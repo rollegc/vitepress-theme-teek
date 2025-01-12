@@ -1,0 +1,5 @@
+packages:
+  - vitepress-theme-tk
+  - sidebar-permalink
+  - docs
+  - build

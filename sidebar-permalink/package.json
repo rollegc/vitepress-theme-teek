@@ -1,0 +1,27 @@
+{
+  "name": "@vitepress-theme-tk/sidebar-permalink",
+  "version": "1.0.0",
+  "description": "Build sidebar for vitepress-theme-tk",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "stub": "unbuild --stub"
+  },
+  "devDependencies": {
+    "chalk": "^5.4.1",
+    "esbuild": "^0.24.2",
+    "gray-matter": "^4.0.3",
+    "unbuild": "^3.2.0",
+    "vite": "^6.0.7",
+    "vitepress": "^1.5.0"
+  }
+}

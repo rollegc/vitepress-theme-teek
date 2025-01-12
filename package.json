@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "vitepress-theme-tk",
+    "sidebar-permalink",
+    "docs",
+    "build"
+  ],
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm stub:build && pnpm stub:sidebar",
+    "docs:dev": "pnpm run -C docs dev",
+    "docs:build": "pnpm run -C docs build",
+    "docs:preview": "pnpm run -C docs preview",
+    "build": "pnpm run clean && pnpm run -C build start",
+    "clean": "rimraf dist",
+    "stub:build": "pnpm run -C build stub",
+    "stub:sidebar": "pnpm run -C sidebar-permalink stub",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:prettier": "prettier --write  \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "lint:eslint": "eslint --max-warnings 0  \"{src,mock,build}/**/*.{vue,js,ts,tsx}\" --fix",
+    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "release": "standard-version",
+    "release-major": "standard-version --release-as major",
+    "release-minor": "standard-version --release-as minor",
+    "release-patch": "standard-version --release-as patch",
+    "release-as": "standard-version --release-as",
+    "release-prerelease": "standard-version --prerelease",
+    "cz": "git add . && git-cz",
+    "czp": "git add . && git-cz && git push"
+  },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@types/node": "^22.10.5",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.11.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.7.3",
+    "vue-eslint-parser": "^9.4.3",
+    "vue-tsc": "^2.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  }
+}
