@@ -20,6 +20,12 @@ export interface SidebarOption {
    */
   ignoreIndexMd?: boolean;
   /**
+   * 是否扫描根目录下的 md 文件作为 sideBar
+   *
+   * @default true
+   */
+  scannerRootMd?: boolean;
+  /**
    * 是否折叠侧边栏
    *
    * @default true

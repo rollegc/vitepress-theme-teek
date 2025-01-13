@@ -1,7 +1,7 @@
 {
-  "name": "@vitepress-theme-tk/sidebar-permalink",
+  "name": "vitepress-plugin-sidebar-resolve",
   "version": "1.0.0",
-  "description": "Build sidebar for vitepress-theme-tk",
+  "description": "Build sidebar",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

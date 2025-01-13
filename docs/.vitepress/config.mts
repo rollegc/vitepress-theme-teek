@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
 import sidebar from "./sidebar";
-import SidebarPermalink from "vitepress-theme-tk-sidebar";
+import SidebarPermalink from "vitepress-plugin-sidebar-resolve";
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 

@@ -33,10 +33,12 @@ export default (
   sourceDir: string,
   option: SidebarOption
 ): { sidebar?: DefaultTheme.SidebarMulti; rewrites?: Record<string, string> } => {
-  const { ignoreList = [], sideBarResolved } = option;
+  const { ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
   let sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(sourceDir, ignoreList);
+
+  if (scannerRootMd) sidebar[`/`] = createSideBarItems(sourceDir, option, "", scannerRootMd);
 
   // 遍历每个一级目录，生成对应的侧边栏数据
   dirPaths.forEach(dirPath => {
@@ -65,16 +67,16 @@ export default (
 
 /**
  * 指定根目录下的所有目录绝对路径，win 如 ['D:\docs\01.guide', 'D:\docs\02.design']，linux 如 ['/usr/local/docs/01.guide', '/usr/local/docs/02.design']
- * @param root 指定文件/文件夹的根目录
+ * @param sourceDir 指定文件/文件夹的根目录
  */
-const readDirPaths = (root: string, ignoreList: SidebarOption["ignoreList"] = []) => {
+const readDirPaths = (sourceDir: string, ignoreList: SidebarOption["ignoreList"] = []) => {
   const dirPaths: string[] = [];
   // 读取目录，返回数组，成员是 root 下所有的目录名（包含文件夹和文件，不递归）
-  const secondDirNames = readdirSync(root);
+  const secondDirNames = readdirSync(sourceDir);
 
   secondDirNames.forEach(secondDirName => {
     // 将路径或路径片段的序列解析为绝对路径，等于使用 cd 命令
-    const secondDirPath = resolve(root, secondDirName);
+    const secondDirPath = resolve(sourceDir, secondDirName);
     // 是否为文件夹目录，并排除指定文件夹
     if (![...DEFAULT_IGNORE_DIR, ...ignoreList].includes(secondDirName) && statSync(secondDirPath).isDirectory()) {
       dirPaths.push(secondDirPath);
@@ -89,9 +91,15 @@ const readDirPaths = (root: string, ignoreList: SidebarOption["ignoreList"] = []
  *
  * @param root 文件/文件夹的根目录绝对路径
  * @param option 配置项
- * @param prefix 记录的文件/文件夹路径（不包含刚进入方法时的 root 目录）
+ * @param prefix 记录的文件/文件夹路径（包含刚进入方法时的 root 目录）
+ * @param recursive 是否迭代
  */
-function createSideBarItems(root: string, option: SidebarOption, prefix = ""): DefaultTheme.SidebarItem[] {
+function createSideBarItems(
+  root: string,
+  option: SidebarOption,
+  prefix = "",
+  onlyScannerRootMd = false
+): DefaultTheme.SidebarItem[] {
   const {
     collapsed = true,
     ignoreList = [],
@@ -103,12 +111,13 @@ function createSideBarItems(root: string, option: SidebarOption, prefix = ""): D
 
   if (ignoreIndexMd && (root.includes("index.md") || root.includes("index.MD"))) return [];
 
+  // 读取目录名（文件和文件夹）
+  let secondDirNames = readdirSync(root);
+
   // 结构化文章侧边栏数据，以文件夹的序号为数字下标
   let sidebarItems: DefaultTheme.SidebarItem[] = [];
   // 存储没有序号的文件，最终生成 sidebarItems 的时候，将这些文件放到最后面
   let sidebarItemsNoIndex: DefaultTheme.SidebarItem[] = [];
-  // 读取目录名（文件和文件夹）
-  let secondDirNames = readdirSync(root);
 
   secondDirNames = beforeCreateSideBarItems?.(secondDirNames) ?? secondDirNames;
 
@@ -129,8 +138,10 @@ function createSideBarItems(root: string, option: SidebarOption, prefix = ""): D
     // 判断序号是否已经存在
     if (sidebarItems[index]) log(`warning：该文件「${filePath}」的序号在同一级别中重复出现，将会被覆盖`);
 
-    if (statSync(filePath).isDirectory()) {
+    if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
+      if ([...DEFAULT_IGNORE_DIR, ...ignoreList].includes(filename)) return [];
+
       // 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取标题，一旦获取到第一个则不再继续遍历
       const filenames = [
         join(root, filename, "index.md"),
@@ -156,12 +167,18 @@ function createSideBarItems(root: string, option: SidebarOption, prefix = ""): D
       else sidebarItems[index] = sidebarItem;
     } else {
       // 是文件
+      // 开启扫描根目录 md 文件时，不扫描 index.md
+      if (onlyScannerRootMd && filename.includes("index.md")) return [];
+
       if (
         !isMdFileExtension(type) ||
         (ignoreIndexMd && filename.includes("index.md")) ||
-        ignoreList.some(item => filename.includes(item as string) || (item instanceof RegExp && item.test(filename)))
+        [...DEFAULT_IGNORE_DIR, ...ignoreList].some(
+          item => filename.includes(item as string) || (item instanceof RegExp && item.test(filename))
+        )
       ) {
-        log(`warning：该文件「${filePath}」非 .md 格式文件，不支持该文件类型`);
+        // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
+        !onlyScannerRootMd && log(`warning：该文件「${filePath}」非 .md 格式文件，不支持该文件类型`);
         return [];
       }
 
@@ -200,15 +217,22 @@ function createSideBarItems(root: string, option: SidebarOption, prefix = ""): D
   return sideBarItemsResolved?.(sidebarItems) ?? sidebarItems;
 }
 
-// 尝试从一个 md 文件中读取标题，读取第一个 # 后的内容作为标题
-const getTitleFromMd = (realFileName: string): string | undefined => {
-  if (!existsSync(realFileName)) return undefined;
+/**
+ * 尝试从一个 md 文件中读取标题
+ * @param filePath 文件绝对路径
+ * @param deep true 是否寻找标题直到没有为止，false 只读取第一个 # 后的内容作为标题
+ */
+const getTitleFromMd = (filePath: string, deep = false): string | undefined => {
+  if (!existsSync(filePath)) return undefined;
 
-  if (!isMdFile(realFileName)) return undefined;
+  if (!isMdFile(filePath)) return undefined;
 
-  const data = readFileSync(realFileName, { encoding: "utf-8" });
+  const content = readFileSync(filePath, { encoding: "utf-8" });
+
+  if (deep) return content.match(/^(#+)\s+(.+)/m)?.[2] || "";
+
   // 切割换行符 \r\n 或 \n
-  const lines = data.split(/\r?\n/);
+  const lines = content.split(/\r?\n/);
 
   for (const line of lines) if (line.startsWith("# ")) return line.substring(2);
 

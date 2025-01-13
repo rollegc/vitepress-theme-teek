@@ -56,11 +56,8 @@ export default function VitePluginVitePressSidebarPermalink(option: SidebarOptio
       }
 
       if (permalinkRewrites) {
-        console.log(vitepressConfig.site);
         vitepressConfig.site.rewrites = { ...permalinkRewrites, ...rewrites };
       }
-
-      log(JSON.stringify(vitepressConfig.site, null, 2));
 
       return config;
     },

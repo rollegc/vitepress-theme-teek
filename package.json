@@ -4,7 +4,7 @@
   "private": true,
   "workspaces": [
     "vitepress-theme-tk",
-    "sidebar-permalink",
+    "plugins/*",
     "docs",
     "build"
   ],
@@ -17,7 +17,7 @@
     "build": "pnpm run clean && pnpm run -C build start",
     "clean": "rimraf dist",
     "stub:build": "pnpm run -C build stub",
-    "stub:sidebar": "pnpm run -C sidebar-permalink stub",
+    "stub:sidebar": "pnpm run -C plugins/vitepress-plugin-sidebar-resolve stub",
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
     "lint:prettier": "prettier --write  \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:eslint": "eslint --max-warnings 0  \"{src,mock,build}/**/*.{vue,js,ts,tsx}\" --fix",
