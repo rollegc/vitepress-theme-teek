@@ -9,9 +9,6 @@ export const log = (message: string, type = "yellow") => {
   console.log(chalk[type](message));
 };
 
-// 重写路径列表，官方地址：https://vitejs.cn/vitepress/guide/routing#route-rewrites
-let rewrites: Record<string, string> = {};
-
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = [
   "scripts",
@@ -21,6 +18,7 @@ export const DEFAULT_IGNORE_DIR = [
   "@pages",
   "node_modules",
   ".vitepress",
+  "_posts",
   "package.json",
 ];
 
@@ -29,40 +27,34 @@ export const DEFAULT_IGNORE_DIR = [
  * @param  sourceDir .md 文件所在源目录，一般是 docs 目录（绝对路径）
  * @param  collapsed  是否可折叠
  */
-export default (
-  sourceDir: string,
-  option: SidebarOption
-): { sidebar?: DefaultTheme.SidebarMulti; rewrites?: Record<string, string> } => {
-  const { ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
+export default (option: SidebarOption = {}): DefaultTheme.SidebarMulti => {
+  const { path = "/docs", ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
+
+  const sourceDir = join(process.cwd(), path);
+
   let sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(sourceDir, ignoreList);
 
+  // 只扫描根目录的 md 文件
   if (scannerRootMd) sidebar[`/`] = createSideBarItems(sourceDir, option, "", scannerRootMd);
 
-  // 遍历每个一级目录，生成对应的侧边栏数据
+  // 遍历根目录下的每个子目录，生成对应的侧边栏数据
   dirPaths.forEach(dirPath => {
     // dirPath 是每个目录的绝对路径
-    if (!dirPath.endsWith("_posts")) {
-      const fileName = basename(dirPath);
+    const fileName = basename(dirPath);
 
-      // 创建 SideBarItems
-      const sidebarItems = createSideBarItems(dirPath, option, fileName);
+    // 创建 SideBarItems
+    const sidebarItems = createSideBarItems(dirPath, option, fileName);
 
-      if (!sidebarItems.length) {
-        return log(`warning：该目录「${dirPath}」内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
-      }
-
-      sidebar[`/${fileName}/`] = sidebarItems;
+    if (!sidebarItems.length) {
+      return log(`warning：该目录「${dirPath}」内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
+
+    sidebar[`/${fileName}/`] = sidebarItems;
   });
 
-  sidebar = sideBarResolved?.(sidebar) ?? sidebar;
-
-  return {
-    sidebar: Object.keys(sidebar).length ? sidebar : undefined,
-    rewrites: Object.keys(rewrites).length ? rewrites : undefined,
-  };
+  return sideBarResolved?.(sidebar) ?? sidebar;
 };
 
 /**
@@ -94,12 +86,12 @@ const readDirPaths = (sourceDir: string, ignoreList: SidebarOption["ignoreList"]
  * @param prefix 记录的文件/文件夹路径（包含刚进入方法时的 root 目录）
  * @param recursive 是否迭代
  */
-function createSideBarItems(
+const createSideBarItems = (
   root: string,
   option: SidebarOption,
   prefix = "",
   onlyScannerRootMd = false
-): DefaultTheme.SidebarItem[] {
+): DefaultTheme.SidebarItem[] => {
   const {
     collapsed = true,
     ignoreList = [],
@@ -160,7 +152,7 @@ function createSideBarItems(
       const sidebarItem = {
         text,
         collapsed,
-        items: createSideBarItems(filePath, option, `${prefix}/${filename}/`),
+        items: createSideBarItems(filePath, option, `${prefix}/${filename}`),
       };
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
@@ -182,11 +174,11 @@ function createSideBarItems(
         return [];
       }
 
-      // title 获取顺序：md 文件 formatter 的 title > md 文件的第一个 # 后面的内容 > md 文件名
       const content = readFileSync(filePath, "utf8");
       // 解析出 front matter 数据
       const { data: { permalink = "", title } = {} } = matter(content, {});
 
+      // title 获取顺序：md 文件 formatter 的 title > md 文件的第一个 # 后面的内容 > md 文件名
       if (title) text = title;
       else text = getTitleFromMd(filePath) || text;
 
@@ -194,20 +186,11 @@ function createSideBarItems(
       const sidebarItem = {
         text,
         collapsed,
-        link: `/${prefix}${name}`,
+        link: `/${prefix}/${name}`,
       };
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
       else sidebarItems[index] = sidebarItem;
-
-      // 判断 permalink 开头是否为 /，是的话截取掉 /，否则为 permalink
-      if (permalink) {
-        let finalPermalink = permalink;
-        if (finalPermalink.startsWith("/")) finalPermalink = finalPermalink.substring(1);
-        if (finalPermalink.endsWith("/")) finalPermalink = finalPermalink.substring(0, finalPermalink.length - 1);
-
-        rewrites[prefix + filename] = finalPermalink + ".md";
-      }
     }
   });
 
@@ -215,7 +198,7 @@ function createSideBarItems(
   sidebarItems = [...sidebarItems, ...sidebarItemsNoIndex].filter(Boolean);
 
   return sideBarItemsResolved?.(sidebarItems) ?? sidebarItems;
-}
+};
 
 /**
  * 尝试从一个 md 文件中读取标题

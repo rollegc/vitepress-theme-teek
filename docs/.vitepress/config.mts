@@ -1,6 +1,7 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, UserConfig } from "vitepress";
 import sidebar from "./sidebar";
 import SidebarPermalink from "vitepress-plugin-sidebar-resolve";
+import Permalinks from "vitepress-plugin-permalinks";
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 
@@ -47,11 +48,8 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [SidebarPermalink({ path: "/" }) as any],
+    plugins: [Permalinks({ path: "/" }), SidebarPermalink({ path: "/" })] as any,
   },
-  // rewrites: {
-  //   'guide/use/使用 - 登出下线.md': 'aa.md',
-  // },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: "/logo.svg",
