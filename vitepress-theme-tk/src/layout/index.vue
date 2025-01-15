@@ -1,45 +1,13 @@
 <script setup lang="ts">
-import { useData, useRoute, useRouter } from "vitepress";
+import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
-import { nextTick, provide, watch, onMounted } from "vue";
-import { data as posts } from "../data/posts.data";
+import { nextTick, provide } from "vue";
 
 defineOptions({
   name: "TkLayout",
 });
 
-const { isDark, theme, site } = useData();
-
-const route = useRoute();
-const router = useRouter();
-
-watch(
-  () => route.path,
-  async newVal => {
-    const { permalinks = {} } = site.value;
-    const path = decodeURIComponent(newVal);
-    const permalink = permalinks[path];
-
-    const { searchParams, hash } = new URL(window.location.href!);
-
-    const last = `${hash ? hash : ""}${searchParams.size ? "?" + searchParams.toString() : ""}`;
-
-    if (permalink) {
-      await nextTick();
-      history.replaceState({}, "", `${permalink}${last}`);
-    } else {
-      for (const [key, value] of Object.entries(permalinks)) {
-        if (value === path) {
-          history.replaceState({}, "", `${key}?${last}`);
-          location.reload();
-        }
-      }
-    }
-  },
-  {
-    immediate: true,
-  }
-);
+const { isDark } = useData();
 
 const enableTransitions = () =>
   "startViewTransition" in document && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;

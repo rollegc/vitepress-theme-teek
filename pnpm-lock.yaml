@@ -27,6 +27,15 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.19.1
         version: 8.19.1(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3)
+      '@vue/compiler-dom':
+        specifier: ^3.5.13
+        version: 3.5.13
+      '@vue/runtime-core':
+        specifier: ^3.5.13
+        version: 3.5.13
+      '@vue/runtime-dom':
+        specifier: ^3.5.13
+        version: 3.5.13
       commitizen:
         specifier: ^4.3.1
         version: 4.3.1(@types/node@22.10.5)(typescript@5.7.3)
@@ -161,13 +170,6 @@ importers:
         version: 1.5.0(@algolia/client-search@5.19.0)(@types/node@22.10.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
 
   vitepress-theme-tk:
-    dependencies:
-      vite:
-        specifier: ^6.0.7
-        version: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
-      vitepress:
-        specifier: ^1.5.0
-        version: 1.5.0(@algolia/client-search@5.19.0)(@types/node@22.10.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
     devDependencies:
       chalk:
         specifier: ^5.4.1
@@ -178,6 +180,12 @@ importers:
       unbuild:
         specifier: ^3.2.0
         version: 3.2.0(sass@1.83.1)(typescript@5.7.3)(vue-tsc@2.2.0(typescript@5.7.3))(vue@3.5.13(typescript@5.7.3))
+      vite:
+        specifier: ^6.0.7
+        version: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+      vitepress:
+        specifier: ^1.5.0
+        version: 1.5.0(@algolia/client-search@5.19.0)(@types/node@22.10.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
 
 packages:
 

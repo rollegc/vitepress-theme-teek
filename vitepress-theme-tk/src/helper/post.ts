@@ -105,6 +105,11 @@ export const getPostsTime = (post: ContentData): number => {
   return date.getTime();
 };
 
+/**
+ * 文章创建时间排序
+ * @param prev 文章 1
+ * @param next 文章 2
+ */
 export const compareDate = (prev: ContentData, next: ContentData) => {
   return getPostsTime(next) - getPostsTime(prev);
 };
