@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 开始
-      link: /guide/
+      link: /01.指南/
     - theme: alt
       text: 设计
-      link: /design/
+      link: /05.设计/01.设计 - 思路/01.设计 - 思路设计
 
 features:
   - title: 特性 A

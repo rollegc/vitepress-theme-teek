@@ -1,3 +1,4 @@
+// 主题色
 $primaryColor: #395ae3;
 
 :root {
@@ -38,11 +39,13 @@ $primaryColor: #395ae3;
   .nav {
     .item {
       h2.text {
+        // 一级菜单字体加大
         font-size: 18px;
       }
     }
 
     .items {
+      // 二级菜单添加间距
       padding-left: 10px;
     }
   }

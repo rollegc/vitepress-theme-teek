@@ -72,7 +72,7 @@ export default defineConfig({
       { text: "知识", link: "/knowledge/" },
     ],
 
-    sidebar,
+    // sidebar,
 
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/hd-security" }],
 

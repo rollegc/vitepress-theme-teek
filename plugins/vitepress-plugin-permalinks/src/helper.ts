@@ -16,6 +16,7 @@ export const DEFAULT_IGNORE_DIR = [
   "package.json",
 ];
 
+// key 为文件路径，value 为永久链接
 let permalinks: Record<string, string> = {};
 
 export default (option: PermalinkOption = {}, cleanUrls = false): Record<string, string> => {
@@ -29,7 +30,7 @@ export default (option: PermalinkOption = {}, cleanUrls = false): Record<string,
   scannerMdFile(sourceDir, option, "", cleanUrls, true);
 
   // 遍历根目录下的每个子目录
-  dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, "/" + basename(dirPath), cleanUrls));
+  dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath), cleanUrls));
 
   return permalinks;
 };
@@ -86,6 +87,7 @@ const scannerMdFile = (
       }
 
       const content = readFileSync(filePath, "utf8");
+
       // 解析出 front matter 数据
       const { data: { permalink = "" } = {} } = matter(content, {});
 
@@ -97,7 +99,7 @@ const scannerMdFile = (
 
         const filename = cleanUrls ? basename(dirOrFilename, extname(dirOrFilename)) : basename(dirOrFilename);
 
-        permalinks[prefix + "/" + filename] = finalPermalink;
+        permalinks[`${prefix}/${filename}`] = finalPermalink;
       }
     }
   });

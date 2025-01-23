@@ -1,9 +1,18 @@
-import { readdirSync, statSync, existsSync, readFileSync } from "node:fs";
+import { readdirSync, statSync, readFileSync } from "node:fs";
+import { writeFile } from "fs/promises";
 import { join, basename, resolve } from "node:path";
-import chalk from "chalk";
 import matter from "gray-matter";
 import { DefaultTheme } from "vitepress";
 import { SidebarOption } from "./types";
+import {
+  getTitleFromMd,
+  getFirstTitleInMd,
+  getYamlFrontMatter,
+  removeYamlFrontMatter,
+  isMdFileExtension,
+  isIllegalIndex,
+} from "./util";
+import chalk from "chalk";
 
 export const log = (message: string, type = "yellow") => {
   console.log(chalk[type](message));
@@ -176,11 +185,18 @@ const createSideBarItems = (
 
       const content = readFileSync(filePath, "utf8");
       // 解析出 front matter 数据
-      const { data: { permalink = "", title } = {} } = matter(content, {});
+      const { data = {}, content: mdContent } = matter(content, {});
+      // 转换 yaml
+      // const yamlContent = `---\n${JSON.stringify(data, null, 2)}\n---` || "";
 
-      // title 获取顺序：md 文件 formatter 的 title > md 文件的第一个 # 后面的内容 > md 文件名
-      if (title) text = title;
-      else text = getTitleFromMd(filePath) || text;
+      // title 获取顺序：md 文件 formatter 的 title > md 文件的 # 后面的内容 > md 文件名
+      if (data.title) text = data.title;
+      else text = getTitleFromMd(mdContent) || text;
+
+      // 如果 content 没有第一个 # 开头的标题，则将现有标题写入
+      // if (!getFirstTitleInMd(mdContent)) {
+        // const d = `${yamlContent}\n\n# ${text}\n\n${mdContent}`
+      // }
 
       // 当没有文件序号时，index == text
       const sidebarItem = {
@@ -198,28 +214,6 @@ const createSideBarItems = (
   sidebarItems = [...sidebarItems, ...sidebarItemsNoIndex].filter(Boolean);
 
   return sideBarItemsResolved?.(sidebarItems) ?? sidebarItems;
-};
-
-/**
- * 尝试从一个 md 文件中读取标题
- * @param filePath 文件绝对路径
- * @param deep true 是否寻找标题直到没有为止，false 只读取第一个 # 后的内容作为标题
- */
-const getTitleFromMd = (filePath: string, deep = false): string | undefined => {
-  if (!existsSync(filePath)) return undefined;
-
-  if (!isMdFile(filePath)) return undefined;
-
-  const content = readFileSync(filePath, { encoding: "utf-8" });
-
-  if (deep) return content.match(/^(#+)\s+(.+)/m)?.[2] || "";
-
-  // 切割换行符 \r\n 或 \n
-  const lines = content.split(/\r?\n/);
-
-  for (const line of lines) if (line.startsWith("# ")) return line.substring(2);
-
-  return undefined;
 };
 
 /**
@@ -264,32 +258,4 @@ const resolveFileName = (
   }
 
   return { index, text, type, name };
-};
-
-/**
- * 判断是否为 md 文件
- *
- * @param filePath 文件绝对路径
- */
-const isMdFile = (filePath: string) => {
-  const fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
-  return isMdFileExtension(fileExtension);
-};
-
-/**
- * 判断是否已 md/MD 结尾
- *
- * @param fileExtension 文件后缀名
- */
-const isMdFileExtension = (fileExtension: string) => {
-  return ["md", "MD"].includes(fileExtension);
-};
-
-/**
- * 判断是否非法的序号
- *
- * @param index 序号
- */
-const isIllegalIndex = (index: number) => {
-  return isNaN(index) || index < 0;
 };

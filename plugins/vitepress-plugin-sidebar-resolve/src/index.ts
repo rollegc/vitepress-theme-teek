@@ -1,6 +1,4 @@
 import type { PluginOption, ViteDevServer } from "vite";
-import path from "node:path";
-import type { UserConfig } from "vitepress";
 import type { SidebarOption } from "./types";
 import chalk from "chalk";
 import createSidebar from "./helper";
