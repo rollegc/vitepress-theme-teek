@@ -1,4 +1,4 @@
-import { DefaultTheme } from "vitepress";
+import type { DefaultTheme } from "vitepress";
 
 export interface SidebarOption {
   /**
@@ -10,9 +10,9 @@ export interface SidebarOption {
   /**
    * 文章所在的目录，基于 package.json 扫描
    *
-   * @default /docs
+   * @default .
    */
-  path?: string;
+  base?: string;
   /**
    * 是否忽略每个目录下的 index.md 文件
    *
@@ -37,6 +37,12 @@ export interface SidebarOption {
    * @default true
    */
   fileIndexPrefix?: boolean;
+  /**
+   * 寻找 md 文件的一级标题时，是否一直查询直到全部扫描结束为止，如果为 false，则只找第一行的一级标题，找不到则为 undefined
+   *
+   * @default false
+   */
+  mdTitleDeep?: boolean;
   /**
    * 解析每个 sideBar 后的回调。每个 sideBar 指的是 SidebarOption.path 目录下的每个子目录
    *

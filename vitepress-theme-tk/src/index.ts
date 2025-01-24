@@ -1,8 +1,10 @@
 import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
-import Layout from "./src/layout/index.vue";
-import { configProvider } from "./src/configProvider";
-import "./src/styles/index.scss";
+import Layout from "./layout/index.vue";
+import { configProvider } from "./configProvider";
+import "./styles/index.scss";
+
+export type { ThemeConfig } from "./config/types";
 
 export default {
   extends: DefaultTheme,

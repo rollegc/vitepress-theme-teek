@@ -1,14 +1,16 @@
 import type { PluginOption } from "vite";
 import createPermalinks from "./helper";
-import { PermalinkOption } from "./types";
+import type { PermalinkOption } from "./types";
 
-export default function VitePluginVitePressPermalinks(option: PermalinkOption = {}): PluginOption {
+export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): PluginOption {
   let vitepressConfig: any = {};
 
   return {
-    name: "vite-plugin-vitepress-sidebar-permalinks",
+    name: "vite-plugin-vitepress-sidebar-permalink",
     config(config: any) {
       const { site } = config.vitepress;
+
+      option.base = option.base || site.base || ".";
 
       // Key 为 path，Value 为 permalink
       const pathToPermalink: Record<string, string> = {};
@@ -53,3 +55,5 @@ export default function VitePluginVitePressPermalinks(option: PermalinkOption = 
     },
   };
 }
+
+export type { PermalinkOption };

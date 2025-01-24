@@ -1,4 +1,4 @@
-import { ContentData } from 'vitepress';
+import type { ContentData } from 'vitepress';
 
 export interface Post {
   /**

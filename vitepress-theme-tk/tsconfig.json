@@ -1,5 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
-  "include": ["**/*.ts", "**/*.d.ts", "**/*.vue"],
-  "exclude": [],
+  "compilerOptions": {
+    "paths": {
+      "vitepress-theme-tk/config": ["./config"],
+      "vitepress-theme-tk": ["src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
 }

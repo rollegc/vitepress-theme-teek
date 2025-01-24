@@ -1,7 +1,7 @@
-import { defineComponent, h, InjectionKey, provide, Ref, watch, type Component } from "vue";
+import { defineComponent, h, InjectionKey, provide, Ref, type Component } from "vue";
 import { useAnchorScroll } from "./hooks";
 import { usePermalinks } from "./hooks";
-import { Post } from "./types/post";
+import type { Post } from "./types/post";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
 

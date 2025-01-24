@@ -1,12 +1,13 @@
-import { defineConfig, UserConfig } from "vitepress";
-import sidebar from "./sidebar";
-import SidebarPermalink from "vitepress-plugin-sidebar-resolve";
-import Permalinks from "vitepress-plugin-permalinks";
+import { defineConfig } from "vitepress";
+import themeConfig from "vitepress-theme-tk/config";
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 
+const tkConfig = themeConfig();
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  extends: tkConfig,
   base: "/",
   title: "Hd Security",
   description: description,
@@ -47,9 +48,6 @@ export default defineConfig({
       detailsLabel: "详细信息",
     },
   },
-  vite: {
-    plugins: [Permalinks({ path: "/" }), SidebarPermalink({ path: "/" })] as any,
-  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: "/logo.svg",
@@ -67,13 +65,10 @@ export default defineConfig({
     },
     nav: [
       { text: "首页", link: "/" },
-      { text: "指南", link: "/guide/" },
-      { text: "设计", link: "/design/" },
-      { text: "知识", link: "/knowledge/" },
+      { text: "指南", link: "/01.指南/" },
+      { text: "设计", link: "/05.设计/01.设计 - 思路/01.设计 - 思路设计" },
+      { text: "API", link: "/07.API/01.登录 API" },
     ],
-
-    // sidebar,
-
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/hd-security" }],
 
     search: {

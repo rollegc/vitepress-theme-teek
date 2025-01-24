@@ -1,5 +1,5 @@
-import { ContentData } from "vitepress";
-import { GroupCardItem, Post } from "../types/post";
+import type { ContentData } from "vitepress";
+import type { GroupCardItem, Post } from "../types/post";
 import { isArray } from "./is";
 
 /**

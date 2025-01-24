@@ -8,7 +8,7 @@ export interface PermalinkOption {
   /**
    * 文章所在的目录，基于 package.json 扫描
    *
-   * @default /docs
+   * @default .
    */
-  path?: string;
+  base?: string;
 }

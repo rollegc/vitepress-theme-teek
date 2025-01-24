@@ -3,6 +3,9 @@ import type { SidebarOption } from "./types";
 import chalk from "chalk";
 import createSidebar from "./helper";
 
+export type { SidebarOption };
+export * from "./util";
+
 const log = console.log;
 
 export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): PluginOption {
@@ -28,7 +31,8 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       });
     },
     config(config: any) {
-      const { themeConfig } = config.vitepress.site;
+      const { themeConfig, srcDir } = config.vitepress.site;
+      option.base = option.base || srcDir || ".";
 
       // 自动生成结构化侧边栏
       const sidebar = createSidebar(option);
@@ -36,10 +40,11 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       themeConfig.sidebar = {
         ...sidebar,
         ...(Array.isArray(themeConfig.sidebar)
-          ? log(chalk.yellow("warning: custom sidebar must be in object form. 自定义 sidebar 必须是对象形式"))
+          ? log(chalk.yellow("warning: Custom sidebar must be in object form. 自定义 sidebar 必须是对象形式"))
           : themeConfig.sidebar),
       };
-      log(chalk.blue("tip ") + chalk.green("add sidebar data. 成功生成侧边栏数据"));
+
+      log(chalk.blue("tip ") + chalk.green("Create sidebar success. 成功生成侧边栏数据"));
     },
   };
 }

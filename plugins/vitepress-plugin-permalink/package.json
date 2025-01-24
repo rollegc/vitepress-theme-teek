@@ -1,7 +1,7 @@
 {
-  "name": "vitepress-plugin-sidebar-resolve",
+  "name": "vitepress-plugin-permalink",
   "version": "1.0.0",
-  "description": "Build sidebar",
+  "description": "Build Permalink",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

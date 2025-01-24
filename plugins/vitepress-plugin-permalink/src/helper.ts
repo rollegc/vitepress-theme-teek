@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, extname, join, resolve } from "node:path";
 import matter from "gray-matter";
-import { PermalinkOption } from "./types";
+import type { PermalinkOption } from "./types";
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = [
@@ -20,8 +20,8 @@ export const DEFAULT_IGNORE_DIR = [
 let permalinks: Record<string, string> = {};
 
 export default (option: PermalinkOption = {}, cleanUrls = false): Record<string, string> => {
-  const { path = "/docs", ignoreList = [] } = option;
-  const sourceDir = join(process.cwd(), path);
+  const { base = ".", ignoreList = [] } = option;
+  const sourceDir = join(process.cwd(), base);
 
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(sourceDir, ignoreList);

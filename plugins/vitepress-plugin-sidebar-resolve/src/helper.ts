@@ -1,8 +1,8 @@
 import { readdirSync, statSync, readFileSync } from "node:fs";
 import { join, basename, resolve } from "node:path";
 import matter from "gray-matter";
-import { DefaultTheme } from "vitepress";
-import { SidebarOption } from "./types";
+import type { DefaultTheme } from "vitepress";
+import type { SidebarOption } from "./types";
 import { getTitleFromMd, isMdFileExtension, isIllegalIndex } from "./util";
 import chalk from "chalk";
 
@@ -29,9 +29,9 @@ export const DEFAULT_IGNORE_DIR = [
  * @param  collapsed  是否可折叠
  */
 export default (option: SidebarOption = {}): DefaultTheme.SidebarMulti => {
-  const { path = "/docs", ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
+  const { base = ".", ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
 
-  const sourceDir = join(process.cwd(), path);
+  const sourceDir = join(process.cwd(), base);
 
   let sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
@@ -100,6 +100,7 @@ const createSideBarItems = (
     fileIndexPrefix = false,
     sideBarItemsResolved,
     beforeCreateSideBarItems,
+    mdTitleDeep = false,
   } = option;
 
   if (ignoreIndexMd && (root.includes("index.md") || root.includes("index.MD"))) return [];
@@ -143,7 +144,7 @@ const createSideBarItems = (
       ];
 
       for (const filename of filenames) {
-        const t = getTitleFromMd(filename);
+        const t = getTitleFromMd(filename, mdTitleDeep);
         if (t) {
           title = t;
           break;
@@ -151,7 +152,7 @@ const createSideBarItems = (
       }
 
       const sidebarItem = {
-        title,
+        text: title,
         collapsed,
         items: createSideBarItems(filePath, option, `${prefix}/${filename}`),
       };
@@ -181,11 +182,11 @@ const createSideBarItems = (
 
       // title 获取顺序：md 文件 formatter 的 title > md 文件的 # 后面的内容 > md 文件名
       if (data.title) title = data.title;
-      else title = getTitleFromMd(mdContent) || title;
+      else title = getTitleFromMd(mdContent, mdTitleDeep) || title;
 
       // 当没有文件序号时，index == title
       const sidebarItem = {
-        title,
+        text: title,
         collapsed,
         link: `/${prefix}/${name}`,
       };
@@ -227,7 +228,8 @@ const resolveFileName = (
   const fileNameArr = filename.split(".");
 
   if (fileNameArr.length === 2) {
-    index = fileNameArr[0];
+    // index.md 文件的下标默认为 0，则永远在侧边栏的第一位
+    index = fileNameArr[0] === "index" ? "0" : fileNameArr[0];
     title = stat.isDirectory() ? fileNameArr[1] : fileNameArr[0];
     type = fileNameArr[1];
     name = fileNameArr[0];

@@ -3,9 +3,9 @@ import type { PluginOption } from "vite";
 import matter from "gray-matter";
 import { basename } from "node:path";
 
-export default function VitePluginVitePressAddTitle(): PluginOption {
+export default function VitePluginVitePressMdH1(): PluginOption {
   return {
-    name: "vite-plugin-vitepress-add-title",
+    name: "vite-plugin-vitepress-md-h1",
     transform: (code, id) => {
       if (!id.endsWith(".md")) return code;
 
@@ -18,17 +18,23 @@ export default function VitePluginVitePressAddTitle(): PluginOption {
         ? code
         : code.replace(
             `_createStaticVNode("`,
-            `_createStaticVNode("<h 1 id=\\"${title}\\" tabindex=\\"-1\\">${title} <a class=\\"header-anchor\\" href= "#${title}\\" aria-label=\\"Permalink to &quot;${title}&quot;\\"></a ></h 1>`
+            `_createStaticVNode("<h1 id=\\"${title}\\" tabindex=\\"-1\\">${title} <a class=\\"header-anchor\\" href=\\"#${title}\\" aria-label=\\"Permalink to &quot;${title}&quot;\\">​</a></h1>`
           );
     },
   };
 }
 
+/**
+ * 解析文件名
+ *
+ * @param filename 文件名
+ */
 const getMdFileTitle = (filename: string) => {
   // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 front matter 中的 title，否则为文件名为标题
   let title = "";
   /**
-   * 如果 filename 为 1.Ke.md，则解析为 ['1', 'Ke', 'md']，其中 index 为 1，title 为 Ke，type 为 md * 如果 filename 为 1.Ke.d.md，则解析为 ['1', 'Ke.d', 'md']，其中 index 为 1，title 为 Ke.d，type 为 md
+   * 如果 filename 为 1.Ke.md，则解析为 ['1', 'Ke', 'md']，其中 index 为 1，title 为 Ke，type 为 md
+   * 如果 filename 为 1.Ke.d.md，则解析为 ['1', 'Ke.d', 'md']，其中 index 为 1，title 为 Ke.d，type 为 md
    */
   const fileNameArr = filename.split(".");
 

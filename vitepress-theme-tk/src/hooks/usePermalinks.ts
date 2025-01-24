@@ -54,9 +54,11 @@ export function usePermalinks() {
    * 2. 如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink
    *
    * @param href 浏览器地址栏
-   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalinks 插件实现了，这里留着只是二次预防
+   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了，这里留着只是二次预防
    */
   const processUrl = async (href: string) => {
+    if (!Object.keys(permalinks).length) return;
+
     const { pathname, search, hash } = new URL(href, fakeHost);
 
     // 解码，支持中文

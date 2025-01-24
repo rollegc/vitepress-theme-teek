@@ -1,7 +1,7 @@
 {
-  "name": "vitepress-plugin-permalinks",
+  "name": "vitepress-plugin-md-h1",
   "version": "1.0.0",
-  "description": "Build Permalink",
+  "description": "add h1 to markdown",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -17,7 +17,7 @@
     "stub": "unbuild --stub"
   },
   "devDependencies": {
-		"gray-matter": "^4.0.3",
+    "gray-matter": "^4.0.3",
     "unbuild": "^3.2.0",
     "vite": "^6.0.7"
   }
