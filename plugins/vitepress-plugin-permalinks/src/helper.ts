@@ -86,7 +86,7 @@ const scannerMdFile = (
         return;
       }
 
-      const content = readFileSync(filePath, "utf8");
+      const content = readFileSync(filePath, "utf-8");
 
       // 解析出 front matter 数据
       const { data: { permalink = "" } = {} } = matter(content, {});

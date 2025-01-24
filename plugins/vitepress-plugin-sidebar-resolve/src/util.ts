@@ -15,7 +15,7 @@ export const getTitleFromMd = (mdContent: string, deep = false): string | undefi
  */
 export const getFirstTitleInMd = (mdContent: string) => {
   // 切割换行符 \r\n 或 \n
-  const lines = mdContent.split(/\r?\n/);
+  const lines = mdContent.trimStart().split(/\r?\n/);
 
   if (lines[0].startsWith("# ")) return lines[0].substring(2);
 

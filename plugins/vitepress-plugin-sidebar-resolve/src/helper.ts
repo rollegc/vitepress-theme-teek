@@ -1,17 +1,9 @@
 import { readdirSync, statSync, readFileSync } from "node:fs";
-import { writeFile } from "fs/promises";
 import { join, basename, resolve } from "node:path";
 import matter from "gray-matter";
 import { DefaultTheme } from "vitepress";
 import { SidebarOption } from "./types";
-import {
-  getTitleFromMd,
-  getFirstTitleInMd,
-  getYamlFrontMatter,
-  removeYamlFrontMatter,
-  isMdFileExtension,
-  isIllegalIndex,
-} from "./util";
+import { getTitleFromMd, isMdFileExtension, isIllegalIndex } from "./util";
 import chalk from "chalk";
 
 export const log = (message: string, type = "yellow") => {
@@ -125,7 +117,7 @@ const createSideBarItems = (
   secondDirNames.forEach(filename => {
     const filePath = resolve(root, filename);
     // 解析文件名
-    let { index: indexStr, text, type, name } = resolveFileName(filename, filePath);
+    let { index: indexStr, title, type, name } = resolveFileName(filename, filePath);
 
     // 十进制转换
     const index = parseInt(indexStr as string, 10);
@@ -151,15 +143,15 @@ const createSideBarItems = (
       ];
 
       for (const filename of filenames) {
-        const title = getTitleFromMd(filename);
-        if (title) {
-          text = title;
+        const t = getTitleFromMd(filename);
+        if (t) {
+          title = t;
           break;
         }
       }
 
       const sidebarItem = {
-        text,
+        title,
         collapsed,
         items: createSideBarItems(filePath, option, `${prefix}/${filename}`),
       };
@@ -183,24 +175,17 @@ const createSideBarItems = (
         return [];
       }
 
-      const content = readFileSync(filePath, "utf8");
+      const content = readFileSync(filePath, "utf-8");
       // 解析出 front matter 数据
       const { data = {}, content: mdContent } = matter(content, {});
-      // 转换 yaml
-      // const yamlContent = `---\n${JSON.stringify(data, null, 2)}\n---` || "";
 
       // title 获取顺序：md 文件 formatter 的 title > md 文件的 # 后面的内容 > md 文件名
-      if (data.title) text = data.title;
-      else text = getTitleFromMd(mdContent) || text;
+      if (data.title) title = data.title;
+      else title = getTitleFromMd(mdContent) || title;
 
-      // 如果 content 没有第一个 # 开头的标题，则将现有标题写入
-      // if (!getFirstTitleInMd(mdContent)) {
-        // const d = `${yamlContent}\n\n# ${text}\n\n${mdContent}`
-      // }
-
-      // 当没有文件序号时，index == text
+      // 当没有文件序号时，index == title
       const sidebarItem = {
-        text,
+        title,
         collapsed,
         link: `/${prefix}/${name}`,
       };
@@ -224,12 +209,12 @@ const createSideBarItems = (
 const resolveFileName = (
   filename: string,
   filePath: string
-): { index: string | number; text: string; type: string; name: string } => {
+): { index: string | number; title: string; type: string; name: string } => {
   const stat = statSync(filePath);
   // 文件序号
   let index: string | number = "";
   // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 front matter 中的 title，否则为文件名为标题
-  let text = "";
+  let title = "";
   // 文件类型
   let type = "";
   // 文件名称，不带后缀
@@ -243,7 +228,7 @@ const resolveFileName = (
 
   if (fileNameArr.length === 2) {
     index = fileNameArr[0];
-    text = stat.isDirectory() ? fileNameArr[1] : fileNameArr[0];
+    title = stat.isDirectory() ? fileNameArr[1] : fileNameArr[0];
     type = fileNameArr[1];
     name = fileNameArr[0];
   } else {
@@ -253,9 +238,9 @@ const resolveFileName = (
     type = filename.substring(lastDotIndex + 1);
     name = filename.substring(0, lastDotIndex);
 
-    if (stat.isDirectory()) text = filename.substring(firstDotIndex + 1);
-    else text = filename.substring(firstDotIndex + 1, lastDotIndex);
+    if (stat.isDirectory()) title = filename.substring(firstDotIndex + 1);
+    else title = filename.substring(firstDotIndex + 1, lastDotIndex);
   }
 
-  return { index, text, type, name };
+  return { index, title, type, name };
 };
