@@ -144,6 +144,9 @@ importers:
 
   plugins/vitepress-plugin-permalink:
     devDependencies:
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3

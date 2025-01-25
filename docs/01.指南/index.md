@@ -8,7 +8,7 @@ Hd Security 主要解决登录认证、权限认证、分布式 Session 会话�
 
 Hd Security 使用文档基本也是按照 sa-token 的使用文档进行编写，只是 API 相对不一样。因为在学习的过程中，加入了一些自己的见解，设计上略微不同。
 
-因此建议读者去阅读 [设计](/design/index) 部分，作者建设文档的目的主要是书写 Hd Security 框架的设计思路，而不是 API 使用，这也是 hd-security 文档没有体现的内容。
+因此建议读者去阅读 [设计](/design/login-overview) 部分，作者建设文档的目的主要是书写 Hd Security 框架的设计思路，而不是 API 使用，这也是 hd-security 文档没有体现的内容。
 
 ## Hd Security 功能特性
 
