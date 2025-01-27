@@ -1,11 +1,12 @@
 import { defineComponent, h, InjectionKey, provide, Ref, type Component } from "vue";
-import { useAnchorScroll } from "./hooks";
-import { usePermalinks } from "./hooks";
+import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./types/post";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
+import { useData } from "vitepress";
+import "./styles/dark-transition.css"
 
-const postSymbol: InjectionKey<Ref<Post>> = Symbol("post");
+export const postSymbol: InjectionKey<Ref<Post>> = Symbol("post");
 
 function createConfigProvider(Layout: Component) {
   return defineComponent({
@@ -17,6 +18,7 @@ function createConfigProvider(Layout: Component) {
       // 开启监听器
       usePermalinks().startWatch();
       useAnchorScroll().startWatch();
+      useViewTransition();
 
       return () => h(Layout, null, slots);
     },
@@ -25,4 +27,9 @@ function createConfigProvider(Layout: Component) {
 
 export const configProvider = (Layout: Component) => {
   return createConfigProvider(Layout);
+};
+
+export const useThemeConfig = () => {
+  const { theme } = useData();
+  return theme.value;
 };
