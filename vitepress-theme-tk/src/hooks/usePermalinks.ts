@@ -38,14 +38,8 @@ export function usePermalinks() {
       }
     }
 
-    // 跳转前缓存当前页面的 url，防止浏览器回退和前进出现历史条目减少
-    history.replaceState(history.state || null, "", href);
-
     // 执行 vitepress 的 go 方法进行跳转
-    await router.go(href);
-
-    // URL 替换为 permalink
-    // if (permalink) history.replaceState(history.state || null, "", `${permalink}${search}${decodeHash}`);
+    router.go(href);
   };
 
   /**

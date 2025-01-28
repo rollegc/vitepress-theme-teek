@@ -1,0 +1,27 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-info;
+
+.#{$prefix-class} {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+
+  & .card {
+    position: relative;
+    margin: 0 auto 10px;
+    padding: 10px;
+    width: 270px;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 8px 0 var(--post-shadow);
+    box-sizing: border-box;
+    transition: box-shadow 0.5s;
+    background-color: var(--bg-base);
+
+    &:hover {
+      box-shadow: 0 2px 16px 0 var(--post-shadow-hover);
+    }
+  }
+}

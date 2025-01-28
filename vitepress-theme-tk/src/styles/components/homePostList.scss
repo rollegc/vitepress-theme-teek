@@ -1,0 +1,29 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-post-list;
+
+.#{$prefix-class} {
+  &-pagination {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pagination-wrapper {
+    display: flex;
+    justify-content: center;
+
+    :deep(.el-pagination li.is-active.number) {
+      background-color: var(--vp-c-brand-2);
+    }
+    :deep(.el-pagination button:hover) {
+      color: var(--vp-c-brand-2);
+    }
+
+    :deep(.el-pager li:not(.is-active):hover) {
+      color: var(--vp-c-brand-2);
+    }
+    :deep(.el-input__wrapper.is-focus) {
+      box-shadow: 0 0 0 1px var(--vp-c-brand-2) inset;
+    }
+  }
+}

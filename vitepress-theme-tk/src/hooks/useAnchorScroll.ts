@@ -15,6 +15,11 @@ export function useAnchorScroll() {
     const anchors = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
     for (let i = 0; i < anchors.length; i++) {
       const anchor = anchors[i];
+
+      // display 为 none 的元素不参与计算，跳过
+      const computedStyle = window.getComputedStyle(anchor);
+      if (computedStyle.display === "none") break;
+
       const rect = anchor.getBoundingClientRect();
       // 如果当前锚点距离顶部最近，且距离页面顶部小于等于 150，则将其设置为当前锚点
       if (rect.top <= 150 && anchor.id !== currentAnchor.id) {

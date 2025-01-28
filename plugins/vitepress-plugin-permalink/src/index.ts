@@ -3,7 +3,7 @@ import createPermalinks from "./helper";
 import type { PermalinkOption } from "./types";
 import chalk from "chalk";
 export const log = (message: string, type = "yellow") => {
-  console.log(chalk[type](message));
+  console.log((chalk as any)[type](message));
 };
 
 export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): PluginOption {
@@ -26,7 +26,8 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       for (const [key, value] of Object.entries(permalinks)) {
         pathToPermalink[key] = value;
 
-        if (permalinkToPath[value]) log(`Permalink ${value} 已存在，其对应的 ${permalinkToPath[value]} 将会被 ${key} 覆盖`);
+        if (permalinkToPath[value])
+          log(`Permalink ${value} 已存在，其对应的 ${permalinkToPath[value]} 将会被 ${key} 覆盖`);
 
         permalinkToPath[value] = key;
       }

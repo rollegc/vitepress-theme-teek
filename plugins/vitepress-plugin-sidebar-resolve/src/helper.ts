@@ -7,7 +7,7 @@ import { getTitleFromMd, isMdFileExtension, isIllegalIndex } from "./util";
 import chalk from "chalk";
 
 export const log = (message: string, type = "yellow") => {
-  console.log(chalk[type](message));
+  console.log((chalk as any)[type](message));
 };
 
 // 默认忽略的文件夹列表

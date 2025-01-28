@@ -1,0 +1,132 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-post-item;
+
+.#{$prefix-class} {
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 8px 0 var(--post-shadow);
+  box-sizing: border-box;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: 0 2px 16px 0 var(--post-shadow-hover);
+  }
+
+  .pin {
+    position: absolute;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    top: -4px;
+    left: -4px;
+    opacity: 0.5;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 120%;
+      height: 30px;
+      background-image: linear-gradient(45deg, var(--tk-theme-color), var(--tk-theme-color));
+      transform: rotate(-45deg) translateY(-20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.23);
+    }
+  }
+
+  &-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__left {
+      flex: 1;
+
+      .title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        display: block;
+        cursor: pointer;
+      }
+
+      .description {
+        color: var(--post-gray-color1);
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        // 多行换行
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      &-footer {
+        font-size: 0.8rem;
+        color: var(--post-gray-color2);
+        margin-top: 0.5rem;
+
+        .split:not(:last-child) {
+          &::after {
+            content: "";
+            display: inline-block;
+            width: 0.8px;
+            height: 0.5rem;
+            margin: 0 10px;
+            background-color: var(--post-gray-color2);
+          }
+        }
+
+        .or:not(:last-child) {
+          &::after {
+            content: "/";
+            display: inline-block;
+            width: 0.35rem;
+            height: 0;
+            background-color: var(--post-gray-color2);
+          }
+        }
+      }
+
+      &-excerpt {
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        margin: 0.5rem 0;
+        overflow: hidden;
+
+        .excerpt {
+          margin: 0.5rem 0;
+          font-size: 0.92rem;
+        }
+
+        .more {
+          float: right;
+          margin-right: 1rem;
+          line-height: 1rem;
+          color: var(--tk-theme-color);
+        }
+      }
+    }
+
+    &__right {
+      &.cover-img {
+        width: 7.5rem;
+        height: 5rem;
+        margin-left: 1.5rem;
+        border-radius: 0.125rem;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+    }
+  }
+}

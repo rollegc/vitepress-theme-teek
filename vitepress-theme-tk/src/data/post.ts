@@ -1,18 +1,34 @@
-import type { ContentData } from 'vitepress';
+import type { ContentData } from "vitepress";
+import { KtThemeConfig } from "../config/types";
+
+export type KtContentData = ContentData & {
+  /**
+   * 文章作者信息
+   */
+  author?: KtThemeConfig["author"];
+  /**
+   * 文章标题
+   */
+  title?: string;
+  /**
+   * 文章创建时间
+   */
+  date?: string;
+};
 
 export interface Post {
   /**
    * 文章列表
    */
-  posts: ContentData[];
+  originPosts: KtContentData[];
   /**
    * 根据日期和 sticky 排序的文章列表
    */
-  sortPostsByDateAndSticky: ContentData[];
+  sortPostsByDateAndSticky: KtContentData[];
   /**
    * 根据日期排序的文章列表
    */
-  sortPostsByDate: ContentData[];
+  sortPostsByDate: KtContentData[];
   /**
    * 分组的文章列表
    */
@@ -20,11 +36,11 @@ export interface Post {
     /**
      * 分类信息，格式：{ 分类名: 文章列表 }[]
      */
-    categories: Record<string, ContentData[]>;
+    categories: Record<string, KtContentData[]>;
     /**
      * 标签信息，格式：{ 标签名: 文章列表 }[]
      */
-    tags: Record<string, ContentData[]>;
+    tags: Record<string, KtContentData[]>;
   };
   /**
    * 分组卡片信息，用于首页右侧渲染分类和标签卡片

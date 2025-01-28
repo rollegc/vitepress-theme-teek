@@ -1,19 +1,19 @@
 import { defineComponent, h, InjectionKey, provide, Ref, type Component } from "vue";
 import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
-import type { Post } from "./types/post";
+import type { Post } from "./data/post";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
 import { useData } from "vitepress";
-import "./styles/dark-transition.css"
+import "./styles/dark-transition.css";
 
-export const postSymbol: InjectionKey<Ref<Post>> = Symbol("post");
+export const postsSymbol: InjectionKey<Ref<Post>> = Symbol("posts");
 
 function createConfigProvider(Layout: Component) {
   return defineComponent({
     name: "ConfigProvider",
     setup(_, { slots }) {
       // 往主题注入数据
-      provide(postSymbol, posts);
+      provide(postsSymbol, posts);
 
       // 开启监听器
       usePermalinks().startWatch();

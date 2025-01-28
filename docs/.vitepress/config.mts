@@ -3,7 +3,15 @@ import themeConfig from "vitepress-theme-tk/config";
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 
-const tkConfig = themeConfig();
+const tkConfig = themeConfig({
+  author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
+  blogger: {
+    // 博主信息，显示在首页侧边栏
+    avatar: "https://cdn.jsdmirror.com/gh/xugaoyi/image_store/blog/20200103123203.jpg",
+    name: "Shp Liu",
+    slogan: "朝圣的使徒，正在走向编程的至高殿堂！", // 个性签名
+  },
+});
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

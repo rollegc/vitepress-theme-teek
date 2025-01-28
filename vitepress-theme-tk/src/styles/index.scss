@@ -1,93 +1,21 @@
-// 主题色
-$primaryColor: #395ae3;
+@forward "./vp.scss";
 
-:root {
-  --vp-c-green: #{$primaryColor};
-  --vp-c-green-light: #2a87f8;
-  --vp-c-green-lighter: #3e93fb;
-
-  --vp-c-green-dark: #046ae7;
-  --vp-c-green-darker: #0362d7;
-  --vp-layout-max-width: 90%;
-  --vp-sidebar-bg-color: #fff;
-  --vp-sidebar-width: 235px;
-  --prism-block-padding-y: 1.2em;
-
-  --vp-c-indigo-1: #{$primaryColor};
-  --vp-c-indigo-3: #{$primaryColor};
-  --vp-c-bg-alt: #f5f7fa;
-  --vp-c-brand-2: #2a87f8;
+html {
+  --tk-theme-color: var(--vp-c-brand-1);
+  --post-shadow: rgba(0, 0, 0, 0.1);
+  --post-shadow-hover: rgba(0, 0, 0, 0.2);
+  --post-gray-color1: #86909c;
+  --post-gray-color2: #4e5969;
+  --bg-base: rgb(255, 255, 255, 0.9);
 }
 
-.dark {
-  --vp-sidebar-bg-color: #161618;
-  --vp-c-bg-alt: #262727;
+html.dark {
+  --bg-base: rgb(20, 20, 20, 0.7);
+  --post-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.6);
+  --post-shadow-hover: 0 2px 16px 0 rgba(0, 0, 0, 0.7);
 }
 
-.VPContent .VPDoc.has-aside .content-container {
-  max-width: 1200px;
-}
-
-.tagline-link {
-  font-weight: 500;
-  color: var(--vp-c-brand);
-  text-decoration-style: dotted;
-  transition: color 0.25s;
-}
-
-.VPSidebar {
-  .nav {
-    .item {
-      h2.text {
-        // 一级菜单字体加大
-        font-size: 18px;
-      }
-    }
-
-    .items {
-      // 二级菜单添加间距
-      padding-left: 10px;
-    }
-  }
-}
-
-.vp-doc {
-  h2 {
-    border-top: 0;
-  }
-
-  th,
-  td {
-    border: 0;
-    min-width: 92px;
-  }
-
-  tr:nth-child(2n) {
-    background-color: unset;
-  }
-
-  tr:nth-last-child(1) {
-    border-bottom: 1px solid var(--vp-c-divider);
-  }
-
-  table {
-    display: table;
-    width: 100%;
-    .el-tag {
-      display: unset;
-      margin-left: 4px;
-    }
-  }
-
-  .custom-block.warning a {
-    color: var(--vp-c-brand-1);
-  }
-}
-
-.copyright {
-  white-space: pre;
-
-  .copyright-link {
-    color: var(--vp-c-brand);
-  }
+a:hover {
+  color: var(--tk-theme-color);
+  cursor: pointer;
 }

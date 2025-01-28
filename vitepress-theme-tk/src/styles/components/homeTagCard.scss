@@ -1,0 +1,32 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-tag;
+
+.#{$prefix-class} {
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  &-list {
+    margin-top: 5px;
+    a {
+      opacity: 0.8;
+      color: #ffffff;
+      display: inline-block;
+      padding: 0 0.4rem;
+      transition: all 0.4s;
+      border-radius: 3px;
+      margin: 0 0.3rem 0.4rem;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      font-size: 0.875rem;
+      text-align: center;
+
+      &:hover {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+  }
+}
