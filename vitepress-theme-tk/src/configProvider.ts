@@ -34,16 +34,16 @@ export const useThemeConfig = () => {
   return unref(theme);
 };
 
-export const isHomePages = () => {
-  return !isCategoriesPages() && !isTagsPages();
+export const isHomePage = () => {
+  return !isCategoriesPage() && !isTagsPage();
 };
 
-export const isCategoriesPages = () => {
+export const isCategoriesPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).categoriesPage;
 };
 
-export const isTagsPages = () => {
+export const isTagsPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).tagsPage;
 };

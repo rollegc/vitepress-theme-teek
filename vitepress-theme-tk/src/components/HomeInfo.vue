@@ -3,7 +3,7 @@ import { useDesign } from "../hooks";
 import HomeMyCard from "./HomeMyCard.vue";
 import HomeCategoryCard from "./HomeCategoryCard.vue";
 import HomeTagCard from "./HomeTagCard.vue";
-import { isHomePages, isCategoriesPages, isTagsPages } from "../configProvider.ts";
+import { isHomePage, isCategoriesPage, isTagsPage } from "../configProvider";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("info");
@@ -11,9 +11,9 @@ const prefixClass = getPrefixClass("info");
 
 <template>
   <div :class="prefixClass">
-    <HomeMyCard v-if="isHomePages()" />
-    <HomeCategoryCard v-if="isHomePages() || isCategoriesPages()" />
-    <HomeTagCard v-if="isHomePages() || isTagsPages()" />
+    <HomeMyCard v-if="isHomePage()" />
+    <HomeCategoryCard v-if="isHomePage() || isCategoriesPage()" />
+    <HomeTagCard v-if="isHomePage() || isTagsPage()" />
   </div>
 </template>
 

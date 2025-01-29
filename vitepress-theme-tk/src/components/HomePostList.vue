@@ -1,11 +1,10 @@
 <script setup lang="ts" name="HomePostList">
-import { computed, inject, reactive, unref, ref, watch } from "vue";
+import { computed, inject, reactive, ref, toRaw, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
 import { postsSymbol } from "../configProvider";
 import Pagination from "./Pagination.vue";
 import { useData, useRoute } from "vitepress";
 import { useDesign } from "../hooks";
-import { isHomePages, isCategoriesPages, isTagsPages } from "../configProvider.ts";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-list");
@@ -13,6 +12,7 @@ const prefixClass = getPrefixClass("post-list");
 const posts = inject(postsSymbol);
 const { frontmatter } = useData();
 
+// 分页信息
 const pageInfo = reactive({
   pageNum: 1,
   pageSizes: [10, 20, 50, 100, 200],
@@ -20,55 +20,56 @@ const pageInfo = reactive({
   total: 0,
 });
 
+// 分页组件的 Props
 const pageOptions = { size: "small", ...unref(frontmatter).tk?.page };
 
 const route = useRoute();
-const category = ref("");
-const tag = ref("");
+const currentPosts = ref([]);
 
 watch(
   route,
   () => {
-    const { searchParams } = new URL(window.location.href);
-
-    const pageNum = searchParams.get("pageNum") || 1;
-    if (pageNum !== pageInfo.pageNum) pageInfo.pageNum = pageNum;
-
     const {
       data: { frontmatter },
     } = route;
 
-    if (frontmatter.categoriesPage || frontmatter.layout === "home") {
-      const c = searchParams.get("category") || "";
-      if (c !== unref(category)) category.value = c;
+    const { pageNum, pageSize, total } = pageInfo;
+
+    // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
+    const { searchParams } = new URL(window.location.href);
+    const p = searchParams.get("pageNum") || 1;
+    if (p !== pageNum) pageInfo.pageNum = Number(p);
+
+    let post = posts.sortPostsByDateAndSticky;
+
+    // 在分类页时，如果 URL 查询参数存在 category，则加载该 category 的 post，不存在则加载所有 post
+    if (frontmatter.categoriesPage) {
+      const c = searchParams.get("category");
+      post = c ? posts.groupPosts.categories[c] : post;
+    } else if (frontmatter.tagsPage) {
+      // 在标签页时，如果 URL 查询参数存在 tag，则加载该 tag 的 post，不存在则加载所有 post
+      const t = searchParams.get("tag");
+      post = t ? posts.groupPosts.tags[t] : post;
     }
 
-    if (frontmatter.tagsPages || frontmatter.layout === "home") {
-      const t = searchParams.get("tag") || "";
-      if (t !== unref(tag)) tag.value = t;
-    }
+    // 总数处理
+    if (total !== post.length) pageInfo.total = post.length;
+
+    currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
   },
   { immediate: true }
 );
 
-const currentPosts = computed(() => {
-  const { pageNum, pageSize } = pageInfo;
-
-  let post = posts.sortPostsByDateAndSticky;
-  if (unref(category)) post = posts.groupPosts.categories[unref(category)];
-  else if (unref(tag)) post = posts.groupPosts.tags[unref(tag)];
-
-  pageInfo.total = post.length;
-
-  return post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
-});
-
 const pageNumKey = "pageNum";
+/**
+ * 切换分页时，记录到 URL 上
+ */
 const handlePagination = () => {
   const { searchParams } = new URL(window.location.href!);
+  // 先删除旧的再追加新的
   searchParams.delete(pageNumKey);
   searchParams.append(pageNumKey, String(pageInfo.pageNum));
-
+  // 替换 URL，但不刷新
   window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
 };
 </script>

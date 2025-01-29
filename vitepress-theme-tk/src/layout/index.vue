@@ -6,7 +6,7 @@ import { useDesign } from "../hooks";
 import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
-import { isHomePages, isCategoriesPages, isTagsPages } from "../configProvider.ts";
+import { isHomePage, isCategoriesPage, isTagsPage } from "../configProvider.ts";
 
 defineOptions({
   name: "TkLayout",
@@ -37,7 +37,7 @@ const useKtTheme = unref(theme).ktTheme ?? true;
       <slot name="home-hero-before" />
       <!-- 自定义首页 -->
       <div v-if="useKtTheme" :class="`${prefixClass}-home`">
-        <div :class="`${prefixClass}-home__banner`" v-if="isHomePages()"><HomeBanner /></div>
+        <div :class="`${prefixClass}-home__banner`" v-if="isHomePage()"><HomeBanner /></div>
         <div :class="`${prefixClass}-home-content`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
           <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>

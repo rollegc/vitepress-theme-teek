@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeMyCard">
 import { useDesign } from "../hooks";
 import { useData } from "vitepress";
-import { computed, unref } from "vue";
+import { unref } from "vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");

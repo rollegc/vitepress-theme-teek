@@ -25,12 +25,12 @@ $prefix-class: #{$theme-namespace}-tag;
 
       &:hover {
         opacity: 1;
-        transform: scale(1.1);
+        transform: scale(1.05);
       }
 
       &.active {
-        box-shadow: 0 5px 10px -5px inherit;
-        transform: scale(1.22);
+        box-shadow: 0 5px 10px -5px var(--home-tag-color);
+        transform: scale(1.15);
         opacity: 1;
         &:hover {
           text-decoration: none;

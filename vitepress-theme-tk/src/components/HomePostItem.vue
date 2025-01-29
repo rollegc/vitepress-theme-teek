@@ -1,11 +1,10 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
-import { useRouter } from "vitepress";
+import { useRouter, useData } from "vitepress";
 import { KtContentData } from "../data/post";
 import { createImageViewer } from "./ImageViewer";
 import { isArray } from "../helper";
-import { useData } from "vitepress";
 import RouteLink from "./RouteLink.vue";
 
 const { getPrefixClass } = useDesign();
