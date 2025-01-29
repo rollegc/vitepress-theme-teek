@@ -16,10 +16,7 @@ export const DEFAULT_IGNORE_DIR = [
   "components",
   "assets",
   ".vitepress",
-  "@pages",
   "node_modules",
-  ".vitepress",
-  "_posts",
   "package.json",
 ];
 

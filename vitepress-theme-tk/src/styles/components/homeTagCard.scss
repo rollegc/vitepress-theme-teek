@@ -18,14 +18,33 @@ $prefix-class: #{$theme-namespace}-tag;
       transition: all 0.4s;
       border-radius: 3px;
       margin: 0 0.3rem 0.4rem;
-      height: 1.5rem;
-      line-height: 1.5rem;
-      font-size: 0.875rem;
+      height: 1.4rem;
+      line-height: 1.4rem;
+      font-size: 0.75rem;
       text-align: center;
 
       &:hover {
         opacity: 1;
         transform: scale(1.1);
+      }
+
+      &.active {
+        box-shadow: 0 5px 10px -5px inherit;
+        transform: scale(1.22);
+        opacity: 1;
+        &:hover {
+          text-decoration: none;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .more {
+      font-size: 0.875rem;
+      line-height: 0.875rem;
+      color: var(--vp-c-text-1);
+      &:hover {
+        transform: none;
       }
     }
   }

@@ -16,7 +16,6 @@ $prefix-class: #{$theme-namespace}-category;
       opacity: 0.8;
       font-size: 0.875rem;
       line-height: 0.875rem;
-      position: relative;
       transition: all 0.2s;
       border-left: 2px solid transparent;
       margin-top: -1px;
@@ -27,6 +26,14 @@ $prefix-class: #{$theme-namespace}-category;
       &:hover {
         background-color: #f8f8f8;
         border-color: var(--vp-c-brand-2);
+      }
+
+      &.active {
+        background: var(--tk-theme-color);
+        color: #ffffff;
+        padding-left: 0.8rem;
+        border-radius: 1px;
+        border-color: transparent;
       }
     }
   }

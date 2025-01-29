@@ -25,7 +25,7 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("pagination");
 
 const props = withDefaults(defineProps<PaginationProps>(), {
-  layout: "prev, pager, next, jumper",
+  layout: "prev, pager, next, jumper, total",
   background: true,
   autoScroll: true,
   hidden: false,

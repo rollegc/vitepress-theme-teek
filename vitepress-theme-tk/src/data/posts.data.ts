@@ -37,8 +37,8 @@ export default createContentLoader("**/*.md", {
 
     const originPosts = filterPosts(posts);
     const sortPostsByDateAndSticky = getSortPostsByDateAndSticky(originPosts);
-    const sortPostsByDate = getSortPostsByDate(sortPostsByDateAndSticky);
-    const groupPosts = getGroupPosts(sortPostsByDate);
+    const sortPostsByDate = getSortPostsByDate(originPosts);
+    const groupPosts = getGroupPosts(sortPostsByDateAndSticky);
     const groupCards = getGroupCards(groupPosts);
 
     return {

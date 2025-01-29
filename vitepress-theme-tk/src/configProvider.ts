@@ -1,4 +1,4 @@
-import { defineComponent, h, InjectionKey, provide, Ref, type Component } from "vue";
+import { defineComponent, h, InjectionKey, provide, Ref, unref, type Component } from "vue";
 import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./data/post";
 // @ts-ignore
@@ -31,5 +31,19 @@ export const configProvider = (Layout: Component) => {
 
 export const useThemeConfig = () => {
   const { theme } = useData();
-  return theme.value;
+  return unref(theme);
+};
+
+export const isHomePages = () => {
+  return !isCategoriesPages() && !isTagsPages();
+};
+
+export const isCategoriesPages = () => {
+  const { frontmatter } = useData();
+  return unref(frontmatter).categoriesPage;
+};
+
+export const isTagsPages = () => {
+  const { frontmatter } = useData();
+  return unref(frontmatter).tagsPage;
 };

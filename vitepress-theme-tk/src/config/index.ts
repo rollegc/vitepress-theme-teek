@@ -7,11 +7,14 @@ import { PluginOption } from "vite";
 
 export default function themeConfig(config: KtThemeConfig = {}): UserConfig {
   const { plugins: pluginsOption, ...c } = config;
-  const { sidebar = true, sidebarOptions, permalink = true, permalinkOptions, mdH1 = true } = pluginsOption || {};
+  const { sidebar = true, sidebarOptions = {}, permalink = true, permalinkOptions, mdH1 = true } = pluginsOption || {};
 
   const plugins: PluginOption[] = [];
 
-  if (sidebar) plugins.push(Sidebar(sidebarOptions));
+  if (sidebar) {
+    sidebarOptions.ignoreList = [...(sidebarOptions?.ignoreList || []), "@pages", "_posts"];
+    plugins.push(Sidebar(sidebarOptions));
+  }
   if (permalink) plugins.push(Permalink(permalinkOptions));
   if (mdH1) plugins.push(MdH1());
 

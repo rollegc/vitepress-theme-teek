@@ -6,6 +6,7 @@ import { useDesign } from "../hooks";
 import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
+import { isHomePages, isCategoriesPages, isTagsPages } from "../configProvider.ts";
 
 defineOptions({
   name: "TkLayout",
@@ -17,7 +18,7 @@ const { Layout } = DefaultTheme;
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("layout");
 
-const useKtTheme = computed(() => unref(theme).ktTheme ?? true);
+const useKtTheme = unref(theme).ktTheme ?? true;
 </script>
 
 <template>
@@ -36,7 +37,7 @@ const useKtTheme = computed(() => unref(theme).ktTheme ?? true);
       <slot name="home-hero-before" />
       <!-- 自定义首页 -->
       <div v-if="useKtTheme" :class="`${prefixClass}-home`">
-        <div :class="`${prefixClass}-home__banner`"><HomeBanner /></div>
+        <div :class="`${prefixClass}-home__banner`" v-if="isHomePages()"><HomeBanner /></div>
         <div :class="`${prefixClass}-home-content`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
           <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
@@ -157,13 +158,13 @@ $prefix-class: #{$theme-namespace}-layout;
       justify-content: center;
 
       &__list {
-        width: 100%;
+        flex: 1;
       }
 
       &__info {
         margin-left: 16px;
         position: sticky;
-        top: 100px;
+        top: 90px;
       }
     }
   }

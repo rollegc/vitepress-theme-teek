@@ -1,25 +1,53 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import { useDesign } from "../hooks";
 import { postsSymbol } from "../configProvider";
-import { inject } from "vue";
+import { computed, inject, unref, ref, onMounted, watch } from "vue";
+import { isCategoriesPages } from "../configProvider.ts";
+import RouteLink from "./RouteLink.vue";
+import { useRoute, useData } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("category");
 
-const posts = inject(postsSymbol);
+const { frontmatter } = useData();
+const {
+  groupCards: { categories },
+} = inject(postsSymbol);
+
+const categorySize = unref(frontmatter).tk?.categorySize || 5;
+const currentCategories = computed(() => (isCategoriesPages() ? categories : categories.slice(0, categorySize)));
+
+const route = useRoute();
+const category = ref("");
+
+watch(
+  route,
+  () => {
+    const c = new URL(window.location.href).searchParams.get("category");
+    if (c != unref(category)) category.value = c;
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <div :class="`${prefixClass} card`">
-    <a title="全部分类" class="title">文章分类</a>
+    <RouteLink to="/categories" :title="isCategoriesPages() ? '全部分类' : '文章分类'" class="title">
+      {{ isCategoriesPages() ? "全部分类" : "文章分类" }}
+    </RouteLink>
 
     <div :class="`${prefixClass}-list`">
-      <a v-for="(item, index) in posts.groupCards.categories" :key="index" :class="{ active: item.key === category }">
-        {{ item.name }}
+      <RouteLink
+        v-for="(item, index) in currentCategories"
+        :key="index"
+        :to="`/categories?category=${encodeURIComponent(item.name)}`"
+        :class="{ active: item.name === category }"
+      >
+        <span>{{ item.name }}</span>
         <span>{{ item.length }}</span>
-      </a>
+      </RouteLink>
 
-      <!-- <a v-if="length !== 'all' && length < posts.groupCards.categories.length" class="more">更多 ...</a> -->
+      <RouteLink v-if="!isCategoriesPages() && categorySize < categories.length" to="/categories">更多 ...</RouteLink>
     </div>
   </div>
 </template>

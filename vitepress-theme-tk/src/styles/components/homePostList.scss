@@ -6,11 +6,6 @@ $prefix-class: #{$theme-namespace}-post-list;
   &-pagination {
     display: flex;
     justify-content: center;
-  }
-
-  .pagination-wrapper {
-    display: flex;
-    justify-content: center;
 
     :deep(.el-pagination li.is-active.number) {
       background-color: var(--vp-c-brand-2);

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBanner">
 import { useDesign } from "../hooks";
 import { useData } from "vitepress";
-import { computed, onMounted, onUnmounted, unref } from "vue";
+import { onMounted, onUnmounted, unref } from "vue";
 import { useTypes } from "../hooks";
 
 const { getPrefixClass } = useDesign();
@@ -9,8 +9,8 @@ const prefixClass = getPrefixClass("banner");
 
 const { site, frontmatter } = useData();
 
-const title = computed(() => unref(frontmatter).name || unref(site).title || "");
-const descArray = computed(() => [...new Set(unref(frontmatter).tk?.description?.filter((v: string) => !!v))]);
+const title = unref(frontmatter).name || unref(site).title || "";
+const descArray = [...new Set(unref(frontmatter).tk?.description?.filter((v: string) => !!v))];
 
 const { text, shouldAnimate, startTypes, stopTypes } = useTypes(descArray, {
   typesInTime: unref(frontmatter).tk?.typesInTime,
