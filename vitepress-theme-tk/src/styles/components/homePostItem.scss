@@ -9,13 +9,13 @@ $prefix-class: #{$theme-namespace}-post-item;
   width: 100%;
   overflow: hidden;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 8px 0 var(--post-shadow);
+  box-shadow: 0 1px 8px 0 var(--tk-gray-lower);
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
 
   &:hover {
-    box-shadow: 0 2px 16px 0 var(--post-shadow-hover);
+    box-shadow: 0 2px 16px 0 var(--tk-gray-lower-hover);
   }
 
   .pin {
@@ -54,7 +54,7 @@ $prefix-class: #{$theme-namespace}-post-item;
       }
 
       .description {
-        color: var(--post-gray-color1);
+        color: var(--tk-lower-color1);
         font-size: 0.875rem;
         margin-bottom: 0.5rem;
         // 多行换行
@@ -68,7 +68,7 @@ $prefix-class: #{$theme-namespace}-post-item;
 
       &-footer {
         font-size: 0.8rem;
-        color: var(--post-gray-color2);
+        color: var(--tk-lower-color2);
         margin-top: 0.5rem;
 
         .split:not(:last-child) {
@@ -78,7 +78,7 @@ $prefix-class: #{$theme-namespace}-post-item;
             width: 0.8px;
             height: 0.5rem;
             margin: 0 10px;
-            background-color: var(--post-gray-color2);
+            background-color: var(--tk-lower-color2);
           }
         }
 
@@ -88,7 +88,7 @@ $prefix-class: #{$theme-namespace}-post-item;
             display: inline-block;
             width: 0.35rem;
             height: 0;
-            background-color: var(--post-gray-color2);
+            background-color: var(--tk-lower-color2);
           }
         }
       }

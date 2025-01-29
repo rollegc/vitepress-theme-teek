@@ -28,8 +28,8 @@ export function usePermalinks() {
     if (permalink === decodePath) return router.go(href);
 
     if (!permalink) {
-      // 如果 permalink 不存在，则根据 permalink 找 pathname
-      const path = permalinks.inv[pathname];
+      // 如果 permalink 不存在，则根据 decodePath 找 pathname
+      const path = permalinks.inv[decodePath];
 
       // 如果 path 存在，则进行更新
       if (path) {
@@ -68,7 +68,7 @@ export function usePermalinks() {
       await nextTick();
       history.replaceState(history.state || null, "", `${permalink}${search}${decodeHash}`);
     } else {
-      // 不存在 permalink 则跳转
+      // 第二点，不存在 permalink 则获取文档地址来跳转
       const path = permalinks.inv[`/${decodePath}`];
       if (path) return router.push(`${path}${search}${decodeHash}`);
     }

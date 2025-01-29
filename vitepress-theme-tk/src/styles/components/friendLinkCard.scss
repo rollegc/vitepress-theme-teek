@@ -1,0 +1,6 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-friendLink;
+
+.#{$prefix-class} {
+}

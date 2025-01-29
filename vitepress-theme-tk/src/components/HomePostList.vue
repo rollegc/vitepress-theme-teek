@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostList">
-import { computed, inject, reactive, ref, toRaw, unref, watch } from "vue";
+import { inject, reactive, ref, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
 import { postsSymbol } from "../configProvider";
 import Pagination from "./Pagination.vue";

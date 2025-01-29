@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import { useData } from "vitepress";
 import DefaultTheme from "vitepress/theme";
-import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
 import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
-import { isHomePage, isCategoriesPage, isTagsPage } from "../configProvider.ts";
+import ArchivesPage from "../components/ArchivesPage.vue";
+import { isHomePage, useThemeConfig, isArchivesPage } from "../configProvider";
 
 defineOptions({
   name: "TkLayout",
 });
 
-const { theme } = useData();
 const { Layout } = DefaultTheme;
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("layout");
 
-const useKtTheme = unref(theme).ktTheme ?? true;
+const useKtTheme = useThemeConfig().ktTheme ?? true;
 </script>
 
 <template>
@@ -80,6 +78,7 @@ const useKtTheme = unref(theme).ktTheme ?? true;
     <!-- content -->
     <template #page-top>
       <slot name="page-top" />
+      <ArchivesPage v-if="isArchivesPage()" />
     </template>
     <template #page-bottom>
       <slot name="page-bottom" />

@@ -1,0 +1,67 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-archives;
+
+.#{$prefix-class} {
+  .count {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-weight: 300;
+    font-style: oblique;
+  }
+
+  &-header {
+    .title {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .count {
+      font-style: normal;
+    }
+  }
+
+  &-timeline {
+    margin-top: 2rem;
+    &__year {
+      border-bottom: 1px solid var(--tk-gray-lower);
+      .year {
+        padding: 0.5rem 0;
+        font-size: 1.5rem;
+      }
+    }
+
+    &-m {
+      margin-top: 1rem;
+      &__month {
+        border-bottom: 1px solid var(--tk-gray-lower);
+        .month {
+          padding-bottom: 0.5rem;
+          font-size: 1.2rem;
+        }
+      }
+
+      ul {
+        padding: 0.5rem 1rem;
+        li {
+          line-height: 2;
+          a {
+            display: block;
+            transition: padding 0.3s;
+            &:hover {
+              padding-left: 1rem;
+              color: var(--tk-theme-color);
+              background: var(--tk-lower-hover);
+            }
+
+            .date {
+              opacity: 0.6;
+              font-size: 0.85rem;
+              margin-right: 0.3rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

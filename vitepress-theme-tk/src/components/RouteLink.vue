@@ -18,7 +18,9 @@ const handleGo = (e: MouseEvent) => {
   // 避免重复跳转
   const currentPath = `${decodeURIComponent(pathname)}${search}${decodeURIComponent(hash)}`;
 
-  if (to !== undefined && to !== currentPath) router.push(to);
+  if (to !== undefined && to !== currentPath) {
+    router.push(to);
+  }
 };
 </script>
 

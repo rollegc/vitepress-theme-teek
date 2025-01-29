@@ -2,20 +2,101 @@
 
 html {
   --tk-theme-color: var(--vp-c-brand-1);
-  --post-shadow: rgba(0, 0, 0, 0.1);
-  --post-shadow-hover: rgba(0, 0, 0, 0.2);
-  --post-gray-color1: #86909c;
-  --post-gray-color2: #4e5969;
+  --tk-lower-color1: #86909c;
+  --tk-lower-color2: #4e5969;
+  --tk-gray-lower: rgba(0, 0, 0, 0.1);
+  --tk-gray-lower-hover: rgba(0, 0, 0, 0.2);
   --bg-base: rgb(255, 255, 255, 0.9);
+  --tk-lower-hover: #f8f8f8;
 }
 
 html.dark {
   --bg-base: rgb(20, 20, 20, 0.7);
-  --post-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.6);
-  --post-shadow-hover: 0 2px 16px 0 rgba(0, 0, 0, 0.7);
+  --tk-gray-lower: rgba(0, 0, 0, 0.6);
+  --tk-gray-lower-hover: rgba(0, 0, 0, 0.7);
 }
 
 a:hover {
   color: var(--tk-theme-color);
   cursor: pointer;
+}
+
+.tk-page {
+  margin-top: 1.5rem !important;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  box-shadow: 0 0 16px var(--tk-gray-lower);
+  border-radius: 10px;
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 4px;
+  border-radius: 4px;
+  background-color: var(--vp-c-brand-1);
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 4px;
+  border-radius: 4px;
+  background-color: var(--vp-c-brand-1);
+}
+
+/* flex */
+.flx-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flx-justify-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flx-align-center {
+  display: flex;
+  align-items: center;
+}
+
+/* clearfix */
+.clearfix-after {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  clear: both;
+  content: "";
+}
+
+/* 文字单行省略号 */
+.sle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 文字多行省略号 */
+.mle {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+}
+
+/* 文字多了自動換行 */
+.break-word {
+  word-break: break-all;
+  word-wrap: break-word;
 }

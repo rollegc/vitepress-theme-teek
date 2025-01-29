@@ -24,7 +24,7 @@ $prefix-class: #{$theme-namespace}-category;
       text-overflow: ellipsis;
 
       &:hover {
-        background-color: #f8f8f8;
+        background-color: var(--tk-lower-hover);
         border-color: var(--vp-c-brand-2);
       }
 

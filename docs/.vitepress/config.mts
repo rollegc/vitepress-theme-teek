@@ -76,6 +76,7 @@ export default defineConfig({
       { text: "指南", link: "/01.指南/" },
       { text: "设计", link: "/05.设计/01.设计 - 思路/01.设计 - 思路设计" },
       { text: "API", link: "/07.API/01.登录 API" },
+      { text: "归档", link: "/archives" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/hd-security" }],
 

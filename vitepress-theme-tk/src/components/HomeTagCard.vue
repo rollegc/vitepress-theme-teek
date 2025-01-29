@@ -32,7 +32,14 @@ watch(
   { immediate: true }
 );
 
-const tagBgColor = ["#11a8cd", "#F8B26A", "#67CC86", "#E15B64", "#F47E60", "#849B87"];
+const tagBgColor = unref(frontmatter).tk?.tagBgColor || [
+  "#11a8cd",
+  "#F8B26A",
+  "#67CC86",
+  "#E15B64",
+  "#F47E60",
+  "#849B87",
+];
 
 const getTagBgColor = (index: number) => {
   return tagBgColor[index % tagBgColor.length];

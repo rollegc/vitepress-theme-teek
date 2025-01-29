@@ -30,6 +30,14 @@ export interface Post {
    */
   sortPostsByDate: KtContentData[];
   /**
+   * 根据年份分组，key 为年份，value 为该年份的文章列表，如 { 2025: [{}, {}], 2024: [{}, {}] }
+   */
+  groupPostsByYear: Record<number, KtContentData[]>;
+  /**
+   * 根据年份和月份分组，key 为年份，value 为该年份的月份分组，如：{ 2025: { 01: [{}, {}], 02: [{}, {}] }, 2024: { 01: [], 02: [{}, {}] } }
+   */
+  groupPostsByYearMonth: Record<number, Record<number, KtContentData[]>>;
+  /**
    * 分组的文章列表
    */
   groupPosts: {

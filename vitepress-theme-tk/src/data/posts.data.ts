@@ -6,6 +6,8 @@ import {
   getSortPostsByDate,
   getGroupPosts,
   getGroupCards,
+  groupByYear,
+  groupByYearMonth,
 } from "../helper/post";
 import { formatDate } from "../helper/date";
 import { KtThemeConfig } from "../config/types";
@@ -38,6 +40,9 @@ export default createContentLoader("**/*.md", {
     const originPosts = filterPosts(posts);
     const sortPostsByDateAndSticky = getSortPostsByDateAndSticky(originPosts);
     const sortPostsByDate = getSortPostsByDate(originPosts);
+    const groupPostsByYear = groupByYear(sortPostsByDate);
+    const groupPostsByYearMonth = groupByYearMonth(sortPostsByDate);
+
     const groupPosts = getGroupPosts(sortPostsByDateAndSticky);
     const groupCards = getGroupCards(groupPosts);
 
@@ -45,6 +50,8 @@ export default createContentLoader("**/*.md", {
       originPosts,
       sortPostsByDateAndSticky,
       sortPostsByDate,
+      groupPostsByYear,
+      groupPostsByYearMonth,
       groupPosts,
       groupCards,
     };

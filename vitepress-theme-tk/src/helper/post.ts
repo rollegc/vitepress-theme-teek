@@ -112,3 +112,39 @@ export const getPostsTime = (post: KtContentData): number => {
 export const compareDate = (prev: KtContentData, next: KtContentData) => {
   return getPostsTime(next) - getPostsTime(prev);
 };
+
+/**
+ * 根据年份分组，key 为年份，value 为该年份的文章列表，如 { 2025: [{}, {}], 2024: [{}, {}] }
+ * @param posts 文章列表
+ */
+export const groupByYear = (posts: KtContentData[]) => {
+  return posts.reduce(
+    (pre, cur) => {
+      const year = new Date(cur.frontmatter.date).getFullYear();
+      if (!pre[year]) pre[year] = [];
+
+      pre[year].push(cur);
+      return pre;
+    },
+    {} as Record<number, KtContentData[]>
+  );
+};
+/**
+ * 根据年份和月份分组，key 为年份，value 为该年份的月份分组，如：{ 2025: { 01: [{}, {}], 02: [{}, {}] }, 2024: { 01: [], 02: [{}, {}] } }
+ * @param posts 文章列表
+ */
+export const groupByYearMonth = (posts: KtContentData[]) => {
+  return posts.reduce(
+    (pre, cur) => {
+      const date = new Date(cur.frontmatter.date);
+      const year = date.getFullYear();
+      const month = Number(String(date.getMonth() + 1).padStart(2, "0"));
+      if (!pre[year]) pre[year] = {};
+      if (!pre[year][month]) pre[year][month] = [];
+
+      pre[year][month].push(cur);
+      return pre;
+    },
+    {} as Record<number, Record<number, KtContentData[]>>
+  );
+};

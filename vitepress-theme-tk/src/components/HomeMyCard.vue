@@ -1,14 +1,11 @@
 <script setup lang="ts" name="HomeMyCard">
 import { useDesign } from "../hooks";
-import { useData } from "vitepress";
-import { unref } from "vue";
+import { useThemeConfig } from "../configProvider";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");
 
-const { theme } = useData();
-
-const blogger = unref(theme).blogger || {};
+const blogger = useThemeConfig().blogger || {};
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
-import { useRouter, useData } from "vitepress";
+import { useData } from "vitepress";
 import { KtContentData } from "../data/post";
 import { createImageViewer } from "./ImageViewer";
 import { isArray } from "../helper";
@@ -12,7 +12,6 @@ const prefixClass = getPrefixClass("post-item");
 
 const props = defineProps<{ post: KtContentData }>();
 
-const router = useRouter();
 const { frontmatter } = useData();
 
 const postFrontmatter = computed(() => props.post.frontmatter);
