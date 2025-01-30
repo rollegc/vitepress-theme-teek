@@ -5,7 +5,8 @@ import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
 import ArchivesPage from "../components/ArchivesPage.vue";
-import { isHomePage, useThemeConfig, isArchivesPage } from "../configProvider";
+import Catalogue from "../components/Catalogue.vue";
+import { isHomePage, useThemeConfig, isArchivesPage, isCatalogue } from "../configProvider";
 
 defineOptions({
   name: "TkLayout",
@@ -79,6 +80,7 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
     <template #page-top>
       <slot name="page-top" />
       <ArchivesPage v-if="isArchivesPage()" />
+      <Catalogue v-if="isCatalogue()" />
     </template>
     <template #page-bottom>
       <slot name="page-bottom" />

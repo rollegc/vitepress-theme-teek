@@ -1,0 +1,60 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-catalogue;
+$prefix-class1: #{$theme-namespace}-sub-catalogue;
+$prefix-class2: #{$theme-namespace}-catalogue-item;
+
+// 递归块样式
+.#{$prefix-class} {
+  &__inline {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    margin-top: 0.7rem;
+    margin-left: 1rem;
+
+    .#{$prefix-class1} {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// 非叶子目录样式
+.#{$prefix-class1} {
+  margin-bottom: 1.8rem;
+
+  &__title {
+    // # 样式
+    .anchor {
+      color: var(--tk-theme-color);
+      font-size: 0.85em;
+      margin-left: -1em;
+      padding-right: 0.38em;
+      opacity: 0;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    span {
+      font-size: 1.1rem;
+    }
+    &:hover {
+      .anchor {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// 叶子目录样式
+.#{$prefix-class2} {
+  width: 48%;
+  margin-bottom: 0.5rem;
+  a {
+    color: var(--tk-theme-color);
+    &:hover {
+      color: var(--vp-c-brand-2);
+    }
+  }
+}

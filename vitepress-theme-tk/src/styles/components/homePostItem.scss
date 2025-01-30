@@ -9,13 +9,13 @@ $prefix-class: #{$theme-namespace}-post-item;
   width: 100%;
   overflow: hidden;
   border-radius: 0.25rem;
-  box-shadow: 0 1px 8px 0 var(--tk-gray-lower);
+  box-shadow: 0 1px 8px 0 var(--tk-shadow-color);
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
 
   &:hover {
-    box-shadow: 0 2px 16px 0 var(--tk-gray-lower-hover);
+    box-shadow: 0 2px 16px 0 var(--tk-shadow-color-hover);
   }
 
   .pin {
@@ -87,7 +87,7 @@ $prefix-class: #{$theme-namespace}-post-item;
       }
 
       &-excerpt {
-        border-top: 1px solid var(--tk-gray-lower);
+        border-top: 1px solid var(--tk-line-color);
         margin: 0.5rem 0;
         overflow: hidden;
 

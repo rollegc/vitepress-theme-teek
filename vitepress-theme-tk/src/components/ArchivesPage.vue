@@ -24,7 +24,7 @@ const getDate = (item: KtContentData) => {
 <template>
   <div :class="`${prefixClass} tk-page`">
     <div :class="`${prefixClass}-header flx-justify-between`">
-      <div class="title">{{ frontmatter.title }}</div>
+      <div class="tk-title-h1">{{ frontmatter.title }}</div>
       <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
     </div>
 

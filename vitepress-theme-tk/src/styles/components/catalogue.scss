@@ -1,0 +1,24 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-catalogue;
+
+.#{$prefix-class} {
+  &-header {
+    border-bottom: 1px solid var(--tk-line-color);
+    margin-top: 1rem;
+    padding-bottom: 1.2rem;
+  }
+
+  &-wrapper {
+    .title {
+      font-size: 1.45rem;
+      margin: 2rem 0;
+    }
+
+    .post {
+      display: inline-block;
+      width: 50%;
+      margin-bottom: 1rem;
+    }
+  }
+}

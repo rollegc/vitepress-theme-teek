@@ -11,14 +11,7 @@ export const log = (message: string, type = "yellow") => {
 };
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = [
-  "scripts",
-  "components",
-  "assets",
-  ".vitepress",
-  "node_modules",
-  "package.json",
-];
+export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "package.json"];
 
 /**
  * 生成侧边栏数据
@@ -176,6 +169,8 @@ const createSideBarItems = (
       const content = readFileSync(filePath, "utf-8");
       // 解析出 front matter 数据
       const { data = {}, content: mdContent } = matter(content, {});
+			// 忽略 front matter 配置了 sidebar 为 false 的 md 文件
+      if (data.sidebar === false) return [];
 
       // title 获取顺序：md 文件 formatter 的 title > md 文件的 # 后面的内容 > md 文件名
       if (data.title) title = data.title;

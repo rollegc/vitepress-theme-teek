@@ -47,7 +47,13 @@ export const isTagsPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).tagsPage;
 };
+
 export const isArchivesPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).archivesPage;
+};
+
+export const isCatalogue = () => {
+  const { frontmatter } = useData();
+  return unref(frontmatter).catalogue;
 };

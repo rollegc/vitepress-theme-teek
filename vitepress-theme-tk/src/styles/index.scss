@@ -4,8 +4,9 @@ html {
   --tk-theme-color: var(--vp-c-brand-1);
   --tk-lower-color1: #86909c;
   --tk-lower-color2: #4e5969;
-  --tk-gray-lower: rgba(0, 0, 0, 0.1);
-  --tk-gray-lower-hover: rgba(0, 0, 0, 0.2);
+  --tk-shadow-color: rgba(0, 0, 0, 0.1);
+  --tk-shadow-color-hover: rgba(0, 0, 0, 0.2);
+  --tk-line-color: rgba(0, 0, 0, 0.12);
   --tk-bg-color1: var(--vp-nav-bg-color);
   --tk-bg-color2: rgb(255, 255, 255, 0.9);
   --tk-lower-hover: #f8f8f8;
@@ -14,11 +15,13 @@ html {
 html.dark {
   --tk-theme-color: var(--vp-c-brand-1);
   --tk-lower-color1: #9facba;
-  --tk-lower-color1: #4e5969;
+  --tk-lower-color2: #4e5969;
+  --tk-shadow-color: rgba(0, 0, 0, 0.6);
+  --tk-shadow-color-hover: rgba(0, 0, 0, 0.7);
+  --tk-line-color: #30363d;
   --tk-bg-color1: var(--vp-nav-bg-color);
   --tk-bg-color2: rgb(20, 20, 20, 0.7);
-  --tk-gray-lower: rgba(0, 0, 0, 0.6);
-  --tk-gray-lower-hover: rgba(0, 0, 0, 0.7);
+  --tk-lower-hover: #27272b;
 }
 
 a:hover {
@@ -27,12 +30,29 @@ a:hover {
 }
 
 .tk-page {
-  margin-top: 1.5rem !important;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 1.5rem auto;
   padding: 20px 30px;
-  box-shadow: 0 0 16px var(--tk-gray-lower);
+  box-shadow: 0 0 16px var(--tk-shadow-color);
   border-radius: 10px;
+}
+
+.tk-title-h1 {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+.tk-title-h2 {
+  font-size: 1.7rem;
+  line-height: 1.7rem;
+  font-weight: 600;
+}
+
+.tk-title-h3 {
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  font-weight: 500;
 }
 
 // 滚动条样式
@@ -105,4 +125,55 @@ a:hover {
 .break-word {
   word-break: break-all;
   word-wrap: break-word;
+}
+
+/* 自定义 */
+@for $i from 1 through 6 {
+  .m-#{$i * 5} {
+    margin: ($i * 5) + px;
+  }
+  .mt-#{$i * 5} {
+    margin-top: ($i * 5) + px;
+  }
+  .mb-#{$i * 5} {
+    margin-bottom: ($i * 5) + px;
+  }
+  .ml-#{$i * 5} {
+    margin-left: ($i * 5) + px;
+  }
+  .mr-#{$i * 5} {
+    margin-right: ($i * 5) + px;
+  }
+  .mx-#{$i * 5} {
+    margin-left: ($i * 5) + px;
+    margin-right: ($i * 5) + px;
+  }
+  .my-#{$i * 5} {
+    margin-top: ($i * 5) + px;
+    margin-bottom: ($i * 5) + px;
+  }
+
+  .p-#{$i * 5} {
+    padding: ($i * 5) + px;
+  }
+  .pt-#{$i * 5} {
+    padding-top: ($i * 5) + px;
+  }
+  .pb-#{$i * 5} {
+    padding-bottom: ($i * 5) + px;
+  }
+  .pl-#{$i * 5} {
+    padding-left: ($i * 5) + px;
+  }
+  .pr-#{$i * 5} {
+    padding-right: ($i * 5) + px;
+  }
+  .px-#{$i * 5} {
+    padding-left: ($i * 5) + px;
+    padding-right: ($i * 5) + px;
+  }
+  .py-#{$i * 5} {
+    padding-top: ($i * 5) + px;
+    padding-bottom: ($i * 5) + px;
+  }
 }
