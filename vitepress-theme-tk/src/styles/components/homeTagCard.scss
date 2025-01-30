@@ -12,7 +12,7 @@ $prefix-class: #{$theme-namespace}-tag;
     margin-top: 5px;
     a {
       opacity: 0.8;
-      color: #ffffff;
+      color: var(--tk-bg-color1);
       display: inline-block;
       padding: 0 0.4rem;
       transition: all 0.4s;

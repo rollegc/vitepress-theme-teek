@@ -30,7 +30,7 @@ $prefix-class: #{$theme-namespace}-category;
 
       &.active {
         background: var(--tk-theme-color);
-        color: #ffffff;
+        color: var(--tk-bg-color1);
         padding-left: 0.8rem;
         border-radius: 1px;
         border-color: transparent;

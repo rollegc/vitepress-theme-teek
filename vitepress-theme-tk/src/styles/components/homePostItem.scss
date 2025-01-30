@@ -87,7 +87,7 @@ $prefix-class: #{$theme-namespace}-post-item;
       }
 
       &-excerpt {
-        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        border-top: 1px solid var(--tk-gray-lower);
         margin: 0.5rem 0;
         overflow: hidden;
 
