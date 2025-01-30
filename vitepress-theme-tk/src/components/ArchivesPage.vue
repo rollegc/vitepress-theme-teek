@@ -54,6 +54,10 @@ const getDate = (item: KtContentData) => {
         </div>
       </template>
     </div>
+
+    <div class="vp-doc">
+      <Content />
+    </div>
   </div>
 </template>
 
