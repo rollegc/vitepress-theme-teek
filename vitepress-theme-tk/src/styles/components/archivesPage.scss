@@ -17,7 +17,7 @@ $prefix-class: #{$theme-namespace}-archives;
   }
 
   &-timeline {
-    margin-top: 2rem;
+    margin: 2rem 0;
     &__year {
       border-bottom: 1px solid var(--tk-line-color);
       margin-top: 2rem;
