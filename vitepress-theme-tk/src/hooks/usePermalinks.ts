@@ -81,13 +81,13 @@ export function usePermalinks() {
    * 监听路由变化（刷新页面不会触发），处理路由地址
    */
   const startWatch = () => {
-    const selfOnAfterRouteChanged = router.onAfterRouteChanged;
-    router.onAfterRouteChanged = async (href: string) => {
+    const selfOnAfterRouteChange = router.onAfterRouteChange;
+    router.onAfterRouteChange = async (href: string) => {
       // 处理路由地址
       processUrl(href);
 
-      // 调用已有的 onAfterRouteChanged
-      selfOnAfterRouteChanged?.(href);
+      // 调用已有的 onAfterRouteChange
+      selfOnAfterRouteChange?.(href);
     };
   };
 
