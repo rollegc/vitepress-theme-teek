@@ -6,13 +6,11 @@ $primaryColor: #395ae3;
   --vp-c-bg-alt: #f5f7fa;
   --vp-c-brand-2: #2a87f8;
   --vp-c-green: #{$primaryColor};
-  --vp-layout-max-width: 90%;
-  --vp-sidebar-bg-color: #ffffff;
-  --vp-sidebar-width: 235px;
+  --vp-layout-max-width: 97vw;
+  --vp-sidebar-width: 275px;
 }
 
 .dark {
-  --vp-sidebar-bg-color: #161618;
   --vp-c-bg-alt: #262727;
 }
 

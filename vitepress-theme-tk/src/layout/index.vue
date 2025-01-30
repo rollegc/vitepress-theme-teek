@@ -163,7 +163,7 @@ $prefix-class: #{$theme-namespace}-layout;
       &__info {
         margin-left: 16px;
         position: sticky;
-        top: 90px;
+        top: calc(var(--vp-nav-height) + 10px);
       }
     }
   }

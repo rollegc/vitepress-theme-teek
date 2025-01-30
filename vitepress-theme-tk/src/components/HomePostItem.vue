@@ -38,7 +38,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
         </a>
 
         <!-- 描述 -->
-        <p v-if="postFrontmatter.description" class="description">
+        <p v-if="postFrontmatter.description" class="description mle">
           {{ postFrontmatter.description }}
         </p>
 

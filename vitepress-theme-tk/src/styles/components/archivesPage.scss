@@ -25,9 +25,16 @@ $prefix-class: #{$theme-namespace}-archives;
     margin-top: 2rem;
     &__year {
       border-bottom: 1px solid var(--tk-gray-lower);
+      margin-top: 2rem;
+      position: sticky;
+      top: var(--vp-nav-height);
+      background-color: var(--tk-bg-color1);
+      z-index: 1;
+
       .year {
         padding: 0.5rem 0;
         font-size: 1.5rem;
+        font-weight: 500;
       }
     }
 

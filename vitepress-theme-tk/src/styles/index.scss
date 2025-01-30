@@ -6,12 +6,17 @@ html {
   --tk-lower-color2: #4e5969;
   --tk-gray-lower: rgba(0, 0, 0, 0.1);
   --tk-gray-lower-hover: rgba(0, 0, 0, 0.2);
-  --bg-base: rgb(255, 255, 255, 0.9);
+  --tk-bg-color1: var(--vp-nav-bg-color);
+  --tk-bg-color2: rgb(255, 255, 255, 0.9);
   --tk-lower-hover: #f8f8f8;
 }
 
 html.dark {
-  --bg-base: rgb(20, 20, 20, 0.7);
+  --tk-theme-color: var(--vp-c-brand-1);
+  --tk-lower-color1: #9facba;
+  --tk-lower-color1: #4e5969;
+  --tk-bg-color1: var(--vp-nav-bg-color);
+  --tk-bg-color2: rgb(20, 20, 20, 0.7);
   --tk-gray-lower: rgba(0, 0, 0, 0.6);
   --tk-gray-lower-hover: rgba(0, 0, 0, 0.7);
 }
@@ -90,6 +95,7 @@ a:hover {
 .mle {
   display: -webkit-box;
   overflow: hidden;
+  text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   line-clamp: 2;
   -webkit-line-clamp: 2;
