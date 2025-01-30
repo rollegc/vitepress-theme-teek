@@ -21,15 +21,16 @@ export function usePermalinks() {
     // 解码，支持中文
     const decodePath = decodeURIComponent(pathname);
     const decodeHash = decodeURIComponent(hash);
-    // 根据文档地址找 permalink
+    // 根据 decodePath 找 permalink
     let permalink = permalinks.map[decodePath];
 
     // 如果当前 pathname 和 permalink 相同，则直接跳转，等价于直接调用 go 方法
     if (permalink === decodePath) return router.go(href);
 
     if (!permalink) {
-      // 如果 permalink 不存在，则根据 decodePath 找 pathname
-      const path = permalinks.inv[decodePath];
+      // 如果 permalink 不存在，则根据 decodePath 反过来找 permalink
+      const path =
+        permalinks.inv[decodePath] || permalinks.inv[decodePath.endsWith("/") ? decodePath.slice(0, -1) : decodePath];
 
       // 如果 path 存在，则进行更新
       if (path) {

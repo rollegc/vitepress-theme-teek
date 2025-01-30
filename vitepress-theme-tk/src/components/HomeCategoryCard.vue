@@ -2,7 +2,6 @@
 import { useDesign } from "../hooks";
 import { postsSymbol, isCategoriesPage } from "../configProvider";
 import { computed, inject, unref, ref, watch } from "vue";
-import RouteLink from "./RouteLink.vue";
 import { useRoute, useData } from "vitepress";
 
 const { getPrefixClass } = useDesign();
@@ -34,22 +33,22 @@ watch(
 
 <template>
   <div :class="`${prefixClass} card`">
-    <RouteLink to="/categories" :title="isCategoriesPage() ? '全部分类' : '文章分类'" class="title">
+    <a href="/categories" :title="isCategoriesPage() ? '全部分类' : '文章分类'" class="title">
       {{ isCategoriesPage() ? "全部分类" : "文章分类" }}
-    </RouteLink>
+    </a>
 
     <div :class="`${prefixClass}-list`">
-      <RouteLink
+      <a
         v-for="item in currentCategories"
         :key="item.name"
-        :to="`/categories?category=${encodeURIComponent(item.name)}`"
+        :href="`/categories?category=${encodeURIComponent(item.name)}`"
         :class="{ active: item.name === category }"
       >
         <span>{{ item.name }}</span>
         <span>{{ item.length }}</span>
-      </RouteLink>
+      </a>
 
-      <RouteLink v-if="!isCategoriesPage() && categorySize < categories.length" to="/categories">更多 ...</RouteLink>
+      <a v-if="!isCategoriesPage() && categorySize < categories.length" href="/categories">更多 ...</a>
     </div>
   </div>
 </template>

@@ -5,7 +5,6 @@ import { useData } from "vitepress";
 import { KtContentData } from "../data/post";
 import { createImageViewer } from "./ImageViewer";
 import { isArray } from "../helper";
-import RouteLink from "./RouteLink.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-item");
@@ -15,7 +14,6 @@ const props = defineProps<{ post: KtContentData }>();
 const { frontmatter } = useData();
 
 const postFrontmatter = computed(() => props.post.frontmatter);
-const postUrl = computed(() => props.post.frontmatter.permalink || props.post.url);
 const getImgUrl = (imgUrl: string | string[]) => {
   if (isArray(imgUrl)) return imgUrl[0];
   return imgUrl;
@@ -35,9 +33,9 @@ const handleViewImg = (imgUrl: string | string[]) => {
     <div :class="`${prefixClass}-info`">
       <div :class="`${prefixClass}-info__left`">
         <!-- 标题 -->
-        <RouteLink class="title" :to="postUrl">
+        <a class="title" :href="post.url">
           {{ post.title }}
-        </RouteLink>
+        </a>
 
         <!-- 描述 -->
         <p v-if="postFrontmatter.description" class="description">
@@ -46,35 +44,45 @@ const handleViewImg = (imgUrl: string | string[]) => {
 
         <!-- 文章信息 -->
         <div :class="`${prefixClass}-info__left-footer`">
-          <RouteLink
+          <a
             v-if="post.author?.name"
             title="作者"
-            :to="post.author.link ? post.author.link : 'javaScript:void(0)'"
+            :href="post.author.link ? post.author.link : 'javaScript:void(0)'"
             :target="post.author.link ? '_blank' : '_self'"
             class="split"
           >
             {{ post.author.name }}
-          </RouteLink>
+          </a>
 
-          <RouteLink v-if="post.date" title="创建时间" class="split">{{ post.date }}</RouteLink>
+          <a v-if="post.date" title="创建时间" class="split">{{ post.date }}</a>
 
           <span v-if="postFrontmatter.categories?.length" title="分类" class="split">
-            <RouteLink v-for="(category, index) in postFrontmatter.categories" :key="index" class="or">
+            <a
+              v-for="(category, index) in postFrontmatter.categories"
+              :key="index"
+              :href="`/categories?category=${encodeURIComponent(category)}`"
+              class="or"
+            >
               {{ category }}
-            </RouteLink>
+            </a>
           </span>
 
           <span v-if="postFrontmatter.tags?.length" title="标签" class="split">
-            <RouteLink v-for="(tag, index) in postFrontmatter.tags" :key="index" class="or">
+            <a
+              v-for="(tag, index) in postFrontmatter.tags"
+              :key="index"
+              :href="`/tags?tag=${encodeURIComponent(tag)}`"
+              class="or"
+            >
               {{ tag }}
-            </RouteLink>
+            </a>
           </span>
         </div>
 
         <!-- 摘要 -->
         <div :class="`${prefixClass}-info__left-excerpt`" v-if="post.excerpt">
           <div class="excerpt" v-html="post.excerpt"></div>
-          <RouteLink class="more" :to="postUrl">阅读全文 ></RouteLink>
+          <a class="more" :href="post.url">阅读全文 ></a>
         </div>
       </div>
 

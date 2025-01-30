@@ -3,7 +3,6 @@ import { useDesign } from "../hooks";
 import { useData } from "vitepress";
 import { postsSymbol } from "../configProvider";
 import { inject } from "vue";
-import RouteLink from "./RouteLink.vue";
 import { KtContentData } from "../data/post";
 
 const { getPrefixClass } = useDesign();
@@ -45,10 +44,10 @@ const getDate = (item: KtContentData) => {
 
             <ul>
               <li v-for="item in posts" :key="item.title">
-                <RouteLink :to="item.frontmatter.permalink || item.url">
+                <a :href="item.url">
                   <span class="date">{{ getDate(item) }}</span>
                   <span>{{ item.title }}</span>
-                </RouteLink>
+                </a>
               </li>
             </ul>
           </template>

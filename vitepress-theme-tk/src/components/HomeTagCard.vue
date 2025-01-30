@@ -3,7 +3,6 @@ import { useDesign } from "../hooks";
 import { postsSymbol, isTagsPage } from "../configProvider";
 import { inject, unref, watch, computed, ref } from "vue";
 import { useRoute, useData } from "vitepress";
-import RouteLink from "./RouteLink.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("tag");
@@ -41,29 +40,30 @@ const tagBgColor = unref(frontmatter).tk?.tagBgColor || [
   "#849B87",
 ];
 
-const getTagBgColor = (index: number) => {
-  return tagBgColor[index % tagBgColor.length];
+const getTagStyle = (index: number) => {
+  const color = tagBgColor[index % tagBgColor.length];
+  return { backgroundColor: color, "--home-tag-color": color };
 };
 </script>
 
 <template>
   <div :class="`${prefixClass} card`">
-    <RouteLink to="/tags" :title="isTagsPage() ? '全部标签' : '热门标签'" class="title">
+    <a href="/tags" :title="isTagsPage() ? '全部标签' : '热门标签'" class="title">
       {{ isTagsPage() ? "全部标签" : "热门标签" }}
-    </RouteLink>
+    </a>
 
     <div :class="`${prefixClass}-list`">
-      <RouteLink
+      <a
         v-for="(item, index) in currentTags"
         :key="item.name"
-        :style="{ backgroundColor: getTagBgColor(index), '--home-tag-color': getTagBgColor(index) }"
-        :to="`/tags?tag=${encodeURIComponent(item.name)}`"
+        :style="getTagStyle(index)"
+        :href="`/tags?tag=${encodeURIComponent(item.name)}`"
         :class="{ active: item.name === tag }"
       >
         {{ item.name }}
-      </RouteLink>
+      </a>
 
-      <RouteLink v-if="!isTagsPage() && tagSize < tags.length" to="/tags" class="more">更多 ...</RouteLink>
+      <a v-if="!isTagsPage() && tagSize < tags.length" href="/tags" class="more">更多 ...</a>
     </div>
   </div>
 </template>
