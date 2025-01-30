@@ -12,4 +12,4 @@
 - 添加多主题切换
 - 添加多语言功能
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-
+- 首页 Footer 添加备案信息
