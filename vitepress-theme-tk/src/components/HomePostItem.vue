@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
 import { useData } from "vitepress";
-import { KtContentData } from "../data/post";
+import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
 import { isArray } from "../helper";
 

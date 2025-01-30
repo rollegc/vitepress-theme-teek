@@ -26,10 +26,7 @@
       "import": "./es/*.mjs"
     },
     "./es/*": {
-      "types": [
-        "./es/*.d.ts",
-        "./es/*/index.d.ts"
-      ],
+      "types": ["./es/*.d.ts", "./es/*/index.d.ts"],
       "import": "./es/*.mjs"
     },
     "./lib": {
@@ -41,17 +38,14 @@
       "require": "./lib/*.js"
     },
     "./lib/*": {
-      "types": [
-        "./lib/*.d.ts",
-        "./lib/*/index.d.ts"
-      ],
+      "types": ["./lib/*.d.ts", "./lib/*/index.d.ts"],
       "require": "./lib/*.js"
     },
     "./*": "./*"
   },
   "dependencies": {
     "vite": "^6.0.7",
-    "vitepress": "^1.5.0"
+    "vitepress": "^1.6.3"
   },
   "devDependencies": {
     "chalk": "^5.4.1",
@@ -60,11 +54,7 @@
   },
   "peerDependencies": {
     "vite": "^6.0.7",
-    "vitepress": "1.5.0"
+    "vitepress": "^1.6.3"
   },
-  "browserslist": [
-    "> 1%",
-    "not ie 11",
-    "not op_mini all"
-  ]
+  "browserslist": ["> 1%", "not ie 11", "not op_mini all"]
 }

@@ -1,5 +1,5 @@
 import { createContentLoader, SiteConfig } from "vitepress";
-import { KtContentData, Post } from "./post";
+import { KtContentData, Post } from "./types";
 import {
   filterPosts,
   getSortPostsByDateAndSticky,

@@ -34,8 +34,6 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       const { themeConfig, srcDir } = config.vitepress.site;
       option.base = option.base || srcDir || ".";
 
-      console.log(option);
-
       // 自动生成结构化侧边栏
       const sidebar = createSidebar(option);
 

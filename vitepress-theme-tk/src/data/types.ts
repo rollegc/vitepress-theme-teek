@@ -32,11 +32,11 @@ export interface Post {
   /**
    * 根据年份分组，key 为年份，value 为该年份的文章列表，如 { 2025: [{}, {}], 2024: [{}, {}] }
    */
-  groupPostsByYear: Record<number, KtContentData[]>;
+  groupPostsByYear: Record<string, KtContentData[]>;
   /**
    * 根据年份和月份分组，key 为年份，value 为该年份的月份分组，如：{ 2025: { 01: [{}, {}], 02: [{}, {}] }, 2024: { 01: [], 02: [{}, {}] } }
    */
-  groupPostsByYearMonth: Record<number, Record<number, KtContentData[]>>;
+  groupPostsByYearMonth: Record<string, Record<string, KtContentData[]>>;
   /**
    * 分组的文章列表
    */
@@ -114,31 +114,16 @@ export interface FrontMatter {
    */
   sticky: number;
   /**
-   * 目录页配置，@see PageComponent
+   * 是否为目录页
    */
-  pageComponent: PageComponent;
-}
+  catalogue: boolean;
 
-export interface PageComponent {
   /**
-   * 目录页标题
+   * 目录页所在路径，将扫描 path 下的所有文章
    */
-  name: string;
+  path: string;
   /**
-   * 目录页配置数据
+   * 目录页描述
    */
-  data: {
-    /**
-     * 目录页所在路径，将扫描 path 下的所有文章
-     */
-    path: string;
-    /**
-     * 目录页图片
-     */
-    imgUrl: string;
-    /**
-     * 目录页描述
-     */
-    description: string;
-  };
+  description: string;
 }

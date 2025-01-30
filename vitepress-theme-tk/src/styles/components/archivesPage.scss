@@ -37,6 +37,7 @@ $prefix-class: #{$theme-namespace}-archives;
       margin-top: 1rem;
       &__month {
         border-bottom: 1px solid var(--tk-line-color);
+        margin-top: 1rem;
         .month {
           padding-bottom: 0.5rem;
           font-size: 1.2rem;
@@ -59,7 +60,7 @@ $prefix-class: #{$theme-namespace}-archives;
             .date {
               opacity: 0.6;
               font-size: 0.85rem;
-              margin-right: 0.3rem;
+              margin-right: 0.5rem;
             }
           }
         }

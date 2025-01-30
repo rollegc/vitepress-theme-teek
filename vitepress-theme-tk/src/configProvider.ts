@@ -1,6 +1,6 @@
 import { defineComponent, h, InjectionKey, provide, Ref, unref, type Component } from "vue";
 import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
-import type { Post } from "./data/post";
+import type { Post } from "./data/types";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
 import { useData } from "vitepress";
@@ -14,6 +14,8 @@ function createConfigProvider(Layout: Component) {
     setup(_, { slots }) {
       // 往主题注入数据
       provide(postsSymbol, posts);
+
+      console.log(posts);
 
       // 开启监听器
       usePermalinks().startWatch();

@@ -1,4 +1,4 @@
-import type { GroupCardItem, KtContentData, Post } from "../data/post";
+import type { GroupCardItem, KtContentData, Post } from "../data/types";
 import { isArray } from "./is";
 
 /**
@@ -7,7 +7,7 @@ import { isArray } from "./is";
  */
 export const filterPosts = (posts: KtContentData[]): KtContentData[] => {
   return posts.filter(
-    ({ frontmatter: { pageComponent, article, layout } }) => !pageComponent && article !== false && layout !== "home"
+    ({ frontmatter: { catalogue, article, layout } }) => catalogue !== false && article !== false && layout !== "home"
   );
 };
 
@@ -120,13 +120,14 @@ export const compareDate = (prev: KtContentData, next: KtContentData) => {
 export const groupByYear = (posts: KtContentData[]) => {
   return posts.reduce(
     (pre, cur) => {
-      const year = new Date(cur.frontmatter.date).getFullYear();
+      // 加个空格转为字符串，避免生产的对象自动根据数字排序（字符串数字也会自定义排序，因此加个空格）
+      const year = new Date(cur.date || cur.frontmatter.date).getFullYear() + " ";
       if (!pre[year]) pre[year] = [];
 
       pre[year].push(cur);
       return pre;
     },
-    {} as Record<number, KtContentData[]>
+    {} as Post["groupPostsByYear"]
   );
 };
 /**
@@ -136,15 +137,16 @@ export const groupByYear = (posts: KtContentData[]) => {
 export const groupByYearMonth = (posts: KtContentData[]) => {
   return posts.reduce(
     (pre, cur) => {
-      const date = new Date(cur.frontmatter.date);
-      const year = date.getFullYear();
-      const month = Number(String(date.getMonth() + 1).padStart(2, "0"));
+      const date = new Date(cur.date || cur.frontmatter.date);
+      // 加个空格转字符串，避免生成的对象自动根据数字排序（字符串数字也会自定义排序，因此加个空格）
+      const year = date.getFullYear() + " ";
+      const month = String(date.getMonth() + 1).padStart(2, "0");
       if (!pre[year]) pre[year] = {};
       if (!pre[year][month]) pre[year][month] = [];
 
       pre[year][month].push(cur);
       return pre;
     },
-    {} as Record<number, Record<number, KtContentData[]>>
+    {} as Post["groupPostsByYearMonth"]
   );
 };

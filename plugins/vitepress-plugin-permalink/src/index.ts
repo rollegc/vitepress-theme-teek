@@ -1,4 +1,4 @@
-import type { PluginOption } from "vite";
+import type { PluginOption, ViteDevServer } from "vite";
 import createPermalinks from "./helper";
 import type { PermalinkOption } from "./types";
 import chalk from "chalk";
@@ -27,7 +27,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         pathToPermalink[key] = value;
 
         if (permalinkToPath[value])
-          log(`Permalink ${value} 已存在，其对应的 ${permalinkToPath[value]} 将会被 ${key} 覆盖`);
+          log(`Permalink「${value}」已存在，其对应的「${permalinkToPath[value]}」将会被 ${key} 覆盖`);
 
         permalinkToPath[value] = key;
       }
@@ -39,7 +39,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       vitepressConfig = config.vitepress;
     },
-    configureServer(server) {
+    configureServer(server: ViteDevServer) {
       const { base, permalinks } = vitepressConfig.site;
       // 重写 URL，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
       server.middlewares.use((req, _res, next) => {

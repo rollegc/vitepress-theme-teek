@@ -3,7 +3,7 @@ import { useDesign } from "../hooks";
 import { useData } from "vitepress";
 import { postsSymbol } from "../configProvider";
 import { inject } from "vue";
-import { KtContentData } from "../data/post";
+import { KtContentData } from "../data/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("archives");
@@ -13,10 +13,7 @@ const { frontmatter } = useData();
 const posts = inject(postsSymbol);
 
 const getDate = (item: KtContentData) => {
-  const {
-    frontmatter: { date },
-  } = item;
-
+  const { date } = item;
   if (date) return date.slice(5, 10);
 };
 </script>
@@ -31,14 +28,14 @@ const getDate = (item: KtContentData) => {
     <div :class="`${prefixClass}-timeline`">
       <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">
         <div :class="`${prefixClass}-timeline__year flx-justify-between`">
-          <div class="year">{{ String(year) === "NaN" ? "未指定" : year }} 年</div>
+          <div class="year">{{ String(year).trim() === "NaN" ? "未指定" : String(year).trim() }}年</div>
           <div class="count">{{ posts.groupPostsByYear[year].length }}篇</div>
         </div>
 
         <div :class="`${prefixClass}-timeline-m`">
           <template v-for="(posts, month) in monthPosts" :key="month">
             <div :class="`${prefixClass}-timeline-m__month flx-justify-between`">
-              <div class="month">{{ String(month) === "NaN" ? "未指定" : month }} 月</div>
+              <div class="month">{{ String(month) === "NaN" ? "未指定" : month }}月</div>
               <div class="count">{{ posts.length }}篇</div>
             </div>
 
