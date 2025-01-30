@@ -11,8 +11,6 @@ const prefixClass = getPrefixClass("catalogue");
 const themeConfig = useThemeConfig();
 const { frontmatter } = useData();
 
-console.log(themeConfig);
-
 const getPath = () => {
   const { path } = unref(frontmatter);
 
@@ -40,6 +38,10 @@ const catalogueList = themeConfig.sidebar[getPath()];
           <CatalogueItem :item :index="index + 1" />
         </template>
       </ul>
+    </div>
+
+    <div class="vp-doc">
+      <Content />
     </div>
   </div>
 </template>

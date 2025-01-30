@@ -35,6 +35,10 @@ a:hover {
   padding: 20px 30px;
   box-shadow: 0 0 16px var(--tk-shadow-color);
   border-radius: 10px;
+
+  & ~ div:not(.tk-page) {
+    display: none;
+  }
 }
 
 .tk-title-h1 {
