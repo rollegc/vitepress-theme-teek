@@ -4,14 +4,7 @@ import matter from "gray-matter";
 import type { PermalinkOption } from "./types";
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = [
-  "scripts",
-  "components",
-  "assets",
-  ".vitepress",
-  "node_modules",
-  "package.json",
-];
+export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "package.json"];
 
 // key 为文件路径，value 为永久链接
 let permalinks: Record<string, string> = {};
@@ -38,6 +31,7 @@ export default (option: PermalinkOption = {}, cleanUrls = false): Record<string,
  */
 const readDirPaths = (sourceDir: string, ignoreList: PermalinkOption["ignoreList"] = []) => {
   const dirPaths: string[] = [];
+  const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   // 读取目录，返回数组，成员是 root 下所有的目录名（包含文件夹和文件，不递归）
   const secondDirNames = readdirSync(sourceDir);
 
@@ -45,7 +39,7 @@ const readDirPaths = (sourceDir: string, ignoreList: PermalinkOption["ignoreList
     // 将路径或路径片段的序列解析为绝对路径，等于使用 cd 命令
     const secondDirPath = resolve(sourceDir, secondDirName);
     // 是否为文件夹目录，并排除指定文件夹
-    if (![...DEFAULT_IGNORE_DIR, ...ignoreList].includes(secondDirName) && statSync(secondDirPath).isDirectory()) {
+    if (!isSome(ignoreListAll, secondDirName) && statSync(secondDirPath).isDirectory()) {
       dirPaths.push(secondDirPath);
     }
   });
@@ -61,27 +55,22 @@ const scannerMdFile = (
   onlyScannerRootMd = false
 ) => {
   const { ignoreList = [] } = option;
+  const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
+
   // 读取目录名（文件和文件夹）
   let secondDirOrFilenames = readdirSync(root);
 
   secondDirOrFilenames.forEach(dirOrFilename => {
+    if (isSome(ignoreListAll, dirOrFilename)) return;
+
     const filePath = resolve(root, dirOrFilename);
 
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
-      if ([...DEFAULT_IGNORE_DIR, ...ignoreList].includes(dirOrFilename)) return;
-
       scannerMdFile(filePath, option, `${prefix}/${dirOrFilename}`, cleanUrls);
     } else {
       // 是文件
-      if (
-        !isMdFile(dirOrFilename) ||
-        [...DEFAULT_IGNORE_DIR, ...ignoreList].some(
-          item => dirOrFilename.includes(item as string) || (item instanceof RegExp && item.test(dirOrFilename))
-        )
-      ) {
-        return;
-      }
+      if (!isMdFile(dirOrFilename)) return;
 
       const content = readFileSync(filePath, "utf-8");
 
@@ -96,7 +85,7 @@ const scannerMdFile = (
 
         const filename = cleanUrls ? basename(dirOrFilename, extname(dirOrFilename)) : basename(dirOrFilename);
 
-        permalinks[`${prefix}/${filename}`] = finalPermalink;
+        permalinks[`${prefix ? `${prefix}/` : ""}${filename}`] = finalPermalink;
       }
     }
   });
@@ -110,4 +99,8 @@ const scannerMdFile = (
 const isMdFile = (filePath: string) => {
   const fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
   return ["md", "MD"].includes(fileExtension);
+};
+
+const isSome = (arr: Array<string | RegExp>, name: string) => {
+  return arr.some(item => name.includes(item as string) || (item instanceof RegExp && item.test(name)));
 };

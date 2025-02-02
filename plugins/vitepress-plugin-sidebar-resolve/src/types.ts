@@ -8,7 +8,7 @@ export interface SidebarOption {
    */
   ignoreList?: Array<RegExp | string>;
   /**
-   * 文章所在的目录，基于 package.json 扫描
+   * 文章所在的目录
    *
    * @default .
    */

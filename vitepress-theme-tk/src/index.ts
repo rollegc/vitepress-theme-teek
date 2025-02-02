@@ -14,6 +14,8 @@ import "element-plus/theme-chalk/el-image-viewer.css";
 import "element-plus/theme-chalk/el-pagination.css";
 import "element-plus/theme-chalk/el-input.css";
 import "element-plus/theme-chalk/el-alert.css";
+import "element-plus/theme-chalk/el-breadcrumb.css";
+import "element-plus/theme-chalk/el-breadcrumb-item.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
 
 export type { KtThemeConfig } from "./config/types";

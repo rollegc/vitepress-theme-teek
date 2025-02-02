@@ -5,6 +5,8 @@ import { useData } from "vitepress";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
 import { isArray } from "../helper";
+import { ElIcon } from "element-plus";
+import { House, User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-item");
@@ -43,20 +45,26 @@ const handleViewImg = (imgUrl: string | string[]) => {
         </p>
 
         <!-- 文章信息 -->
-        <div :class="`${prefixClass}-info__left-footer`">
-          <a
-            v-if="post.author?.name"
-            title="作者"
-            :href="post.author.link ? post.author.link : 'javaScript:void(0)'"
-            :target="post.author.link ? '_blank' : '_self'"
-            class="split"
-          >
-            {{ post.author.name }}
-          </a>
+        <div :class="`${prefixClass}-info__left-footer flx-align-center`">
+          <span class="split flx-center">
+            <el-icon><User /></el-icon>
+            <a
+              v-if="post.author?.name"
+              title="作者"
+              :href="post.author.link ? post.author.link : 'javaScript:void(0)'"
+              :target="post.author.link ? '_blank' : '_self'"
+            >
+              {{ post.author.name }}
+            </a>
+          </span>
 
-          <a v-if="post.date" title="创建时间" class="split">{{ post.date }}</a>
+          <span class="split flx-center">
+            <el-icon><Calendar /></el-icon>
+            <a v-if="post.date" title="创建时间">{{ post.date }}</a>
+          </span>
 
-          <span v-if="postFrontmatter.categories?.length" title="分类" class="split">
+          <span v-if="postFrontmatter.categories?.length" title="分类" class="split flx-center">
+            <el-icon><FolderOpened /></el-icon>
             <a
               v-for="(category, index) in postFrontmatter.categories"
               :key="index"
@@ -67,7 +75,8 @@ const handleViewImg = (imgUrl: string | string[]) => {
             </a>
           </span>
 
-          <span v-if="postFrontmatter.tags?.length" title="标签" class="split">
+          <span v-if="postFrontmatter.tags?.length" title="标签" class="split flx-center">
+            <el-icon><CollectionTag /></el-icon>
             <a
               v-for="(tag, index) in postFrontmatter.tags"
               :key="index"

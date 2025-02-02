@@ -5,8 +5,9 @@ import { inBrowser } from "../helper";
 export function usePermalinks() {
   const fakeHost = "http://a.com";
   const router = useRouter();
-  const { site } = useData();
-  const { permalinks = {}, base } = site.value;
+  const { site, theme } = useData();
+  const { base } = site.value;
+  const { permalinks = {} } = theme.value;
 
   /**
    * 为 vitepress 的 router 添加 push 方法，支持手动跳转 permalink

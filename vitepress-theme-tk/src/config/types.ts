@@ -1,5 +1,6 @@
 import { PermalinkOption } from "vitepress-plugin-permalink";
 import { SidebarOption } from "vitepress-plugin-sidebar-resolve";
+import { CatalogueOption } from "vitepress-plugin-catalogue";
 
 export interface KtThemeConfig {
   /**
@@ -15,6 +16,21 @@ export interface KtThemeConfig {
    * 文章默认的作者信息
    */
   author?: string | { name: string; link?: string };
+  /**
+   * 面包屑配置
+   */
+  breadcrumb?: {
+    /**
+     * 是否启用面包屑
+     * @default true
+     */
+    enabled: boolean;
+    /**
+     * 面包屑最后一列是否显示当前文章的文件名
+     * @default false
+     */
+    showCurrentName: boolean;
+  };
   /**
    * 博主信息 (显示在首页侧边栏)
    */
@@ -56,5 +72,9 @@ export interface KtThemeConfig {
      * @default false
      */
     mdH1: boolean;
+    /**
+     * catalogues 插件配置项
+     */
+    catalogueOptions?: CatalogueOption;
   };
 }

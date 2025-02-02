@@ -131,6 +131,16 @@ a:hover {
   word-wrap: break-word;
 }
 
+.or:not(:last-child) {
+  &::after {
+    content: "/";
+    display: inline-block;
+    width: 0.35rem;
+    height: 0;
+    background-color: var(--tk-lower-color2);
+  }
+}
+
 /* 自定义 */
 @for $i from 1 through 6 {
   .m-#{$i * 5} {

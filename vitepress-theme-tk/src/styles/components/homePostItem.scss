@@ -64,6 +64,10 @@ $prefix-class: #{$theme-namespace}-post-item;
         color: var(--tk-lower-color2);
         margin-top: 0.5rem;
 
+        i {
+          margin-right: 3px;
+        }
+
         .split:not(:last-child) {
           &::after {
             content: "";
@@ -71,16 +75,6 @@ $prefix-class: #{$theme-namespace}-post-item;
             width: 0.8px;
             height: 0.5rem;
             margin: 0 10px;
-            background-color: var(--tk-lower-color2);
-          }
-        }
-
-        .or:not(:last-child) {
-          &::after {
-            content: "/";
-            display: inline-block;
-            width: 0.35rem;
-            height: 0;
             background-color: var(--tk-lower-color2);
           }
         }

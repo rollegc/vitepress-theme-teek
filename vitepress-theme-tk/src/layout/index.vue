@@ -6,6 +6,8 @@ import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
 import ArchivesPage from "../components/ArchivesPage.vue";
 import Catalogue from "../components/Catalogue.vue";
+import ArticleAnalyze from "../components/ArticleAnalyze.vue";
+import ArticleImagePreview from "../components/ArticleImagePreview.vue";
 import { isHomePage, useThemeConfig, isArchivesPage, isCatalogue } from "../configProvider";
 
 defineOptions({
@@ -27,6 +29,10 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
     </template>
     <template #doc-before>
       <slot name="doc-before" />
+			<ClientOnly>
+				<ArticleAnalyze />
+				<ArticleImagePreview />
+			</ClientOnly>
     </template>
     <template #nav-bar-content-before>
       <slot name="nav-bar-content-before" />

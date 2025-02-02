@@ -63,7 +63,7 @@ export default createContentLoader("**/*.md", {
  *
  * @param post 文章数据
  */
-function getTitle(post: KtContentData) {
+function getTitle(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "url">) {
   if (post.frontmatter.title) return post.frontmatter.title;
 
   const { content = "" } = matter(post.src || "", {});
@@ -79,7 +79,7 @@ function getTitle(post: KtContentData) {
  * @param post 文章数据
  * @param srcDir 项目绝对路径
  */
-function getDate(post: KtContentData, srcDir: string) {
+function getDate(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "url">, srcDir: string) {
   const { frontmatter, url } = post;
 
   if (frontmatter.date) return frontmatter.date;

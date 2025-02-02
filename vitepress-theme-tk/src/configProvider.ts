@@ -15,8 +15,6 @@ function createConfigProvider(Layout: Component) {
       // 往主题注入数据
       provide(postsSymbol, posts);
 
-      console.log(posts);
-
       // 开启监听器
       usePermalinks().startWatch();
       useAnchorScroll().startWatch();
