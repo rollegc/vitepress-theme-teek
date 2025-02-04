@@ -9,11 +9,9 @@ export const DEFAULT_INCLUDE_DIR = ["目录页"];
 let catalogues: Record<string, string> = {};
 
 export default (option: CatalogueOption = {}) => {
-  const { base = ".", includeList = [] } = option;
-  const sourceDir = join(process.cwd(), base);
-
+  const { base = process.cwd(), includeList = [] } = option;
   // 获取指定根目录下的所有目录绝对路径
-  const dirPaths = readDirPaths(sourceDir, includeList);
+  const dirPaths = readDirPaths(base, includeList);
 
   // 遍历根目录下的每个子目录
   dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath)));

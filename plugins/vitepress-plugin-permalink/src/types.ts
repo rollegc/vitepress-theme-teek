@@ -6,9 +6,7 @@ export interface PermalinkOption {
    */
   ignoreList?: Array<RegExp | string>;
   /**
-   * 文章所在的目录
-   *
-   * @default .
+   * 文章所在的目录，基于 package.json 所在目录
    */
   base?: string;
 }

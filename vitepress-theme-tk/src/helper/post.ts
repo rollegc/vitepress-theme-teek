@@ -16,14 +16,16 @@ export const filterPosts = (posts: KtContentData[]): KtContentData[] => {
  * @param posts 过滤非文章页之后的文章数据
  */
 export const getSortPostsByDateAndSticky = (posts: KtContentData[]): KtContentData[] => {
-  return posts.sort((prev, next) => {
+  // sort 会改变原数组，因此确保参数不被修改，复杂一份
+  const p = [...posts];
+  return p.sort((prev, next) => {
     // 先根据 sticky 排序，sticky 值越大越靠前，如果 sticky 相同，则按时间排序
     const prevSticky = prev.frontmatter.sticky;
     const nextSticky = next.frontmatter.sticky;
-    if (prevSticky && nextSticky) {
-      return nextSticky === prevSticky ? compareDate(prev, next) : nextSticky - prevSticky;
-    } else if (prevSticky) return -1;
-    else if (nextSticky) return 1;
+
+    if (prevSticky && nextSticky) return prevSticky === nextSticky ? compareDate(prev, next) : prevSticky - nextSticky;
+    if (prevSticky) return -1;
+    if (nextSticky) return 1;
 
     return compareDate(prev, next);
   });
@@ -34,7 +36,9 @@ export const getSortPostsByDateAndSticky = (posts: KtContentData[]): KtContentDa
  * @param posts 过滤非文章页之后的文章数据
  */
 export const getSortPostsByDate = (posts: KtContentData[]): KtContentData[] => {
-  return posts.sort((prev, next) => compareDate(prev, next));
+  // sort 会改变原数组，因此确保参数不被修改，复杂一份
+  const p = [...posts];
+  return p.sort((prev, next) => compareDate(prev, next));
 };
 
 /**

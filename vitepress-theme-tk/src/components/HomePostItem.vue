@@ -4,9 +4,9 @@ import { useDesign } from "../hooks";
 import { useData } from "vitepress";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
-import { isArray } from "../helper";
+import { formatDate, isArray } from "../helper";
 import { ElIcon } from "element-plus";
-import { House, User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
+import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-item");
@@ -30,7 +30,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
 
 <template>
   <div :class="prefixClass">
-    <i v-if="!!postFrontmatter.sticky" class="pin" />
+    <i v-if="!!postFrontmatter.sticky" class="pin" title="置顶" />
 
     <div :class="`${prefixClass}-info`">
       <div :class="`${prefixClass}-info__left`">
@@ -60,7 +60,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
 
           <span class="split flx-center">
             <el-icon><Calendar /></el-icon>
-            <a v-if="post.date" title="创建时间">{{ post.date }}</a>
+            <a v-if="post.date" title="创建时间">{{ formatDate(post.date, "yyyy-MM-dd") }}</a>
           </span>
 
           <span v-if="postFrontmatter.categories?.length" title="分类" class="split flx-center">

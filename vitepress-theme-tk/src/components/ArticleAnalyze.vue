@@ -1,26 +1,39 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { useData } from "vitepress";
-import { useDesign } from "../hooks";
+import { useData, useRoute } from "vitepress";
+import { useDesign, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
-import { ref, unref } from "vue";
+import { computed, ref, unref } from "vue";
 import { formatDate } from "../helper";
-import { House, User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
+import { House, User, Calendar, FolderOpened, CollectionTag, Reading, Clock, View } from "@element-plus/icons-vue";
+import { useThemeConfig } from "../configProvider";
+import { FileWords } from "vitepress-plugin-doc-analysis";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("articleAnalyze");
 
-const { page, frontmatter, theme } = useData();
+const { page, frontmatter } = useData();
+const themeConfig = useThemeConfig();
 
-const author = unref(frontmatter).author || unref(theme).author;
-const date = formatDate(unref(frontmatter).date || new Date());
+const author = unref(frontmatter).author || themeConfig.author;
+const date = formatDate(unref(frontmatter).date || new Date(), "yyyy-MM-dd");
 const categories = unref(frontmatter).categories || [];
 const tags = unref(frontmatter).tags || [];
+// 文章阅读量
+const { eachFileWords } = themeConfig.docAnalysisInfo || {};
+const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = themeConfig.docAnalysis || {};
 
-const breadcrumb = unref(frontmatter).breadcrumb ||
-  unref(theme).breadcrumb || { enabled: true, showCurrentName: false };
+const pageViewInfo = computed(() => {
+  let pageViewInfo: Partial<FileWords> = {};
 
+  eachFileWords.forEach((item: FileWords) => {
+    if (item.fileInfo.relativePath === useRoute().data.relativePath) return (pageViewInfo = item);
+  });
+  return pageViewInfo;
+});
+
+// 面包屑
+const breadcrumb = unref(frontmatter).breadcrumb || themeConfig.breadcrumb || { enabled: true, showCurrentName: false };
 const relativePathArr = unref(page).relativePath.split("/") as string[];
-
 const classifyList = ref<string[]>([]);
 
 relativePathArr.forEach((item, index) => {
@@ -32,9 +45,11 @@ relativePathArr.forEach((item, index) => {
   }
 });
 
-const getFilePath = (index: string) => {
-  return unref(theme).catalogues?.inv[relativePathArr[index]];
+const getFilePath = (index: number) => {
+  return themeConfig.catalogues?.inv[relativePathArr[index]];
 };
+
+const { pagePv, isGet } = useBuSunZi(pageIteration);
 </script>
 
 <template>
@@ -45,10 +60,14 @@ const getFilePath = (index: string) => {
           <el-icon><House /></el-icon>
         </a>
       </el-breadcrumb-item>
-      <el-breadcrumb-item v-for="(item, index) in classifyList" :key="index" :title="item">
-        <a :href="getFilePath(index) ? getFilePath(index) : undefined">
+      <el-breadcrumb-item v-for="(item, index) in classifyList" :key="index">
+        <component
+          :is="getFilePath(index) ? 'a' : 'span'"
+          :href="getFilePath(index) ? `/${getFilePath(index)}` : undefined"
+          :title="item"
+        >
           {{ item }}
-        </a>
+        </component>
       </el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -87,6 +106,21 @@ const getFilePath = (index: string) => {
         <a v-for="tag in tags" :href="`/tags?tag=${encodeURIComponent(tag)}`" title="标签" class="or">
           {{ tag }}
         </a>
+      </div>
+
+      <div v-if="wordsCount" class="flx-center">
+        <el-icon><Reading /></el-icon>
+        <a title="文章字数">{{ pageViewInfo.wordsCount }}</a>
+      </div>
+
+      <div v-if="readingTime" class="flx-center">
+        <el-icon><Clock /></el-icon>
+        <a title="预计阅读时长">{{ pageViewInfo.readingTime }}</a>
+      </div>
+
+      <div v-if="pageView" class="flx-center">
+        <el-icon><View /></el-icon>
+        <a title="浏览量">{{ isGet ? pagePv : "Get..." }}</a>
       </div>
     </div>
   </div>

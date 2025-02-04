@@ -1,16 +1,20 @@
 import type { PluginOption } from "vite";
 import { CatalogueOption } from "./types";
 import createCatalogues from "./helper";
+import { join } from "node:path";
 
-export type { CatalogueOption };
+export * from "./types";
 
 export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): PluginOption {
   return {
     name: "vite-plugin-vitepress-catalogue",
     config(config: any) {
-      const { themeConfig, srcDir } = config.vitepress.site;
+      const {
+        site: { themeConfig },
+        srcDir,
+      } = config.vitepress;
 
-      option.base = option.base || srcDir || ".";
+      option.base = option.base ? join(process.cwd(), option.base) : srcDir;
 
       const catalogues = createCatalogues(option);
 

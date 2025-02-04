@@ -19,16 +19,14 @@ export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepres
  * @param  collapsed  是否可折叠
  */
 export default (option: SidebarOption = {}): DefaultTheme.SidebarMulti => {
-  const { base = ".", ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
-
-  const sourceDir = join(process.cwd(), base);
+  const { base = process.cwd(), ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
 
   let sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
-  const dirPaths = readDirPaths(sourceDir, ignoreList);
+  const dirPaths = readDirPaths(base, ignoreList);
 
   // 只扫描根目录的 md 文件
-  if (scannerRootMd) sidebar[`/`] = createSideBarItems(sourceDir, option, "", scannerRootMd);
+  if (scannerRootMd) sidebar[`/`] = createSideBarItems(base, option, "", scannerRootMd);
 
   // 遍历根目录下的每个子目录，生成对应的侧边栏数据
   dirPaths.forEach(dirPath => {

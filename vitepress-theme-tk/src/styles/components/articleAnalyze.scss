@@ -13,12 +13,15 @@ $prefix-class: #{$theme-namespace}-articleAnalyze;
     margin: 0 4px;
   }
 
-  .el-breadcrumb__inner a {
-    font-weight: 400;
-    color: var(--el-text-color-regular);
+  .el-breadcrumb__item {
+    .el-breadcrumb__inner a {
+      font-weight: 400;
+      color: var(--el-text-color-regular);
 
-    &:hover {
-      color: var(--tk-theme-color);
+      &:hover {
+        color: var(--tk-theme-color);
+        cursor: pointer;
+      }
     }
   }
 

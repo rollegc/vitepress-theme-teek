@@ -2,8 +2,9 @@ import type { PluginOption, ViteDevServer } from "vite";
 import type { SidebarOption } from "./types";
 import chalk from "chalk";
 import createSidebar from "./helper";
+import { join } from "node:path";
 
-export type { SidebarOption };
+export * from "./types";
 export * from "./util";
 
 const log = console.log;
@@ -31,8 +32,12 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       });
     },
     config(config: any) {
-      const { themeConfig, srcDir } = config.vitepress.site;
-      option.base = option.base || srcDir || ".";
+      const {
+        site: { themeConfig },
+        srcDir,
+      } = config.vitepress;
+
+      option.base = option.base ? join(process.cwd(), option.base) : srcDir;
 
       // 自动生成结构化侧边栏
       const sidebar = createSidebar(option);

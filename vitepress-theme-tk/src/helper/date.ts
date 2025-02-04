@@ -49,3 +49,55 @@ export function formatShowDate(date: Date | string) {
 
   return formatDate(new Date(date), "yyyy-MM-dd");
 }
+
+// 小于 10 补 0
+export function zero(d: number) {
+  return d.toString().padStart(2, "0");
+}
+
+/**
+ * 获取两个日期相差多少天
+ */
+export function dayDiff(startDate: string, endDate?: string): number {
+  const startTimestamp = new Date(startDate).getTime();
+  const endTimestamp = endDate ? new Date(endDate).getTime() : new Date().getTime();
+
+  return Math.floor(Math.abs(endTimestamp - startTimestamp) / (1000 * 60 * 60 * 24));
+}
+
+/**
+ * 计算相差多少年/月/日/时/分/秒
+ */
+export function timeDiff(startDate: Date | string, endDate?: Date | string): string {
+  if (!endDate) {
+    endDate = startDate;
+    startDate = new Date();
+  }
+  if (!(startDate instanceof Date)) {
+    startDate = new Date(startDate);
+  }
+  if (!(endDate instanceof Date)) {
+    endDate = new Date(endDate);
+  }
+
+  // 计算时间戳的差
+  const diffValue = Math.abs(endDate.getTime() - startDate.getTime()) / 1000;
+
+  if (diffValue < 1) {
+    return "刚刚";
+  } else if (diffValue < 60) {
+    return `${Math.floor(diffValue)} 秒`;
+  } else if (diffValue < 3600) {
+    return `${Math.floor(diffValue / 60)} 分`;
+  } else if (diffValue < 86400) {
+    return `${Math.floor(diffValue / 3600)} 时`;
+  } else if (diffValue < 2592000) {
+    return `${Math.floor(diffValue / 86400)} 天`;
+  } else if (diffValue < 31104000) {
+    const months = Math.floor(diffValue / 2592000);
+    return `${months} 月`;
+  } else {
+    const years = Math.floor(diffValue / 31104000);
+    return `${years} 年`;
+  }
+}

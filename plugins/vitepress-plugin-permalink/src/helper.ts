@@ -10,14 +10,13 @@ export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepres
 let permalinks: Record<string, string> = {};
 
 export default (option: PermalinkOption = {}, cleanUrls = false): Record<string, string> => {
-  const { base = ".", ignoreList = [] } = option;
-  const sourceDir = join(process.cwd(), base);
+  const { base = process.cwd(), ignoreList = [] } = option;
 
   // 获取指定根目录下的所有目录绝对路径
-  const dirPaths = readDirPaths(sourceDir, ignoreList);
+  const dirPaths = readDirPaths(base, ignoreList);
 
   // 只扫描根目录的 md 文件
-  scannerMdFile(sourceDir, option, "", cleanUrls, true);
+  scannerMdFile(base, option, "", cleanUrls, true);
 
   // 遍历根目录下的每个子目录
   dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath), cleanUrls));

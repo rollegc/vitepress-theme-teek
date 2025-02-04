@@ -32,7 +32,8 @@
     "vitepress-plugin-md-h1": "workspace:*",
     "vitepress-plugin-permalink": "workspace:*",
     "vitepress-plugin-sidebar-resolve": "workspace:*",
-    "vitepress-plugin-catalogue": "workspace:*"
+    "vitepress-plugin-catalogue": "workspace:*",
+    "vitepress-plugin-doc-analysis": "workspace:*"
   },
   "peerDependencies": {
     "vite": "^6.0.7",

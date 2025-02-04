@@ -11,6 +11,15 @@ const tkConfig = themeConfig({
     name: "Shp Liu",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！", // 个性签名
   },
+  docAnalysis: {
+    createTime: "2021-10-19",
+    siteView: true,
+    pageView: true,
+    wordsCount: true,
+    readingTime: true,
+    siteIteration: 2500,
+    pageIteration: 2500,
+  },
 });
 
 // https://vitepress.dev/reference/site-config

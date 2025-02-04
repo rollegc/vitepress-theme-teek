@@ -2,8 +2,9 @@ import type { PluginOption, ViteDevServer } from "vite";
 import createPermalinks from "./helper";
 import type { PermalinkOption } from "./types";
 import chalk from "chalk";
+import { join } from "node:path";
 
-export type { PermalinkOption };
+export * from "./types";
 
 export const log = (message: string, type = "yellow") => {
   console.log((chalk as any)[type](message));
@@ -15,9 +16,12 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
   return {
     name: "vite-plugin-vitepress-sidebar-permalink",
     config(config: any) {
-      const { themeConfig, srcDir, cleanUrls } = config.vitepress.site;
+      const {
+        site: { themeConfig, cleanUrls },
+        srcDir,
+      } = config.vitepress;
 
-      option.base = option.base || srcDir || ".";
+      option.base = option.base ? join(process.cwd(), option.base) : srcDir;
 
       const permalinks = createPermalinks(option, cleanUrls);
 

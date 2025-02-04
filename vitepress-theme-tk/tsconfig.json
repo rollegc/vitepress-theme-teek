@@ -6,6 +6,6 @@
       "vitepress-theme-tk": ["src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "typings/*.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "typings/*.d.ts", "src/helper/busuanzi.ts"],
   "exclude": ["node_modules", "dist"]
 }
