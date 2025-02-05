@@ -21,14 +21,58 @@ export interface KtThemeConfig {
    * 首页 Banner 配置
    */
   banner?: {
+    /**
+     * Banner 背景风格
+     */
     bgStyle?: "default" | "bigImg" | "grid";
-    bigImg?: string | string[];
+    /**
+     * Banner 背景色，bgStyle 为 default 时生效
+     * @default '#e5e5e5'
+     */
+    defaultBgColor?: string;
+    /**
+     * Banner 字体颜色，bgStyle 为 default 时生效
+     * @default '#000000'
+     */
+    defaultTextColor?: string;
+    /**
+     * Banner 大图链接，bgStyle 为 bigImg 时生效
+     */
+    bigImgSrc?: string | string[];
+    /**
+     * Banner 遮罩颜色，bgStyle 为 bigImg 时生效
+     * @default 'rgba(0, 0, 0, 0.4)'
+     */
+    maskBg?: string | number;
     descStyle?: "default" | "types" | "fade";
+    /**
+     * 描述信息
+     */
     description?: string | string[];
+    /**
+     * 标题字体大小
+     * @default '3.2rem'
+     */
     titleFontSize?: string;
+    /**
+     * 描述字体大小
+     * @default '1.4rem'
+     */
     descFontSize?: string;
+    /**
+     * 打字速度，descStyle 为 types 时生效
+     * @default 200
+     */
     typesInTime?: number;
+    /**
+     * 删字速度，descStyle 为 types 时生效
+     * @default 100
+     */
     typesOutTime?: number;
+    /**
+     * 打字与删字的间隔时间，descStyle 为 types 时生效
+     * @default 800
+     */
     typeNextTime?: number;
   };
   /**

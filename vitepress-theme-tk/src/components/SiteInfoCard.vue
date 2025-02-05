@@ -1,15 +1,15 @@
 <script setup lang="ts" name="SiteInfoCard">
-import { useThemeConfig } from "../configProvider";
+import { useUnrefData } from "../configProvider";
 import { useDesign, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, timeDiff } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("siteInfo");
 
-const themeConfig = useThemeConfig();
+const { theme } = useUnrefData();
 
-const { fileList = [], totalFileWords = 0, lastCommitTime } = themeConfig.docAnalysisInfo || {};
-const { createTime, siteView = true, siteIteration } = themeConfig.docAnalysis || {};
+const { fileList = [], totalFileWords = 0, lastCommitTime } = theme.docAnalysisInfo || {};
+const { createTime, siteView = true, siteIteration } = theme.docAnalysis || {};
 
 const createToNowDay = dayDiff(createTime || getNowDate());
 

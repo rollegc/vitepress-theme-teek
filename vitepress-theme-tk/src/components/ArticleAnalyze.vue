@@ -1,26 +1,25 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { useData, useRoute } from "vitepress";
+import { useRoute } from "vitepress";
 import { useDesign, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
 import { computed, ref, unref } from "vue";
 import { formatDate } from "../helper";
 import { House, User, Calendar, FolderOpened, CollectionTag, Reading, Clock, View } from "@element-plus/icons-vue";
-import { useThemeConfig } from "../configProvider";
+import { useUnrefData } from "../configProvider";
 import { FileWords } from "vitepress-plugin-doc-analysis";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("articleAnalyze");
 
-const { page, frontmatter } = useData();
-const themeConfig = useThemeConfig();
+const { theme, frontmatter, page } = useUnrefData();
 
-const author = unref(frontmatter).author || themeConfig.author;
-const date = formatDate(unref(frontmatter).date || new Date(), "yyyy-MM-dd");
-const categories = unref(frontmatter).categories || [];
-const tags = unref(frontmatter).tags || [];
+const author = frontmatter.author || theme.author;
+const date = formatDate(frontmatter.date || new Date(), "yyyy-MM-dd");
+const categories = frontmatter.categories || [];
+const tags = frontmatter.tags || [];
 // 文章阅读量
-const { eachFileWords } = themeConfig.docAnalysisInfo || {};
-const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = themeConfig.docAnalysis || {};
+const { eachFileWords } = theme.docAnalysisInfo || {};
+const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
 
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<FileWords> = {};
@@ -32,8 +31,8 @@ const pageViewInfo = computed(() => {
 });
 
 // 面包屑
-const breadcrumb = unref(frontmatter).breadcrumb || themeConfig.breadcrumb || { enabled: true, showCurrentName: false };
-const relativePathArr = unref(page).relativePath.split("/") as string[];
+const breadcrumb = frontmatter.breadcrumb || theme.breadcrumb || { enabled: true, showCurrentName: false };
+const relativePathArr = page.relativePath.split("/") as string[];
 const classifyList = ref<string[]>([]);
 
 relativePathArr.forEach((item, index) => {
@@ -46,7 +45,7 @@ relativePathArr.forEach((item, index) => {
 });
 
 const getFilePath = (index: number) => {
-  return themeConfig.catalogues?.inv[relativePathArr[index]];
+  return theme.catalogues?.inv[relativePathArr[index]];
 };
 
 const { pagePv, isGet } = useBuSunZi(pageIteration);

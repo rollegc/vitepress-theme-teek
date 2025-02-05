@@ -1,11 +1,8 @@
 @use "../namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-info;
+$prefix-class: #{$theme-namespace}-home-info;
 
 .#{$prefix-class} {
-  display: flex;
-  flex-direction: column;
-
   & .card {
     margin: 0 auto 10px;
     padding: 10px;

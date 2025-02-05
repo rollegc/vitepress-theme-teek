@@ -1,19 +1,19 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import { useDesign } from "../hooks";
-import { postsSymbol, isCategoriesPage } from "../configProvider";
+import { postsSymbol, isCategoriesPage, useUnrefData } from "../configProvider";
 import { computed, inject, unref, ref, watch } from "vue";
-import { useRoute, useData } from "vitepress";
+import { useRoute } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("category");
 
-const { frontmatter } = useData();
+const { frontmatter } = useUnrefData();
 const {
   groupCards: { categories },
 } = inject(postsSymbol);
 
 // 分类显示数量
-const categorySize = unref(frontmatter).tk?.categorySize || 5;
+const categorySize = frontmatter.tk?.categorySize || 5;
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则显示前 categorySize 个分类
 const currentCategories = computed(() => (isCategoriesPage() ? categories : categories.slice(0, categorySize)));
 

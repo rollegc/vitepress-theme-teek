@@ -1,14 +1,13 @@
 <script setup lang="ts" name="ArchivesPage">
 import { useDesign } from "../hooks";
-import { useData } from "vitepress";
-import { postsSymbol } from "../configProvider";
+import { postsSymbol, useUnrefData } from "../configProvider";
 import { inject } from "vue";
 import { KtContentData } from "../data/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("archives");
 
-const { frontmatter } = useData();
+const { frontmatter } = useUnrefData();
 
 const posts = inject(postsSymbol);
 

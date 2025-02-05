@@ -20,7 +20,7 @@ defineProps<{ item: DefaultTheme.SidebarMulti; index: number | string }>();
         <span>{{ `${index}. ${item.text}` }}</span>
       </div>
 
-      <ul v-if="item.items" :class="`${prefixClass}__inline`">
+      <ul v-if="item.items" :class="`${prefixClass}__inline flx-wrap-between`">
         <!-- 递归 -->
         <CatalogueItem v-for="(item, i) in item.items" :key="i" :item :index="`${index}-${i + 1}`" />
       </ul>

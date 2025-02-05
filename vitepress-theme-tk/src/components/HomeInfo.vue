@@ -7,7 +7,7 @@ import SiteInfoCard from "./SiteInfoCard.vue";
 import { isHomePage, isCategoriesPage, isTagsPage } from "../configProvider";
 
 const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("info");
+const prefixClass = getPrefixClass("home-info");
 </script>
 
 <template>

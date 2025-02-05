@@ -7,10 +7,6 @@ $prefix-class2: #{$theme-namespace}-catalogue-item;
 // 递归块样式
 .#{$prefix-class} {
   &__inline {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
     margin-top: 0.7rem;
     margin-left: 1rem;
 

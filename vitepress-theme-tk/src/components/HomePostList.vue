@@ -1,27 +1,27 @@
 <script setup lang="ts" name="HomePostList">
 import { inject, reactive, ref, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
-import { postsSymbol } from "../configProvider";
+import { postsSymbol, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
-import { useData, useRoute } from "vitepress";
+import { useRoute } from "vitepress";
 import { useDesign } from "../hooks";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-list");
 
 const posts = inject(postsSymbol);
-const { frontmatter } = useData();
+const { frontmatter } = useUnrefData();
 
 // 分页信息
 const pageInfo = reactive({
   pageNum: 1,
   pageSizes: [10, 20, 50, 100, 200],
-  pageSize: unref(frontmatter).tk?.page?.pageSize || 10,
+  pageSize: frontmatter.tk?.page?.pageSize || 10,
   total: 0,
 });
 
 // 分页组件的 Props
-const pageOptions = { size: "small", ...unref(frontmatter).tk?.page };
+const pageOptions = { size: "small", ...frontmatter.tk?.page };
 
 const route = useRoute();
 const currentPosts = ref([]);
@@ -82,7 +82,7 @@ const handlePagination = () => {
       </li>
     </ul>
     <ClientOnly>
-      <div :class="`${prefixClass}-pagination`">
+      <div :class="`${prefixClass}-pagination flx-justify-center`">
         <Pagination
           v-if="posts.sortPostsByDateAndSticky?.length >= pageInfo.pageSize"
           v-model="pageInfo"

@@ -8,7 +8,7 @@ import ArchivesPage from "../components/ArchivesPage.vue";
 import CataloguePage from "../components/CataloguePage.vue";
 import ArticleAnalyze from "../components/ArticleAnalyze.vue";
 import ArticleImagePreview from "../components/ArticleImagePreview.vue";
-import { isHomePage, useThemeConfig, isArchivesPage, isCataloguePage } from "../configProvider";
+import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 
 defineOptions({
   name: "TkLayout",
@@ -19,7 +19,7 @@ const { Layout } = DefaultTheme;
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("layout");
 
-const useKtTheme = useThemeConfig().ktTheme ?? true;
+const useKtTheme = useUnrefData().theme.ktTheme ?? true;
 </script>
 
 <template>
@@ -43,7 +43,7 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
       <!-- 自定义首页 -->
       <div v-if="useKtTheme" :class="`${prefixClass}-home`">
         <template v-if="isHomePage()"><HomeBanner /></template>
-        <div :class="`${prefixClass}-home-content`">
+        <div :class="`${prefixClass}-home-content flx-start-justify-center`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
           <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
         </div>
@@ -150,10 +150,7 @@ $prefix-class: #{$theme-namespace}-layout;
 .#{$prefix-class} {
   &-home {
     &-content {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      margin: 5rem auto 0;
+      margin: 3rem auto 0;
       max-width: 1120px;
       gap: 20px;
 

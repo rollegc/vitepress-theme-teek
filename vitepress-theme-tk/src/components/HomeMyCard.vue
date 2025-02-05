@@ -1,11 +1,11 @@
 <script setup lang="ts" name="HomeMyCard">
 import { useDesign } from "../hooks";
-import { useThemeConfig } from "../configProvider";
+import { useUnrefData } from "../configProvider";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");
 
-const blogger = useThemeConfig().blogger || {};
+const blogger = useUnrefData().theme.blogger || {};
 </script>
 
 <template>

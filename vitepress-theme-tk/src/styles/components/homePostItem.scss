@@ -11,8 +11,6 @@ $prefix-class: #{$theme-namespace}-post-item;
   border-radius: 0.25rem;
   box-shadow: 0 1px 8px 0 var(--tk-shadow-color);
   transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
 
   &:hover {
     box-shadow: 0 2px 16px 0 var(--tk-shadow-color-hover);
@@ -39,9 +37,6 @@ $prefix-class: #{$theme-namespace}-post-item;
   }
 
   &-info {
-    display: flex;
-    align-items: center;
-
     &__left {
       flex: 1;
 

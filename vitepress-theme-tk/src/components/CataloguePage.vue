@@ -1,18 +1,15 @@
 <script setup lang="ts" name="Catalogue">
 import { useDesign } from "../hooks";
-import { useThemeConfig } from "../configProvider";
-import { unref } from "vue";
-import { useData } from "vitepress";
+import { useUnrefData } from "../configProvider";
 import CatalogueItem from "./CatalogueItem.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("catalogue");
 
-const themeConfig = useThemeConfig();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useUnrefData();
 
 const getPath = () => {
-  const { path } = unref(frontmatter);
+  const { path } = frontmatter;
 
   if (!path) return "";
   if (path.startsWith("/") && path.endsWith("/")) return path;
@@ -21,7 +18,7 @@ const getPath = () => {
   return `/${path}/`;
 };
 
-const catalogueList = themeConfig.sidebar[getPath()];
+const catalogueList = theme.sidebar[getPath()];
 </script>
 
 <template>

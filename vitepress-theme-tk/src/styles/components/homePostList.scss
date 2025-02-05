@@ -4,9 +4,6 @@ $prefix-class: #{$theme-namespace}-post-list;
 
 .#{$prefix-class} {
   &-pagination {
-    display: flex;
-    justify-content: center;
-
     :deep(.el-pagination li.is-active.number) {
       background-color: var(--vp-c-brand-2);
     }

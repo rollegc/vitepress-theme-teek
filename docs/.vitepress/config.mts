@@ -20,6 +20,10 @@ const tkConfig = themeConfig({
     siteIteration: 2500,
     pageIteration: 2500,
   },
+  banner: {
+    bgStyle: "bigImg",
+    bigImgSrc: "/img/girl.png",
+  },
 });
 
 // https://vitepress.dev/reference/site-config

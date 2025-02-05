@@ -1,19 +1,19 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
-import { useData } from "vitepress";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
 import { formatDate, isArray } from "../helper";
 import { ElIcon } from "element-plus";
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
+import { useUnrefData } from "../configProvider";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-item");
 
 const props = defineProps<{ post: KtContentData }>();
 
-const { frontmatter } = useData();
+const { frontmatter } = useUnrefData();
 
 const postFrontmatter = computed(() => props.post.frontmatter);
 const getImgUrl = (imgUrl: string | string[]) => {
@@ -23,7 +23,7 @@ const getImgUrl = (imgUrl: string | string[]) => {
 
 const handleViewImg = (imgUrl: string | string[]) => {
   const urlList = (isArray(imgUrl) ? imgUrl : [imgUrl]) as string[];
-  const imageViewerOptions = { ...unref(frontmatter).tk?.imageViewer, urlList };
+  const imageViewerOptions = { ...frontmatter.tk?.imageViewer, urlList };
   createImageViewer(imageViewerOptions);
 };
 </script>
@@ -32,7 +32,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
   <div :class="prefixClass">
     <i v-if="!!postFrontmatter.sticky" class="pin" title="置顶" />
 
-    <div :class="`${prefixClass}-info`">
+    <div :class="`${prefixClass}-info flx-align-center`">
       <div :class="`${prefixClass}-info__left`">
         <!-- 标题 -->
         <a class="title" :href="post.url">

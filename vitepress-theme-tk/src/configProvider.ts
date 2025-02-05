@@ -29,9 +29,9 @@ export const configProvider = (Layout: Component) => {
   return createConfigProvider(Layout);
 };
 
-export const useThemeConfig = () => {
-  const { theme } = useData();
-  return unref(theme);
+export const useUnrefData = () => {
+  const { theme, frontmatter, site, page } = useData();
+  return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
 export const isHomePage = () => {

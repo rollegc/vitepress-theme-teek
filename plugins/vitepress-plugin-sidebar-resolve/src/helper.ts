@@ -11,7 +11,7 @@ export const log = (message: string, type = "yellow") => {
 };
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "package.json"];
+export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "package.json", "public"];
 
 /**
  * 生成侧边栏数据
