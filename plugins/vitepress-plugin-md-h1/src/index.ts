@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
-import type { PluginOption } from "vite";
+import type { Plugin } from "vite";
 import matter from "gray-matter";
 import { basename } from "node:path";
 
-export default function VitePluginVitePressMdH1(): PluginOption {
+export default function VitePluginVitePressMdH1(): Plugin {
   return {
     name: "vite-plugin-vitepress-md-h1",
     transform: (code, id) => {

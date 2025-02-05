@@ -1,11 +1,11 @@
-import type { PluginOption } from "vite";
+import type { Plugin } from "vite";
 import { CatalogueOption } from "./types";
 import createCatalogues from "./helper";
 import { join } from "node:path";
 
 export * from "./types";
 
-export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): PluginOption {
+export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin {
   return {
     name: "vite-plugin-vitepress-catalogue",
     config(config: any) {

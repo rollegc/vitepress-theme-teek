@@ -53,7 +53,7 @@ export const isArchivesPage = () => {
   return unref(frontmatter).archivesPage;
 };
 
-export const isCatalogue = () => {
+export const isCataloguePage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).catalogue;
 };

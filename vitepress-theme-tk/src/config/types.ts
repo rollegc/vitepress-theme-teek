@@ -18,6 +18,20 @@ export interface KtThemeConfig {
    */
   author?: string | { name: string; link?: string };
   /**
+   * 首页 Banner 配置
+   */
+  banner?: {
+    bgStyle?: "default" | "bigImg" | "grid";
+    bigImg?: string | string[];
+    descStyle?: "default" | "types" | "fade";
+    description?: string | string[];
+    titleFontSize?: string;
+    descFontSize?: string;
+    typesInTime?: number;
+    typesOutTime?: number;
+    typeNextTime?: number;
+  };
+  /**
    * 面包屑配置
    */
   breadcrumb?: {
@@ -79,10 +93,10 @@ export interface KtThemeConfig {
      * @default 2000 (2秒)
      */
     siteIteration: number;
-		/**
-		 * 如果文章页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
-		 * @default 2000 (2秒)
-		 */
+    /**
+     * 如果文章页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
+     * @default 2000 (2秒)
+     */
     pageIteration: number;
   };
   plugins?: {

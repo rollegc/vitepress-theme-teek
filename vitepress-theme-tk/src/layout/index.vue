@@ -5,10 +5,10 @@ import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
 import ArchivesPage from "../components/ArchivesPage.vue";
-import Catalogue from "../components/Catalogue.vue";
+import CataloguePage from "../components/CataloguePage.vue";
 import ArticleAnalyze from "../components/ArticleAnalyze.vue";
 import ArticleImagePreview from "../components/ArticleImagePreview.vue";
-import { isHomePage, useThemeConfig, isArchivesPage, isCatalogue } from "../configProvider";
+import { isHomePage, useThemeConfig, isArchivesPage, isCataloguePage } from "../configProvider";
 
 defineOptions({
   name: "TkLayout",
@@ -29,10 +29,10 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
     </template>
     <template #doc-before>
       <slot name="doc-before" />
-			<ClientOnly>
-				<ArticleAnalyze />
-				<ArticleImagePreview />
-			</ClientOnly>
+      <ClientOnly>
+        <ArticleAnalyze />
+        <ArticleImagePreview />
+      </ClientOnly>
     </template>
     <template #nav-bar-content-before>
       <slot name="nav-bar-content-before" />
@@ -42,7 +42,7 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
       <slot name="home-hero-before" />
       <!-- 自定义首页 -->
       <div v-if="useKtTheme" :class="`${prefixClass}-home`">
-        <div :class="`${prefixClass}-home__banner`" v-if="isHomePage()"><HomeBanner /></div>
+        <template v-if="isHomePage()"><HomeBanner /></template>
         <div :class="`${prefixClass}-home-content`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
           <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
@@ -86,7 +86,7 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
     <template #page-top>
       <slot name="page-top" />
       <ArchivesPage v-if="isArchivesPage()" />
-      <Catalogue v-if="isCatalogue()" />
+      <CataloguePage v-if="isCataloguePage()" />
     </template>
     <template #page-bottom>
       <slot name="page-bottom" />
@@ -145,31 +145,23 @@ const useKtTheme = useThemeConfig().ktTheme ?? true;
 
 <style lang="scss" scoped>
 @use "../styles/namespace.scss" as *;
-
 $prefix-class: #{$theme-namespace}-layout;
 
 .#{$prefix-class} {
   &-home {
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 1120px;
-
-    &__banner {
-      margin-top: 0;
-      padding: 30px 0;
-    }
-
     &-content {
       display: flex;
       align-items: flex-start;
       justify-content: center;
+      margin: 5rem auto 0;
+      max-width: 1120px;
+      gap: 20px;
 
       &__list {
         flex: 1;
       }
 
       &__info {
-        margin-left: 16px;
         position: sticky;
         top: calc(var(--vp-nav-height) + 10px);
       }

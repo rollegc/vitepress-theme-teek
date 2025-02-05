@@ -1,4 +1,4 @@
-import type { PluginOption, ViteDevServer } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
 import createPermalinks from "./helper";
 import type { PermalinkOption } from "./types";
 import chalk from "chalk";
@@ -10,7 +10,7 @@ export const log = (message: string, type = "yellow") => {
   console.log((chalk as any)[type](message));
 };
 
-export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): PluginOption {
+export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): Plugin {
   let vitepressConfig: any = {};
 
   return {

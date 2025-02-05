@@ -46,12 +46,12 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 
     <div v-if="siteView" :class="`${prefixClass}-item`">
       <span>本站被访问了：</span>
-      <span>{{ isGet ? sitePv : "Get ..." }}次</span>
+      <span>{{ isGet ? sitePv : "Get..." }}次</span>
     </div>
 
     <div v-if="siteView" :class="`${prefixClass}-item`">
       <span>您的访问排名：</span>
-      <span>{{ isGet ? siteUv : "Get ..." }}名</span>
+      <span>{{ isGet ? siteUv : "Get..." }}名</span>
     </div>
   </div>
 </template>

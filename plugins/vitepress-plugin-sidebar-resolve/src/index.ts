@@ -1,4 +1,4 @@
-import type { PluginOption, ViteDevServer } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
 import type { SidebarOption } from "./types";
 import chalk from "chalk";
 import createSidebar from "./helper";
@@ -9,7 +9,7 @@ export * from "./util";
 
 const log = console.log;
 
-export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): PluginOption {
+export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin {
   return {
     name: "vite-plugin-vitepress-sidebar-resolve",
     configureServer({ watcher, restart }: ViteDevServer) {
