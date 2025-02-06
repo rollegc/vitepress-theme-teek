@@ -22,8 +22,11 @@ const tkConfig = themeConfig({
   },
   banner: {
     bgStyle: "bigImg",
-    bigImgSrc: "/img/bg1.jpg",
-    descStyle: "types",
+    bigImgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+    descStyle: "switch",
+  },
+  bodyBgImg: {
+    // imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
   },
 });
 

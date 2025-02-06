@@ -27,12 +27,12 @@ export interface KtThemeConfig {
     imgSrc?: string | string[];
     /**
      * body 背景图透明度，选值 0.1 ~ 1.0
-     * @default 0.5
+     * @default 1
      */
     imgOpacity?: 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1;
     /**
-     * body 当多张背景图时，设置切换时间，默认 15s
-     * @default 15
+     * body 当多张背景图时（imgSrc 为数组），设置切换时间，单位：毫秒
+     * @default 15000 (15秒)
      */
     imgInterval?: number;
   };
@@ -55,6 +55,16 @@ export interface KtThemeConfig {
      * @default []
      */
     bigImgSrc?: string | string[];
+    /**
+     * 当多张大图时（bigImgSrc 为数组），设置切换时间，单位：毫秒
+     * @default 15000 (15秒)
+     */
+    bigImgInterval?: number;
+    /**
+     * Banner 大图遮罩，bgStyle 为 bigImg 时生效
+     * @default true
+     */
+    mask?: boolean;
     /**
      * Banner 遮罩颜色，bgStyle 为 bigImg 时生效
      * @default 'rgba(0, 0, 0, 0.4)'
@@ -82,22 +92,27 @@ export interface KtThemeConfig {
     descStyle?: "default" | "types" | "switch";
     /**
      * 描述信息
-     * @default '''
+     * @default ''
      */
     description?: string | string[];
     /**
+     * 描述信息切换间隔时间，单位：毫秒，descStyle 为 switch 时生效
+     * @default 4000 (4秒)
+     */
+    switchTime?: number;
+    /**
      * 输出一个文字的时间，单位：毫秒，descStyle 为 types 时生效
-     * @default 200
+     * @default 200 (0.2秒)
      */
     typesInTime?: number;
     /**
      * 删除一个文字的时间，单位：毫秒，descStyle 为 types 时生效
-     * @default 100
+     * @default 100 (0.1秒)
      */
     typesOutTime?: number;
     /**
      * 打字与删字的间隔时间，单位：毫秒，descStyle 为 types 时生效
-     * @default 800
+     * @default 800 (0.8秒)
      */
     typesNextTime?: number;
   };

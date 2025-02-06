@@ -3,15 +3,10 @@ $primaryColor: #395ae3;
 :root {
   --vp-c-indigo-1: #{$primaryColor};
   --vp-c-indigo-3: #{$primaryColor};
-  --vp-c-bg-alt: #f5f7fa;
   --vp-c-brand-2: #2a87f8;
   --vp-c-green: #{$primaryColor};
   --vp-layout-max-width: 97vw;
   --vp-sidebar-width: 275px;
-}
-
-.dark {
-  --vp-c-bg-alt: #262727;
 }
 
 .VPContent .VPDoc.has-aside .content-container {

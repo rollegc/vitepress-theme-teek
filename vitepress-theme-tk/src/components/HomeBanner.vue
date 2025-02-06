@@ -1,8 +1,7 @@
 <script setup lang="ts" name="HomeBanner">
-import { useDesign } from "../hooks";
+import { useDesign, useTextTypes, useTextSwitch, useSwitchImage } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
-import { useTextTypes, useTextSwitch } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import { isArray, isNumber } from "../helper";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
@@ -20,14 +19,16 @@ const descArray = isArray(frontmatter.tk?.description)
 const {
   bgStyle = "default",
   bigImgSrc,
-  maskBg = "rgba(0,0,0,0.4)",
-  defaultBgColor = "#e 5 e 5 e 5",
+  bigImgInterval = 15000,
+  mask = true,
+  maskBg = "rgba(0, 0, 0, 0.4)",
+  defaultBgColor = "#e5e5e5",
   textColor,
   features = [],
   typesInTime = 200,
   typesOutTime = 100,
   typesNextTime = 800,
-  switchTime = 2500,
+  switchTime = 4000,
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
   descStyle = "default",
@@ -40,6 +41,8 @@ const isBodyBygImg = !!theme.bodyBgImg?.imgSrc;
 const isDefaultDescStyle = descStyle === "default";
 const isTypesDescStyle = descStyle === "types";
 const isSwitchDescStyle = descStyle === "switch";
+
+const { imageSrc, startSwitch } = useSwitchImage(bigImgSrc, bigImgInterval);
 
 const getStyle = () => {
   let baseStyle = { "--banner-title-text": titleFontSize, "--banner-desc-text": descFontSize };
@@ -54,14 +57,15 @@ const getStyle = () => {
     return {
       ...baseStyle,
       background:
-        "rgb(40,40,45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)",
+        "rgb(40, 40, 45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)",
       "--banner-text-color": textColor || "#ffffff",
     };
   }
+
   if (isBigImgBgStyle) {
     return {
       ...baseStyle,
-      backgroundImage: bigImgSrc ? `url(${bigImgSrc})` : "",
+      backgroundImage: `url(${unref(imageSrc)})`,
       "--banner-text-color": textColor || "#ffffff",
       "--banner-mask-bg-color": isNumber(maskBg) ? `rgba(0, 0, 0, ${maskBg})` : maskBg,
     };
@@ -102,7 +106,8 @@ const { text, switchText } = useTextSwitch(descArray, switchTime);
 onMounted(() => {
   if (isTypesDescStyle) startTypes();
   if (isSwitchDescStyle) switchText();
-  if (isBigImgBgStyle) nextTick(() => watchScroll());
+  if (isBigImgBgStyle) startSwitch();
+  if (isBigImgBgStyle || isBodyBygImg) nextTick(() => watchScroll());
 });
 
 onUnmounted(() => {
@@ -117,7 +122,7 @@ onUnmounted(() => {
     :class="[prefixClass, { default: isDefaultBgStyle, 'big-img': isBigImgBgStyle, grid: isGridBgStyle }]"
     :style="getStyle()"
   >
-    <div v-if="isBigImgBgStyle && !isBodyBygImg" class="mask" />
+    <div v-if="mask && isBigImgBgStyle && !isBodyBygImg" class="mask" />
 
     <div :class="[`${prefixClass}-content`, { center: isBigImgBgStyle || !features.length }]">
       <h1 :class="`${prefixClass}-content__title`">{{ title }}</h1>

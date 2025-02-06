@@ -4,4 +4,5 @@ export * from "./useViewTransition";
 export * from "./useDesign";
 export * from "./useTextTypes";
 export * from "./useTextSwitch";
+export * from "./useSwitchImage";
 export * from "./useBuSunZi";

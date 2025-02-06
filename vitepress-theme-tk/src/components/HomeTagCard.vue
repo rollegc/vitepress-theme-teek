@@ -64,3 +64,9 @@ const getTagStyle = (index: number) => {
 <style lang="scss" scoped>
 @use "../styles/components/homeTagCard.scss";
 </style>
+
+<style lang="scss">
+.VPNavBar.home.top {
+  background-color: var(--tk-bg-color1);
+}
+</style>

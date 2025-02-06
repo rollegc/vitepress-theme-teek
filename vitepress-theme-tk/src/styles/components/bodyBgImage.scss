@@ -1,6 +1,6 @@
 @use "../namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-bodyBgImg;
+$prefix-class: #{$theme-namespace}-bodyBgImage;
 
 .#{$prefix-class} {
   position: fixed;

@@ -56,3 +56,9 @@ watch(
 <style lang="scss" scoped>
 @use "../styles/components/homeCategoryCard.scss";
 </style>
+
+<style lang="scss">
+.VPNavBar.home.top {
+  background-color: var(--tk-bg-color1);
+}
+</style>
