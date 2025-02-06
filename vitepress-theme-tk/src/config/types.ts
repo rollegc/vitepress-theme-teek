@@ -41,7 +41,7 @@ export interface KtThemeConfig {
    */
   banner?: {
     /**
-     * Banner 背景风格
+     * Banner 背景风格：default 为纯色背景，bigImg 为大图背景，grid 为网格背景
      * @default 'default'
      */
     bgStyle?: "default" | "bigImg" | "grid";
@@ -86,7 +86,7 @@ export interface KtThemeConfig {
      */
     descFontSize?: string;
     /**
-     * 描述信息风格，default 为纯文字渲染风格（如果 description 为数组，则取第一个），types 为文字打印风格，switch 为文字切换风格
+     * 描述信息风格：default 为纯文字渲染风格（如果 description 为数组，则取第一个），types 为文字打印风格，switch 为文字切换风格
      * @default 'default'
      */
     descStyle?: "default" | "types" | "switch";
@@ -147,6 +147,11 @@ export interface KtThemeConfig {
      * 博主签名
      */
     slogan?: string;
+    /**
+     * 头像风格：radius 为圆形头像，可支持鼠标悬停旋转，full 为方形头像
+     * @default 'radius'
+     */
+    avatarStyle?: "radius" | "full";
   };
   docAnalysis?: {
     /**

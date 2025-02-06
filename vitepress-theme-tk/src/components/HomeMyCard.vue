@@ -5,12 +5,14 @@ import { useUnrefData } from "../configProvider";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");
 
-const blogger = useUnrefData().theme.blogger || {};
+const { theme } = useUnrefData();
+
+const blogger = theme.blogger || {};
 </script>
 
 <template>
   <div :class="`${prefixClass} card`">
-    <div :class="`${prefixClass}-avatar`">
+    <div :class="`${prefixClass}-avatar ${blogger.avatarStyle || 'radius'}`">
       <img :src="blogger.avatar" alt="头像" title="我好看吗" />
     </div>
     <div :class="`${prefixClass}-blogger`">
