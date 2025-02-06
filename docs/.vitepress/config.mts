@@ -8,7 +8,7 @@ const tkConfig = themeConfig({
   blogger: {
     // 博主信息，显示在首页侧边栏
     avatar: "https://cdn.jsdmirror.com/gh/xugaoyi/image_store/blog/20200103123203.jpg",
-    name: "Shp Liu",
+    name: "天客",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！", // 个性签名
   },
   docAnalysis: {
@@ -22,7 +22,8 @@ const tkConfig = themeConfig({
   },
   banner: {
     bgStyle: "bigImg",
-    bigImgSrc: "/img/girl.png",
+    bigImgSrc: "/img/bg1.jpg",
+    descStyle: "types",
   },
 });
 

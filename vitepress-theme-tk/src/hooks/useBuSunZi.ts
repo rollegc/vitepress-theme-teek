@@ -26,15 +26,15 @@ export const useBuSunZi = (iterationTime = 2000) => {
   // 第一次调用
   request();
 
-  let interval: NodeJS.Timeout | undefined;
+  let interval: NodeJS.Timeout;
   let i = 0;
   // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
   interval = setInterval(() => {
     if (!unref(isGet)) {
       i += iterationTime;
-      if (i > iterationTime * 5) clearInterval(interval!);
+      if (i > iterationTime * 5) clearInterval(interval);
       request();
-    } else clearInterval(interval!);
+    } else clearInterval(interval);
   }, iterationTime);
 
   onBeforeUnmount(() => {

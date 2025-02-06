@@ -11,7 +11,6 @@ $prefix-class: #{$theme-namespace}-tag;
   &-list {
     margin-top: 5px;
     a {
-      opacity: 0.8;
       color: var(--tk-bg-color1);
       display: inline-block;
       padding: 0 0.4rem;
@@ -24,17 +23,14 @@ $prefix-class: #{$theme-namespace}-tag;
       text-align: center;
 
       &:hover {
-        opacity: 1;
         transform: scale(1.05);
       }
 
       &.active {
         box-shadow: 0 5px 10px -5px var(--home-tag-color);
         transform: scale(1.15);
-        opacity: 1;
         &:hover {
           text-decoration: none;
-          opacity: 0.8;
         }
       }
     }

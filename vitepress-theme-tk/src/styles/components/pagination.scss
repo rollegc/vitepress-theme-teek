@@ -4,7 +4,6 @@ $prefix-class: #{$theme-namespace}-pagination;
 
 .#{$prefix-class} {
   padding: 15px 2px 0;
-  background: var(--tk-bg-color1);
 
   &.hidden {
     display: none;

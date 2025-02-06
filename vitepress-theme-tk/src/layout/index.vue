@@ -8,6 +8,7 @@ import ArchivesPage from "../components/ArchivesPage.vue";
 import CataloguePage from "../components/CataloguePage.vue";
 import ArticleAnalyze from "../components/ArticleAnalyze.vue";
 import ArticleImagePreview from "../components/ArticleImagePreview.vue";
+import BodyBgImage from "../components/BodyBgImage.vue";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 
 defineOptions({
@@ -19,10 +20,14 @@ const { Layout } = DefaultTheme;
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("layout");
 
-const useKtTheme = useUnrefData().theme.ktTheme ?? true;
+const { theme } = useUnrefData();
+
+const useKtTheme = theme.ktTheme ?? true;
 </script>
 
 <template>
+  <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
+
   <Layout :class="prefixClass">
     <template #layout-top>
       <slot name="layout-top" />

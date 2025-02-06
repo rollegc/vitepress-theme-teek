@@ -2,9 +2,9 @@
 import { useDesign } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
-import { useTypes } from "../hooks";
+import { useTextTypes, useTextSwitch } from "../hooks";
 import { useUnrefData } from "../configProvider";
-import { isNumber } from "../helper";
+import { isArray, isNumber } from "../helper";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 
 const { getPrefixClass } = useDesign();
@@ -12,43 +12,57 @@ const prefixClass = getPrefixClass("banner");
 
 const { site, theme, frontmatter } = useUnrefData();
 
-const title = frontmatter.name || site.title || "";
-const descArray = [...new Set(frontmatter.tk?.description?.filter((v: string) => !!v))] as string[];
+const title = frontmatter.tk?.name || site.title || "";
+const descArray = isArray(frontmatter.tk?.description)
+  ? ([...new Set(frontmatter.tk?.description?.filter((v: string) => !!v))] as string[])
+  : [frontmatter.tk?.description];
+
 const {
   bgStyle = "default",
   bigImgSrc,
   maskBg = "rgba(0,0,0,0.4)",
-  defaultBgColor = "#e5e5e5",
-  defaultTextColor = "#000000",
+  defaultBgColor = "#e 5 e 5 e 5",
+  textColor,
   features = [],
   typesInTime = 200,
   typesOutTime = 100,
   typesNextTime = 800,
+  switchTime = 2500,
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
+  descStyle = "default",
 } = { ...theme.banner, ...frontmatter.tk };
 
-const isDefaultStyle = bgStyle === "default";
-const isBigImgStyle = bgStyle === "bigImg";
-const isGridStyle = bgStyle === "grid";
+const isDefaultBgStyle = bgStyle === "default";
+const isBigImgBgStyle = bgStyle === "bigImg";
+const isGridBgStyle = bgStyle === "grid";
+const isBodyBygImg = !!theme.bodyBgImg?.imgSrc;
+const isDefaultDescStyle = descStyle === "default";
+const isTypesDescStyle = descStyle === "types";
+const isSwitchDescStyle = descStyle === "switch";
 
 const getStyle = () => {
   let baseStyle = { "--banner-title-text": titleFontSize, "--banner-desc-text": descFontSize };
 
-  if (isDefaultStyle) return { ...baseStyle, backgroundColor: defaultBgColor, "--banner-text-color": defaultTextColor };
-  if (isGridStyle) {
+  if (isBodyBygImg) return { ...baseStyle, "--banner-text-color": textColor || "#ffffff" };
+
+  if (isDefaultBgStyle) {
+    return { ...baseStyle, backgroundColor: defaultBgColor, "--banner-text-color": textColor || "#000000" };
+  }
+
+  if (isGridBgStyle) {
     return {
       ...baseStyle,
       background:
         "rgb(40,40,45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)",
-      "--banner-text-color": "#ffffff",
+      "--banner-text-color": textColor || "#ffffff",
     };
   }
-  if (isBigImgStyle) {
+  if (isBigImgBgStyle) {
     return {
       ...baseStyle,
       backgroundImage: bigImgSrc ? `url(${bigImgSrc})` : "",
-      "--banner-text-color": "#ffffff",
+      "--banner-text-color": textColor || "#ffffff",
       "--banner-mask-bg-color": isNumber(maskBg) ? `rgba(0, 0, 0, ${maskBg})` : maskBg,
     };
   }
@@ -75,19 +89,24 @@ const watchScroll = () => {
 };
 
 // 打字效果
-const { text, shouldAnimate, startTypes, stopTypes } = useTypes(descArray, {
-  typesInTime,
-  typesOutTime,
-  typesNextTime,
-});
+const {
+  text: typesText,
+  shouldAnimate,
+  startTypes,
+  stopTypes,
+} = useTextTypes(descArray, { typesInTime, typesOutTime, typesNextTime });
+
+// 切换效果
+const { text, switchText } = useTextSwitch(descArray, switchTime);
 
 onMounted(() => {
-  startTypes();
-  if (isBigImgStyle) nextTick(() => watchScroll());
+  if (isTypesDescStyle) startTypes();
+  if (isSwitchDescStyle) switchText();
+  if (isBigImgBgStyle) nextTick(() => watchScroll());
 });
 
 onUnmounted(() => {
-  stopTypes();
+  if (isTypesDescStyle) stopTypes();
   window.onscroll = null;
 });
 </script>
@@ -95,20 +114,27 @@ onUnmounted(() => {
 <template>
   <div
     ref="bannerRef"
-    :class="[prefixClass, { default: isDefaultStyle, 'big-img': isBigImgStyle, grid: isGridStyle }]"
+    :class="[prefixClass, { default: isDefaultBgStyle, 'big-img': isBigImgBgStyle, grid: isGridBgStyle }]"
     :style="getStyle()"
   >
-    <div v-if="isBigImgStyle" class="mask" />
+    <div v-if="isBigImgBgStyle && !isBodyBygImg" class="mask" />
 
-    <div :class="[`${prefixClass}-content`, { center: isBigImgStyle || !features.length }]">
+    <div :class="[`${prefixClass}-content`, { center: isBigImgBgStyle || !features.length }]">
       <h1 :class="`${prefixClass}-content__title`">{{ title }}</h1>
-      <p v-if="descArray.length" :class="`${prefixClass}-content__desc`">
-        <span>{{ text }}</span>
-        <span :class="['typed', { 'is-animation': shouldAnimate }]">|</span>
+
+      <p :class="`${prefixClass}-content__desc`">
+        <template v-if="isDefaultDescStyle">{{ descArray[0] }}</template>
+        <template v-else-if="isSwitchDescStyle">
+          <span v-show="!!text" @click="switchText" class="switch">{{ text || " " }}</span>
+        </template>
+        <template v-else-if="isTypesDescStyle && descArray.length">
+          <span>{{ typesText }}</span>
+          <span :class="['typed', { 'is-animation': shouldAnimate }]">|</span>
+        </template>
       </p>
     </div>
 
-    <div v-if="features.length && !isBigImgStyle" :class="`${prefixClass}-feature flx-wrap-between`">
+    <div v-if="features.length && !isBigImgBgStyle" :class="`${prefixClass}-feature flx-wrap-between`">
       <div :class="`${prefixClass}-feature__item`" v-for="(feature, index) in features" :key="index">
         <a v-if="feature.link" :href="feature.link" class="flx-column-center">
           <img v-if="feature.imgUrl" class="feature-img" :src="withBase(feature.imgUrl)" :alt="feature.title" />
@@ -118,7 +144,8 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <HomeBannerWaves v-if="isBigImgStyle" />
+
+  <HomeBannerWaves v-if="isBigImgBgStyle && !isBodyBygImg" />
 </template>
 
 <style lang="scss" scoped>

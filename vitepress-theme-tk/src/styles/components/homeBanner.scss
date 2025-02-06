@@ -43,13 +43,18 @@ $prefix-class: #{$theme-namespace}-banner;
       font-size: var(--banner-desc-text);
       max-width: 50rem;
       line-height: 1.3;
-      opacity: 0.9;
       margin: 1.5rem auto;
+      height: 32px;
+
+      .switch {
+        animation: fadeIn 1s ease-in-out;
+        cursor: pointer;
+      }
 
       .typed {
         opacity: 1;
         &.is-animation {
-          animation: typedBlink 1 s infinite;
+          animation: fadeOut 1s infinite;
         }
       }
     }
@@ -88,7 +93,16 @@ $prefix-class: #{$theme-namespace}-banner;
   }
 }
 
-@keyframes typedBlink {
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
   0% {
     opacity: 1;
   }

@@ -11,7 +11,7 @@ html {
   --tk-shadow-color: rgba(0, 0, 0, 0.1);
   --tk-shadow-color-hover: rgba(0, 0, 0, 0.2);
   --tk-line-color: rgba(0, 0, 0, 0.12);
-  --tk-bg-color1: var(--vp-nav-bg-color);
+  --tk-bg-color1: var(--vp-c-bg);
   --tk-bg-color2: rgb(255, 255, 255, 0.9);
   --tk-lower-hover: #f8f8f8;
 }
@@ -27,7 +27,7 @@ html.dark {
   --tk-shadow-color: rgba(0, 0, 0, 0.6);
   --tk-shadow-color-hover: rgba(0, 0, 0, 0.7);
   --tk-line-color: #30363d;
-  --tk-bg-color1: var(--vp-nav-bg-color);
+  --tk-bg-color1: var(--vp-c-bg);
   --tk-bg-color2: rgb(20, 20, 20, 0.7);
   --tk-lower-hover: #27272b;
 }

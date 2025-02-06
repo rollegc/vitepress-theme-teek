@@ -6,7 +6,7 @@ export interface TypesOption {
   typesNextTime?: number;
 }
 
-export function useTypes(typesArray: string[], option?: TypesOption) {
+export function useTextTypes(typesArray: string[], option?: TypesOption) {
   const typesInTime = option?.typesInTime || 200;
   const typesOutTime = option?.typesOutTime || 100;
   const typesNextTime = option?.typesNextTime || 800;
