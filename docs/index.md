@@ -14,7 +14,7 @@ tk:
       imgUrl: /img/ui.png
     - title: API
       description: Hd Security 所有的 API 介绍
-      link: /07.API/01.登录 API/
+      link: /07.API/01.API - 登录/
       imgUrl: /img/other.png
   description:
     - 故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt

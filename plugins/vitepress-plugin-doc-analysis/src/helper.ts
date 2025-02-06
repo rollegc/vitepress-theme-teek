@@ -8,7 +8,14 @@ export const log = (message: string, type = "yellow") => {
 };
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = [".vitepress", "node_modules", "public"];
+export const DEFAULT_IGNORE_DIR = [
+  "scripts",
+  "components",
+  "assets",
+  ".vitepress",
+  "node_modules",
+  "public",
+];
 
 export default (option: SiteInfoOption = {}) => {
   const { base = process.cwd() } = option;
