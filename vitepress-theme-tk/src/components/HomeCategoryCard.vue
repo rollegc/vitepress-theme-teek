@@ -3,23 +3,35 @@ import { useDesign } from "../hooks";
 import { postsSymbol, isCategoriesPage, useUnrefData } from "../configProvider";
 import { computed, inject, unref, ref, watch } from "vue";
 import { useRoute } from "vitepress";
+import HomeCard from "./HomeCard.vue";
+import categorySvg from "../assets/svg/category";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("category");
 
-const { frontmatter } = useUnrefData();
+const { frontmatter, theme } = useUnrefData();
 const {
   groupCards: { categories },
 } = inject(postsSymbol);
 
-// 分类显示数量
-const categorySize = frontmatter.tk?.categorySize || 5;
-// 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则显示前 categorySize 个分类
-const currentCategories = computed(() => (isCategoriesPage() ? categories : categories.slice(0, categorySize)));
-
 const route = useRoute();
 // 当前选中的分类，从 URL 查询参数中获取
 const category = ref("");
+
+const pageNum = ref(1);
+// 分类显示数量
+const { pageTitle = `${categorySvg}全部分类`, homeTitle = `${categorySvg}文章分类` } = {
+  ...theme.category,
+  ...frontmatter.tk,
+};
+const limit = theme.category?.limit || frontmatter.tk?.categoryLimit || 5;
+
+const categoriesPage = isCategoriesPage();
+// 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
+const currentCategories = computed(() => {
+  const p = unref(pageNum);
+  return categoriesPage ? categories : categories.slice((p - 1) * limit, p * limit);
+});
 
 watch(
   route,
@@ -29,15 +41,26 @@ watch(
   },
   { immediate: true }
 );
+
+const transitionName = ref("");
+
+const pagination = (_: number, type: "prev" | "next") => {
+  transitionName.value = `slide-${type}`;
+};
 </script>
 
 <template>
-  <div :class="`${prefixClass} card`">
-    <a href="/categories" :title="isCategoriesPage() ? '全部分类' : '文章分类'" class="title">
-      {{ isCategoriesPage() ? "全部分类" : "文章分类" }}
-    </a>
-
-    <div :class="`${prefixClass}-list`">
+  <HomeCard
+    page
+    v-model="pageNum"
+    :pageSize="limit"
+    :total="categories.length"
+    :title="categoriesPage ? pageTitle : homeTitle"
+    title-link="/categories"
+    :class="prefixClass"
+    @pagination="pagination"
+  >
+    <TransitionGroup :name="transitionName" tag="div" mode="out-in" :class="`${prefixClass}-list`">
       <a
         v-for="item in currentCategories"
         :key="item.name"
@@ -48,9 +71,9 @@ watch(
         <span>{{ item.length }}</span>
       </a>
 
-      <a v-if="!isCategoriesPage() && categorySize < categories.length" href="/categories">更多 ...</a>
-    </div>
-  </div>
+      <a v-if="!categoriesPage && limit < categories.length" href="/categories">更多 ...</a>
+    </TransitionGroup>
+  </HomeCard>
 </template>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBanner">
-import { useDesign, useTextTypes, useTextSwitch, useSwitchImage } from "../hooks";
+import { useDesign, useTextTypes, useTextSwitch, useSwitchImage, useSwitchData } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useUnrefData } from "../configProvider";
@@ -18,8 +18,8 @@ const descArray = isArray(frontmatter.tk?.description)
 
 const {
   bgStyle = "default",
-  bigImgSrc,
-  bigImgInterval = 15000,
+  imgSrc,
+  imgInterval = 15000,
   mask = true,
   maskBg = "rgba(0, 0, 0, 0.4)",
   defaultBgColor = "#e5e5e5",
@@ -42,7 +42,17 @@ const isDefaultDescStyle = descStyle === "default";
 const isTypesDescStyle = descStyle === "types";
 const isSwitchDescStyle = descStyle === "switch";
 
-const { imageSrc, startSwitch } = useSwitchImage(bigImgSrc, bigImgInterval);
+const { data: imageSrc, switchData: switchImg } = useSwitchData({
+  dataArray: imgSrc,
+  timeout: imgInterval,
+  onAfterUpdate: newValue => {
+    // 预加载下一张图片
+    if (newValue) {
+      const img = new Image();
+      img.src = newValue;
+    }
+  },
+});
 
 const getStyle = () => {
   let baseStyle = { "--banner-title-text": titleFontSize, "--banner-desc-text": descFontSize };
@@ -92,7 +102,7 @@ const watchScroll = () => {
   };
 };
 
-// 打字效果
+// 文字打印输入输出效果
 const {
   text: typesText,
   shouldAnimate,
@@ -100,13 +110,23 @@ const {
   stopTypes,
 } = useTextTypes(descArray, { typesInTime, typesOutTime, typesNextTime });
 
-// 切换效果
-const { text, switchText } = useTextSwitch(descArray, switchTime);
+// 文字淡入淡出效果
+const { data: text, switchData: switchText } = useSwitchData({
+  dataArray: descArray,
+  timeout: switchTime,
+  onUpdate: (data, newValue) => {
+    // 重新渲染数据，同时触发动画
+    data.value = "";
+    setTimeout(() => {
+      data.value = newValue;
+    }, 100);
+  },
+});
 
 onMounted(() => {
   if (isTypesDescStyle) startTypes();
   if (isSwitchDescStyle) switchText();
-  if (isBigImgBgStyle) startSwitch();
+  if (isBigImgBgStyle) switchImg();
   if (isBigImgBgStyle || isBodyBygImg) nextTick(() => watchScroll());
 });
 

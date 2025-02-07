@@ -2,6 +2,7 @@ import { PermalinkOption } from "vitepress-plugin-permalink";
 import { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import { CatalogueOption } from "vitepress-plugin-catalogue";
 import { SiteInfoOption } from "vitepress-plugin-doc-analysis";
+import { PaginationProps } from "element-plus";
 
 export interface KtThemeConfig {
   /**
@@ -35,6 +36,16 @@ export interface KtThemeConfig {
      * @default 15000 (15秒)
      */
     imgInterval?: number;
+    /**
+     * body 背景图遮罩
+     * @default false
+     */
+    mask?: boolean;
+    /**
+     * body 背景图遮罩颜色，如果为数字，则是 rgba(0, 0, 0, ${maskBg})，如果为字符串，则作为背景色。mask 为 true 时生效
+     * @default 'rgba(0, 0, 0, 0.2)'
+     */
+    maskBg?: string | number;
   };
   /**
    * 首页 Banner 配置
@@ -46,27 +57,27 @@ export interface KtThemeConfig {
      */
     bgStyle?: "default" | "bigImg" | "grid";
     /**
-     * Banner 背景色，bgStyle 为 default 时生效
+     * Banner 背景色。bgStyle 为 default 时生效
      * @default '#e5e5e5'
      */
     defaultBgColor?: string;
     /**
-     * Banner 大图链接，bgStyle 为 bigImg 时生效
+     * Banner 大图链接。bgStyle 为 bigImg 时生效
      * @default []
      */
-    bigImgSrc?: string | string[];
+    imgSrc?: string | string[];
     /**
-     * 当多张大图时（bigImgSrc 为数组），设置切换时间，单位：毫秒
+     * 当多张大图时（imgSrc 为数组），设置切换时间，单位：毫秒
      * @default 15000 (15秒)
      */
-    bigImgInterval?: number;
+    imgInterval?: number;
     /**
      * Banner 大图遮罩，bgStyle 为 bigImg 时生效
      * @default true
      */
     mask?: boolean;
     /**
-     * Banner 遮罩颜色，bgStyle 为 bigImg 时生效
+     * Banner 遮罩颜色，如果为数字，则是 rgba(0, 0, 0, ${maskBg})，如果为字符串，则作为背景色。bgStyle 为 bigImg 且 mask 为 true 时生效
      * @default 'rgba(0, 0, 0, 0.4)'
      */
     maskBg?: string | number;
@@ -96,22 +107,22 @@ export interface KtThemeConfig {
      */
     description?: string | string[];
     /**
-     * 描述信息切换间隔时间，单位：毫秒，descStyle 为 switch 时生效
+     * 描述信息切换间隔时间，单位：毫秒。descStyle 为 switch 时生效
      * @default 4000 (4秒)
      */
     switchTime?: number;
     /**
-     * 输出一个文字的时间，单位：毫秒，descStyle 为 types 时生效
+     * 输出一个文字的时间，单位：毫秒。descStyle 为 types 时生效
      * @default 200 (0.2秒)
      */
     typesInTime?: number;
     /**
-     * 删除一个文字的时间，单位：毫秒，descStyle 为 types 时生效
+     * 删除一个文字的时间，单位：毫秒。descStyle 为 types 时生效
      * @default 100 (0.1秒)
      */
     typesOutTime?: number;
     /**
-     * 打字与删字的间隔时间，单位：毫秒，descStyle 为 types 时生效
+     * 打字与删字的间隔时间，单位：毫秒。descStyle 为 types 时生效
      * @default 800 (0.8秒)
      */
     typesNextTime?: number;
@@ -153,7 +164,98 @@ export interface KtThemeConfig {
      */
     avatarStyle?: "radius" | "full";
   };
+  category?: {
+    /**
+     * 分类页卡片标题
+     * @default '${svg}全部分类'
+     */
+    pageTitle?: string;
+    /**
+     * 首页卡片标题
+     * @default '${svg}文章分类'
+     */
+    homeTitle?: string;
+    /**
+     * 一页显示的数量
+     * @default 5
+     */
+    limit?: number;
+  };
+  tag?: {
+    /**
+     * 标签页页卡片标题
+     * @default '${svg}全部标签'
+     */
+    pageTitle?: string;
+    /**
+     * 首页卡片标题
+     * @default '${svg}热门标签'
+     */
+    homeTitle?: string;
+    /**
+     * 一页显示的数量
+     * @default 21
+     */
+    limit?: number;
+  };
+  hotArticle?: {
+    /**
+     * 首页卡片标题
+     * @default '${svg}精选文章'
+     */
+    title?: string;
+    /**
+     * 一页显示的数量
+     * @default 5
+     */
+    limit?: number;
+  };
+  friendLink?: {
+    list?: {
+      /**
+       * 友链头像
+       */
+      avatar?: string;
+      /**
+       * 友链名称
+       */
+      name: string;
+      /**
+       * 友链描述
+       */
+      desc?: string;
+      /**
+       * 友链链接
+       */
+      link?: string;
+    }[];
+    /**
+     * 首页卡片标题
+     * @default '${svg}友情链接'
+     */
+    title?: string;
+    /**
+     * 一页显示的数量
+     * @default 5
+     */
+    limit?: number;
+    /**
+     * 是否自动滚动
+     * @default true
+     */
+    autoScroll?: boolean;
+    /**
+     * 滚动间隔时间，单位：毫秒。autoScroll 为 true 时生效
+     * @default 2500 (2.5秒)
+     */
+    scrollIntervalTime?: number;
+  };
   docAnalysis?: {
+    /**
+     * 首页卡片标题
+     * @default '${svg}站点信息'
+     */
+    title?: string;
     /**
      * 项目创建时间
      */
@@ -227,4 +329,5 @@ export interface KtThemeConfig {
      */
     siteInfoOption?: SiteInfoOption;
   };
+  page?: Partial<PaginationProps>;
 }

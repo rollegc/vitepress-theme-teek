@@ -57,3 +57,8 @@ export const isCataloguePage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).catalogue;
 };
+
+export const getBgColor = () => {
+  const { theme } = useData();
+  return unref(theme).bgColor || ["#E15B64", "#11a8cd", "#F8B26A", "#67CC86", "#F47E60", "#849B87"];
+};

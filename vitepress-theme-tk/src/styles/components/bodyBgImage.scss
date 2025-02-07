@@ -11,4 +11,10 @@ $prefix-class: #{$theme-namespace}-bodyBgImage;
   width: 100vw;
   transition: background 0.5s;
   background: center center / cover no-repeat;
+
+  .mask {
+    width: 100%;
+    height: 100%;
+    background-color: var(--body-mask-bg-color);
+  }
 }

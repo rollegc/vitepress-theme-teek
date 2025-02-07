@@ -3,4 +3,42 @@
 $prefix-class: #{$theme-namespace}-friendLink;
 
 .#{$prefix-class} {
+  position: relative;
+
+  &-list {
+    gap: 20px;
+    padding-right: 5px;
+
+    &__item {
+      transition: all 0.5s ease;
+      padding: 0 5px;
+      a {
+        gap: 15px;
+        .friend-avatar {
+          width: 3vw;
+          height: 3vw;
+          border-radius: 50%;
+        }
+      }
+
+      &-info {
+        // 让文字溢出后显示 ...
+        min-width: 0;
+        .friend-name {
+          font-size: 16px;
+          font-weight: 450;
+        }
+        .friend-desc {
+          font-size: 14px;
+          color: var(--vp-c-text-2);
+        }
+      }
+    }
+  }
+
+  &-empty {
+    font-size: 14px;
+    padding: 6px;
+    text-align: center;
+  }
 }

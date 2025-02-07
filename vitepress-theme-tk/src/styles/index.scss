@@ -8,14 +8,14 @@ html {
   --tk-lower-color4: rgba(253, 253, 253, 0.3);
   --tk-lower-color5: rgba(253, 253, 253, 0.5);
   --tk-lower-color6: rgba(253, 253, 253, 0.7);
-  --tk-shadow-color: rgba(0, 0, 0, 0.1);
-  --tk-shadow-color-hover: rgba(0, 0, 0, 0.2);
   --tk-line-color: rgba(0, 0, 0, 0.12);
   --tk-bg-color1: var(--vp-c-bg);
-  --tk-bg-color2: rgb(255, 255, 255, 0.9);
+  --tk-bg-color2: rgb(255, 255, 255, 0.7);
+  --tk-shadow-color: rgba(0, 0, 0, 0.1);
+  --tk-shadow-color-hover: rgba(0, 0, 0, 0.2);
   --tk-lower-hover: #f8f8f8;
-	--tk-home-card-padding: 10px;
-	--tk-home-card-width: 270px;
+  --tk-home-card-padding: 10px;
+  --tk-home-card-width: 280px;
 }
 
 html.dark {
@@ -26,11 +26,11 @@ html.dark {
   --tk-lower-color4: rgba(34, 34, 34, 0.3);
   --tk-lower-color5: rgba(34, 34, 34, 0.5);
   --tk-lower-color6: rgba(34, 34, 34, 0.7);
+  --tk-bg-color1: var(--vp-c-bg);
+  --tk-bg-color2: rgb(20, 20, 20, 0.7);
   --tk-shadow-color: rgba(0, 0, 0, 0.6);
   --tk-shadow-color-hover: rgba(0, 0, 0, 0.7);
   --tk-line-color: #30363d;
-  --tk-bg-color1: var(--vp-c-bg);
-  --tk-bg-color2: rgb(20, 20, 20, 0.7);
   --tk-lower-hover: #27272b;
 }
 

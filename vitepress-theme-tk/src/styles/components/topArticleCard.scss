@@ -1,0 +1,55 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-topArticle;
+
+.#{$prefix-class} {
+  position: relative;
+  &-list {
+    gap: 10px;
+    padding-right: 5px;
+
+    &__item {
+      display: flex;
+      gap: 10px;
+
+      .num {
+        color: var(--tk-lower-color1);
+        font-size: 14px;
+        margin-top: 4px;
+        padding: 0 6px;
+        height: 18px;
+        line-height: 18px;
+        border-radius: 8px 0;
+        font-weight: 600;
+        font-style: italic;
+
+        &.sticky {
+          font-size: 12px;
+          background-color: var(--tk-num-bg-color);
+          color: #ffffff;
+          border-radius: 8px 0;
+        }
+      }
+
+      &-info {
+        // 让文字溢出后显示 ...
+        min-width: 0;
+
+        .title {
+          font-size: 14px;
+          font-weight: 450;
+        }
+        .date {
+          font-size: 12px;
+          color: var(--vp-c-text-2);
+        }
+      }
+    }
+  }
+
+  &-empty {
+    font-size: 14px;
+    padding: 6px;
+    text-align: center;
+  }
+}

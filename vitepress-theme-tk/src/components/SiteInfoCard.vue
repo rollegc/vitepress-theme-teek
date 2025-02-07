@@ -2,14 +2,21 @@
 import { useUnrefData } from "../configProvider";
 import { useDesign, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, timeDiff } from "../helper";
+import HomeCard from "./HomeCard.vue";
+import siteInfoSvg from "../assets/svg/siteInfo";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("siteInfo");
 
-const { theme } = useUnrefData();
+const { frontmatter, theme } = useUnrefData();
 
-const { fileList = [], totalFileWords = 0, lastCommitTime } = theme.docAnalysisInfo || {};
-const { createTime, siteView = true, siteIteration } = theme.docAnalysis || {};
+const {
+  createTime,
+  siteView = true,
+  siteIteration,
+  title = `${siteInfoSvg}站点信息`,
+} = { ...theme.docAnalysis, ...frontmatter.tk };
+const { fileList = [], totalFileWords = 0, lastCommitTime } = { ...theme.docAnalysisInfo };
 
 const createToNowDay = dayDiff(createTime || getNowDate());
 
@@ -17,9 +24,7 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 </script>
 
 <template>
-  <div :class="`${prefixClass} card`">
-    <div :class="`${prefixClass}-title`">站点信息</div>
-
+  <HomeCard :title :class="`${prefixClass} card`">
     <div :class="`${prefixClass}-item`">
       <span>文章数目：</span>
       <span>{{ fileList.length }} 篇</span>
@@ -53,7 +58,7 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
       <span>您的访问排名：</span>
       <span>{{ isGet ? siteUv : "Get..." }}名</span>
     </div>
-  </div>
+  </HomeCard>
 </template>
 
 <style lang="scss" scoped>

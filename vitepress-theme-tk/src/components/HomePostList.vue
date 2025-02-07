@@ -10,18 +10,18 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-list");
 
 const posts = inject(postsSymbol);
-const { frontmatter } = useUnrefData();
+const { frontmatter, theme } = useUnrefData();
+
+// 自定义一页数量 & 分页组件的 Props
+const { pageSize = 10, size = "small", ...pageProps } = { ...theme.page, ...frontmatter.tk?.page };
 
 // 分页信息
 const pageInfo = reactive({
   pageNum: 1,
   pageSizes: [10, 20, 50, 100, 200],
-  pageSize: frontmatter.tk?.page?.pageSize || 10,
+  pageSize: pageSize,
   total: 0,
 });
-
-// 分页组件的 Props
-const pageOptions = { size: "small", ...frontmatter.tk?.page };
 
 const route = useRoute();
 const currentPosts = ref([]);
@@ -86,7 +86,7 @@ const handlePagination = () => {
         <Pagination
           v-if="posts.sortPostsByDateAndSticky?.length >= pageInfo.pageSize"
           v-model="pageInfo"
-          v-bind="pageOptions"
+          v-bind="pageProps"
           @pagination="handlePagination"
         />
       </div>

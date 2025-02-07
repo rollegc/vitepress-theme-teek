@@ -3,11 +3,6 @@
 $prefix-class: #{$theme-namespace}-tag;
 
 .#{$prefix-class} {
-  .title {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-
   &-list {
     margin-top: 5px;
     a {
