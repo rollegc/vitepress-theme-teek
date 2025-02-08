@@ -3,8 +3,8 @@
 $prefix-class: #{$theme-namespace}-topArticle;
 
 .#{$prefix-class} {
-  position: relative;
   &-list {
+    position: relative;
     gap: 10px;
     padding-right: 5px;
 

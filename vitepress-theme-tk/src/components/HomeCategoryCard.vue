@@ -9,6 +9,8 @@ import categorySvg from "../assets/svg/category";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("category");
 
+const { categoriesPage = false } = defineProps<{ categoriesPage: boolean }>();
+
 const { frontmatter, theme } = useUnrefData();
 const {
   groupCards: { categories },
@@ -26,7 +28,6 @@ const { pageTitle = `${categorySvg}全部分类`, homeTitle = `${categorySvg}文
 };
 const limit = theme.category?.limit || frontmatter.tk?.categoryLimit || 5;
 
-const categoriesPage = isCategoriesPage();
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
 const currentCategories = computed(() => {
   const p = unref(pageNum);
@@ -51,7 +52,7 @@ const pagination = (_: number, type: "prev" | "next") => {
 
 <template>
   <HomeCard
-    page
+    :page="!categoriesPage"
     v-model="pageNum"
     :pageSize="limit"
     :total="categories.length"

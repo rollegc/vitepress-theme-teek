@@ -4,6 +4,7 @@ $prefix-class: #{$theme-namespace}-tag;
 
 .#{$prefix-class} {
   &-list {
+    position: relative;
     margin-top: 5px;
     a {
       color: var(--tk-bg-color1);

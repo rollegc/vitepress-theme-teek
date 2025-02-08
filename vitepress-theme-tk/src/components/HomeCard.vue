@@ -16,7 +16,6 @@ export interface HomeCardProps {
   auto?: boolean;
   timeout?: number;
 }
-const emit = defineEmits<{ pagination: [to: number, "pre" | "next"] }>();
 
 const {
   title = "",
@@ -27,6 +26,9 @@ const {
   auto = false,
   timeout = 4000,
 } = defineProps<HomeCardProps>();
+
+const emit = defineEmits<{ pagination: [to: number, "pre" | "next"] }>();
+
 const pageNum = defineModel<number>({ default: 1 });
 const pageTotalNum = Math.ceil(total / pageSize);
 const hasNextData = total !== 0 && pageTotalNum !== 1;
@@ -49,7 +51,7 @@ const startTimer = () => {
   if (timer) clearTimeout(timer);
   if (timeout > 0) {
     timer = setTimeout(() => {
-      pagination(1);
+      pagination(1, "next");
     }, timeout);
   }
 };
@@ -125,11 +127,11 @@ $prefix-class: #{$theme-namespace}-homeCard;
   }
   .slide-prev-enter-from {
     transform: translateX(-100%);
-    opacity: 0.5;
+    opacity: 0;
   }
   .slide-prev-leave-to {
     transform: translateX(100%);
-    opacity: 0.5;
+    opacity: 0;
   }
   .slide-prev-leave-active {
     position: absolute;

@@ -3,9 +3,8 @@
 $prefix-class: #{$theme-namespace}-category;
 
 .#{$prefix-class} {
-  position: relative;
-
   &-list {
+    position: relative;
     margin-top: 5px;
 
     a {

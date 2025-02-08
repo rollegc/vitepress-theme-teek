@@ -37,6 +37,8 @@ const transitionName = ref("scroll");
 const pagination = (_: number, type: "prev" | "next") => {
   transitionName.value = `slide-${type}`;
 };
+
+const liRefs = ref<HTMLLIElement[]>([]);
 </script>
 
 <template>
@@ -55,10 +57,16 @@ const pagination = (_: number, type: "prev" | "next") => {
       mode="out-in"
       v-if="list?.length"
       :class="`${prefixClass}-list flx-column`"
-      @mouseenter="stopScroll"
-      @mouseleave="startScroll"
+      @mouseenter="autoScroll ? stopScroll : () => {}"
+      @mouseleave="autoScroll ? startScroll : () => {}"
     >
-      <li v-for="item in currentFriendLinkList" :key="item.name" :class="`${prefixClass}-list__item`">
+      <li
+        ref="liRefs"
+        v-for="item in currentFriendLinkList"
+        :key="item.name"
+        :class="`${prefixClass}-list__item`"
+        :style="`top: calc(${index} * (calc(var(--tk-friend-gap) + ${liRefs?.[index]?.getBoundingClientRect().height || 0}px)))`"
+      >
         <a :href="item.link" class="flx-align-center">
           <img :src="item.avatar" class="friend-avatar" />
           <div :class="`${prefixClass}-list__item-info`">

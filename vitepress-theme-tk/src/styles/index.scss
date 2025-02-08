@@ -16,6 +16,9 @@ html {
   --tk-lower-hover: #f8f8f8;
   --tk-home-card-padding: 10px;
   --tk-home-card-width: 280px;
+  --tk-gap1: 10px;
+  --tk-gap2: 20px;
+  --tk-friend-gap: var(--tk-gap2);
 }
 
 html.dark {

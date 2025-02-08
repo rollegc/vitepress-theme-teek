@@ -9,6 +9,8 @@ import tagSvg from "../assets/svg/tag";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("tag");
 
+const { tagsPage = false } = defineProps<{ categoriesPage: boolean }>();
+
 const {
   groupCards: { tags },
 } = inject(postsSymbol);
@@ -24,7 +26,6 @@ const { pageTitle = `${tagSvg}全部标签`, homeTitle = `${tagSvg}热门标签`
 // 标签数量
 const limit = theme.tag?.limit || frontmatter.tk?.tagLimit || 21;
 
-const tagsPage = isTagsPage();
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
 const currentTags = computed(() => {
   const p = unref(pageNum);
@@ -56,7 +57,7 @@ const pagination = (_: number, type: "prev" | "next") => {
 
 <template>
   <HomeCard
-    page
+    :page="!tagsPage"
     v-model="pageNum"
     :pageSize="limit"
     :total="tags.length"
