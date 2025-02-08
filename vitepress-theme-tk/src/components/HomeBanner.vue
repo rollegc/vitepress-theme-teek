@@ -32,7 +32,7 @@ const {
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
   descStyle = "default",
-} = { ...theme.banner, ...frontmatter.tk };
+} = { ...theme.banner, ...frontmatter.tk?.banner };
 
 const isDefaultBgStyle = bgStyle === "default";
 const isBigImgBgStyle = bgStyle === "bigImg";
@@ -42,7 +42,7 @@ const isDefaultDescStyle = descStyle === "default";
 const isTypesDescStyle = descStyle === "types";
 const isSwitchDescStyle = descStyle === "switch";
 
-const { data: imageSrc, switchData: switchImg } = useSwitchData({
+const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   dataArray: imgSrc,
   timeout: imgInterval,
   onAfterUpdate: newValue => {
@@ -111,7 +111,7 @@ const {
 } = useTextTypes(descArray, { typesInTime, typesOutTime, typesNextTime });
 
 // 文字淡入淡出效果
-const { data: text, switchData: switchText } = useSwitchData({
+const { data: text, startAutoSwitch: switchText } = useSwitchData({
   dataArray: descArray,
   timeout: switchTime,
   onUpdate: (data, newValue) => {

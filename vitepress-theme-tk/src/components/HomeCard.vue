@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeCard">
-import { unref, onMounted } from "vue";
+import { unref, onMounted, ref } from "vue";
 import { useDesign } from "../hooks";
 import { ElIcon } from "element-plus";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
@@ -13,8 +13,8 @@ export interface HomeCardProps {
   page?: boolean;
   pageSize?: number;
   total?: number;
-  auto?: boolean;
-  timeout?: number;
+  autoPage?: boolean;
+  pageTimeOut?: number;
 }
 
 const {
@@ -23,8 +23,8 @@ const {
   page = false,
   pageSize = 4,
   total,
-  auto = false,
-  timeout = 4000,
+  autoPage = false,
+  pageTimeOut = 4000,
 } = defineProps<HomeCardProps>();
 
 const emit = defineEmits<{ pagination: [to: number, "pre" | "next"] }>();
@@ -32,11 +32,13 @@ const emit = defineEmits<{ pagination: [to: number, "pre" | "next"] }>();
 const pageNum = defineModel<number>({ default: 1 });
 const pageTotalNum = Math.ceil(total / pageSize);
 const hasNextData = total !== 0 && pageTotalNum !== 1;
+const transitionName = ref("scroll");
 
 const pagination = (to: number, type: "prev" | "next") => {
   emit("pagination", to, type);
+  transitionName.value = `slide-${type}`;
 
-  if (auto) startTimer();
+  if (page && autoPage) startAutoPage();
   const index = unref(pageNum) % pageTotalNum;
   const res = (index + to) % pageTotalNum;
 
@@ -47,17 +49,21 @@ const pagination = (to: number, type: "prev" | "next") => {
 
 let timer: NodeJS.Timeout;
 
-const startTimer = () => {
-  if (timer) clearTimeout(timer);
-  if (timeout > 0) {
+const startAutoPage = () => {
+  closeAutoPage();
+  if (pageTimeOut > 0) {
     timer = setTimeout(() => {
       pagination(1, "next");
-    }, timeout);
+    }, pageTimeOut);
   }
 };
 
+const closeAutoPage = () => {
+  if (timer) clearTimeout(timer);
+};
+
 onMounted(() => {
-  if (auto) startTimer();
+  if (page && autoPage) startAutoPage();
 });
 </script>
 
@@ -87,7 +93,7 @@ onMounted(() => {
       </slot>
     </div>
 
-    <slot />
+    <slot v-bind="{ transitionName, startAutoPage, closeAutoPage }" />
   </div>
 </template>
 
@@ -105,7 +111,7 @@ $prefix-class: #{$theme-namespace}-homeCard;
   .slide-next-move,
   .slide-next-enter-active,
   .slide-next-leave-active {
-    transition: all 0.5s ease;
+    transition: all 0.5s ease !important;
   }
   .slide-next-enter-from {
     transform: translateX(100%);
@@ -123,7 +129,7 @@ $prefix-class: #{$theme-namespace}-homeCard;
   .slide-prev-move,
   .slide-prev-enter-active,
   .slide-prev-leave-active {
-    transition: all 0.5s ease;
+    transition: all 0.5s ease !important;
   }
   .slide-prev-enter-from {
     transform: translateX(-100%);

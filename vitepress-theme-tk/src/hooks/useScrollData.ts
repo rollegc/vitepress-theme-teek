@@ -1,11 +1,11 @@
 import { ref } from "vue";
 
-export const useSwiper = (list: any[], limit: number, intervalTime = 3000) => {
+export const useScrollData = (list: any[], limit: number, intervalTime = 3000) => {
   const visibleData = ref(list.slice(0, limit));
   let currentIndex = limit;
   let intervalId: NodeJS.Timeout | null = null;
 
-  const startScroll = () => {
+  const startAutoScroll = () => {
     intervalId = setInterval(() => {
       const nextIndex = (currentIndex + 1) % list.length;
 
@@ -16,7 +16,7 @@ export const useSwiper = (list: any[], limit: number, intervalTime = 3000) => {
     }, intervalTime);
   };
 
-  const stopScroll = () => {
+  const stopAutoScroll = () => {
     if (intervalId) {
       clearInterval(intervalId);
       intervalId = null;
@@ -25,7 +25,7 @@ export const useSwiper = (list: any[], limit: number, intervalTime = 3000) => {
 
   return {
     visibleData,
-    startScroll,
-    stopScroll,
+    startAutoScroll,
+    stopAutoScroll,
   };
 };

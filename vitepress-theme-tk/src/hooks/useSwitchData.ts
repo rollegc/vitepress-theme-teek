@@ -24,12 +24,12 @@ export const useSwitchData = ({
     if (timer) clearTimeout(timer);
     if (timeout > 0) {
       timer = setTimeout(() => {
-        switchData();
+        startAutoSwitch();
       }, timeout);
     }
   };
 
-  const switchData = () => {
+  const startAutoSwitch = () => {
     if (dataArray.length < 1) return;
     if (isString(dataArray)) return (data.value = dataArray);
     if (dataArray.length === 1) return (data.value = dataArray[0]);
@@ -49,5 +49,5 @@ export const useSwitchData = ({
     onAfterUpdate?.(newValue);
   };
 
-  return { data, index, switchData };
+  return { data, index, startAutoSwitch };
 };

@@ -10,7 +10,7 @@ $prefix-class: #{$theme-namespace}-tag;
       color: var(--tk-bg-color1);
       display: inline-block;
       padding: 0 0.4rem;
-      transition: all 0.4s;
+      transition: transform 0.4s;
       border-radius: 3px;
       margin: 0 0.3rem 0.4rem;
       height: 1.4rem;
@@ -39,5 +39,11 @@ $prefix-class: #{$theme-namespace}-tag;
         transform: none;
       }
     }
+  }
+
+  &-empty {
+    font-size: 14px;
+    padding: 6px;
+    text-align: center;
   }
 }

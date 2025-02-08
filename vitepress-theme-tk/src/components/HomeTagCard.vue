@@ -9,7 +9,7 @@ import tagSvg from "../assets/svg/tag";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("tag");
 
-const { tagsPage = false } = defineProps<{ categoriesPage: boolean }>();
+const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
 const {
   groupCards: { tags },
@@ -18,13 +18,15 @@ const {
 const { frontmatter, theme } = useUnrefData();
 
 const route = useRoute();
-// 当前选中的标签，从 URL 查询参数中获取
-const tag = ref("");
 
 const pageNum = ref(1);
-const { pageTitle = `${tagSvg}全部标签`, homeTitle = `${tagSvg}热门标签` } = { ...theme.tag, ...frontmatter.tk };
-// 标签数量
-const limit = theme.tag?.limit || frontmatter.tk?.tagLimit || 21;
+const {
+  pageTitle = `${tagSvg}全部标签`,
+  homeTitle = `${tagSvg}热门标签`,
+  limit = 21,
+  autoPage = false,
+  pageTimeOut = 4000,
+} = { ...theme.tag, ...frontmatter.tk?.tag };
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
 const currentTags = computed(() => {
@@ -32,6 +34,8 @@ const currentTags = computed(() => {
   return tagsPage ? tags : tags.slice((p - 1) * limit, p * limit);
 });
 
+// 当前选中的标签，从 URL 查询参数中获取
+const tag = ref("");
 watch(
   route,
   () => {
@@ -48,11 +52,7 @@ const getTagStyle = (index: number) => {
   return { backgroundColor: color, "--home-tag-color": color };
 };
 
-const transitionName = ref("");
-
-const pagination = (_: number, type: "prev" | "next") => {
-  transitionName.value = `slide-${type}`;
-};
+const itemRefs = ref<HTMLLIElement[]>([]);
 </script>
 
 <template>
@@ -63,22 +63,28 @@ const pagination = (_: number, type: "prev" | "next") => {
     :total="tags.length"
     :title="tagsPage ? pageTitle : homeTitle"
     title-link="/tags"
+    :autoPage
+    :pageTimeOut
     :class="prefixClass"
-    @pagination="pagination"
   >
-    <TransitionGroup :name="transitionName" tag="div" mode="out-in" :class="`${prefixClass}-list`">
-      <a
-        v-for="(item, index) in currentTags"
-        :key="item.name"
-        :style="getTagStyle(index)"
-        :href="`/tags?tag=${encodeURIComponent(item.name)}`"
-        :class="{ active: item.name === tag }"
-      >
-        {{ item.name }}
-      </a>
+    <template #default="{ transitionName }">
+      <TransitionGroup v-if="tags.length" :name="transitionName" tag="div" mode="out-in" :class="`${prefixClass}-list`">
+        <a
+          ref="itemRefs"
+          v-for="(item, index) in currentTags"
+          :key="item.name"
+          :style="getTagStyle(index)"
+          :href="`/tags?tag=${encodeURIComponent(item.name)}`"
+          :class="{ active: item.name === tag }"
+        >
+          {{ item.name }}
+        </a>
 
-      <a v-if="!tagsPage && limit < tags.length" href="/tags" class="more">更多 ...</a>
-    </TransitionGroup>
+        <a v-if="!tagsPage && limit < tags.length" href="/tags" class="more">更多 ...</a>
+      </TransitionGroup>
+
+      <div v-else :class="`${prefixClass}-empty`">暂无热门标签</div>
+    </template>
   </HomeCard>
 </template>
 

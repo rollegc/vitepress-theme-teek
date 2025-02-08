@@ -16,8 +16,8 @@ const prefixClass = getPrefixClass("home-info");
   <div :class="prefixClass">
     <HomeMyCard v-if="isHomePage()" />
     <TopArticleCard v-if="isHomePage()" />
-    <HomeCategoryCard v-if="isHomePage() || isCategoriesPage()" />
-    <HomeTagCard v-if="isHomePage() || isTagsPage()" />
+    <HomeCategoryCard v-if="isHomePage() || isCategoriesPage()" :categoriesPage="isCategoriesPage()" />
+    <HomeTagCard v-if="isHomePage() || isTagsPage()" :tagsPage="isTagsPage()" />
     <SiteInfoCard v-if="isHomePage()" />
     <FriendLinkCard v-if="isHomePage()" />
   </div>

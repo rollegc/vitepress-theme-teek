@@ -15,7 +15,7 @@ let {
   maskBg = "rgba(0, 0, 0, 0.2)",
 } = useUnrefData().theme.bodyBgImg || {};
 
-const { data: imageSrc, switchData: switchImg } = useSwitchData({
+const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   dataArray: imgSrc,
   timeout: imgInterval,
   onAfterUpdate: newValue => {

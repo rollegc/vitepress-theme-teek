@@ -15,7 +15,7 @@ const {
   siteView = true,
   siteIteration,
   title = `${siteInfoSvg}站点信息`,
-} = { ...theme.docAnalysis, ...frontmatter.tk };
+} = { ...theme.docAnalysis, ...frontmatter.tk?.docAnalysis };
 const { fileList = [], totalFileWords = 0, lastCommitTime } = { ...theme.docAnalysisInfo };
 
 const createToNowDay = dayDiff(createTime || getNowDate());

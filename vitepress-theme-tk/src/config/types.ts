@@ -135,25 +135,25 @@ export interface KtThemeConfig {
      * 是否启用面包屑
      * @default true
      */
-    enabled: boolean;
+    enabled?: boolean;
     /**
      * 面包屑最后一列是否显示当前文章的文件名
      * @default false
      */
-    showCurrentName: boolean;
+    showCurrentName?: boolean;
   };
   /**
    * 博主信息 (显示在首页侧边栏)
    */
   blogger?: {
     /**
-     * 博主头像
-     */
-    avatar: string;
-    /**
      * 博主昵称
      */
     name: string;
+    /**
+     * 博主头像
+     */
+    avatar: string;
     /**
      * 博主签名
      */
@@ -180,6 +180,16 @@ export interface KtThemeConfig {
      * @default 5
      */
     limit?: number;
+    /**
+     * 是否自动翻页
+     * @default false
+     */
+    autoPage?: boolean;
+    /**
+     * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+     * @default 4000 (4秒)
+     */
+    pageTimeOut?: number;
   };
   tag?: {
     /**
@@ -197,6 +207,16 @@ export interface KtThemeConfig {
      * @default 21
      */
     limit?: number;
+    /**
+     * 是否自动翻页
+     * @default false
+     */
+    autoPage?: boolean;
+    /**
+     * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+     * @default 4000 (4秒)
+     */
+    pageTimeOut?: number;
   };
   hotArticle?: {
     /**
@@ -209,17 +229,27 @@ export interface KtThemeConfig {
      * @default 5
      */
     limit?: number;
+    /**
+     * 是否自动翻页
+     * @default false
+     */
+    autoPage?: boolean;
+    /**
+     * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+     * @default 4000 (4秒)
+     */
+    pageTimeOut?: number;
   };
   friendLink?: {
     list?: {
       /**
-       * 友链头像
-       */
-      avatar?: string;
-      /**
        * 友链名称
        */
       name: string;
+      /**
+       * 友链头像
+       */
+      avatar?: string;
       /**
        * 友链描述
        */
@@ -241,14 +271,24 @@ export interface KtThemeConfig {
     limit?: number;
     /**
      * 是否自动滚动
-     * @default true
+     * @default false
      */
     autoScroll?: boolean;
     /**
      * 滚动间隔时间，单位：毫秒。autoScroll 为 true 时生效
      * @default 2500 (2.5秒)
      */
-    scrollIntervalTime?: number;
+    scrollTimeOut?: number;
+    /**
+     * 是否自动翻页
+     * @default false
+     */
+    autoPage?: boolean;
+    /**
+     * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+     * @default 4000 (4秒)
+     */
+    pageTimeOut?: number;
   };
   docAnalysis?: {
     /**
@@ -314,7 +354,7 @@ export interface KtThemeConfig {
      * 是否启用 mdH1 插件
      * @default true
      */
-    mdH1: boolean;
+    mdH1?: boolean;
     /**
      * catalogues 插件配置项
      */

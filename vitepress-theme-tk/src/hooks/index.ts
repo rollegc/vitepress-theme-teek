@@ -4,5 +4,5 @@ export * from "./useViewTransition";
 export * from "./useDesign";
 export * from "./useTextTypes";
 export * from "./useSwitchData";
-export * from "./useSwiper";
+export * from "./useScrollData";
 export * from "./useBuSunZi";
