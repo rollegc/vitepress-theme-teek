@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostList">
-import { inject, reactive, ref, unref, watch } from "vue";
+import { inject, reactive, ref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
 import { postsSymbol, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
@@ -36,22 +36,22 @@ const updateData = () => {
   const p = searchParams.get("pageNum") || 1;
   if (p !== pageNum) pageInfo.pageNum = Number(p);
 
-  let post = posts.sortPostsByDateAndSticky;
+  let post = posts?.sortPostsByDateAndSticky;
 
   // 在分类页时，如果 URL 查询参数存在 category，则加载该 category 的 post，不存在则加载所有 post
   if (frontmatter.categoriesPage) {
     const c = searchParams.get("category");
-    post = c ? posts.groupPosts.categories[c] : post;
+    post = c ? posts?.groupPosts.categories[c] : post;
   } else if (frontmatter.tagsPage) {
     // 在标签页时，如果 URL 查询参数存在 tag，则加载该 tag 的 post，不存在则加载所有 post
     const t = searchParams.get("tag");
-    post = t ? posts.groupPosts.tags[t] : post;
+    post = t ? posts?.groupPosts.tags[t] : post;
   }
 
   // 总数处理
-  if (total !== post.length) pageInfo.total = post.length;
+  if (total !== post?.length) pageInfo.total = post?.length || 0;
 
-  currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+  currentPosts.value = post?.slice((pageNum - 1) * pageSize, pageNum * pageSize);
 };
 
 watch(

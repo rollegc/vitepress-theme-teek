@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostItem">
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useDesign } from "../hooks";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";

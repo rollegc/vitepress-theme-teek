@@ -2,7 +2,6 @@
 import { useDesign } from "../hooks";
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
-import type { KtThemeConfig } from "../config/types";
 import HomeMyCard from "./HomeMyCard.vue";
 import HomeCategoryCard from "./HomeCategoryCard.vue";
 import HomeTagCard from "./HomeTagCard.vue";

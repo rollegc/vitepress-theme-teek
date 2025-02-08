@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import { useDesign } from "../hooks";
-import { postsSymbol, isCategoriesPage, useUnrefData } from "../configProvider";
+import { postsSymbol, useUnrefData } from "../configProvider";
 import { computed, inject, unref, ref, watch } from "vue";
 import { useRoute } from "vitepress";
 import HomeCard from "./HomeCard.vue";
@@ -11,13 +11,11 @@ const prefixClass = getPrefixClass("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
+const posts = inject(postsSymbol);
+const categories = computed(() => posts?.groupCards.categories || []);
+
 const { frontmatter, theme } = useUnrefData();
-const {
-  groupCards: { categories },
-} = inject(postsSymbol);
-
 const route = useRoute();
-
 const pageNum = ref(1);
 // 分类配置项
 const {
@@ -30,8 +28,9 @@ const {
 
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
 const currentCategories = computed(() => {
+  const c = unref(categories);
   const p = unref(pageNum);
-  return categoriesPage ? categories : categories.slice((p - 1) * limit, p * limit);
+  return categoriesPage ? c : c.slice((p - 1) * limit, p * limit);
 });
 
 // 当前选中的分类，从 URL 查询参数中获取

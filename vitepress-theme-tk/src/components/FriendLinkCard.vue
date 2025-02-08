@@ -4,7 +4,6 @@ import { useUnrefData } from "../configProvider";
 import { useDesign, useScrollData } from "../hooks";
 import HomeCard from "./HomeCard.vue";
 import friendLinkSvg from "../assets/svg/friendLink";
-import { watch } from "vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("friendLink");

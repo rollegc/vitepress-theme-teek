@@ -1,4 +1,4 @@
-import { defineComponent, h, InjectionKey, provide, Ref, unref, type Component } from "vue";
+import { defineComponent, h, InjectionKey, provide, unref, type Component } from "vue";
 import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./data/types";
 // @ts-ignore
@@ -6,7 +6,7 @@ import { data as posts } from "./data/posts.data";
 import { useData } from "vitepress";
 import "./styles/dark-transition.css";
 
-export const postsSymbol: InjectionKey<Ref<Post>> = Symbol("posts");
+export const postsSymbol: InjectionKey<Post> = Symbol("posts");
 
 function createConfigProvider(Layout: Component) {
   return defineComponent({

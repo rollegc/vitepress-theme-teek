@@ -20,7 +20,7 @@ const {
 } = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
 const TopArticleList =
-  posts.sortPostsByDateAndSticky?.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 })) || [];
+  posts!.sortPostsByDateAndSticky?.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 })) || [];
 const pageNum = ref(1);
 
 // 当前页的文章列表
@@ -29,8 +29,15 @@ const currentTopArticleList = computed(() => {
   return TopArticleList.slice((p - 1) * limit, p * limit);
 });
 
-const itemRefs = ref<HTMLLIElement[]>([]);
 const bgColor = getBgColor();
+const itemRefs = ref<HTMLLIElement[]>([]);
+
+const getStyle = (num: number, index: number) => {
+  return {
+    "--tk-num-bg-color": bgColor[num % bgColor.length],
+    top: `calc(${index} * (calc(var(--tk-gap1) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+  };
+};
 </script>
 
 <template>
@@ -57,10 +64,7 @@ const bgColor = getBgColor();
           v-for="(item, index) in currentTopArticleList"
           :key="item.num"
           :class="`${prefixClass}-list__item`"
-          :style="{
-            '--tk-num-bg-color': bgColor[(item.num - 1) % bgColor.length],
-            top: `calc(${index} * (calc(var(--tk-gap1) + ${itemRefs?.[index]?.getBoundingClientRect().height || 0}px)))`,
-          }"
+          :style="getStyle(item.num - 1, index)"
         >
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
           <div :class="`${prefixClass}-list__item-info`">

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBanner">
-import { useDesign, useTextTypes, useTextSwitch, useSwitchImage, useSwitchData } from "../hooks";
+import { useDesign, useTextTypes, useSwitchData } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useUnrefData } from "../configProvider";
