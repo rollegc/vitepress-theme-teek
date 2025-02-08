@@ -1,12 +1,12 @@
-<script setup lang="ts" name="SiteInfoCard">
+<script setup lang="ts" name="DocAnalysisCard">
 import { useUnrefData } from "../configProvider";
 import { useDesign, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, timeDiff } from "../helper";
 import HomeCard from "./HomeCard.vue";
-import siteInfoSvg from "../assets/svg/siteInfo";
+import docAnalysisSvg from "../assets/svg/docAnalysis";
 
 const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("siteInfo");
+const prefixClass = getPrefixClass("docAnalysis");
 
 const { frontmatter, theme } = useUnrefData();
 // 站点信息配置项
@@ -14,7 +14,7 @@ const {
   createTime,
   siteView = true,
   siteIteration,
-  title = `${siteInfoSvg}站点信息`,
+  title = `${docAnalysisSvg}站点信息`,
 } = { ...theme.docAnalysis, ...frontmatter.tk?.docAnalysis };
 const { fileList = [], totalFileWords = 0, lastCommitTime } = { ...theme.docAnalysisInfo };
 
@@ -63,5 +63,5 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 </template>
 
 <style lang="scss" scoped>
-@use "../styles/components/siteInfoCard.scss";
+@use "../styles/components/docAnalysisCard.scss";
 </style>

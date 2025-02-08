@@ -1,7 +1,7 @@
 import { PermalinkOption } from "vitepress-plugin-permalink";
 import { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import { CatalogueOption } from "vitepress-plugin-catalogue";
-import { SiteInfoOption } from "vitepress-plugin-doc-analysis";
+import { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
 import { PaginationProps } from "element-plus";
 
 export interface KtThemeConfig {
@@ -166,6 +166,11 @@ export interface KtThemeConfig {
   };
   category?: {
     /**
+     * 是否启用分类卡片
+     * @default true
+     */
+    enable?: boolean;
+    /**
      * 分类页卡片标题
      * @default '${svg}全部分类'
      */
@@ -193,6 +198,11 @@ export interface KtThemeConfig {
   };
   tag?: {
     /**
+     * 是否启用标签卡片
+     * @default true
+     */
+    enabled?: boolean;
+    /**
      * 标签页页卡片标题
      * @default '${svg}全部标签'
      */
@@ -218,7 +228,12 @@ export interface KtThemeConfig {
      */
     pageTimeOut?: number;
   };
-  hotArticle?: {
+  topArticle?: {
+    /**
+     * 是否启用精选文章卡片
+     * @default true
+     */
+    enabled?: boolean;
     /**
      * 首页卡片标题
      * @default '${svg}精选文章'
@@ -241,6 +256,14 @@ export interface KtThemeConfig {
     pageTimeOut?: number;
   };
   friendLink?: {
+    /**
+     * 是否启用友情链接卡片
+     * @default true
+     */
+    enabled?: boolean;
+    /**
+     * 友情链接数据列表
+     */
     list?: {
       /**
        * 友链名称
@@ -291,6 +314,11 @@ export interface KtThemeConfig {
     pageTimeOut?: number;
   };
   docAnalysis?: {
+    /**
+     * 是否启用站点信息卡片
+     * @default true
+     */
+    enabled?: boolean;
     /**
      * 首页卡片标题
      * @default '${svg}站点信息'
@@ -360,14 +388,14 @@ export interface KtThemeConfig {
      */
     catalogueOption?: CatalogueOption;
     /**
-     * 是否启用 siteInfo 插件
+     * 是否启用 docAnalysis 插件
      * @default true
      */
-    siteInfo?: boolean;
+    docAnalysis?: boolean;
     /**
-     * siteInfo 插件配置项
+     * docAnalysis 插件配置项
      */
-    siteInfoOption?: SiteInfoOption;
+    docAnalysisOption?: DocAnalysisOption;
   };
   page?: Partial<PaginationProps>;
 }

@@ -13,6 +13,7 @@ const posts = inject(postsSymbol);
 
 const getDate = (item: KtContentData) => {
   const { date } = item;
+  // 获取文章创建时间：MM-DD
   if (date) return date.slice(5, 10);
 };
 </script>

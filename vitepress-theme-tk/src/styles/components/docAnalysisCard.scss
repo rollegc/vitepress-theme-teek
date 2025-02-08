@@ -1,6 +1,6 @@
 @use "../namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-siteInfo;
+$prefix-class: #{$theme-namespace}-docAnalysis;
 
 .#{$prefix-class} {
   &-item {

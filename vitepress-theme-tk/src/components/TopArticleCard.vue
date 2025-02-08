@@ -3,7 +3,7 @@ import { computed, inject, ref, unref } from "vue";
 import { useUnrefData, postsSymbol, getBgColor } from "../configProvider";
 import { useDesign } from "../hooks";
 import HomeCard from "./HomeCard.vue";
-import hotArticleSvg from "../assets/svg/hotArticle";
+import TopArticleSvg from "../assets/svg/topArticle";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("topArticle");
@@ -14,19 +14,19 @@ const { theme, frontmatter } = useUnrefData();
 // 精选文章配置项
 const {
   limit = 4,
-  title = `${hotArticleSvg}精选文章`,
+  title = `${TopArticleSvg}精选文章`,
   autoPage = false,
   pageTimeOut = 4000,
-} = { ...theme.hotArticle, ...frontmatter.tk?.hotArticle };
+} = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
-const hotArticleList =
+const TopArticleList =
   posts.sortPostsByDateAndSticky?.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 })) || [];
 const pageNum = ref(1);
 
 // 当前页的文章列表
-const currentHotArticleList = computed(() => {
+const currentTopArticleList = computed(() => {
   const p = unref(pageNum);
-  return hotArticleList.slice((p - 1) * limit, p * limit);
+  return TopArticleList.slice((p - 1) * limit, p * limit);
 });
 
 const itemRefs = ref<HTMLLIElement[]>([]);
@@ -38,7 +38,7 @@ const bgColor = getBgColor();
     page
     v-model="pageNum"
     :pageSize="limit"
-    :total="hotArticleList.length"
+    :total="TopArticleList.length"
     :title
     :autoPage
     :pageTimeOut
@@ -46,7 +46,7 @@ const bgColor = getBgColor();
   >
     <template #default="{ transitionName }">
       <TransitionGroup
-        v-if="hotArticleList.length"
+        v-if="TopArticleList.length"
         :name="transitionName"
         tag="ul"
         mode="out-in"
@@ -54,7 +54,7 @@ const bgColor = getBgColor();
       >
         <li
           ref="itemRefs"
-          v-for="(item, index) in currentHotArticleList"
+          v-for="(item, index) in currentTopArticleList"
           :key="item.num"
           :class="`${prefixClass}-list__item`"
           :style="{
