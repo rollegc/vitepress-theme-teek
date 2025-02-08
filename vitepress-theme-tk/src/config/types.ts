@@ -19,6 +19,11 @@ export interface KtThemeConfig {
    */
   author?: string | { name: string; link?: string };
   /**
+   * 首页卡片的排序
+   * @default '["topArticle", "category", "tag", "docAnalysis", "friendLink"]'
+   */
+  homeCardSort?: ("topArticle" | "category" | "tag" | "docAnalysis" | "friendLink")[];
+  /**
    *  body 背景大图配置
    */
   bodyBgImg?: {

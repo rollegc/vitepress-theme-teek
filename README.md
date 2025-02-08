@@ -11,3 +11,7 @@
 - _post 随笔功能
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
 - 添加多语言功能
+
+## Bug
+
+- 点击下一页/上一页，大图模式不需要滚动到最上面

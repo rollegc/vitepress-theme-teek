@@ -45,7 +45,6 @@ const tkConfig = themeConfig({
       { avatar: "/img/more.png", name: "测试444", desc: "这是一个友链测试4" },
       { avatar: "/img/ui.png", name: "测试222", desc: "这是一个友链测试2" },
     ],
-    // autoPage: true,
   },
 });
 
