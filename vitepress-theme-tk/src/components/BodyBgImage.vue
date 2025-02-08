@@ -15,6 +15,7 @@ let {
   maskBg = "rgba(0, 0, 0, 0.2)",
 } = useUnrefData().theme.bodyBgImg || {};
 
+// body 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   dataArray: imgSrc,
   timeout: imgInterval,

@@ -11,6 +11,7 @@ const prefixClass = getPrefixClass("topArticle");
 const posts = inject(postsSymbol);
 
 const { theme, frontmatter } = useUnrefData();
+// 精选文章配置项
 const {
   limit = 4,
   title = `${hotArticleSvg}精选文章`,
@@ -22,14 +23,14 @@ const hotArticleList =
   posts.sortPostsByDateAndSticky?.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 })) || [];
 const pageNum = ref(1);
 
+// 当前页的文章列表
 const currentHotArticleList = computed(() => {
   const p = unref(pageNum);
   return hotArticleList.slice((p - 1) * limit, p * limit);
 });
 
-const bgColor = getBgColor();
-
 const itemRefs = ref<HTMLLIElement[]>([]);
+const bgColor = getBgColor();
 </script>
 
 <template>

@@ -13,14 +13,17 @@ const prefixClass = getPrefixClass("articleAnalyze");
 
 const { theme, frontmatter, page } = useUnrefData();
 
+// 基本信息
 const author = frontmatter.author || theme.author;
 const date = formatDate(frontmatter.date || new Date(), "yyyy-MM-dd");
 const categories = frontmatter.categories || [];
 const tags = frontmatter.tags || [];
 // 文章阅读量
 const { eachFileWords } = theme.docAnalysisInfo || {};
+// 站点信息配置项
 const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
 
+// 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<FileWords> = {};
 
@@ -44,10 +47,12 @@ relativePathArr.forEach((item, index) => {
   }
 });
 
+// 文章的 URL，面包屑点击文章名后跳转
 const getFilePath = (index: number) => {
   return theme.catalogues?.inv[relativePathArr[index]];
 };
 
+// 通过不蒜子获取页面访问量
 const { pagePv, isGet } = useBuSunZi(pageIteration);
 </script>
 

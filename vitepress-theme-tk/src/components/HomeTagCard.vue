@@ -18,8 +18,8 @@ const {
 const { frontmatter, theme } = useUnrefData();
 
 const route = useRoute();
-
 const pageNum = ref(1);
+// 标签配置项
 const {
   pageTitle = `${tagSvg}全部标签`,
   homeTitle = `${tagSvg}热门标签`,
@@ -48,6 +48,7 @@ watch(
 const tagBgColor = frontmatter.tk?.tagBgColor || getBgColor();
 
 const getTagStyle = (index: number) => {
+  // 标签背景色
   const color = tagBgColor[index % tagBgColor.length];
   return { backgroundColor: color, "--home-tag-color": color };
 };

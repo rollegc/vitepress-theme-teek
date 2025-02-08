@@ -29,6 +29,9 @@ export const useSwitchData = ({
     }
   };
 
+  /**
+   * 开启自动切换数据
+   */
   const startAutoSwitch = () => {
     if (dataArray.length < 1) return;
     if (isString(dataArray)) return (data.value = dataArray);
@@ -49,5 +52,12 @@ export const useSwitchData = ({
     onAfterUpdate?.(newValue);
   };
 
-  return { data, index, startAutoSwitch };
+  /**
+   * 关闭自动切换数据
+   */
+  const stopAutoSwitch = () => {
+    if (timer) clearTimeout(timer);
+  };
+
+  return { data, index, startAutoSwitch, stopAutoSwitch };
 };

@@ -54,7 +54,7 @@ $prefix-class: #{$theme-namespace}-archives;
             &:hover {
               padding-left: 1rem;
               color: var(--tk-theme-color);
-              background: var(--tk-lower-hover);
+              background: var(--tk-item-bg-color-hover);
             }
 
             .date {

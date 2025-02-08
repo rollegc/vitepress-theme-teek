@@ -16,6 +16,7 @@ const descArray = isArray(frontmatter.tk?.description)
   ? ([...new Set(frontmatter.tk?.description?.filter((v: string) => !!v))] as string[])
   : [frontmatter.tk?.description];
 
+// Banner 配置项
 const {
   bgStyle = "default",
   imgSrc,
@@ -42,6 +43,7 @@ const isDefaultDescStyle = descStyle === "default";
 const isTypesDescStyle = descStyle === "types";
 const isSwitchDescStyle = descStyle === "switch";
 
+// banner 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   dataArray: imgSrc,
   timeout: imgInterval,
@@ -54,6 +56,7 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   },
 });
 
+// 根据不同的 Banner 风格获取对应的样式
 const getStyle = () => {
   let baseStyle = { "--banner-title-text": titleFontSize, "--banner-desc-text": descFontSize };
 
@@ -84,6 +87,7 @@ const getStyle = () => {
 
 const bannerRef = ref<HTMLElement | null>(null);
 
+// 大图模式，监听滚轮，修改导航栏样式
 const watchScroll = () => {
   const vPNavDom = document.querySelector(".VPNavBar");
   // 获取窗口高度

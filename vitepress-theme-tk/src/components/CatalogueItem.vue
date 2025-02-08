@@ -21,7 +21,7 @@ defineProps<{ item: DefaultTheme.SidebarMulti; index: number | string }>();
       </div>
 
       <ul v-if="item.items" :class="`${prefixClass}__inline flx-wrap-between`">
-        <!-- 递归 -->
+        <!-- 递归自己 -->
         <CatalogueItem v-for="(item, i) in item.items" :key="i" :item :index="`${index}-${i + 1}`" />
       </ul>
     </template>

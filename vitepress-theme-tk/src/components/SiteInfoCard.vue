@@ -9,7 +9,7 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("siteInfo");
 
 const { frontmatter, theme } = useUnrefData();
-
+// 站点信息配置项
 const {
   createTime,
   siteView = true,
@@ -20,6 +20,7 @@ const { fileList = [], totalFileWords = 0, lastCommitTime } = { ...theme.docAnal
 
 const createToNowDay = dayDiff(createTime || getNowDate());
 
+// 通过不蒜子获取访问量和访客数
 const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 </script>
 
@@ -51,12 +52,12 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 
     <div v-if="siteView" :class="`${prefixClass}-item`">
       <span>本站被访问了：</span>
-      <span>{{ isGet ? sitePv : "Get..." }}次</span>
+      <span>{{ isGet ? sitePv : "Get..." }} 次</span>
     </div>
 
     <div v-if="siteView" :class="`${prefixClass}-item`">
-      <span>您的访问排名：</span>
-      <span>{{ isGet ? siteUv : "Get..." }}名</span>
+      <span>本站曾来访过：</span>
+      <span>{{ isGet ? siteUv : "Get..." }} 人</span>
     </div>
   </HomeCard>
 </template>

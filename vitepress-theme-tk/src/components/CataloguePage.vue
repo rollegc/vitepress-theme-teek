@@ -18,13 +18,14 @@ const getPath = () => {
   return `/${path}/`;
 };
 
+// 文章信息
 const catalogueList = theme.sidebar[getPath()];
 </script>
 
 <template>
   <div :class="`${prefixClass} tk-page`">
     <div :class="`${prefixClass}-header`">
-      <div class="tk-title-h2">{{ frontmatter.title }}</div>
+      <div class="tk-page-title-h2">{{ frontmatter.title }}</div>
       <div class="my-10">{{ frontmatter.description }}</div>
     </div>
 

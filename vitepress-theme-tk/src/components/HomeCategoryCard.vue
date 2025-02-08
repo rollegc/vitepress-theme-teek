@@ -19,7 +19,7 @@ const {
 const route = useRoute();
 
 const pageNum = ref(1);
-// 分类显示数量
+// 分类配置项
 const {
   pageTitle = `${categorySvg}全部分类`,
   homeTitle = `${categorySvg}文章分类`,

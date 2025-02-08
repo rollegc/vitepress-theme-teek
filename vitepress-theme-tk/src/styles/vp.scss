@@ -1,23 +1,12 @@
-$primaryColor: #395ae3;
-
 :root {
-  --vp-c-indigo-1: #{$primaryColor};
-  --vp-c-indigo-3: #{$primaryColor};
-  --vp-c-brand-2: #2a87f8;
-  --vp-c-green: #{$primaryColor};
+  // 数值越大，侧边栏约靠近屏幕左侧
   --vp-layout-max-width: 97vw;
   --vp-sidebar-width: 275px;
 }
 
+// 文章内容宽度加大
 .VPContent .VPDoc.has-aside .content-container {
   max-width: 1800px;
-}
-
-.tagline-link {
-  font-weight: 500;
-  color: var(--vp-c-brand);
-  text-decoration-style: dotted;
-  transition: color 0.25s;
 }
 
 .VPSidebar {

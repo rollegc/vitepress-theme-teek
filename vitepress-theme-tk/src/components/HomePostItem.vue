@@ -21,6 +21,9 @@ const getImgUrl = (imgUrl: string | string[]) => {
   return imgUrl;
 };
 
+/**
+ * 点击图片进行预览
+ */
 const handleViewImg = (imgUrl: string | string[]) => {
   const urlList = (isArray(imgUrl) ? imgUrl : [imgUrl]) as string[];
   const imageViewerOptions = { ...frontmatter.tk?.imageViewer, urlList };

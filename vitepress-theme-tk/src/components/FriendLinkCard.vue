@@ -10,6 +10,7 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("friendLink");
 
 const { theme, frontmatter } = useUnrefData();
+// 友情链接配置项
 const {
   list = [],
   limit = 4,
@@ -20,12 +21,16 @@ const {
   pageTimeOut = 4000,
 } = { ...theme.friendLink, ...frontmatter.tk?.friendLink };
 
+// 使用上下滚动功能
 const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollTimeOut);
 
 const pageNum = ref(1);
+// 友情链接渲染数据
 const currentFriendLinkList = computed(() => {
+  // 如果使用上下滚动功能，则显示滚动数据
   if (autoScroll) return unref(visibleData);
 
+  // 分页功能
   const p = unref(pageNum);
   return list.slice((p - 1) * limit, p * limit);
 });
@@ -34,8 +39,8 @@ onMounted(() => {
   if (autoScroll) startAutoScroll();
 });
 
+// 每一个 li 的 ref 元素，用于获取元素高度来计算实际的 top 位置
 const itemRefs = ref<HTMLLIElement[]>([]);
-
 const setItemRefs = (el: HTMLLIElement) => {
   // 非自动滚动时才记录 dom 元素，否则自动滚动部分动画失效，割裂严重
   if (!autoScroll) unref(itemRefs).push(el);
@@ -43,6 +48,7 @@ const setItemRefs = (el: HTMLLIElement) => {
 
 const getLiStyle = (index: number) => {
   if (autoScroll) return {};
+
   const clientRect = unref(itemRefs)?.[index]?.getBoundingClientRect();
   // 分页动画需要指定 top，否则默认移动到 0px 位置
   return {
