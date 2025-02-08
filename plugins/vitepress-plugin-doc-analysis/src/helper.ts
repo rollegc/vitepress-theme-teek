@@ -1,23 +1,16 @@
 import { readdirSync, statSync } from "node:fs"; // 文件模块
-import { extname, join, relative, resolve } from "node:path"; // 路径模块
+import { extname, relative, resolve } from "node:path"; // 路径模块
 import chalk from "chalk"; // 命令行打印美化
-import { FileInfo, SiteInfoOption } from "./types";
+import { FileInfo, DocAnalysisOption } from "./types";
 
 export const log = (message: string, type = "yellow") => {
   console.log((chalk as any)[type](message));
 };
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = [
-  "scripts",
-  "components",
-  "assets",
-  ".vitepress",
-  "node_modules",
-  "public",
-];
+export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "public"];
 
-export default (option: SiteInfoOption = {}) => {
+export default (option: DocAnalysisOption = {}) => {
   const { base = process.cwd() } = option;
   return readFileList(base, option);
 };
@@ -25,7 +18,7 @@ export default (option: SiteInfoOption = {}) => {
 /**
  * 获取所有的 md 文档
  */
-export function readFileList(root: string, option: SiteInfoOption, fileList: FileInfo[] = []) {
+export function readFileList(root: string, option: DocAnalysisOption, fileList: FileInfo[] = []) {
   const { ignoreList = [] } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 

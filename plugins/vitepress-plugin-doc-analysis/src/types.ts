@@ -1,4 +1,4 @@
-export interface SiteInfoOption {
+export interface DocAnalysisOption {
   /**
    * 忽略的文件/文件夹列表，支持正则表达式
    *

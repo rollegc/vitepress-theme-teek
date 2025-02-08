@@ -1,12 +1,12 @@
 import type { Plugin } from "vite";
-import { SiteInfoOption } from "./types";
+import { DocAnalysisOption } from "./types";
 import { join } from "node:path";
 import readFileList from "./helper";
 import { getLastCommitTime, getEachFileWords, getTotalFileWords, getLastUpdateTime } from "./util";
 
 export * from "./types";
 
-export default function VitePluginVitePressDocAnalysis(option: SiteInfoOption = {}): Plugin {
+export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption = {}): Plugin {
   return {
     name: "vitepress-plugin-doc-analysis",
     async config(config: any) {
