@@ -199,7 +199,7 @@ export interface KtThemeConfig {
      * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
      * @default 4000 (4秒)
      */
-    pageTimeOut?: number;
+    pageSpeed?: number;
   };
   tag?: {
     /**
@@ -231,7 +231,7 @@ export interface KtThemeConfig {
      * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
      * @default 4000 (4秒)
      */
-    pageTimeOut?: number;
+    pageSpeed?: number;
   };
   topArticle?: {
     /**
@@ -258,7 +258,7 @@ export interface KtThemeConfig {
      * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
      * @default 4000 (4秒)
      */
-    pageTimeOut?: number;
+    pageSpeed?: number;
   };
   friendLink?: {
     /**
@@ -306,7 +306,7 @@ export interface KtThemeConfig {
      * 滚动间隔时间，单位：毫秒。autoScroll 为 true 时生效
      * @default 2500 (2.5秒)
      */
-    scrollTimeOut?: number;
+    scrollSpeed?: number;
     /**
      * 是否自动翻页
      * @default false
@@ -316,7 +316,7 @@ export interface KtThemeConfig {
      * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
      * @default 4000 (4秒)
      */
-    pageTimeOut?: number;
+    pageSpeed?: number;
   };
   docAnalysis?: {
     /**

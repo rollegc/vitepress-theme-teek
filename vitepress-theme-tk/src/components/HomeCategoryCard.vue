@@ -23,7 +23,7 @@ const {
   homeTitle = `${categorySvg}文章分类`,
   limit = 5,
   autoPage = false,
-  pageTimeOut = 4000,
+  pageSpeed = 4000,
 } = { ...theme.category, ...frontmatter.tk?.category };
 
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
@@ -57,7 +57,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :title="categoriesPage ? pageTitle : homeTitle"
     title-link="/categories"
     :autoPage
-    :pageTimeOut
+    :pageSpeed
     :class="prefixClass"
   >
     <template #default="{ transitionName }">

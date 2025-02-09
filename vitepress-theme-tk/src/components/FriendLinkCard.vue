@@ -15,13 +15,13 @@ const {
   limit = 4,
   title = `${friendLinkSvg}友情链接`,
   autoScroll = false,
-  scrollTimeOut = 2500,
+  scrollSpeed = 2500,
   autoPage = false,
-  pageTimeOut = 4000,
+  pageSpeed = 4000,
 } = { ...theme.friendLink, ...frontmatter.tk?.friendLink };
 
 // 使用上下滚动功能
-const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollTimeOut);
+const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollSpeed);
 
 const pageNum = ref(1);
 // 友情链接渲染数据
@@ -64,7 +64,7 @@ const getLiStyle = (index: number) => {
     :total="list.length"
     :title
     :autoPage
-    :pageTimeOut
+    :pageSpeed
     :class="prefixClass"
   >
     <template #default="{ transitionName, startAutoPage, closeAutoPage }">

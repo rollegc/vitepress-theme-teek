@@ -16,7 +16,7 @@ const {
   limit = 4,
   title = `${TopArticleSvg}精选文章`,
   autoPage = false,
-  pageTimeOut = 4000,
+  pageSpeed = 4000,
 } = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
 const TopArticleList =
@@ -48,7 +48,7 @@ const getStyle = (num: number, index: number) => {
     :total="TopArticleList.length"
     :title
     :autoPage
-    :pageTimeOut
+    :pageSpeed
     :class="prefixClass"
   >
     <template #default="{ transitionName }">

@@ -23,7 +23,7 @@ const {
   homeTitle = `${tagSvg}热门标签`,
   limit = 21,
   autoPage = false,
-  pageTimeOut = 4000,
+  pageSpeed = 4000,
 } = { ...theme.tag, ...frontmatter.tk?.tag };
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
@@ -64,7 +64,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :title="tagsPage ? pageTitle : homeTitle"
     title-link="/tags"
     :autoPage
-    :pageTimeOut
+    :pageSpeed
     :class="prefixClass"
   >
     <template #default="{ transitionName }">

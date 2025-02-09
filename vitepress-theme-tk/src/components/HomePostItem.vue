@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed } from "vue";
 import { useDesign } from "../hooks";
+import { withBase } from "vitepress";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
 import { formatDate, isArray } from "../helper";
@@ -17,8 +18,9 @@ const { frontmatter } = useUnrefData();
 
 const postFrontmatter = computed(() => props.post.frontmatter);
 const getImgUrl = (imgUrl: string | string[]) => {
-  if (isArray(imgUrl)) return imgUrl[0];
-  return imgUrl;
+  // 页面只展示一个图片
+  if (isArray(imgUrl)) return withBase(imgUrl[0]);
+  return withBase(imgUrl);
 };
 
 /**

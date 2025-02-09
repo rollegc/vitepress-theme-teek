@@ -14,7 +14,7 @@ export interface HomeCardProps {
   pageSize?: number;
   total?: number;
   autoPage?: boolean;
-  pageTimeOut?: number;
+  pageSpeed?: number;
 }
 
 const {
@@ -24,7 +24,7 @@ const {
   pageSize = 4,
   total,
   autoPage = false,
-  pageTimeOut = 4000,
+  pageSpeed = 4000,
 } = defineProps<HomeCardProps>();
 
 const emit = defineEmits<{ pagination: [to: number, "pre" | "next"] }>();
@@ -63,10 +63,10 @@ let timer: NodeJS.Timeout;
 const startAutoPage = () => {
   // 先关闭自动翻页
   closeAutoPage();
-  if (pageTimeOut > 0) {
+  if (pageSpeed > 0) {
     timer = setTimeout(() => {
       pagination(1, "next");
-    }, pageTimeOut);
+    }, pageSpeed);
   }
 };
 /**
