@@ -7,7 +7,7 @@ const prefixClass = getPrefixClass("my");
 
 const { theme } = useUnrefData();
 
-const blogger = theme.blogger || {};
+const { blogger = {}, social = [] } = theme;
 </script>
 
 <template>
@@ -15,6 +15,17 @@ const blogger = theme.blogger || {};
     <div :class="`${prefixClass}-avatar ${blogger.avatarStyle || 'radius'}`">
       <img :src="blogger.avatar" alt="头像" title="我好看吗" />
     </div>
+
+    <div v-if="social.length" :class="`${prefixClass}-icons flx-justify-around`">
+      <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
+        <template v-if="item.icon">
+          <i v-if="!item.iconType || item.iconType === 'svg'" v-html="item.icon" />
+          <i v-else-if="item.iconType === 'iconfont'" :class="['iconfont', item.icon]" />
+          <img v-else-if="item.iconType === 'img'" :src="item.icon" :alt="item.imgAlt" />
+        </template>
+      </a>
+    </div>
+
     <div :class="`${prefixClass}-blogger`">
       <span class="name">{{ blogger.name }}</span>
       <span class="slogan">{{ blogger.slogan }}</span>

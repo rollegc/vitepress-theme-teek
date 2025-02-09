@@ -91,6 +91,12 @@ a:hover {
   justify-content: space-between;
 }
 
+.flx-justify-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .flx-start-justify-center {
   display: flex;
   align-items: flex-start;
@@ -101,6 +107,12 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.flx-wrap-justify-center {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* 文字单行省略号 */

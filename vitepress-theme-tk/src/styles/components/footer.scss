@@ -1,0 +1,69 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-footer;
+
+.#{$prefix-class} {
+  padding: 0 20px 12px;
+  text-align: center;
+
+  &-icons {
+    gap: 20px;
+    margin-bottom: 10px;
+    i :deep(svg),
+    img {
+      fill: var(--vp-c-text-2);
+      width: 20px;
+      height: 20px;
+      &:hover {
+        fill: var(--tk-theme-color);
+      }
+    }
+    .iconfont {
+      color: var(--vp-c-text-2);
+      font-size: 20px;
+      &:hover {
+        color: var(--tk-theme-color);
+      }
+    }
+  }
+
+  p {
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--vp-c-text-2);
+  }
+
+  &-list {
+    gap: 15px;
+    font-size: 14px;
+    color: var(--vp-c-text-2);
+
+    &__item {
+      gap: 5px;
+      a:hover {
+        color: var(--tk-theme-color);
+        text-decoration: underline;
+        text-decoration-color: var(--tk-theme-color);
+        text-decoration-style: dashed;
+      }
+      i :deep(svg),
+      img {
+        fill: var(--vp-c-text-2);
+        width: 16px;
+        height: 16px;
+      }
+      .iconfont {
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media (max-width: 719px) {
+    &-list {
+      gap: 0;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

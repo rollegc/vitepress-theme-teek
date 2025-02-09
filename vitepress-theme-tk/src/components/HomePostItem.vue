@@ -4,7 +4,7 @@ import { useDesign } from "../hooks";
 import { withBase } from "vitepress";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
-import { formatDate, isArray } from "../helper";
+import { formatDate } from "../helper";
 import { ElIcon } from "element-plus";
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
@@ -19,15 +19,14 @@ const { frontmatter } = useUnrefData();
 const postFrontmatter = computed(() => props.post.frontmatter);
 const getImgUrl = (imgUrl: string | string[]) => {
   // 页面只展示一个图片
-  if (isArray(imgUrl)) return withBase(imgUrl[0]);
-  return withBase(imgUrl);
+  return withBase([imgUrl || []].flat()[0]);
 };
 
 /**
  * 点击图片进行预览
  */
 const handleViewImg = (imgUrl: string | string[]) => {
-  const urlList = (isArray(imgUrl) ? imgUrl : [imgUrl]) as string[];
+  const urlList = [imgUrl || []].flat() as string[];
   const imageViewerOptions = { ...frontmatter.tk?.imageViewer, urlList };
   createImageViewer(imageViewerOptions);
 };

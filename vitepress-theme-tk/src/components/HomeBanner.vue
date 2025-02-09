@@ -3,7 +3,7 @@ import { useDesign, useTextTypes, useSwitchData } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useUnrefData } from "../configProvider";
-import { isArray, isNumber } from "../helper";
+import { isNumber } from "../helper";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 
 const { getPrefixClass } = useDesign();
@@ -12,9 +12,7 @@ const prefixClass = getPrefixClass("banner");
 const { site, theme, frontmatter } = useUnrefData();
 
 const title = frontmatter.tk?.name || site.title || "";
-const descArray = isArray(frontmatter.tk?.description)
-  ? ([...new Set(frontmatter.tk?.description?.filter((v: string) => !!v))] as string[])
-  : [frontmatter.tk?.description];
+const descArray = [...new Set([frontmatter.tk?.description || []].flat()?.filter((v: string) => !!v))] as string[];
 
 // Banner 配置项
 const {

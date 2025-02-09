@@ -46,6 +46,44 @@ const tkConfig = themeConfig({
       { avatar: "/img/ui.png", name: "测试222", desc: "这是一个友链测试2" },
     ],
   },
+
+  footerInfo: {
+    message: ["下面的内容和图标都可以修改（本条内容也可以隐藏的）"],
+    copyright: {
+      createYear: 2021,
+      suffix: "天客 Blog",
+    },
+    icpRecord: {
+      name: "桂ICP备2021009994号",
+      link: "http://beian.miit.gov.cn/",
+    },
+  },
+  social: [
+    {
+      icon: "icon-github",
+      iconType: "iconfont",
+      name: "GitHub",
+      link: "https://github.com/kele-bingtang",
+    },
+    {
+      icon: "icon-gitee2",
+      iconType: "iconfont",
+      name: "Gitee",
+      link: "https://gitee.com/kele-bingtang",
+    },
+    {
+      icon: "icon-qq",
+      iconType: "iconfont",
+      name: "QQ",
+      link: "http://wpa.qq.com/msgrd?v=3&uin=28761025&site=qq&menu=yes",
+    },
+    {
+      icon: "icon-mobile",
+      iconType: "iconfont",
+      name: "联系我",
+      link: "https://www.youngkbt.cn/?contact=true",
+    },
+  ],
 });
 
 // https://vitepress.dev/reference/site-config
@@ -75,6 +113,7 @@ export default defineConfig({
     ],
     ["meta", { name: "keywords", description }],
     ["link", { rel: "icon", href: "/favicon.ico", type: "image/png" }],
+    ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
   ],
   markdown: {
     // 开启行号

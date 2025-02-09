@@ -85,7 +85,7 @@ const getLiStyle = (index: number) => {
           :style="getLiStyle(index)"
         >
           <a :href="item.link" class="flx-align-center">
-            <img :src="item.avatar" class="friend-avatar" />
+            <img :src="item.avatar" class="friend-avatar" :alt="item.name || item.alt" />
             <div :class="`${prefixClass}-list__item-info`">
               <div class="friend-name sle">{{ item.name }}</div>
               <div class="friend-desc sle">{{ item.desc }}</div>

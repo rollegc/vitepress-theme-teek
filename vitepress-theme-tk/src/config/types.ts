@@ -286,6 +286,11 @@ export interface KtThemeConfig {
        * 友链链接
        */
       link?: string;
+      /**
+       * img 标签的 alt
+       * @default name
+       */
+      alt?: string;
     }[];
     /**
      * 首页卡片标题
@@ -364,6 +369,44 @@ export interface KtThemeConfig {
      */
     pageIteration: number;
   };
+  /**
+   * 社交配置
+   */
+  social?: FooterConfig[];
+  /**
+   * 页脚配置
+   */
+  footerInfo?: {
+    /**
+     * 页脚信息
+     */
+    message?: string | string[];
+    /**
+     * 主题版权配置
+     */
+    theme?: FooterConfig;
+    /**
+     * 博客版权配置
+     */
+    copyright?: FooterConfig & {
+      /**
+       * 创建年份
+       */
+      createYear: number | string;
+      /**
+       * 后缀
+       */
+      suffix: string;
+    };
+    /**
+     * ICP 备案信息配置
+     */
+    icpRecord?: FooterConfig;
+    /**
+     * 网络安全备案信息配置
+     */
+    securityRecord?: FooterConfig;
+  };
   plugins?: {
     /**
      * 是否启用 sidebar 插件
@@ -403,4 +446,34 @@ export interface KtThemeConfig {
     docAnalysisOption?: DocAnalysisOption;
   };
   page?: Partial<PaginationProps>;
+}
+
+export interface FooterConfig {
+  /**
+   * 名称，如果作用在 a 标签，则鼠标悬停显示名称，否则在页面文字显示
+   */
+  name?: string;
+  /**
+   * 图标地址
+   *
+   * @remark 与 iconType 配合使用
+   *
+   * 1、iconType 为 svg 时，需要填写 svg 代码
+   * 2、iconType 为 iconfont 时，需要填写 class 名
+   * 3、iconType 为 img 时，需要填写图片链接
+   */
+  icon?: string;
+  /**
+   * 图标类型
+   * @default 'svg'
+   */
+  iconType?: "svg" | "iconfont" | "img";
+  /**
+   * 链接，点击后跳转到新窗口，如果不设置，则无法点击
+   */
+  link?: string;
+  /**
+   * img 标签的 alt，当 iconType 为 img 时生效
+   */
+  imgAlt?: string;
 }

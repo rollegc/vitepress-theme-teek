@@ -9,6 +9,7 @@ import CataloguePage from "../components/CataloguePage.vue";
 import ArticleAnalyze from "../components/ArticleAnalyze.vue";
 import ArticleImagePreview from "../components/ArticleImagePreview.vue";
 import BodyBgImage from "../components/BodyBgImage.vue";
+import Footer from "../components/Footer.vue";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 
 defineOptions({
@@ -62,6 +63,7 @@ const useKtTheme = theme.ktTheme ?? true;
       <slot name="doc-after" />
     </template>
     <template #layout-bottom>
+      <Footer v-if="isHomePage()" />
       <slot name="layout-bottom" />
     </template>
 

@@ -5,7 +5,6 @@
 ## TODO
 
 - 首页 PostList 支持简约模式和图文模式，图文模式参考 `http://niubin.site/`
-- 首页 Footer 添加备案信息
 - 添加多主题切换
 - 添加评论功能
 - _post 随笔功能

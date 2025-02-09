@@ -1,5 +1,4 @@
 import type { GroupCardItem, KtContentData, Post } from "../data/types";
-import { isArray } from "./is";
 
 /**
  * 过滤非文章页
@@ -52,23 +51,19 @@ export const getGroupPosts = (posts: KtContentData[]): Post["groupPosts"] => {
   posts.forEach(post => {
     const { categories, tags } = post.frontmatter as { categories: string[]; tags: string[]; [key: string]: any };
 
-    if (isArray(categories)) {
-      categories.forEach(category => {
-        if (category) {
-          if (!categoriesObj[category]) categoriesObj[category] = [];
-          categoriesObj[category].push(post);
-        }
-      });
-    }
+    [categories || []].flat().forEach(category => {
+      if (category) {
+        if (!categoriesObj[category]) categoriesObj[category] = [];
+        categoriesObj[category].push(post);
+      }
+    });
 
-    if (isArray(tags)) {
-      tags.forEach(tag => {
-        if (tag) {
-          if (!tagsObj[tag]) tagsObj[tag] = [];
-          tagsObj[tag].push(post);
-        }
-      });
-    }
+    [tags || []].flat().forEach(tag => {
+      if (tag) {
+        if (!tagsObj[tag]) tagsObj[tag] = [];
+        tagsObj[tag].push(post);
+      }
+    });
   });
 
   return {
