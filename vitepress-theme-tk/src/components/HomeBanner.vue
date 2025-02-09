@@ -54,7 +54,9 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   },
 });
 
-// 根据不同的 Banner 风格获取对应的样式
+/**
+ * 根据不同的 Banner 风格获取对应的样式
+ */
 const getStyle = () => {
   let baseStyle = { "--banner-title-text": titleFontSize, "--banner-desc-text": descFontSize };
 
@@ -85,19 +87,26 @@ const getStyle = () => {
 
 const bannerRef = ref<HTMLElement | null>(null);
 
-// 大图模式，监听滚轮，修改导航栏样式
-const watchScroll = () => {
+/**
+ * 修改导航栏样式
+ */
+const toggleClass = () => {
   const vPNavDom = document.querySelector(".VPNavBar");
   // 获取窗口高度
   const windowH = unref(bannerRef)?.clientHeight;
 
   if (!vPNavDom || !windowH) return;
-  const toggleClass = () => {
-    if (unref(bannerRef) && document.documentElement.scrollTop + 100 < windowH) {
-      vPNavDom.classList.add("big-img-nav-bar");
-    } else vPNavDom.classList.remove("big-img-nav-bar");
-  };
 
+  if (unref(bannerRef) && document.documentElement.scrollTop + 100 < windowH) {
+    vPNavDom.classList.add("big-img-nav-bar");
+  } else vPNavDom.classList.remove("big-img-nav-bar");
+};
+
+/**
+ * 大图模式，监听滚轮，修改导航栏样式
+ */
+const watchScroll = () => {
+  // 第一次初始化
   toggleClass();
   window.addEventListener("scroll", toggleClass);
 };
