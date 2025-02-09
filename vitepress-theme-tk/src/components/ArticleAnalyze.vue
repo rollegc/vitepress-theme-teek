@@ -23,12 +23,13 @@ const { eachFileWords } = theme.docAnalysisInfo || {};
 // 站点信息配置项
 const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
 
+const route = useRoute();
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<FileWords> = {};
 
   eachFileWords.forEach((item: FileWords) => {
-    if (item.fileInfo.relativePath === useRoute().data.relativePath) return (pageViewInfo = item);
+    if (item.fileInfo.relativePath === route.data.relativePath) return (pageViewInfo = item);
   });
   return pageViewInfo;
 });

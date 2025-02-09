@@ -45,11 +45,9 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       themeConfig.sidebar = {
         ...sidebar,
         ...(Array.isArray(themeConfig.sidebar)
-          ? log(chalk.yellow("warning: Custom sidebar must be in object form. 自定义 sidebar 必须是对象形式"))
+          ? log(chalk.yellow("Warning: 自定义 Sidebar 必须是对象形式"))
           : themeConfig.sidebar),
       };
-
-      log(chalk.blue("tip ") + chalk.green("Create sidebar success. 成功生成侧边栏数据"));
     },
   };
 }

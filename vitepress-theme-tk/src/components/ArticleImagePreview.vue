@@ -1,10 +1,6 @@
 <script setup lang="ts" name="ArticleImagePreview">
-import { useDesign } from "../hooks";
-import { onMounted, onUnmounted, reactive, ref } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { createImageViewer } from "./ImageViewer";
-
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("articleImagePreview");
 
 const previewImage = (e: Event) => {
   const target = e.target as HTMLElement;
@@ -15,7 +11,7 @@ const previewImage = (e: Event) => {
     const imgs = Array.from(imgDoms);
 
     const urlList = imgs.map(el => el.src);
-    const initialIndex = imgs.findIndex(el => el === target);
+    let initialIndex = imgs.findIndex(el => el === target);
     const url = target.getAttribute("src");
 
     // 兼容点击文档之外的图片
@@ -38,3 +34,5 @@ onUnmounted(() => {
   docDomContainer?.removeEventListener("click", previewImage);
 });
 </script>
+
+<template></template>

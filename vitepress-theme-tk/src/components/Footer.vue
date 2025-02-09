@@ -4,7 +4,7 @@ import { useUnrefData } from "../configProvider";
 import themeSvg from "../assets/svg/footerTheme";
 import copyrightSvg from "../assets/svg/copyright";
 import icpRecordSvg from "../assets/svg/icpRecord";
-import securityRecordImg from "./../assets/img/securityRecord.png";
+import securityRecordImg from "../assets/img/securityRecord.png";
 import packageJSON from "../../package.json";
 import { computed } from "vue";
 

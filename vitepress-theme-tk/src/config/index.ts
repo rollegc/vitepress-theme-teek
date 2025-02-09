@@ -23,7 +23,7 @@ export default function themeConfig(config: KtThemeConfig = {}): UserConfig {
   const plugins: PluginOption[] = [Catalogue(catalogueOption)];
 
   if (sidebar) {
-    sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", "_posts"];
+    sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", "@fragment"];
     plugins.push(Sidebar(sidebarOption));
   }
   if (permalink) plugins.push(Permalink(permalinkOption));

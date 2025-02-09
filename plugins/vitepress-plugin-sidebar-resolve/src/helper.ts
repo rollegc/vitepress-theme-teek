@@ -45,7 +45,7 @@ export default (option: SidebarOption = {}): DefaultTheme.SidebarMulti => {
     const sidebarItems = createSideBarItems(dirPath, option, fileName);
 
     if (!sidebarItems.length) {
-      return log(`warning：该目录「${dirPath}」内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
+      return log(`Warning：该目录「${dirPath}」内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
     sidebar[`/${fileName}/`] = sidebarItems;
@@ -125,12 +125,12 @@ const createSideBarItems = (
 
     // 校验文件序号
     if (fileIndexPrefix && isIllegalIndex(index)) {
-      log(`warning：该文件「${filePath}」序号出错，请填写正确的序号`);
+      log(`Warning：该文件「${filePath}」序号出错，请填写正确的序号`);
       return [];
     }
 
     // 判断序号是否已经存在
-    if (sidebarItems[index]) log(`warning：该文件「${filePath}」的序号在同一级别中重复出现，将会被覆盖`);
+    if (sidebarItems[index]) log(`Warning：该文件「${filePath}」的序号在同一级别中重复出现，将会被覆盖`);
 
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
@@ -164,7 +164,7 @@ const createSideBarItems = (
 
       if (!isMdFileExtension(type) || (ignoreIndexMd && filename.includes("index.md"))) {
         // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
-        !onlyScannerRootMd && log(`warning：该文件「${filePath}」非 .md 格式文件，不支持该文件类型`);
+        !onlyScannerRootMd && log(`Warning：该文件「${filePath}」非 .md 格式文件，不支持该文件类型`);
         return [];
       }
 
