@@ -33,6 +33,11 @@ const useKtTheme = theme.ktTheme ?? true;
     <template #layout-top>
       <slot name="layout-top" />
     </template>
+    <template #layout-bottom>
+      <Footer v-if="isHomePage()" />
+      <slot name="layout-bottom" />
+    </template>
+
     <template #doc-before>
       <slot name="doc-before" />
       <ClientOnly>
@@ -40,8 +45,9 @@ const useKtTheme = theme.ktTheme ?? true;
         <ArticleImagePreview />
       </ClientOnly>
     </template>
-    <template #nav-bar-content-before>
-      <slot name="nav-bar-content-before" />
+
+    <template #doc-after>
+      <slot name="doc-after" />
     </template>
 
     <template #home-hero-before>
@@ -56,23 +62,15 @@ const useKtTheme = theme.ktTheme ?? true;
       </div>
     </template>
 
-    <template #sidebar-nav-after>
-      <slot name="sidebar-nav-after" />
-    </template>
-    <template #doc-after>
-      <slot name="doc-after" />
-    </template>
-    <template #layout-bottom>
-      <Footer v-if="isHomePage()" />
-      <slot name="layout-bottom" />
-    </template>
-
     <!-- navbar -->
     <template #nav-bar-title-before>
       <slot name="nav-bar-title-before" />
     </template>
     <template #nav-bar-title-after>
       <slot name="nav-bar-title-after" />
+    </template>
+    <template #nav-bar-content-before>
+      <slot name="nav-bar-content-before" />
     </template>
     <template #nav-bar-content-after>
       <slot name="nav-bar-content-after" />
@@ -87,6 +85,9 @@ const useKtTheme = theme.ktTheme ?? true;
     <!-- sidebar -->
     <template #sidebar-nav-before>
       <slot name="sidebar-nav-before" />
+    </template>
+    <template #sidebar-nav-after>
+      <slot name="sidebar-nav-after" />
     </template>
 
     <!-- content -->
