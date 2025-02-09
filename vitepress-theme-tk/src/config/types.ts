@@ -24,6 +24,37 @@ export interface KtThemeConfig {
    */
   homeCardSort?: ("topArticle" | "category" | "tag" | "docAnalysis" | "friendLink")[];
   /**
+   * 背景色
+   * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
+   */
+  bgColor?: string[];
+  /**
+   * 主题模式配置
+   */
+  themeMode?: {
+    /**
+     * 主题组名称
+     */
+    label: string;
+    /**
+     * 主题组提示信息，鼠标悬停时显示
+     */
+    tip?: string;
+    /**
+     * 主题组内容
+     */
+    options: {
+      /**
+       * 主题名称，用于页面文字渲染
+       */
+      name: string;
+      /**
+       * 主题标识，在 html 标签的 theme 属性添加该标识
+       */
+      theme: string;
+    }[];
+  }[];
+  /**
    *  body 背景大图配置
    */
   bodyBgImg?: {
@@ -232,6 +263,10 @@ export interface KtThemeConfig {
      * @default 4000 (4秒)
      */
     pageSpeed?: number;
+    /**
+     * 自定义 tag 的背景颜色，默认取 theme.bgColor
+     */
+    bgColor?: string[];
   };
   topArticle?: {
     /**

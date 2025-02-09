@@ -99,9 +99,7 @@ const watchScroll = () => {
   };
 
   toggleClass();
-  window.onscroll = () => {
-    toggleClass();
-  };
+  window.addEventListener("scroll", toggleClass);
 };
 
 // 文字打印输入输出效果
@@ -134,7 +132,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (isTypesDescStyle) stopTypes();
-  window.onscroll = null;
+  window.removeEventListener("scroll", toggleClass);
 });
 </script>
 

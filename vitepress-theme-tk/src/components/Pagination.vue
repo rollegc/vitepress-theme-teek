@@ -62,7 +62,10 @@ const afterChange = () => {
   emits("pagination", unref(pageObj));
   if (props.autoScroll) {
     nextTick(() => {
-      scrollTo("html", 0, 700);
+      const rootStyles = getComputedStyle(document.documentElement);
+      const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
+      // 滚动返回时，减去导航栏的高度
+      scrollTo("html", window.innerHeight - navHeight, 700);
     });
   }
 };

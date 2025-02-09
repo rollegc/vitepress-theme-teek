@@ -24,6 +24,7 @@ const {
   limit = 21,
   autoPage = false,
   pageSpeed = 4000,
+  bgColor
 } = { ...theme.tag, ...frontmatter.tk?.tag };
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
@@ -44,7 +45,7 @@ watch(
   { immediate: true }
 );
 
-const tagBgColor = frontmatter.tk?.tagBgColor || getBgColor();
+const tagBgColor = bgColor || getBgColor();
 
 const getTagStyle = (index: number) => {
   // 标签背景色

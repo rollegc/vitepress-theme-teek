@@ -10,11 +10,10 @@ import ArticleAnalyze from "../components/ArticleAnalyze.vue";
 import ArticleImagePreview from "../components/ArticleImagePreview.vue";
 import BodyBgImage from "../components/BodyBgImage.vue";
 import Footer from "../components/Footer.vue";
+import RightBottomButton from "../components/RightBottomButton.vue";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 
-defineOptions({
-  name: "TkLayout",
-});
+defineOptions({ name: "TkLayout" });
 
 const { Layout } = DefaultTheme;
 
@@ -27,6 +26,7 @@ const useKtTheme = theme.ktTheme ?? true;
 </script>
 
 <template>
+  <RightBottomButton />
   <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
 
   <Layout :class="prefixClass">

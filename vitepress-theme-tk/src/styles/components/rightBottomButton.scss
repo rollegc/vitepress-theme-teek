@@ -1,0 +1,88 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-rightBottomButton;
+
+.#{$prefix-class} {
+  position: fixed;
+  right: 2rem;
+  bottom: 2.5rem;
+  z-index: 99;
+  gap: 1rem;
+
+  @media (max-width: 719px) {
+    right: 1rem;
+    bottom: 1.5rem;
+  }
+
+  &-button {
+    width: 2.2rem;
+    height: 2.2rem;
+    line-height: 2.4rem;
+    border-radius: 50%;
+    box-shadow: 0 1px 8px var(--tk-shadow-color);
+    text-align: center;
+    cursor: pointer;
+    background: var(--tk-bg-color1);
+
+    &:hover {
+      background: var(--tk-theme-color);
+      box-shadow: 0 1px 8px var(--tk-shadow-color-hover);
+      .el-icon {
+        color: #ffffff;
+      }
+    }
+
+    // 主题模式样式
+    &__mode {
+      padding: 6px 0 8px 0;
+      position: absolute;
+      bottom: 0.7rem;
+      right: 1.7rem;
+      background: var(--tk-bg-color1);
+      border: 1px solid var(--tk-shadow-color);
+      width: 110px;
+      border-radius: 6px;
+      line-height: 1.6rem;
+      text-align: left;
+
+      &-title {
+        padding: 0 10px;
+        font-size: 12px;
+        color: var(--el-color-info);
+        cursor: default;
+      }
+
+      &-item {
+        font-size: 14px;
+        padding: 0 10px 0 15px;
+        &:hover {
+          background-color: var(--tk-item-bg-color-hover);
+          color: var(--tk-theme-color);
+        }
+        &.active {
+          background-color: var(--tk-theme-color);
+          color: var(--tk-bg-color1);
+        }
+      }
+    }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  .mode-enter-active,
+  .mode-leave-active {
+    transition: all 0.3s ease;
+  }
+  .mode-enter-from,
+  .mode-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}

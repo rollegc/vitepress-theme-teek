@@ -60,5 +60,17 @@ export const isCataloguePage = () => {
 
 export const getBgColor = () => {
   const { theme } = useData();
-  return unref(theme).bgColor || ["#E15B64", "#11a8cd", "#F8B26A", "#67CC86", "#F47E60", "#849B87"];
+  return (
+    unref(theme).bgColor || [
+      "#e74c3c",
+      "#409EFF",
+      "#DAA96E",
+      "#0C819F",
+      "#27ae60",
+      "#ff5c93",
+      "#fd726d",
+      "#f39c12",
+      "#9b59b6",
+    ]
+  );
 };
