@@ -4,7 +4,7 @@ import { useDesign } from "../hooks";
 import { withBase } from "vitepress";
 import { KtContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
-import { formatDate } from "../helper";
+import { formatDate, isFunction } from "../helper";
 import { ElIcon } from "element-plus";
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
@@ -20,13 +20,30 @@ const {
   excerptPosition = "bottom",
   showMore = true,
   moreLabel = "阅读全文 >",
-  coverImgMode = "simple",
+  coverImgMode = "default",
   showIcon = true,
+  dateFormat = "yyyy-MM-dd hh:mm:ss",
+  showBaseInfo = true,
+  showCapture = false,
   imageViewer = {},
 } = { ...theme.post, ...frontmatter.tk?.post };
 
 const postFrontmatter = computed(() => props.post.frontmatter);
-const excerpt = unref(postFrontmatter).description || props.post.excerpt || props.post.capture;
+const excerpt = unref(postFrontmatter).description || props.post.excerpt || (showCapture && props.post.capture);
+
+const getDate = () => {
+  // 如果 post.date 时函数，则调用获取返回值作为 date，否则 使用 formatDate 格式化
+  const { date } = props.post;
+  if (isFunction(dateFormat)) return dateFormat(date);
+  return formatDate(date, dateFormat);
+};
+
+// 是否展示作者、日期、分类、标签等信息
+const isShowBaseInfo = computed(() => {
+  const arr = [showBaseInfo].flat();
+  if (arr.includes(true) || arr.includes("home")) return true;
+  return false;
+});
 
 const getImgUrl = (imgUrl: string | string[]) => {
   // 页面只展示一个图片
@@ -45,9 +62,9 @@ const handleViewImg = (imgUrl: string | string[]) => {
 
 <template>
   <div :class="prefixClass">
-    <i v-if="!!postFrontmatter.sticky" class="pin" title="置顶" />
+    <i v-if="!!postFrontmatter.sticky" class="pin" :title="`置顶：${postFrontmatter.sticky}`" />
 
-    <div :class="`${prefixClass}-info flx-align-center`">
+    <div :class="`${prefixClass}-info`">
       <div :class="`${prefixClass}-info__left`">
         <!-- 标题 -->
         <a class="title" :href="post.url">
@@ -61,7 +78,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
         </div>
 
         <!-- 文章信息 -->
-        <div :class="`${prefixClass}-info__left-footer flx-align-center`">
+        <div v-if="isShowBaseInfo" :class="`${prefixClass}-info__left-footer flx-align-center`">
           <span class="split flx-center">
             <el-icon v-if="showIcon"><User /></el-icon>
             <a
@@ -76,7 +93,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
 
           <span class="split flx-center">
             <el-icon v-if="showIcon"><Calendar /></el-icon>
-            <a v-if="post.date" title="创建时间">{{ formatDate(post.date, "yyyy-MM-dd") }}</a>
+            <a v-if="post.date" title="创建时间">{{ getDate() }}</a>
           </span>
 
           <span v-if="postFrontmatter.categories?.length" title="分类" class="split flx-center">
@@ -112,16 +129,16 @@ const handleViewImg = (imgUrl: string | string[]) => {
       </div>
 
       <!-- 右侧封面图 -->
-      <div :class="`${prefixClass}-info__right`">
+      <div :class="`${prefixClass}-info__right flx-align-center`">
         <div v-if="postFrontmatter.coverImg || postFrontmatter.coverImg?.length" class="cover-img">
           <div
-            v-if="coverImgMode == 'simple'"
+            v-if="coverImgMode == 'default'"
             :class="coverImgMode"
             :style="`background-image: url(${getImgUrl(postFrontmatter.coverImg)});`"
             @click="handleViewImg(postFrontmatter.coverImg)"
           />
           <img
-            v-else-if="coverImgMode == 'full'"
+            v-else-if="coverImgMode == 'large'"
             :src="getImgUrl(postFrontmatter.coverImg)"
             :class="coverImgMode"
             @click="handleViewImg(postFrontmatter.coverImg)"

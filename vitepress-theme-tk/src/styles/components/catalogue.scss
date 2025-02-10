@@ -7,6 +7,10 @@ $prefix-class: #{$theme-namespace}-catalogue;
     border-bottom: 1px solid var(--tk-line-color);
     margin-top: 1rem;
     padding-bottom: 1.2rem;
+
+    .description {
+      margin-top: 10px;
+    }
   }
 
   &-wrapper {

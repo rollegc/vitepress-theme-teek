@@ -28,6 +28,10 @@ export interface KtThemeConfig {
    * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
    */
   bgColor?: string[];
+  /**
+   * 文章列表配置
+   *
+   */
   post?: {
     /**
      * 摘要位置
@@ -46,14 +50,30 @@ export interface KtThemeConfig {
     moreLabel?: string;
     /**
      * 文章封面图模式
-     * @default 'simple'
+     * @default 'default'
      */
-    coverImgMode?: "simple" | "full";
+    coverImgMode?: "default" | "large";
     /**
      * 文章信息图标是否显示
      * @default true
      */
     showIcon?: boolean;
+    /**
+     * 文章日期格式，首页和文章页解析日期时使用
+     * @default 'yyyy-MM-dd'
+     */
+    dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: string) => string);
+    /**
+     * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等基本信息，分别作用于首页和文章页
+     * 如果 showBaseInfo 为数组，则控制在哪里显示，如 ["home"]，则只在首页显示基本信息；如果为 boolean 值，则控制基本信息是否展示，如 false，则在首页和文章页都不显示基本信息
+     * @default true
+     */
+    showBaseInfo?: boolean | ("home" | "article")[];
+    /**
+     * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
+     * @default false
+     */
+    showCapture?: boolean;
   };
   /**
    * 主题模式配置
@@ -80,6 +100,19 @@ export interface KtThemeConfig {
        */
       theme: string;
     }[];
+  }[];
+  /**
+   * 主题尺寸配置
+   */
+  themeSize?: {
+    /**
+     * 主题尺寸名称，用于页面文字渲染
+     */
+    name: string;
+    /**
+     * 主题尺寸标识，在 html 标签的 size 属性添加该标识
+     */
+    size: string;
   }[];
   /**
    *  body 背景大图配置
@@ -209,6 +242,11 @@ export interface KtThemeConfig {
      * @default false
      */
     showCurrentName?: boolean;
+    /**
+     * 面包屑分隔符
+     * @default '/'
+     */
+    separator?: string;
   };
   /**
    * 博主信息 (显示在首页侧边栏)

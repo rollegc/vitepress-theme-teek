@@ -2,10 +2,10 @@ html[size="large"] {
   --tk-home-max-width: 1330px;
   --tk-home-gap: 30px;
   --tk-home-post-simple-img-width: 160px;
-  --tk-home-post-simple-img-height: 120px;
+  --tk-home-post-simple-img-height: 80px;
   --tk-home-post-full-img-width: 360px;
-  --tk-home-post-full-img-height: 240px;
-  --tk-home-post-line-clamp: 3;
+  --tk-home-post-full-img-height: 100%;
+  --tk-home-post-line-clamp: 4;
   --tk-home-card-padding: 15px;
   --tk-home-card-width: 350px;
   --tk-home-card-svg-margin-left: 10px;
@@ -24,7 +24,7 @@ html[size="default"] {
   --tk-home-post-simple-img-width: 120px;
   --tk-home-post-simple-img-height: 80px;
   --tk-home-post-full-img-width: 240px;
-  --tk-home-post-full-img-height: 160px;
+  --tk-home-post-full-img-height: 100%;
   --tk-home-post-line-clamp: 3;
   --tk-home-card-padding: 10px;
   --tk-home-card-width: 280px;
@@ -41,9 +41,9 @@ html[size="small"] {
   --tk-home-max-width: 1000px;
   --tk-home-gap: var(--tk-gap2);
   --tk-home-post-simple-img-width: 100px;
-  --tk-home-post-simple-img-height: 60px;
-  --tk-home-post-full-img-width: 90px;
-  --tk-home-post-full-img-height: 60px;
+  --tk-home-post-simple-img-height: 80px;
+  --tk-home-post-full-img-width: 130px;
+  --tk-home-post-full-img-height: 100%;
   --tk-home-post-line-clamp: 2;
   --tk-home-card-padding: 8px;
   --tk-home-card-width: 260px;

@@ -2,7 +2,7 @@
 import { useDesign } from "../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { ElIcon } from "element-plus";
-import { ArrowUp, MagicStick, Tools } from "@element-plus/icons-vue";
+import { ArrowUp, MagicStick, ZoomIn } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { scrollTo } from "../helper";
 
@@ -29,10 +29,10 @@ onUnmounted(() => {
   window.removeEventListener("scroll", watchScroll);
 });
 
-// 主题切换
 const { theme } = useUnrefData();
 const { themeMode = [], themeSize = [] } = theme;
 
+// 主题切换
 const showThemeModeItem = ref(false);
 const currentThemeMode = ref("vp-default");
 
@@ -57,7 +57,6 @@ const themeModeList = [
       { name: "红色", theme: "el-red" },
     ],
   },
-
   ...themeMode,
 ];
 
@@ -66,6 +65,7 @@ const changeThemeMode = (themeMode: string) => {
   document.documentElement.setAttribute("theme", themeMode);
 };
 
+// 主题尺寸
 const showThemeSizeItem = ref(false);
 const currentThemeSize = ref("default");
 
@@ -97,7 +97,7 @@ const changeThemeSize = (themeSize: string) => {
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
-      <el-icon><Tools /></el-icon>
+      <el-icon><ZoomIn /></el-icon>
       <transition name="mode">
         <ul :class="`${prefixClass}-button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li

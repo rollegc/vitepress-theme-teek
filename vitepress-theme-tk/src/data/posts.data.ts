@@ -34,6 +34,7 @@ export default createContentLoader("**/*.md", {
         author: themeConfig.author,
         title: getTitle(r),
         date: getDate(r, siteConfig.srcDir),
+        capture: getCaptureText(r),
       });
     });
 
@@ -105,8 +106,8 @@ const getCaptureText = (post: KtContentData, count = 400) => {
       ?.replace(/\*\*(.*?)\*\*/g, "$1")
       // 除去 [[TOC]]
       ?.replace(/\[\[TOC\]\]/g, "")
-      // 除去::: 字符串
-      ?.replace(/^:::.+$/g, "")
+      // 去除 ::: 及其后面的内容
+      ?.replace(/:::.*?(\n|$)/g, "")
       ?.replace(/<!-- more -->/g, "")
       ?.split("\n")
       ?.filter(v => !!v)

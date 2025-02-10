@@ -37,6 +37,7 @@ $prefix-class: #{$theme-namespace}-post-item;
   }
 
   &-info {
+    display: flex;
     &__left {
       padding: 16px 24px;
       flex: 1;
@@ -94,6 +95,7 @@ $prefix-class: #{$theme-namespace}-post-item;
           float: right;
           line-height: 16px;
           color: var(--vp-c-brand-2);
+          margin-right: 16px;
 
           &:hover {
             color: var(--tk-theme-color);
@@ -105,7 +107,7 @@ $prefix-class: #{$theme-namespace}-post-item;
     &__right {
       .cover-img {
         cursor: pointer;
-        .simple {
+        .default {
           width: var(--tk-home-post-simple-img-width);
           height: var(--tk-home-post-simple-img-height);
           border-radius: 2px;
@@ -114,7 +116,7 @@ $prefix-class: #{$theme-namespace}-post-item;
           background-size: contain;
           background-position: center;
         }
-        .full {
+        .large {
           width: var(--tk-home-post-full-img-width);
           height: var(--tk-home-post-full-img-height);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);

@@ -2,10 +2,10 @@
 import { useRoute } from "vitepress";
 import { useDesign, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
-import { computed, ref, unref } from "vue";
+import { computed, ref, unref, inject } from "vue";
 import { formatDate } from "../helper";
 import { House, User, Calendar, FolderOpened, CollectionTag, Reading, Clock, View } from "@element-plus/icons-vue";
-import { useUnrefData } from "../configProvider";
+import { useUnrefData, postsSymbol } from "../configProvider";
 import { FileWords } from "vitepress-plugin-doc-analysis";
 
 const { getPrefixClass } = useDesign();
@@ -14,16 +14,29 @@ const prefixClass = getPrefixClass("articleAnalyze");
 const { theme, frontmatter, page } = useUnrefData();
 
 // 基本信息
-const author = frontmatter.author || theme.author;
-const date = formatDate(frontmatter.date || new Date(), "yyyy-MM-dd");
+const author = { ...theme.author, ...frontmatter.author };
 const categories = frontmatter.categories || [];
 const tags = frontmatter.tags || [];
+const posts = inject(postsSymbol);
+
+const route = useRoute();
+const { dateFormat = "yyyy-MM-dd", showBaseInfo = true } = theme.post || {};
+// 文章创建时间，先读取 frontmatter.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在 frontmatter 配置 date，减少文章扫描性能）
+const date = computed(() => {
+  if (frontmatter.date) return formatDate(frontmatter.date, dateFormat);
+
+  const targetPost = posts?.originPosts.filter(item =>
+    [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`)
+  );
+
+  return formatDate(targetPost?.[0]?.date || new Date(), dateFormat);
+});
+
 // 文章阅读量
 const { eachFileWords } = theme.docAnalysisInfo || {};
 // 站点信息配置项
 const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
 
-const route = useRoute();
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<FileWords> = {};
@@ -34,8 +47,23 @@ const pageViewInfo = computed(() => {
   return pageViewInfo;
 });
 
-// 面包屑
-const breadcrumb = frontmatter.breadcrumb || theme.breadcrumb || { enabled: true, showCurrentName: false };
+/**
+ * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等信息
+ */
+const isShowBaseInfo = computed(() => {
+  const arr = [showBaseInfo].flat();
+  if (arr.includes(true) || arr.includes("article")) return true;
+  return false;
+});
+
+// 面包屑配置项
+const breadcrumb = {
+  enabled: true,
+  showCurrentName: false,
+  separator: "/",
+  ...theme.breadcrumb,
+  ...frontmatter.breadcrumb,
+};
 const relativePathArr = page.relativePath.split("/") as string[];
 const classifyList = ref<string[]>([]);
 
@@ -59,7 +87,7 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
 
 <template>
   <div :class="`${prefixClass} flx-justify-between`">
-    <el-breadcrumb v-if="breadcrumb?.enabled" separator="/">
+    <el-breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <el-breadcrumb-item>
         <a href="/" title="首页">
           <el-icon><House /></el-icon>
@@ -76,11 +104,11 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div :class="`${prefixClass}-wrapper flx-center`">
+    <div v-if="isShowBaseInfo" :class="`${prefixClass}-wrapper flx-center`">
       <div class="flx-center">
         <el-icon><User /></el-icon>
         <a
-          v-if="author?.name"
+          v-if="author.name"
           title="作者"
           :href="author.link ? author.link : 'javaScript:void(0)'"
           :target="author.link ? '_blank' : '_self'"

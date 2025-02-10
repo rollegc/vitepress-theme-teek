@@ -84,6 +84,9 @@ const tkConfig = themeConfig({
       link: "https://www.youngkbt.cn/?contact=true",
     },
   ],
+  post: {
+    showBaseInfo: ["home"],
+  },
 });
 
 // https://vitepress.dev/reference/site-config

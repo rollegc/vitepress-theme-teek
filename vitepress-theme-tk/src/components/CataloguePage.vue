@@ -26,7 +26,7 @@ const catalogueList = theme.sidebar[getPath()];
   <div :class="`${prefixClass} tk-page`">
     <div :class="`${prefixClass}-header`">
       <div class="tk-page-title-h2">{{ frontmatter.title }}</div>
-      <div class="my-10">{{ frontmatter.description }}</div>
+      <div class="description">{{ frontmatter.desc || frontmatter.description }}</div>
     </div>
 
     <div :class="`${prefixClass}-wrapper`">
