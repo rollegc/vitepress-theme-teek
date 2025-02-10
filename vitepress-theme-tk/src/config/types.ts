@@ -2,7 +2,7 @@ import { PermalinkOption } from "vitepress-plugin-permalink";
 import { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import { CatalogueOption } from "vitepress-plugin-catalogue";
 import { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import { PaginationProps } from "element-plus";
+import { ImageViewerProps, PaginationProps } from "element-plus";
 
 export interface KtThemeConfig {
   /**
@@ -28,6 +28,23 @@ export interface KtThemeConfig {
    * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
    */
   bgColor?: string[];
+  post?: {
+    /**
+     * 摘要位置
+     * @default bottom
+     */
+    excerptPosition?: "top" | "bottom";
+    /**
+     * 是否显示更多按钮
+     * @default true
+     */
+    more?: boolean;
+    /**
+     * 更多按钮文字
+     * @default '阅读全文 >'
+     */
+    moreLabel?: string;
+  };
   /**
    * 主题模式配置
    */
@@ -87,6 +104,11 @@ export interface KtThemeConfig {
    * 首页 Banner 配置
    */
   banner?: {
+    /**
+     * 是否启用 Banner
+     * @default true
+     */
+    enabled?: boolean;
     /**
      * Banner 背景风格：default 为纯色背景，bigImg 为大图背景，grid 为网格背景
      * @default 'default'
@@ -481,6 +503,7 @@ export interface KtThemeConfig {
     docAnalysisOption?: DocAnalysisOption;
   };
   page?: Partial<PaginationProps>;
+  imageViewer?: Partial<ImageViewerProps>;
 }
 
 export interface FooterConfig {

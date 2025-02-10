@@ -88,3 +88,33 @@ function getDate(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "u
   const filePath = join(srcDir, `${url.endsWith("/") ? `${url}/index` : url}.md`);
   return formatDate(statSync(filePath).birthtime || new Date());
 }
+
+const getCaptureText = (post: KtContentData, count = 400) => {
+  const { content = "" } = matter(post.src || "", {});
+  return (
+    content
+      // 首个标题
+      ?.replace(/^#+\s+.*/, "")
+      // 除去标题
+      ?.replace(/#/g, "")
+      // 除去图片
+      ?.replace(/!\[.*?\]\(.*?\)/g, "")
+      // 除去链接
+      ?.replace(/\[(.*?)\]\(.*?\)/g, "$1")
+      // 除去加粗
+      ?.replace(/\*\*(.*?)\*\*/g, "$1")
+      // 除去 [[TOC]]
+      ?.replace(/\[\[TOC\]\]/g, "")
+      // 除去::: 字符串
+      ?.replace(/^:::.+$/g, "")
+      ?.replace(/<!-- more -->/g, "")
+      ?.split("\n")
+      ?.filter(v => !!v)
+      ?.join("\n")
+      ?.replace(/>(.*)/, "")
+      ?.replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      ?.trim()
+      ?.slice(0, count)
+  );
+};

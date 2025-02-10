@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, extname, join, resolve } from "node:path";
+import { basename, extname, resolve } from "node:path";
 import matter from "gray-matter";
 import type { CatalogueOption } from "./types";
 
@@ -16,7 +16,7 @@ export default (option: CatalogueOption = {}) => {
   // 遍历根目录下的每个子目录
   dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath)));
 
-	return catalogues;
+  return catalogues;
 };
 
 /**

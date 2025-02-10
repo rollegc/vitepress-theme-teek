@@ -3,7 +3,6 @@
 $prefix-class: #{$theme-namespace}-post-item;
 
 .#{$prefix-class} {
-  padding: 1rem 1.5rem;
   margin-bottom: 0.8rem;
   position: relative;
   width: 100%;
@@ -39,20 +38,14 @@ $prefix-class: #{$theme-namespace}-post-item;
 
   &-info {
     &__left {
+      padding: 1rem 1.5rem;
       flex: 1;
 
       .title {
         font-size: 1.125rem;
         font-weight: 600;
-        margin-bottom: 0.4rem;
         display: block;
         cursor: pointer;
-      }
-
-      .description {
-        color: var(--tk-lower-color1);
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
       }
 
       &-footer {
@@ -77,28 +70,38 @@ $prefix-class: #{$theme-namespace}-post-item;
       }
 
       &-excerpt {
-        border-top: 1px solid var(--tk-line-color);
         margin: 0.5rem 0;
         overflow: hidden;
 
+        &.bottom {
+          border-top: 1px solid var(--tk-line-color);
+          .excerpt {
+            margin: 0.5rem 0;
+          }
+        }
+
         .excerpt {
-          margin: 0.5rem 0;
-          font-size: 0.92rem;
+          color: var(--tk-lower-color1);
+          font-size: 0.875rem;
         }
 
         .more {
           float: right;
           line-height: 1rem;
-          color: var(--tk-theme-color);
+          color: var(--vp-c-brand-2);
+
+          &:hover {
+            color: var(--tk-theme-color);
+          }
         }
       }
     }
 
     &__right {
+      margin-right: 1.5rem;
       &.cover-img {
         width: 7.5rem;
         height: 5rem;
-        margin-left: 1.5rem;
         border-radius: 0.125rem;
         background-repeat: no-repeat;
         background-size: contain;

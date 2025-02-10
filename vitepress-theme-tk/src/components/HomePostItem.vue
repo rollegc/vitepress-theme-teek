@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostItem">
-import { computed } from "vue";
+import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
 import { withBase } from "vitepress";
 import { KtContentData } from "../data/types";
@@ -14,9 +14,18 @@ const prefixClass = getPrefixClass("post-item");
 
 const props = defineProps<{ post: KtContentData }>();
 
-const { frontmatter } = useUnrefData();
+const { frontmatter, theme } = useUnrefData();
+
+const {
+  excerptPosition = "bottom",
+  more = true,
+  moreLabel = "阅读全文 >",
+  imageViewer = {},
+} = { ...theme.post, ...frontmatter.tk?.post };
 
 const postFrontmatter = computed(() => props.post.frontmatter);
+const excerpt = unref(postFrontmatter).description || props.post.excerpt || props.post.capture;
+
 const getImgUrl = (imgUrl: string | string[]) => {
   // 页面只展示一个图片
   return withBase([imgUrl || []].flat()[0]);
@@ -27,7 +36,7 @@ const getImgUrl = (imgUrl: string | string[]) => {
  */
 const handleViewImg = (imgUrl: string | string[]) => {
   const urlList = [imgUrl || []].flat() as string[];
-  const imageViewerOptions = { ...frontmatter.tk?.imageViewer, urlList };
+  const imageViewerOptions = { ...imageViewer, urlList };
   createImageViewer(imageViewerOptions);
 };
 </script>
@@ -44,9 +53,15 @@ const handleViewImg = (imgUrl: string | string[]) => {
         </a>
 
         <!-- 描述 -->
-        <p v-if="postFrontmatter.description" class="description mle">
+        <!-- <p v-if="postFrontmatter.description" class="description mle">
           {{ postFrontmatter.description }}
-        </p>
+        </p> -->
+
+        <!-- 摘要 top -->
+        <div v-if="excerpt && excerptPosition === 'top'" :class="`${prefixClass}-info__left-excerpt top`">
+          <div class="excerpt" v-html="excerpt" />
+          <a v-if="more" class="more" :href="post.url">{{ moreLabel }}</a>
+        </div>
 
         <!-- 文章信息 -->
         <div :class="`${prefixClass}-info__left-footer flx-align-center`">
@@ -92,19 +107,19 @@ const handleViewImg = (imgUrl: string | string[]) => {
           </span>
         </div>
 
-        <!-- 摘要 -->
-        <div :class="`${prefixClass}-info__left-excerpt`" v-if="post.excerpt">
-          <div class="excerpt" v-html="post.excerpt"></div>
-          <a class="more" :href="post.url">阅读全文 ></a>
+        <!-- 摘要 bottom -->
+        <div v-if="excerpt && excerptPosition === 'bottom'" :class="`${prefixClass}-info__left-excerpt bottom`">
+          <div class="excerpt" v-html="excerpt" />
+          <a v-if="more" class="more" :href="post.url">{{ moreLabel }}</a>
         </div>
       </div>
 
       <!-- 右侧封面图 -->
       <div
-        v-if="postFrontmatter.img || postFrontmatter.img?.length"
+        v-if="postFrontmatter.coverImg || postFrontmatter.coverImg?.length"
         :class="`${prefixClass}-info__right cover-img`"
-        :style="`background-image: url(${getImgUrl(postFrontmatter.img)});`"
-        @click="handleViewImg(postFrontmatter.img)"
+        :style="`background-image: url(${getImgUrl(postFrontmatter.coverImg)});`"
+        @click="handleViewImg(postFrontmatter.coverImg)"
       ></div>
     </div>
   </div>

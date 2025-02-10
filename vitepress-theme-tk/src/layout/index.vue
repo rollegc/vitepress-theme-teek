@@ -20,9 +20,11 @@ const { Layout } = DefaultTheme;
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("layout");
 
-const { theme } = useUnrefData();
+const { theme, frontmatter } = useUnrefData();
 
 const useKtTheme = theme.ktTheme ?? true;
+
+const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
 </script>
 
 <template>
@@ -54,7 +56,7 @@ const useKtTheme = theme.ktTheme ?? true;
       <slot name="home-hero-before" />
       <!-- 自定义首页 -->
       <div v-if="useKtTheme" :class="`${prefixClass}-home`">
-        <template v-if="isHomePage()"><HomeBanner /></template>
+        <HomeBanner v-if="isHomePage() && enabled" />
         <div :class="`${prefixClass}-home-content flx-start-justify-center`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
           <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
