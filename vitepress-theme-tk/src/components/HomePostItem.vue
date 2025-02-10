@@ -18,8 +18,10 @@ const { frontmatter, theme } = useUnrefData();
 
 const {
   excerptPosition = "bottom",
-  more = true,
+  showMore = true,
   moreLabel = "阅读全文 >",
+  coverImgMode = "simple",
+  showIcon = true,
   imageViewer = {},
 } = { ...theme.post, ...frontmatter.tk?.post };
 
@@ -52,21 +54,16 @@ const handleViewImg = (imgUrl: string | string[]) => {
           {{ post.title }}
         </a>
 
-        <!-- 描述 -->
-        <!-- <p v-if="postFrontmatter.description" class="description mle">
-          {{ postFrontmatter.description }}
-        </p> -->
-
         <!-- 摘要 top -->
         <div v-if="excerpt && excerptPosition === 'top'" :class="`${prefixClass}-info__left-excerpt top`">
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="more" class="more" :href="post.url">{{ moreLabel }}</a>
+          <a v-if="showMore" class="more" :href="post.url">{{ moreLabel }}</a>
         </div>
 
         <!-- 文章信息 -->
         <div :class="`${prefixClass}-info__left-footer flx-align-center`">
           <span class="split flx-center">
-            <el-icon><User /></el-icon>
+            <el-icon v-if="showIcon"><User /></el-icon>
             <a
               v-if="post.author?.name"
               title="作者"
@@ -78,12 +75,12 @@ const handleViewImg = (imgUrl: string | string[]) => {
           </span>
 
           <span class="split flx-center">
-            <el-icon><Calendar /></el-icon>
+            <el-icon v-if="showIcon"><Calendar /></el-icon>
             <a v-if="post.date" title="创建时间">{{ formatDate(post.date, "yyyy-MM-dd") }}</a>
           </span>
 
           <span v-if="postFrontmatter.categories?.length" title="分类" class="split flx-center">
-            <el-icon><FolderOpened /></el-icon>
+            <el-icon v-if="showIcon"><FolderOpened /></el-icon>
             <a
               v-for="(category, index) in postFrontmatter.categories"
               :key="index"
@@ -95,7 +92,7 @@ const handleViewImg = (imgUrl: string | string[]) => {
           </span>
 
           <span v-if="postFrontmatter.tags?.length" title="标签" class="split flx-center">
-            <el-icon><CollectionTag /></el-icon>
+            <el-icon v-if="showIcon"><CollectionTag /></el-icon>
             <a
               v-for="(tag, index) in postFrontmatter.tags"
               :key="index"
@@ -110,17 +107,27 @@ const handleViewImg = (imgUrl: string | string[]) => {
         <!-- 摘要 bottom -->
         <div v-if="excerpt && excerptPosition === 'bottom'" :class="`${prefixClass}-info__left-excerpt bottom`">
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="more" class="more" :href="post.url">{{ moreLabel }}</a>
+          <a v-if="showMore" class="more" :href="post.url">{{ moreLabel }}</a>
         </div>
       </div>
 
       <!-- 右侧封面图 -->
-      <div
-        v-if="postFrontmatter.coverImg || postFrontmatter.coverImg?.length"
-        :class="`${prefixClass}-info__right cover-img`"
-        :style="`background-image: url(${getImgUrl(postFrontmatter.coverImg)});`"
-        @click="handleViewImg(postFrontmatter.coverImg)"
-      ></div>
+      <div :class="`${prefixClass}-info__right`">
+        <div v-if="postFrontmatter.coverImg || postFrontmatter.coverImg?.length" class="cover-img">
+          <div
+            v-if="coverImgMode == 'simple'"
+            :class="coverImgMode"
+            :style="`background-image: url(${getImgUrl(postFrontmatter.coverImg)});`"
+            @click="handleViewImg(postFrontmatter.coverImg)"
+          />
+          <img
+            v-else-if="coverImgMode == 'full'"
+            :src="getImgUrl(postFrontmatter.coverImg)"
+            :class="coverImgMode"
+            @click="handleViewImg(postFrontmatter.coverImg)"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -143,7 +150,7 @@ $prefix-class: #{$theme-namespace}-post-item;
     }
 
     img {
-      max-height: 17.5rem;
+      max-height: 280px;
       max-width: 100%;
       margin: 0 auto;
     }

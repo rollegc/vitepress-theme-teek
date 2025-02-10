@@ -7,7 +7,7 @@ $prefix-class: #{$theme-namespace}-footer;
   text-align: center;
 
   &-icons {
-    gap: 20px;
+    gap: var(--tk-gap1);
     margin-bottom: 10px;
     i :deep(svg),
     img {

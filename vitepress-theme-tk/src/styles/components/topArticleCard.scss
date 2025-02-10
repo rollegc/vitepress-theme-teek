@@ -14,7 +14,7 @@ $prefix-class: #{$theme-namespace}-topArticle;
 
       .num {
         color: var(--tk-lower-color1);
-        font-size: 14px;
+        font-size: var(--tk-home-font-size-middle);
         margin-top: 4px;
         padding: 0 6px;
         height: 18px;
@@ -24,7 +24,7 @@ $prefix-class: #{$theme-namespace}-topArticle;
         font-style: italic;
 
         &.sticky {
-          font-size: 12px;
+          font-size: var(--tk-home-font-size-small);
           background-color: var(--tk-num-bg-color);
           color: #ffffff;
           border-radius: 8px 0;
@@ -36,11 +36,11 @@ $prefix-class: #{$theme-namespace}-topArticle;
         min-width: 0;
 
         .title {
-          font-size: 14px;
+          font-size: var(--tk-home-font-size-middle);
           font-weight: 450;
         }
         .date {
-          font-size: 12px;
+          font-size: var(--tk-home-font-size-small);
           color: var(--vp-c-text-2);
         }
       }
@@ -48,7 +48,7 @@ $prefix-class: #{$theme-namespace}-topArticle;
   }
 
   &-empty {
-    font-size: 14px;
+    font-size: var(--tk-home-font-size-middle);
     padding: 6px;
     text-align: center;
   }

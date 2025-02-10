@@ -6,18 +6,22 @@ $prefix-class: #{$theme-namespace}-homeCard;
   &-header {
     margin-bottom: 10px;
     .title {
-      font-size: 1.1rem;
+      font-size: var(--tk-home-font-size-large);
 
       :deep(svg) {
         width: 16px;
         height: 16px;
-        margin-right: 4px;
+        margin-right: var(--tk-home-card-svg-margin-left);
       }
     }
 
     .page-button {
       padding: 0 3px;
       user-select: none;
+
+      .el-icon {
+        font-size: var(--tk-home-font-size-middle);
+      }
 
       &:hover {
         color: var(--tk-theme-color);

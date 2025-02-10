@@ -1,0 +1,57 @@
+html[size="large"] {
+  --tk-home-max-width: 1330px;
+  --tk-home-gap: 30px;
+  --tk-home-post-simple-img-width: 160px;
+  --tk-home-post-simple-img-height: 120px;
+  --tk-home-post-full-img-width: 360px;
+  --tk-home-post-full-img-height: 240px;
+  --tk-home-post-line-clamp: 3;
+  --tk-home-card-padding: 15px;
+  --tk-home-card-width: 350px;
+  --tk-home-card-svg-margin-left: 10px;
+  --tk-home-font-size-large: 19px;
+  --tk-home-font-size-base: 17px;
+  --tk-home-font-size-middle: 15px;
+  --tk-home-font-size-sm: 14px;
+  --tk-home-font-size-small: 13px;
+  --tk-page-width: 1100px;
+}
+
+:root,
+html[size="default"] {
+  --tk-home-max-width: 1140px;
+  --tk-home-gap: var(--tk-gap1);
+  --tk-home-post-simple-img-width: 120px;
+  --tk-home-post-simple-img-height: 80px;
+  --tk-home-post-full-img-width: 240px;
+  --tk-home-post-full-img-height: 160px;
+  --tk-home-post-line-clamp: 3;
+  --tk-home-card-padding: 10px;
+  --tk-home-card-width: 280px;
+  --tk-home-card-svg-margin-left: 5px;
+  --tk-home-font-size-large: 18px;
+  --tk-home-font-size-base: 16px;
+  --tk-home-font-size-middle: 14px;
+  --tk-home-font-size-sm: 13px;
+  --tk-home-font-size-small: 12px;
+  --tk-page-width: 900px;
+}
+
+html[size="small"] {
+  --tk-home-max-width: 1000px;
+  --tk-home-gap: var(--tk-gap2);
+  --tk-home-post-simple-img-width: 100px;
+  --tk-home-post-simple-img-height: 60px;
+  --tk-home-post-full-img-width: 90px;
+  --tk-home-post-full-img-height: 60px;
+  --tk-home-post-line-clamp: 2;
+  --tk-home-card-padding: 8px;
+  --tk-home-card-width: 260px;
+  --tk-home-card-svg-margin-left: 4px;
+  --tk-home-font-size-large: 17px;
+  --tk-home-font-size-base: 15px;
+  --tk-home-font-size-middle: 13px;
+  --tk-home-font-size-sm: 13px;
+  --tk-home-font-size-small: 12px;
+  --tk-page-width: 800px;
+}

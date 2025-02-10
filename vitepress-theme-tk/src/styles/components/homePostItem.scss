@@ -3,11 +3,11 @@
 $prefix-class: #{$theme-namespace}-post-item;
 
 .#{$prefix-class} {
-  margin-bottom: 0.8rem;
+  margin-bottom: 14px;
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   box-shadow: 0 1px 8px 0 var(--tk-shadow-color);
   transition: all 0.3s;
   background-color: var(--tk-bg-color2);
@@ -38,20 +38,20 @@ $prefix-class: #{$theme-namespace}-post-item;
 
   &-info {
     &__left {
-      padding: 1rem 1.5rem;
+      padding: 16px 24px;
       flex: 1;
 
       .title {
-        font-size: 1.125rem;
+        font-size: 20px;
         font-weight: 600;
         display: block;
         cursor: pointer;
       }
 
       &-footer {
-        font-size: 0.8rem;
+        font-size: var(--tk-home-font-size-sm);
         color: var(--tk-lower-color2);
-        margin-top: 0.5rem;
+        margin-top: 8px;
 
         i {
           margin-right: 3px;
@@ -62,7 +62,7 @@ $prefix-class: #{$theme-namespace}-post-item;
             content: "";
             display: inline-block;
             width: 0.8px;
-            height: 0.5rem;
+            height: 8px;
             margin: 0 10px;
             background-color: var(--tk-lower-color2);
           }
@@ -71,23 +71,28 @@ $prefix-class: #{$theme-namespace}-post-item;
 
       &-excerpt {
         margin: 0.5rem 0;
-        overflow: hidden;
 
         &.bottom {
           border-top: 1px solid var(--tk-line-color);
           .excerpt {
+            overflow: hidden;
+            display: -webkit-box;
             margin: 0.5rem 0;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            line-clamp: var(--tk-home-post-line-clamp);
+            -webkit-line-clamp: var(--tk-home-post-line-clamp);
           }
         }
 
         .excerpt {
           color: var(--tk-lower-color1);
-          font-size: 0.875rem;
+          font-size: 14px;
         }
 
         .more {
           float: right;
-          line-height: 1rem;
+          line-height: 16px;
           color: var(--vp-c-brand-2);
 
           &:hover {
@@ -98,15 +103,22 @@ $prefix-class: #{$theme-namespace}-post-item;
     }
 
     &__right {
-      margin-right: 1.5rem;
-      &.cover-img {
-        width: 7.5rem;
-        height: 5rem;
-        border-radius: 0.125rem;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+      .cover-img {
         cursor: pointer;
+        .simple {
+          width: var(--tk-home-post-simple-img-width);
+          height: var(--tk-home-post-simple-img-height);
+          border-radius: 2px;
+          margin-right: 24px;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+        }
+        .full {
+          width: var(--tk-home-post-full-img-width);
+          height: var(--tk-home-post-full-img-height);
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);
+        }
       }
     }
   }

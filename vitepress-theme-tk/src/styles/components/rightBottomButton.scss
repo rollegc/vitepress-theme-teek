@@ -33,17 +33,17 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
     }
 
     // 主题模式样式
+    &__size {
+      position: absolute;
+      bottom: 3.7rem;
+      right: 1.7rem;
+    }
+
+    // 主题模式样式
     &__mode {
-      padding: 6px 0 8px 0;
       position: absolute;
       bottom: 0.7rem;
       right: 1.7rem;
-      background: var(--tk-bg-color1);
-      border: 1px solid var(--tk-shadow-color);
-      width: 110px;
-      border-radius: 6px;
-      line-height: 1.6rem;
-      text-align: left;
 
       &-title {
         padding: 0 10px;
@@ -51,6 +51,16 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
         color: var(--el-color-info);
         cursor: default;
       }
+    }
+
+    .dropdown {
+      padding: 6px 0 8px 0;
+      background: var(--tk-bg-color1);
+      border: 1px solid var(--tk-shadow-color);
+      width: 110px;
+      border-radius: 6px;
+      line-height: 1.6rem;
+      text-align: left;
 
       &-item {
         font-size: 14px;

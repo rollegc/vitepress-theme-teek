@@ -38,12 +38,22 @@ export interface KtThemeConfig {
      * 是否显示更多按钮
      * @default true
      */
-    more?: boolean;
+    showMore?: boolean;
     /**
      * 更多按钮文字
      * @default '阅读全文 >'
      */
     moreLabel?: string;
+    /**
+     * 文章封面图模式
+     * @default 'simple'
+     */
+    coverImgMode?: "simple" | "full";
+    /**
+     * 文章信息图标是否显示
+     * @default true
+     */
+    showIcon?: boolean;
   };
   /**
    * 主题模式配置

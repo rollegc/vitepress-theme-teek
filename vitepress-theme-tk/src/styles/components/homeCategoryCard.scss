@@ -11,8 +11,8 @@ $prefix-class: #{$theme-namespace}-category;
       display: flex;
       justify-content: space-between;
       padding: 8px 12px 7px 5px;
-      font-size: 0.875rem;
-      line-height: 0.875rem;
+      font-size: var(--tk-home-font-size-middle);
+      line-height: var(--tk-home-font-size-middle);
       transition: all 0.2s;
       border-left: 2px solid transparent;
       margin-top: -1px;
@@ -28,7 +28,7 @@ $prefix-class: #{$theme-namespace}-category;
       &.active {
         background: var(--tk-theme-color);
         color: var(--tk-bg-color1);
-        padding-left: 0.8rem;
+        padding-left: 13px;
         border-radius: 1px;
         border-color: transparent;
       }
@@ -36,7 +36,7 @@ $prefix-class: #{$theme-namespace}-category;
   }
 
   &-empty {
-    font-size: 14px;
+    font-size: var(--tk-home-font-size-middle);
     padding: 6px;
     text-align: center;
   }

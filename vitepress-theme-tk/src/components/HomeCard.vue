@@ -94,13 +94,13 @@ onMounted(() => {
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? 'pointer' : 'disabled']" @click="pagination(-1, 'prev')">
-              <el-icon :size="12"><ArrowLeft /></el-icon>
+              <el-icon><ArrowLeft /></el-icon>
             </span>
           </slot>
 
           <slot name="page-right" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? 'pointer' : 'disabled']" @click="pagination(1, 'next')">
-              <el-icon :size="12"><ArrowRight /></el-icon>
+              <el-icon><ArrowRight /></el-icon>
             </span>
           </slot>
         </div>

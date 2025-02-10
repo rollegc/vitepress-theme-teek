@@ -2,7 +2,7 @@
 import { useDesign } from "../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { ElIcon } from "element-plus";
-import { ArrowUp, MagicStick } from "@element-plus/icons-vue";
+import { ArrowUp, MagicStick, Tools } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { scrollTo } from "../helper";
 
@@ -31,7 +31,8 @@ onUnmounted(() => {
 
 // 主题切换
 const { theme } = useUnrefData();
-const { themeMode = [] } = theme;
+const { themeMode = [], themeSize = [] } = theme;
+
 const showThemeModeItem = ref(false);
 const currentThemeMode = ref("vp-default");
 
@@ -64,6 +65,21 @@ const changeThemeMode = (themeMode: string) => {
   currentThemeMode.value = themeMode;
   document.documentElement.setAttribute("theme", themeMode);
 };
+
+const showThemeSizeItem = ref(false);
+const currentThemeSize = ref("default");
+
+const themeSizeList = [
+  { name: "Large", size: "large" },
+  { name: "Default", size: "default" },
+  { name: "Small", size: "small" },
+  ...themeSize,
+];
+
+const changeThemeSize = (themeSize: string) => {
+  currentThemeSize.value = themeSize;
+  document.documentElement.setAttribute("size", themeSize);
+};
 </script>
 
 <template>
@@ -75,6 +91,29 @@ const changeThemeMode = (themeMode: string) => {
     </transition>
 
     <div
+      title="字体切换"
+      :class="`${prefixClass}-button`"
+      @mouseenter="showThemeSizeItem = true"
+      @mouseleave="showThemeSizeItem = false"
+      @click="showThemeSizeItem = true"
+    >
+      <el-icon><Tools /></el-icon>
+      <transition name="mode">
+        <ul :class="`${prefixClass}-button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
+          <li
+            v-for="item in themeSizeList"
+            :key="item.size"
+            title=""
+            :class="['dropdown-item', 'sle', { active: item.size === currentThemeSize }]"
+            @click="changeThemeSize(item.size)"
+          >
+            {{ item.name }}
+          </li>
+        </ul>
+      </transition>
+    </div>
+
+    <div
       title="主题切换"
       :class="`${prefixClass}-button`"
       @mouseenter="showThemeModeItem = true"
@@ -83,7 +122,7 @@ const changeThemeMode = (themeMode: string) => {
     >
       <el-icon><MagicStick /></el-icon>
       <transition name="mode">
-        <div :class="`${prefixClass}-button__mode`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
+        <div :class="`${prefixClass}-button__mode dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
           <ul v-for="item in themeModeList" :key="item.label">
             <li :class="`${prefixClass}-button__mode-title sle`" :title="item.tip || ''">{{ item.label }}</li>
             <li>
@@ -92,7 +131,7 @@ const changeThemeMode = (themeMode: string) => {
                   v-for="option in item.options"
                   :key="item.label + option.theme"
                   title=""
-                  :class="[`${prefixClass}-button__mode-item`, 'sle', { active: option.theme === currentThemeMode }]"
+                  :class="['dropdown-item', 'sle', { active: option.theme === currentThemeMode }]"
                   @click="changeThemeMode(option.theme)"
                 >
                   {{ option.name }}

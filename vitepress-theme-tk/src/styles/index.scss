@@ -1,6 +1,7 @@
 @forward "./vp.scss";
 @forward "./tk.scss";
-@forward "./theme/var.scss";
+@forward "./var/theme.scss";
+@forward "./var/size.scss";
 
 // 基础全局样式变量，和 .dark 呼应
 :root {
@@ -37,15 +38,12 @@
 
 // 全局样式变量
 :root {
-  --tk-home-card-padding: 10px;
-  --tk-home-card-width: 280px;
-  --tk-gap1: 10px;
-  --tk-gap2: 20px;
-  --tk-page-width: 900px;
+  --tk-gap2: 10px;
+  --tk-gap1: 20px;
 }
 
 // 使用自定义自定义全局样式变量
 :root {
-  --tk-article-gap: var(--tk-gap1);
-  --tk-friend-gap: var(--tk-gap2);
+  --tk-article-gap: var(--tk-gap2);
+  --tk-friend-gap: var(--tk-gap1);
 }

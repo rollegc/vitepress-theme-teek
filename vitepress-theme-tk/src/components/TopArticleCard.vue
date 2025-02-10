@@ -35,7 +35,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const getStyle = (num: number, index: number) => {
   return {
     "--tk-num-bg-color": bgColor[num % bgColor.length],
-    top: `calc(${index} * (calc(var(--tk-gap1) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    top: `calc(${index} * (calc(var(--tk-gap2) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>
