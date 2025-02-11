@@ -4,7 +4,6 @@
 
 ## TODO
 
-- 首页 PostList 图片支持单选数镜像对称，镜像对称参考 `http://niubin.site/`
 - 添加评论功能
 - 文章页支持动态全屏大小和默认大小
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

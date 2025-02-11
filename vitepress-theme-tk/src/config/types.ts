@@ -76,9 +76,23 @@ export interface KtThemeConfig {
     showCapture?: boolean;
   };
   /**
-   * 主题模式配置
+   * 设置当前主题模式
+   * @default 'vp-default'
    */
-  themeMode?: {
+  themeMode?:
+    | "vp-default"
+    | "vp-green"
+    | "vp-yellow"
+    | "vp-red"
+    | "el-blue"
+    | "el-green"
+    | "el-yellow"
+    | "el-red"
+    | string;
+  /**
+   * 自定义主题模式，将会追加到内置主题模式后面
+   */
+  themeModeAppend?: {
     /**
      * 主题组名称
      */
@@ -101,10 +115,11 @@ export interface KtThemeConfig {
       theme: string;
     }[];
   }[];
+  themeSize?: "small" | "default" | "large" | string;
   /**
-   * 主题尺寸配置
+   * 自定义主题尺寸，将会追加到内置主题尺寸后面
    */
-  themeSize?: {
+  themeSizeAppend?: {
     /**
      * 主题尺寸名称，用于页面文字渲染
      */

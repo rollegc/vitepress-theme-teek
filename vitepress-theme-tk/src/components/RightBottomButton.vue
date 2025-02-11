@@ -30,11 +30,11 @@ onUnmounted(() => {
 });
 
 const { theme } = useUnrefData();
-const { themeMode = [], themeSize = [] } = theme;
+const { themeMode = "vp-default", themeModeAppend = [], themeSize = "default", themeSizeAppend = [] } = theme;
 
 // 主题切换
 const showThemeModeItem = ref(false);
-const currentThemeMode = ref("vp-default");
+const currentThemeMode = ref(themeMode);
 
 const themeModeList = [
   {
@@ -57,29 +57,37 @@ const themeModeList = [
       { name: "红色", theme: "el-red" },
     ],
   },
-  ...themeMode,
+  ...themeModeAppend,
 ];
 
 const changeThemeMode = (themeMode: string) => {
+  if (themeMode === unref(currentThemeMode)) return;
   currentThemeMode.value = themeMode;
   document.documentElement.setAttribute("theme", themeMode);
 };
 
+// 初始化主题模式
+changeThemeMode(themeMode);
+
 // 主题尺寸
 const showThemeSizeItem = ref(false);
-const currentThemeSize = ref("default");
+const currentThemeSize = ref(themeSize);
 
 const themeSizeList = [
   { name: "Large", size: "large" },
   { name: "Default", size: "default" },
   { name: "Small", size: "small" },
-  ...themeSize,
+  ...themeSizeAppend,
 ];
 
 const changeThemeSize = (themeSize: string) => {
+  if (themeSize === unref(currentThemeSize)) return;
   currentThemeSize.value = themeSize;
   document.documentElement.setAttribute("size", themeSize);
 };
+
+// 初始化主题尺寸
+changeThemeSize(themeSize);
 </script>
 
 <template>
