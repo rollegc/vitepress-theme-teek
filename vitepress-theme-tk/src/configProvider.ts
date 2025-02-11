@@ -35,7 +35,8 @@ export const useUnrefData = () => {
 };
 
 export const isHomePage = () => {
-  return !isCategoriesPage() && !isTagsPage();
+  const { frontmatter } = useData();
+  return !isCategoriesPage() && !isTagsPage() && unref(frontmatter).layout === "home";
 };
 
 export const isCategoriesPage = () => {

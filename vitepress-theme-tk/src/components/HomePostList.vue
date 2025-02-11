@@ -15,6 +15,8 @@ const { frontmatter, theme } = useUnrefData();
 // 自定义一页数量 & 分页组件的 Props
 const { pageSize = 10, size = "small", ...pageProps } = { ...theme.page, ...frontmatter.tk?.page };
 
+const { coverImgMode = "default" } = { ...theme.post, ...frontmatter.tk?.post };
+
 // 分页信息
 const pageInfo = reactive({
   pageNum: 1,
@@ -81,7 +83,11 @@ const handlePagination = () => {
 <template>
   <div :class="prefixClass">
     <ul>
-      <li v-for="post in currentPosts" :key="post">
+      <li
+        v-for="post in currentPosts"
+        :key="post"
+        :class="[`${prefixClass}-item`, { 'large-cover-wrapper': coverImgMode === 'large' }]"
+      >
         <HomePostItem :post />
       </li>
     </ul>

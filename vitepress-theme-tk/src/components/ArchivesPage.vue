@@ -10,12 +10,6 @@ const prefixClass = getPrefixClass("archives");
 const { frontmatter } = useUnrefData();
 
 const posts = inject(postsSymbol);
-
-const getDate = (item: KtContentData) => {
-  const { date } = item;
-  // 获取文章创建时间：MM-DD
-  if (date) return date.slice(5, 10);
-};
 </script>
 
 <template>
@@ -42,7 +36,7 @@ const getDate = (item: KtContentData) => {
             <ul>
               <li v-for="item in posts" :key="item.title">
                 <a :href="item.url">
-                  <span class="date">{{ getDate(item) }}</span>
+                  <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>
                 </a>
               </li>
