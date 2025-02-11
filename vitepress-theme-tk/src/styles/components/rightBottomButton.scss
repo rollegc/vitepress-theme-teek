@@ -56,7 +56,7 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
     .dropdown {
       padding: 6px 0 8px 0;
       background: var(--tk-bg-color1);
-      border: 1px solid var(--tk-shadow-color);
+      box-shadow: 0 1px 8px var(--tk-shadow-color);
       width: 110px;
       border-radius: 6px;
       line-height: 1.6rem;

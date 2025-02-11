@@ -1,12 +1,6 @@
-:root {
-  // 数值越大，侧边栏约靠近屏幕左侧
-  --vp-layout-max-width: 97vw;
-  --vp-sidebar-width: 275px;
-}
-
 // 文章内容宽度加大
 .VPContent .VPDoc.has-aside .content-container {
-  max-width: 1800px;
+  max-width: var(--vp-content-container, 688px);
 }
 
 .VPSidebar {
@@ -22,5 +16,13 @@
       // 二级菜单添加间距
       padding-left: 10px;
     }
+  }
+}
+
+// 导航栏切换暗黑模式按钮样式调整
+.tk-layout .VPNavBar .VPSwitchAppearance {
+  width: 22px !important;
+  .check {
+    transform: none;
   }
 }

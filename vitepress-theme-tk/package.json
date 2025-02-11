@@ -20,6 +20,8 @@
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@giscus/vue": "^3.1.1",
+    "@waline/client": "^3.5.1",
     "chalk": "^5.4.1",
     "element-plus": "^2.9.3",
     "gray-matter": "^4.0.3",
@@ -29,11 +31,11 @@
     "vitepress": "^1.6.3"
   },
   "dependencies": {
+    "vitepress-plugin-catalogue": "workspace:*",
+    "vitepress-plugin-doc-analysis": "workspace:*",
     "vitepress-plugin-md-h1": "workspace:*",
     "vitepress-plugin-permalink": "workspace:*",
-    "vitepress-plugin-sidebar-resolve": "workspace:*",
-    "vitepress-plugin-catalogue": "workspace:*",
-    "vitepress-plugin-doc-analysis": "workspace:*"
+    "vitepress-plugin-sidebar-resolve": "workspace:*"
   },
   "peerDependencies": {
     "vite": "^6.0.7",

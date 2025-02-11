@@ -3,6 +3,7 @@ import { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import { CatalogueOption } from "vitepress-plugin-catalogue";
 import { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
 import { ImageViewerProps, PaginationProps } from "element-plus";
+import { VNode } from "vue";
 
 export interface KtThemeConfig {
   /**
@@ -76,6 +77,11 @@ export interface KtThemeConfig {
     showCapture?: boolean;
   };
   /**
+   * 是否使用主题模式切换功能
+   * @default true
+   */
+  useThemeMode?: boolean;
+  /**
    * 设置当前主题模式
    * @default 'vp-default'
    */
@@ -115,6 +121,15 @@ export interface KtThemeConfig {
       theme: string;
     }[];
   }[];
+  /**
+   * 是否使用主题尺寸切换功能
+   * @default true
+   */
+  useThemeSize?: boolean;
+  /**
+   * 设置当前主题尺寸
+   * @default 'default'
+   */
   themeSize?: "small" | "default" | "large" | string;
   /**
    * 自定义主题尺寸，将会追加到内置主题尺寸后面
@@ -526,6 +541,28 @@ export interface KtThemeConfig {
      * 网络安全备案信息配置
      */
     securityRecord?: FooterConfig;
+  };
+  /**
+   * 评论区配置
+   */
+  comment?: {
+    /**
+     * 评论区提供者
+     * twikoo 官网：https://twikoo.js.org/
+     * waline 官网：https://waline.js.org/
+     * giscus 官网：https://giscus.app/zh-CN
+     * artalk 官网：https://artalk.js.org/
+     */
+    provider: "twikoo" | "waline" | "giscus" | "artalk";
+    /**
+     * 评论区配置项，根据 provider 不同而不同，具体看对应的官网
+     */
+    options?: Record<string, any>;
+    /**
+     * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如 .vue 组件
+     * @remark 例：{ ..., render: () => <MyCommentVueComponent /> }
+     */
+    render?: () => VNode;
   };
   plugins?: {
     /**

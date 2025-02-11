@@ -67,6 +67,11 @@
     "xlink",
     "qrcode",
     "cascader",
-		"vitepress"
+    "vitepress",
+    "katex",
+    "twikoo",
+    "waline",
+    "artalk",
+    "giscus"
   ]
 }

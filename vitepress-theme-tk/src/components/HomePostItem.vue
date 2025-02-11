@@ -74,22 +74,22 @@ const handleViewImg = (imgUrl: string | string[]) => {
 };
 
 const coverImgMap = computed(() => {
-  const imgSrc = withBase([unref(postFrontmatter).coverImg || []].flat()[0]);
+  const imgSrcList = [unref(postFrontmatter).coverImg || []].flat();
   return {
     default: {
       is: "div",
       props: {
         class: "default",
-        style: `background-image: url(${imgSrc});`,
-        onClick: () => handleViewImg(imgSrc),
+        style: `background-image: url(${imgSrcList[0]});`,
+        onClick: () => handleViewImg(imgSrcList),
       },
     },
     large: {
       is: "img",
       props: {
         class: "large",
-        src: imgSrc,
-        onClick: () => handleViewImg(imgSrc),
+        src: imgSrcList[0],
+        onClick: () => handleViewImg(imgSrcList),
       },
     },
   };

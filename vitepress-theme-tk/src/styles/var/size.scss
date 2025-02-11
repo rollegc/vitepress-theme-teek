@@ -15,6 +15,10 @@ html[size="large"] {
   --tk-home-font-size-sm: 14px;
   --tk-home-font-size-small: 13px;
   --tk-page-width: 1100px;
+  // 数值越大，侧边栏约靠近屏幕左侧
+  --vp-layout-max-width: 97vw;
+  --vp-sidebar-width: 275px;
+  --vp-content-container: 1800px;
 }
 
 :root,
@@ -54,4 +58,7 @@ html[size="small"] {
   --tk-home-font-size-sm: 13px;
   --tk-home-font-size-small: 12px;
   --tk-page-width: 800px;
+  --vp-layout-max-width: 1300px;
+  --vp-sidebar-width: 270px;
+  --vp-content-container: 688px;
 }

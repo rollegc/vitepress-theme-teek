@@ -11,6 +11,10 @@ import ArticleImagePreview from "../components/ArticleImagePreview.vue";
 import BodyBgImage from "../components/BodyBgImage.vue";
 import Footer from "../components/Footer.vue";
 import RightBottomButton from "../components/RightBottomButton.vue";
+import CommentTwikoo from "../components/CommentTwikoo.vue";
+import CommentArtalk from "../components/CommentArtalk.vue";
+import CommentGiscus from "../components/CommentGiscus.vue";
+import CommentWaline from "../components/CommentWaline.vue";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 
 defineOptions({ name: "TkLayout" });
@@ -25,6 +29,14 @@ const { theme, frontmatter } = useUnrefData();
 const useKtTheme = theme.ktTheme ?? true;
 
 const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
+const { provider, render } = { ...theme.comment };
+
+const commentComponent = {
+  twikoo: CommentTwikoo,
+  waline: CommentWaline,
+  giscus: CommentGiscus,
+  artalk: CommentArtalk,
+};
 </script>
 
 <template>
@@ -32,6 +44,18 @@ const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
   <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
 
   <Layout :class="prefixClass">
+    <template #home-hero-before>
+      <slot name="home-hero-before" />
+      <!-- 自定义首页 -->
+      <div v-if="useKtTheme" :class="`${prefixClass}-home`">
+        <HomeBanner v-if="isHomePage() && enabled" />
+        <div :class="`${prefixClass}-home-content flx-start-justify-center`">
+          <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
+          <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
+        </div>
+      </div>
+    </template>
+
     <template #layout-top>
       <slot name="layout-top" />
     </template>
@@ -50,18 +74,26 @@ const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
 
     <template #doc-after>
       <slot name="doc-after" />
+      <!-- 评论区 -->
+      <template v-if="frontmatter.comment !== false">
+        <component v-if="render" :is="render" :id="`${prefixClass}-comment`" :class="`${prefixClass}-comment`" />
+        <component
+          v-else-if="provider"
+          :is="commentComponent[provider]"
+          :id="`${prefixClass}-comment`"
+          :class="`${prefixClass}-comment`"
+        />
+      </template>
     </template>
 
-    <template #home-hero-before>
-      <slot name="home-hero-before" />
-      <!-- 自定义首页 -->
-      <div v-if="useKtTheme" :class="`${prefixClass}-home`">
-        <HomeBanner v-if="isHomePage() && enabled" />
-        <div :class="`${prefixClass}-home-content flx-start-justify-center`">
-          <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
-          <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
-        </div>
-      </div>
+    <!-- content -->
+    <template #page-top>
+      <slot name="page-top" />
+      <ArchivesPage v-if="isArchivesPage()" />
+      <CataloguePage v-if="isCataloguePage()" />
+    </template>
+    <template #page-bottom>
+      <slot name="page-bottom" />
     </template>
 
     <!-- navbar -->
@@ -90,16 +122,6 @@ const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
     </template>
     <template #sidebar-nav-after>
       <slot name="sidebar-nav-after" />
-    </template>
-
-    <!-- content -->
-    <template #page-top>
-      <slot name="page-top" />
-      <ArchivesPage v-if="isArchivesPage()" />
-      <CataloguePage v-if="isCataloguePage()" />
-    </template>
-    <template #page-bottom>
-      <slot name="page-bottom" />
     </template>
 
     <template #not-found>
@@ -173,6 +195,10 @@ $prefix-class: #{$theme-namespace}-layout;
         top: calc(var(--vp-nav-height) + 10px);
       }
     }
+  }
+
+  &-comment {
+    margin-top: 1.25rem;
   }
 }
 </style>

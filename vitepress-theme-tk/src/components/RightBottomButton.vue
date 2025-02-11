@@ -2,19 +2,31 @@
 import { useDesign } from "../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { ElIcon } from "element-plus";
-import { ArrowUp, MagicStick, ZoomIn } from "@element-plus/icons-vue";
+import { ArrowUp, MagicStick, SetUp, ChatDotSquare } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { scrollTo } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("rightBottomButton");
 
-// 返回顶部
+// 返回顶部 & 前往评论区
 const scrollTop = ref(0);
 const showToTop = computed(() => unref(scrollTop) > 100);
+const showToComment = computed(() => {
+  let docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
+  let docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
+  let height = 0;
+  if (docContentHeight) height = docContentHeight - docFooterHeight - window.innerHeight / 2;
+
+  return unref(scrollTop) < height;
+});
 const scrollToTop = () => {
   scrollTo("html", 0, 1500);
   scrollTop.value = 0;
+};
+
+const scrollToComment = () => {
+  document.querySelector("#tk-layout-comment")?.scrollIntoView({ behavior: "smooth" });
 };
 
 const watchScroll = () => {
@@ -30,7 +42,15 @@ onUnmounted(() => {
 });
 
 const { theme } = useUnrefData();
-const { themeMode = "vp-default", themeModeAppend = [], themeSize = "default", themeSizeAppend = [] } = theme;
+const {
+  useThemeMode = true,
+  themeMode = "vp-default",
+  themeModeAppend = [],
+  useThemeSize = true,
+  themeSize = "default",
+  themeSizeAppend = [],
+  comment,
+} = theme;
 
 // 主题切换
 const showThemeModeItem = ref(false);
@@ -99,13 +119,23 @@ changeThemeSize(themeSize);
     </transition>
 
     <div
+      v-if="comment?.provider && showToComment"
+      title="前往评论"
+      :class="`${prefixClass}-button`"
+      @click="scrollToComment"
+    >
+      <el-icon><ChatDotSquare /></el-icon>
+    </div>
+
+    <div
+      v-if="useThemeSize"
       title="字体切换"
       :class="`${prefixClass}-button`"
       @mouseenter="showThemeSizeItem = true"
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
-      <el-icon><ZoomIn /></el-icon>
+      <el-icon><SetUp /></el-icon>
       <transition name="mode">
         <ul :class="`${prefixClass}-button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
@@ -122,6 +152,7 @@ changeThemeSize(themeSize);
     </div>
 
     <div
+      v-if="useThemeMode"
       title="主题切换"
       :class="`${prefixClass}-button`"
       @mouseenter="showThemeModeItem = true"
