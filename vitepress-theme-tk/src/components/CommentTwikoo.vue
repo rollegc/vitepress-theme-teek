@@ -9,7 +9,7 @@ const {
   envId,
   link = "https://cdn.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js",
   version = "1.6.41",
-  katex = {},
+  katex,
   timeout = 700,
   ...options
 } = { ...theme.comment?.options };
@@ -55,12 +55,18 @@ onMounted(() => {
     <!-- KaTeX -->
     <template v-if="katex">
       <link rel="stylesheet" :href="katex.cssLink" :integrity="katex.cssIntegrity" crossorigin="anonymous" />
-      <component :is="'script'" defer :src="katex.coreLink" :integrity="katex.coreIntegrity" crossorigin="anonymous" />
       <component
         :is="'script'"
         defer
-        :src="katex.renderLink"
-        :integrity="katex.renderIntegrity"
+        :src="katex.coreJsLink"
+        :integrity="katex.coreJsIntegrity"
+        crossorigin="anonymous"
+      />
+      <component
+        :is="'script'"
+        defer
+        :src="katex.renderJsLink"
+        :integrity="katex.renderJsIntegrity"
         crossorigin="anonymous"
       />
     </template>

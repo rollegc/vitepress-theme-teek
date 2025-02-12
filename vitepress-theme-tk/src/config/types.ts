@@ -545,25 +545,7 @@ export interface KtThemeConfig {
   /**
    * 评论区配置
    */
-  comment?: {
-    /**
-     * 评论区提供者
-     * twikoo 官网：https://twikoo.js.org/
-     * waline 官网：https://waline.js.org/
-     * giscus 官网：https://giscus.app/zh-CN
-     * artalk 官网：https://artalk.js.org/
-     */
-    provider: "twikoo" | "waline" | "giscus" | "artalk";
-    /**
-     * 评论区配置项，根据 provider 不同而不同，具体看对应的官网
-     */
-    options?: Record<string, any>;
-    /**
-     * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如 .vue 组件
-     * @remark 例：{ ..., render: () => <MyCommentVueComponent /> }
-     */
-    render?: () => VNode;
-  };
+  comment?: CommentConfig<"twikoo"> | CommentConfig<"waline"> | CommentConfig<"giscus"> | CommentConfig<"artalk">;
   plugins?: {
     /**
      * 是否启用 sidebar 插件
@@ -635,3 +617,144 @@ export interface FooterConfig {
    */
   imgAlt?: string;
 }
+
+export type CommentConfig<T extends keyof CommentProvider> = {
+  /**
+   * 评论区提供者
+   * twikoo 官网：https://twikoo.js.org/
+   * waline 官网：https://waline.js.org/
+   * giscus 官网：https://giscus.app/zh-CN
+   * artalk 官网：https://artalk.js.org/
+   */
+  provider: T;
+  /**
+   * 评论区配置项，根据 provider 不同而不同，具体看对应官网的使用介绍
+   */
+  options?: CommentProvider[T];
+  /**
+   * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如 .vue 组件
+   * @remark 例：{ ..., render: () => <MyCommentVueComponent /> }
+   */
+  render?: () => VNode;
+};
+
+export type CommentProvider = {
+  /**
+   * twikoo 评论区配置项
+   */
+  twikoo: {
+    /**
+     * 官网其他配置项
+     */
+    [key: string]: any;
+    envId: string;
+    /**
+     * twikoo.js 在线链接
+     * @default 'https://cdn.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js'
+     */
+    link?: string;
+    /**
+     * twikoo 版本号，不定期更新为最新版
+     * @default '1.6.41'
+     */
+    version?: string;
+    /**
+     * 页面渲染后多少毫秒开始渲染 twikoo，如果设置太短，可能获取的 DOM 还没加载完成
+     * @default 700 (0.7秒)
+     */
+    timeout?: number;
+    /**
+     * katex 配置项，如果设置，则加载 katex
+     */
+    katex?: {
+      /**
+       * katex 的 css、core、render 的在线链接
+       */
+      cssLink: string;
+      coreJsLink: string;
+      renderJsLink: string;
+      /**
+       * katex 的 css、core、render 的 integrity
+       */
+      cssIntegrity?: string;
+      coreJsIntegrity?: string;
+      renderJsIntegrity?: string;
+    };
+  };
+  /**
+   * waline 评论区配置项
+   */
+  waline: {
+    /**
+     * 官网其他配置项
+     */
+    [key: string]: any;
+    /**
+     * waline 后台服务器地址
+     */
+    serverURL: string;
+    /**
+     * waline.js 在线链接，在线链接和依赖二选一，依赖安装为：`pnpm install @waline/client`。如果两个都设置，则优先使用 jsLink
+     */
+    jsLink?: string;
+    /**
+     * waline.css 在线链接，在线链接和依赖二选一，和 jsLink 搭配使用。如果安装了依赖则不需要传入，如果两个都设置，则优先使用 cssLink
+     */
+    cssLink?: string;
+    /**
+     * waline.css 的 integrity
+     */
+    cssIntegrity?: string;
+    /**
+     * 暗黑模式，具体使用请看 waline 官网
+     * @default 'html[class='dark']'
+     */
+    dark?: string;
+  };
+  /**
+   * giscus 评论区配置项
+   */
+  giscus: {
+    [key: string]: any;
+    repo: string;
+    repoId: string;
+    category: string;
+    categoryId: string;
+    mapping?: string;
+    strict?: string;
+    reactionsEnabled?: string;
+    emitMetadata?: string;
+    inputPosition?: string;
+    lang?: string;
+    theme?: string;
+    loading?: string;
+    /**
+     * 是否使用在线链接，如果不打算安装依赖，则设为 true
+     * @default false
+     */
+    useOnline?: boolean;
+    /**
+     * giscus.js 在线链接，useOnline 为 false 时生效
+     * @default 'https://giscus.app/client.js'
+     */
+    link?: string;
+    /**
+     * giscus.js 的 integrity
+     */
+    integrity?: string;
+  };
+  /**
+   * artalk 评论区配置项
+   */
+  artalk: {
+    [key: string]: any;
+    /**
+     * artalk 后台服务器地址
+     */
+    server: string;
+    /**
+     * artalk 站点名称
+     */
+    site: string;
+  };
+};

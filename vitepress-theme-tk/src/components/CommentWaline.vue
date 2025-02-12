@@ -9,7 +9,14 @@ import { onMounted } from "vue";
 const { theme } = useUnrefData();
 const router = useRouter();
 
-const { serverURL, jsLink, cssLink, dark = "html[class='dark']", ...options } = { ...theme.comment?.options };
+const {
+  serverURL,
+  jsLink,
+  cssLink,
+  dark = "html[class='dark']",
+  cssIntegrity,
+  ...options
+} = { ...theme.comment?.options };
 
 let waline: WalineInstance | null = null;
 
@@ -18,7 +25,7 @@ const initWaline = async () => {
     // 异步加载 js 文件
     const { init } = await import(/* @vite-ignore */ jsLink);
     waline = init({ dark, ...options, serverURL, el: "#waline" });
-  } else waline = init({ dark, ...options, serverURL, el: "#waline" });
+  } else waline = init({ ...options, serverURL, dark, el: "#waline" });
 };
 
 const initRoute = () => {

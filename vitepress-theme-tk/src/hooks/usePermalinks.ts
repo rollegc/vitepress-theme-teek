@@ -86,7 +86,6 @@ export function usePermalinks() {
     router.onAfterRouteChange = async (href: string) => {
       // 处理路由地址
       processUrl(href);
-
       // 调用已有的 onAfterRouteChange
       selfOnAfterRouteChange?.(href);
     };
