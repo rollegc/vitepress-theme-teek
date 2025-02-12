@@ -1,5 +1,5 @@
 import { createContentLoader, SiteConfig } from "vitepress";
-import { KtContentData, Post } from "./types";
+import { TkContentData, Post } from "./types";
 import {
   filterPosts,
   getSortPostsByDateAndSticky,
@@ -10,7 +10,7 @@ import {
   groupByYearMonth,
 } from "../helper/post";
 import { formatDate } from "../helper/date";
-import { KtThemeConfig } from "../config/types";
+import { TkThemeConfig } from "../config/types";
 import matter from "gray-matter";
 import { getTitleFromMd } from "vitepress-plugin-sidebar-resolve";
 import { basename, join } from "node:path";
@@ -23,8 +23,8 @@ export default createContentLoader("**/*.md", {
   render: true,
   transform(raw): Post {
     const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
-    const themeConfig: KtThemeConfig = siteConfig.userConfig.themeConfig;
-    const posts: KtContentData[] = [];
+    const themeConfig: TkThemeConfig = siteConfig.userConfig.themeConfig;
+    const posts: TkContentData[] = [];
 
     raw.forEach(r => {
       if (r.frontmatter.date) r.frontmatter.date = formatDate(r.frontmatter.date);
@@ -64,7 +64,7 @@ export default createContentLoader("**/*.md", {
  *
  * @param post 文章数据
  */
-function getTitle(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "url">) {
+function getTitle(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "url">) {
   if (post.frontmatter.title) return post.frontmatter.title;
 
   const { content = "" } = matter(post.src || "", {});
@@ -80,7 +80,7 @@ function getTitle(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "
  * @param post 文章数据
  * @param srcDir 项目绝对路径
  */
-function getDate(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "url">, srcDir: string) {
+function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "url">, srcDir: string) {
   const { frontmatter, url } = post;
 
   if (frontmatter.date) return frontmatter.date;
@@ -90,7 +90,7 @@ function getDate(post: RequiredKeyPartialOther<KtContentData, "frontmatter" | "u
   return formatDate(statSync(filePath).birthtime || new Date());
 }
 
-const getCaptureText = (post: KtContentData, count = 400) => {
+const getCaptureText = (post: TkContentData, count = 400) => {
   const { content = "" } = matter(post.src || "", {});
   return (
     content

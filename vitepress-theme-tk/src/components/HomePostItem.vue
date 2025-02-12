@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
 import { withBase } from "vitepress";
-import { KtContentData } from "../data/types";
+import { TkContentData } from "../data/types";
 import { createImageViewer } from "./ImageViewer";
 import { formatDate, isFunction } from "../helper";
 import { ElIcon } from "element-plus";
@@ -12,7 +12,7 @@ import { useUnrefData } from "../configProvider";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-item");
 
-const props = defineProps<{ post: KtContentData }>();
+const props = defineProps<{ post: TkContentData }>();
 
 const { frontmatter, theme } = useUnrefData();
 

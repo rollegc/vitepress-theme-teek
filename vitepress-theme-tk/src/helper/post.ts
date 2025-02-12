@@ -1,10 +1,10 @@
-import type { GroupCardItem, KtContentData, Post } from "../data/types";
+import type { GroupCardItem, TkContentData, Post } from "../data/types";
 
 /**
  * 过滤非文章页
  * @param posts 所有文章数据
  */
-export const filterPosts = (posts: KtContentData[]): KtContentData[] => {
+export const filterPosts = (posts: TkContentData[]): TkContentData[] => {
   return posts.filter(
     ({ frontmatter: { catalogue, article, layout } }) => catalogue !== false && article !== false && layout !== "home"
   );
@@ -14,7 +14,7 @@ export const filterPosts = (posts: KtContentData[]): KtContentData[] => {
  * 按置顶和时间排序
  * @param posts 过滤非文章页之后的文章数据
  */
-export const getSortPostsByDateAndSticky = (posts: KtContentData[]): KtContentData[] => {
+export const getSortPostsByDateAndSticky = (posts: TkContentData[]): TkContentData[] => {
   // sort 会改变原数组，因此确保参数不被修改，复杂一份
   const p = [...posts];
   return p.sort((prev, next) => {
@@ -34,7 +34,7 @@ export const getSortPostsByDateAndSticky = (posts: KtContentData[]): KtContentDa
  * 按时间排序
  * @param posts 过滤非文章页之后的文章数据
  */
-export const getSortPostsByDate = (posts: KtContentData[]): KtContentData[] => {
+export const getSortPostsByDate = (posts: TkContentData[]): TkContentData[] => {
   // sort 会改变原数组，因此确保参数不被修改，复杂一份
   const p = [...posts];
   return p.sort((prev, next) => compareDate(prev, next));
@@ -44,9 +44,9 @@ export const getSortPostsByDate = (posts: KtContentData[]): KtContentData[] => {
  * 按分类和标签分组
  * @param  posts 按时间排序之后的文章数据
  */
-export const getGroupPosts = (posts: KtContentData[]): Post["groupPosts"] => {
-  const categoriesObj: Record<string, KtContentData[]> = {};
-  const tagsObj: Record<string, KtContentData[]> = {};
+export const getGroupPosts = (posts: TkContentData[]): Post["groupPosts"] => {
+  const categoriesObj: Record<string, TkContentData[]> = {};
+  const tagsObj: Record<string, TkContentData[]> = {};
 
   posts.forEach(post => {
     const { categories, tags } = post.frontmatter as { categories: string[]; tags: string[]; [key: string]: any };
@@ -94,7 +94,7 @@ export const getGroupCards = (groupPosts: Post["groupPosts"]): Post["groupCards"
  * 获取文章时间戳
  * @param post 文章数据
  */
-export const getPostsTime = (post: KtContentData): number => {
+export const getPostsTime = (post: TkContentData): number => {
   const dateStr = post.date;
   let date = dateStr ? new Date(dateStr) : new Date();
   if ((date as unknown as string) === "Invalid Date" && dateStr) {
@@ -108,7 +108,7 @@ export const getPostsTime = (post: KtContentData): number => {
  * @param prev 文章 1
  * @param next 文章 2
  */
-export const compareDate = (prev: KtContentData, next: KtContentData) => {
+export const compareDate = (prev: TkContentData, next: TkContentData) => {
   return getPostsTime(next) - getPostsTime(prev);
 };
 
@@ -116,7 +116,7 @@ export const compareDate = (prev: KtContentData, next: KtContentData) => {
  * 根据年份分组，key 为年份，value 为该年份的文章列表，如 { 2025: [{}, {}], 2024: [{}, {}] }
  * @param posts 文章列表
  */
-export const groupByYear = (posts: KtContentData[]) => {
+export const groupByYear = (posts: TkContentData[]) => {
   return posts.reduce(
     (pre, cur) => {
       // 加个空格转为字符串，避免生产的对象自动根据数字排序（字符串数字也会自定义排序，因此加个空格）
@@ -133,7 +133,7 @@ export const groupByYear = (posts: KtContentData[]) => {
  * 根据年份和月份分组，key 为年份，value 为该年份的月份分组，如：{ 2025: { 01: [{}, {}], 02: [{}, {}] }, 2024: { 01: [], 02: [{}, {}] } }
  * @param posts 文章列表
  */
-export const groupByYearMonth = (posts: KtContentData[]) => {
+export const groupByYearMonth = (posts: TkContentData[]) => {
   return posts.reduce(
     (pre, cur) => {
       const date = new Date(cur.date || cur.frontmatter.date);

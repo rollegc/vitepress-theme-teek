@@ -13,7 +13,7 @@ import "element-plus/theme-chalk/el-input.css";
 import "element-plus/theme-chalk/el-breadcrumb.css";
 import "element-plus/theme-chalk/el-breadcrumb-item.css";
 
-export type { KtThemeConfig } from "./config/types";
+export type { TkThemeConfig } from "./config/types";
 
 export default {
   extends: DefaultTheme,

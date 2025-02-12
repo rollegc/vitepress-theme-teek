@@ -5,12 +5,12 @@ import { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
 import { ImageViewerProps, PaginationProps } from "element-plus";
 import { VNode } from "vue";
 
-export interface KtThemeConfig {
+export interface TkThemeConfig {
   /**
    * 是否启用主题
    * @default true
    */
-  ktTheme?: boolean;
+  tkTheme?: boolean;
   /**
    * 外观切换时是否开启过渡动画
    */

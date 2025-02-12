@@ -2,7 +2,7 @@
 import { useDesign } from "../hooks";
 import { postsSymbol, useUnrefData } from "../configProvider";
 import { inject } from "vue";
-import { KtContentData } from "../data/types";
+import { TkContentData } from "../data/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("archives");

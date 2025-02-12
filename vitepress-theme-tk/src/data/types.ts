@@ -1,11 +1,11 @@
 import type { ContentData } from "vitepress";
-import { KtThemeConfig } from "../config/types";
+import { TkThemeConfig } from "../config/types";
 
-export type KtContentData = ContentData & {
+export type TkContentData = ContentData & {
   /**
    * 文章作者信息
    */
-  author?: KtThemeConfig["author"];
+  author?: TkThemeConfig["author"];
   /**
    * 文章标题
    */
@@ -25,23 +25,23 @@ export interface Post {
   /**
    * 文章列表
    */
-  originPosts: KtContentData[];
+  originPosts: TkContentData[];
   /**
    * 根据日期和 sticky 排序的文章列表
    */
-  sortPostsByDateAndSticky: KtContentData[];
+  sortPostsByDateAndSticky: TkContentData[];
   /**
    * 根据日期排序的文章列表
    */
-  sortPostsByDate: KtContentData[];
+  sortPostsByDate: TkContentData[];
   /**
    * 根据年份分组，key 为年份，value 为该年份的文章列表，如 { 2025: [{}, {}], 2024: [{}, {}] }
    */
-  groupPostsByYear: Record<string, KtContentData[]>;
+  groupPostsByYear: Record<string, TkContentData[]>;
   /**
    * 根据年份和月份分组，key 为年份，value 为该年份的月份分组，如：{ 2025: { 01: [{}, {}], 02: [{}, {}] }, 2024: { 01: [], 02: [{}, {}] } }
    */
-  groupPostsByYearMonth: Record<string, Record<string, KtContentData[]>>;
+  groupPostsByYearMonth: Record<string, Record<string, TkContentData[]>>;
   /**
    * 分组的文章列表
    */
@@ -49,11 +49,11 @@ export interface Post {
     /**
      * 分类信息，格式：{ 分类名: 文章列表 }[]
      */
-    categories: Record<string, KtContentData[]>;
+    categories: Record<string, TkContentData[]>;
     /**
      * 标签信息，格式：{ 标签名: 文章列表 }[]
      */
-    tags: Record<string, KtContentData[]>;
+    tags: Record<string, TkContentData[]>;
   };
   /**
    * 分组卡片信息，用于首页右侧渲染分类和标签卡片
