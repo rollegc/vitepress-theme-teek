@@ -24,6 +24,13 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
     cursor: pointer;
     background: var(--tk-bg-color1);
 
+    // i :deep(svg) {
+    //   fill: var(--vp-c-text-2);
+    //   &:hover {
+    //     fill: var(--tk-theme-color);
+    //   }
+    // }
+
     &:hover {
       background: var(--tk-theme-color);
       box-shadow: 0 1px 8px var(--tk-shadow-color-hover);

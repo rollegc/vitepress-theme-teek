@@ -2,9 +2,10 @@
 import { useDesign } from "../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { ElIcon } from "element-plus";
-import { ArrowUp, MagicStick, SetUp, ChatDotSquare } from "@element-plus/icons-vue";
+import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { scrollTo } from "../helper";
+import sizeSvg from "../assets/svg/size";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("rightBottomButton");
@@ -135,7 +136,7 @@ changeThemeSize(themeSize);
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
-      <el-icon><SetUp /></el-icon>
+      <i class="el-icon" v-html="sizeSvg"></i>
       <transition name="mode">
         <ul :class="`${prefixClass}-button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
