@@ -23,18 +23,21 @@ export const DEFAULT_IGNORE_DIR = [
 
 /**
  * 生成侧边栏数据
- * @param  sourceDir .md 文件所在源目录，一般是 docs 目录（绝对路径）
- * @param  collapsed  是否可折叠
+ * @param  option 配置项
+ * @param prefix 指定前缀，在生成侧边栏的 link 时，会自动加上前缀
  */
-export default (option: SidebarOption = {}): DefaultTheme.SidebarMulti => {
+export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarMulti => {
   const { base = process.cwd(), ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
+  // 确保 prefix 始终都有 / 结尾
+  prefix = prefix.replace(/\/$/, "") + "/";
 
   let sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(base, ignoreList);
 
-  // 只扫描根目录的 md 文件
-  if (scannerRootMd) sidebar[`/`] = createSideBarItems(base, option, "", scannerRootMd);
+  // 只扫描根目录的 md 文件，且不扫描 index.md（首页文档）
+  const key = prefix === "/" ? "/" : `/${prefix}`;
+  if (scannerRootMd) sidebar[key] = createSideBarItems(base, { ...option, ignoreIndexMd: true }, key, scannerRootMd);
 
   // 遍历根目录下的每个子目录，生成对应的侧边栏数据
   dirPaths.forEach(dirPath => {
@@ -42,13 +45,13 @@ export default (option: SidebarOption = {}): DefaultTheme.SidebarMulti => {
     const fileName = basename(dirPath);
 
     // 创建 SideBarItems
-    const sidebarItems = createSideBarItems(dirPath, option, fileName);
+    const sidebarItems = createSideBarItems(dirPath, option, `${key}${fileName}/`);
 
     if (!sidebarItems.length) {
       return log(`Warning：该目录「${dirPath}」内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
-    sidebar[`/${fileName}/`] = sidebarItems;
+    sidebar[`${key}${fileName}/`] = sidebarItems;
   });
 
   return sideBarResolved?.(sidebar) ?? sidebar;
@@ -81,13 +84,13 @@ const readDirPaths = (sourceDir: string, ignoreList: SidebarOption["ignoreList"]
  *
  * @param root 文件/文件夹的根目录绝对路径
  * @param option 配置项
- * @param prefix 记录的文件/文件夹路径（包含刚进入方法时的 root 目录）
+ * @param prefix 记录的文件/文件夹路径（包含刚进入方法时的 root 目录），确保 prefix 始终都有 / 结尾
  * @param recursive 是否迭代
  */
 const createSideBarItems = (
   root: string,
   option: SidebarOption,
-  prefix = "",
+  prefix = "/",
   onlyScannerRootMd = false
 ): DefaultTheme.SidebarItem[] => {
   const {
@@ -152,7 +155,7 @@ const createSideBarItems = (
       const sidebarItem = {
         text: title,
         collapsed,
-        items: createSideBarItems(filePath, option, `${prefix}/${filename}`),
+        items: createSideBarItems(filePath, option, `${prefix}${filename}/`),
       };
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
@@ -180,7 +183,7 @@ const createSideBarItems = (
       const sidebarItem = {
         text: title,
         collapsed,
-        link: `${prefix ? `/${prefix}` : ""}/${name}`,
+        link: prefix + name,
       };
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);

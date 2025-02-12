@@ -17,7 +17,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
     name: "vite-plugin-vitepress-sidebar-permalink",
     config(config: any) {
       const {
-        site: { themeConfig, cleanUrls },
+        site: { themeConfig, cleanUrls, locales },
         srcDir,
       } = config.vitepress;
 
@@ -29,15 +29,23 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       const pathToPermalink: Record<string, string> = {};
       // Key 为 permalink，Value 为 path
       const permalinkToPath: Record<string, string> = {};
+      // 多语言 key 数组
+      const localesKeys = Object.keys(locales || {});
 
       for (const [key, value] of Object.entries(permalinks)) {
-        pathToPermalink[key] = value;
+        let newValue = value;
 
-        if (permalinkToPath[value]) {
-          log(`Permalink「${value}」已存在，其对应的「${permalinkToPath[value]}」将会被 ${key} 覆盖`);
+        // 如果设置了多语言，则 permalink 添加语言前缀
+        const localesKey = localesKeys.find(k => key.startsWith(k));
+        if (localesKey) newValue = `/${localesKey}${value.startsWith("/") ? value : `/${value}`}`;
+
+        pathToPermalink[key] = newValue;
+
+        if (permalinkToPath[newValue]) {
+          log(`Permalink「${newValue}」已存在，其对应的「${permalinkToPath[newValue]}」将会被 ${key} 覆盖`);
         }
 
-        permalinkToPath[value] = key;
+        permalinkToPath[newValue] = key;
       }
 
       themeConfig.permalinks = {

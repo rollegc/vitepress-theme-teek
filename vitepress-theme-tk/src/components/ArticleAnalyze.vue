@@ -33,7 +33,7 @@ const date = computed(() => {
 });
 
 // 文章阅读量
-const { eachFileWords } = theme.docAnalysisInfo || {};
+const { eachFileWords = [] } = theme.docAnalysisInfo || {};
 // 站点信息配置项
 const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
 
