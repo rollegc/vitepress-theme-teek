@@ -50,11 +50,6 @@ export function formatShowDate(date: Date | string) {
   return formatDate(new Date(date), "yyyy-MM-dd");
 }
 
-// 小于 10 补 0
-export function zero(d: number) {
-  return d.toString().padStart(2, "0");
-}
-
 /**
  * 获取两个日期相差多少天
  */

@@ -41,6 +41,12 @@ const readDirPaths = (sourceDir: string, includeList: CatalogueOption["includeLi
   return dirPaths;
 };
 
+/**
+ * 递归扫描指定目录下所有的 md 文件
+ * @param root 指定目录
+ * @param option 配置项
+ * @param prefix 目录前缀，每次递归都加前端目录名
+ */
 const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
   const { includeList = [] } = option;
   const includeListAll = [...DEFAULT_INCLUDE_DIR, ...includeList];
