@@ -109,5 +109,5 @@ const isMdFile = (filePath: string) => {
 };
 
 const isSome = (arr: Array<string | RegExp>, name: string) => {
-  return arr.some(item => name.includes(item as string) || (item instanceof RegExp && item.test(name)));
+  return arr.some(item => item === name || (item instanceof RegExp && item.test(name)));
 };

@@ -1,8 +1,8 @@
 <script setup lang="ts" name="HomeTagCard">
 import { useDesign } from "../hooks";
-import { postsSymbol, useUnrefData, getBgColor } from "../configProvider";
-import { inject, unref, watch, computed, ref } from "vue";
-import { useRoute } from "vitepress";
+import { usePosts, useUnrefData, getBgColor } from "../configProvider";
+import { unref, watch, computed, ref } from "vue";
+import { useData, useRoute } from "vitepress";
 import HomeCard from "./HomeCard.vue";
 import tagSvg from "../assets/svg/tag";
 
@@ -10,9 +10,6 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("tag");
 
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
-
-const posts = inject(postsSymbol);
-const tags = computed(() => posts?.groupCards.tags || []);
 
 const { frontmatter, theme } = useUnrefData();
 const route = useRoute();
@@ -24,8 +21,12 @@ const {
   limit = 21,
   autoPage = false,
   pageSpeed = 4000,
-  bgColor
+  bgColor,
 } = { ...theme.tag, ...frontmatter.tk?.tag };
+
+const posts = usePosts();
+const { localeIndex } = useData();
+const tags = computed(() => posts.locales?.[unref(localeIndex)]?.groupCards.tags || posts.groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
 const currentTags = computed(() => {

@@ -5,7 +5,7 @@ import { join } from "node:path";
 
 export * from "./types";
 
-export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin {
+export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-catalogue",
     config(config: any) {

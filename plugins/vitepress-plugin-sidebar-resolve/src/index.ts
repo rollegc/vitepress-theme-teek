@@ -10,7 +10,7 @@ export * from "./util";
 
 const log = console.log;
 
-export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin {
+export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-sidebar-resolve",
     configureServer({ watcher, restart }: ViteDevServer) {
@@ -34,31 +34,29 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
     },
     config(config: any) {
       const {
-        site: { themeConfig, locales },
+        site: { themeConfig = {}, locales = {} },
         srcDir,
       } = config.vitepress;
 
       option.base = option.base ? join(process.cwd(), option.base) : srcDir;
 
       // 多语言 key 数组
-      const localesKeys = Object.keys(locales || {}).filter(key => key !== "root");
-
+      const localesKeys = Object.keys(locales).filter(key => key !== "root");
       // 如果不是多语言，直接自动生成结构化侧边栏
       if (!localesKeys.length) return setSideBar(themeConfig, createSidebar(option));
 
       // 多语言处理，针对每个语言的目录进行单独的扫描（除了 root）
       localesKeys.forEach(localesKey => {
-        let sidebar: DefaultTheme.SidebarMulti = {};
-        sidebar = createSidebar({ ...option, base: `${option.base}/${localesKey}` }, localesKey);
-
+        const sidebar: DefaultTheme.SidebarMulti = createSidebar(
+          { ...option, base: `${option.base}/${localesKey}` },
+          localesKey
+        );
         setSideBar(locales[localesKey].themeConfig, sidebar);
       });
 
       // 对 root 根目录的 sidebar 进行单独的扫描，且不扫描其他语言目录
-      setSideBar(
-        locales.root.themeConfig,
-        createSidebar({ ...option, ignoreList: [...(option.ignoreList || []), ...localesKeys] })
-      );
+      const rootSideBar = createSidebar({ ...option, ignoreList: [...(option.ignoreList || []), ...localesKeys] });
+      setSideBar(locales["root"].themeConfig, rootSideBar);
     },
   };
 }

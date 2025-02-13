@@ -1,4 +1,4 @@
-import { defineComponent, h, InjectionKey, provide, unref, type Component } from "vue";
+import { defineComponent, h, inject, InjectionKey, provide, unref, type Component } from "vue";
 import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./data/types";
 // @ts-ignore
@@ -32,6 +32,12 @@ export const configProvider = (Layout: Component) => {
 export const useUnrefData = () => {
   const { theme, frontmatter, site, page } = useData();
   return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
+};
+
+export const usePosts = () => {
+  const posts = inject(postsSymbol);
+  if (!posts) throw new Error("posts not properly injected in app");
+  return posts;
 };
 
 export const isHomePage = () => {

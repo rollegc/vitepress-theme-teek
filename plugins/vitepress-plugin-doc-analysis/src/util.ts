@@ -10,7 +10,9 @@ import { exec } from "child_process";
 export function getTotalFileWords(filePathList: string[]) {
   let wordCount = 0;
   filePathList.forEach((item: any) => {
-    const content = readFileSync(item, "utf8");
+    const fileContent = readFileSync(item, "utf8");
+    const { content } = matter(fileContent, {});
+    // 使用 content 而不是 fileContent 是因为 fileContent 有 frontmatter，影响字数
     let len = getCounter(content);
     wordCount += len[0] + len[1];
   });
@@ -26,7 +28,9 @@ export function getEachFileWords(fileList: FileInfo[], cn: number = 300, en: num
   const filePathListWords: FileWords[] = [];
 
   fileList.forEach(item => {
-    const content = readFileSync(item.filePath, "utf8");
+    const fileContent = readFileSync(item.filePath, "utf8");
+    const { data, content } = matter(fileContent, {});
+    // 使用 content 而不是 fileContent 是因为 fileContent 有 frontmatter，影响字数
     let len = getCounter(content);
     // 计算预计的阅读时间
     let readingTime = getReadTime(len, cn, en);
@@ -35,7 +39,6 @@ export function getEachFileWords(fileList: FileInfo[], cn: number = 300, en: num
 
     if (wordsCount >= 1000) wordsCount = Math.round(wordsCount / 100) / 10 + "k";
 
-    const { data } = matter(content, {});
     filePathListWords.push({ fileInfo: item, wordsCount, readingTime, frontmatter: data });
   });
 

@@ -1,16 +1,18 @@
 <script setup lang="ts" name="TopArticleCard">
-import { computed, inject, ref, unref } from "vue";
-import { useUnrefData, postsSymbol, getBgColor } from "../configProvider";
+import { computed, ref, unref } from "vue";
+import { useUnrefData, usePosts, getBgColor } from "../configProvider";
 import { useDesign } from "../hooks";
 import HomeCard from "./HomeCard.vue";
 import TopArticleSvg from "../assets/svg/topArticle";
+import { useData } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("topArticle");
 
-const posts = inject(postsSymbol);
+const posts = usePosts();
 
 const { theme, frontmatter } = useUnrefData();
+const { localeIndex } = useData();
 // 精选文章配置项
 const {
   limit = 4,
@@ -19,14 +21,19 @@ const {
   pageSpeed = 4000,
 } = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
-const TopArticleList =
-  posts!.sortPostsByDateAndSticky?.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 })) || [];
+const topArticleList = computed(() => {
+  const sortPostsByDateAndSticky =
+    posts.locales?.[unref(localeIndex)]?.sortPostsByDateAndSticky || posts.sortPostsByDateAndSticky;
+
+  return sortPostsByDateAndSticky.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 }));
+});
+
 const pageNum = ref(1);
 
 // 当前页的文章列表
 const currentTopArticleList = computed(() => {
   const p = unref(pageNum);
-  return TopArticleList.slice((p - 1) * limit, p * limit);
+  return unref(topArticleList).slice((p - 1) * limit, p * limit);
 });
 
 const bgColor = getBgColor();
@@ -45,7 +52,7 @@ const getStyle = (num: number, index: number) => {
     page
     v-model="pageNum"
     :pageSize="limit"
-    :total="TopArticleList.length"
+    :total="topArticleList.length"
     :title
     :autoPage
     :pageSpeed
@@ -53,7 +60,7 @@ const getStyle = (num: number, index: number) => {
   >
     <template #default="{ transitionName }">
       <TransitionGroup
-        v-if="TopArticleList.length"
+        v-if="topArticleList.length"
         :name="transitionName"
         tag="ul"
         mode="out-in"

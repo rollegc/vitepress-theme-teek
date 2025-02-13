@@ -3,7 +3,7 @@ import type { Plugin } from "vite";
 import matter from "gray-matter";
 import { basename } from "node:path";
 
-export default function VitePluginVitePressMdH1(): Plugin {
+export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-md-h1",
     transform: (code, id) => {

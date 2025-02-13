@@ -4,11 +4,15 @@ import { useDesign, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, timeDiff } from "../helper";
 import HomeCard from "./HomeCard.vue";
 import docAnalysisSvg from "../assets/svg/docAnalysis";
+import { computed, unref } from "vue";
+import { useData } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("docAnalysis");
 
 const { frontmatter, theme } = useUnrefData();
+// 使用 useData 的 theme 是为了监听多语言切换来动态修改站点信息的内容
+const { theme: themeRef } = useData();
 // 站点信息配置项
 const {
   createTime,
@@ -16,7 +20,7 @@ const {
   siteIteration,
   title = `${docAnalysisSvg}站点信息`,
 } = { ...theme.docAnalysis, ...frontmatter.tk?.docAnalysis };
-const { fileList = [], totalFileWords = 0, lastCommitTime } = { ...theme.docAnalysisInfo };
+const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
 
 const createToNowDay = dayDiff(createTime || getNowDate());
 
@@ -28,7 +32,7 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
   <HomeCard :title :class="`${prefixClass} card`">
     <div :class="`${prefixClass}-item`">
       <span>文章数目：</span>
-      <span>{{ fileList.length }} 篇</span>
+      <span>{{ docAnalysisInfo.fileList.length }} 篇</span>
     </div>
 
     <div :class="`${prefixClass}-item`">
@@ -40,13 +44,13 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 
     <div :class="`${prefixClass}-item`">
       <span>本站总字数：</span>
-      <span>{{ totalFileWords }} 字</span>
+      <span>{{ docAnalysisInfo.totalFileWords }} 字</span>
     </div>
 
     <div :class="`${prefixClass}-item`">
       <span>最后活动时间：</span>
       <span>
-        {{ timeDiff(lastCommitTime) }}
+        {{ timeDiff(docAnalysisInfo.lastCommitTime) }}
       </span>
     </div>
 

@@ -10,7 +10,6 @@ import {
   groupByYearMonth,
 } from "../helper/post";
 import { formatDate } from "../helper/date";
-import { TkThemeConfig } from "../config/types";
 import matter from "gray-matter";
 import { getTitleFromMd } from "vitepress-plugin-sidebar-resolve";
 import { basename, join } from "node:path";
@@ -23,7 +22,7 @@ export default createContentLoader("**/*.md", {
   render: true,
   transform(raw): Post {
     const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
-    const themeConfig: TkThemeConfig = siteConfig.userConfig.themeConfig;
+    const { themeConfig, locales = {} } = siteConfig.userConfig;
     const posts: TkContentData[] = [];
 
     raw.forEach(r => {
@@ -38,26 +37,47 @@ export default createContentLoader("**/*.md", {
       });
     });
 
-    const originPosts = filterPosts(posts);
-    const sortPostsByDateAndSticky = getSortPostsByDateAndSticky(originPosts);
-    const sortPostsByDate = getSortPostsByDate(originPosts);
-    const groupPostsByYear = groupByYear(sortPostsByDate);
-    const groupPostsByYearMonth = groupByYearMonth(sortPostsByDate);
+    const postsData = resolvePosts(posts);
 
-    const groupPosts = getGroupPosts(sortPostsByDateAndSticky);
-    const groupCards = getGroupCards(groupPosts);
+    const localesKeys = Object.keys(locales);
+    // 没有配置多语言，则返回所有数据
+    if (!localesKeys.length) return postsData;
 
-    return {
-      originPosts,
-      sortPostsByDateAndSticky,
-      sortPostsByDate,
-      groupPostsByYear,
-      groupPostsByYearMonth,
-      groupPosts,
-      groupCards,
-    };
+    // 多语言处理，计算每个语言目录下的 posts 数据
+    const postsLocale: Record<string, Post> = {};
+    localesKeys
+      .filter(localesKey => localesKey !== "root")
+      .forEach(localesKey => {
+        const localePosts = posts.filter(post => post.url.startsWith(`/${localesKey}`));
+        postsLocale[localesKey] = resolvePosts(localePosts);
+      });
+
+    // root 处理
+    const rootPosts = posts.filter(post => !localesKeys.some(localesKey => post.url.startsWith(`/${localesKey}`)));
+    postsLocale["root"] = resolvePosts(rootPosts);
+
+    return { ...postsData, locales: postsLocale };
   },
 });
+
+const resolvePosts = (posts: TkContentData[]): Post => {
+  const originPosts = filterPosts(posts);
+  const sortPostsByDateAndSticky = getSortPostsByDateAndSticky(originPosts);
+  const sortPostsByDate = getSortPostsByDate(originPosts);
+  const groupPostsByYear = groupByYear(sortPostsByDate);
+  const groupPostsByYearMonth = groupByYearMonth(sortPostsByDate);
+  const groupPosts = getGroupPosts(sortPostsByDateAndSticky);
+  const groupCards = getGroupCards(groupPosts);
+  return {
+    originPosts,
+    sortPostsByDateAndSticky,
+    sortPostsByDate,
+    groupPostsByYear,
+    groupPostsByYearMonth,
+    groupPosts,
+    groupCards,
+  };
+};
 
 /**
  * 获取文章标题，获取顺序：frontmatter.title > md 文件开头的 # 标题 > 文件名

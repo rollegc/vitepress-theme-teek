@@ -6,9 +6,16 @@ export interface DocAnalysisOption {
    */
   ignoreList?: Array<RegExp | string>;
   /**
-   * 文章所在的目录，基于 package.json 所在目录
+   * 文章所在的目录，基于 package.json 所在目录，开头不需要有 /
+   * @default 'vitepress 的 srcDir 配置项'
    */
   base?: string;
+  /**
+   * 是否忽略每个目录下的 index.md 文件
+   *
+   * @default false
+   */
+  ignoreIndexMd?: boolean;
   /**
    * 1 分钟内阅读的中文字数
    * @default 300

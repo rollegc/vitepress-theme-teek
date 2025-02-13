@@ -26,7 +26,7 @@ const prefixClass = getPrefixClass("layout");
 
 const { theme, frontmatter } = useUnrefData();
 
-const usetkTheme = theme.tkTheme ?? true;
+const useTkTheme = theme.tkTheme ?? true;
 
 const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render } = { ...theme.comment };
@@ -47,7 +47,7 @@ const commentComponent = {
     <template #home-hero-before>
       <slot name="home-hero-before" />
       <!-- 自定义首页 -->
-      <div v-if="usetkTheme" :class="`${prefixClass}-home`">
+      <div v-if="useTkTheme" :class="`${prefixClass}-home`">
         <HomeBanner v-if="isHomePage() && enabled" />
         <div :class="`${prefixClass}-home-content flx-start-justify-center`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>

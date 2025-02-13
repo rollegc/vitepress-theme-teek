@@ -82,9 +82,6 @@ const tkConfig = themeConfig({
       link: "https://www.youngkbt.cn/?contact=true",
     },
   ],
-  post: {
-    showBaseInfo: ["home"],
-  },
   comment: {
     provider: "giscus",
     options: {

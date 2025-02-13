@@ -1,16 +1,17 @@
 <script setup lang="ts" name="HomePostList">
-import { inject, reactive, ref, watch } from "vue";
+import { reactive, ref, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
-import { postsSymbol, useUnrefData } from "../configProvider";
+import { usePosts, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
-import { useRoute } from "vitepress";
+import { useRoute, useData } from "vitepress";
 import { useDesign } from "../hooks";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("post-list");
 
-const posts = inject(postsSymbol);
+const posts = usePosts();
 const { frontmatter, theme } = useUnrefData();
+const { localeIndex } = useData();
 
 // 自定义一页数量 & 分页组件的 Props
 const { pageSize = 10, size = "small", ...pageProps } = { ...theme.page, ...frontmatter.tk?.page };
@@ -30,7 +31,6 @@ const currentPosts = ref([]);
 
 const updateData = () => {
   const { frontmatter } = route.data;
-
   const { pageNum, pageSize, total } = pageInfo;
 
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
@@ -38,22 +38,22 @@ const updateData = () => {
   const p = searchParams.get("pageNum") || 1;
   if (p !== pageNum) pageInfo.pageNum = Number(p);
 
-  let post = posts?.sortPostsByDateAndSticky;
+  let post = posts.locales?.[unref(localeIndex)]?.sortPostsByDateAndSticky || posts.sortPostsByDateAndSticky;
 
   // 在分类页时，如果 URL 查询参数存在 category，则加载该 category 的 post，不存在则加载所有 post
   if (frontmatter.categoriesPage) {
     const c = searchParams.get("category");
-    post = c ? posts?.groupPosts.categories[c] : post;
+    post = c ? posts.groupPosts.categories[c] : post;
   } else if (frontmatter.tagsPage) {
     // 在标签页时，如果 URL 查询参数存在 tag，则加载该 tag 的 post，不存在则加载所有 post
     const t = searchParams.get("tag");
-    post = t ? posts?.groupPosts.tags[t] : post;
+    post = t ? posts.groupPosts.tags[t] : post;
   }
 
   // 总数处理
-  if (total !== post?.length) pageInfo.total = post?.length || 0;
+  if (total !== post.length) pageInfo.total = post?.length || 0;
 
-  currentPosts.value = post?.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+  currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
 };
 
 watch(

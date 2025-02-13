@@ -85,7 +85,7 @@ const readDirPaths = (sourceDir: string, ignoreList: SidebarOption["ignoreList"]
  * @param root 文件/文件夹的根目录绝对路径
  * @param option 配置项
  * @param prefix 记录的文件/文件夹路径（包含刚进入方法时的 root 目录），确保 prefix 始终都有 / 结尾
- * @param recursive 是否迭代
+ * @param onlyScannerRootMd 是否只扫描根目录下的 md 文件，如果为 false，则只递归扫描根目录下的所有子目录文件（不包含根目录文件），如果为 true，则只扫描根目录的文件
  */
 const createSideBarItems = (
   root: string,
@@ -116,13 +116,12 @@ const createSideBarItems = (
 
   secondDirNames = beforeCreateSideBarItems?.(secondDirNames) ?? secondDirNames;
 
-  secondDirNames.forEach(filename => {
-    if (isSome(ignoreListAll, filename)) return [];
+  secondDirNames.forEach(dirOrFilename => {
+    if (isSome(ignoreListAll, dirOrFilename)) return [];
 
-    const filePath = resolve(root, filename);
+    const filePath = resolve(root, dirOrFilename);
     // 解析文件名
-    let { index: indexStr, title, type, name } = resolveFileName(filename, filePath);
-
+    let { index: indexStr, title, type, name } = resolveFileName(dirOrFilename, filePath);
     // 十进制转换
     const index = parseInt(indexStr as string, 10);
 
@@ -139,9 +138,9 @@ const createSideBarItems = (
       // 是文件夹目录
       // 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取标题，一旦获取到第一个则不再继续遍历
       const filenames = [
-        join(root, filename, "index.md"),
-        join(root, filename, "index.MD"),
-        join(root, filename, filename + ".md"),
+        join(root, dirOrFilename, "index.md"),
+        join(root, dirOrFilename, "index.MD"),
+        join(root, dirOrFilename, dirOrFilename + ".md"),
       ];
 
       for (const filename of filenames) {
@@ -155,17 +154,18 @@ const createSideBarItems = (
       const sidebarItem = {
         text: title,
         collapsed,
-        items: createSideBarItems(filePath, option, `${prefix}${filename}/`),
+        items: createSideBarItems(filePath, option, `${prefix}${dirOrFilename}/`),
       };
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
       else sidebarItems[index] = sidebarItem;
     } else {
       // 是文件
-      // 开启扫描根目录 md 文件时，不扫描 index.md
-      if (onlyScannerRootMd && filename.includes("index.md")) return [];
+      if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
+      // 开启只扫描根目录 md 文件时，不扫描 index.md（首页文档）
+      if (onlyScannerRootMd && dirOrFilename === "index.md") return [];
 
-      if (!isMdFileExtension(type) || (ignoreIndexMd && filename.includes("index.md"))) {
+      if (!isMdFileExtension(type) || (ignoreIndexMd && dirOrFilename.includes("index.md"))) {
         // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
         !onlyScannerRootMd && log(`Warning：该文件「${filePath}」非 .md 格式文件，不支持该文件类型`);
         return [];
@@ -243,5 +243,5 @@ const resolveFileName = (
 };
 
 const isSome = (arr: Array<string | RegExp>, name: string) => {
-  return arr.some(item => name.includes(item as string) || (item instanceof RegExp && item.test(name)));
+  return arr.some(item => item === name || (item instanceof RegExp && item.test(name)));
 };

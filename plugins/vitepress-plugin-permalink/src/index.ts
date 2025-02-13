@@ -10,7 +10,7 @@ export const log = (message: string, type = "yellow") => {
   console.log((chalk as any)[type](message));
 };
 
-export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): Plugin {
+export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): Plugin & { name: string } {
   let vitepressConfig: any = {};
 
   return {

@@ -1,11 +1,11 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { useRoute } from "vitepress";
+import { useRoute, useData } from "vitepress";
 import { useDesign, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
-import { computed, ref, unref, inject } from "vue";
+import { computed, ref, unref } from "vue";
 import { formatDate } from "../helper";
 import { House, User, Calendar, FolderOpened, CollectionTag, Reading, Clock, View } from "@element-plus/icons-vue";
-import { useUnrefData, postsSymbol } from "../configProvider";
+import { useUnrefData, usePosts } from "../configProvider";
 import { FileWords } from "vitepress-plugin-doc-analysis";
 
 const { getPrefixClass } = useDesign();
@@ -17,23 +17,24 @@ const { theme, frontmatter, page } = useUnrefData();
 const author = { ...theme.author, ...frontmatter.author };
 const categories = frontmatter.categories || [];
 const tags = frontmatter.tags || [];
-const posts = inject(postsSymbol);
 
+const posts = usePosts();
+const { localeIndex, theme: themeRef } = useData();
 const route = useRoute();
+
 const { dateFormat = "yyyy-MM-dd", showBaseInfo = true } = theme.post || {};
 // 文章创建时间，先读取 frontmatter.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在 frontmatter 配置 date，减少文章扫描性能）
 const date = computed(() => {
   if (frontmatter.date) return formatDate(frontmatter.date, dateFormat);
 
-  const targetPost = posts?.originPosts.filter(item =>
-    [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`)
-  );
+  const originPosts = posts.locales?.[unref(localeIndex)]?.originPosts || posts.originPosts;
+  const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
 
   return formatDate(targetPost?.[0]?.date || new Date(), dateFormat);
 });
 
-// 文章阅读量
-const { eachFileWords = [] } = theme.docAnalysisInfo || {};
+// 站点信息数据
+const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
 // 站点信息配置项
 const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
 
@@ -41,7 +42,10 @@ const { pageView = true, wordsCount = true, readingTime = true, pageIteration } 
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<FileWords> = {};
 
-  eachFileWords.forEach((item: FileWords) => {
+  console.log(unref(docAnalysisInfo));
+  console.log(route.data.relativePath);
+
+  unref(docAnalysisInfo).eachFileWords.forEach((item: FileWords) => {
     if (item.fileInfo.relativePath === route.data.relativePath) return (pageViewInfo = item);
   });
   return pageViewInfo;
