@@ -2,7 +2,7 @@
 import { useDesign } from "../hooks";
 import { usePosts, useUnrefData } from "../configProvider";
 import { useData } from "vitepress";
-import { unref } from "vue";
+import { computed, unref } from "vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("archives");
@@ -12,25 +12,21 @@ const { localeIndex } = useData();
 
 const posts = usePosts();
 
-const {
-  sortPostsByDate = posts.sortPostsByDate,
-  groupPostsByYearMonth = posts.groupPostsByYearMonth,
-  groupPostsByYear = posts.groupPostsByYear,
-} = posts.locales?.[unref(localeIndex)] || {};
+const finalPosts = computed(() => posts.locales?.[unref(localeIndex)] || posts);
 </script>
 
 <template>
   <div :class="`${prefixClass} tk-page`">
     <div :class="`${prefixClass}-header flx-justify-between`">
       <div class="tk-page-title-h1">{{ frontmatter.title }}</div>
-      <div class="count">总共 {{ sortPostsByDate.length }} 篇文章</div>
+      <div class="count">总共 {{ finalPosts.sortPostsByDate.length }} 篇文章</div>
     </div>
 
     <div :class="`${prefixClass}-timeline`">
-      <template v-for="(monthPosts, year) in groupPostsByYearMonth" :key="year">
+      <template v-for="(monthPosts, year) in finalPosts.groupPostsByYearMonth" :key="year">
         <div :class="`${prefixClass}-timeline__year flx-justify-between`">
           <div class="year">{{ String(year).trim() === "NaN" ? "未指定" : String(year).trim() }}年</div>
-          <div class="count">{{ groupPostsByYear[year].length }}篇</div>
+          <div class="count">{{ finalPosts.groupPostsByYear[year].length }}篇</div>
         </div>
 
         <div :class="`${prefixClass}-timeline-m`">

@@ -55,6 +55,12 @@ const getTagStyle = (index: number) => {
 };
 
 const itemRefs = ref<HTMLLIElement[]>([]);
+
+const tagsPageLink = computed(() => {
+  // 兼容多语言功能，如果没有使用多语言，则返回 '/tags'
+  const localeIndexConst = unref(localeIndex);
+  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/tags`;
+});
 </script>
 
 <template>
@@ -64,7 +70,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :pageSize="limit"
     :total="tags.length"
     :title="tagsPage ? pageTitle : homeTitle"
-    title-link="/tags"
+    :title-link="tagsPageLink"
     :autoPage
     :pageSpeed
     :class="prefixClass"
@@ -76,13 +82,13 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           v-for="(item, index) in currentTags"
           :key="item.name"
           :style="getTagStyle(index)"
-          :href="`/tags?tag=${encodeURIComponent(item.name)}`"
+          :href="`${tagsPageLink}?tag=${encodeURIComponent(item.name)}`"
           :class="{ active: item.name === tag }"
         >
           {{ item.name }}
         </a>
 
-        <a v-if="!tagsPage && limit < tags.length" href="/tags" class="more">更多 ...</a>
+        <a v-if="!tagsPage && limit < tags.length" :href="tagsPageLink" class="more">更多 ...</a>
       </TransitionGroup>
 
       <div v-else :class="`${prefixClass}-empty`">暂无热门标签</div>

@@ -49,6 +49,12 @@ watch(
 );
 
 const itemRefs = ref<HTMLLIElement[]>([]);
+
+const categoriesPageLink = computed(() => {
+  const localeIndexConst = unref(localeIndex);
+  // 兼容多语言功能，如果没有使用多语言，则返回 '/categories'
+  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/categories`;
+});
 </script>
 
 <template>
@@ -58,7 +64,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :pageSize="limit"
     :total="categories.length"
     :title="categoriesPage ? pageTitle : homeTitle"
-    title-link="/categories"
+    :title-link="categoriesPageLink"
     :autoPage
     :pageSpeed
     :class="prefixClass"
@@ -75,7 +81,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           ref="itemRefs"
           v-for="(item, index) in currentCategories"
           :key="item.name"
-          :href="`/categories?category=${encodeURIComponent(item.name)}`"
+          :href="`${categoriesPageLink}?category=${encodeURIComponent(item.name)}`"
           :class="{ active: item.name === category }"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
         >
@@ -83,7 +89,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           <span>{{ item.length }}</span>
         </a>
 
-        <a v-if="!categoriesPage && limit < categories.length" href="/categories">更多 ...</a>
+        <a v-if="!categoriesPage && limit < categories.length" :href="categoriesPageLink">更多 ...</a>
       </TransitionGroup>
 
       <div v-else :class="`${prefixClass}-empty`">暂无热门文章</div>

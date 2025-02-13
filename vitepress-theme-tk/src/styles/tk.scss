@@ -137,14 +137,3 @@ a:hover {
   word-break: break-all;
   word-wrap: break-word;
 }
-
-/* 首页 PostItem 的多个分类、标签分割符 */
-.or:not(:last-child) {
-  &::after {
-    content: "/";
-    display: inline-block;
-    width: 0.35rem;
-    height: 0;
-    background-color: var(--tk-lower-color2);
-  }
-}

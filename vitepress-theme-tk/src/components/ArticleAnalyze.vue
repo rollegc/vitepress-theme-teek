@@ -3,62 +3,16 @@ import { useRoute, useData } from "vitepress";
 import { useDesign, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
 import { computed, ref, unref } from "vue";
-import { formatDate } from "../helper";
-import { House, User, Calendar, FolderOpened, CollectionTag, Reading, Clock, View } from "@element-plus/icons-vue";
-import { useUnrefData, usePosts } from "../configProvider";
+import { House, Reading, Clock, View } from "@element-plus/icons-vue";
+import { useUnrefData } from "../configProvider";
 import { FileWords } from "vitepress-plugin-doc-analysis";
+import PostBaseInfo from "./PostBaseInfo.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("articleAnalyze");
 
 const { theme, frontmatter, page } = useUnrefData();
-
-// 基本信息
-const author = { ...theme.author, ...frontmatter.author };
-const categories = frontmatter.categories || [];
-const tags = frontmatter.tags || [];
-
-const posts = usePosts();
-const { localeIndex, theme: themeRef } = useData();
-const route = useRoute();
-
-const { dateFormat = "yyyy-MM-dd", showBaseInfo = true } = theme.post || {};
-// 文章创建时间，先读取 frontmatter.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在 frontmatter 配置 date，减少文章扫描性能）
-const date = computed(() => {
-  if (frontmatter.date) return formatDate(frontmatter.date, dateFormat);
-
-  const originPosts = posts.locales?.[unref(localeIndex)]?.originPosts || posts.originPosts;
-  const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
-
-  return formatDate(targetPost?.[0]?.date || new Date(), dateFormat);
-});
-
-// 站点信息数据
-const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
-// 站点信息配置项
-const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
-
-// 文章阅读量、阅读时长、字数
-const pageViewInfo = computed(() => {
-  let pageViewInfo: Partial<FileWords> = {};
-
-  console.log(unref(docAnalysisInfo));
-  console.log(route.data.relativePath);
-
-  unref(docAnalysisInfo).eachFileWords.forEach((item: FileWords) => {
-    if (item.fileInfo.relativePath === route.data.relativePath) return (pageViewInfo = item);
-  });
-  return pageViewInfo;
-});
-
-/**
- * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等信息
- */
-const isShowBaseInfo = computed(() => {
-  const arr = [showBaseInfo].flat();
-  if (arr.includes(true) || arr.includes("article")) return true;
-  return false;
-});
+const { theme: themeRef, localeIndex } = useData();
 
 // 面包屑配置项
 const breadcrumb = {
@@ -75,7 +29,8 @@ relativePathArr.forEach((item, index) => {
   // 去除「序号.」的前缀，并获取文件名
   const fileName = item.replace(/^\d+\./, "").split(".")?.[0] || "";
 
-  if (index !== relativePathArr.length - 1 || breadcrumb?.showCurrentName) {
+  // 兼容多语言功能，如果使用多语言，在面包屑去掉多语言根目录名
+  if ((index !== relativePathArr.length - 1 || breadcrumb?.showCurrentName) && fileName !== unref(localeIndex)) {
     unref(classifyList).push(fileName);
   }
 });
@@ -84,6 +39,23 @@ relativePathArr.forEach((item, index) => {
 const getFilePath = (index: number) => {
   return theme.catalogues?.inv[relativePathArr[index]];
 };
+
+const route = useRoute();
+
+// 站点信息数据
+const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
+// 站点信息配置项
+const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
+
+// 文章阅读量、阅读时长、字数
+const pageViewInfo = computed(() => {
+  let pageViewInfo: Partial<FileWords> = {};
+  unref(docAnalysisInfo).eachFileWords.forEach((item: FileWords) => {
+    if (item.fileInfo.relativePath === route.data.relativePath) return (pageViewInfo = item);
+  });
+
+  return pageViewInfo;
+});
 
 // 通过不蒜子获取页面访问量
 const { pagePv, isGet } = useBuSunZi(pageIteration);
@@ -108,42 +80,8 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div v-if="isShowBaseInfo" :class="`${prefixClass}-wrapper flx-center`">
-      <div class="flx-center">
-        <el-icon><User /></el-icon>
-        <a
-          v-if="author.name"
-          title="作者"
-          :href="author.link ? author.link : 'javaScript:void(0)'"
-          :target="author.link ? '_blank' : '_self'"
-        >
-          {{ author.name }}
-        </a>
-      </div>
-
-      <div class="flx-center">
-        <el-icon><Calendar /></el-icon>
-        <a title="创建时间">{{ date }}</a>
-      </div>
-
-      <div v-if="categories.length" class="flx-center">
-        <el-icon><FolderOpened /></el-icon>
-        <a
-          v-for="category in categories"
-          :href="`/categories?category=${encodeURIComponent(category)}`"
-          title="分类"
-          class="or"
-        >
-          {{ category }}
-        </a>
-      </div>
-
-      <div v-if="tags.length" class="flx-center">
-        <el-icon><CollectionTag /></el-icon>
-        <a v-for="tag in tags" :href="`/tags?tag=${encodeURIComponent(tag)}`" title="标签" class="or">
-          {{ tag }}
-        </a>
-      </div>
+    <div :class="`${prefixClass}-wrapper flx-center`">
+      <PostBaseInfo />
 
       <div v-if="wordsCount" class="flx-center">
         <el-icon><Reading /></el-icon>

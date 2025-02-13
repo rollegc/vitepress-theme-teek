@@ -50,24 +50,7 @@ $prefix-class: #{$theme-namespace}-post-item;
       }
 
       &-footer {
-        font-size: var(--tk-home-font-size-sm);
-        color: var(--tk-lower-color2);
         margin-top: 8px;
-
-        i {
-          margin-right: 3px;
-        }
-
-        .split:not(:last-child) {
-          &::after {
-            content: "";
-            display: inline-block;
-            width: 0.8px;
-            height: 8px;
-            margin: 0 10px;
-            background-color: var(--tk-lower-color2);
-          }
-        }
       }
 
       &-excerpt {
