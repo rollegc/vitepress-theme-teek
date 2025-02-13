@@ -43,6 +43,13 @@ export default defineConfig({
       { text: "指南", link: "/01.指南/" },
       { text: "设计", link: "/design" },
       { text: "API", link: "/07.API/01.API - 登录" },
+      {
+        text: "API 下拉",
+        items: [
+          { text: "Session 会话", link: "/07.API/04.API - Session 会话" },
+          { text: "Token 密钥", link: "/api/token" },
+        ],
+      },
       { text: "归档", link: "/archives" },
     ],
     editLink: {

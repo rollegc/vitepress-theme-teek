@@ -80,17 +80,13 @@ const scannerMdFile = (
       if (!isMdFile(dirOrFilename)) return;
 
       const content = readFileSync(filePath, "utf-8");
-
       // 解析出 front matter 数据
       const { data: { permalink = "" } = {} } = matter(content, {});
 
       // 判断 permalink 开头是否为 /，是的话截取掉 /，否则为 permalink
       if (permalink) {
-        let finalPermalink = permalink;
-        if (!finalPermalink.startsWith("/")) finalPermalink = "/" + finalPermalink;
-        if (finalPermalink.endsWith("/")) finalPermalink = finalPermalink.substring(0, finalPermalink.length - 1);
-
         const filename = cleanUrls ? basename(dirOrFilename, extname(dirOrFilename)) : basename(dirOrFilename);
+        const finalPermalink = standardLink(permalink);
 
         permalinks[`${prefix ? `${prefix}/` : ""}${filename}`] = finalPermalink;
       }
@@ -110,4 +106,12 @@ const isMdFile = (filePath: string) => {
 
 const isSome = (arr: Array<string | RegExp>, name: string) => {
   return arr.some(item => item === name || (item instanceof RegExp && item.test(name)));
+};
+
+export const standardLink = (permalink: string) => {
+  let finalPermalink = permalink;
+  if (!finalPermalink.startsWith("/")) finalPermalink = "/" + finalPermalink;
+  if (finalPermalink.endsWith("/")) finalPermalink = finalPermalink.replace(/\/$/, "");
+
+  return finalPermalink;
 };

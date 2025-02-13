@@ -1,7 +1,8 @@
-import { readdirSync, statSync } from "node:fs"; // 文件模块
+import { readdirSync, readFileSync, statSync } from "node:fs"; // 文件模块
 import { extname, relative, resolve } from "node:path"; // 路径模块
 import chalk from "chalk"; // 命令行打印美化
 import { FileInfo, DocAnalysisOption } from "./types";
+import matter from "gray-matter";
 
 export const log = (message: string, type = "yellow") => {
   console.log((chalk as any)[type](message));
@@ -17,10 +18,10 @@ export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepres
  */
 export default (option: DocAnalysisOption = {}, prefix = ""): FileInfo[] => {
   const { base = process.cwd() } = option;
-  // 开头不允许有 /
-  prefix = prefix.replace(/^\//, "");
   // 结尾必须有 /
   prefix = prefix.endsWith("/") ? prefix : `${prefix}/`;
+  // 开头不允许有 /
+  prefix = prefix.replace(/^\//, "");
 
   return readFileList(base, option, [], prefix);
 };
@@ -53,6 +54,13 @@ export function readFileList(
       if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
       // 根目录的 index.md（首页文档）不扫描
       if (filePath === resolve(base, "index.md")) return [];
+
+      const content = readFileSync(filePath, "utf-8");
+      // 解析出 frontmatter 数据
+      const { data: { layout, docAnalysis } = {} } = matter(content, {});
+
+      // 首页和手动在 frontmatter 中配置了 docAnalysis: false 的文档不纳入统计里
+      if (layout === "home" || docAnalysis === false) return [];
 
       // 确保路径是绝对路径
       const workingDir = resolve(base);

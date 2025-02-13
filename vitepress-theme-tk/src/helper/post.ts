@@ -6,7 +6,7 @@ import type { GroupCardItem, TkContentData, Post } from "../data/types";
  */
 export const filterPosts = (posts: TkContentData[]): TkContentData[] => {
   return posts.filter(
-    ({ frontmatter: { catalogue, article, layout } }) => catalogue !== false && article !== false && layout !== "home"
+    ({ frontmatter: { catalogue, article, layout } }) => catalogue !== true && article !== false && layout !== "home"
   );
 };
 

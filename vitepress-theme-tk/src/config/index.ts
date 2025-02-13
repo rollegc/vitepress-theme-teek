@@ -29,7 +29,7 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
   if (permalink) plugins.push(Permalink(permalinkOption));
   if (mdH1) plugins.push(MdH1());
   if (docAnalysis) {
-    docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", "目录页"];
+    docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", /目录页/];
     plugins.push(DocAnalysis(docAnalysisOption));
   }
 

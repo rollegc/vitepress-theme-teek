@@ -39,11 +39,18 @@ export default defineConfig({
       next: "next",
     },
     nav: [
-      { text: "index", link: "/" },
-      { text: "guide", link: "/01.指南/" },
-      { text: "design", link: "/design" },
-      { text: "API", link: "/07.API/01.API - 登录" },
-      { text: "archives", link: "/archives" },
+      { text: "index", link: "/en" },
+      { text: "guide", link: "/en/01.指南/" },
+      { text: "design", link: "/en/design" },
+      { text: "API", link: "/en/07.API/01.API - 登录" },
+      {
+        text: "API Dropdown",
+        items: [
+          { text: "Session", link: "/en/07.API/04.API - Session 会话" },
+          { text: "Token", link: "/en/api/token" },
+        ],
+      },
+      { text: "archives", link: "/en/archives" },
     ],
     editLink: {
       text: "Edit this page on GitHub",

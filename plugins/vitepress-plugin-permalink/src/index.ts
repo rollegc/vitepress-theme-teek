@@ -1,5 +1,5 @@
 import type { Plugin, ViteDevServer } from "vite";
-import createPermalinks from "./helper";
+import createPermalinks, { standardLink } from "./helper";
 import type { PermalinkOption } from "./types";
 import chalk from "chalk";
 import { join } from "node:path";
@@ -34,7 +34,6 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       for (const [key, value] of Object.entries(permalinks)) {
         let newValue = value;
-
         // 如果设置了多语言，则 permalink 添加语言前缀
         const localesKey = localesKeys.find(k => key.startsWith(k));
         if (localesKey) newValue = `/${localesKey}${value.startsWith("/") ? value : `/${value}`}`;
@@ -48,10 +47,15 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         permalinkToPath[newValue] = key;
       }
 
-      themeConfig.permalinks = {
-        map: pathToPermalink,
-        inv: permalinkToPath,
-      };
+      themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath };
+
+      // TODO 归档、目录进入后，导航栏对应的 label 没有高亮，需要转为高亮的 link
+      // themeConfig.nav = themeConfig.nav?.map((n: any) => {
+      //   const link = standardLink(n.link);
+      //   const permalink = permalinkToPath[link];
+      //   if (permalink) n.link = permalink;
+      //   return n;
+      // });
 
       vitepressConfig = config.vitepress;
     },
