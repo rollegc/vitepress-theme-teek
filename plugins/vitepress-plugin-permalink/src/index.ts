@@ -49,32 +49,32 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       vitepressConfig = config.vitepress;
 
-      if (!localesKeys.length) return setDefaultActiveMatch(themeConfig.nav, permalinkToPath);
+      if (!localesKeys.length) return setDefaultActiveMatch(themeConfig.nav, permalinkToPath, cleanUrls);
 
       localesKeys.forEach(localeKey => {
-        setDefaultActiveMatch(locales[localeKey].themeConfig?.nav, permalinkToPath);
+        setDefaultActiveMatch(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls);
       });
     },
     configureServer(server: ViteDevServer) {
       const {
         base,
-        themeConfig: { permalinks },
+        themeConfig: { permalinks, cleanUrls },
       } = vitepressConfig.site;
       // 重写 URL，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
       server.middlewares.use((req, _res, next) => {
+        // req.url 为实际的文件资源地址，如 /guide/index.md，而不是浏览器的请求地址 /guide/index.html
         if (req.url) {
           const reqUrl = decodeURI(req.url)
             .replace(/[?#].*$/, "")
             .replace(/\.md$/, "")
             .slice(base.length);
 
-          // 如果访问链接 reqUrl 为 permalink，则找到对应的文档路由
-          const pageUrl = permalinks.inv[reqUrl.startsWith("/") ? reqUrl : `/${reqUrl}`];
+          const finalReqUrl = reqUrl.startsWith("/") ? reqUrl : `/${reqUrl}`;
+          // 如果访问链接 reqUrl 为 permalink，则找到对应的文档路由。当开启 cleanUrls 后，permalinks 内容都是 .html 结尾
+          const pageUrl = permalinks.inv[cleanUrls ? finalReqUrl : `${finalReqUrl}.html`];
 
-          // 如果找到文档路由，则跳转，防止页面 404
-          if (pageUrl) {
-            req.url = req.url.replace(encodeURI(reqUrl), encodeURI(pageUrl));
-          }
+          // 如果找到文档路由，则跳转，防止页面 404。当开启 cleanUrls 后，得到的文档地址为 .html 结尾，因此需要替换为空
+          if (pageUrl) req.url = req.url.replace(encodeURI(reqUrl), encodeURI(pageUrl));
         }
 
         next();
@@ -97,12 +97,15 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
   return permalink;
 };
 
-const setDefaultActiveMatch = (nav: any[] = [], permalinkToPath: Record<string, string>) => {
+const setDefaultActiveMatch = (nav: any[] = [], permalinkToPath: Record<string, string>, cleanUrls = false) => {
   if (!nav.length) return;
 
   nav.forEach(item => {
+    if (!item.link || item.link === "/") return;
+
     const link = standardLink(item.link);
-    const path = permalinkToPath[link];
+    // cleanUrls 为 false 时，permalinkToPath 的 key 都会带上 .html
+    const path = permalinkToPath[cleanUrls ? link : `${link.replace(/\.html/, "")}.html`];
 
     // 官方归档 activeMatch 是一个正则表达式字符串
     if (path && !item.activeMatch) item.activeMatch = path;

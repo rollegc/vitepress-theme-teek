@@ -47,10 +47,10 @@ export const usePermalinks = () => {
   /**
    * 判断路由是否为文档路由
    * 1. 如果为文档路由，则替换为 permalink
-   * 2. 如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink
+   * 2. 如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink（先加载 404 页面再瞬间跳转文档路由）
    *
    * @param href 浏览器地址栏
-   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了，这里留着只是二次预防
+   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了（不会出现 404 页面过渡），这里留着只是二次预防
    */
   const processUrl = async (href: string) => {
     if (!Object.keys(permalinks).length) return;
@@ -58,7 +58,7 @@ export const usePermalinks = () => {
     const { pathname, search, hash } = new URL(href, fakeHost);
 
     // 解码，支持中文
-    const decodePath = decodeURIComponent(pathname.slice(base.length));
+    const decodePath = decodeURIComponent(pathname.slice(base.length || 1));
     const decodeHash = decodeURIComponent(hash);
     const permalink = permalinks.map[decodePath];
 

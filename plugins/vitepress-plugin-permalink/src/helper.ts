@@ -17,6 +17,11 @@ export const DEFAULT_IGNORE_DIR = [
 // key 为文件路径，value 为永久链接
 let permalinks: Record<string, string> = {};
 
+/**
+ * 生成永久链接
+ * @param option 插件配置项
+ * @param cleanUrls 是否清除 .html 后缀
+ */
 export default (option: PermalinkOption = {}, cleanUrls = false): Record<string, string> => {
   const { base = process.cwd(), ignoreList = [] } = option;
 
@@ -35,6 +40,7 @@ export default (option: PermalinkOption = {}, cleanUrls = false): Record<string,
 /**
  * 指定根目录下的所有目录绝对路径，win 如 ['D:\docs\01.guide', 'D:\docs\02.design']，linux 如 ['/usr/local/docs/01.guide', '/usr/local/docs/02.design']
  * @param sourceDir 指定文件/文件夹的根目录
+ * @param ignoreList 忽略的文件/文件夹列表
  */
 const readDirPaths = (sourceDir: string, ignoreList: PermalinkOption["ignoreList"] = []) => {
   const dirPaths: string[] = [];
@@ -54,6 +60,15 @@ const readDirPaths = (sourceDir: string, ignoreList: PermalinkOption["ignoreList
   return dirPaths;
 };
 
+/**
+ * 扫描指定根目录下的 md 文件，并生成永久链接
+ *
+ * @param root 根目录
+ * @param option 配置项
+ * @param prefix 前缀
+ * @param cleanUrls 是否清除 .html 后缀
+ * @param onlyScannerRootMd 是否只扫描根目录下的 md 文件
+ */
 const scannerMdFile = (
   root: string,
   option: PermalinkOption,
@@ -85,10 +100,11 @@ const scannerMdFile = (
 
       // 判断 permalink 开头是否为 /，是的话截取掉 /，否则为 permalink
       if (permalink) {
-        const filename = cleanUrls ? basename(dirOrFilename, extname(dirOrFilename)) : basename(dirOrFilename);
-        const finalPermalink = standardLink(permalink);
+        // 如果 cleanUrls 为 false，则访问路径必须带有 .html
+        const filename = basename(dirOrFilename, extname(dirOrFilename));
 
-        permalinks[`${prefix ? `${prefix}/` : ""}${filename}`] = finalPermalink;
+        const finalPermalink = standardLink(permalink);
+        permalinks[`${prefix ? `${prefix}/` : ""}${filename}`] = cleanUrls ? finalPermalink : `${finalPermalink}.html`;
       }
     }
   });

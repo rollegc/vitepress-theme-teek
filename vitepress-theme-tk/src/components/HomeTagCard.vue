@@ -11,7 +11,7 @@ const prefixClass = getPrefixClass("tag");
 
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
-const { frontmatter, theme } = useUnrefData();
+const { frontmatter, theme, site } = useUnrefData();
 const route = useRoute();
 const pageNum = ref(1);
 // 标签配置项
@@ -59,7 +59,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const tagsPageLink = computed(() => {
   // 兼容多语言功能，如果没有使用多语言，则返回 '/tags'
   const localeIndexConst = unref(localeIndex);
-  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/tags`;
+  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/tags${site.cleanUrls ? "" : ".html"}`;
 });
 </script>
 

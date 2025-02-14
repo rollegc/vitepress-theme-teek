@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DefaultTheme from "vitepress/theme";
 import { useDesign } from "../hooks";
+import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
@@ -15,7 +16,7 @@ import CommentTwikoo from "../components/CommentTwikoo.vue";
 import CommentArtalk from "../components/CommentArtalk.vue";
 import CommentGiscus from "../components/CommentGiscus.vue";
 import CommentWaline from "../components/CommentWaline.vue";
-import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
+import { useRoute } from "vitepress";
 
 defineOptions({ name: "TkLayout" });
 
@@ -37,6 +38,9 @@ const commentComponent = {
   giscus: CommentGiscus,
   artalk: CommentArtalk,
 };
+
+console.log(theme);
+console.log(useRoute());
 </script>
 
 <template>

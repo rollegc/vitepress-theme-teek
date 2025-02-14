@@ -11,7 +11,7 @@ const prefixClass = getPrefixClass("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
-const { frontmatter, theme } = useUnrefData();
+const { frontmatter, theme, site } = useUnrefData();
 const route = useRoute();
 const pageNum = ref(1);
 // 分类配置项
@@ -53,7 +53,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
   // 兼容多语言功能，如果没有使用多语言，则返回 '/categories'
-  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/categories`;
+  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/categories${site.cleanUrls ? "" : ".html"}`;
 });
 </script>
 

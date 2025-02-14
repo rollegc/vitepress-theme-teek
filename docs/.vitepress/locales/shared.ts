@@ -112,7 +112,7 @@ export default defineConfig({
   extends: tkConfig,
   base: "/",
   title: "Hd Security",
-  cleanUrls: true,
+  cleanUrls: false,
   lastUpdated: true,
 
   head: [
