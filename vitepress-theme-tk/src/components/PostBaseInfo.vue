@@ -23,6 +23,10 @@ const {
   showIcon = true,
   dateFormat = "yyyy-MM-dd",
   showBaseInfo = true,
+  showAuthor = true,
+  showDate = true,
+  showCategory = false,
+  showTag = false,
 } = { ...theme.post, ...frontmatter.post, ...frontmatter.tk?.post };
 
 const { author = {} } = { ...theme, ...frontmatter, ...post?.frontmatter };
@@ -61,14 +65,21 @@ const baseInfo = [
     data: author.name,
     href: author.link,
     target: author.link ? "_blank" : "_self",
+    show: showAuthor,
   },
-  { title: "创建时间", icon: Calendar, data: unref(date) },
+  {
+    title: "创建时间",
+    icon: Calendar,
+    data: unref(date),
+    show: showDate,
+  },
   {
     title: "分类",
     icon: FolderOpened,
     dataList: post?.frontmatter?.categories || frontmatter.categories || [],
     href: "/categories?category={data}",
     class: "or",
+    show: showCategory,
   },
   {
     title: "标签",
@@ -76,6 +87,7 @@ const baseInfo = [
     dataList: post?.frontmatter?.tags || frontmatter.tags || [],
     href: "/tags?tag={data}",
     class: "or",
+    show: showTag,
   },
 ];
 </script>
@@ -86,25 +98,27 @@ const baseInfo = [
     :class="[`${prefixClass}`, 'flx-align-center', `${post ? 'home-post-base' : 'page-base'}`]"
   >
     <template v-for="item in baseInfo" :key="item.title">
-      <div
-        v-if="item.data || item.dataList?.length"
-        :class="['flx-center', `${post ? 'split home-post-base-tem' : 'page-base-item'}`]"
-      >
-        <el-icon v-if="showIcon"><component :is="item.icon" /></el-icon>
-        <a v-if="item.data" :title="item.title" :href="item.href" :target="item.target" :class="item.class">
-          {{ item.data }}
-        </a>
-        <a
-          v-else
-          v-for="(data, index) in item.dataList"
-          :key="index"
-          :title="item.title"
-          :href="item.href?.replace('{data}', encodeURIComponent(data))"
-          :class="item.class"
+      <template v-if="post || item.show">
+        <div
+          v-if="item.data || item.dataList?.length"
+          :class="['flx-center', `${post ? 'split home-post-base-tem' : 'page-base-item'}`]"
         >
-          {{ data }}
-        </a>
-      </div>
+          <el-icon v-if="showIcon"><component :is="item.icon" /></el-icon>
+          <a v-if="item.data" :title="item.title" :href="item.href" :target="item.target" :class="item.class">
+            {{ item.data }}
+          </a>
+          <a
+            v-else
+            v-for="(data, index) in item.dataList"
+            :key="index"
+            :title="item.title"
+            :href="item.href?.replace('{data}', encodeURIComponent(data))"
+            :class="item.class"
+          >
+            {{ data }}
+          </a>
+        </div>
+      </template>
     </template>
   </div>
 </template>

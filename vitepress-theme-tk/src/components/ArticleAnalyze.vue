@@ -45,7 +45,12 @@ const route = useRoute();
 // 站点信息数据
 const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
 // 站点信息配置项
-const { pageView = true, wordsCount = true, readingTime = true, pageIteration } = theme.docAnalysis || {};
+const {
+  pageView = true,
+  wordsCount = true,
+  readingTime = true,
+  pageIteration = 2000,
+} = { ...theme.docAnalysis, ...frontmatter.docAnalysis };
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {

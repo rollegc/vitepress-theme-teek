@@ -7,13 +7,15 @@ import { isNumber } from "../helper";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("bodyBgImage");
 
+const { theme } = useUnrefData();
+
 let {
   imgSrc,
   imgOpacity = 1,
   imgInterval = 15000,
   mask = false,
   maskBg = "rgba(0, 0, 0, 0.2)",
-} = useUnrefData().theme.bodyBgImg || {};
+} = theme.bodyBgImg || {};
 
 // body 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({

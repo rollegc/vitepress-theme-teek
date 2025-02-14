@@ -51,7 +51,7 @@ const {
   themeSize = "default",
   themeSizeAppend = [],
   comment,
-} = theme;
+} = theme.themeSetting || {};
 
 // 主题切换
 const showThemeModeItem = ref(false);

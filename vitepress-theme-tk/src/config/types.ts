@@ -30,8 +30,7 @@ export interface TkThemeConfig {
    */
   bgColor?: string[];
   /**
-   * 文章列表配置
-   *
+   * 文章列表配置，支持在 frontmatter 配置，如果是首页 index.md，则是 tk.post.[key]，如果是非首页 index.md，则是 post.[key]
    */
   post?: {
     /**
@@ -55,6 +54,11 @@ export interface TkThemeConfig {
      */
     coverImgMode?: "default" | "large";
     /**
+     * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
+     * @default false
+     */
+    showCapture?: boolean;
+    /**
      * 文章信息图标是否显示
      * @default true
      */
@@ -71,79 +75,99 @@ export interface TkThemeConfig {
      */
     showBaseInfo?: boolean | ("home" | "article")[];
     /**
-     * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
+     * 文章页是否展示作者
+     * @default true
+     */
+    showAuthor?: boolean;
+    /**
+     * 文章页是否展示日期
+     * @default true
+     */
+    showDate?: boolean;
+    /**
+     * 文章页是否展示分类
      * @default false
      */
-    showCapture?: boolean;
+    showCategory?: boolean;
+    /**
+     * 文章页是否展示标签
+     * @default false
+     */
+    showTag?: boolean;
   };
   /**
-   * 是否使用主题模式切换功能
-   * @default true
+   * 主题全局配置
    */
-  useThemeMode?: boolean;
-  /**
-   * 设置当前主题模式
-   * @default 'vp-default'
-   */
-  themeMode?:
-    | "vp-default"
-    | "vp-green"
-    | "vp-yellow"
-    | "vp-red"
-    | "el-blue"
-    | "el-green"
-    | "el-yellow"
-    | "el-red"
-    | string;
-  /**
-   * 自定义主题模式，将会追加到内置主题模式后面
-   */
-  themeModeAppend?: {
+  themeSetting?: {
     /**
-     * 主题组名称
+     * 是否使用主题模式切换功能
+     * @default true
      */
-    label: string;
+    useThemeMode?: boolean;
     /**
-     * 主题组提示信息，鼠标悬停时显示
+     * 设置当前主题模式
+     * @default 'vp-default'
      */
-    tip?: string;
+    themeMode?:
+      | "vp-default"
+      | "vp-green"
+      | "vp-yellow"
+      | "vp-red"
+      | "el-blue"
+      | "el-green"
+      | "el-yellow"
+      | "el-red"
+      | string;
     /**
-     * 主题组内容
+     * 自定义主题模式，将会追加到内置主题模式后面
      */
-    options: {
+    themeModeAppend?: {
       /**
-       * 主题名称，用于页面文字渲染
+       * 主题组名称
+       */
+      label: string;
+      /**
+       * 主题组提示信息，鼠标悬停时显示
+       */
+      tip?: string;
+      /**
+       * 主题组内容
+       */
+      options: {
+        /**
+         * 主题名称，用于页面文字渲染
+         */
+        name: string;
+        /**
+         * 主题标识，在 html 标签的 theme 属性添加该标识
+         */
+        theme: string;
+      }[];
+    }[];
+    /**
+     * 是否使用主题尺寸切换功能
+     * @default true
+     */
+    useThemeSize?: boolean;
+    /**
+     * 设置当前主题尺寸
+     * @default 'default'
+     */
+    themeSize?: "small" | "default" | "large" | string;
+    /**
+     * 自定义主题尺寸，将会追加到内置主题尺寸后面
+     */
+    themeSizeAppend?: {
+      /**
+       * 主题尺寸名称，用于页面文字渲染
        */
       name: string;
       /**
-       * 主题标识，在 html 标签的 theme 属性添加该标识
+       * 主题尺寸标识，在 html 标签的 size 属性添加该标识
        */
-      theme: string;
+      size: string;
     }[];
-  }[];
-  /**
-   * 是否使用主题尺寸切换功能
-   * @default true
-   */
-  useThemeSize?: boolean;
-  /**
-   * 设置当前主题尺寸
-   * @default 'default'
-   */
-  themeSize?: "small" | "default" | "large" | string;
-  /**
-   * 自定义主题尺寸，将会追加到内置主题尺寸后面
-   */
-  themeSizeAppend?: {
-    /**
-     * 主题尺寸名称，用于页面文字渲染
-     */
-    name: string;
-    /**
-     * 主题尺寸标识，在 html 标签的 size 属性添加该标识
-     */
-    size: string;
-  }[];
+  };
   /**
    *  body 背景大图配置
    */
@@ -174,7 +198,7 @@ export interface TkThemeConfig {
     maskBg?: string | number;
   };
   /**
-   * 首页 Banner 配置
+   * 首页 Banner 配置，里面的属性全部支持在 frontmatter 配置 tk.banner.[key]
    */
   banner?: {
     /**
@@ -259,7 +283,7 @@ export interface TkThemeConfig {
     typesNextTime?: number;
   };
   /**
-   * 面包屑配置
+   * 面包屑配置，里面的属性全部支持在 frontmatter 配置 breadcrumb.[key]
    */
   breadcrumb?: {
     /**
@@ -300,6 +324,9 @@ export interface TkThemeConfig {
      */
     avatarStyle?: "radius" | "full";
   };
+  /**
+   * 分类卡片配置，里面的属性全部支持在 frontmatter 配置 tk.category.[key]
+   */
   category?: {
     /**
      * 是否启用分类卡片
@@ -332,6 +359,9 @@ export interface TkThemeConfig {
      */
     pageSpeed?: number;
   };
+  /**
+   * 标签卡片配置，里面的属性全部支持在 frontmatter 配置 tk.tag.[key]
+   */
   tag?: {
     /**
      * 是否启用标签卡片
@@ -368,6 +398,9 @@ export interface TkThemeConfig {
      */
     bgColor?: string[];
   };
+  /**
+   * 精选文章卡片配置，里面的属性全部支持在 frontmatter 配置 tk.topArticle.[key]
+   */
   topArticle?: {
     /**
      * 是否启用精选文章卡片
@@ -395,6 +428,9 @@ export interface TkThemeConfig {
      */
     pageSpeed?: number;
   };
+  /**
+   * 友情链接卡片配置，里面的属性全部支持在 frontmatter 配置 tk.friendLink.[key]
+   */
   friendLink?: {
     /**
      * 是否启用友情链接卡片
@@ -458,6 +494,9 @@ export interface TkThemeConfig {
      */
     pageSpeed?: number;
   };
+  /**
+   * 站点信息卡片配置，里面的属性全部支持在 frontmatter 配置 tk.docAnalysis.[key]
+   */
   docAnalysis?: {
     /**
      * 是否启用站点信息卡片
@@ -546,6 +585,9 @@ export interface TkThemeConfig {
    * 评论区配置
    */
   comment?: CommentConfig<"twikoo"> | CommentConfig<"waline"> | CommentConfig<"giscus"> | CommentConfig<"artalk">;
+  /**
+   * 内置插件配置
+   */
   plugins?: {
     /**
      * 是否启用 sidebar 插件
@@ -584,7 +626,13 @@ export interface TkThemeConfig {
      */
     docAnalysisOption?: DocAnalysisOption;
   };
+  /**
+   * 首页 Post 的分页配置，完全是 ElPagination 的 props
+   */
   page?: Partial<PaginationProps>;
+  /**
+   * 图片查看器配置，完全是 ElImageViewer 的 props
+   */
   imageViewer?: Partial<ImageViewerProps>;
 }
 
