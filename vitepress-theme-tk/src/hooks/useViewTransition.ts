@@ -3,7 +3,7 @@ import { nextTick, provide } from "vue";
 import { useUnrefData } from "../configProvider";
 import "../styles/dark-transition.css";
 
-export function useViewTransition() {
+export const useViewTransition = () => {
   const { isDark } = useData();
 
   const isOpenViewTransition = useUnrefData().theme.viewTransition ?? true;
@@ -38,4 +38,4 @@ export function useViewTransition() {
       }
     );
   });
-}
+};

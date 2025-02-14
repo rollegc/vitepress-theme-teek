@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted, reactive, watch } from "vue";
 
-export function useAnchorScroll() {
+export const useAnchorScroll = () => {
   // 初始化当前锚点
   const currentAnchor = reactive({
     id: "",
@@ -63,4 +63,4 @@ export function useAnchorScroll() {
   };
 
   return { startWatch };
-}
+};

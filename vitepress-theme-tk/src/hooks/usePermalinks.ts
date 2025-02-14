@@ -2,7 +2,7 @@ import { useRouter, useData } from "vitepress";
 import { nextTick, onMounted } from "vue";
 import { inBrowser } from "../helper";
 
-export function usePermalinks() {
+export const usePermalinks = () => {
   const fakeHost = "http://a.com";
   const router = useRouter();
   const { site, theme } = useData();
@@ -92,4 +92,4 @@ export function usePermalinks() {
   };
 
   return { startWatch };
-}
+};
