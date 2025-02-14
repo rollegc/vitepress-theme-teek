@@ -104,11 +104,20 @@ const isMdFile = (filePath: string) => {
   return ["md", "MD"].includes(fileExtension);
 };
 
+/**
+ * 判断数组中是否存在某个元素，支持正则表达式
+ *
+ * @param arr 数组
+ * @param name 元素
+ */
 const isSome = (arr: Array<string | RegExp>, name: string) => {
   return arr.some(item => item === name || (item instanceof RegExp && item.test(name)));
 };
 
-export const standardLink = (permalink: string) => {
+/**
+ * 处理 permalink 的格式为 /xxx 或者 /xx/xx，即开头带有 /，结尾不带 /
+ */
+export const standardLink = (permalink = "") => {
   let finalPermalink = permalink;
   if (!finalPermalink.startsWith("/")) finalPermalink = "/" + finalPermalink;
   if (finalPermalink.endsWith("/")) finalPermalink = finalPermalink.replace(/\/$/, "");

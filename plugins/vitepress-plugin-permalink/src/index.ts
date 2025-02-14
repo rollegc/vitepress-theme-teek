@@ -29,14 +29,12 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       const pathToPermalink: Record<string, string> = {};
       // Key 为 permalink，Value 为 path
       const permalinkToPath: Record<string, string> = {};
-      // 多语言 key 数组
+      // 多语言 key 数组，排除 root 根目录
       const localesKeys = Object.keys(locales || {});
 
       for (const [key, value] of Object.entries(permalinks)) {
-        let newValue = value;
         // 如果设置了多语言，则 permalink 添加语言前缀
-        const localesKey = localesKeys.find(k => key.startsWith(k));
-        if (localesKey) newValue = `/${localesKey}${value.startsWith("/") ? value : `/${value}`}`;
+        let newValue = getLocalePermalink(localesKeys, key, value);
 
         pathToPermalink[key] = newValue;
 
@@ -49,15 +47,13 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath };
 
-      // TODO 归档、目录进入后，导航栏对应的 label 没有高亮，需要转为高亮的 link
-      // themeConfig.nav = themeConfig.nav?.map((n: any) => {
-      //   const link = standardLink(n.link);
-      //   const permalink = permalinkToPath[link];
-      //   if (permalink) n.link = permalink;
-      //   return n;
-      // });
-
       vitepressConfig = config.vitepress;
+
+      if (!localesKeys.length) return setDefaultActiveMatch(themeConfig.nav, permalinkToPath);
+
+      localesKeys.forEach(localeKey => {
+        setDefaultActiveMatch(locales[localeKey].themeConfig?.nav, permalinkToPath);
+      });
     },
     configureServer(server: ViteDevServer) {
       const {
@@ -86,3 +82,30 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
     },
   };
 }
+
+/**
+ * 给 permalink 添加多语言前缀
+ * @param localesKeys 多语言 key 数组，排除 root 根目录
+ * @param path 文件路径
+ * @param permalink 永久链接
+ */
+const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "") => {
+  // 过滤掉 root 根目录
+  const localesKey = localesKeys.filter(key => key !== "root").find(key => path.startsWith(key));
+  if (localesKey) return `/${localesKey}${permalink.startsWith("/") ? permalink : `/${permalink}`}`;
+
+  return permalink;
+};
+
+const setDefaultActiveMatch = (nav: any[] = [], permalinkToPath: Record<string, string>) => {
+  if (!nav.length) return;
+
+  nav.forEach(item => {
+    const link = standardLink(item.link);
+    const path = permalinkToPath[link];
+
+    // 官方归档 activeMatch 是一个正则表达式字符串
+    if (path && !item.activeMatch) item.activeMatch = path;
+    if (item.items) setDefaultActiveMatch(item.items, permalinkToPath);
+  });
+};

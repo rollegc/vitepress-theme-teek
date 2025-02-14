@@ -13,7 +13,7 @@ export default defineConfig({
     // 开启行号
     lineNumbers: true,
     image: {
-      // 默认禁用；设置为 true 可为所有图片启用懒加载。
+      // 默认禁用；设置为 true 可为所有图片启用懒加载
       lazyLoading: true,
     },
     // 更改容器默认值标题
