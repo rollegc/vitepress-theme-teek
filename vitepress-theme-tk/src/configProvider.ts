@@ -4,7 +4,6 @@ import type { Post } from "./data/types";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
 import { useData } from "vitepress";
-import "./styles/dark-transition.css";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
 

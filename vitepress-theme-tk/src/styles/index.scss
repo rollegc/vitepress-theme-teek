@@ -3,6 +3,8 @@
 @forward "./var/theme.scss";
 @forward "./var/size.scss";
 
+@use "./namespace.scss" as *;
+
 // 基础全局样式变量，和 .dark 呼应
 :root {
   --tk-theme-color: var(--vp-c-brand-1);
@@ -38,6 +40,8 @@
 
 // 全局样式变量
 :root {
+  // 命名空间，具体看 src/hooks/useDesign.ts 的使用
+  --tk-namespace: #{$theme-namespace};
   --tk-gap2: 10px;
   --tk-gap1: 20px;
 }
