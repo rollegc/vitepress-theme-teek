@@ -9,6 +9,7 @@ export default () => {
   const { site, theme } = useData();
   const { base } = site.value;
   const { permalinks = {} } = theme.value;
+  const permalinkKeys = Object.keys(permalinks);
 
   /**
    * 为 vitepress 的 router 添加 push 方法，支持手动跳转 permalink
@@ -54,7 +55,7 @@ export default () => {
    * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了（不会出现 404 页面过渡），因此现在是在插件执行后，重新触发该方法，替换 URL 为 permalink
    */
   const processUrl = async (href: string) => {
-    if (!Object.keys(permalinks).length) return;
+    if (!permalinkKeys.length) return;
 
     const { pathname, search, hash } = new URL(href, fakeHost);
 
@@ -84,6 +85,8 @@ export default () => {
    * 监听路由变化（刷新页面不会触发），处理路由地址
    */
   const startWatch = () => {
+    if (!permalinkKeys.length) return;
+
     const selfOnAfterRouteChange = router.onAfterRouteChange;
     router.onAfterRouteChange = async (href: string) => {
       // 处理路由地址

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DefaultTheme from "vitepress/theme";
+import { useData } from "vitepress";
 import { useDesign } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import HomeBanner from "../components/HomeBanner.vue";
@@ -25,8 +26,9 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("layout");
 
 const { theme, frontmatter } = useUnrefData();
+const { frontmatter: frontmatterRef } = useData();
 
-const useTkTheme = theme.tkTheme ?? true;
+const { tkTheme = true, tkHome = true } = theme;
 
 const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render } = { ...theme.comment };
@@ -47,7 +49,7 @@ const commentComponent = {
     <template #home-hero-before>
       <slot name="home-hero-before" />
       <!-- 自定义首页 -->
-      <div v-if="useTkTheme" :class="`${prefixClass}-home`">
+      <div v-if="tkTheme && tkHome" :class="`${prefixClass}-home`">
         <HomeBanner v-if="isHomePage() && enabled" />
         <div :class="`${prefixClass}-home-content flx-start-justify-center`">
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
@@ -60,7 +62,7 @@ const commentComponent = {
       <slot name="layout-top" />
     </template>
     <template #layout-bottom>
-      <Footer v-if="isHomePage()" />
+      <Footer v-if="tkTheme && isHomePage()" />
       <slot name="layout-bottom" />
     </template>
 
@@ -75,7 +77,7 @@ const commentComponent = {
     <template #doc-after>
       <slot name="doc-after" />
       <!-- 评论区 -->
-      <template v-if="frontmatter.comment !== false">
+      <template v-if="frontmatterRef.comment !== false">
         <component v-if="render" :is="render" :id="`${prefixClass}-comment`" :class="`${prefixClass}-comment`" />
         <component
           v-else-if="provider"
@@ -89,8 +91,10 @@ const commentComponent = {
     <!-- content -->
     <template #page-top>
       <slot name="page-top" />
-      <ArchivesPage v-if="isArchivesPage()" />
-      <CataloguePage v-if="isCataloguePage()" />
+      <template v-if="tkTheme">
+        <ArchivesPage v-if="isArchivesPage()" />
+        <CataloguePage v-if="isCataloguePage()" />
+      </template>
     </template>
     <template #page-bottom>
       <slot name="page-bottom" />

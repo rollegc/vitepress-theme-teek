@@ -13,6 +13,18 @@ export interface TkThemeConfig {
    */
   tkTheme?: boolean;
   /**
+   * 是否启用主题的首页
+   *
+   * @default true
+   */
+  tkHome?: boolean;
+  /**
+   * 是否启用锚点滚动功能，即阅读文章时，自动将 h1~ h6 标题添加到地址栏 # 后面
+   *
+   * @default true
+   */
+  anchorScroll?: boolean;
+  /**
    * 暗黑、亮白模式切换时是否开启过渡动画
    */
   viewTransition?: boolean;

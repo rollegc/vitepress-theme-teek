@@ -1,6 +1,8 @@
 import { onMounted, onUnmounted, reactive, watch } from "vue";
+import { useUnrefData } from "../configProvider";
 
 export const useAnchorScroll = () => {
+  const { theme } = useUnrefData();
   // 初始化当前锚点
   const currentAnchor = reactive({
     id: "",
@@ -54,6 +56,8 @@ export const useAnchorScroll = () => {
    * 文档更新锚点的时候更新 url 中的 hash
    */
   const startWatch = () => {
+    if (theme.anchorScroll === false) return;
+
     watch(
       () => currentAnchor.id,
       (val: string) => {

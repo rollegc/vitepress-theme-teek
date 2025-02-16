@@ -68,6 +68,7 @@ const resolvePosts = (posts: TkContentData[]): Post => {
   const groupPostsByYearMonth = groupByYearMonth(sortPostsByDate);
   const groupPosts = getGroupPosts(sortPostsByDateAndSticky);
   const groupCards = getGroupCards(groupPosts);
+
   return {
     originPosts,
     sortPostsByDateAndSticky,
