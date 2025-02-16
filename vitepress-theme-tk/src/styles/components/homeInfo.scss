@@ -1,6 +1,6 @@
 @use "../namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-home-info;
+$prefix-class: #{$theme-namespace}-homeInfo;
 
 .#{$prefix-class} {
   & .card {

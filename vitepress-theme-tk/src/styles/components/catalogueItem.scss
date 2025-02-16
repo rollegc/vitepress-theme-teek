@@ -1,8 +1,8 @@
 @use "../namespace.scss" as *;
 
 $prefix-class: #{$theme-namespace}-catalogue;
-$prefix-class1: #{$theme-namespace}-sub-catalogue;
-$prefix-class2: #{$theme-namespace}-catalogue-item;
+$prefix-class1: #{$theme-namespace}-subCatalogue;
+$prefix-class2: #{$theme-namespace}-catalogueItem;
 
 // 递归块样式
 .#{$prefix-class} {

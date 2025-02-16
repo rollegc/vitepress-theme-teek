@@ -1,6 +1,6 @@
 @use "../namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-post-item;
+$prefix-class: #{$theme-namespace}-postItem;
 
 .#{$prefix-class} {
   margin-bottom: 14px;

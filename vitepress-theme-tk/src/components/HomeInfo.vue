@@ -10,7 +10,7 @@ import TopArticleCard from "./TopArticleCard.vue";
 import DocAnalysisCard from "./DocAnalysisCard.vue";
 
 const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("home-info");
+const prefixClass = getPrefixClass("homeInfo");
 
 const { theme, frontmatter } = useData();
 

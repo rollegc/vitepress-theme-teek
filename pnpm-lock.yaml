@@ -121,6 +121,33 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@22.10.5)(rollup@4.30.1)(typescript@5.7.3)(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
 
+  demo/docs-base:
+    devDependencies:
+      vitepress:
+        specifier: ^1.6.3
+        version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
+      vitepress-theme-tk:
+        specifier: workspace:*
+        version: link:../../vitepress-theme-tk
+
+  demo/docs-locales:
+    devDependencies:
+      vitepress:
+        specifier: ^1.6.3
+        version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
+      vitepress-theme-tk:
+        specifier: workspace:*
+        version: link:../../vitepress-theme-tk
+
+  demo/docs-locales-root:
+    devDependencies:
+      vitepress:
+        specifier: ^1.6.3
+        version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
+      vitepress-theme-tk:
+        specifier: workspace:*
+        version: link:../../vitepress-theme-tk
+
   docs:
     devDependencies:
       vitepress:

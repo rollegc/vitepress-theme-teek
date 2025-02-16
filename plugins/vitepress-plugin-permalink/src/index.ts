@@ -37,12 +37,11 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         // 如果设置了多语言，则 permalink 添加语言前缀
         let newValue = getLocalePermalink(localesKeys, key, value);
 
-        pathToPermalink[key] = newValue;
-
         if (permalinkToPath[newValue]) {
           log(`Permalink「${newValue}」已存在，其对应的「${permalinkToPath[newValue]}」将会被 ${key} 覆盖`);
         }
 
+        pathToPermalink[key] = newValue;
         permalinkToPath[newValue] = key;
       }
 
@@ -50,8 +49,10 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       vitepressConfig = config.vitepress;
 
-      if (!localesKeys.length)
+      // 导航栏高亮适配 permalink
+      if (!localesKeys.length) {
         return setActiveMatchWhenUsePermalink(themeConfig.nav, permalinkToPath, cleanUrls, rewrites);
+      }
 
       localesKeys.forEach(localeKey => {
         setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls, rewrites);

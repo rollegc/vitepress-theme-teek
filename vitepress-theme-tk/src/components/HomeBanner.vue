@@ -223,5 +223,11 @@ onUnmounted(() => {
       }
     }
   }
+
+  .VPNavBarTranslations {
+    .text {
+      color: #ffffff;
+    }
+  }
 }
 </style>

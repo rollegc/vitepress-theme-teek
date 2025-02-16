@@ -8,7 +8,7 @@ import { useUnrefData } from "../configProvider";
 import PostBaseInfo from "./PostBaseInfo.vue";
 
 const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("post-item");
+const prefixClass = getPrefixClass("postItem");
 
 const { post = { url: "", frontmatter: {} } } = defineProps<{ post: TkContentData }>();
 
@@ -103,7 +103,7 @@ const coverImgMap = computed(() => {
 <style lang="scss">
 @use "../styles/namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-post-item;
+$prefix-class: #{$theme-namespace}-postItem;
 
 .#{$prefix-class} {
   .excerpt {

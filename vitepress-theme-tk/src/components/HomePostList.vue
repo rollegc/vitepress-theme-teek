@@ -8,7 +8,7 @@ import { useDesign } from "../hooks";
 import { TkContentData } from "../data/types";
 
 const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("post-list");
+const prefixClass = getPrefixClass("postList");
 
 const posts = usePosts();
 const { frontmatter, theme } = useUnrefData();

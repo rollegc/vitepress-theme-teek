@@ -1,6 +1,6 @@
 @use "../namespace.scss" as *;
 
-$prefix-class: #{$theme-namespace}-post-list;
+$prefix-class: #{$theme-namespace}-postList;
 
 .#{$prefix-class} {
   &-pagination {

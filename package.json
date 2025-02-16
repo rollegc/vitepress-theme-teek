@@ -6,7 +6,8 @@
     "vitepress-theme-tk",
     "plugins/*",
     "docs",
-    "build"
+    "build",
+    "demo/*"
   ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -14,6 +15,9 @@
     "docs:dev": "pnpm run -C docs dev",
     "docs:build": "pnpm run -C docs build",
     "docs:preview": "pnpm run -C docs preview",
+    "docs:base:dev": "pnpm run -C demo/docs-base dev",
+    "docs:locales:dev": "pnpm run -C demo/docs-locales dev",
+    "docs:localesRoot:dev": "pnpm run -C demo/docs-locales-root dev",
     "build": "pnpm run clean && pnpm run -C build start",
     "clean": "rimraf dist",
     "stub:build": "pnpm run -C build stub",

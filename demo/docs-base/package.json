@@ -1,0 +1,15 @@
+{
+  "name": "vitepress-theme-tk-docs",
+  "version": "1.0.0",
+  "description": "vitepress-theme-tk 使用文档",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3",
+    "vitepress-theme-tk": "workspace:*"
+  }
+}

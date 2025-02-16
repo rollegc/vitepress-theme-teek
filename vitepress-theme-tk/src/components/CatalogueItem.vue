@@ -4,8 +4,8 @@ import type { DefaultTheme } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("catalogue");
-const prefixClass1 = getPrefixClass("sub-catalogue");
-const prefixClass2 = getPrefixClass("catalogue-item");
+const prefixClass1 = getPrefixClass("subCatalogue");
+const prefixClass2 = getPrefixClass("catalogueItem");
 
 defineProps<{ item: DefaultTheme.SidebarMulti; index: number | string }>();
 </script>
