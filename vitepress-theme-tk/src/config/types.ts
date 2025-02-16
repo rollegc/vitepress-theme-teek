@@ -12,23 +12,32 @@ export interface TkThemeConfig {
    */
   tkTheme?: boolean;
   /**
-   * 外观切换时是否开启过渡动画
+   * 暗黑、亮白模式切换时是否开启过渡动画
    */
   viewTransition?: boolean;
-  /**
-   * 文章默认的作者信息
-   */
-  author?: string | { name: string; link?: string };
   /**
    * 首页卡片的排序
    * @default '["topArticle", "category", "tag", "docAnalysis", "friendLink"]'
    */
   homeCardSort?: ("topArticle" | "category" | "tag" | "docAnalysis" | "friendLink")[];
   /**
-   * 背景色
+   * 背景色，用于精选文章卡片的 hot 功能和标签卡片的背景色
    * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
    */
   bgColor?: string[];
+  /**
+   * 文章默认的作者信息
+   */
+  author?: {
+    /**
+     * 作者名称，作用在首页的 PostItem 和文章页
+     */
+    name: string;
+    /**
+     * 点击作者名称后跳转的链接
+     */
+    link?: string;
+  };
   /**
    * 文章列表配置，支持在 frontmatter 配置，如果是首页 index.md，则是 tk.post.[key]，如果是非首页 index.md，则是 post.[key]
    */
