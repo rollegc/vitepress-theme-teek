@@ -16,7 +16,6 @@ import CommentTwikoo from "../components/CommentTwikoo.vue";
 import CommentArtalk from "../components/CommentArtalk.vue";
 import CommentGiscus from "../components/CommentGiscus.vue";
 import CommentWaline from "../components/CommentWaline.vue";
-import { useRoute } from "vitepress";
 
 defineOptions({ name: "TkLayout" });
 

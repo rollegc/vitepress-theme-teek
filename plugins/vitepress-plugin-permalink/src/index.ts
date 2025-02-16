@@ -118,7 +118,7 @@ const setActiveMatchWhenUsePermalink = (
   if (!nav.length) return;
 
   nav.forEach(item => {
-    if (!item.link || item.link === "/") return;
+    if (item.link === "/") return;
 
     const link = standardLink(item.link);
     // cleanUrls 为 false 时，permalinkToPath 的 key 都会带上 .html
@@ -126,6 +126,6 @@ const setActiveMatchWhenUsePermalink = (
 
     // 官方归档 activeMatch 是一个正则表达式字符串
     if (path && !item.activeMatch) item.activeMatch = rewrites.map?.[`${path}.md`]?.replace(/\.md/, "") || path;
-    if (item.items) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
+    if (item.items?.length) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
   });
 };
