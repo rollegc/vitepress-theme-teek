@@ -4,15 +4,7 @@ import matter from "gray-matter";
 import type { PermalinkOption } from "./types";
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = [
-  "scripts",
-  "components",
-  "assets",
-  ".vitepress",
-  "node_modules",
-  "package.json",
-  "public",
-];
+export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "dist", "public"];
 
 // key 为文件路径，value 为永久链接
 let permalinks: Record<string, string> = {};
