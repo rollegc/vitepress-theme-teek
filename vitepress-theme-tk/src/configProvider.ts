@@ -4,7 +4,7 @@ import type { Post } from "./data/types";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
 import { useData } from "vitepress";
-import usePermalinks from "vitepress-plugin-permalink/usePermalinks";
+import usePermalinks from "vitepress-plugin-permalink/src/usePermalinks";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
 
