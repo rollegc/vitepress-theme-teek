@@ -38,9 +38,6 @@ const commentComponent = {
   giscus: CommentGiscus,
   artalk: CommentArtalk,
 };
-
-console.log(theme);
-console.log(useRoute());
 </script>
 
 <template>

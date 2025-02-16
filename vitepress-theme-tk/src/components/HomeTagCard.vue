@@ -59,7 +59,8 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const tagsPageLink = computed(() => {
   // 兼容多语言功能，如果没有使用多语言，则返回 '/tags'
   const localeIndexConst = unref(localeIndex);
-  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/tags${site.cleanUrls ? "" : ".html"}`;
+  const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
+  return `${localeName}/tags${site.cleanUrls ? "" : ".html"}`;
 });
 </script>
 

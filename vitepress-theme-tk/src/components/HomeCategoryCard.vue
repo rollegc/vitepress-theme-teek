@@ -52,8 +52,9 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 
 const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
+  const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   // 兼容多语言功能，如果没有使用多语言，则返回 '/categories'
-  return `${localeIndexConst !== "root" ? `/${localeIndexConst}` : ""}/categories${site.cleanUrls ? "" : ".html"}`;
+  return `${localeName}/categories${site.cleanUrls ? "" : ".html"}`;
 });
 </script>
 

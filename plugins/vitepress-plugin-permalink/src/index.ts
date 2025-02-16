@@ -49,10 +49,10 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       vitepressConfig = config.vitepress;
 
-      if (!localesKeys.length) return setDefaultActiveMatch(themeConfig.nav, permalinkToPath, cleanUrls);
+      if (!localesKeys.length) return setActiveMatchWhenUsePermalink(themeConfig.nav, permalinkToPath, cleanUrls);
 
       localesKeys.forEach(localeKey => {
-        setDefaultActiveMatch(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls);
+        setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls);
       });
     },
     configureServer(server: ViteDevServer) {
@@ -60,7 +60,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         base,
         themeConfig: { permalinks, cleanUrls },
       } = vitepressConfig.site;
-      // 重写 URL，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
+      // 将 permalink 重写实际文件路径，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
       server.middlewares.use((req, _res, next) => {
         // req.url 为实际的文件资源地址，如 /guide/index.md，而不是浏览器的请求地址 /guide/index.html
         if (req.url) {
@@ -85,6 +85,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
 /**
  * 给 permalink 添加多语言前缀
+ *
  * @param localesKeys 多语言 key 数组，排除 root 根目录
  * @param path 文件路径
  * @param permalink 永久链接
@@ -97,7 +98,19 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
   return permalink;
 };
 
-const setDefaultActiveMatch = (nav: any[] = [], permalinkToPath: Record<string, string>, cleanUrls = false) => {
+/**
+ * 如果 nav 有 link 且 link 为 permalink，则添加 activeMatch 为 permalink 对应的文件路径
+ * 这里的处理是导航栏兼容 permalink 的高亮功能，默认访问 permalink 后，导航栏不会高亮，因为导航栏是根据实际的文件路径进行匹配
+ *
+ * @param nav 导航栏
+ * @param permalinkToPath permalink 和文件路径的映射关系
+ * @param cleanUrls cleanUrls
+ */
+const setActiveMatchWhenUsePermalink = (
+  nav: any[] = [],
+  permalinkToPath: Record<string, string>,
+  cleanUrls = false
+) => {
   if (!nav.length) return;
 
   nav.forEach(item => {
@@ -109,6 +122,6 @@ const setDefaultActiveMatch = (nav: any[] = [], permalinkToPath: Record<string, 
 
     // 官方归档 activeMatch 是一个正则表达式字符串
     if (path && !item.activeMatch) item.activeMatch = path;
-    if (item.items) setDefaultActiveMatch(item.items, permalinkToPath);
+    if (item.items) setActiveMatchWhenUsePermalink(item.items, permalinkToPath);
   });
 };

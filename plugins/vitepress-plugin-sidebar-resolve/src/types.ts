@@ -9,6 +9,7 @@ export interface SidebarOption {
   ignoreList?: Array<RegExp | string>;
   /**
    * 文章所在的目录，基于 package.json 所在目录，开头不需要有 /
+   *
    * @default 'vitepress 的 srcDir 配置项'
    */
   base?: string;
@@ -42,6 +43,13 @@ export interface SidebarOption {
    * @default false
    */
   mdTitleDeep?: boolean;
+  /**
+   * 当 Vitepress 设置 locales 多语言后，如果将 root 语言的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏如无法知道文件都放到了 zh
+   * 如果 root 语言的所有文件放在文档根目录下，则不需要设置 localeRootDir
+   *
+   * @default 文档根目录
+   */
+  localeRootDir?: string;
   /**
    * 解析每个 sideBar 后的回调。每个 sideBar 指的是 SidebarOption.path 目录下的每个子目录
    *

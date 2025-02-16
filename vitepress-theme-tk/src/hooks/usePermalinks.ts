@@ -22,8 +22,8 @@ export const usePermalinks = () => {
     // 解码，支持中文
     const decodePath = decodeURIComponent(pathname);
     const decodeHash = decodeURIComponent(hash);
-    // 根据 decodePath 找 permalink
-    let permalink = permalinks.map[decodePath];
+    // 根据 decodePath 找 permalink，当使用 cleanUrls 为 false 时，decodePath 会带上 .html，因此尝试去掉 .html
+    let permalink = permalinks.map[decodePath.replace(/\.html/, "")];
 
     // 如果当前 pathname 和 permalink 相同，则直接跳转，等价于直接调用 go 方法
     if (permalink === decodePath) return router.go(href);
@@ -50,7 +50,7 @@ export const usePermalinks = () => {
    * 2. 如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink（先加载 404 页面再瞬间跳转文档路由）
    *
    * @param href 浏览器地址栏
-   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了（不会出现 404 页面过渡），这里留着只是二次预防
+   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了（不会出现 404 页面过渡），因此现在是在插件执行后，重新触发该方法，替换 URL 为 permalink
    */
   const processUrl = async (href: string) => {
     if (!Object.keys(permalinks).length) return;
@@ -60,7 +60,8 @@ export const usePermalinks = () => {
     // 解码，支持中文
     const decodePath = decodeURIComponent(pathname.slice(base.length || 1));
     const decodeHash = decodeURIComponent(hash);
-    const permalink = permalinks.map[decodePath];
+    // 当使用 cleanUrls 为 false 时，decodePath 会带上 .html，因此去掉 .html
+    const permalink = permalinks.map[decodePath.replace(/\.html/, "")];
 
     // 如果当前 pathname 和 permalink 相同，则不需要处理
     if (permalink === decodePath) return;

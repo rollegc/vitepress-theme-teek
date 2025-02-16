@@ -105,6 +105,10 @@ const tkConfig = themeConfig({
       // site: "",
     },
   },
+
+  plugins: {
+    sidebarOption: { localeRootDir: "zh" },
+  },
 });
 
 // https://vitepress.dev/reference/site-config
@@ -114,6 +118,10 @@ export default defineConfig({
   title: "Hd Security",
   cleanUrls: false,
   lastUpdated: true,
+
+  rewrites: {
+    "zh/:rest*": ":rest*",
+  },
 
   head: [
     ["meta", { name: "author", content: "Tianke" }],
