@@ -6,7 +6,7 @@ import { basename } from "node:path";
 export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-md-h1",
-    transform: (code, id) => {
+    transform: (code: string, id: string) => {
       if (!id.endsWith(".md")) return code;
 
       const content = readFileSync(id, "utf-8");

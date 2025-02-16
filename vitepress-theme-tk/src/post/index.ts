@@ -19,12 +19,13 @@ import { statSync } from "node:fs";
 export const transformData = (data: FileContentLoaderData): TkContentData => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { themeConfig } = siteConfig.userConfig;
+  const { frontmatter, url } = data;
 
-  if (data.frontmatter.date) data.frontmatter.date = formatDate(data.frontmatter.date);
+  if (frontmatter.date) frontmatter.date = formatDate(frontmatter.date);
 
   return {
-    url: data.url,
-    frontmatter: data.frontmatter,
+    url: url,
+    frontmatter: frontmatter,
     author: themeConfig.author,
     title: getTitle(data),
     date: getDate(data, siteConfig.srcDir),
