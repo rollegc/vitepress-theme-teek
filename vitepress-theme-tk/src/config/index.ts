@@ -4,8 +4,11 @@ import Permalink from "vitepress-plugin-permalink";
 import MdH1 from "vitepress-plugin-md-h1";
 import Catalogue from "vitepress-plugin-catalogue";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
+import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import { UserConfig } from "vitepress";
 import { PluginOption } from "vite";
+import { transformData, transformRaw } from "../post";
+import { Post, TkContentData } from "../post/types";
 
 export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
   const { plugins: pluginsOption, ...c } = config;
@@ -18,9 +21,35 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
     catalogueOption,
     docAnalysis = true,
     docAnalysisOption = {},
+    fileContentLoaderIgnore = [],
   } = pluginsOption || {};
 
-  const plugins: PluginOption[] = [Catalogue(catalogueOption)];
+  const fileContentLoaderOptions: FileContentLoaderOptions<TkContentData, Post> = {
+    pattern: ["**/*.md"],
+    // 指定摘录格式
+    excerpt: "<!-- more -->",
+    includeSrc: true,
+    transformData,
+    transformRaw,
+    themeConfigKey: "posts",
+    globOptions: {
+      ignore: [
+        "**/scripts/**",
+        "**/components/**",
+        "**/assets/**",
+        "**/.vitepress/**",
+        "**/public/**",
+        ...fileContentLoaderIgnore,
+      ],
+    },
+  };
+
+  const plugins: PluginOption[] = [];
+
+  if (config.tkTheme !== false) {
+    plugins.push(Catalogue(catalogueOption));
+    plugins.push(FileContentLoader<TkContentData, Post>(fileContentLoaderOptions));
+  }
 
   if (sidebar) {
     sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", "@fragment"];

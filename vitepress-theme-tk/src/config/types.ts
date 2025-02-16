@@ -2,6 +2,7 @@ import type { PermalinkOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
+import type { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
 import type { VNode } from "vue";
 
@@ -726,6 +727,12 @@ export interface TkThemeConfig {
      * docAnalysis 插件配置项
      */
     docAnalysisOption?: DocAnalysisOption;
+    /**
+     * fileContentLoader 插件扫描 markdown 文档时，指定忽略路径，格式为 glob 表达式，如 test/**
+     *
+     * @default []
+     */
+    fileContentLoaderIgnore?: string[];
   };
   /**
    * 首页 Post 的分页配置，完全是 ElPagination 的 props

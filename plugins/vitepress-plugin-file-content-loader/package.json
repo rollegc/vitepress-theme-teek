@@ -1,0 +1,28 @@
+{
+  "name": "vitepress-plugin-file-content-loader",
+  "version": "1.0.0",
+  "description": "scanner file And resolve content",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "tinyglobby": "^0.2.10",
+    "unbuild": "^3.2.0"
+  },
+  "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "vite": "^6.0.7",
+    "vitepress": "^1.6.3"
+  }
+}

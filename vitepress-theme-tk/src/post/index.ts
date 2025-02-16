@@ -1,4 +1,4 @@
-import { createContentLoader, SiteConfig } from "vitepress";
+import { SiteConfig } from "vitepress";
 import { TkContentData, Post } from "./types";
 import {
   filterPosts,
@@ -8,57 +8,55 @@ import {
   getGroupCards,
   groupByYear,
   groupByYearMonth,
-} from "../helper/post";
+} from "./helper";
 import { formatDate } from "../helper/date";
 import matter from "gray-matter";
 import { getTitleFromMd } from "vitepress-plugin-sidebar-resolve";
+import type { FileContentLoaderData } from "vitepress-plugin-file-content-loader";
 import { basename, join } from "node:path";
 import { statSync } from "node:fs";
 
-export default createContentLoader("**/*.md", {
-  // 指定摘录格式
-  excerpt: "<!-- more -->",
-  includeSrc: true,
-  render: true,
-  transform(raw): Post {
-    const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
-    const { themeConfig, locales = {} } = siteConfig.userConfig;
-    const posts: TkContentData[] = [];
+export const transformData = (data: FileContentLoaderData): TkContentData => {
+  const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
+  const { themeConfig } = siteConfig.userConfig;
 
-    raw.forEach(r => {
-      if (r.frontmatter.date) r.frontmatter.date = formatDate(r.frontmatter.date);
+  if (data.frontmatter.date) data.frontmatter.date = formatDate(data.frontmatter.date);
 
-      posts.push({
-        ...r,
-        author: themeConfig.author,
-        title: getTitle(r),
-        date: getDate(r, siteConfig.srcDir),
-        capture: getCaptureText(r),
-      });
+  return {
+    url: data.url,
+    frontmatter: data.frontmatter,
+    author: themeConfig.author,
+    title: getTitle(data),
+    date: getDate(data, siteConfig.srcDir),
+    capture: getCaptureText(data),
+  };
+};
+
+export const transformRaw = (posts: TkContentData[]): Post => {
+  const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
+  const { locales = {} } = siteConfig.userConfig;
+
+  const postsData = resolvePosts(posts);
+
+  const localesKeys = Object.keys(locales);
+  // 没有配置多语言，则返回所有 posts 数据
+  if (!localesKeys.length) return postsData;
+
+  // 多语言处理，计算每个语言目录下的 posts 数据
+  const postsLocale: Record<string, Post> = {};
+  localesKeys
+    .filter(localesKey => localesKey !== "root")
+    .forEach(localesKey => {
+      const localePosts = posts.filter(post => post.url.startsWith(`/${localesKey}`));
+      postsLocale[localesKey] = resolvePosts(localePosts);
     });
 
-    const postsData = resolvePosts(posts);
+  // root 处理
+  const rootPosts = posts.filter(post => !localesKeys.some(localesKey => post.url.startsWith(`/${localesKey}`)));
+  postsLocale["root"] = resolvePosts(rootPosts);
 
-    const localesKeys = Object.keys(locales);
-    // 没有配置多语言，则返回所有 posts 数据
-    if (!localesKeys.length) return postsData;
-
-    // 多语言处理，计算每个语言目录下的 posts 数据
-    const postsLocale: Record<string, Post> = {};
-    localesKeys
-      .filter(localesKey => localesKey !== "root")
-      .forEach(localesKey => {
-        const localePosts = posts.filter(post => post.url.startsWith(`/${localesKey}`));
-        postsLocale[localesKey] = resolvePosts(localePosts);
-      });
-
-    // root 处理
-    const rootPosts = posts.filter(post => !localesKeys.some(localesKey => post.url.startsWith(`/${localesKey}`)));
-    postsLocale["root"] = resolvePosts(rootPosts);
-
-    return { ...postsData, locales: postsLocale };
-  },
-});
+  return { ...postsData, locales: postsLocale };
+};
 
 const resolvePosts = (posts: TkContentData[]): Post => {
   const originPosts = filterPosts(posts);
@@ -85,7 +83,7 @@ const resolvePosts = (posts: TkContentData[]): Post => {
  *
  * @param post 文章数据
  */
-function getTitle(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "url">) {
+export function getTitle(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "url">) {
   if (post.frontmatter.title) return post.frontmatter.title;
 
   const { content = "" } = matter(post.src || "", {});
@@ -101,7 +99,7 @@ function getTitle(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "
  * @param post 文章数据
  * @param srcDir 项目绝对路径
  */
-function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "url">, srcDir: string) {
+export function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "url">, srcDir: string) {
   const { frontmatter, url } = post;
 
   if (frontmatter.date) return frontmatter.date;
@@ -111,7 +109,7 @@ function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatter" | "u
   return formatDate(statSync(filePath).birthtime || new Date());
 }
 
-const getCaptureText = (post: TkContentData, count = 400) => {
+export const getCaptureText = (post: TkContentData, count = 400) => {
   const { content = "" } = matter(post.src || "", {});
   return (
     content

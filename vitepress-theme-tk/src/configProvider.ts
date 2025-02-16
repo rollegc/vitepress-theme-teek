@@ -1,8 +1,6 @@
-import { defineComponent, h, inject, InjectionKey, provide, unref, type Component } from "vue";
+import { defineComponent, h, InjectionKey, provide, unref, type Component } from "vue";
 import { useAnchorScroll, useViewTransition } from "./hooks";
-import type { Post } from "./data/types";
-// @ts-ignore
-import { data as posts } from "./data/posts.data";
+import type { Post } from "./post/types";
 import { useData } from "vitepress";
 import usePermalinks from "vitepress-plugin-permalink/src/usePermalinks";
 
@@ -12,8 +10,9 @@ function createConfigProvider(Layout: Component) {
   return defineComponent({
     name: "ConfigProvider",
     setup(_, { slots }) {
+      const { theme } = useUnrefData();
       // 往主题注入数据
-      provide(postsSymbol, posts);
+      provide(postsSymbol, theme.posts);
 
       // 开启监听器
       usePermalinks().startWatch();
@@ -34,9 +33,22 @@ export const useUnrefData = () => {
   return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
-export const usePosts = () => {
-  const posts = inject(postsSymbol);
-  if (!posts) throw new Error("posts not properly injected in app");
+export const usePosts = (): Post => {
+  const { theme } = useData();
+  const posts = unref(theme).posts;
+
+  if (!posts) {
+    return {
+      originPosts: [],
+      sortPostsByDateAndSticky: [],
+      sortPostsByDate: [],
+      groupPostsByYear: {},
+      groupPostsByYearMonth: {},
+      groupPosts: { categories: {}, tags: {} },
+      groupCards: { categories: [], tags: [] },
+      locales: {},
+    };
+  }
   return posts;
 };
 

@@ -1,7 +1,7 @@
-import type { ContentData } from "vitepress";
+import type { FileContentLoaderData } from "vitepress-plugin-file-content-loader";
 import { TkThemeConfig } from "../config/types";
 
-export type TkContentData = ContentData & {
+export type TkContentData = FileContentLoaderData & {
   /**
    * 文章作者信息
    */

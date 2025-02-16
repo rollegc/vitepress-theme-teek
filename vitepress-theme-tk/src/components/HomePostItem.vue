@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useDesign } from "../hooks";
 import { withBase } from "vitepress";
-import { TkContentData } from "../data/types";
+import { TkContentData } from "../post/types";
 import { createImageViewer } from "./ImageViewer";
 import { useUnrefData } from "../configProvider";
 import PostBaseInfo from "./PostBaseInfo.vue";

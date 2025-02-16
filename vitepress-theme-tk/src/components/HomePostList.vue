@@ -5,7 +5,7 @@ import { usePosts, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
 import { useRoute, useData } from "vitepress";
 import { useDesign } from "../hooks";
-import { TkContentData } from "../data/types";
+import { TkContentData } from "../post/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("postList");
@@ -60,7 +60,7 @@ const updateData = () => {
   }
 
   // 总数处理
-  if (total !== post.length) pageInfo.total = post?.length || 0;
+  if (total !== post.length) pageInfo.total = post.length || 0;
 
   currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
 };

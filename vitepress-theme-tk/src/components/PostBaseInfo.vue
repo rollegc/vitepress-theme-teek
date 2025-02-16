@@ -4,7 +4,7 @@ import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons
 import { usePosts, useUnrefData } from "../configProvider";
 import { computed, unref } from "vue";
 import { formatDate, isFunction } from "../helper";
-import { TkContentData } from "../data/types";
+import { TkContentData } from "../post/types";
 import { useDesign } from "../hooks";
 import { useData, useRoute } from "vitepress";
 

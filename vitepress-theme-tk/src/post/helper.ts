@@ -1,4 +1,4 @@
-import type { GroupCardItem, TkContentData, Post } from "../data/types";
+import type { GroupCardItem, TkContentData, Post } from "./types";
 
 /**
  * 过滤非文章页
