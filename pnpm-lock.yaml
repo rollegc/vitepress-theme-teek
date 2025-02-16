@@ -210,6 +210,9 @@ importers:
       vite:
         specifier: ^6.0.7
         version: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+      vitepress:
+        specifier: ^1.6.3
+        version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
 
   plugins/vitepress-plugin-sidebar-resolve:
     devDependencies:

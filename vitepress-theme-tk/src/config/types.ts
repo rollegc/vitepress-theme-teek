@@ -1,9 +1,9 @@
-import { PermalinkOption } from "vitepress-plugin-permalink";
-import { SidebarOption } from "vitepress-plugin-sidebar-resolve";
-import { CatalogueOption } from "vitepress-plugin-catalogue";
-import { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import { ImageViewerProps, PaginationProps } from "element-plus";
-import { VNode } from "vue";
+import type { PermalinkOption } from "vitepress-plugin-permalink";
+import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
+import type { CatalogueOption } from "vitepress-plugin-catalogue";
+import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
+import type { ImageViewerProps, PaginationProps } from "element-plus";
+import type { VNode } from "vue";
 
 export interface TkThemeConfig {
   /**

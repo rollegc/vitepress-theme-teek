@@ -1,8 +1,9 @@
 import { useRouter, useData } from "vitepress";
 import { nextTick, onMounted } from "vue";
-import { inBrowser } from "../helper";
 
-export const usePermalinks = () => {
+const inBrowser = typeof window !== "undefined";
+
+export default () => {
   const fakeHost = "http://a.com";
   const router = useRouter();
   const { site, theme } = useData();
@@ -15,7 +16,7 @@ export const usePermalinks = () => {
    *
    * @param href 文档地址或 permalink
    */
-  router.push = async (href = inBrowser ? location.href : "/") => {
+  (router as any).push = async (href = inBrowser ? location.href : "/") => {
     if (!href) throw new Error("href is undefined");
 
     const { pathname, search, hash } = new URL(href, fakeHost);
@@ -73,7 +74,7 @@ export const usePermalinks = () => {
     } else {
       // 第二点，不存在 permalink 则获取文档地址来跳转
       const path = permalinks.inv[`/${decodePath}`];
-      if (path) return router.push(`${path}${search}${decodeHash}`);
+      if (path) return (router as any).push(`${path}${search}${decodeHash}`);
     }
   };
 

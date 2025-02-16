@@ -1,9 +1,10 @@
 import { defineComponent, h, inject, InjectionKey, provide, unref, type Component } from "vue";
-import { usePermalinks, useAnchorScroll, useViewTransition } from "./hooks";
+import { useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./data/types";
 // @ts-ignore
 import { data as posts } from "./data/posts.data";
 import { useData } from "vitepress";
+import usePermalinks from "vitepress-plugin-permalink/usePermalinks";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
 

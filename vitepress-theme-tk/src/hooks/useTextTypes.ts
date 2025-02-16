@@ -28,13 +28,15 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
   const typesIn = () => {
     // 打字时，关闭动画效果
     shouldAnimate.value = false;
-
     originText = unref(typesArray)[length];
+
+    // 防止 originText 为空的情况
+    if (!originText) return;
 
     text.value = originText.substring(0, index++);
 
     if (index > originText.length) {
-      clearInterval(typesInInterval);
+      if (typesInInterval) clearInterval(typesInInterval);
       // 打字结束，开启动画效果
       shouldAnimate.value = true;
       setTimeout(() => {
@@ -53,7 +55,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
       shouldAnimate.value = false;
       text.value = originText.substring(0, index--);
     } else {
-      clearInterval(typesOutInterval);
+      if (typesOutInterval) clearInterval(typesOutInterval);
       // 删字结束，开启动画效果
       shouldAnimate.value = true;
 
@@ -83,8 +85,8 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
    * 停止打字
    */
   const stopTypes = () => {
-    clearInterval(typesInInterval);
-    clearInterval(typesOutInterval);
+    if (typesInInterval) clearInterval(typesInInterval);
+    if (typesOutInterval) clearInterval(typesOutInterval);
     shouldAnimate.value = false;
   };
 

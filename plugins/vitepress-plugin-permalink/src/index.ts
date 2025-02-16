@@ -61,7 +61,8 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
     configureServer(server: ViteDevServer) {
       const {
         base,
-        themeConfig: { permalinks, cleanUrls },
+        themeConfig: { permalinks },
+        cleanUrls,
       } = vitepressConfig.site;
       // 将 permalink 重写实际文件路径，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
       server.middlewares.use((req, _res, next) => {
