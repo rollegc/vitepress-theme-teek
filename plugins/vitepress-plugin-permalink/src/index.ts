@@ -19,6 +19,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       const {
         site: { themeConfig, cleanUrls, locales },
         srcDir,
+        rewrites,
       } = config.vitepress;
 
       option.base = option.base ? join(process.cwd(), option.base) : srcDir;
@@ -49,10 +50,11 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       vitepressConfig = config.vitepress;
 
-      if (!localesKeys.length) return setActiveMatchWhenUsePermalink(themeConfig.nav, permalinkToPath, cleanUrls);
+      if (!localesKeys.length)
+        return setActiveMatchWhenUsePermalink(themeConfig.nav, permalinkToPath, cleanUrls, rewrites);
 
       localesKeys.forEach(localeKey => {
-        setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls);
+        setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls, rewrites);
       });
     },
     configureServer(server: ViteDevServer) {
@@ -105,11 +107,13 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
  * @param nav 导航栏
  * @param permalinkToPath permalink 和文件路径的映射关系
  * @param cleanUrls cleanUrls
+ * @param rewrites 如果设置了 rewrites，则取 rewrites 后的 path
  */
 const setActiveMatchWhenUsePermalink = (
   nav: any[] = [],
   permalinkToPath: Record<string, string>,
-  cleanUrls = false
+  cleanUrls = false,
+  rewrites: Record<string, any> = {}
 ) => {
   if (!nav.length) return;
 
@@ -121,7 +125,7 @@ const setActiveMatchWhenUsePermalink = (
     const path = permalinkToPath[cleanUrls ? link : `${link.replace(/\.html/, "")}.html`];
 
     // 官方归档 activeMatch 是一个正则表达式字符串
-    if (path && !item.activeMatch) item.activeMatch = path;
-    if (item.items) setActiveMatchWhenUsePermalink(item.items, permalinkToPath);
+    if (path && !item.activeMatch) item.activeMatch = rewrites.map?.[`${path}.md`]?.replace(/\.md/, "") || path;
+    if (item.items) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
   });
 };
