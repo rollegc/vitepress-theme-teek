@@ -5,6 +5,7 @@ import { useDesign, useScrollData } from "../hooks";
 import HomeCard from "./HomeCard.vue";
 import friendLinkSvg from "../assets/svg/friendLink";
 import { isFunction } from "../helper";
+import { createImageViewer } from "./ImageViewer";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("friendLink");
@@ -46,19 +47,22 @@ onMounted(() => {
 
 // 每一个 li 的 ref 元素，用于获取元素高度来计算实际的 top 位置
 const itemRefs = ref<HTMLLIElement[]>([]);
-const setItemRefs = (el: HTMLLIElement) => {
-  // 非自动滚动时才记录 dom 元素，否则自动滚动部分动画失效，割裂严重
-  if (!autoScroll) unref(itemRefs).push(el);
-};
 
 const getLiStyle = (index: number) => {
   if (autoScroll) return {};
-
   const clientRect = unref(itemRefs)?.[index]?.getBoundingClientRect();
+
   // 分页动画需要指定 top，否则默认移动到 0px 位置
   return {
     top: `calc(${index} * (calc(var(--tk-friend-gap) + ${clientRect?.height || 0}px)))`,
   };
+};
+
+const handleViewImg = (imgSrc: string, e: MouseEvent) => {
+  // @click.stop 不起作用，因此手动阻止冒泡到 a 标签
+  e.preventDefault();
+
+  createImageViewer({ urlList: [imgSrc] });
 };
 </script>
 
@@ -84,14 +88,19 @@ const getLiStyle = (index: number) => {
         @mouseleave="autoScroll ? startAutoScroll() : autoPage ? startAutoPage() : () => {}"
       >
         <li
-          :ref="setItemRefs"
+          :ref="autoScroll ? '' : 'itemRefs'"
           v-for="(item, index) in currentFriendLinkList"
           :key="item.name"
           :class="`${prefixClass}-list__item`"
           :style="getLiStyle(index)"
         >
-          <a :href="item.link" class="flx-align-center">
-            <img :src="item.avatar" class="friend-avatar" :alt="item.name || item.alt" />
+          <a :href="item.link" target="_blank" class="flx-align-center">
+            <img
+              :src="item.avatar"
+              class="friend-avatar"
+              :alt="item.name || item.alt"
+              @click="handleViewImg(item.avatar, $event)"
+            />
             <div :class="`${prefixClass}-list__item-info`">
               <div class="friend-name sle">{{ item.name }}</div>
               <div class="friend-desc sle">{{ item.desc }}</div>

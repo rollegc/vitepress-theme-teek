@@ -20,6 +20,8 @@ const tkConfig = themeConfig({
     readingTime: true,
     siteIteration: 2500,
     pageIteration: 2500,
+    overrideInfo: [{ key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` }],
+    appendInfo: [{ key: "index", label: "序号", value: "天客1024" }],
   },
   banner: {
     bgStyle: "bigImg",
@@ -32,7 +34,7 @@ const tkConfig = themeConfig({
 
   friendLink: {
     list: [
-      { avatar: "/img/other.png", name: "测试1", desc: "这是一个友链测试1" },
+      { avatar: "/img/bg1.jpg", name: "测试1", desc: "这是一个友链测试1", link: "https://github.com/Kele-Bingtang" },
       { avatar: "/img/ui.png", name: "测试2", desc: "这是一个友链测试2222111啊" },
       { avatar: "/img/web.png", name: "测试3测试3测试3测试3测试3测试3", desc: "这是一个友链测试3" },
       { avatar: "/img/more.png", name: "测试4", desc: "这是一个友链测试4" },
