@@ -47,7 +47,7 @@ const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
 // 站点信息配置项
 const {
   pageView = true,
-  wordsCount = true,
+  wordCount = true,
   readingTime = true,
   pageIteration = 2000,
 } = { ...theme.docAnalysis, ...frontmatter.docAnalysis };
@@ -88,9 +88,9 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
     <div :class="`${prefixClass}-wrapper flx-center`">
       <PostBaseInfo />
 
-      <div v-if="wordsCount" class="flx-center">
+      <div v-if="wordCount" class="flx-center">
         <el-icon><Reading /></el-icon>
-        <a title="文章字数">{{ pageViewInfo.wordsCount }}</a>
+        <a title="文章字数">{{ pageViewInfo.wordCount }}</a>
       </div>
 
       <div v-if="readingTime" class="flx-center">

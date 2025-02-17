@@ -16,7 +16,7 @@ const tkConfig = themeConfig({
     createTime: "2021-10-19",
     siteView: true,
     pageView: true,
-    wordsCount: true,
+    wordCount: true,
     readingTime: true,
     siteIteration: 2500,
     pageIteration: 2500,

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostList">
-import { computed, reactive, ref, unref, watch } from "vue";
+import { reactive, ref, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
 import { usePosts, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
@@ -12,7 +12,6 @@ const prefixClass = getPrefixClass("postList");
 
 const posts = usePosts();
 const { frontmatter, theme } = useUnrefData();
-const { localeIndex } = useData();
 
 // 自定义一页数量 & 分页组件的 Props
 const { pageSize = 10, size = "small", ...pageProps } = { ...theme.page, ...frontmatter.tk?.page };

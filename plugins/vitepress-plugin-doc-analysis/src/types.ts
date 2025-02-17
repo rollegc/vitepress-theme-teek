@@ -35,7 +35,7 @@ export interface FileInfo {
 
 export interface FileWords {
   fileInfo: FileInfo;
-  wordsCount: number;
+  wordCount: number;
   readingTime: string;
   frontmatter: Record<string, any>;
 }

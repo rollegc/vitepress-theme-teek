@@ -1,7 +1,7 @@
 <script setup lang="ts" name="DocAnalysisCard">
 import { useUnrefData } from "../configProvider";
 import { useDesign, useBuSunZi } from "../hooks";
-import { dayDiff, getNowDate, timeDiff } from "../helper";
+import { dayDiff, getNowDate, isFunction, timeDiff } from "../helper";
 import HomeCard from "./HomeCard.vue";
 import docAnalysisSvg from "../assets/svg/docAnalysis";
 import { computed, unref } from "vue";
@@ -22,6 +22,11 @@ const {
 } = { ...theme.docAnalysis, ...frontmatter.tk?.docAnalysis };
 const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
 
+const finalTitle = computed(() => {
+  if (isFunction(title)) return title(docAnalysisSvg);
+  return title;
+});
+
 const createToNowDay = dayDiff(createTime || getNowDate());
 
 // 通过不蒜子获取访问量和访客数
@@ -29,7 +34,7 @@ const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 </script>
 
 <template>
-  <HomeCard :title :class="`${prefixClass} card`">
+  <HomeCard :title="finalTitle" :class="`${prefixClass} card`">
     <div :class="`${prefixClass}-item`">
       <span>文章数目：</span>
       <span>{{ docAnalysisInfo.fileList.length }} 篇</span>

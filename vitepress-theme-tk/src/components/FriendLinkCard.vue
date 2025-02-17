@@ -4,6 +4,7 @@ import { useUnrefData } from "../configProvider";
 import { useDesign, useScrollData } from "../hooks";
 import HomeCard from "./HomeCard.vue";
 import friendLinkSvg from "../assets/svg/friendLink";
+import { isFunction } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("friendLink");
@@ -34,6 +35,11 @@ const currentFriendLinkList = computed(() => {
   return list.slice((p - 1) * limit, p * limit);
 });
 
+const finalTitle = computed(() => {
+  if (isFunction(title)) return title(friendLinkSvg);
+  return title;
+});
+
 onMounted(() => {
   if (autoScroll) startAutoScroll();
 });
@@ -62,7 +68,7 @@ const getLiStyle = (index: number) => {
     v-model="pageNum"
     :pageSize="limit"
     :total="list.length"
-    :title
+    :title="finalTitle"
     :autoPage
     :pageSpeed
     :class="prefixClass"

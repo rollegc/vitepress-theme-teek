@@ -34,12 +34,12 @@ export function getEachFileWords(fileList: FileInfo[], cn: number = 300, en: num
     let len = getCounter(content);
     // 计算预计的阅读时间
     let readingTime = getReadTime(len, cn, en);
-    let wordsCount: any = 0;
-    wordsCount = len[0] + len[1];
+    let wordCount: any = 0;
+    wordCount = len[0] + len[1];
 
-    if (wordsCount >= 1000) wordsCount = Math.round(wordsCount / 100) / 10 + "k";
+    if (wordCount >= 1000) wordCount = Math.round(wordCount / 100) / 10 + "k";
 
-    filePathListWords.push({ fileInfo: item, wordsCount, readingTime, frontmatter: data });
+    filePathListWords.push({ fileInfo: item, wordCount, readingTime, frontmatter: data });
   });
 
   return filePathListWords;

@@ -6,7 +6,7 @@ import { computed, unref } from "vue";
 import { formatDate, isFunction } from "../helper";
 import { TkContentData } from "../post/types";
 import { useDesign } from "../hooks";
-import { useData, useRoute } from "vitepress";
+import { useRoute } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("postBaseInfo");
@@ -32,7 +32,6 @@ const {
 const { author = {} } = { ...theme, ...frontmatter, ...post?.frontmatter };
 
 const posts = usePosts();
-const { localeIndex } = useData();
 const route = useRoute();
 
 // 文章创建时间，先读取 post.date || frontmatter.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在 frontmatter 配置 date，减少文章扫描性能）
@@ -45,7 +44,7 @@ const date = computed(() => {
   }
 
   // 如果 frontmatter 没有配置 date，则从 posts 中获取文档的创建时间
-  const originPosts = unref(posts).originPosts;
+  const originPosts: TkContentData[] = unref(posts).originPosts;
   const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
 
   return formatDate(targetPost?.[0]?.date || new Date(), dateFormat);

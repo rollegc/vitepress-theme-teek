@@ -3,8 +3,9 @@ import { computed, ref, unref } from "vue";
 import { useUnrefData, usePosts, getBgColor } from "../configProvider";
 import { useDesign } from "../hooks";
 import HomeCard from "./HomeCard.vue";
-import TopArticleSvg from "../assets/svg/topArticle";
-import { useData } from "vitepress";
+import topArticleSvg from "../assets/svg/topArticle";
+import { TkContentData } from "../post/types";
+import { isFunction } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("topArticle");
@@ -12,19 +13,17 @@ const prefixClass = getPrefixClass("topArticle");
 const posts = usePosts();
 
 const { theme, frontmatter } = useUnrefData();
-const { localeIndex } = useData();
 // 精选文章配置项
 const {
   limit = 4,
-  title = `${TopArticleSvg}精选文章`,
+  title = `${topArticleSvg}精选文章`,
   autoPage = false,
   pageSpeed = 4000,
 } = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
 const topArticleList = computed(() => {
-  return unref(posts)
-    .sortPostsByDateAndSticky.filter(p => p.frontmatter.hot)
-    ?.map((p, index) => ({ ...p, num: index + 1 }));
+  const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;
+  return sortPostsByDateAndSticky.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 }));
 });
 
 const pageNum = ref(1);
@@ -33,6 +32,11 @@ const pageNum = ref(1);
 const currentTopArticleList = computed(() => {
   const p = unref(pageNum);
   return unref(topArticleList).slice((p - 1) * limit, p * limit);
+});
+
+const finalTitle = computed(() => {
+  if (isFunction(title)) return title(topArticleSvg);
+  return title;
 });
 
 const bgColor = getBgColor();
@@ -52,7 +56,7 @@ const getStyle = (num: number, index: number) => {
     v-model="pageNum"
     :pageSize="limit"
     :total="topArticleList.length"
-    :title
+    :title="finalTitle"
     :autoPage
     :pageSpeed
     :class="prefixClass"

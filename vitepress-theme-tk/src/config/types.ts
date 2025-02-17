@@ -403,13 +403,13 @@ export interface TkThemeConfig {
      *
      * @default '${svg}全部分类'
      */
-    pageTitle?: string;
+    pageTitle?: string | ((svg: string) => string);
     /**
      * 首页卡片标题
      *
      * @default '${svg}文章分类'
      */
-    homeTitle?: string;
+    homeTitle?: string | ((svg: string) => string);
     /**
      * 一页显示的数量
      *
@@ -444,13 +444,13 @@ export interface TkThemeConfig {
      *
      * @default '${svg}全部标签'
      */
-    pageTitle?: string;
+    pageTitle?: string | ((svg: string) => string);
     /**
      * 首页卡片标题
      *
      * @default '${svg}热门标签'
      */
-    homeTitle?: string;
+    homeTitle?: string | ((svg: string) => string);
     /**
      * 一页显示的数量
      *
@@ -489,7 +489,7 @@ export interface TkThemeConfig {
      *
      * @default '${svg}精选文章'
      */
-    title?: string;
+    title?: string | ((svg: string) => string);
     /**
      * 一页显示的数量
      *
@@ -551,7 +551,7 @@ export interface TkThemeConfig {
      *
      * @default '${svg}友情链接'
      */
-    title?: string;
+    title?: string | ((svg: string) => string);
     /**
      * 一页显示的数量
      *
@@ -598,7 +598,7 @@ export interface TkThemeConfig {
      *
      * @default '${svg}站点信息'
      */
-    title?: string;
+    title?: string | ((svg: string) => string);
     /**
      * 项目创建时间
      */
@@ -620,7 +620,7 @@ export interface TkThemeConfig {
      *
      * @default true
      */
-    wordsCount?: boolean;
+    wordCount?: boolean;
     /**
      * 是否开启文章页的阅读时长统计
      *
@@ -632,13 +632,17 @@ export interface TkThemeConfig {
      *
      * @default 2000 (2秒)
      */
-    siteIteration: number;
+    siteIteration?: number;
     /**
      * 如果文章页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
      *
      * @default 2000 (2秒)
      */
-    pageIteration: number;
+    pageIteration?: number;
+    /**
+     * 自定义额外信息
+     */
+    appendInfo?: { label: string; value: string }[];
   };
   /**
    * 社交配置

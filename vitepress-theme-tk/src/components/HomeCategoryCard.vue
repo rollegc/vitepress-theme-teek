@@ -5,6 +5,7 @@ import { computed, unref, ref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import HomeCard from "./HomeCard.vue";
 import categorySvg from "../assets/svg/category";
+import { isFunction } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("category");
@@ -32,6 +33,12 @@ const currentCategories = computed(() => {
   const c = unref(categories);
   const p = unref(pageNum);
   return categoriesPage ? c : c.slice((p - 1) * limit, p * limit);
+});
+
+const finalTitle = computed(() => {
+  let pt = isFunction(pageTitle) ? pageTitle(categorySvg) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(categorySvg) : homeTitle;
+  return { true: pt, false: ht };
 });
 
 // 当前选中的分类，从 URL 查询参数中获取
@@ -62,7 +69,7 @@ const categoriesPageLink = computed(() => {
     v-model="pageNum"
     :pageSize="limit"
     :total="categories.length"
-    :title="categoriesPage ? pageTitle : homeTitle"
+    :title="finalTitle[categoriesPage]"
     :title-link="categoriesPageLink"
     :autoPage
     :pageSpeed

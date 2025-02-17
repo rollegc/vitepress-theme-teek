@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, InjectionKey, provide, unref, type Component } from "vue";
+import { computed, defineComponent, h, InjectionKey, provide, Ref, unref, type Component } from "vue";
 import { useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./post/types";
 import { useData } from "vitepress";
@@ -55,7 +55,7 @@ export const useAllPosts = (): Post => {
 /**
  * 返回 Posts 数据，当处于多语言功能时，返回对应语言的 Posts 数据，否则返回全部 Posts 数据
  */
-export const usePosts = (): Post => {
+export const usePosts = (): Ref<Post> => {
   const { localeIndex } = useData();
   const posts = useAllPosts();
 

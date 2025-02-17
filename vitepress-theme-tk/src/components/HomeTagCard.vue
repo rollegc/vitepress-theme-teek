@@ -5,6 +5,7 @@ import { unref, watch, computed, ref } from "vue";
 import { useData, useRoute } from "vitepress";
 import HomeCard from "./HomeCard.vue";
 import tagSvg from "../assets/svg/tag";
+import { isFunction } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("tag");
@@ -35,6 +36,12 @@ const currentTags = computed(() => {
   return tagsPage ? t : t.slice((p - 1) * limit, p * limit);
 });
 
+const finalTitle = computed(() => {
+  let pt = isFunction(pageTitle) ? pageTitle(tagSvg) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(tagSvg) : homeTitle;
+  return { true: pt, false: ht };
+});
+
 // 当前选中的标签，从 URL 查询参数中获取
 const tag = ref("");
 watch(
@@ -54,8 +61,6 @@ const getTagStyle = (index: number) => {
   return { backgroundColor: color, "--home-tag-color": color };
 };
 
-const itemRefs = ref<HTMLLIElement[]>([]);
-
 const tagsPageLink = computed(() => {
   // 兼容多语言功能，如果没有使用多语言，则返回 '/tags'
   const localeIndexConst = unref(localeIndex);
@@ -70,7 +75,7 @@ const tagsPageLink = computed(() => {
     v-model="pageNum"
     :pageSize="limit"
     :total="tags.length"
-    :title="tagsPage ? pageTitle : homeTitle"
+    :title="finalTitle[tagsPage]"
     :title-link="tagsPageLink"
     :autoPage
     :pageSpeed
@@ -79,7 +84,6 @@ const tagsPageLink = computed(() => {
     <template #default="{ transitionName }">
       <TransitionGroup v-if="tags.length" :name="transitionName" tag="div" mode="out-in" :class="`${prefixClass}-list`">
         <a
-          ref="itemRefs"
           v-for="(item, index) in currentTags"
           :key="item.name"
           :style="getTagStyle(index)"

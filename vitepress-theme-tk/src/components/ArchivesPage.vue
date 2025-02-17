@@ -2,13 +2,11 @@
 import { useDesign } from "../hooks";
 import { usePosts, useUnrefData } from "../configProvider";
 import { useData } from "vitepress";
-import { computed, unref } from "vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("archives");
 
 const { frontmatter } = useUnrefData();
-const { localeIndex } = useData();
 
 const posts = usePosts();
 </script>
