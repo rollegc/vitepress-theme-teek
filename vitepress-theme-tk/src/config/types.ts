@@ -41,6 +41,36 @@ export interface TkThemeConfig {
    */
   bgColor?: string[];
   /**
+   * 在首页最顶部进入全屏后，使用壁纸模式，仅当 (banner.bgStyle = 'bigImg' & banner.imgSrc 存在) 或 bodyBgImg.imgSrc 存在才生效
+   */
+  wallpaper?: {
+    /**
+     * 是否启用壁纸模式
+     *
+     * @default false
+     */
+    enabled?: boolean;
+
+    /**
+     * 开启壁纸模式后，是否隐藏 Banner
+     *
+     * @default false
+     */
+    hideBanner?: boolean;
+    /**
+     * 开启壁纸模式后，是否隐藏 Banner 和 bodyBgImage 的遮罩层，则确保 banner.mask 和 bodyBgImage.mask 为 true 才生效
+     *
+     * @default false
+     */
+    hideMask?: boolean;
+    /**
+     * 开启壁纸模式后，是否隐藏 Banner 波浪，仅 banner.bgStyle = 'bigImg' 生效
+     *
+     * @default false
+     */
+    hideWaves?: boolean;
+  };
+  /**
    * 文章默认的作者信息
    */
   author?: {
@@ -357,7 +387,7 @@ export interface Banner {
   /**
    * Banner 功能列表
    */
-  features: { title: string; description?: string; link?: string; imgUrl?: string }[];
+  features?: { title: string; description?: string; link?: string; imgUrl?: string }[];
   /**
    * 标题字体大小
    *
@@ -728,7 +758,7 @@ export interface Social {
   /**
    * 名称，如果作用在 a 标签，则鼠标悬停显示名称，否则在页面文字显示
    */
-  name: string;
+  name?: string;
   /**
    * 图标地址
    *

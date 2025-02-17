@@ -4,5 +4,6 @@
 
 ## TODO
 
-- 首页 top 0 位置时监听 F12，开启壁纸功能
+- 代码块支持折叠功能
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
+- 修改 themeConfig 动态生效，不需要重启服务

@@ -17,6 +17,7 @@ import CommentTwikoo from "../components/CommentTwikoo.vue";
 import CommentArtalk from "../components/CommentArtalk.vue";
 import CommentGiscus from "../components/CommentGiscus.vue";
 import CommentWaline from "../components/CommentWaline.vue";
+import HomeFullscreenWallpaper from "../components/HomeFullscreenWallpaper.vue";
 
 defineOptions({ name: "TkLayout" });
 
@@ -28,9 +29,9 @@ const prefixClass = getPrefixClass("layout");
 const { theme, frontmatter } = useUnrefData();
 const { frontmatter: frontmatterRef } = useData();
 
-const { tkTheme = true, tkHome = true } = theme;
+const { tkTheme = true, tkHome = true, wallpaper = {} } = theme;
 
-const { enabled = true } = { ...theme.banner, ...frontmatter.tk?.banner };
+const { enabled = true, bgStyle, imgSrc } = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render } = { ...theme.comment };
 
 const commentComponent = {
@@ -55,6 +56,9 @@ const commentComponent = {
           <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
           <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
         </div>
+        <HomeFullscreenWallpaper
+          v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
+        />
       </div>
     </template>
 

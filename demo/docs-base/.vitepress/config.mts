@@ -28,8 +28,13 @@ const tkConfig = themeConfig({
     imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
     descStyle: "types",
   },
-  bodyBgImg: {
-    // imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+  // bodyBgImg: {
+  //   imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+  // },
+
+  // 首页顶部 F11 壁纸模式
+  wallpaper: {
+    enabled: true,
   },
 
   friendLink: {

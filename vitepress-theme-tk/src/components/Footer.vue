@@ -20,7 +20,7 @@ const { footerInfo, social = [] } = theme;
 
 const footerData = computed(() => {
   const { theme, copyright, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
-  const data: { name: string; icon?: string; link?: string }[] = [];
+  const data: { name?: string; icon?: string; link?: string }[] = [];
   // 1.主题版权
   data.push({
     name: `Theme By TK@${packageJSON.version}`,
@@ -64,7 +64,7 @@ const footerData = computed(() => {
             :imgAlt="item.imgAlt"
           />
         </template>
-        <span v-else>{{ item.name }}</span>
+        <span v-else-if="item.name">{{ item.name }}</span>
       </a>
     </div>
 

@@ -24,13 +24,13 @@ defineOptions({ name: "Pagination" });
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("pagination");
 
-const props = withDefaults(defineProps<PaginationProps>(), {
-  layout: "prev, pager, next, jumper, total",
-  background: true,
-  autoScroll: true,
-  hidden: false,
-  reset: true,
-});
+const {
+  layout = "prev, pager, next, jumper, total",
+  background = true,
+  autoScroll = true,
+  hidden = false,
+  reset = true,
+} = defineProps<PaginationProps>();
 
 type PaginationEmits = {
   pagination: [value: Paging];
@@ -47,7 +47,7 @@ if (!unref(pageObj).pageSizes) unref(pageObj).pageSizes = pageSetting.pageSizes;
 if (!unref(pageObj).pageSize) unref(pageObj).pageSize = pageSetting.pageSize;
 
 const handleSizeChange = (value: number) => {
-  if (props.reset) return handleCurrentChange(1);
+  if (reset) return handleCurrentChange(1);
   unref(pageObj).pageSize = value;
   afterChange();
 };
@@ -60,12 +60,12 @@ const handleCurrentChange = (value: number) => {
 const afterChange = () => {
   pageObj.value = unref(pageObj);
   emits("pagination", unref(pageObj));
-  if (props.autoScroll) {
+  if (autoScroll) {
     nextTick(() => {
       const rootStyles = getComputedStyle(document.documentElement);
       const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
       // 滚动返回时，减去导航栏的高度
-      scrollTo("html", window.innerHeight - navHeight, 700);
+      scrollTo("html", window.innerHeight - Number(navHeight), 700);
     });
   }
 };

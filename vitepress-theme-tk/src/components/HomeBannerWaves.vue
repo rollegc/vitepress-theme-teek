@@ -1,6 +1,13 @@
+<script setup lang="ts" name="FullScreenChange">
+import { useDesign } from "../hooks";
+
+const { getPrefixClass } = useDesign();
+const prefixClass = getPrefixClass("waves");
+</script>
+
 <template>
   <svg
-    class="waves"
+    :class="prefixClass"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="0 24 150 28"
@@ -22,69 +29,5 @@
 </template>
 
 <style lang="scss" scoped>
-.waves {
-  margin-top: -11vh;
-  position: relative;
-  width: 100%;
-  height: 12vh;
-  min-height: 3.125rem;
-  max-height: 9.375rem;
-  z-index: 10;
-
-  .parallax {
-    .use {
-      animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
-
-      &:nth-child(1) {
-        animation-delay: -2s;
-        animation-duration: 7s;
-        fill: var(--tk-lower-color6);
-
-        :is(.dark .dark\:fill-black) {
-          fill: #000 !important;
-        }
-      }
-
-      &:nth-child(2) {
-        animation-delay: -3s;
-        animation-duration: 10s;
-        fill: var(--tk-lower-color5);
-
-        :is(.dark .dark\:fill-black) {
-          fill: #000;
-        }
-      }
-
-      &:nth-child(3) {
-        animation-delay: -4s;
-        animation-duration: 13s;
-        fill: var(--tk-lower-color4);
-      }
-
-      &:nth-child(4) {
-        animation-delay: -5s;
-        animation-duration: 20s;
-        fill: var(--tk-lower-color3);
-      }
-    }
-  }
-}
-
-/* 波浪动画 */
-@keyframes move-forever {
-  0% {
-    transform: translate3d(-90px, 0, 0);
-  }
-
-  100% {
-    transform: translate3d(85px, 0, 0);
-  }
-}
-
-@media (max-width: 768px) {
-  .waves {
-    height: 10vh;
-    min-height: 10vh;
-  }
-}
+@use "../styles/components/homeBannerWaves.scss";
 </style>
