@@ -7,7 +7,10 @@ import { emptyPost } from "./post/helper";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
 
-function createConfigProvider(Layout: Component) {
+/**
+ * 创建 Layout 组件
+ */
+const createConfigProvider = (Layout: Component) => {
   return defineComponent({
     name: "ConfigProvider",
     setup(_, { slots }) {
@@ -23,17 +26,23 @@ function createConfigProvider(Layout: Component) {
       return () => h(Layout, null, slots);
     },
   });
-}
+};
 
 export const configProvider = (Layout: Component) => {
   return createConfigProvider(Layout);
 };
 
+/**
+ * 返回非响应式的 useDate() 对象
+ */
 export const useUnrefData = () => {
   const { theme, frontmatter, site, page } = useData();
   return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
+/**
+ * 返回全部 Posts 数据
+ */
 export const useAllPosts = (): Post => {
   const { theme } = useData();
   const posts = unref(theme).posts;
@@ -43,41 +52,59 @@ export const useAllPosts = (): Post => {
   return posts;
 };
 
+/**
+ * 返回 Posts 数据，当处于多语言功能时，返回对应语言的 Posts 数据，否则返回全部 Posts 数据
+ */
 export const usePosts = (): Post => {
-  const { theme, localeIndex } = useData();
-  const posts = unref(theme).posts;
-
-  if (!posts) return emptyPost;
+  const { localeIndex } = useData();
+  const posts = useAllPosts();
 
   // 兼容多语言功能，先从多语言下获取 posts 数据，获取不到说明没有使用多语言功能，则获取所有 posts 数据。因为多语言可以随时切换，因此使用 computed
   return computed(() => posts.locales?.[unref(localeIndex)] || posts);
 };
 
+/**
+ * 是否为首页
+ */
 export const isHomePage = () => {
   const { frontmatter } = useData();
   return !isCategoriesPage() && !isTagsPage() && unref(frontmatter).layout === "home";
 };
 
+/**
+ * 是否为分类页
+ */
 export const isCategoriesPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).categoriesPage;
 };
-
+/**
+ * 是否为标签页
+ */
 export const isTagsPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).tagsPage;
 };
 
+/**
+ * 是否为归档页
+ */
 export const isArchivesPage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).archivesPage;
 };
 
+/**
+ * 是否为目录页
+ */
 export const isCataloguePage = () => {
   const { frontmatter } = useData();
   return unref(frontmatter).catalogue;
 };
 
+/**
+ * 获取默认背景色
+ */
 export const getBgColor = () => {
   const { theme } = useData();
   return (
