@@ -6,6 +6,7 @@ import { useRoute, useData } from "vitepress";
 import HomeCard from "./HomeCard.vue";
 import categorySvg from "../assets/svg/category";
 import { isFunction } from "../helper";
+import { Category } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("category");
@@ -22,7 +23,7 @@ const {
   limit = 5,
   autoPage = false,
   pageSpeed = 4000,
-} = { ...theme.category, ...frontmatter.tk?.category };
+}: Category = { ...theme.category, ...frontmatter.tk?.category };
 
 const posts = usePosts();
 const { localeIndex } = useData();

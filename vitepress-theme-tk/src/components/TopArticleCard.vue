@@ -6,6 +6,7 @@ import HomeCard from "./HomeCard.vue";
 import topArticleSvg from "../assets/svg/topArticle";
 import { TkContentData } from "../post/types";
 import { isFunction } from "../helper";
+import { TopArticle } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("topArticle");
@@ -19,7 +20,7 @@ const {
   title = `${topArticleSvg}精选文章`,
   autoPage = false,
   pageSpeed = 4000,
-} = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
+}: TopArticle = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
 const topArticleList = computed(() => {
   const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;

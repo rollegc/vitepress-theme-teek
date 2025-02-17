@@ -2,13 +2,14 @@
 import { useDesign } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import Icon from "./Icon.vue";
+import { Blogger, Social } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");
 
 const { theme } = useUnrefData();
 
-const { blogger = {}, social = [] } = theme;
+const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social[] } = theme;
 </script>
 
 <template>

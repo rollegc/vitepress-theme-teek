@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vitepress";
 import { useUnrefData } from "../configProvider";
+import { CommentProvider } from "../config/types";
 
 const { theme } = useUnrefData();
 
@@ -12,7 +13,7 @@ const {
   katex,
   timeout = 700,
   ...options
-} = { ...theme.comment?.options };
+}: CommentProvider["twikoo"] = { ...theme.comment?.options };
 
 const initTwikoo = () => {
   if (!envId) return;

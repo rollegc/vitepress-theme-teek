@@ -117,10 +117,6 @@ export interface TkThemeConfig {
    * 首页 Post 的分页配置，完全是 ElPagination 的 props
    */
   page?: Partial<PaginationProps>;
-  /**
-   * 图片查看器配置，完全是 ElImageViewer 的 props
-   */
-  imageViewer?: Partial<ImageViewerProps>;
 }
 
 export interface Post {
@@ -197,6 +193,10 @@ export interface Post {
    * @default false
    */
   showTag?: boolean;
+  /**
+   * 图片查看器配置，完全是 ElImageViewer 的 props
+   */
+  imageViewer?: Partial<ImageViewerProps>;
 }
 
 export interface ThemeSetting {
@@ -354,6 +354,10 @@ export interface Banner {
    * @default bgStyle 为 default 时为 '#000000'，其他为 '#ffffff'
    */
   textColor?: string;
+  /**
+   * Banner 功能列表
+   */
+  features: { title: string; description?: string; link?: string; imgUrl?: string }[];
   /**
    * 标题字体大小
    *
@@ -724,7 +728,7 @@ export interface Social {
   /**
    * 名称，如果作用在 a 标签，则鼠标悬停显示名称，否则在页面文字显示
    */
-  name?: string;
+  name: string;
   /**
    * 图标地址
    *

@@ -13,21 +13,18 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("homeInfo");
 
 const { theme, frontmatter } = useData();
+const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = unref(theme);
 
-const enabledTopArticleCard = unref(theme).topArticle?.enabled || true;
-const enabledCategoryCard = unref(theme).category?.enabled || true;
-const enabledTagCard = unref(theme).tag?.enabled || true;
-const enabledDocAnalysisCard = unref(theme).docAnalysis?.enabled || true;
-const enabledFriendLinkCard = unref(theme).friendLink?.enabled || true;
+const enabledTopArticleCard = topArticle?.enabled || true;
+const enabledCategoryCard = category?.enabled || true;
+const enabledTagCard = tag?.enabled || true;
+const enabledDocAnalysisCard = docAnalysis?.enabled || true;
+const enabledFriendLinkCard = friendLink?.enabled || true;
 
 // 获取用户配置 + 默认的卡片排序
-const homeCardSort = computed(() => {
-  const configCardSort = unref(theme).homeCardSort || [];
-  const homeCardSort = [
-    ...new Set([...configCardSort, ...["topArticle", "category", "tag", "docAnalysis", "friendLink"]]),
-  ];
-
-  return homeCardSort;
+const finalHomeCardSort = computed(() => {
+  const configCardSort = homeCardSort || [];
+  return [...new Set([...configCardSort, ...["topArticle", "category", "tag", "docAnalysis", "friendLink"]])];
 });
 
 const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);
@@ -70,7 +67,7 @@ const componentMap = computed(() => {
 <template>
   <div :class="prefixClass">
     <HomeMyCard v-if="isHomePage" />
-    <template v-for="item in homeCardSort" :key="item">
+    <template v-for="item in finalHomeCardSort" :key="item">
       <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props" />
     </template>
   </div>

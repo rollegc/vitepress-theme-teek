@@ -6,6 +6,7 @@ import { TkContentData } from "../post/types";
 import { createImageViewer } from "./ImageViewer";
 import { useUnrefData } from "../configProvider";
 import PostBaseInfo from "./PostBaseInfo.vue";
+import { Post } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("postItem");
@@ -21,7 +22,7 @@ const {
   coverImgMode = "default",
   showCapture = false,
   imageViewer = {},
-} = { ...theme.post, ...frontmatter.tk?.post };
+}: Post = { ...theme.post, ...frontmatter.tk?.post };
 
 const excerpt = post.frontmatter.description || post.excerpt || (showCapture && post.capture);
 

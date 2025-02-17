@@ -2,11 +2,12 @@
 import { onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useUnrefData } from "../configProvider";
 import { useData, useRouter } from "vitepress";
+import { CommentProvider } from "../config/types";
 
 const { isDark, page } = useData();
 const { theme } = useUnrefData();
 
-const { server, site } = { ...theme.comment?.options };
+const { server, site }: CommentProvider["artalk"] = { ...theme.comment?.options };
 
 const router = useRouter();
 const artalkRef = ref();

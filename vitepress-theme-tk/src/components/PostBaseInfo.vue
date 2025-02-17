@@ -7,6 +7,7 @@ import { formatDate, isFunction } from "../helper";
 import { TkContentData } from "../post/types";
 import { useDesign } from "../hooks";
 import { useRoute } from "vitepress";
+import { Post } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("postBaseInfo");
@@ -27,7 +28,7 @@ const {
   showDate = true,
   showCategory = false,
   showTag = false,
-} = { ...theme.post, ...frontmatter.post, ...frontmatter.tk?.post };
+}: Post = { ...theme.post, ...frontmatter.post, ...frontmatter.tk?.post };
 
 const { author = {} } = { ...theme, ...frontmatter, ...post?.frontmatter };
 
@@ -47,7 +48,8 @@ const date = computed(() => {
   const originPosts: TkContentData[] = unref(posts).originPosts;
   const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
 
-  return formatDate(targetPost?.[0]?.date || new Date(), dateFormat);
+  if (isFunction(dateFormat)) return dateFormat(targetPost[0]?.date || "");
+  return formatDate(targetPost[0]?.date || new Date(), dateFormat);
 });
 
 // 是否展示作者、日期、分类、标签等信息

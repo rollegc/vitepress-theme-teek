@@ -6,6 +6,7 @@ import { useData, useRoute } from "vitepress";
 import HomeCard from "./HomeCard.vue";
 import tagSvg from "../assets/svg/tag";
 import { isFunction } from "../helper";
+import { Tag } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("tag");
@@ -23,7 +24,7 @@ const {
   autoPage = false,
   pageSpeed = 4000,
   bgColor,
-} = { ...theme.tag, ...frontmatter.tk?.tag };
+}: Tag = { ...theme.tag, ...frontmatter.tk?.tag };
 
 const posts = usePosts();
 const { localeIndex } = useData();

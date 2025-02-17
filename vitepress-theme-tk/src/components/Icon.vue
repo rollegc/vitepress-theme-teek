@@ -2,7 +2,7 @@
 import { useDesign } from "../hooks";
 import { computed } from "vue";
 import { ElIcon } from "element-plus";
-import { isNumber } from "../helper";
+import { isString } from "../helper";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("icon");
@@ -24,7 +24,7 @@ const {
   ...props
 } = defineProps<IconProps>();
 
-const sizeStr = computed(() => props.size && (isNumber(props.size) ? `${props.size}px` : props.size));
+const sizeStr = computed(() => props.size && (isString(props.size) ? props.size : `${props.size}px`));
 </script>
 
 <template>

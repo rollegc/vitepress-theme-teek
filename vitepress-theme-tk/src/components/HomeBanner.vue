@@ -3,8 +3,9 @@ import { useDesign, useTextTypes, useSwitchData } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useUnrefData } from "../configProvider";
-import { isNumber } from "../helper";
+import { isString } from "../helper";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
+import { Banner } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("banner");
@@ -31,7 +32,7 @@ const {
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
   descStyle = "default",
-} = { ...theme.banner, ...frontmatter.tk?.banner };
+}: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 
 const isDefaultBgStyle = bgStyle === "default";
 const isBigImgBgStyle = bgStyle === "bigImg";
@@ -43,7 +44,7 @@ const isSwitchDescStyle = descStyle === "switch";
 
 // banner 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
-  dataArray: imgSrc,
+  dataArray: [imgSrc || []].flat(),
   timeout: imgInterval,
   onAfterUpdate: newValue => {
     // 预加载下一张图片
@@ -80,7 +81,7 @@ const getStyle = () => {
       ...baseStyle,
       backgroundImage: `url(${unref(imageSrc)})`,
       "--banner-text-color": textColor || "#ffffff",
-      "--banner-mask-bg-color": isNumber(maskBg) ? `rgba(0, 0, 0, ${maskBg})` : maskBg,
+      "--banner-mask-bg-color": isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
     };
   }
 };

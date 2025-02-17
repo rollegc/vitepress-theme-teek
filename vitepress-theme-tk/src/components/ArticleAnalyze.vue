@@ -7,6 +7,7 @@ import { House, Reading, Clock, View } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { FileWords } from "vitepress-plugin-doc-analysis";
 import PostBaseInfo from "./PostBaseInfo.vue";
+import { Breadcrumb } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("articleAnalyze");
@@ -15,7 +16,7 @@ const { theme, frontmatter, page } = useUnrefData();
 const { theme: themeRef, localeIndex } = useData();
 
 // 面包屑配置项
-const breadcrumb = {
+const breadcrumb: Breadcrumb = {
   enabled: true,
   showCurrentName: false,
   separator: "/",

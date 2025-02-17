@@ -5,6 +5,7 @@ import { init, type WalineInstance } from "@waline/client";
 import "@waline/client/style";
 
 import { onMounted } from "vue";
+import { CommentProvider } from "../config/types";
 
 const { theme } = useUnrefData();
 const router = useRouter();
@@ -16,7 +17,7 @@ const {
   dark = "html[class='dark']",
   cssIntegrity,
   ...options
-} = { ...theme.comment?.options };
+}: CommentProvider["waline"] = { ...theme.comment?.options };
 
 let waline: WalineInstance | null = null;
 

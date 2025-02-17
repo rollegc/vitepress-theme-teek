@@ -6,6 +6,7 @@ import HomeCard from "./HomeCard.vue";
 import friendLinkSvg from "../assets/svg/friendLink";
 import { isFunction } from "../helper";
 import { createImageViewer } from "./ImageViewer";
+import { FriendLink } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("friendLink");
@@ -20,7 +21,7 @@ const {
   scrollSpeed = 2500,
   autoPage = false,
   pageSpeed = 4000,
-} = { ...theme.friendLink, ...frontmatter.tk?.friendLink };
+}: FriendLink = { ...theme.friendLink, ...frontmatter.tk?.friendLink };
 
 // 使用上下滚动功能
 const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollSpeed);

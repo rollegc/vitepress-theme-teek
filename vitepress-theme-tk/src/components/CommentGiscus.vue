@@ -4,6 +4,7 @@ import Giscus from "@giscus/vue";
 import { useRouter, useData } from "vitepress";
 import { ref, nextTick, onMounted, computed, unref } from "vue";
 import { isFunction } from "../helper";
+import { CommentProvider } from "../config/types";
 
 const { isDark } = useData();
 const { theme } = useUnrefData();
@@ -25,7 +26,7 @@ const {
   link = "https://giscus.app/client.js",
   integrity,
   ...options
-} = { ...theme.comment?.options };
+}: CommentProvider["giscus"] = { ...theme.comment?.options };
 
 const giscusTheme = computed(() => {
   if (isFunction(giscusThemeConfig)) return giscusThemeConfig(unref(isDark));

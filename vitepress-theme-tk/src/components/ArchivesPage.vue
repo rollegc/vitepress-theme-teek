@@ -1,7 +1,6 @@
 <script setup lang="ts" name="ArchivesPage">
 import { useDesign } from "../hooks";
 import { usePosts, useUnrefData } from "../configProvider";
-import { useData } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("archives");

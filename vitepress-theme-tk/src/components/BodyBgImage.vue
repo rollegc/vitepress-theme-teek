@@ -2,7 +2,8 @@
 import { useDesign, useSwitchData } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import { onMounted } from "vue";
-import { isNumber } from "../helper";
+import { isString } from "../helper";
+import { BodyBgImg } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("bodyBgImage");
@@ -15,11 +16,11 @@ let {
   imgInterval = 15000,
   mask = false,
   maskBg = "rgba(0, 0, 0, 0.2)",
-} = theme.bodyBgImg || {};
+}: BodyBgImg = theme.bodyBgImg || {};
 
 // body 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
-  dataArray: imgSrc,
+  dataArray: [imgSrc || []].flat(),
   timeout: imgInterval,
   onAfterUpdate: newValue => {
     // 预加载下一张图片
@@ -38,7 +39,7 @@ onMounted(() => {
 <template>
   <div
     :class="prefixClass"
-    :style="`background-image: url(${imageSrc}); opacity:${imgOpacity}; --body-mask-bg-color: ${isNumber(maskBg) ? `rgba(0, 0, 0, ${maskBg})` : maskBg}`"
+    :style="`background-image: url(${imageSrc}); opacity:${imgOpacity}; --body-mask-bg-color: ${isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`}`"
   >
     <div v-if="mask" class="mask" />
   </div>
