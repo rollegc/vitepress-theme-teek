@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomeMyCard">
 import { useDesign } from "../hooks";
 import { useUnrefData } from "../configProvider";
+import Icon from "./Icon.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");
@@ -19,9 +20,7 @@ const { blogger = {}, social = [] } = theme;
     <div v-if="social.length" :class="`${prefixClass}-icons flx-justify-around`">
       <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
         <template v-if="item.icon">
-          <i v-if="!item.iconType || item.iconType === 'svg'" v-html="item.icon" />
-          <i v-else-if="item.iconType === 'iconfont'" :class="['iconfont', item.icon]" />
-          <img v-else-if="item.iconType === 'img'" :src="item.icon" :alt="item.imgAlt" />
+          <Icon :iconType="item.iconType" :icon="item.icon" size="20px" hover :imgAlt="item.imgAlt" />
         </template>
       </a>
     </div>

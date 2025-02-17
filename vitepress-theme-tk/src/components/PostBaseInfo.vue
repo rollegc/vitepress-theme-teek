@@ -45,7 +45,7 @@ const date = computed(() => {
   }
 
   // 如果 frontmatter 没有配置 date，则从 posts 中获取文档的创建时间
-  const originPosts = posts.locales?.[unref(localeIndex)]?.originPosts || posts.originPosts;
+  const originPosts = unref(posts).originPosts;
   const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
 
   return formatDate(targetPost?.[0]?.date || new Date(), dateFormat);

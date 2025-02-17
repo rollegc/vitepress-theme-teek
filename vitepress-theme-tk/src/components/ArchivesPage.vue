@@ -11,22 +11,20 @@ const { frontmatter } = useUnrefData();
 const { localeIndex } = useData();
 
 const posts = usePosts();
-
-const finalPosts = computed(() => posts.locales?.[unref(localeIndex)] || posts);
 </script>
 
 <template>
   <div :class="`${prefixClass} tk-page`">
     <div :class="`${prefixClass}-header flx-justify-between`">
       <div class="tk-page-title-h1">{{ frontmatter.title }}</div>
-      <div class="count">总共 {{ finalPosts.sortPostsByDate.length }} 篇文章</div>
+      <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
     </div>
 
     <div :class="`${prefixClass}-timeline`">
-      <template v-for="(monthPosts, year) in finalPosts.groupPostsByYearMonth" :key="year">
+      <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">
         <div :class="`${prefixClass}-timeline__year flx-justify-between`">
           <div class="year">{{ String(year).trim() === "NaN" ? "未指定" : String(year).trim() }}年</div>
-          <div class="count">{{ finalPosts.groupPostsByYear[year].length }}篇</div>
+          <div class="count">{{ posts.groupPostsByYear[year].length }}篇</div>
         </div>
 
         <div :class="`${prefixClass}-timeline-m`">

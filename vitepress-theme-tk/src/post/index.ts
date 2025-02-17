@@ -16,6 +16,9 @@ import type { FileContentLoaderData } from "vitepress-plugin-file-content-loader
 import { basename, join } from "node:path";
 import { statSync } from "node:fs";
 
+/**
+ * 转换为文章数据
+ */
 export const transformData = (data: FileContentLoaderData): TkContentData => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { themeConfig } = siteConfig.userConfig;
@@ -33,6 +36,9 @@ export const transformData = (data: FileContentLoaderData): TkContentData => {
   };
 };
 
+/**
+ * 转换为各个文章不同类型的数据
+ */
 export const transformRaw = (posts: TkContentData[]): Post => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { locales = {} } = siteConfig.userConfig;

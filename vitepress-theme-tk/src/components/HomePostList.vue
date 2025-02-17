@@ -30,10 +30,6 @@ const pageInfo = reactive({
 const route = useRoute();
 const currentPosts = ref<TkContentData[]>([]);
 
-const sortPostsByDateAndSticky = computed(
-  () => posts.locales?.[unref(localeIndex)]?.sortPostsByDateAndSticky || posts.sortPostsByDateAndSticky
-);
-
 const updateData = () => {
   const { frontmatter } = route.data;
   const { pageNum, pageSize, total } = pageInfo;
@@ -43,20 +39,16 @@ const updateData = () => {
   const p = searchParams.get("pageNum") || 1;
   if (p !== pageNum) pageInfo.pageNum = Number(p);
 
-  let post = unref(sortPostsByDateAndSticky);
+  let post = unref(posts).sortPostsByDateAndSticky;
 
-  // 兼容多语言功能，先从多语言下的 posts 获取数据，获取不到说明没有使用多语言功能，则从所有 posts 获取数据
-  const locale = posts.locales?.[unref(localeIndex)];
   if (frontmatter.categoriesPage) {
     // 在分类页时，如果 URL 查询参数存在 category，则加载该 category 的 post，不存在则加载所有 post
     const c = searchParams.get("category");
-    const categories = locale?.groupPosts.categories || posts.groupPosts.categories;
-    post = c ? categories[c] : post;
+    post = c ? unref(posts).groupPosts.categories[c] : post;
   } else if (frontmatter.tagsPage) {
     // 在标签页时，如果 URL 查询参数存在 tag，则加载该 tag 的 post，不存在则加载所有 post
     const t = searchParams.get("tag");
-    const tags = locale?.groupPosts.tags || posts.groupPosts.tags;
-    post = t ? tags[t] : post;
+    post = t ? unref(posts).groupPosts.tags[t] : post;
   }
 
   // 总数处理
@@ -103,7 +95,7 @@ const handlePagination = () => {
     <ClientOnly>
       <div :class="`${prefixClass}-pagination flx-justify-center`">
         <Pagination
-          v-if="sortPostsByDateAndSticky.length >= pageInfo.pageSize"
+          v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
           v-model="pageInfo"
           v-bind="pageProps"
           @pagination="handlePagination"

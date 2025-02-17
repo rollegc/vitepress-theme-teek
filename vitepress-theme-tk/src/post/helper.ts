@@ -1,6 +1,20 @@
 import type { GroupCardItem, TkContentData, Post } from "./types";
 
 /**
+ * Post 空数据，方便定义空对象
+ */
+export const emptyPost: Post = {
+  originPosts: [],
+  sortPostsByDateAndSticky: [],
+  sortPostsByDate: [],
+  groupPostsByYear: {},
+  groupPostsByYearMonth: {},
+  groupPosts: { categories: {}, tags: {} },
+  groupCards: { categories: [], tags: [] },
+  locales: {},
+};
+
+/**
  * 过滤非文章页
  * @param posts 所有文章数据
  */

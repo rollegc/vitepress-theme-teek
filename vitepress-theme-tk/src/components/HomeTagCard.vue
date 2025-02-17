@@ -26,7 +26,7 @@ const {
 
 const posts = usePosts();
 const { localeIndex } = useData();
-const tags = computed(() => posts.locales?.[unref(localeIndex)]?.groupCards.tags || posts.groupCards.tags);
+const tags = computed(() => unref(posts).groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
 const currentTags = computed(() => {

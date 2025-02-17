@@ -39,23 +39,6 @@ $prefix-class: #{$theme-namespace}-my;
 
   &-icons {
     margin-bottom: 5px;
-    i :deep(svg),
-    img {
-      fill: var(--vp-c-text-1);
-      width: 20px;
-      height: 20px;
-
-      &:hover {
-        fill: var(--tk-theme-color);
-      }
-    }
-    .iconfont {
-      color: var(--vp-c-text-1);
-      font-size: 20px;
-      &:hover {
-        color: var(--tk-theme-color);
-      }
-    }
   }
 
   &-blogger {

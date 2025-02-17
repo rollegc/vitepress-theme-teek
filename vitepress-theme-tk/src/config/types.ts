@@ -2,7 +2,6 @@ import type { PermalinkOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import type { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
 import type { VNode } from "vue";
 
@@ -757,6 +756,7 @@ export interface FooterConfig {
    * 1、iconType 为 svg 时，需要填写 svg 代码
    * 2、iconType 为 iconfont 时，需要填写 class 名
    * 3、iconType 为 img 时，需要填写图片链接
+   * 4、iconType 为 el 时，需要传入 ElIcon 的组件
    */
   icon?: string;
   /**
@@ -764,7 +764,7 @@ export interface FooterConfig {
    *
    * @default 'svg'
    */
-  iconType?: "svg" | "iconfont" | "img";
+  iconType?: "svg" | "iconfont" | "img" | "el";
   /**
    * 链接，点击后跳转到新窗口，如果不设置，则无法点击
    */

@@ -8,6 +8,7 @@ import icpRecordSvg from "../assets/svg/icpRecord";
 import securityRecordImg from "../assets/img/securityRecord.png";
 import packageJSON from "../../package.json";
 import { computed } from "vue";
+import Icon from "./Icon.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("footer");
@@ -55,9 +56,7 @@ const footerData = computed(() => {
     <div v-if="social.length" :class="`${prefixClass}-icons flx-center`">
       <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
         <template v-if="item.icon">
-          <i v-if="!item.iconType || item.iconType === 'svg'" v-html="item.icon" />
-          <i v-else-if="item.iconType === 'iconfont'" :class="['iconfont', item.icon]" />
-          <img v-else-if="item.iconType === 'img'" :src="item.icon" :alt="item.imgAlt" />
+          <Icon :iconType="item.iconType" :icon="item.icon" size="20px" color="var(--vp-c-text-2)" hover :imgAlt="item.imgAlt"/>
         </template>
       </a>
     </div>
@@ -68,9 +67,7 @@ const footerData = computed(() => {
       <div :class="`${prefixClass}-list flx-wrap-justify-center`">
         <div v-for="item in footerData" :key="item.name" :class="`${prefixClass}-list__item flx-align-center`">
           <template v-if="item.icon">
-            <i v-if="!item.iconType || item.iconType === 'svg'" v-html="item.icon" />
-            <i v-else-if="item.iconType === 'iconfont'" :class="['iconfont', item.icon]" />
-            <img v-else-if="item.iconType === 'img'" :src="item.icon" :alt="item.imgAlt" />
+            <Icon :iconType="item.iconType" :icon="item.icon" size="16px" color="var(--vp-c-text-2)" :imgAlt="item.imgAlt" />
           </template>
 
           <a v-if="item.link" :href="item.link" target="_blank">

@@ -1,8 +1,9 @@
-import { defineComponent, h, InjectionKey, provide, unref, type Component } from "vue";
+import { computed, defineComponent, h, InjectionKey, provide, unref, type Component } from "vue";
 import { useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./post/types";
 import { useData } from "vitepress";
 import usePermalinks from "vitepress-plugin-permalink/src/usePermalinks";
+import { emptyPost } from "./post/helper";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
 
@@ -33,23 +34,23 @@ export const useUnrefData = () => {
   return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
-export const usePosts = (): Post => {
+export const useAllPosts = (): Post => {
   const { theme } = useData();
   const posts = unref(theme).posts;
 
-  if (!posts) {
-    return {
-      originPosts: [],
-      sortPostsByDateAndSticky: [],
-      sortPostsByDate: [],
-      groupPostsByYear: {},
-      groupPostsByYearMonth: {},
-      groupPosts: { categories: {}, tags: {} },
-      groupCards: { categories: [], tags: [] },
-      locales: {},
-    };
-  }
+  if (!posts) return emptyPost;
+
   return posts;
+};
+
+export const usePosts = (): Post => {
+  const { theme, localeIndex } = useData();
+  const posts = unref(theme).posts;
+
+  if (!posts) return emptyPost;
+
+  // 兼容多语言功能，先从多语言下获取 posts 数据，获取不到说明没有使用多语言功能，则获取所有 posts 数据。因为多语言可以随时切换，因此使用 computed
+  return computed(() => posts.locales?.[unref(localeIndex)] || posts);
 };
 
 export const isHomePage = () => {

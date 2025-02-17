@@ -22,10 +22,9 @@ const {
 } = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
 const topArticleList = computed(() => {
-  const sortPostsByDateAndSticky =
-    posts.locales?.[unref(localeIndex)]?.sortPostsByDateAndSticky || posts.sortPostsByDateAndSticky;
-
-  return sortPostsByDateAndSticky.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 }));
+  return unref(posts)
+    .sortPostsByDateAndSticky.filter(p => p.frontmatter.hot)
+    ?.map((p, index) => ({ ...p, num: index + 1 }));
 });
 
 const pageNum = ref(1);

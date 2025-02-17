@@ -25,9 +25,7 @@ const {
 
 const posts = usePosts();
 const { localeIndex } = useData();
-const categories = computed(
-  () => posts.locales?.[unref(localeIndex)]?.groupCards.categories || posts.groupCards.categories
-);
+const categories = computed(() => unref(posts).groupCards.categories);
 
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
 const currentCategories = computed(() => {
