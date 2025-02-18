@@ -41,6 +41,12 @@ export interface TkThemeConfig {
    */
   bgColor?: string[];
   /**
+   * 是否使用新版代码块样式，如果为 false 则使用官方默认样式
+   *
+   * @default true
+   */
+  codeBlock?: boolean;
+  /**
    * 在首页最顶部进入全屏后，使用壁纸模式，仅当 (banner.bgStyle = 'bigImg' & banner.imgSrc 存在) 或 bodyBgImg.imgSrc 存在才生效
    */
   wallpaper?: {

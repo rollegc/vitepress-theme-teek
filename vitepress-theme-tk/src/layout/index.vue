@@ -18,6 +18,7 @@ import CommentArtalk from "../components/CommentArtalk.vue";
 import CommentGiscus from "../components/CommentGiscus.vue";
 import CommentWaline from "../components/CommentWaline.vue";
 import HomeFullscreenWallpaper from "../components/HomeFullscreenWallpaper.vue";
+import CodeBlockToggle from "../components/CodeBlockToggle.vue";
 
 defineOptions({ name: "TkLayout" });
 
@@ -29,7 +30,7 @@ const prefixClass = getPrefixClass("layout");
 const { theme, frontmatter } = useUnrefData();
 const { frontmatter: frontmatterRef } = useData();
 
-const { tkTheme = true, tkHome = true, wallpaper = {} } = theme;
+const { tkTheme = true, tkHome = true, wallpaper = {}, codeBlock = true } = theme;
 
 const { enabled = true, bgStyle, imgSrc } = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render } = { ...theme.comment };
@@ -43,8 +44,10 @@ const commentComponent = {
 </script>
 
 <template>
-  <RightBottomButton />
-  <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
+  <template v-if="tkTheme">
+    <RightBottomButton />
+    <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
+  </template>
 
   <Layout :class="prefixClass">
     <template #home-hero-before>
@@ -72,10 +75,13 @@ const commentComponent = {
 
     <template #doc-before>
       <slot name="doc-before" />
-      <ClientOnly>
-        <ArticleAnalyze />
-        <ArticleImagePreview />
-      </ClientOnly>
+      <template v-if="tkTheme">
+        <ClientOnly>
+          <ArticleAnalyze />
+          <ArticleImagePreview />
+          <CodeBlockToggle v-if="codeBlock" />
+        </ClientOnly>
+      </template>
     </template>
 
     <template #doc-after>

@@ -32,7 +32,7 @@ const initWaline = async () => {
 const initRoute = () => {
   const selfOnAfterRouteChange = router.onAfterRouteChange;
   // 路由切换后的回调
-  router.onAfterRouteChange = async (href: string) => {
+  router.onAfterRouteChange = (href: string) => {
     selfOnAfterRouteChange?.(href);
     // 路由切换后更新评论内容
     waline?.update();

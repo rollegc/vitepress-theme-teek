@@ -86,11 +86,11 @@ const handleFullscreenChange = () => {
 };
 
 const addOrRemoveClass = (
-  isFullscreen: boolean,
+  add: boolean,
   options: { el: Element | null; executeClass?: string; notExecuteClass?: string; execute?: boolean }[]
 ) => {
   // 进入全屏
-  if (isFullscreen) {
+  if (add) {
     options.forEach(item => {
       if (item.execute !== false) item.executeClass && item.el?.classList.add(item.executeClass);
       else item.notExecuteClass && item.el?.classList.add(item.notExecuteClass);

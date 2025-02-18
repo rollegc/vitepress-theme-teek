@@ -16,7 +16,7 @@ const createConfigProvider = (Layout: Component) => {
     setup(_, { slots }) {
       const { theme } = useUnrefData();
       // 往主题注入数据
-      provide(postsSymbol, theme.posts);
+      provide(postsSymbol, theme.posts || emptyPost);
 
       // 开启监听器
       usePermalinks().startWatch();
