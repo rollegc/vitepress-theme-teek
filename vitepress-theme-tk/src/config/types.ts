@@ -339,6 +339,10 @@ export interface BodyBgImg {
    * @default 'rgba(0, 0, 0, 0.2)'
    */
   maskBg?: string | number;
+  /**
+   * 文章页的样式风格，default 为官方风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
+   */
+  pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
 }
 
 export interface Banner {
