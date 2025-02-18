@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CodeBlockToggle">
-import { onMounted } from "vue";
+import { nextTick, onMounted } from "vue";
 import arrowSvg from "../assets/svg/arrow";
 import { useRouter } from "vitepress";
 
@@ -11,7 +11,7 @@ const arrowClass = "arrow";
  * 初始化代码块
  */
 const initCodeBlock = () => {
-  const modes = document.querySelectorAll(".vp-doc div[class*='language-']");
+  const modes = document.querySelectorAll(".vp-doc div[class*='language-']") as unknown as HTMLElement[];
 
   Array.from(modes).forEach(item => {
     // 如果当前代码块已经初始化了，则不需要继续执行代码
@@ -28,14 +28,14 @@ const initCodeBlock = () => {
 /**
  * 创建箭头元素，添加点击事件（折叠/展开）
  */
-const createArrowElement = (item: Element) => {
+const createArrowElement = (item: HTMLElement) => {
   // 获取代码块原来的高度，进行备份
   const modeHeight = item.offsetHeight;
   // 初始化代码块高度，确保第一次折叠时就有动画
   item.style.height = `${modeHeight}px`;
   // 获取代码块的元素
-  const pre = item.querySelector("pre");
-  const wrapper = item.querySelector(".line-numbers-wrapper");
+  const preDom: HTMLElement | null = item.querySelector("pre");
+  const lineNumbersWrapperDom: HTMLElement | null = item.querySelector(".line-numbers-wrapper");
 
   const div = document.createElement("div");
   div.classList.add(arrowClass);
@@ -56,13 +56,15 @@ const createArrowElement = (item: Element) => {
 
     item.style.height = state.height;
 
-    clearTimeout(timeoutId);
+    if (timeoutId) clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(() => {
-      pre.style.display = state.display;
-      wrapper.style.display = state.display;
-      clearTimeout(timeoutId);
-    }, state.speed);
+    if (preDom && lineNumbersWrapperDom) {
+      timeoutId = setTimeout(() => {
+        preDom.style.display = state.display;
+        lineNumbersWrapperDom.style.display = state.display;
+        if (timeoutId) clearTimeout(timeoutId);
+      }, state.speed);
+    }
 
     div.classList.toggle(foldClass);
   };
@@ -91,8 +93,10 @@ const initRoute = () => {
 };
 
 onMounted(() => {
-  initCodeBlock();
-  initRoute();
+  nextTick(() => {
+    initCodeBlock();
+    initRoute();
+  });
 });
 </script>
 

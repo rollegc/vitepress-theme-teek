@@ -6,6 +6,7 @@ import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { scrollTo } from "../helper";
 import sizeSvg from "../assets/svg/size";
+import { CommentConfig, ThemeSetting } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("rightBottomButton");
@@ -13,6 +14,7 @@ const prefixClass = getPrefixClass("rightBottomButton");
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
 const showToTop = computed(() => unref(scrollTop) > 100);
+
 const showToComment = computed(() => {
   let docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
   let docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
@@ -21,13 +23,14 @@ const showToComment = computed(() => {
 
   return unref(scrollTop) < height;
 });
+
 const scrollToTop = () => {
   scrollTo("html", 0, 1500);
   scrollTop.value = 0;
 };
 
 const scrollToComment = () => {
-  document.querySelector("#tk-layout-comment")?.scrollIntoView({ behavior: "smooth" });
+  document.querySelector(`#${getPrefixClass("layout-comment")}`)?.scrollIntoView({ behavior: "smooth" });
 };
 
 const watchScroll = () => {
@@ -50,8 +53,9 @@ const {
   useThemeSize = true,
   themeSize = "default",
   themeSizeAppend = [],
-  comment,
-} = theme.themeSetting || {};
+}: ThemeSetting = theme.themeSetting || {};
+
+const { provider }: CommentConfig = theme.comment || {};
 
 // 主题切换
 const showThemeModeItem = ref(false);
@@ -119,14 +123,11 @@ changeThemeSize(themeSize);
       </div>
     </transition>
 
-    <div
-      v-if="comment?.provider && showToComment"
-      title="前往评论"
-      :class="`${prefixClass}-button`"
-      @click="scrollToComment"
-    >
-      <el-icon><ChatDotSquare /></el-icon>
-    </div>
+    <transition name="fade">
+      <div v-if="provider && showToComment" title="前往评论" :class="`${prefixClass}-button`" @click="scrollToComment">
+        <el-icon><ChatDotSquare /></el-icon>
+      </div>
+    </transition>
 
     <div
       v-if="useThemeSize"

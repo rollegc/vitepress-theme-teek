@@ -828,7 +828,7 @@ export interface FooterInfo {
   securityRecord?: Social;
 }
 
-export type CommentConfig<T extends keyof CommentProvider> = {
+export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" | "giscus" | "artalk"> = {
   /**
    * 评论区提供者
    * twikoo 官网：https://twikoo.js.org/
