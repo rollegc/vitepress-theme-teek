@@ -29,6 +29,7 @@ const pageInfo = reactive({
 
 const route = useRoute();
 const currentPosts = ref<TkContentData[]>([]);
+const pageNumKey = "pageNum";
 
 const updateData = () => {
   const { frontmatter } = route.data;
@@ -36,7 +37,7 @@ const updateData = () => {
 
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
-  const p = searchParams.get("pageNum") || 1;
+  const p = searchParams.get(pageNumKey) || 1;
   if (p !== pageNum) pageInfo.pageNum = Number(p);
 
   let post = unref(posts).sortPostsByDateAndSticky;
@@ -54,7 +55,7 @@ const updateData = () => {
   // 总数处理
   if (total !== post.length) pageInfo.total = post.length || 0;
 
-  currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+  currentPosts.value = post.slice((pageInfo.pageNum - 1) * pageSize, pageInfo.pageNum * pageSize);
 };
 
 watch(
@@ -65,7 +66,6 @@ watch(
   { immediate: true }
 );
 
-const pageNumKey = "pageNum";
 /**
  * 切换分页时，记录到 URL 上
  */

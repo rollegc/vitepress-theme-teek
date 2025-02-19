@@ -25,7 +25,7 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("pagination");
 
 const {
-  layout = "prev, pager, next, jumper, total",
+  layout = "prev, pager, next, jumper, ->, total",
   background = true,
   autoScroll = true,
   hidden = false,
