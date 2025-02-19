@@ -44,10 +44,10 @@ const commentComponent = {
 </script>
 
 <template>
-  <template v-if="tkTheme">
+  <div v-if="tkTheme" :class="`${prefixClass}-global`">
     <RightBottomButton />
     <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
-  </template>
+  </div>
 
   <Layout :class="prefixClass">
     <template #home-hero-before>
@@ -223,7 +223,7 @@ $prefix-class: #{$theme-namespace}-layout;
     }
   }
 
-  @media screen and (max-width: 730px) {
+  @media screen and (max-width: 768px) {
     &-home-content {
       flex-wrap: wrap;
       &__list {

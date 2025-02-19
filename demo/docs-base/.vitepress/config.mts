@@ -91,14 +91,11 @@ const tkConfig = themeConfig({
       link: "https://www.youngkbt.cn/?contact=true",
     },
   ],
-  topArticle: {
-    enabled: false,
-  },
   comment: {
-    provider: "twikoo",
+    provider: "giscus",
     options: {
       // twikoo 配置，官网：https://twikoo.js.org/
-      envId: "https://twikoo.youngkbt.cn/",
+      // envId: "https://twikoo.youngkbt.cn/",
       // link: "https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.min.js",
 
       // waline 配置，官网：https://waline.js.org/
@@ -107,10 +104,10 @@ const tkConfig = themeConfig({
       // cssLink: "https://unpkg.com/@waline/client@v3/dist/waline.css",
 
       // giscus 配置，官网：https://giscus.app/zh-CN
-      // repo: "Kele-Bingtang/vitepress-theme-kt",
-      // repoId: "R_kgDONpVfBA",
-      // category: "Announcements",
-      // categoryId: "DIC_kwDONpVfBM4Cm3v9",
+      repo: "Kele-Bingtang/vitepress-theme-kt",
+      repoId: "R_kgDONpVfBA",
+      category: "Announcements",
+      categoryId: "DIC_kwDONpVfBM4Cm3v9",
 
       // artalk 配置，官网：https://artalk.js.org/
       // server: "",

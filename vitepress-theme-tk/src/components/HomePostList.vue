@@ -1,11 +1,12 @@
 <script setup lang="ts" name="HomePostList">
-import { reactive, ref, unref, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
 import { usePosts, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
-import { useRoute, useData } from "vitepress";
+import { useRoute } from "vitepress";
 import { useDesign } from "../hooks";
 import { TkContentData } from "../post/types";
+import { PaginationProps } from "element-plus";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("postList");
@@ -14,7 +15,7 @@ const posts = usePosts();
 const { frontmatter, theme } = useUnrefData();
 
 // 自定义一页数量 & 分页组件的 Props
-const { pageSize = 10, size = "small", ...pageProps } = { ...theme.page, ...frontmatter.tk?.page };
+const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.page, ...frontmatter.tk?.page };
 
 const { coverImgMode = "default" } = { ...theme.post, ...frontmatter.tk?.post };
 
@@ -78,6 +79,25 @@ const handlePagination = () => {
   // 更新数据
   updateData();
 };
+
+const pagePropsRef = reactive({ ...pageProps });
+
+/**
+ *  屏幕小于 768px 时，切换为 small
+ */
+const watchResize = () => {
+  if (window.innerWidth <= 768) pagePropsRef.size = "small";
+  else if (pagePropsRef.size !== (pageProps.size || "default")) pagePropsRef.size = pageProps.size || "default";
+};
+
+onMounted(() => {
+  if (pagePropsRef.size === "small") return;
+  window.addEventListener("resize", watchResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", watchResize);
+});
 </script>
 
 <template>
@@ -96,7 +116,7 @@ const handlePagination = () => {
         <Pagination
           v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
           v-model="pageInfo"
-          v-bind="pageProps"
+          v-bind="pagePropsRef"
           @pagination="handlePagination"
         />
       </div>
