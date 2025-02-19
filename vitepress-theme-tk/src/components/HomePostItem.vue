@@ -21,6 +21,7 @@ const {
   moreLabel = "阅读全文 >",
   coverImgMode = "default",
   showCapture = false,
+  showBaseInfo = true,
   imageViewer = {},
 }: Post = { ...theme.post, ...frontmatter.tk?.post };
 
@@ -56,6 +57,13 @@ const coverImgMap = computed(() => {
     },
   };
 });
+
+// 是否展示作者、日期、分类、标签等信息
+const isShowBaseInfo = computed(() => {
+  const arr = [showBaseInfo].flat();
+  if (arr.includes(true) || arr.includes("home")) return true;
+  return false;
+});
 </script>
 
 <template>
@@ -77,7 +85,7 @@ const coverImgMap = computed(() => {
 
         <!-- 文章信息 -->
         <div :class="`${prefixClass}-info__left-footer`">
-          <PostBaseInfo :post />
+          <PostBaseInfo v-if="isShowBaseInfo" :post scope="home" split />
         </div>
 
         <!-- 摘要 bottom -->

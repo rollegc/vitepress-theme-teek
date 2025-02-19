@@ -132,7 +132,7 @@ changeThemeSize(themeSize);
     <div
       v-if="useThemeSize"
       title="字体切换"
-      :class="`${prefixClass}-button`"
+      :class="`${prefixClass}-button size-change`"
       @mouseenter="showThemeSizeItem = true"
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"

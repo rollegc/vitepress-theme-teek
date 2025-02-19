@@ -13,32 +13,31 @@ const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("postBaseInfo");
 
 export interface PostBaseInfoProps {
-  post?: TkContentData;
+  post: TkContentData;
+  scope: "home" | "article";
+  split?: boolean;
 }
 
 // 首页会传入 post，文章页不传
-const { post } = defineProps<PostBaseInfoProps>();
+const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
 const { frontmatter, theme } = useUnrefData();
 const {
   showIcon = true,
   dateFormat = "yyyy-MM-dd",
-  showBaseInfo = true,
   showAuthor = true,
   showDate = true,
   showCategory = false,
   showTag = false,
 }: Post = { ...theme.post, ...frontmatter.post, ...frontmatter.tk?.post };
 
-const { author = {} } = { ...theme, ...frontmatter, ...post?.frontmatter };
-
 const posts = usePosts();
 const route = useRoute();
 
-// 文章创建时间，先读取 post.date || frontmatter.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在 frontmatter 配置 date，减少文章扫描性能）
+// 文章创建时间，先读取 post.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在文档的 frontmatter 配置 date，让文章扫描耗费性能降低）
 const date = computed(() => {
   // 如果 date 是函数，则调用获取返回值作为 date
-  const date = post?.date || frontmatter.date;
+  const date = post.date;
   if (date) {
     if (isFunction(dateFormat)) return dateFormat(date);
     return formatDate(date, dateFormat);
@@ -52,20 +51,13 @@ const date = computed(() => {
   return formatDate(targetPost[0]?.date || new Date(), dateFormat);
 });
 
-// 是否展示作者、日期、分类、标签等信息
-const isShowBaseInfo = computed(() => {
-  const arr = [showBaseInfo].flat();
-  if (arr.includes(true) || arr.includes("home")) return true;
-  return false;
-});
-
 const baseInfo = [
   {
     title: "作者",
     icon: User,
-    data: author.name,
-    href: author.link,
-    target: author.link ? "_blank" : "_self",
+    data: post.author?.name,
+    href: post.author?.link,
+    target: post.author?.link ? "_blank" : "_self",
     show: showAuthor,
   },
   {
@@ -77,7 +69,7 @@ const baseInfo = [
   {
     title: "分类",
     icon: FolderOpened,
-    dataList: post?.frontmatter?.categories || frontmatter.categories || [],
+    dataList: post.frontmatter?.categories || [],
     href: "/categories?category={data}",
     class: "or",
     show: showCategory,
@@ -85,7 +77,7 @@ const baseInfo = [
   {
     title: "标签",
     icon: CollectionTag,
-    dataList: post?.frontmatter?.tags || frontmatter.tags || [],
+    dataList: post.frontmatter?.tags || [],
     href: "/tags?tag={data}",
     class: "or",
     show: showTag,
@@ -94,33 +86,27 @@ const baseInfo = [
 </script>
 
 <template>
-  <div
-    v-if="isShowBaseInfo"
-    :class="[`${prefixClass}`, 'flx-align-center', `${post ? 'home-post-base' : 'page-base'}`]"
-  >
+  <div :class="[`${prefixClass}`, 'flx-align-center', scope]">
     <template v-for="item in baseInfo" :key="item.title">
-      <template v-if="post || item.show">
-        <div
-          v-if="item.data || item.dataList?.length"
-          :class="['flx-center', `${post ? 'split home-post-base-tem' : 'page-base-item'}`]"
+      <div v-if="item.show && (item.data || item.dataList?.length)" :class="['flx-center', `${scope}-item`, { split }]">
+        <el-icon v-if="showIcon"><component :is="item.icon" /></el-icon>
+        <a v-if="item.data" :title="item.title" :href="item.href" :target="item.target" :class="item.class">
+          {{ item.data }}
+        </a>
+        <a
+          v-else
+          v-for="(data, index) in item.dataList"
+          :key="index"
+          :title="item.title"
+          :href="item.href?.replace('{data}', encodeURIComponent(data))"
+          :class="item.class"
         >
-          <el-icon v-if="showIcon"><component :is="item.icon" /></el-icon>
-          <a v-if="item.data" :title="item.title" :href="item.href" :target="item.target" :class="item.class">
-            {{ item.data }}
-          </a>
-          <a
-            v-else
-            v-for="(data, index) in item.dataList"
-            :key="index"
-            :title="item.title"
-            :href="item.href?.replace('{data}', encodeURIComponent(data))"
-            :class="item.class"
-          >
-            {{ data }}
-          </a>
-        </div>
-      </template>
+          {{ data }}
+        </a>
+      </div>
     </template>
+
+    <slot />
   </div>
 </template>
 

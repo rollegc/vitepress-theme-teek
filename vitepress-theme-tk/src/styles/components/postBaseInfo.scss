@@ -3,12 +3,12 @@
 $prefix-class: #{$theme-namespace}-postBaseInfo;
 
 .#{$prefix-class} {
-  &.home-post-base {
+  &.home {
     font-size: var(--tk-home-font-size-sm);
     color: var(--tk-lower-color2);
   }
 
-  .page-base-item:not(:last-child) {
+  &.article > div:not(:last-child) {
     margin-right: 14px;
   }
 

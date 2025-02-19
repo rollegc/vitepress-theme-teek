@@ -7,7 +7,8 @@ import { House, Reading, Clock, View } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { FileWords } from "vitepress-plugin-doc-analysis";
 import PostBaseInfo from "./PostBaseInfo.vue";
-import { Breadcrumb } from "../config/types";
+import { Breadcrumb, DocAnalysis, Post } from "../config/types";
+import { TkContentData } from "../post/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("articleAnalyze");
@@ -41,7 +42,13 @@ const getFilePath = (index: number) => {
   return theme.catalogues?.inv[relativePathArr[index]];
 };
 
-const route = useRoute();
+// 文章基本信息
+const post: TkContentData = {
+  author: { ...theme.author, ...frontmatter.author },
+  date: frontmatter.date,
+  frontmatter: frontmatter,
+  url: "",
+};
 
 // 站点信息数据
 const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
@@ -51,7 +58,9 @@ const {
   wordCount = true,
   readingTime = true,
   pageIteration = 2000,
-} = { ...theme.docAnalysis, ...frontmatter.docAnalysis };
+}: DocAnalysis = { ...theme.docAnalysis, ...frontmatter.docAnalysis };
+
+const route = useRoute();
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
@@ -61,6 +70,15 @@ const pageViewInfo = computed(() => {
   });
 
   return pageViewInfo;
+});
+
+const { showBaseInfo = true }: Post = { ...theme.post, ...frontmatter.post };
+
+// 是否展示作者、日期、分类、标签等信息
+const isShowBaseInfo = computed(() => {
+  const arr = [showBaseInfo].flat();
+  if (arr.includes(true) || arr.includes("article")) return true;
+  return false;
 });
 
 // 通过不蒜子获取页面访问量
@@ -86,8 +104,8 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div :class="`${prefixClass}-wrapper flx-center`">
-      <PostBaseInfo />
+    <div v-if="isShowBaseInfo" :class="`${prefixClass}-wrapper flx-center`">
+      <PostBaseInfo :post scope="article" />
 
       <div v-if="wordCount" class="flx-center">
         <el-icon><Reading /></el-icon>

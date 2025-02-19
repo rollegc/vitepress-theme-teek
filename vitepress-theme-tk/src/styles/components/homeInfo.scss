@@ -3,18 +3,4 @@
 $prefix-class: #{$theme-namespace}-homeInfo;
 
 .#{$prefix-class} {
-  & .card {
-    margin: 0 auto 10px;
-    padding: var(--tk-home-card-padding);
-    width: var(--tk-home-card-width);
-    overflow: hidden;
-    border-radius: 4px;
-    box-shadow: 0 1px 8px 0 var(--tk-shadow-color);
-    transition: box-shadow 0.5s;
-    background-color: var(--tk-bg-color2);
-
-    &:hover {
-      box-shadow: 0 2px 16px 0 var(--tk-shadow-color-hover);
-    }
-  }
 }

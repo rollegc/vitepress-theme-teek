@@ -191,6 +191,7 @@ const commentComponent = {
 
 <style lang="scss" scoped>
 @use "../styles/namespace.scss" as *;
+
 $prefix-class: #{$theme-namespace}-layout;
 
 .#{$prefix-class} {
@@ -202,6 +203,7 @@ $prefix-class: #{$theme-namespace}-layout;
 
       &__list {
         flex: 1;
+        min-width: 435px;
       }
 
       &__info {
@@ -213,6 +215,24 @@ $prefix-class: #{$theme-namespace}-layout;
 
   &-comment {
     margin-top: 1.25rem;
+  }
+
+  @media (max-width: 1280px) {
+    &-home-content {
+      padding: 0 20px;
+    }
+  }
+
+  @media screen and (max-width: 730px) {
+    &-home-content {
+      flex-wrap: wrap;
+      &__list {
+        width: 100%;
+      }
+      &__info {
+        flex: 1;
+      }
+    }
   }
 }
 </style>

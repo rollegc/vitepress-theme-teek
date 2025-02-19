@@ -3,6 +3,7 @@ import { useDesign } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import Icon from "./Icon.vue";
 import { Blogger, Social } from "../config/types";
+import HomeCard from "./HomeCard.vue";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("my");
@@ -13,8 +14,8 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
 </script>
 
 <template>
-  <div :class="`${prefixClass} card`">
-    <div :class="`${prefixClass}-avatar ${blogger.avatarStyle || 'radius'}`">
+  <HomeCard :class="`${prefixClass}`">
+    <div :class="`${prefixClass}-avatar ${blogger.avatarStyle || 'radius'} flx-center`">
       <img :src="blogger.avatar" alt="头像" title="我好看吗" />
     </div>
 
@@ -30,7 +31,7 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
       <span class="name">{{ blogger.name }}</span>
       <span class="slogan">{{ blogger.slogan }}</span>
     </div>
-  </div>
+  </HomeCard>
 </template>
 
 <style lang="scss" scoped>

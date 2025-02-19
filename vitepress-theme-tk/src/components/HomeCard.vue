@@ -83,7 +83,7 @@ onMounted(() => {
 
 <template>
   <div :class="`${prefixClass} card`">
-    <div :class="`${prefixClass}-header flx-justify-between`">
+    <div v-if="title" :class="`${prefixClass}-header flx-justify-between`">
       <slot name="title">
         <a v-if="titleLink" :href="titleLink">
           <span class="title flx-align-center" v-html="title"></span>

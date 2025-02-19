@@ -3,9 +3,6 @@
 $prefix-class: #{$theme-namespace}-my;
 
 .#{$prefix-class} {
-  width: 100%;
-  overflow: hidden;
-
   &-avatar {
     width: 100%;
 
@@ -47,6 +44,25 @@ $prefix-class: #{$theme-namespace}-my;
       font-size: 21px;
       display: block;
       margin-bottom: 6px;
+    }
+    .slogan {
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    text-align: center;
+    &-avatar {
+      &.full {
+        img {
+          width: 240px;
+        }
+      }
     }
   }
 }

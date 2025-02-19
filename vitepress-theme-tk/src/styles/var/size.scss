@@ -63,3 +63,21 @@ html[size="small"] {
   --vp-sidebar-width: 290px;
   --vp-content-container: 688px;
 }
+
+@media screen and (min-width: 767px) {
+  :root,
+  html[size="large"],
+  html[size="default"],
+  html[size="small"] {
+    --tk-home-card-width: 280px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root,
+  html[size="large"],
+  html[size="default"],
+  html[size="small"] {
+    --tk-home-card-width: 100%;
+  }
+}
