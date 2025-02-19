@@ -13,7 +13,7 @@ export interface TkThemeConfig {
    */
   tkTheme?: boolean;
   /**
-   * 是否启用主题的首页
+   * 是否启用主题的首页风格
    *
    * @default true
    */
@@ -35,19 +35,19 @@ export interface TkThemeConfig {
    */
   homeCardSort?: ("topArticle" | "category" | "tag" | "friendLink" | "docAnalysis")[];
   /**
-   * 背景色，用于精选文章卡片的 hot 功能和标签卡片的背景色
+   * 主题背景色，用于精选文章卡片的 top + sticky 功能和标签卡片的背景色
    *
    * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
    */
   bgColor?: string[];
   /**
-   * 是否使用新版代码块样式，如果为 false 则使用官方默认样式
+   * 是否使用新版代码块样式，如果为 false 则使用官方默认样式。新版代码块支持折叠
    *
    * @default true
    */
   codeBlock?: boolean;
   /**
-   * 在首页最顶部进入全屏后，使用壁纸模式，仅当 (banner.bgStyle = 'bigImg' & banner.imgSrc 存在) 或 bodyBgImg.imgSrc 存在才生效
+   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'bigImg' && banner.imgSrc 存在) 或 bodyBgImg.imgSrc 存在才生效
    */
   wallpaper?: {
     /**
@@ -56,7 +56,6 @@ export interface TkThemeConfig {
      * @default false
      */
     enabled?: boolean;
-
     /**
      * 开启壁纸模式后，是否隐藏 Banner
      *
@@ -64,13 +63,13 @@ export interface TkThemeConfig {
      */
     hideBanner?: boolean;
     /**
-     * 开启壁纸模式后，是否隐藏 Banner 和 bodyBgImage 的遮罩层，则确保 banner.mask 和 bodyBgImage.mask 为 true 才生效
+     * 开启壁纸模式后，是否隐藏 Banner 或 bodyBgImage 的遮罩层，则确保 banner.mask 和 bodyBgImage.mask 为 true 才生效
      *
      * @default false
      */
     hideMask?: boolean;
     /**
-     * 开启壁纸模式后，是否隐藏 Banner 波浪，仅 banner.bgStyle = 'bigImg' 生效
+     * 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'bigImg' 生效
      *
      * @default false
      */
@@ -90,10 +89,6 @@ export interface TkThemeConfig {
     link?: string;
   };
   /**
-   * 文章列表配置，支持在 frontmatter 配置，如果是首页 index.md，则是 tk.post.[key]，如果是非首页 index.md，则是 post.[key]
-   */
-  post?: Post;
-  /**
    * 主题全局配置
    */
   themeSetting?: ThemeSetting;
@@ -106,13 +101,13 @@ export interface TkThemeConfig {
    */
   banner?: Banner;
   /**
-   * 面包屑配置，里面的属性全部支持在 frontmatter 配置 breadcrumb.[key]
-   */
-  breadcrumb?: Breadcrumb;
-  /**
    * 博主信息 (显示在首页侧边栏)
    */
   blogger?: Blogger;
+  /**
+   * 精选文章卡片配置，里面的属性全部支持在 frontmatter 配置 tk.topArticle.[key]
+   */
+  topArticle?: TopArticle;
   /**
    * 分类卡片配置，里面的属性全部支持在 frontmatter 配置 tk.category.[key]
    */
@@ -122,10 +117,6 @@ export interface TkThemeConfig {
    */
   tag?: Tag;
   /**
-   * 精选文章卡片配置，里面的属性全部支持在 frontmatter 配置 tk.topArticle.[key]
-   */
-  topArticle?: TopArticle;
-  /**
    * 友情链接卡片配置，里面的属性全部支持在 frontmatter 配置 tk.friendLink.[key]
    */
   friendLink?: FriendLink;
@@ -133,6 +124,14 @@ export interface TkThemeConfig {
    * 站点信息卡片配置，里面的属性全部支持在 frontmatter 配置 tk.docAnalysis.[key]
    */
   docAnalysis?: DocAnalysis;
+  /**
+   * 文章列表配置，支持在 frontmatter 配置，如果是首页 index.md，则是 tk.post.[key]，如果是非首页 index.md，则是 post.[key]
+   */
+  post?: Post;
+  /**
+   * 面包屑配置，里面的属性全部支持在 frontmatter 配置 breadcrumb.[key]
+   */
+  breadcrumb?: Breadcrumb;
   /**
    * 社交配置
    */
@@ -142,9 +141,14 @@ export interface TkThemeConfig {
    */
   footerInfo?: FooterInfo;
   /**
-   * 评论区配置
+   * 评论配置
    */
-  comment?: CommentConfig<"twikoo"> | CommentConfig<"waline"> | CommentConfig<"giscus"> | CommentConfig<"artalk">;
+  comment?:
+    | CommentConfig<"twikoo">
+    | CommentConfig<"waline">
+    | CommentConfig<"giscus">
+    | CommentConfig<"artalk">
+    | CommentConfig<"render">;
   /**
    * 内置插件配置
    */
@@ -153,86 +157,6 @@ export interface TkThemeConfig {
    * 首页 Post 的分页配置，完全是 ElPagination 的 props
    */
   page?: Partial<PaginationProps>;
-}
-
-export interface Post {
-  /**
-   * 摘要位置
-   *
-   * @default bottom
-   */
-  excerptPosition?: "top" | "bottom";
-  /**
-   * 是否显示更多按钮
-   *
-   * @default true
-   */
-  showMore?: boolean;
-  /**
-   * 更多按钮文字
-   *
-   * @default '阅读全文 >'
-   */
-  moreLabel?: string;
-  /**
-   * 文章封面图模式
-   *
-   * @default 'default'
-   */
-  coverImgMode?: "default" | "large";
-  /**
-   * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
-   *
-   * @default false
-   */
-  showCapture?: boolean;
-  /**
-   * 文章信息图标是否显示
-   *
-   * @default true
-   */
-  showIcon?: boolean;
-  /**
-   * 文章日期格式，首页和文章页解析日期时使用
-   *
-   * @default 'yyyy-MM-dd'
-   */
-  dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: string) => string);
-  /**
-   * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等基本信息，分别作用于首页和文章页
-   * 如果 showBaseInfo 为数组，则控制在哪里显示，如 ["home"]，则只在首页显示基本信息；如果为 boolean 值，则控制基本信息是否展示，如 false，则在首页和文章页都不显示基本信息
-   *
-   * @default true
-   */
-  showBaseInfo?: boolean | ("home" | "article")[];
-  /**
-   * 文章页是否展示作者
-   *
-   * @default true
-   */
-  showAuthor?: boolean;
-  /**
-   * 文章页是否展示日期
-   *
-   * @default true
-   */
-  showDate?: boolean;
-  /**
-   * 文章页是否展示分类
-   *
-   * @default false
-   */
-  showCategory?: boolean;
-  /**
-   * 文章页是否展示标签
-   *
-   * @default false
-   */
-  showTag?: boolean;
-  /**
-   * 图片查看器配置，完全是 ElImageViewer 的 props
-   */
-  imageViewer?: Partial<ImageViewerProps>;
 }
 
 export interface ThemeSetting {
@@ -448,27 +372,6 @@ export interface Banner {
   typesNextTime?: number;
 }
 
-export interface Breadcrumb {
-  /**
-   * 是否启用面包屑
-   *
-   * @default true
-   */
-  enabled?: boolean;
-  /**
-   * 面包屑最后一列是否显示当前文章的文件名
-   *
-   * @default false
-   */
-  showCurrentName?: boolean;
-  /**
-   * 面包屑分隔符
-   *
-   * @default '/'
-   */
-  separator?: string;
-}
-
 export interface Blogger {
   /**
    * 博主昵称
@@ -488,6 +391,39 @@ export interface Blogger {
    * @default 'radius'
    */
   avatarStyle?: "radius" | "full";
+}
+
+export interface TopArticle {
+  /**
+   * 是否启用精选文章卡片
+   *
+   * @default true
+   */
+  enabled?: boolean;
+  /**
+   * 首页卡片标题
+   *
+   * @default '${svg}精选文章'
+   */
+  title?: string | ((svg: string) => string);
+  /**
+   * 一页显示的数量
+   *
+   * @default 5
+   */
+  limit?: number;
+  /**
+   * 是否自动翻页
+   *
+   * @default false
+   */
+  autoPage?: boolean;
+  /**
+   * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+   *
+   * @default 4000 (4秒)
+   */
+  pageSpeed?: number;
 }
 
 export interface Category {
@@ -570,39 +506,6 @@ export interface Tag {
    * 自定义 tag 的背景颜色，默认取 theme.bgColor
    */
   bgColor?: string[];
-}
-
-export interface TopArticle {
-  /**
-   * 是否启用精选文章卡片
-   *
-   * @default true
-   */
-  enabled?: boolean;
-  /**
-   * 首页卡片标题
-   *
-   * @default '${svg}精选文章'
-   */
-  title?: string | ((svg: string) => string);
-  /**
-   * 一页显示的数量
-   *
-   * @default 5
-   */
-  limit?: number;
-  /**
-   * 是否自动翻页
-   *
-   * @default false
-   */
-  autoPage?: boolean;
-  /**
-   * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
-   *
-   * @default 4000 (4秒)
-   */
-  pageSpeed?: number;
 }
 
 export interface FriendLink {
@@ -764,6 +667,107 @@ export interface DocAnalysisInfo {
   show?: boolean;
 }
 
+export interface Post {
+  /**
+   * 摘要位置
+   *
+   * @default bottom
+   */
+  excerptPosition?: "top" | "bottom";
+  /**
+   * 是否显示更多按钮
+   *
+   * @default true
+   */
+  showMore?: boolean;
+  /**
+   * 更多按钮文字
+   *
+   * @default '阅读全文 >'
+   */
+  moreLabel?: string;
+  /**
+   * 文章封面图模式
+   *
+   * @default 'default'
+   */
+  coverImgMode?: "default" | "large";
+  /**
+   * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
+   *
+   * @default false
+   */
+  showCapture?: boolean;
+  /**
+   * 作者、日期、分类、标签、字数、阅读时长、浏览量等基本信息的图标是否显示
+   *
+   * @default true
+   */
+  showIcon?: boolean;
+  /**
+   * 文章日期格式，首页和文章页解析日期时使用
+   *
+   * @default 'yyyy-MM-dd'
+   */
+  dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: string) => string);
+  /**
+   * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等基本信息，分别作用于首页和文章页
+   * 如果 showBaseInfo 为数组，则控制在哪里显示，如 ["home"] 只在首页显示基本信息；如果为 boolean 值，则控制基本信息是否展示，如 false 则在首页和文章页都不显示基本信息
+   *
+   * @default true
+   */
+  showBaseInfo?: boolean | ("home" | "article")[];
+  /**
+   * 文章页是否展示作者
+   *
+   * @default true
+   */
+  showAuthor?: boolean;
+  /**
+   * 文章页是否展示日期
+   *
+   * @default true
+   */
+  showDate?: boolean;
+  /**
+   * 文章页是否展示分类
+   *
+   * @default false
+   */
+  showCategory?: boolean;
+  /**
+   * 文章页是否展示标签
+   *
+   * @default false
+   */
+  showTag?: boolean;
+  /**
+   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   */
+  imageViewer?: Partial<ImageViewerProps>;
+}
+
+export interface Breadcrumb {
+  /**
+   * 是否启用面包屑
+   *
+   * @default true
+   */
+  enabled?: boolean;
+  /**
+   * 面包屑最后一列是否显示当前文章的文件名
+   *
+   * @default false
+   */
+  showCurrentName?: boolean;
+  /**
+   * 面包屑分隔符
+   *
+   * @default '/'
+   */
+  separator?: string;
+}
+
 export interface Social {
   /**
    * 名称，如果作用在 a 标签，则鼠标悬停显示名称，否则在页面文字显示
@@ -828,13 +832,14 @@ export interface FooterInfo {
   securityRecord?: Social;
 }
 
-export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" | "giscus" | "artalk"> = {
+export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" | "giscus" | "artalk" | "render"> = {
   /**
    * 评论区提供者
    * twikoo 官网：https://twikoo.js.org/
    * waline 官网：https://waline.js.org/
    * giscus 官网：https://giscus.app/zh-CN
    * artalk 官网：https://artalk.js.org/
+   * render 需要自定义评论区组件
    */
   provider: T;
   /**
@@ -842,9 +847,9 @@ export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" 
    */
   options?: CommentProvider[T];
   /**
-   * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如 .vue 组件
+   * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如一个 vue 组件。当自定义组件时，请将 provider 设为 render
    *
-   * @remark 例：{ ..., render: () => <MyCommentVueComponent /> }
+   * @remark 例：{ provider: "render", render: () => <MyCommentVueComponent /> }
    */
   render?: () => VNode;
 };
@@ -973,6 +978,10 @@ export type CommentProvider = {
      */
     site: string;
   };
+  /**
+   * 自定义评论组件
+   */
+  render: Record<string, any>;
 };
 
 export interface Plugins {

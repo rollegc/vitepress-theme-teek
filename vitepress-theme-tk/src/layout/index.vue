@@ -19,6 +19,7 @@ import CommentGiscus from "../components/CommentGiscus.vue";
 import CommentWaline from "../components/CommentWaline.vue";
 import HomeFullscreenWallpaper from "../components/HomeFullscreenWallpaper.vue";
 import CodeBlockToggle from "../components/CodeBlockToggle.vue";
+import { Banner, CommentConfig } from "../config/types";
 
 defineOptions({ name: "TkLayout" });
 
@@ -32,14 +33,15 @@ const { frontmatter: frontmatterRef } = useData();
 
 const { tkTheme = true, tkHome = true, wallpaper = {}, codeBlock = true } = theme;
 
-const { enabled = true, bgStyle, imgSrc } = { ...theme.banner, ...frontmatter.tk?.banner };
-const { provider, render } = { ...theme.comment };
+const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+const { provider, render }: CommentConfig = { ...theme.comment };
 
 const commentComponent = {
   twikoo: CommentTwikoo,
   waline: CommentWaline,
   giscus: CommentGiscus,
   artalk: CommentArtalk,
+  render,
 };
 </script>
 
@@ -88,9 +90,8 @@ const commentComponent = {
       <slot name="doc-after" />
       <!-- 评论区 -->
       <template v-if="frontmatterRef.comment !== false">
-        <component v-if="render" :is="render" :id="`${prefixClass}-comment`" :class="`${prefixClass}-comment`" />
         <component
-          v-else-if="provider"
+          v--if="provider"
           :is="commentComponent[provider]"
           :id="`${prefixClass}-comment`"
           :class="`${prefixClass}-comment`"

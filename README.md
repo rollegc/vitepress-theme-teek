@@ -2,22 +2,36 @@
 
 正在开发 ing...
 
+开发计划已完成 90%。
+
 ## TODO
 
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- 修改 themeConfig 动态生效，不需要重启服务
+- JS 支持修改 themeConfig
+- 构建测试、部署测试、线上效果测试
+- 项目发布 NPM 库
 
 ## 使用
+
+项目拉取
+
+```bash
+git clone https://github.com/Kele-Bingtang/vitepress-theme-kt.git
+```
+
+依赖安装（只能用 pnpm 安装依赖）
 
 ```bash
 pnpm install
 ```
 
+项目启动
+
 ```bash
 # 基本文档 Demo
-docs:base:dev
+pnpm docs:base:dev
 # 多语言文档 Demo（默认语言的文档放到根目录下）
-docs:locales:dev
+pnpm docs:locales:dev
 # 多语言文档 Demo（默认语言的文档放到指定目录下）
-docs:localesRoot:dev
+pnpm docs:localesRoot:dev
 ```

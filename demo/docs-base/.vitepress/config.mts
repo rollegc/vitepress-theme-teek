@@ -32,7 +32,7 @@ const tkConfig = themeConfig({
   //   imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
   // },
 
-  // 首页顶部 F11 壁纸模式
+  // 首页顶部按 F11 开启壁纸模式
   wallpaper: {
     enabled: true,
   },

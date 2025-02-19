@@ -24,7 +24,7 @@ const {
 
 const topArticleList = computed(() => {
   const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;
-  return sortPostsByDateAndSticky.filter(p => p.frontmatter.hot)?.map((p, index) => ({ ...p, num: index + 1 }));
+  return sortPostsByDateAndSticky.filter(p => p.frontmatter.top)?.map((p, index) => ({ ...p, num: index + 1 }));
 });
 
 const pageNum = ref(1);
