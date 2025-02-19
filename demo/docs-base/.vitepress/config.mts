@@ -91,6 +91,9 @@ const tkConfig = themeConfig({
       link: "https://www.youngkbt.cn/?contact=true",
     },
   ],
+  topArticle: {
+    enabled: false,
+  },
   comment: {
     provider: "twikoo",
     options: {

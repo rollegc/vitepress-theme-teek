@@ -72,7 +72,7 @@ const baseInfo = [
     dataList: post.frontmatter?.categories || [],
     href: "/categories?category={data}",
     class: "or",
-    show: showCategory,
+    show: scope === "home" || showCategory,
   },
   {
     title: "标签",
@@ -80,7 +80,7 @@ const baseInfo = [
     dataList: post.frontmatter?.tags || [],
     href: "/tags?tag={data}",
     class: "or",
-    show: showTag,
+    show: scope === "home" || showTag,
   },
 ];
 </script>

@@ -15,16 +15,16 @@ const prefixClass = getPrefixClass("homeInfo");
 const { theme, frontmatter } = useData();
 const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = unref(theme);
 
-const enabledTopArticleCard = topArticle?.enabled || true;
-const enabledCategoryCard = category?.enabled || true;
-const enabledTagCard = tag?.enabled || true;
-const enabledDocAnalysisCard = docAnalysis?.enabled || true;
-const enabledFriendLinkCard = friendLink?.enabled || true;
+const enabledTopArticleCard = topArticle?.enabled !== false;
+const enabledCategoryCard = category?.enabled !== false;
+const enabledTagCard = tag?.enabled !== false;
+const enabledDocAnalysisCard = docAnalysis?.enabled !== false;
+const enabledFriendLinkCard = friendLink?.enabled !== false;
 
 // 获取用户配置 + 默认的卡片排序
 const finalHomeCardSort = computed(() => {
   const configCardSort = homeCardSort || [];
-  return [...new Set([...configCardSort, ...["topArticle", "category", "tag", "docAnalysis", "friendLink"]])];
+  return [...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
 const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);

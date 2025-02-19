@@ -31,9 +31,9 @@ export interface TkThemeConfig {
   /**
    * 首页卡片的排序
    *
-   * @default '["topArticle", "category", "tag", "docAnalysis", "friendLink"]'
+   * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
    */
-  homeCardSort?: ("topArticle" | "category" | "tag" | "docAnalysis" | "friendLink")[];
+  homeCardSort?: ("topArticle" | "category" | "tag" | "friendLink" | "docAnalysis")[];
   /**
    * 背景色，用于精选文章卡片的 hot 功能和标签卡片的背景色
    *
