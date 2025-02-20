@@ -15,13 +15,13 @@ let permalinks: Record<string, string> = {};
  * @param cleanUrls 是否清除 .html 后缀
  */
 export default (option: PermalinkOption = {}, cleanUrls = false): Record<string, string> => {
-  const { base = process.cwd(), ignoreList = [] } = option;
+  const { srcDir = process.cwd(), ignoreList = [] } = option;
 
   // 获取指定根目录下的所有目录绝对路径
-  const dirPaths = readDirPaths(base, ignoreList);
+  const dirPaths = readDirPaths(srcDir, ignoreList);
 
   // 只扫描根目录的 md 文件
-  scannerMdFile(base, option, "", cleanUrls, true);
+  scannerMdFile(srcDir, option, "", cleanUrls, true);
 
   // 遍历根目录下的每个子目录
   dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath), cleanUrls));

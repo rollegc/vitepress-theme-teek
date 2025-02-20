@@ -20,7 +20,7 @@ const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.pag
 const { coverImgMode = "default" } = { ...theme.post, ...frontmatter.tk?.post };
 
 // 分页信息
-const pageInfo = reactive({
+const pageInfo = ref({
   pageNum: 1,
   pageSizes: [10, 20, 50, 100, 200],
   pageSize: pageSize,
@@ -33,12 +33,12 @@ const pageNumKey = "pageNum";
 
 const updateData = () => {
   const { frontmatter } = route.data;
-  const { pageNum, pageSize, total } = pageInfo;
+  const { pageNum, pageSize, total } = unref(pageInfo);
 
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
   const p = searchParams.get(pageNumKey) || 1;
-  if (p !== pageNum) pageInfo.pageNum = Number(p);
+  if (p !== pageNum) unref(pageInfo).pageNum = Number(p);
 
   let post = unref(posts).sortPostsByDateAndSticky;
 
@@ -53,9 +53,9 @@ const updateData = () => {
   }
 
   // 总数处理
-  if (total !== post.length) pageInfo.total = post.length || 0;
+  if (total !== post.length) unref(pageInfo).total = post.length || 0;
 
-  currentPosts.value = post.slice((pageInfo.pageNum - 1) * pageSize, pageInfo.pageNum * pageSize);
+  currentPosts.value = post.slice((unref(pageInfo).pageNum - 1) * pageSize, unref(pageInfo).pageNum * pageSize);
 };
 
 watch(
@@ -73,7 +73,7 @@ const handlePagination = () => {
   const { searchParams } = new URL(window.location.href!);
   // 先删除旧的再追加新的
   searchParams.delete(pageNumKey);
-  searchParams.append(pageNumKey, String(pageInfo.pageNum));
+  searchParams.append(pageNumKey, String(unref(pageInfo).pageNum));
   // 替换 URL，但不刷新
   window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
   // 更新数据

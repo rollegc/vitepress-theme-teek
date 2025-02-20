@@ -63,6 +63,7 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
   }
 
   return {
+    ignoreDeadLinks: true,
     vite: {
       plugins,
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.

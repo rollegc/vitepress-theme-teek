@@ -37,18 +37,18 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
         site: { themeConfig = {}, locales = {} },
         srcDir,
       } = config.vitepress;
-      const { base, ignoreList, localeRootDir } = option;
-      const baseDir = base ? join(process.cwd(), base) : srcDir;
+      const { srcDir: pluginSrcDir, ignoreList, localeRootDir } = option;
+      const baseDir = srcDir ? join(process.cwd(), srcDir) : pluginSrcDir;
 
       // 多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
       // 如果不是多语言，直接自动生成结构化侧边栏
-      if (!localesKeys.length) return setSideBar(themeConfig, createSidebar({ ...option, base: baseDir }));
+      if (!localesKeys.length) return setSideBar(themeConfig, createSidebar({ ...option, srcDir: baseDir }));
 
       // 多语言处理，针对每个语言的目录进行单独的扫描（除了 root）
       localesKeys.forEach(localesKey => {
         const sidebar: DefaultTheme.SidebarMulti = createSidebar(
-          { ...option, base: `${baseDir}/${localesKey}` },
+          { ...option, srcDir: `${baseDir}/${localesKey}` },
           localesKey
         );
         setSideBar(locales[localesKey].themeConfig, sidebar);
@@ -59,7 +59,7 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       // 对 root 根目录的 sidebar 进行单独的扫描，且不扫描其他语言目录
       const rootSideBar = createSidebar({
         ...option,
-        base: `${baseDir}${rootDir}`,
+        srcDir: `${baseDir}${rootDir}`,
         ignoreList: [...(ignoreList || []), ...localesKeys],
       });
       setSideBar(locales["root"].themeConfig, rootSideBar);

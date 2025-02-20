@@ -12,7 +12,7 @@ export interface SidebarOption {
    *
    * @default 'vitepress 的 srcDir 配置项'
    */
-  base?: string;
+  srcDir?: string;
   /**
    * 是否忽略每个目录下的 index.md 文件
    *

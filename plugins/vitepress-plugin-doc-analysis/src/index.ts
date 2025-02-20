@@ -15,7 +15,7 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
         srcDir,
       } = config.vitepress;
 
-      option.base = option.base ? join(process.cwd(), option.base) : srcDir;
+      option.srcDir = option.srcDir ? join(process.cwd(), option.srcDir) : srcDir;
 
       // 多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
@@ -24,7 +24,7 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
 
       // 多语言处理，针对每个语言的目录进行单独的扫描（除了 root）
       localesKeys.forEach(localesKey => {
-        const fileList = readFileList({ ...option, base: `${option.base}/${localesKey}` }, localesKey);
+        const fileList = readFileList({ ...option, srcDir: `${option.srcDir}/${localesKey}` }, localesKey);
         doDocAnalysisThenSet(locales[localesKey].themeConfig, fileList, option);
       });
 
