@@ -17,13 +17,13 @@ export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepres
  * @param prefix 指定前缀，在生成 relativePath 的时候会自动加上前缀
  */
 export default (option: DocAnalysisOption = {}, prefix = ""): FileInfo[] => {
-  const { srcDir = process.cwd() } = option;
+  const { path = process.cwd() } = option;
   // 结尾必须有 /
   prefix = prefix.endsWith("/") ? prefix : `${prefix}/`;
   // 开头不允许有 /
   prefix = prefix.replace(/^\//, "");
 
-  return readFileList(srcDir, option, [], prefix);
+  return readFileList(path, option, [], prefix);
 };
 
 /**
@@ -35,7 +35,7 @@ export function readFileList(
   fileList: FileInfo[] = [],
   prefix = ""
 ): FileInfo[] {
-  const { srcDir = process.cwd(), ignoreList = [], ignoreIndexMd } = option;
+  const { path = process.cwd(), ignoreList = [], ignoreIndexMd } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 
   const secondDirOrFilenames = readdirSync(root);
@@ -53,7 +53,7 @@ export function readFileList(
       if (!isMdFile(dirOrFilename)) return [];
       if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
       // 根目录的 index.md（首页文档）不扫描
-      if (filePath === resolve(srcDir, "index.md")) return [];
+      if (filePath === resolve(path, "index.md")) return [];
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
@@ -63,7 +63,7 @@ export function readFileList(
       if (layout === "home" || docAnalysis === false) return [];
 
       // 确保路径是绝对路径
-      const workingDir = resolve(srcDir);
+      const workingDir = resolve(path);
       const absoluteFilePath = resolve(filePath);
       // 计算相对路径
       const relativePath = relative(workingDir, absoluteFilePath).replace(/\\/g, "/");

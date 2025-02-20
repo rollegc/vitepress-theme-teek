@@ -7,48 +7,46 @@
 
 // 基础全局样式变量，和 .dark 呼应
 :root {
-  --tk-theme-color: var(--vp-c-brand-1);
-  --tk-lower-color1: #86909c;
-  --tk-lower-color2: #4e5969;
-  --tk-lower-color3: #fdfdfd;
-  --tk-lower-color4: rgba(253, 253, 253, 0.3);
-  --tk-lower-color5: rgba(253, 253, 253, 0.5);
-  --tk-lower-color6: rgba(253, 253, 253, 0.7);
-  --tk-bg-color1: var(--vp-c-bg);
-  --tk-bg-color2: rgb(255, 255, 255, 0.7);
-  --tk-shadow-color: rgba(0, 0, 0, 0.1);
-  --tk-shadow-color-hover: rgba(0, 0, 0, 0.2);
-  --tk-line-color: rgba(0, 0, 0, 0.12);
-  --tk-item-bg-color-hover: #f8f8f8;
+  --#{$theme-namespace}-theme-color: var(--vp-c-brand-1);
+  --#{$theme-namespace}-lower-color1: #86909c;
+  --#{$theme-namespace}-lower-color2: #4e5969;
+  --#{$theme-namespace}-lower-color3: #fdfdfd;
+  --#{$theme-namespace}-lower-color4: rgba(253, 253, 253, 0.3);
+  --#{$theme-namespace}-lower-color5: rgba(253, 253, 253, 0.5);
+  --#{$theme-namespace}-lower-color6: rgba(253, 253, 253, 0.7);
+  --#{$theme-namespace}-bg-color1: var(--vp-c-bg);
+  --#{$theme-namespace}-bg-color2: rgb(255, 255, 255, 0.7);
+  --#{$theme-namespace}-shadow-color: rgba(0, 0, 0, 0.1);
+  --#{$theme-namespace}-shadow-color-hover: rgba(0, 0, 0, 0.2);
+  --#{$theme-namespace}-line-color: rgba(0, 0, 0, 0.12);
+  --#{$theme-namespace}-item-bg-color-hover: #f8f8f8;
 }
 
 :root.dark {
-  --tk-theme-color: var(--vp-c-brand-1);
-  --tk-lower-color1: #9facba;
-  --tk-lower-color2: #bdc3cc;
-  --tk-lower-color3: #21252b;
-  --tk-lower-color4: rgba(34, 34, 34, 0.3);
-  --tk-lower-color5: rgba(34, 34, 34, 0.5);
-  --tk-lower-color6: rgba(34, 34, 34, 0.7);
-  --tk-bg-color1: var(--vp-c-bg);
-  --tk-bg-color2: rgb(20, 20, 20, 0.7);
-  --tk-shadow-color: rgba(0, 0, 0, 0.6);
-  --tk-shadow-color-hover: rgba(0, 0, 0, 0.7);
-  --tk-line-color: #30363d;
-  --tk-item-bg-color-hover: #27272b;
+  --#{$theme-namespace}-theme-color: var(--vp-c-brand-1);
+  --#{$theme-namespace}-lower-color1: #9facba;
+  --#{$theme-namespace}-lower-color2: #bdc3cc;
+  --#{$theme-namespace}-lower-color3: #21252b;
+  --#{$theme-namespace}-lower-color4: rgba(34, 34, 34, 0.3);
+  --#{$theme-namespace}-lower-color5: rgba(34, 34, 34, 0.5);
+  --#{$theme-namespace}-lower-color6: rgba(34, 34, 34, 0.7);
+  --#{$theme-namespace}-bg-color1: var(--vp-c-bg);
+  --#{$theme-namespace}-bg-color2: rgb(20, 20, 20, 0.7);
+  --#{$theme-namespace}-shadow-color: rgba(0, 0, 0, 0.6);
+  --#{$theme-namespace}-shadow-color-hover: rgba(0, 0, 0, 0.7);
+  --#{$theme-namespace}-line-color: #30363d;
+  --#{$theme-namespace}-item-bg-color-hover: #27272b;
 }
 
 // 全局样式变量
 :root {
-  // 命名空间，具体看 src/hooks/useDesign.ts 的使用
-  --tk-namespace: #{$theme-namespace};
-  --tk-gap2: 10px;
-  --tk-gap1: 20px;
-  --tk-code-block-fold-height: 40px;
+  --#{$theme-namespace}-gap2: 10px;
+  --#{$theme-namespace}-gap1: 20px;
+  --#{$theme-namespace}-code-block-fold-height: 40px;
 }
 
 // 使用自定义自定义全局样式变量
 :root {
-  --tk-article-gap: var(--tk-gap2);
-  --tk-friend-gap: var(--tk-gap1);
+  --#{$theme-namespace}-article-gap: var(--#{$theme-namespace}-gap2);
+  --#{$theme-namespace}-friend-gap: var(--#{$theme-namespace}-gap1);
 }

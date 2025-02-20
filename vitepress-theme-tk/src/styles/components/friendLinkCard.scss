@@ -5,7 +5,7 @@ $prefix-class: #{$theme-namespace}-friendLink;
 .#{$prefix-class} {
   &-list {
     position: relative;
-    gap: var(--tk-friend-gap);
+    gap: var(--#{$theme-namespace}-friend-gap);
     padding-right: 5px;
 
     &__item {
@@ -23,11 +23,11 @@ $prefix-class: #{$theme-namespace}-friendLink;
         // 让文字溢出后显示 ...
         min-width: 0;
         .friend-name {
-          font-size: var(--tk-home-font-size-middle);
+          font-size: var(--#{$theme-namespace}-home-font-size-middle);
           font-weight: 450;
         }
         .friend-desc {
-          font-size: var(--tk-home-font-size-small);
+          font-size: var(--#{$theme-namespace}-home-font-size-small);
           color: var(--vp-c-text-2);
         }
       }
@@ -35,7 +35,7 @@ $prefix-class: #{$theme-namespace}-friendLink;
   }
 
   &-empty {
-    font-size: var(--tk-home-font-size-middle);
+    font-size: var(--#{$theme-namespace}-home-font-size-middle);
     padding: 6px;
     text-align: center;
   }

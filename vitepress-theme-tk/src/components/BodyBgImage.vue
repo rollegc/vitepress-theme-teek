@@ -69,7 +69,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
 // 官方默认样式
 .#{$prefix-class-layout}.#{$prefix-class-default} {
   .VPContent:not(.is-home) {
-    background-color: var(--tk-bg-color1);
+    background-color: var(--#{$theme-namespace}-bg-color1);
   }
 }
 
@@ -78,7 +78,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
 .#{$prefix-class-layout}.#{$prefix-class-card-nav} {
   .VPContent:not(.is-home) {
     .VPDoc.has-sidebar {
-      background-color: var(--tk-bg-color1);
+      background-color: var(--#{$theme-namespace}-bg-color1);
       padding-top: 0;
       padding-left: 10px;
     }
@@ -86,7 +86,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
     .VPDoc:not(.has-sidebar) {
       padding-top: 0;
       .container {
-        background-color: var(--tk-bg-color1);
+        background-color: var(--#{$theme-namespace}-bg-color1);
         & > .content {
           padding-left: 0;
           padding-right: 10px;
@@ -106,7 +106,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
     .VPDoc {
       padding: 0;
       .container > .content {
-        background-color: var(--tk-bg-color1);
+        background-color: var(--#{$theme-namespace}-bg-color1);
         .content-container {
           padding-left: 10px;
         }
@@ -118,7 +118,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
             padding-bottom: 20px;
             .content {
               padding-bottom: 10px;
-              background-color: var(--tk-bg-color1);
+              background-color: var(--#{$theme-namespace}-bg-color1);
             }
           }
         }
@@ -143,7 +143,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
 
       // 带侧边栏的导航栏
       .VPNavBar.has-sidebar:not(.home) {
-        background-color: var(--tk-bg-color1);
+        background-color: var(--#{$theme-namespace}-bg-color1);
         .title {
           padding-left: 20px;
         }
@@ -183,7 +183,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
         font-weight: 700;
       }
       &.active {
-        color: var(--tk-theme-color);
+        color: var(--#{$theme-namespace}-theme-color);
       }
     }
   }
@@ -206,7 +206,7 @@ $prefix-class-segment-nav: #{$theme-namespace}-segment-nav;
   @media (min-width: 960px) {
     .VPNav {
       .VPNavBar.has-sidebar:not(.home) {
-        background-color: var(--tk-bg-color1);
+        background-color: var(--#{$theme-namespace}-bg-color1);
       }
     }
   }

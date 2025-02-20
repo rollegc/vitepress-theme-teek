@@ -3,7 +3,7 @@ import { useDesign } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import CatalogueItem from "./CatalogueItem.vue";
 
-const { getPrefixClass } = useDesign();
+const { getPrefixClass, namespace } = useDesign();
 const prefixClass = getPrefixClass("catalogue");
 
 const { theme, frontmatter } = useUnrefData();
@@ -23,9 +23,9 @@ const catalogueList = theme.sidebar[getPath()];
 </script>
 
 <template>
-  <div :class="`${prefixClass} tk-page`">
+  <div :class="`${prefixClass} ${namespace}-page`">
     <div :class="`${prefixClass}-header`">
-      <div class="tk-page-title-h2">{{ frontmatter.title }}</div>
+      <div :class="`${namespace}-page-title-h2`">{{ frontmatter.title }}</div>
       <div class="description">{{ frontmatter.desc || frontmatter.description }}</div>
     </div>
 

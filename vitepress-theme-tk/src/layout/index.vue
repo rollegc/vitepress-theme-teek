@@ -199,8 +199,8 @@ $prefix-class: #{$theme-namespace}-layout;
   &-home {
     &-content {
       margin: 3rem auto 0;
-      max-width: var(--tk-home-max-width);
-      gap: var(--tk-home-gap);
+      max-width: var(--#{$theme-namespace}-home-max-width);
+      gap: var(--#{$theme-namespace}-home-gap);
 
       &__list {
         flex: 1;

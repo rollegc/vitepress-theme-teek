@@ -4,27 +4,27 @@ $prefix-class: #{$theme-namespace}-homeCard;
 
 .#{$prefix-class} {
   margin: 0 auto 10px;
-  padding: var(--tk-home-card-padding);
-  width: var(--tk-home-card-width);
+  padding: var(--#{$theme-namespace}-home-card-padding);
+  width: var(--#{$theme-namespace}-home-card-width);
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 1px 8px 0 var(--tk-shadow-color);
+  box-shadow: 0 1px 8px 0 var(--#{$theme-namespace}-shadow-color);
   transition: box-shadow 0.5s;
-  background-color: var(--tk-bg-color2);
+  background-color: var(--#{$theme-namespace}-bg-color2);
 
   &:hover {
-    box-shadow: 0 2px 16px 0 var(--tk-shadow-color-hover);
+    box-shadow: 0 2px 16px 0 var(--#{$theme-namespace}-shadow-color-hover);
   }
 
   &-header {
     margin-bottom: 10px;
     .title {
-      font-size: var(--tk-home-font-size-large);
+      font-size: var(--#{$theme-namespace}-home-font-size-large);
 
       :deep(svg) {
         width: 16px;
         height: 16px;
-        margin-right: var(--tk-home-card-svg-margin-left);
+        margin-right: var(--#{$theme-namespace}-home-card-svg-margin-left);
       }
     }
 
@@ -33,11 +33,11 @@ $prefix-class: #{$theme-namespace}-homeCard;
       user-select: none;
 
       .el-icon {
-        font-size: var(--tk-home-font-size-middle);
+        font-size: var(--#{$theme-namespace}-home-font-size-middle);
       }
 
       &:hover {
-        color: var(--tk-theme-color);
+        color: var(--#{$theme-namespace}-theme-color);
       }
 
       &.pointer {

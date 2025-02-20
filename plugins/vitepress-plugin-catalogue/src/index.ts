@@ -14,11 +14,8 @@ export default function VitePluginVitePressCatalogue(option: CatalogueOption = {
         srcDir,
       } = config.vitepress;
 
-      console.log(join(process.cwd(), option.srcDir || ""));
-
-      option.srcDir = option.srcDir ? join(process.cwd(), option.srcDir) : srcDir;
-
-      const catalogues = createCatalogues(option);
+      const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
+      const catalogues = createCatalogues({ ...option, path: baseDir });
 
       // Key 为文件路径，Value 为目录页扫描的路径
       const filePathToCataloguePath: Record<string, string> = {};

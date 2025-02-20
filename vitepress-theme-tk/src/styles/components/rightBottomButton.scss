@@ -19,21 +19,21 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
     height: 2.2rem;
     line-height: 2.4rem;
     border-radius: 50%;
-    box-shadow: 0 1px 8px var(--tk-shadow-color);
+    box-shadow: 0 1px 8px var(--#{$theme-namespace}-shadow-color);
     text-align: center;
     cursor: pointer;
-    background: var(--tk-bg-color1);
+    background: var(--#{$theme-namespace}-bg-color1);
 
     // i :deep(svg) {
     //   fill: var(--vp-c-text-2);
     //   &:hover {
-    //     fill: var(--tk-theme-color);
+    //     fill: var(--#{$theme-namespace}-theme-color);
     //   }
     // }
 
     &:hover {
-      background: var(--tk-theme-color);
-      box-shadow: 0 1px 8px var(--tk-shadow-color-hover);
+      background: var(--#{$theme-namespace}-theme-color);
+      box-shadow: 0 1px 8px var(--#{$theme-namespace}-shadow-color-hover);
       .el-icon {
         color: #ffffff;
       }
@@ -62,8 +62,8 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
 
     .dropdown {
       padding: 6px 0 8px 0;
-      background: var(--tk-bg-color1);
-      box-shadow: 0 1px 8px var(--tk-shadow-color);
+      background: var(--#{$theme-namespace}-bg-color1);
+      box-shadow: 0 1px 8px var(--#{$theme-namespace}-shadow-color);
       width: 110px;
       border-radius: 6px;
       line-height: 1.6rem;
@@ -73,12 +73,12 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
         font-size: 14px;
         padding: 0 10px 0 15px;
         &:hover {
-          background-color: var(--tk-item-bg-color-hover);
-          color: var(--tk-theme-color);
+          background-color: var(--#{$theme-namespace}-item-bg-color-hover);
+          color: var(--#{$theme-namespace}-theme-color);
         }
         &.active {
-          background-color: var(--tk-theme-color);
-          color: var(--tk-bg-color1);
+          background-color: var(--#{$theme-namespace}-theme-color);
+          color: var(--#{$theme-namespace}-bg-color1);
         }
       }
     }

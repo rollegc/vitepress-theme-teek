@@ -5,7 +5,7 @@ $prefix-class: #{$theme-namespace}-topArticle;
 .#{$prefix-class} {
   &-list {
     position: relative;
-    gap: var(--tk-article-gap);
+    gap: var(--#{$theme-namespace}-article-gap);
     padding-right: 5px;
 
     &__item {
@@ -13,8 +13,8 @@ $prefix-class: #{$theme-namespace}-topArticle;
       gap: 10px;
 
       .num {
-        color: var(--tk-lower-color1);
-        font-size: var(--tk-home-font-size-middle);
+        color: var(--#{$theme-namespace}-lower-color1);
+        font-size: var(--#{$theme-namespace}-home-font-size-middle);
         margin-top: 4px;
         padding: 0 6px;
         height: 18px;
@@ -24,8 +24,8 @@ $prefix-class: #{$theme-namespace}-topArticle;
         font-style: italic;
 
         &.sticky {
-          font-size: var(--tk-home-font-size-small);
-          background-color: var(--tk-num-bg-color);
+          font-size: var(--#{$theme-namespace}-home-font-size-small);
+          background-color: var(--#{$theme-namespace}-num-bg-color);
           color: #ffffff;
           border-radius: 8px 0;
         }
@@ -36,11 +36,11 @@ $prefix-class: #{$theme-namespace}-topArticle;
         min-width: 0;
 
         .title {
-          font-size: var(--tk-home-font-size-middle);
+          font-size: var(--#{$theme-namespace}-home-font-size-middle);
           font-weight: 450;
         }
         .date {
-          font-size: var(--tk-home-font-size-small);
+          font-size: var(--#{$theme-namespace}-home-font-size-small);
           color: var(--vp-c-text-2);
         }
       }
@@ -48,7 +48,7 @@ $prefix-class: #{$theme-namespace}-topArticle;
   }
 
   &-empty {
-    font-size: var(--tk-home-font-size-middle);
+    font-size: var(--#{$theme-namespace}-home-font-size-middle);
     padding: 6px;
     text-align: center;
   }

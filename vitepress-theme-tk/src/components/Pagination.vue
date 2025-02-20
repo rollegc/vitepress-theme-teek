@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useDesign } from "../hooks";
 import { scrollTo } from "../helper";
-import { nextTick, unref } from "vue";
+import { nextTick, onMounted, unref } from "vue";
 import { ElPagination } from "element-plus";
 
 export interface Paging {
@@ -12,7 +12,6 @@ export interface Paging {
 }
 
 export interface PaginationProps {
-  layout?: string; // 布局
   background?: boolean; // 是否开启背景色
   autoScroll?: boolean; // 切换页数，是否自动滚动到最上面
   hidden?: boolean; // 是否不显示分页
@@ -24,13 +23,7 @@ defineOptions({ name: "Pagination" });
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("pagination");
 
-const {
-  layout = "prev, pager, next, jumper, ->, total",
-  background = true,
-  autoScroll = true,
-  hidden = false,
-  reset = true,
-} = defineProps<PaginationProps>();
+const { background = true, autoScroll = true, hidden = false, reset = true } = defineProps<PaginationProps>();
 
 type PaginationEmits = {
   pagination: [value: Paging];
@@ -42,9 +35,12 @@ const pageObj = defineModel<Paging>({ required: true });
 
 const pageSetting = { pageNum: 1, pageSizes: [10, 20, 50, 100, 200], pageSize: 20 };
 
-if (!unref(pageObj).pageNum) unref(pageObj).pageNum = pageSetting.pageNum;
-if (!unref(pageObj).pageSizes) unref(pageObj).pageSizes = pageSetting.pageSizes;
-if (!unref(pageObj).pageSize) unref(pageObj).pageSize = pageSetting.pageSize;
+onMounted(() => {
+  const { pageNum, pageSize, pageSizes } = unref(pageObj);
+  if (!pageNum) unref(pageObj).pageNum = pageSetting.pageNum;
+  if (!pageSizes) unref(pageObj).pageSizes = pageSetting.pageSizes;
+  if (!pageSize) unref(pageObj).pageSize = pageSetting.pageSize;
+});
 
 const handleSizeChange = (value: number) => {
   if (reset) return handleCurrentChange(1);
@@ -60,6 +56,7 @@ const handleCurrentChange = (value: number) => {
 const afterChange = () => {
   pageObj.value = unref(pageObj);
   emits("pagination", unref(pageObj));
+
   if (autoScroll) {
     nextTick(() => {
       const rootStyles = getComputedStyle(document.documentElement);
@@ -69,8 +66,6 @@ const afterChange = () => {
     });
   }
 };
-
-defineExpose({ paging: pageSetting });
 </script>
 
 <template>
@@ -80,7 +75,6 @@ defineExpose({ paging: pageSetting });
       v-model:current-page="pageObj.pageNum"
       v-model:page-size="pageObj.pageSize"
       :page-sizes="pageObj.pageSizes"
-      :layout="layout"
       :total="pageObj.total || 0"
       v-bind="$attrs"
       @size-change="handleSizeChange"

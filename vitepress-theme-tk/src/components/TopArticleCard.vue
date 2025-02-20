@@ -8,7 +8,7 @@ import { TkContentData } from "../post/types";
 import { isFunction } from "../helper";
 import { TopArticle } from "../config/types";
 
-const { getPrefixClass } = useDesign();
+const { getPrefixClass, namespace } = useDesign();
 const prefixClass = getPrefixClass("topArticle");
 
 const posts = usePosts();
@@ -45,8 +45,8 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getStyle = (num: number, index: number) => {
   return {
-    "--tk-num-bg-color": bgColor[num % bgColor.length],
-    top: `calc(${index} * (calc(var(--tk-gap2) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    [`--${namespace}-num-bg-color`]: bgColor[num % bgColor.length],
+    top: `calc(${index} * (calc(var(--${namespace}-gap2) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>

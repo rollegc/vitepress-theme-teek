@@ -19,11 +19,11 @@ $prefix-class: #{$theme-namespace}-archives;
   &-timeline {
     margin: 2rem 0;
     &__year {
-      border-bottom: 1px solid var(--tk-line-color);
+      border-bottom: 1px solid var(--#{$theme-namespace}-line-color);
       margin-top: 2rem;
       position: sticky;
       top: var(--vp-nav-height);
-      background-color: var(--tk-bg-color1);
+      background-color: var(--#{$theme-namespace}-bg-color1);
       z-index: 1;
 
       .year {
@@ -36,7 +36,7 @@ $prefix-class: #{$theme-namespace}-archives;
     &-m {
       margin-top: 1rem;
       &__month {
-        border-bottom: 1px solid var(--tk-line-color);
+        border-bottom: 1px solid var(--#{$theme-namespace}-line-color);
         margin-top: 1rem;
         .month {
           padding-bottom: 0.5rem;
@@ -53,8 +53,8 @@ $prefix-class: #{$theme-namespace}-archives;
             transition: padding 0.3s;
             &:hover {
               padding-left: 1rem;
-              color: var(--tk-theme-color);
-              background: var(--tk-item-bg-color-hover);
+              color: var(--#{$theme-namespace}-theme-color);
+              background: var(--#{$theme-namespace}-item-bg-color-hover);
             }
 
             .date {

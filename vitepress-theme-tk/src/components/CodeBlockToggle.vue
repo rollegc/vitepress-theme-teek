@@ -2,6 +2,9 @@
 import { nextTick, onMounted } from "vue";
 import arrowSvg from "../assets/svg/arrow";
 import { useRouter } from "vitepress";
+import { useDesign } from "../hooks";
+
+const { namespace } = useDesign();
 
 const foldClass = "fold";
 const circleClass = "circle";
@@ -43,7 +46,7 @@ const createArrowElement = (item: HTMLElement) => {
 
   const codeBlockState = {
     expand: { height: `${modeHeight}px`, display: "block", speed: 80 },
-    fold: { height: "var(--tk-code-block-fold-height)", display: "none", speed: 400 },
+    fold: { height: `var(--${namespace}-code-block-fold-height)`, display: "none", speed: 400 },
   };
 
   let timeoutId: NodeJS.Timeout | null = null;
@@ -103,23 +106,25 @@ onMounted(() => {
 <template></template>
 
 <style lang="scss">
+@use "../styles/namespace.scss" as *;
+
 .vp-doc div[class*="language-"] {
   transition: height 0.3s;
   overflow: hidden;
 
   .vp-code {
-    padding-top: var(--tk-code-block-fold-height);
+    padding-top: var(--#{$theme-namespace}-code-block-fold-height);
   }
 
   .line-numbers-wrapper {
-    margin-top: var(--tk-code-block-fold-height);
+    margin-top: var(--#{$theme-namespace}-code-block-fold-height);
     padding-top: 0;
   }
 
   /* 代码块三个圆圈 */
   .circle {
     position: absolute;
-    top: calc(var(--tk-code-block-fold-height) / 2);
+    top: calc(var(--#{$theme-namespace}-code-block-fold-height) / 2);
     left: 14px;
     transform: translateY(-50%);
     width: 12px;
@@ -138,7 +143,7 @@ onMounted(() => {
   span.lang {
     position: absolute;
     z-index: 3;
-    top: calc(var(--tk-code-block-fold-height) / 2);
+    top: calc(var(--#{$theme-namespace}-code-block-fold-height) / 2);
     left: 75px;
     transform: translateY(-50%);
     font-size: 18px;
@@ -153,7 +158,7 @@ onMounted(() => {
     width: 18px;
     height: 18px;
     position: absolute;
-    top: calc(var(--tk-code-block-fold-height) / 2);
+    top: calc(var(--#{$theme-namespace}-code-block-fold-height) / 2);
     right: 36px;
     transform: translateY(-50%);
     opacity: 1;
@@ -182,7 +187,7 @@ onMounted(() => {
     cursor: pointer;
     position: absolute;
     z-index: 3;
-    top: calc(var(--tk-code-block-fold-height) / 2);
+    top: calc(var(--#{$theme-namespace}-code-block-fold-height) / 2);
     right: 14px;
     transform: translateY(-50%);
     transition: all 0.3s;

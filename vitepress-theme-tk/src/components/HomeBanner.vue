@@ -188,6 +188,8 @@ onUnmounted(() => {
 </style>
 
 <style lang="scss">
+@use "../styles/namespace.scss" as *;
+
 // 大图风格时，指定顶部导航栏样式
 .VPNavBar.home.big-img-nav-bar {
   background-color: transparent !important;
@@ -200,7 +202,7 @@ onUnmounted(() => {
 
     &.active,
     &:hover {
-      color: var(--tk-theme-color);
+      color: var(--#{$theme-namespace}-theme-color);
     }
   }
 

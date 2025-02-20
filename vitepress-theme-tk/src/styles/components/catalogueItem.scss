@@ -23,7 +23,7 @@ $prefix-class2: #{$theme-namespace}-catalogueItem;
   &__title {
     // # 样式
     .anchor {
-      color: var(--tk-theme-color);
+      color: var(--#{$theme-namespace}-theme-color);
       font-size: 0.85em;
       margin-left: -1em;
       padding-right: 0.38em;
@@ -49,7 +49,7 @@ $prefix-class2: #{$theme-namespace}-catalogueItem;
   width: 48%;
   margin-bottom: 0.5rem;
   a {
-    color: var(--tk-theme-color);
+    color: var(--#{$theme-namespace}-theme-color);
     &:hover {
       color: var(--vp-c-brand-1);
     }

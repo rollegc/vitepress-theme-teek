@@ -7,7 +7,7 @@ $prefix-class: #{$theme-namespace}-articleAnalyze;
   color: var(--vp-c-text-2);
   font-size: 14px;
   margin-bottom: 24px;
-  gap: var(--tk-gap2);
+  gap: var(--#{$theme-namespace}-gap2);
 
   :deep(.el-breadcrumb__separator) {
     font-weight: 400;
@@ -20,7 +20,7 @@ $prefix-class: #{$theme-namespace}-articleAnalyze;
       color: var(--el-text-color-regular);
 
       &:hover {
-        color: var(--tk-theme-color);
+        color: var(--#{$theme-namespace}-theme-color);
         cursor: pointer;
       }
     }

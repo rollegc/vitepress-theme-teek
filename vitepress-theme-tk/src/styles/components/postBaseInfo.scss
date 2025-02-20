@@ -4,8 +4,8 @@ $prefix-class: #{$theme-namespace}-postBaseInfo;
 
 .#{$prefix-class} {
   &.home {
-    font-size: var(--tk-home-font-size-sm);
-    color: var(--tk-lower-color2);
+    font-size: var(--#{$theme-namespace}-home-font-size-sm);
+    color: var(--#{$theme-namespace}-lower-color2);
   }
 
   &.article > div:not(:last-child) {
@@ -23,7 +23,7 @@ $prefix-class: #{$theme-namespace}-postBaseInfo;
       width: 0.8px;
       height: 8px;
       margin: 0 10px;
-      background-color: var(--tk-lower-color2);
+      background-color: var(--#{$theme-namespace}-lower-color2);
     }
   }
 
@@ -33,7 +33,7 @@ $prefix-class: #{$theme-namespace}-postBaseInfo;
       display: inline-block;
       width: 0.35rem;
       height: 0;
-      background-color: var(--tk-lower-color2);
+      background-color: var(--#{$theme-namespace}-lower-color2);
     }
   }
 }

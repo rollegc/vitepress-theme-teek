@@ -33,12 +33,11 @@ const pageNumKey = "pageNum";
 
 const updateData = () => {
   const { frontmatter } = route.data;
-  const { pageNum, pageSize, total } = unref(pageInfo);
 
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
   const p = searchParams.get(pageNumKey) || 1;
-  if (p !== pageNum) unref(pageInfo).pageNum = Number(p);
+  if (p !== unref(pageInfo)) unref(pageInfo).pageNum = Number(p);
 
   let post = unref(posts).sortPostsByDateAndSticky;
 
@@ -52,10 +51,11 @@ const updateData = () => {
     post = t ? unref(posts).groupPosts.tags[t] : post;
   }
 
+  const { pageNum, pageSize, total } = unref(pageInfo);
   // 总数处理
   if (total !== post.length) unref(pageInfo).total = post.length || 0;
 
-  currentPosts.value = post.slice((unref(pageInfo).pageNum - 1) * pageSize, unref(pageInfo).pageNum * pageSize);
+  currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
 };
 
 watch(

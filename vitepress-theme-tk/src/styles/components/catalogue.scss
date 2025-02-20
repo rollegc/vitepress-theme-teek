@@ -4,7 +4,7 @@ $prefix-class: #{$theme-namespace}-catalogue;
 
 .#{$prefix-class} {
   &-header {
-    border-bottom: 1px solid var(--tk-line-color);
+    border-bottom: 1px solid var(--#{$theme-namespace}-line-color);
     margin-top: 1rem;
     padding-bottom: 1.2rem;
 

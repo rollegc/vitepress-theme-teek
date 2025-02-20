@@ -18,7 +18,7 @@ $prefix-class: #{$theme-namespace}-waves;
       &:nth-child(1) {
         animation-delay: -2s;
         animation-duration: 7s;
-        fill: var(--tk-lower-color6);
+        fill: var(--#{$theme-namespace}-lower-color6);
 
         :is(.dark .dark\:fill-black) {
           fill: #000 !important;
@@ -28,7 +28,7 @@ $prefix-class: #{$theme-namespace}-waves;
       &:nth-child(2) {
         animation-delay: -3s;
         animation-duration: 10s;
-        fill: var(--tk-lower-color5);
+        fill: var(--#{$theme-namespace}-lower-color5);
 
         :is(.dark .dark\:fill-black) {
           fill: #000;
@@ -38,13 +38,13 @@ $prefix-class: #{$theme-namespace}-waves;
       &:nth-child(3) {
         animation-delay: -4s;
         animation-duration: 13s;
-        fill: var(--tk-lower-color4);
+        fill: var(--#{$theme-namespace}-lower-color4);
       }
 
       &:nth-child(4) {
         animation-delay: -5s;
         animation-duration: 20s;
-        fill: var(--tk-lower-color3);
+        fill: var(--#{$theme-namespace}-lower-color3);
       }
     }
   }

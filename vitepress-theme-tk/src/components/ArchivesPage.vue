@@ -2,7 +2,7 @@
 import { useDesign } from "../hooks";
 import { usePosts, useUnrefData } from "../configProvider";
 
-const { getPrefixClass } = useDesign();
+const { getPrefixClass, namespace } = useDesign();
 const prefixClass = getPrefixClass("archives");
 
 const { frontmatter } = useUnrefData();
@@ -11,9 +11,9 @@ const posts = usePosts();
 </script>
 
 <template>
-  <div :class="`${prefixClass} tk-page`">
+  <div :class="`${prefixClass} ${namespace}-page`">
     <div :class="`${prefixClass}-header flx-justify-between`">
-      <div class="tk-page-title-h1">{{ frontmatter.title }}</div>
+      <div :class="`${namespace}-page-title-h1`">{{ frontmatter.title }}</div>
       <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
     </div>
 

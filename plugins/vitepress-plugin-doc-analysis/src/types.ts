@@ -10,7 +10,7 @@ export interface DocAnalysisOption {
    *
    * @default 'vitepress 的 srcDir 配置项'
    */
-  srcDir?: string;
+  path?: string;
   /**
    * 是否忽略每个目录下的 index.md 文件
    *

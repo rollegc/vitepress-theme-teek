@@ -1,3 +1,5 @@
+@use "./namespace.scss" as *;
+
 // 文章内容宽度加大
 .VPContent .VPDoc.has-aside .content-container {
   max-width: var(--vp-content-container, 688px);
@@ -24,7 +26,7 @@
 }
 
 // 导航栏切换暗黑模式按钮样式调整
-.tk-layout .VPNavBar .VPSwitchAppearance {
+.#{$theme-namespace}-layout .VPNavBar .VPSwitchAppearance {
   width: 22px !important;
   .check {
     transform: none;
@@ -33,7 +35,7 @@
 
 .VPNav .VPNavBarTranslations .VPMenu {
   .title {
-    color: var(--tk-theme-color);
+    color: var(--#{$theme-namespace}-theme-color);
   }
 }
 

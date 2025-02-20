@@ -8,12 +8,12 @@ $prefix-class: #{$theme-namespace}-postItem;
   width: 100%;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 1px 8px 0 var(--tk-shadow-color);
+  box-shadow: 0 1px 8px 0 var(--#{$theme-namespace}-shadow-color);
   transition: all 0.3s;
-  background-color: var(--tk-bg-color2);
+  background-color: var(--#{$theme-namespace}-bg-color2);
 
   &:hover {
-    box-shadow: 0 2px 16px 0 var(--tk-shadow-color-hover);
+    box-shadow: 0 2px 16px 0 var(--#{$theme-namespace}-shadow-color-hover);
   }
 
   .pin {
@@ -30,7 +30,7 @@ $prefix-class: #{$theme-namespace}-postItem;
       position: absolute;
       width: 120%;
       height: 30px;
-      background-image: linear-gradient(45deg, var(--tk-theme-color), var(--tk-theme-color));
+      background-image: linear-gradient(45deg, var(--#{$theme-namespace}-theme-color), var(--#{$theme-namespace}-theme-color));
       transform: rotate(-45deg) translateY(-20px);
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.23);
     }
@@ -57,20 +57,20 @@ $prefix-class: #{$theme-namespace}-postItem;
         margin: 0.5rem 0;
 
         &.bottom {
-          border-top: 1px solid var(--tk-line-color);
+          border-top: 1px solid var(--#{$theme-namespace}-line-color);
           .excerpt {
             overflow: hidden;
             display: -webkit-box;
             margin: 0.5rem 0;
             text-overflow: ellipsis;
             -webkit-box-orient: vertical;
-            line-clamp: var(--tk-home-post-line-clamp);
-            -webkit-line-clamp: var(--tk-home-post-line-clamp);
+            line-clamp: var(--#{$theme-namespace}-home-post-line-clamp);
+            -webkit-line-clamp: var(--#{$theme-namespace}-home-post-line-clamp);
           }
         }
 
         .excerpt {
-          color: var(--tk-lower-color1);
+          color: var(--#{$theme-namespace}-lower-color1);
           font-size: 14px;
         }
 
@@ -81,7 +81,7 @@ $prefix-class: #{$theme-namespace}-postItem;
           margin-right: 16px;
 
           &:hover {
-            color: var(--tk-theme-color);
+            color: var(--#{$theme-namespace}-theme-color);
           }
         }
       }
@@ -91,8 +91,8 @@ $prefix-class: #{$theme-namespace}-postItem;
       .cover-img {
         cursor: pointer;
         .default {
-          width: var(--tk-home-post-simple-img-width);
-          height: var(--tk-home-post-simple-img-height);
+          width: var(--#{$theme-namespace}-home-post-simple-img-width);
+          height: var(--#{$theme-namespace}-home-post-simple-img-height);
           border-radius: 2px;
           margin-right: 24px;
           background-repeat: no-repeat;
@@ -100,8 +100,8 @@ $prefix-class: #{$theme-namespace}-postItem;
           background-position: center;
         }
         .large {
-          width: var(--tk-home-post-full-img-width);
-          height: var(--tk-home-post-full-img-height);
+          width: var(--#{$theme-namespace}-home-post-full-img-width);
+          height: var(--#{$theme-namespace}-home-post-full-img-height);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);
         }
       }

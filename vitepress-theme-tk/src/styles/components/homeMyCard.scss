@@ -23,9 +23,9 @@ $prefix-class: #{$theme-namespace}-my;
     }
 
     &.full {
-      width: var(--tk-home-card-width);
+      width: var(--#{$theme-namespace}-home-card-width);
       height: 100%;
-      margin: calc(-1 * var(--tk-home-card-padding)) calc(-1 * var(--tk-home-card-padding)) 10px;
+      margin: calc(-1 * var(--#{$theme-namespace}-home-card-padding)) calc(-1 * var(--#{$theme-namespace}-home-card-padding)) 10px;
 
       img {
         width: 100%;

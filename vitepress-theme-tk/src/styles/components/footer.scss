@@ -7,7 +7,7 @@ $prefix-class: #{$theme-namespace}-footer;
   text-align: center;
 
   &-icons {
-    gap: var(--tk-gap1);
+    gap: var(--#{$theme-namespace}-gap1);
     margin-bottom: 10px;
   }
 
@@ -26,9 +26,9 @@ $prefix-class: #{$theme-namespace}-footer;
     &__item {
       gap: 5px;
       a:hover {
-        color: var(--tk-theme-color);
+        color: var(--#{$theme-namespace}-theme-color);
         text-decoration: underline;
-        text-decoration-color: var(--tk-theme-color);
+        text-decoration-color: var(--#{$theme-namespace}-theme-color);
         text-decoration-style: dashed;
       }
       i :deep(svg),

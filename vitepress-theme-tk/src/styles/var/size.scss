@@ -1,20 +1,22 @@
+@use "../namespace.scss" as *;
+
 html[size="large"] {
-  --tk-home-max-width: 1330px;
-  --tk-home-gap: 30px;
-  --tk-home-post-simple-img-width: 160px;
-  --tk-home-post-simple-img-height: 80px;
-  --tk-home-post-full-img-width: 360px;
-  --tk-home-post-full-img-height: 100%;
-  --tk-home-post-line-clamp: 4;
-  --tk-home-card-padding: 15px;
-  --tk-home-card-width: 350px;
-  --tk-home-card-svg-margin-left: 10px;
-  --tk-home-font-size-large: 19px;
-  --tk-home-font-size-base: 17px;
-  --tk-home-font-size-middle: 15px;
-  --tk-home-font-size-sm: 14px;
-  --tk-home-font-size-small: 13px;
-  --tk-page-width: 1100px;
+  --#{$theme-namespace}-home-max-width: 1330px;
+  --#{$theme-namespace}-home-gap: 30px;
+  --#{$theme-namespace}-home-post-simple-img-width: 160px;
+  --#{$theme-namespace}-home-post-simple-img-height: 80px;
+  --#{$theme-namespace}-home-post-full-img-width: 360px;
+  --#{$theme-namespace}-home-post-full-img-height: 100%;
+  --#{$theme-namespace}-home-post-line-clamp: 4;
+  --#{$theme-namespace}-home-card-padding: 15px;
+  --#{$theme-namespace}-home-card-width: 350px;
+  --#{$theme-namespace}-home-card-svg-margin-left: 10px;
+  --#{$theme-namespace}-home-font-size-large: 19px;
+  --#{$theme-namespace}-home-font-size-base: 17px;
+  --#{$theme-namespace}-home-font-size-middle: 15px;
+  --#{$theme-namespace}-home-font-size-sm: 14px;
+  --#{$theme-namespace}-home-font-size-small: 13px;
+  --#{$theme-namespace}-page-width: 1100px;
   // 数值越大，侧边栏约靠近屏幕左侧
   --vp-layout-max-width: 97vw;
   --vp-sidebar-width: 290px;
@@ -23,42 +25,42 @@ html[size="large"] {
 
 :root,
 html[size="default"] {
-  --tk-home-max-width: 1140px;
-  --tk-home-gap: var(--tk-gap1);
-  --tk-home-post-simple-img-width: 120px;
-  --tk-home-post-simple-img-height: 80px;
-  --tk-home-post-full-img-width: 240px;
-  --tk-home-post-full-img-height: 100%;
-  --tk-home-post-line-clamp: 3;
-  --tk-home-card-padding: 10px;
-  --tk-home-card-width: 280px;
-  --tk-home-card-svg-margin-left: 5px;
-  --tk-home-font-size-large: 18px;
-  --tk-home-font-size-base: 16px;
-  --tk-home-font-size-middle: 14px;
-  --tk-home-font-size-sm: 13px;
-  --tk-home-font-size-small: 12px;
-  --tk-page-width: 900px;
+  --#{$theme-namespace}-home-max-width: 1140px;
+  --#{$theme-namespace}-home-gap: var(--#{$theme-namespace}-gap1);
+  --#{$theme-namespace}-home-post-simple-img-width: 120px;
+  --#{$theme-namespace}-home-post-simple-img-height: 80px;
+  --#{$theme-namespace}-home-post-full-img-width: 240px;
+  --#{$theme-namespace}-home-post-full-img-height: 100%;
+  --#{$theme-namespace}-home-post-line-clamp: 3;
+  --#{$theme-namespace}-home-card-padding: 10px;
+  --#{$theme-namespace}-home-card-width: 280px;
+  --#{$theme-namespace}-home-card-svg-margin-left: 5px;
+  --#{$theme-namespace}-home-font-size-large: 18px;
+  --#{$theme-namespace}-home-font-size-base: 16px;
+  --#{$theme-namespace}-home-font-size-middle: 14px;
+  --#{$theme-namespace}-home-font-size-sm: 13px;
+  --#{$theme-namespace}-home-font-size-small: 12px;
+  --#{$theme-namespace}-page-width: 900px;
   --vp-sidebar-width: 290px;
 }
 
 html[size="small"] {
-  --tk-home-max-width: 1000px;
-  --tk-home-gap: var(--tk-gap2);
-  --tk-home-post-simple-img-width: 100px;
-  --tk-home-post-simple-img-height: 80px;
-  --tk-home-post-full-img-width: 130px;
-  --tk-home-post-full-img-height: 100%;
-  --tk-home-post-line-clamp: 2;
-  --tk-home-card-padding: 8px;
-  --tk-home-card-width: 260px;
-  --tk-home-card-svg-margin-left: 4px;
-  --tk-home-font-size-large: 17px;
-  --tk-home-font-size-base: 15px;
-  --tk-home-font-size-middle: 13px;
-  --tk-home-font-size-sm: 13px;
-  --tk-home-font-size-small: 12px;
-  --tk-page-width: 800px;
+  --#{$theme-namespace}-home-max-width: 1000px;
+  --#{$theme-namespace}-home-gap: var(--#{$theme-namespace}-gap2);
+  --#{$theme-namespace}-home-post-simple-img-width: 100px;
+  --#{$theme-namespace}-home-post-simple-img-height: 80px;
+  --#{$theme-namespace}-home-post-full-img-width: 130px;
+  --#{$theme-namespace}-home-post-full-img-height: 100%;
+  --#{$theme-namespace}-home-post-line-clamp: 2;
+  --#{$theme-namespace}-home-card-padding: 8px;
+  --#{$theme-namespace}-home-card-width: 260px;
+  --#{$theme-namespace}-home-card-svg-margin-left: 4px;
+  --#{$theme-namespace}-home-font-size-large: 17px;
+  --#{$theme-namespace}-home-font-size-base: 15px;
+  --#{$theme-namespace}-home-font-size-middle: 13px;
+  --#{$theme-namespace}-home-font-size-sm: 13px;
+  --#{$theme-namespace}-home-font-size-small: 12px;
+  --#{$theme-namespace}-page-width: 800px;
   --vp-layout-max-width: 1300px;
   --vp-sidebar-width: 290px;
   --vp-content-container: 688px;
@@ -69,7 +71,7 @@ html[size="small"] {
   html[size="large"],
   html[size="default"],
   html[size="small"] {
-    --tk-home-card-width: 280px;
+    --#{$theme-namespace}-home-card-width: 280px;
   }
 }
 
@@ -78,6 +80,6 @@ html[size="small"] {
   html[size="large"],
   html[size="default"],
   html[size="small"] {
-    --tk-home-card-width: 100%;
+    --#{$theme-namespace}-home-card-width: 100%;
   }
 }

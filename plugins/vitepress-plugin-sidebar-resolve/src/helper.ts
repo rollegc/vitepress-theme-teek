@@ -19,17 +19,17 @@ export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepres
  * @param prefix 指定前缀，在生成侧边栏的 link 时，会自动加上前缀
  */
 export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarMulti => {
-  const { base = process.cwd(), ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
+  const { path = process.cwd(), ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
   // 确保 prefix 始终都有 / 结尾
   prefix = prefix.replace(/\/$/, "") + "/";
 
   let sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
-  const dirPaths = readDirPaths(base, ignoreList);
+  const dirPaths = readDirPaths(path, ignoreList);
 
   // 只扫描根目录的 md 文件，且不扫描 index.md（首页文档）
   const key = prefix === "/" ? "/" : `/${prefix}`;
-  if (scannerRootMd) sidebar[key] = createSideBarItems(base, { ...option, ignoreIndexMd: true }, key, scannerRootMd);
+  if (scannerRootMd) sidebar[key] = createSideBarItems(path, { ...option, ignoreIndexMd: true }, key, scannerRootMd);
 
   // 遍历根目录下的每个子目录，生成对应的侧边栏数据
   dirPaths.forEach(dirPath => {

@@ -10,5 +10,5 @@ export interface CatalogueOption {
    *
    * @default 'vitepress 的 srcDir 配置项'
    */
-  srcDir?: string;
+  path?: string;
 }

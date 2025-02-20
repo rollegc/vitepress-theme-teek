@@ -20,7 +20,7 @@ interface IconProps {
 const {
   color = "var(--vp-c-text-1)",
   hover = false,
-  hoverColor = "var(--tk-theme-color)",
+  hoverColor = "var(--vp-c-brand-1)",
   ...props
 } = defineProps<IconProps>();
 

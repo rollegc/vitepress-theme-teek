@@ -8,7 +8,7 @@ import { isFunction } from "../helper";
 import { createImageViewer } from "./ImageViewer";
 import { FriendLink } from "../config/types";
 
-const { getPrefixClass } = useDesign();
+const { getPrefixClass, namespace } = useDesign();
 const prefixClass = getPrefixClass("friendLink");
 
 const { theme, frontmatter } = useUnrefData();
@@ -55,7 +55,7 @@ const getLiStyle = (index: number) => {
 
   // 分页动画需要指定 top，否则默认移动到 0px 位置
   return {
-    top: `calc(${index} * (calc(var(--tk-friend-gap) + ${clientRect?.height || 0}px)))`,
+    top: `calc(${index} * (calc(var(--${namespace}-friend-gap) + ${clientRect?.height || 0}px)))`,
   };
 };
 

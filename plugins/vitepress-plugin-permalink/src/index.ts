@@ -22,9 +22,9 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         rewrites,
       } = config.vitepress;
 
-      option.srcDir = option.srcDir ? join(process.cwd(), option.srcDir) : srcDir;
+      const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
 
-      const permalinks = createPermalinks(option, cleanUrls);
+      const permalinks = createPermalinks({ ...option, path: baseDir }, cleanUrls);
 
       // Key 为 path，Value 为 permalink
       const pathToPermalink: Record<string, string> = {};

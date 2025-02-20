@@ -11,8 +11,8 @@ $prefix-class: #{$theme-namespace}-category;
       display: flex;
       justify-content: space-between;
       padding: 8px 12px 7px 5px;
-      font-size: var(--tk-home-font-size-middle);
-      line-height: var(--tk-home-font-size-middle);
+      font-size: var(--#{$theme-namespace}-home-font-size-middle);
+      line-height: var(--#{$theme-namespace}-home-font-size-middle);
       transition: all 0.2s;
       border-left: 2px solid transparent;
       margin-top: -1px;
@@ -21,13 +21,13 @@ $prefix-class: #{$theme-namespace}-category;
       text-overflow: ellipsis;
 
       &:hover {
-        background-color: var(--tk-item-bg-color-hover);
-        border-color: var(--tk-theme-color);
+        background-color: var(--#{$theme-namespace}-item-bg-color-hover);
+        border-color: var(--#{$theme-namespace}-theme-color);
       }
 
       &.active {
-        background: var(--tk-theme-color);
-        color: var(--tk-bg-color1);
+        background: var(--#{$theme-namespace}-theme-color);
+        color: var(--#{$theme-namespace}-bg-color1);
         padding-left: 13px;
         border-radius: 1px;
         border-color: transparent;
@@ -36,7 +36,7 @@ $prefix-class: #{$theme-namespace}-category;
   }
 
   &-empty {
-    font-size: var(--tk-home-font-size-middle);
+    font-size: var(--#{$theme-namespace}-home-font-size-middle);
     padding: 6px;
     text-align: center;
   }

@@ -109,7 +109,9 @@ const categoriesPageLink = computed(() => {
 </style>
 
 <style lang="scss">
+@use "../styles/namespace.scss" as *;
+
 .VPNavBar.home.top {
-  background-color: var(--tk-bg-color1);
+  background-color: var(--#{$theme-namespace}-bg-color1);
 }
 </style>

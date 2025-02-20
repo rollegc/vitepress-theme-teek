@@ -1,34 +1,36 @@
+@use "./namespace.scss" as *;
+
 a:hover {
-  color: var(--tk-theme-color);
+  color: var(--#{$theme-namespace}-theme-color);
   cursor: pointer;
 }
 
-.tk-page {
-  max-width: var(--tk-page-width);
+.#{$theme-namespace}-page {
+  max-width: var(--#{$theme-namespace}-page-width);
   margin: 1.5rem auto;
   padding: 20px 30px;
-  box-shadow: 0 0 16px var(--tk-shadow-color);
+  box-shadow: 0 0 16px var(--#{$theme-namespace}-shadow-color);
   border-radius: 10px;
 
   // 隐藏 md 内容
-  & ~ div:not(.tk-page) {
+  & ~ div:not(.#{$theme-namespace}-page) {
     display: none;
   }
 }
 
-.tk-page-title-h1 {
+.#{$theme-namespace}-page-title-h1 {
   font-size: 2rem;
   line-height: 2rem;
   font-weight: 600;
 }
 
-.tk-page-title-h2 {
+.#{$theme-namespace}-page-title-h2 {
   font-size: 1.7rem;
   line-height: 1.7rem;
   font-weight: 600;
 }
 
-.tk-page-title-h3 {
+.#{$theme-namespace}-page-title-h3 {
   font-size: 1.4rem;
   line-height: 1.4rem;
   font-weight: 500;
