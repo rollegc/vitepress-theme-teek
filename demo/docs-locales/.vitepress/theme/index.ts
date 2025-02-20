@@ -1,4 +1,4 @@
-import tk from "vitepress-theme-tk";
+import tk from "vitepress-theme-teeker";
 import DefaultTheme from "vitepress/theme";
 
 export default {

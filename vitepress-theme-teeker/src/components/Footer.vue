@@ -9,18 +9,18 @@ import securityRecordImg from "../assets/img/securityRecord.png";
 import packageJSON from "../../package.json";
 import { computed } from "vue";
 import Icon from "./Icon.vue";
-import { FooterInfo } from "../config/types";
+import { FooterInfo, Social } from "../config/types";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("footer");
 
 const { theme } = useUnrefData();
 
-const { footerInfo, social = [] } = theme;
+const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = theme;
 
 const footerData = computed(() => {
   const { theme, copyright, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
-  const data: { name?: string; icon?: string; link?: string }[] = [];
+  const data: Social[] = [];
   // 1.主题版权
   data.push({
     name: `Theme By TK@${packageJSON.version}`,
@@ -89,7 +89,7 @@ const footerData = computed(() => {
           <span v-else>{{ item.name }}</span>
         </div>
 
-        <span v-html="footerInfo.copyrightInfo"></span>
+        <span v-if="footerInfo.customerHtml" v-html="footerInfo.customerHtml"></span>
       </div>
     </template>
   </div>

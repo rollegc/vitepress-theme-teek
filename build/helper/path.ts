@@ -2,10 +2,10 @@ import { resolve } from 'path';
 
 /** 项目根目录 `/`  */
 export const projRoot = resolve(__dirname, '../../');
-/** vitepress-theme-tk 目录 即 `/vitepress-theme-tk` */
-export const tkRoot = resolve(projRoot, 'vitepress-theme-tk');
+/** vitepress-theme-teeker 目录 即 `/vitepress-theme-teeker` */
+export const tkRoot = resolve(projRoot, 'vitepress-theme-teeker');
 
-/** 组件目录 `/vitepress-theme-tk/components` */
+/** 组件目录 `/vitepress-theme-teeker/components` */
 export const compRoot = resolve(tkRoot, 'components');
 
 /** Docs */
@@ -15,8 +15,8 @@ export const vpRoot = resolve(docRoot, '.vitepress');
 
 /** `/dist` */
 export const buildOutput = resolve(projRoot, 'dist');
-/** `/dist/vitepress-theme-tk` */
-export const tkOutput = resolve(buildOutput, 'vitepress-theme-tk');
+/** `/dist/vitepress-theme-teeker` */
+export const tkOutput = resolve(buildOutput, 'vitepress-theme-teeker');
 /** /dist/types */
 export const tsOutput = resolve(buildOutput, 'types');
 

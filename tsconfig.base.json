@@ -17,7 +17,7 @@
     "types": [],
     "preserveSymlinks": true,
     "paths": {
-      "vitepress-theme-tk/*": ["vitepress-theme-tk/*"]
+      "vitepress-theme-teeker/*": ["vitepress-theme-teeker/*"]
     }
   }
 }

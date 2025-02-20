@@ -129,28 +129,5 @@ onUnmounted(() => {
 <template></template>
 
 <style lang="scss">
-@use "../styles/namespace.scss" as *;
-
-$prefix-class: #{$theme-namespace}-fullscreen;
-$prefix-class-rightBottomButton: #{$theme-namespace}-rightBottomButton;
-$prefix-class-content: #{$theme-namespace}-layout-home-content;
-$prefix-class-banner: #{$theme-namespace}-banner;
-$prefix-class-footer: #{$theme-namespace}-footer;
-
-html {
-  &.#{$prefix-class} {
-    overflow: hidden;
-
-    .VPNav,
-    .#{$prefix-class-rightBottomButton},
-    .#{$prefix-class-content},
-    .#{$prefix-class-footer} {
-      display: none;
-    }
-
-    .display-none {
-      display: none;
-    }
-  }
-}
+@use "../styles/components/HomeFullscreenWallpaperGlobal.scss";
 </style>

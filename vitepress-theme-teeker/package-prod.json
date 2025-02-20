@@ -1,7 +1,7 @@
 {
-  "name": "vitepress-theme-tk",
+  "name": "vitepress-theme-teeker",
   "version": "1.0.0",
-  "description": "vitepress-theme-tk",
+  "description": "vitepress-theme-teeker",
   "author": "tianke",
   "type": "module",
   "main": "lib/index.js",

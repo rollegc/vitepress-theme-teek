@@ -1,7 +1,7 @@
 {
-  "name": "vitepress-theme-tk-docs-locales",
+  "name": "vitepress-theme-teeker-docs-locales",
   "version": "1.0.0",
-  "description": "vitepress-theme-tk 多语言文档 Demo",
+  "description": "vitepress-theme-teeker 多语言文档 Demo",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",
@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "vitepress": "^1.6.3",
-    "vitepress-theme-tk": "workspace:*"
+    "vitepress-theme-teeker": "workspace:*"
   }
 }

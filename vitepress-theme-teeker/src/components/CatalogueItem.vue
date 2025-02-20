@@ -7,7 +7,7 @@ const prefixClass = getPrefixClass("catalogue");
 const prefixClass1 = getPrefixClass("subCatalogue");
 const prefixClass2 = getPrefixClass("catalogueItem");
 
-defineProps<{ item: DefaultTheme.SidebarMulti; index: number | string }>();
+defineProps<{ item: DefaultTheme.SidebarItem; index: number | string }>();
 </script>
 
 <template>
@@ -15,8 +15,8 @@ defineProps<{ item: DefaultTheme.SidebarMulti; index: number | string }>();
     <a v-if="!item.items" :href="item.link">{{ index }}. {{ item.text }}</a>
 
     <template v-else>
-      <div :id="anchorText = item.text" :class="`${prefixClass1}__title`">
-        <a :href="`#${anchorText}`" class="anchor">#</a>
+      <div :id="item.text" :class="`${prefixClass1}__title`">
+        <a :href="`#${item.text}`" class="anchor">#</a>
         <span>{{ `${index}. ${item.text}` }}</span>
       </div>
 

@@ -40,7 +40,7 @@ const currentTags = computed(() => {
 const finalTitle = computed(() => {
   let pt = isFunction(pageTitle) ? pageTitle(tagSvg) : pageTitle;
   let ht = isFunction(homeTitle) ? homeTitle(tagSvg) : homeTitle;
-  return { true: pt, false: ht };
+  return { pt, ht };
 });
 
 // 当前选中的标签，从 URL 查询参数中获取
@@ -49,7 +49,7 @@ watch(
   route,
   () => {
     const t = new URL(window.location.href).searchParams.get("tag");
-    if (t != unref(tag)) tag.value = t;
+    if (t && t != unref(tag)) tag.value = t;
   },
   { immediate: true }
 );
@@ -76,7 +76,7 @@ const tagsPageLink = computed(() => {
     v-model="pageNum"
     :pageSize="limit"
     :total="tags.length"
-    :title="finalTitle[tagsPage]"
+    :title="finalTitle[tagsPage ? 'pt' : 'ht']"
     :title-link="tagsPageLink"
     :autoPage
     :pageSpeed

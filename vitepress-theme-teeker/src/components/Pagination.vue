@@ -57,7 +57,7 @@ const afterChange = () => {
   pageObj.value = unref(pageObj);
   emits("pagination", unref(pageObj));
 
-  if (!import.meta.env.SSR && autoScroll) {
+  if (!(import.meta as any).env.SSR && autoScroll) {
     nextTick(() => {
       const rootStyles = getComputedStyle(document.documentElement);
       const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");

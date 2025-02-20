@@ -22,12 +22,12 @@ const {
   titleLink,
   page = false,
   pageSize = 4,
-  total,
+  total = 0,
   autoPage = false,
   pageSpeed = 4000,
 } = defineProps<HomeCardProps>();
 
-const emit = defineEmits<{ pagination: [to: number, "pre" | "next"] }>();
+const emit = defineEmits<{ pagination: [to: number, "prev" | "next"] }>();
 
 const pageNum = defineModel<number>({ default: 1 });
 const pageTotalNum = Math.ceil(total / pageSize);
@@ -116,63 +116,5 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-@use "../styles/namespace.scss" as *;
-
-$prefix-class: #{$theme-namespace}-homeCard;
-
-.#{$prefix-class} {
-  /* 下一页滑动效果 */
-  .slide-next-move,
-  .slide-next-enter-active,
-  .slide-next-leave-active {
-    transition: all 0.5s ease !important;
-  }
-  .slide-next-enter-from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  .slide-next-leave-to {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  .slide-next-leave-active {
-    position: absolute;
-  }
-
-  /* 上一页滑动效果 */
-  .slide-prev-move,
-  .slide-prev-enter-active,
-  .slide-prev-leave-active {
-    transition: all 0.5s ease !important;
-  }
-  .slide-prev-enter-from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  .slide-prev-leave-to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  .slide-prev-leave-active {
-    position: absolute;
-  }
-
-  /* 上下滚动效果 */
-  .scroll-move,
-  .scroll-enter-active,
-  .scroll-leave-active {
-    transition: all 0.5s ease;
-  }
-  .scroll-enter-from {
-    transform: translateY(70px);
-    opacity: 0;
-  }
-  .scroll-leave-to {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-  .scroll-leave-active {
-    position: absolute;
-  }
-}
+@use "../styles/components/homeCardGlobal.scss";
 </style>

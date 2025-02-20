@@ -4,7 +4,7 @@ import { useDesign, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../helper";
 import HomeCard from "./HomeCard.vue";
 import docAnalysisSvg from "../assets/svg/docAnalysis";
-import { computed, reactive, unref } from "vue";
+import { computed, reactive, Ref, unref } from "vue";
 import { useData } from "vitepress";
 import { DocAnalysis, DocAnalysisInfo } from "../config/types";
 
@@ -36,7 +36,7 @@ const createToNowDay = dayDiff(createTime || getNowDate());
 // 通过不蒜子获取访问量和访客数
 const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 
-const docAnalysisList: (DocAnalysisInfo & { originValue: string | number })[] = reactive([
+const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<string> })[] = reactive([
   {
     key: "totalPosts",
     label: "文章数目",
@@ -83,7 +83,7 @@ if (overrideInfo.length) {
     const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
     if (override) {
       item.label = override.label || item.label;
-      item.value = override.value ? override.value(item.originValue, item.value) : item.value;
+      item.value = override.value ? override.value(item.originValue || "", item.value) : item.value;
       item.show = override.show !== false;
     }
   });

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CommentTwikoo">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, unref } from "vue";
 import { useRouter } from "vitepress";
 import { useUnrefData } from "../configProvider";
 import { CommentProvider } from "../config/types";
@@ -22,12 +22,13 @@ const initTwikoo = () => {
   } catch (e) {}
 };
 
-const twikooJs = ref(null);
+const twikooJs = ref<HTMLScriptElement | null>(null);
 const router = useRouter();
 
 const initJs = () => {
-  if (twikooJs.value) {
-    twikooJs.value.onload = initTwikoo;
+  const t = unref(twikooJs);
+  if (t) {
+    t.onload = initTwikoo;
 
     const selfOnAfterRouteChange = router.onAfterRouteChange;
     // 路由切换后的回调

@@ -638,7 +638,10 @@ export interface DocAnalysis {
    * originValue 为计算前的数据，currentValue 为计算后的数据（加单位的数据），针对 lastActiveTime 这些需要判断 N 分、N 时、N 天的 key，originValue 为具体的时间，需要自行计算
    */
   overrideInfo?: (Omit<PartialKey<DocAnalysisInfo, "label">, "value"> & {
-    value?: (originValue: string | number, currentValue?: string) => string | Ref<string>;
+    value?: (
+      originValue: string | number | Ref<string>,
+      currentValue?: string | number | Ref<string>
+    ) => string | Ref<string>;
   })[];
   /**
    * 自定义额外信息，类型和 overrideInfo 一样
@@ -651,7 +654,7 @@ export interface DocAnalysisInfo {
   /**
    * 站点信息唯一标识
    */
-  key: "totalPosts" | "runtime" | "totalWordCount" | "lastActiveTime" | "viewCount" | "visitCount";
+  key: "totalPosts" | "runtime" | "totalWordCount" | "lastActiveTime" | "viewCount" | "visitCount" | string;
   /**
    * 站点信息标签
    */
@@ -830,6 +833,10 @@ export interface FooterInfo {
    * 网络安全备案信息配置
    */
   securityRecord?: Social;
+  /**
+   * 自定义 HTML 片段到 footer 最底部
+   */
+  customerHtml?: string;
 }
 
 export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" | "giscus" | "artalk" | "render"> = {
@@ -935,18 +942,18 @@ export type CommentProvider = {
    */
   giscus: {
     [key: string]: any;
-    repo: string;
+    repo: `${string}/${string}`;
     repoId: string;
     category: string;
     categoryId: string;
-    mapping?: string;
-    strict?: string;
-    reactionsEnabled?: string;
-    emitMetadata?: string;
-    inputPosition?: string;
+    mapping?: "url" | "title" | "og:title" | "specific" | "number" | "pathname";
+    strict?: "0" | "1";
+    reactionsEnabled?: "0" | "1";
+    emitMetadata?: "0" | "1";
+    inputPosition?: "top" | "bottom";
     lang?: string;
     theme?: string;
-    loading?: string;
+    loading?: "lazy" | "eager";
     /**
      * 是否使用在线链接，如果不打算安装依赖，则设为 true
      *

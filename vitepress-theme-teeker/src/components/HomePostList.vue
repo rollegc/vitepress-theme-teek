@@ -36,8 +36,8 @@ const updateData = () => {
 
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
-  const p = searchParams.get(pageNumKey) || 1;
-  if (p !== unref(pageInfo)) unref(pageInfo).pageNum = Number(p);
+  const p = Number(searchParams.get(pageNumKey)) || 1;
+  if (p !== unref(pageInfo).pageNum) unref(pageInfo).pageNum = p;
 
   let post = unref(posts).sortPostsByDateAndSticky;
 
@@ -105,7 +105,7 @@ onUnmounted(() => {
     <ul>
       <li
         v-for="post in currentPosts"
-        :key="post"
+        :key="post.url"
         :class="[`${prefixClass}-item`, { 'large-cover-wrapper': coverImgMode === 'large' }]"
       >
         <HomePostItem :post />

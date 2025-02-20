@@ -110,23 +110,5 @@ const isShowBaseInfo = computed(() => {
 </style>
 
 <style lang="scss">
-@use "../styles/namespace.scss" as *;
-
-$prefix-class: #{$theme-namespace}-postItem;
-
-.#{$prefix-class} {
-  .excerpt {
-    h1,
-    h2,
-    h3 {
-      display: none;
-    }
-
-    img {
-      max-height: 280px;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-  }
-}
+@use "../styles/components/homePostItemGlobal.scss";
 </style>

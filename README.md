@@ -1,4 +1,4 @@
-# vitepress-theme-tk
+# vitepress-theme-teeker
 
 正在开发 ing...
 

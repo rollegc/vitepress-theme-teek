@@ -3,6 +3,6 @@ export interface ScssVariables {
   namespace: string;
 }
 
-export const variables: ScssVariables;
+export let variables: ScssVariables;
 
 export default variables;

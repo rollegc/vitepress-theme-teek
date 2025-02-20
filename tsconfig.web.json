@@ -7,6 +7,6 @@
     "skipLibCheck": true,
     "noImplicitAny": false
   },
-  "include": ["vitepress-theme-tk", "typings"],
+  "include": ["vitepress-theme-teeker", "typings", "vitepress-theme-teeker/package.json"],
   "exclude": ["node_modules", "**/dist", "**/*.md"]
 }

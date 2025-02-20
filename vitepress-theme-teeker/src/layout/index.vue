@@ -96,7 +96,7 @@ const commentComponent = {
       <template v-if="frontmatterRef.comment !== false">
         <ClientOnly>
           <component
-            v--if="provider"
+            v-if="provider"
             :is="commentComponent[provider]"
             :id="`${prefixClass}-comment`"
             :class="`${prefixClass}-comment`"
@@ -197,49 +197,5 @@ const commentComponent = {
 </template>
 
 <style lang="scss" scoped>
-@use "../styles/namespace.scss" as *;
-
-$prefix-class: #{$theme-namespace}-layout;
-
-.#{$prefix-class} {
-  &-home {
-    &-content {
-      margin: 3rem auto 0;
-      max-width: var(--#{$theme-namespace}-home-max-width);
-      gap: var(--#{$theme-namespace}-home-gap);
-
-      &__list {
-        flex: 1;
-        min-width: 435px;
-      }
-
-      &__info {
-        position: sticky;
-        top: calc(var(--vp-nav-height) + 10px);
-      }
-    }
-  }
-
-  &-comment {
-    margin-top: 1.25rem;
-  }
-
-  @media (max-width: 1280px) {
-    &-home-content {
-      padding: 0 20px;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    &-home-content {
-      flex-wrap: wrap;
-      &__list {
-        width: 100%;
-      }
-      &__info {
-        flex: 1;
-      }
-    }
-  }
-}
+@use "./index.scss";
 </style>

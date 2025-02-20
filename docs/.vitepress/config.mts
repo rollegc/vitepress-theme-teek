@@ -1,5 +1,5 @@
 import { defineConfig } from "vitepress";
-import themeConfig from "vitepress-theme-tk/config";
+import themeConfig from "vitepress-theme-teeker/config";
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 

@@ -39,7 +39,7 @@ const currentCategories = computed(() => {
 const finalTitle = computed(() => {
   let pt = isFunction(pageTitle) ? pageTitle(categorySvg) : pageTitle;
   let ht = isFunction(homeTitle) ? homeTitle(categorySvg) : homeTitle;
-  return { true: pt, false: ht };
+  return { pt, ht };
 });
 
 // 当前选中的分类，从 URL 查询参数中获取
@@ -49,7 +49,7 @@ watch(
   route,
   () => {
     const c = new URL(window.location.href).searchParams.get("category");
-    if (c != unref(category)) category.value = c;
+    if (c && c != unref(category)) category.value = c;
   },
   { immediate: true }
 );
@@ -70,7 +70,7 @@ const categoriesPageLink = computed(() => {
     v-model="pageNum"
     :pageSize="limit"
     :total="categories.length"
-    :title="finalTitle[categoriesPage]"
+    :title="finalTitle[categoriesPage ? 'pt' : 'ht']"
     :title-link="categoriesPageLink"
     :autoPage
     :pageSpeed

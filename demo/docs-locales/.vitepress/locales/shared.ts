@@ -1,5 +1,5 @@
 import { defineConfig } from "vitepress";
-import themeConfig from "vitepress-theme-tk/config";
+import themeConfig from "vitepress-theme-teeker/config";
 
 const tkConfig = themeConfig({
   author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },

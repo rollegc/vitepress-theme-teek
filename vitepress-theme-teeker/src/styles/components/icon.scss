@@ -1,0 +1,19 @@
+@use "../namespace.scss" as *;
+
+$prefix-class: #{$theme-namespace}-icon;
+
+i.#{$prefix-class} :deep(svg),
+img.#{$prefix-class} {
+  fill: var(--icon-color);
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+.#{$prefix-class} {
+  &.iconfont {
+    color: var(--icon-color);
+    font-size: var(--icon-size);
+  }
+  &.hover:hover {
+    color: var(--icon-color-hover);
+  }
+}

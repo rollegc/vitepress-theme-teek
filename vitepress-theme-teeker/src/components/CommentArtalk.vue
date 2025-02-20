@@ -73,7 +73,7 @@ watch(isDark, () => {
 
 <template>
   <div class="artalk-container">
-    <div v-if="isShow" id="artalk" ref="artalkRef" />
+    <div id="artalk" ref="artalkRef" />
   </div>
 </template>
 

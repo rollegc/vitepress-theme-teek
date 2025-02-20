@@ -1,6 +1,5 @@
 <script setup lang="ts" name="Icon">
 import { useDesign } from "../hooks";
-import { computed } from "vue";
 import { ElIcon } from "element-plus";
 import { isString } from "../helper";
 
@@ -24,37 +23,26 @@ const {
   ...props
 } = defineProps<IconProps>();
 
-const sizeStr = computed(() => props.size && (isString(props.size) ? props.size : `${props.size}px`));
+const getStyle = () => {
+  return {
+    "--icon-color": color,
+    "--icon-size": props.size && (isString(props.size) ? props.size : `${props.size}px`),
+    "--icon-color-hover": hoverColor,
+  };
+};
 </script>
 
 <template>
-  <i v-if="!iconType || iconType === 'svg'" v-html="icon" :class="[prefixClass, { hover: hover }]" />
-  <i v-else-if="iconType === 'iconfont'" :class="[prefixClass, 'iconfont', icon, { hover: hover }]" />
-  <img v-else-if="iconType === 'img'" :src="icon" :alt="imgAlt" :class="[prefixClass, { hover: hover }]" />
-  <el-icon v-else-if="iconType === 'el'">
-    <component :is="icon" :size :class="[prefixClass, { hover: hover }]" />
-  </el-icon>
+  <span :style="getStyle()">
+    <i v-if="!iconType || iconType === 'svg'" v-html="icon" :class="[prefixClass, { hover: hover }]" />
+    <i v-else-if="iconType === 'iconfont'" :class="[prefixClass, 'iconfont', icon, { hover: hover }]" />
+    <img v-else-if="iconType === 'img'" :src="icon" :alt="imgAlt" :class="[prefixClass, { hover: hover }]" />
+    <el-icon v-else-if="iconType === 'el'">
+      <component :is="icon" :size :class="[prefixClass, { hover: hover }]" />
+    </el-icon>
+  </span>
 </template>
 
 <style lang="scss" scoped>
-@use "../styles/namespace.scss" as *;
-
-$prefix-class: #{$theme-namespace}-icon;
-
-i.#{$prefix-class} :deep(svg),
-img.#{$prefix-class} {
-  fill: v-bind(color);
-  width: v-bind(sizeStr);
-  height: v-bind(sizeStr);
-}
-
-.#{$prefix-class} {
-  &.iconfont {
-    color: v-bind(color);
-    font-size: v-bind(sizeStr);
-  }
-  &.hover:hover {
-    color: v-bind(hoverColor);
-  }
-}
+@use "../styles/components/icon.scss";
 </style>
