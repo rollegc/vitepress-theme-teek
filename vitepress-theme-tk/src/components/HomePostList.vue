@@ -111,16 +111,14 @@ onUnmounted(() => {
         <HomePostItem :post />
       </li>
     </ul>
-    <ClientOnly>
-      <div :class="`${prefixClass}-pagination flx-justify-center`">
-        <Pagination
-          v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
-          v-model="pageInfo"
-          v-bind="pagePropsRef"
-          @pagination="handlePagination"
-        />
-      </div>
-    </ClientOnly>
+    <div :class="`${prefixClass}-pagination flx-justify-center`">
+      <Pagination
+        v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
+        v-model="pageInfo"
+        v-bind="pagePropsRef"
+        @pagination="handlePagination"
+      />
+    </div>
   </div>
 </template>
 

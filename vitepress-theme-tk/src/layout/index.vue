@@ -47,24 +47,28 @@ const commentComponent = {
 
 <template>
   <div v-if="tkTheme" :class="`${prefixClass}-global`">
-    <RightBottomButton />
-    <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
+    <ClientOnly>
+      <RightBottomButton />
+      <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
+    </ClientOnly>
   </div>
 
   <Layout :class="prefixClass">
     <template #home-hero-before>
       <slot name="home-hero-before" />
-      <!-- 自定义首页 -->
-      <div v-if="tkTheme && tkHome" :class="`${prefixClass}-home`">
-        <HomeBanner v-if="isHomePage() && enabled" />
-        <div :class="`${prefixClass}-home-content flx-start-justify-center`">
-          <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
-          <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
+      <ClientOnly>
+        <!-- 自定义首页 -->
+        <div v-if="tkTheme && tkHome" :class="`${prefixClass}-home`">
+          <HomeBanner v-if="isHomePage() && enabled" />
+          <div :class="`${prefixClass}-home-content flx-start-justify-center`">
+            <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
+            <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
+          </div>
+          <HomeFullscreenWallpaper
+            v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
+          />
         </div>
-        <HomeFullscreenWallpaper
-          v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
-        />
-      </div>
+      </ClientOnly>
     </template>
 
     <template #layout-top>
@@ -90,12 +94,14 @@ const commentComponent = {
       <slot name="doc-after" />
       <!-- 评论区 -->
       <template v-if="frontmatterRef.comment !== false">
-        <component
-          v--if="provider"
-          :is="commentComponent[provider]"
-          :id="`${prefixClass}-comment`"
-          :class="`${prefixClass}-comment`"
-        />
+        <ClientOnly>
+          <component
+            v--if="provider"
+            :is="commentComponent[provider]"
+            :id="`${prefixClass}-comment`"
+            :class="`${prefixClass}-comment`"
+          />
+        </ClientOnly>
       </template>
     </template>
 
