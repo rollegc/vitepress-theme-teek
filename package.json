@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "workspaces": [
-    "vitepress-theme-tk",
+    "vitepress-theme-teeker",
     "plugins/*",
     "docs",
     "build",
@@ -24,7 +24,7 @@
     "build": "pnpm run clean && pnpm run -C build start",
     "clean": "rimraf dist",
     "stub:build": "pnpm run -C build stub",
-    "stub:theme": "pnpm run -C vitepress-theme-tk stub",
+    "stub:theme": "pnpm run -C vitepress-theme-teeker stub",
     "stub:sidebar": "pnpm run -C plugins/vitepress-plugin-sidebar-resolve stub",
     "stub:fileContentLoader": "pnpm run -C plugins/vitepress-plugin-file-content-loader stub",
     "stub:permalink": "pnpm run -C plugins/vitepress-plugin-permalink stub",

@@ -3,15 +3,16 @@ import { basename, extname, resolve } from "node:path";
 import matter from "gray-matter";
 import type { CatalogueOption } from "./types";
 
-// 默认扫描的文件夹列表
-export const DEFAULT_INCLUDE_DIR = ["目录页"];
+// 默认忽略的文件夹列表
+export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "dist", "public"];
 
+// key 为文件路径，value 为 frontmatter 的 path 值
 let catalogues: Record<string, string> = {};
 
 export default (option: CatalogueOption = {}) => {
-  const { path = process.cwd(), includeList = [] } = option;
+  const { path = process.cwd(), ignoreList = [] } = option;
   // 获取指定根目录下的所有目录绝对路径
-  const dirPaths = readDirPaths(path, includeList);
+  const dirPaths = readDirPaths(path, ignoreList);
 
   // 遍历根目录下的每个子目录
   dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath)));
@@ -23,8 +24,8 @@ export default (option: CatalogueOption = {}) => {
  * 指定根目录下的所有目录绝对路径，win 如 ['D:\docs\01.guide', 'D:\docs\02.design']，linux 如 ['/usr/local/docs/01.guide', '/usr/local/docs/02.design']
  * @param sourceDir 指定文件/文件夹的根目录
  */
-const readDirPaths = (sourceDir: string, includeList: CatalogueOption["includeList"] = []) => {
-  const includeListAll = [...DEFAULT_INCLUDE_DIR, ...includeList];
+const readDirPaths = (sourceDir: string, ignoreList: CatalogueOption["ignoreList"] = []) => {
+  const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   const dirPaths: string[] = [];
   // 读取目录，返回数组，成员是 root 下所有的目录名（包含文件夹和文件，不递归）
   const secondDirNames = readdirSync(sourceDir);
@@ -33,7 +34,7 @@ const readDirPaths = (sourceDir: string, includeList: CatalogueOption["includeLi
     // 将路径或路径片段的序列解析为绝对路径，等于使用 cd 命令
     const secondDirPath = resolve(sourceDir, secondDirName);
     // 是否为文件夹目录，并排除指定文件夹
-    if (isSome(includeListAll, secondDirName) && statSync(secondDirPath).isDirectory()) {
+    if (!isSome(ignoreListAll, secondDirName) && statSync(secondDirPath).isDirectory()) {
       dirPaths.push(secondDirPath);
     }
   });
@@ -48,18 +49,18 @@ const readDirPaths = (sourceDir: string, includeList: CatalogueOption["includeLi
  * @param prefix 目录前缀，每次递归都加前端目录名
  */
 const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
-  const { includeList = [] } = option;
-  const includeListAll = [...DEFAULT_INCLUDE_DIR, ...includeList];
+  const { ignoreList = [] } = option;
+  const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   // 读取目录名（文件和文件夹）
   let secondDirOrFilenames = readdirSync(root);
 
   secondDirOrFilenames.forEach(dirOrFilename => {
+    if (isSome(ignoreListAll, dirOrFilename)) return [];
+
     const filePath = resolve(root, dirOrFilename);
 
     if (statSync(filePath).isDirectory()) {
       // 是文件夹目录
-      if (!isSome(includeListAll, dirOrFilename)) return;
-
       scannerMdFile(filePath, option, `${prefix}/${dirOrFilename}`);
     } else {
       // 是文件
@@ -67,7 +68,7 @@ const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
 
       const content = readFileSync(filePath, "utf-8");
 
-      // 解析出 front matter 数据
+      // 解析出 frontmatter 数据
       const { data: { catalogue, path = "" } = {} } = matter(content, {});
 
       if (catalogue && path) {
@@ -95,5 +96,5 @@ const isMdFile = (filePath: string) => {
  * @param name 元素
  */
 const isSome = (arr: Array<string | RegExp>, name: string) => {
-  return arr.some(item => name.includes(item as string) || (item instanceof RegExp && item.test(name)));
+  return arr.some(item => item === name || (item instanceof RegExp && item.test(name)));
 };

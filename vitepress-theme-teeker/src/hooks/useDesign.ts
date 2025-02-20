@@ -10,7 +10,8 @@ export const useDesign = () => {
   };
 
   return {
-    namespace: variables,
+    variables,
+    namespace: variables.namespace,
     getPrefixClass,
   };
 };

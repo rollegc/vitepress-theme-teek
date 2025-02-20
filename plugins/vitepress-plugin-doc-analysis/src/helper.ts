@@ -1,6 +1,6 @@
-import { readdirSync, readFileSync, statSync } from "node:fs"; // 文件模块
-import { extname, relative, resolve } from "node:path"; // 路径模块
-import chalk from "chalk"; // 命令行打印美化
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { extname, relative, resolve } from "node:path";
+import chalk from "chalk";
 import { FileInfo, DocAnalysisOption } from "./types";
 import matter from "gray-matter";
 

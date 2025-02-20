@@ -128,7 +128,7 @@ importers:
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
       vitepress-theme-tk:
         specifier: workspace:*
-        version: link:../../vitepress-theme-tk
+        version: link:../../vitepress-theme-teeker
 
   demo/docs-locales:
     devDependencies:
@@ -137,7 +137,7 @@ importers:
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
       vitepress-theme-tk:
         specifier: workspace:*
-        version: link:../../vitepress-theme-tk
+        version: link:../../vitepress-theme-teeker
 
   demo/docs-locales-root:
     devDependencies:
@@ -146,7 +146,7 @@ importers:
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
       vitepress-theme-tk:
         specifier: workspace:*
-        version: link:../../vitepress-theme-tk
+        version: link:../../vitepress-theme-teeker
 
   docs:
     devDependencies:
@@ -155,7 +155,7 @@ importers:
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
       vitepress-theme-tk:
         specifier: workspace:*
-        version: link:../vitepress-theme-tk
+        version: link:../vitepress-theme-teeker
 
   plugins/vitepress-plugin-catalogue:
     dependencies:
@@ -256,7 +256,7 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
 
-  vitepress-theme-tk:
+  vitepress-theme-teeker:
     dependencies:
       gray-matter:
         specifier: ^4.0.3

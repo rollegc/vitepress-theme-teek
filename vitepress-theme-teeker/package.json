@@ -1,8 +1,8 @@
 {
   "name": "vitepress-theme-tk",
   "version": "1.0.0",
-  "description": "vitepress-theme-tk",
-  "author": "tianke",
+  "description": "vitepress-theme-teeker",
+  "author": "teeker",
   "type": "module",
   "license": "MIT",
   "main": "./src/index.ts",
