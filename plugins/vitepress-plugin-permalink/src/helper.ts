@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import type { PermalinkOption } from "./types";
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "dist", "public"];
+export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
 
 // key 为文件路径，value 为永久链接
 let permalinks: Record<string, string> = {};
@@ -87,7 +87,7 @@ const scannerMdFile = (
       if (!isMdFile(dirOrFilename)) return;
 
       const content = readFileSync(filePath, "utf-8");
-      // 解析出 front matter 数据
+      // 解析出 frontmatter 数据
       const { data: { permalink = "" } = {} } = matter(content, {});
 
       // 判断 permalink 开头是否为 /，是的话截取掉 /，否则为 permalink

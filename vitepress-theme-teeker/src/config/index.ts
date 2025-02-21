@@ -33,14 +33,7 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
     transformRaw,
     themeConfigKey: "posts",
     globOptions: {
-      ignore: [
-        "**/scripts/**",
-        "**/components/**",
-        "**/assets/**",
-        "**/.vitepress/**",
-        "**/public/**",
-        ...fileContentLoaderIgnore,
-      ],
+      ignore: ["**/components/**", "**/.vitepress/**", "**/public/**", ...fileContentLoaderIgnore],
     },
   };
 

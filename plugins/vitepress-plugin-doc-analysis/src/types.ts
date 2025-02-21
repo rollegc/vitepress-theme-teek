@@ -29,14 +29,51 @@ export interface DocAnalysisOption {
   en?: number;
 }
 
-export interface FileInfo {
-  filePath: string;
-  relativePath: string;
+export interface DocAnalysis {
+  /**
+   * 文件路径列表
+   */
+  fileList: FilePathInfo[];
+  /**
+   * 文件总共字数
+   */
+  totalFileWords: string;
+  /**
+   * 文件信息列表
+   */
+  eachFileWords: FileInfo[];
+  /**
+   * git 上次 commit 时间
+   */
+  lastCommitTime: string;
 }
 
-export interface FileWords {
-  fileInfo: FileInfo;
+export interface FileInfo {
+  /**
+   * 文件路径
+   */
+  fileInfo: FilePathInfo;
+  /**
+   * 字数
+   */
   wordCount: number;
+  /**
+   * 阅读时间
+   */
   readingTime: string;
+  /**
+   * 文件 frontmatter 数据
+   */
   frontmatter: Record<string, any>;
+}
+
+export interface FilePathInfo {
+  /**
+   * 文件绝对路径
+   */
+  filePath: string;
+  /**
+   * 文件相对路径
+   */
+  relativePath: string;
 }

@@ -1,5 +1,5 @@
 import type { Plugin } from "vite";
-import { DocAnalysisOption, FileInfo } from "./types";
+import { DocAnalysis, DocAnalysisOption, FilePathInfo } from "./types";
 import { join } from "node:path";
 import readFileList from "./helper";
 import { getLastCommitTime, getEachFileWords, getTotalFileWords, getLastUpdateTime } from "./util";
@@ -39,7 +39,7 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
   };
 }
 
-const doDocAnalysisThenSet = async (themeConfig: any, fileList: FileInfo[], option: DocAnalysisOption) => {
+const doDocAnalysisThenSet = async (themeConfig: any, fileList: FilePathInfo[], option: DocAnalysisOption) => {
   const filePathList = fileList.map(item => item.filePath);
 
   const totalFileWords = getTotalFileWords(filePathList);
@@ -53,5 +53,5 @@ const doDocAnalysisThenSet = async (themeConfig: any, fileList: FileInfo[], opti
     totalFileWords,
     eachFileWords,
     lastCommitTime,
-  };
+  } as DocAnalysis;
 };

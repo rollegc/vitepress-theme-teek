@@ -20,7 +20,7 @@ export interface SidebarOption {
    */
   ignoreIndexMd?: boolean;
   /**
-   * 是否扫描根目录下的 md 文件作为 sideBar，如果为 true，则扫描根目录下的 md 文件作为 sideBar，但是会忽略根目录下的 index.md
+   * 是否扫描根目录下的 md 文件作为 sideBar，如果为 true，则扫描根目录下的 md 文件作为 sideBar，且忽略根目录下的 index.md
    *
    * @default true
    */
@@ -32,13 +32,13 @@ export interface SidebarOption {
    */
   collapsed?: boolean;
   /**
-   * 文件名前缀必须是「数字.」开头
+   * 文件名前缀必须以「数字.」开头
    *
    * @default true
    */
   fileIndexPrefix?: boolean;
   /**
-   * 寻找 md 文件的一级标题时，是否一直查询直到全部扫描结束为止，如果为 false，则只找第一行的一级标题，找不到则为 undefined
+   * 寻找 md 文件的一级标题时，是否一直寻找直到扫描文件结束为止，如果为 false，则只找第一行的一级标题，找不到则为 undefined
    *
    * @default false
    */
@@ -51,14 +51,14 @@ export interface SidebarOption {
    */
   localeRootDir?: string;
   /**
-   * 解析每个 sideBar 后的回调。每个 sideBar 指的是 SidebarOption.path 目录下的每个子目录
+   * 解析完每个 sideBar 后的回调。每个 sideBar 指的是 SidebarOption.path 目录下的每个子目录
    *
    * @param data 当前 sideBar 列表
    * @default undefined
    */
   sideBarResolved?: (data: DefaultTheme.SidebarMulti) => DefaultTheme.SidebarMulti;
   /**
-   * 解析每个 sideBarItem 后的回调。每个 sideBarItem 指的是每个目录下的文件数组
+   * 解析完每个 sideBarItem 后的回调。每个 sideBarItem 指的是每个目录下的文件数组
    *
    * @param data 当前 sideBarItem 列表
    * @default undefined

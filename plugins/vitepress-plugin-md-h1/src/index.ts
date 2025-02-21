@@ -30,7 +30,7 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
  * @param filename 文件名
  */
 export const getMdFileTitle = (filename: string) => {
-  // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 front matter 中的 title，否则为文件名为标题
+  // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 frontmatter 中的 title，否则为文件名为标题
   let title = "";
   /**
    * 如果 filename 为 1.Ke.md，则解析为 ['1', 'Ke', 'md']，其中 index 为 1，title 为 Ke，type 为 md

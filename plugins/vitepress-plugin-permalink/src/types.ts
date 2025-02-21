@@ -11,3 +11,14 @@ export interface PermalinkOption {
    */
   path?: string;
 }
+
+export interface Permalink {
+  /**
+   * key 为文件相对路径，value 为永久链接
+   */
+  map: Record<string, string>;
+  /**
+   * key 为永久链接，value 为文件相对路径
+   */
+  inv: Record<string, string>;
+}

@@ -73,6 +73,7 @@
     "waline",
     "artalk",
     "giscus",
-    "teeker"
+    "teeker",
+    "frontmatter"
   ]
 }

@@ -2,7 +2,7 @@ import type { GlobOptions } from "tinyglobby";
 
 export interface FileContentLoaderOptions<T = FileContentLoaderData, R = FileContentLoaderData[]> {
   /**
-   * 扫描的文件路径表达式
+   * 扫描的文件路径表达式，为 global 表达式
    */
   pattern: string | string[];
   /**
@@ -13,10 +13,10 @@ export interface FileContentLoaderOptions<T = FileContentLoaderData, R = FileCon
   includeSrc?: boolean;
 
   /**
-   * 是否将 src 渲染为 HTML 并放到在数据中
+   * 是否将 src 转换为 HTML 并放到在数据中
    *
    * @default false
-   * @remark 不需要渲染为 HTML 时，不要将 render 设为 true，否则内容过大导致容易内存溢出
+   * @remark 不需要转换为 HTML 时，不要将 render 设为 true，否则内容过大导致容易内存溢出
    */
   render?: boolean;
 
@@ -65,7 +65,7 @@ export interface FileContentLoaderOptions<T = FileContentLoaderData, R = FileCon
    */
   globOptions?: GlobOptions;
   /**
-   * 指定 themeConfig 的一个 key，将处理/转换的数据挂在到该 key 下
+   * 指定 themeConfig 的一个不存在的 key，将处理/转换的数据挂在到该 key 下
    *
    * @default contentLoader
    * @remark 如果没有传入 themeConfigKey，则可以通过 themeConfig.contentLoader 获取处理/转换的数据

@@ -11,7 +11,7 @@ export const log = (message: string, type = "yellow") => {
 };
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "dist", "public"];
+export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
 
 /**
  * 生成侧边栏数据
@@ -201,7 +201,7 @@ const resolveFileName = (
   const stat = statSync(filePath);
   // 文件序号
   let index: string | number = "";
-  // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 front matter 中的 title，否则为文件名为标题
+  // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 frontmatter 中的 title，否则为文件名为标题
   let title = "";
   // 文件类型
   let type = "";

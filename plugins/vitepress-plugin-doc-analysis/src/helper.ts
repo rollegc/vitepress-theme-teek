@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, relative, resolve } from "node:path";
 import chalk from "chalk";
-import { FileInfo, DocAnalysisOption } from "./types";
+import { FilePathInfo, DocAnalysisOption } from "./types";
 import matter from "gray-matter";
 
 export const log = (message: string, type = "yellow") => {
@@ -9,14 +9,14 @@ export const log = (message: string, type = "yellow") => {
 };
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "dist", "public"];
+export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
 
 /**
  * 扫描所有的 md 文件
  * @param option 配置项
  * @param prefix 指定前缀，在生成 relativePath 的时候会自动加上前缀
  */
-export default (option: DocAnalysisOption = {}, prefix = ""): FileInfo[] => {
+export default (option: DocAnalysisOption = {}, prefix = ""): FilePathInfo[] => {
   const { path = process.cwd() } = option;
   // 结尾必须有 /
   prefix = prefix.endsWith("/") ? prefix : `${prefix}/`;
@@ -32,9 +32,9 @@ export default (option: DocAnalysisOption = {}, prefix = ""): FileInfo[] => {
 export function readFileList(
   root: string,
   option: DocAnalysisOption,
-  fileList: FileInfo[] = [],
+  fileList: FilePathInfo[] = [],
   prefix = ""
-): FileInfo[] {
+): FilePathInfo[] {
   const { path = process.cwd(), ignoreList = [], ignoreIndexMd } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 

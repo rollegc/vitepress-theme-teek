@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import type { CatalogueOption } from "./types";
 
 // 默认忽略的文件夹列表
-export const DEFAULT_IGNORE_DIR = ["scripts", "components", "assets", ".vitepress", "node_modules", "dist", "public"];
+export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
 
 // key 为文件路径，value 为 frontmatter 的 path 值
 let catalogues: Record<string, string> = {};

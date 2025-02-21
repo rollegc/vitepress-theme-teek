@@ -2,7 +2,7 @@
   "name": "vitepress-plugin-catalogue",
   "type": "module",
   "version": "1.0.0",
-  "description": "create catalogue config",
+  "description": "扫描 markdown 文档，获取目录信息",
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",
@@ -37,7 +37,8 @@
     }
   },
   "scripts": {
-    "stub": "unbuild --stub"
+    "stub": "unbuild --stub",
+    "build": "unbuild"
   },
   "dependencies": {
     "gray-matter": "^4.0.3"

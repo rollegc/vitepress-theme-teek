@@ -1,6 +1,6 @@
 import type { Plugin, ViteDevServer } from "vite";
 import createPermalinks, { standardLink } from "./helper";
-import type { PermalinkOption } from "./types";
+import type { Permalink, PermalinkOption } from "./types";
 import chalk from "chalk";
 import { join } from "node:path";
 
@@ -45,7 +45,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         permalinkToPath[newValue] = key;
       }
 
-      themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath };
+      themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath } as Permalink;
 
       vitepressConfig = config.vitepress;
 

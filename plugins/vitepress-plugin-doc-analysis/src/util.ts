@@ -1,6 +1,6 @@
 import { readFileSync, statSync } from "node:fs";
 import matter from "gray-matter";
-import { FileInfo, FileWords } from "./types";
+import { FilePathInfo, FileInfo } from "./types";
 import { exec } from "child_process";
 
 /**
@@ -17,15 +17,15 @@ export function getTotalFileWords(filePathList: string[]) {
     wordCount += len[0] + len[1];
   });
 
-  if (wordCount < 1000) return wordCount;
+  if (wordCount < 1000) return wordCount + "";
   return Math.round(wordCount / 100) / 10 + "k";
 }
 /**
  * 获取每一个文章的字数
  * 可以排除某个目录下的 md 文档字数
  */
-export function getEachFileWords(fileList: FileInfo[], cn: number = 300, en: number = 160) {
-  const filePathListWords: FileWords[] = [];
+export function getEachFileWords(fileList: FilePathInfo[], cn: number = 300, en: number = 160) {
+  const filePathListWords: FileInfo[] = [];
 
   fileList.forEach(item => {
     const fileContent = readFileSync(item.filePath, "utf8");

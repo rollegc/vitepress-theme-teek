@@ -1,8 +1,31 @@
 {
   "name": "vitepress-plugin-permalink",
-  "version": "1.0.0",
-  "description": "Build Permalink",
   "type": "module",
+  "version": "1.0.0",
+  "description": "扫描 markdown 文件，生成永久链接",
+  "author": {
+    "name": "teeker",
+    "email": "2456019588@qq.com",
+    "url": "https://tianke99.cn"
+  },
+  "keywords": [
+    "vitepress",
+    "vite",
+    "plugin",
+    "permalink"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/tree/master/plugins/vitepress-plugin-catalogue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kele-Bingtang/vitepress-theme-teeker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/issues"
+  },
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -17,7 +40,8 @@
     }
   },
   "scripts": {
-    "stub": "unbuild --stub"
+    "stub": "unbuild --stub",
+    "build": "unbuild"
   },
   "dependencies": {
     "gray-matter": "^4.0.3"
