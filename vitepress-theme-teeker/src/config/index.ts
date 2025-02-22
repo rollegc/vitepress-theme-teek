@@ -11,7 +11,7 @@ import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
 
 export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
-  const { plugins: pluginsOption, ...c } = config;
+  const { plugins: pluginsOption, ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -61,7 +61,10 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
       plugins: plugins as any,
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
+      optimizeDeps: {
+        include: ["element-plus", "@giscus/vue", "@waline/client"],
+      },
     },
-    themeConfig: { ...c },
+    themeConfig: tkThemeConfig,
   };
 }
