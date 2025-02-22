@@ -1,7 +1,7 @@
 import { defineBuildConfig } from "unbuild";
 
 export default defineBuildConfig({
-  entries: ["src/index"],
+  entries: ["src/index", "src/usePermalinks"],
   clean: true,
   declaration: true,
   rollup: {
@@ -10,5 +10,5 @@ export default defineBuildConfig({
       exports: "named",
     },
   },
-  externals: ["vitepress"],
+  externals: ["vitepress", "vue"],
 });

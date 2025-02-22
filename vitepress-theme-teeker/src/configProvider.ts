@@ -2,7 +2,7 @@ import { computed, defineComponent, h, InjectionKey, provide, Ref, unref, type C
 import { useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./post/types";
 import { useData } from "vitepress";
-import usePermalinks from "vitepress-plugin-permalink/src/usePermalinks";
+import usePermalinks from "vitepress-plugin-permalink/usePermalinks";
 import { emptyPost } from "./post/helper";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");

@@ -1,13 +1,13 @@
 <script setup lang="ts" name="CatalogueItem">
+import type { CatalogueItem } from "vitepress-plugin-catalogue";
 import { useDesign } from "../hooks";
-import type { DefaultTheme } from "vitepress";
 
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("catalogue");
 const prefixClass1 = getPrefixClass("subCatalogue");
 const prefixClass2 = getPrefixClass("catalogueItem");
 
-defineProps<{ item: DefaultTheme.SidebarItem; index: number | string }>();
+defineProps<{ item: CatalogueItem; index: number | string }>();
 </script>
 
 <template>
