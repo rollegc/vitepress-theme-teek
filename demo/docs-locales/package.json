@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@vitepress-theme-teeker/docs-locales",
   "version": "1.0.0",
   "description": "vitepress-theme-teeker 多语言文档 Demo",

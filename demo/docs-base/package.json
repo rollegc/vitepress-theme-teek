@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@vitepress-theme-teeker/docs",
   "version": "1.0.0",
   "description": "vitepress-theme-teeker 使用文档",
