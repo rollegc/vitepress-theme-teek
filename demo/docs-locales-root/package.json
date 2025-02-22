@@ -1,5 +1,5 @@
 {
-  "name": "vitepress-theme-teeker-docs-locales-root",
+  "name": "@vitepress-theme-teeker-docs/locales-root",
   "version": "1.0.0",
   "description": "vitepress-theme-teeker 多语言文档 Demo，将 root 目录移到 zh 目录下",
   "type": "module",

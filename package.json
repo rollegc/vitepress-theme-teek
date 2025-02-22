@@ -19,8 +19,7 @@
     "demo:base": "pnpm run -C demo/docs-base",
     "demo:locales": "pnpm run -C demo/docs-locales",
     "demo:localesRoot": "pnpm run -C demo/docs-locales-root",
-    "stub": "pnpm to:theme stub && pnpm to:build stub && pnpm to:sidebar stub && pnpm to:fileContentLoader stub && pnpm to:permalink stub && pnpm to:mdH1 stub && pnpm to:catalogue stub && pnpm to:docAnalysis stub",
-    "to:build": "pnpm run -C build",
+    "stub": "pnpm to:theme stub && pnpm to:sidebar stub && pnpm to:fileContentLoader stub && pnpm to:permalink stub && pnpm to:mdH1 stub && pnpm to:catalogue stub && pnpm to:docAnalysis stub",
     "to:theme": "pnpm run -C vitepress-theme-teeker",
     "to:sidebar": "pnpm run -C plugins/vitepress-plugin-sidebar-resolve",
     "to:fileContentLoader": "pnpm run -C plugins/vitepress-plugin-file-content-loader",
@@ -32,6 +31,12 @@
     "lint:prettier": "prettier --write  \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:eslint": "eslint --max-warnings 0  \"{src,mock,build}/**/*.{vue,js,ts,tsx}\" --fix",
     "lint": "yarn lint:eslint && yarn lint:prettier",
+    "cs": "pnpm changeset",
+    "cs:version": "pnpm changeset version",
+    "cs:release": "changeset publish",
+    "cs:release:beta": "changeset publish --tag beta",
+    "cs:pre": "changeset pre enter beta",
+    "cs:pre:exit": "changeset pre enter exit",
     "release": "standard-version",
     "release-major": "standard-version --release-as major",
     "release-minor": "standard-version --release-as minor",
@@ -42,6 +47,7 @@
     "czp": "git add . && git-cz && git push"
   },
   "dependencies": {
+    "@changesets/cli": "^2.28.1",
     "vue": "^3.5.13"
   },
   "devDependencies": {
