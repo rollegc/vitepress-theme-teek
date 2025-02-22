@@ -34,15 +34,17 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       const localesKeys = Object.keys(locales || {});
 
       for (const [key, value] of Object.entries(permalinks)) {
+        // 如果设置了 rewrites，则取 rewrites 后的文件路径
+        const rewriteFilePath = rewrites.map[`${key}.md`]?.replace(/\.md/, "") || key;
         // 如果设置了多语言，则 permalink 添加语言前缀
         let newValue = getLocalePermalink(localesKeys, key, value);
 
         if (permalinkToPath[newValue]) {
-          log(`Permalink「${newValue}」已存在，其对应的「${permalinkToPath[newValue]}」将会被 ${key} 覆盖`);
+          log(`永久链接「${newValue}」已存在，其对应的 '${permalinkToPath[newValue]}' 将会被 「${key}」 覆盖`);
         }
 
-        pathToPermalink[key] = newValue;
-        permalinkToPath[newValue] = key;
+        pathToPermalink[rewriteFilePath] = newValue;
+        permalinkToPath[newValue] = rewriteFilePath;
       }
 
       themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath } as Permalink;
@@ -57,13 +59,18 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       localesKeys.forEach(localeKey => {
         setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls, rewrites);
       });
+
+      log("injected permalinks data successfully. 注入永久链接数据成功!", "green");
     },
     configureServer(server: ViteDevServer) {
       const {
-        base,
-        themeConfig: { permalinks },
-        cleanUrls,
-      } = vitepressConfig.site;
+        site: {
+          base,
+          themeConfig: { permalinks },
+          cleanUrls,
+        },
+        rewrites,
+      } = vitepressConfig;
       // 将 permalink 重写实际文件路径，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
       server.middlewares.use((req, _res, next) => {
         // req.url 为实际的文件资源地址，如 /guide/index.md，而不是浏览器的请求地址 /guide/index.html
@@ -75,12 +82,13 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
           const finalReqUrl = reqUrl.startsWith("/") ? reqUrl : `/${reqUrl}`;
           // 如果访问链接 reqUrl 为 permalink，则找到对应的文档路由。当开启 cleanUrls 后，permalinks 内容都是 .html 结尾
-          const pageUrl = permalinks.inv[cleanUrls ? finalReqUrl : `${finalReqUrl}.html`];
+          const filePath = permalinks.inv[cleanUrls ? finalReqUrl : `${finalReqUrl}.html`];
+          // 如果设置了 rewrites，则取没有 rewrites 前的实际文件地址
+          const realFilePath = rewrites.inv[`${filePath}.md`]?.replace(/\.md/, "") || filePath;
 
           // 如果找到文档路由，则跳转，防止页面 404。当开启 cleanUrls 后，得到的文档地址为 .html 结尾，因此需要替换为空
-          if (pageUrl) req.url = req.url.replace(encodeURI(reqUrl), encodeURI(pageUrl));
+          if (realFilePath) req.url = req.url.replace(encodeURI(reqUrl), encodeURI(realFilePath));
         }
-
         next();
       });
     },
@@ -109,7 +117,7 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
  * @param nav 导航栏
  * @param permalinkToPath permalink 和文件路径的映射关系
  * @param cleanUrls cleanUrls
- * @param rewrites 如果设置了 rewrites，则取 rewrites 后的 path
+ * @param rewrites 如果设置了 rewrites，则取 rewrites 后的文件路径
  */
 const setActiveMatchWhenUsePermalink = (
   nav: any[] = [],
@@ -126,8 +134,8 @@ const setActiveMatchWhenUsePermalink = (
     // cleanUrls 为 false 时，permalinkToPath 的 key 都会带上 .html
     const path = permalinkToPath[cleanUrls ? link : `${link.replace(/\.html/, "")}.html`];
 
-    // 官方归档 activeMatch 是一个正则表达式字符串
-    if (path && !item.activeMatch) item.activeMatch = rewrites.map?.[`${path}.md`]?.replace(/\.md/, "") || path;
+    // 官方规定 activeMatch 是一个正则表达式字符串
+    if (path && !item.activeMatch) item.activeMatch = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
     if (item.items?.length) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
   });
 };

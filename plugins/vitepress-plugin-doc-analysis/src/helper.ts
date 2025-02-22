@@ -1,12 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, relative, resolve } from "node:path";
-import chalk from "chalk";
 import { FilePathInfo, DocAnalysisOption } from "./types";
 import matter from "gray-matter";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((chalk as any)[type](message));
-};
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
@@ -81,8 +76,7 @@ export function readFileList(
  * @param filePath 文件绝对路径
  */
 const isMdFile = (filePath: string) => {
-  const fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
-  return ["md", "MD"].includes(fileExtension);
+  return filePath.includes("md") || filePath.includes("MD");
 };
 
 /**

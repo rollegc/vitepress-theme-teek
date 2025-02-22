@@ -162,6 +162,9 @@ importers:
 
   plugins/vitepress-plugin-catalogue:
     dependencies:
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -175,13 +178,13 @@ importers:
 
   plugins/vitepress-plugin-doc-analysis:
     dependencies:
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
     devDependencies:
-      chalk:
-        specifier: ^5.4.1
-        version: 5.4.1
       unbuild:
         specifier: ^3.2.0
         version: 3.2.0(sass@1.83.1)(typescript@5.7.3)(vue-tsc@2.2.0(typescript@5.7.3))(vue@3.5.13(typescript@5.7.3))
@@ -191,6 +194,9 @@ importers:
 
   plugins/vitepress-plugin-file-content-loader:
     dependencies:
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -223,13 +229,13 @@ importers:
 
   plugins/vitepress-plugin-permalink:
     dependencies:
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
     devDependencies:
-      chalk:
-        specifier: ^5.4.1
-        version: 5.4.1
       unbuild:
         specifier: ^3.2.0
         version: 3.2.0(sass@1.83.1)(typescript@5.7.3)(vue-tsc@2.2.0(typescript@5.7.3))(vue@3.5.13(typescript@5.7.3))
@@ -242,13 +248,13 @@ importers:
 
   plugins/vitepress-plugin-sidebar-resolve:
     dependencies:
+      chalk:
+        specifier: ^5.4.1
+        version: 5.4.1
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
     devDependencies:
-      chalk:
-        specifier: ^5.4.1
-        version: 5.4.1
       unbuild:
         specifier: ^3.2.0
         version: 3.2.0(sass@1.83.1)(typescript@5.7.3)(vue-tsc@2.2.0(typescript@5.7.3))(vue@3.5.13(typescript@5.7.3))

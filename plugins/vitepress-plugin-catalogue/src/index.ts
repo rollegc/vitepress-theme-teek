@@ -1,9 +1,14 @@
 import type { Plugin } from "vite";
-import { CatalogueOption } from "./types";
+import { Catalogue, CatalogueOption } from "./types";
 import createCatalogues from "./helper";
 import { join } from "node:path";
+import chalk from "chalk";
 
 export * from "./types";
+
+export const log = (message: string, type = "yellow") => {
+  console.log((chalk as any)[type](message));
+};
 
 export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin & { name: string } {
   return {
@@ -17,20 +22,18 @@ export default function VitePluginVitePressCatalogue(option: CatalogueOption = {
       const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
       const catalogues = createCatalogues({ ...option, path: baseDir });
 
-      // Key 为文件路径，Value 为目录页扫描的路径
-      const filePathToCataloguePath: Record<string, string> = {};
-      // Key 为目录页扫描的路径，Value 为文件路径
-      const cataloguesPathToFilePath: Record<string, string> = {};
+      const finalCatalogues: Catalogue = { arr: catalogues, map: {}, inv: {} };
 
-      for (const [key, value] of Object.entries(catalogues)) {
-        filePathToCataloguePath[key] = value;
-        cataloguesPathToFilePath[value] = key;
-      }
+      catalogues.forEach(item => {
+        const { filePath, path, catalogues = [] } = item;
 
-      themeConfig.catalogues = {
-        map: filePathToCataloguePath,
-        inv: cataloguesPathToFilePath,
-      };
+        finalCatalogues.map[filePath] = { path, catalogues };
+        finalCatalogues.inv[path] = { filePath, catalogues };
+      });
+
+      themeConfig.catalogues = finalCatalogues;
+
+      log("injected catalogues data successfully. 注入目录页数据成功!", "green");
     },
   };
 }

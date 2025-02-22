@@ -11,18 +11,18 @@ defineProps<{ item: DefaultTheme.SidebarItem; index: number | string }>();
 </script>
 
 <template>
-  <li :class="item.items ? prefixClass1 : prefixClass2">
-    <a v-if="!item.items" :href="item.link">{{ index }}. {{ item.text }}</a>
+  <li :class="item.children ? prefixClass1 : prefixClass2">
+    <a v-if="!item.children" :href="item.link">{{ index }}. {{ item.title }}</a>
 
     <template v-else>
-      <div :id="item.text" :class="`${prefixClass1}__title`">
-        <a :href="`#${item.text}`" class="anchor">#</a>
-        <span>{{ `${index}. ${item.text}` }}</span>
+      <div :id="item.title" :class="`${prefixClass1}__title`">
+        <a :href="`#${item.title}`" class="anchor">#</a>
+        <span>{{ `${index}. ${item.title}` }}</span>
       </div>
 
-      <ul v-if="item.items" :class="`${prefixClass}__inline flx-wrap-between`">
+      <ul v-if="item.children" :class="`${prefixClass}__inline flx-wrap-between`">
         <!-- 递归自己 -->
-        <CatalogueItem v-for="(item, i) in item.items" :key="i" :item :index="`${index}-${i + 1}`" />
+        <CatalogueItem v-for="(item, i) in item.children" :key="i" :item :index="`${index}-${i + 1}`" />
       </ul>
     </template>
   </li>

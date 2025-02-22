@@ -3,8 +3,13 @@ import { DocAnalysis, DocAnalysisOption, FilePathInfo } from "./types";
 import { join } from "node:path";
 import readFileList from "./helper";
 import { getLastCommitTime, getEachFileWords, getTotalFileWords, getLastUpdateTime } from "./util";
+import chalk from "chalk";
 
 export * from "./types";
+
+export const log = (message: string, type = "yellow") => {
+  console.log((chalk as any)[type](message));
+};
 
 export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption = {}): Plugin & { name: string } {
   return {
@@ -54,4 +59,6 @@ const doDocAnalysisThenSet = async (themeConfig: any, fileList: FilePathInfo[], 
     eachFileWords,
     lastCommitTime,
   } as DocAnalysis;
+
+  log("injected docAnalysisInfo data successfully. 注入文档分析数据成功!", "green");
 };

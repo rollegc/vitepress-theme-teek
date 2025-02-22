@@ -40,8 +40,8 @@ export default defineConfig({
     },
     nav: [
       { text: "index", link: "/en" },
-      { text: "guide", link: "/en/01.指南/" },
-      { text: "design", link: "/en/design" },
+      { text: "guide", link: "/en/guide" },
+      { text: "design", link: "/en/design/login-overview" },
       { text: "API", link: "/en/07.API/01.API - 登录" },
       {
         text: "API Dropdown",

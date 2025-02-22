@@ -7,7 +7,7 @@ import type { PermalinkOption } from "./types";
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
 
 // key 为文件路径，value 为永久链接
-let permalinks: Record<string, string> = {};
+const permalinks: Record<string, string> = {};
 
 /**
  * 生成永久链接
@@ -108,8 +108,7 @@ const scannerMdFile = (
  * @param filePath 文件绝对路径
  */
 const isMdFile = (filePath: string) => {
-  const fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
-  return ["md", "MD"].includes(fileExtension);
+  return filePath.includes("md") || filePath.includes("MD");
 };
 
 /**

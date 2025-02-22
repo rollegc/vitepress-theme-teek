@@ -1,25 +1,16 @@
 <script setup lang="ts" name="Catalogue">
+import { computed, unref } from "vue";
 import { useDesign } from "../hooks";
-import { useUnrefData } from "../configProvider";
 import CatalogueItem from "./CatalogueItem.vue";
+import { useData } from "vitepress";
 
 const { getPrefixClass, namespace } = useDesign();
 const prefixClass = getPrefixClass("catalogue");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
-const getPath = () => {
-  const { path } = frontmatter;
-
-  if (!path) return "";
-  if (path.startsWith("/") && path.endsWith("/")) return path;
-  if (path.startsWith("/")) return `${path}/`;
-  if (path.endsWith("/")) return `/${path}`;
-  return `/${path}/`;
-};
-
-// 文章信息
-const catalogueList = theme.sidebar[getPath()];
+// 目录列表
+const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter).path]?.catalogues);
 </script>
 
 <template>
@@ -30,9 +21,9 @@ const catalogueList = theme.sidebar[getPath()];
     </div>
 
     <div :class="`${prefixClass}-wrapper`">
-      <div class="title">目录</div>
-      <ul :class="`${prefixClass}-wrapper__inline`">
-        <template v-for="(item, index) in catalogueList" :key="index">
+      <div class="title">{{ frontmatter.pageTitle || "目录" }}</div>
+      <ul :class="`${prefixClass}-wrapper__inline flx-wrap-between`">
+        <template v-for="(item, index) in catalogues" :key="index">
           <CatalogueItem :item :index="index + 1" />
         </template>
       </ul>

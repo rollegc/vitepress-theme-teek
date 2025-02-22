@@ -2,10 +2,10 @@
 import { useRoute, useData } from "vitepress";
 import { useDesign, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
-import { computed, ref, unref } from "vue";
+import { computed, unref } from "vue";
 import { House, Reading, Clock, View } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
-import { FileWords } from "vitepress-plugin-doc-analysis";
+import { FileInfo } from "vitepress-plugin-doc-analysis";
 import PostBaseInfo from "./PostBaseInfo.vue";
 import { Breadcrumb, DocAnalysis, Post } from "../config/types";
 import { TkContentData } from "../post/types";
@@ -13,8 +13,8 @@ import { TkContentData } from "../post/types";
 const { getPrefixClass } = useDesign();
 const prefixClass = getPrefixClass("articleAnalyze");
 
-const { theme, frontmatter, page } = useUnrefData();
-const { theme: themeRef, localeIndex } = useData();
+const { theme, frontmatter } = useUnrefData();
+const { theme: themeRef, localeIndex, page } = useData();
 
 // 面包屑配置项
 const breadcrumb: Breadcrumb = {
@@ -24,23 +24,26 @@ const breadcrumb: Breadcrumb = {
   ...theme.breadcrumb,
   ...frontmatter.breadcrumb,
 };
-const relativePathArr = page.relativePath.split("/") as string[];
-const classifyList = ref<string[]>([]);
+const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);
 
-relativePathArr.forEach((item, index) => {
-  // 去除「序号.」的前缀，并获取文件名
-  const fileName = item.replace(/^\d+\./, "").split(".")?.[0] || "";
+const breadcrumbList = computed(() => {
+  const classifyList: { fileName: string; filePath: string }[] = [];
+  const relativePathArrConst: string[] = unref(relativePathArr);
 
-  // 兼容多语言功能，如果使用多语言，在面包屑去掉多语言根目录名
-  if ((index !== relativePathArr.length - 1 || breadcrumb?.showCurrentName) && fileName !== unref(localeIndex)) {
-    unref(classifyList).push(fileName);
-  }
+  relativePathArrConst.forEach((item, index) => {
+    // 去除「序号.」的前缀，并获取文件名
+    const fileName = item.replace(/^\d+\./, "").split(".")?.[0] || "";
+
+    // 兼容多语言功能，如果使用多语言，在面包屑去掉多语言根目录名
+    if ((index !== relativePathArrConst.length - 1 || breadcrumb?.showCurrentName) && fileName !== unref(localeIndex)) {
+      classifyList.push({
+        fileName,
+        filePath: theme.catalogues?.inv[item]?.filePath || "",
+      });
+    }
+  });
+  return classifyList;
 });
-
-// 文章的 URL，面包屑点击文章名后跳转
-const getFilePath = (index: number) => {
-  return theme.catalogues?.inv[relativePathArr[index]];
-};
 
 // 文章基本信息
 const post: TkContentData = {
@@ -64,8 +67,8 @@ const route = useRoute();
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
-  let pageViewInfo: Partial<FileWords> = {};
-  unref(docAnalysisInfo).eachFileWords.forEach((item: FileWords) => {
+  let pageViewInfo: Partial<FileInfo> = {};
+  unref(docAnalysisInfo).eachFileWords.forEach((item: FileInfo) => {
     if (item.fileInfo.relativePath === route.data.relativePath) return (pageViewInfo = item);
   });
 
@@ -93,13 +96,13 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
           <el-icon><House /></el-icon>
         </a>
       </el-breadcrumb-item>
-      <el-breadcrumb-item v-for="(item, index) in classifyList" :key="index">
+      <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
         <component
-          :is="getFilePath(index) ? 'a' : 'span'"
-          :href="getFilePath(index) ? `/${getFilePath(index)}` : undefined"
-          :title="item"
+          :is="item.filePath ? 'a' : 'span'"
+          :href="item.filePath ? `/${item.filePath}` : undefined"
+          :title="item.fileName"
         >
-          {{ item }}
+          {{ item.fileName }}
         </component>
       </el-breadcrumb-item>
     </el-breadcrumb>

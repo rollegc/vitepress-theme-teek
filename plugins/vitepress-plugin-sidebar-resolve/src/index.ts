@@ -1,14 +1,11 @@
 import type { Plugin, ViteDevServer } from "vite";
 import type { SidebarOption } from "./types";
-import chalk from "chalk";
-import createSidebar from "./helper";
+import createSidebar, { log } from "./helper";
 import { join } from "node:path";
 import { DefaultTheme } from "vitepress";
 
 export * from "./types";
 export * from "./util";
-
-const log = console.log;
 
 export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin & { name: string } {
   return {
@@ -72,8 +69,8 @@ const setSideBar = (themeConfig: any, sidebar: DefaultTheme.SidebarMulti) => {
   themeConfig = themeConfig || {};
   themeConfig.sidebar = {
     ...sidebar,
-    ...(Array.isArray(themeConfig.sidebar)
-      ? log(chalk.yellow("Warning: 自定义 Sidebar 必须是对象形式"))
-      : themeConfig.sidebar),
+    ...(Array.isArray(themeConfig.sidebar) ? log("Warning: 自定义 Sidebar 必须是对象形式") : themeConfig.sidebar),
   };
+
+  log("injected sidebar data successfully. 注入侧边栏数据成功!", "green");
 };

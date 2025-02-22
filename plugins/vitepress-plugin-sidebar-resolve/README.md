@@ -1,6 +1,6 @@
 # vitepress-plugin-sidebar-resolve
 
-这是一个适用于 `vitepress` 的 Vite 插件，在 `vitepress` 启动后扫描 markdown 文件来自动生成侧边栏。
+这是一个适用于 `vitepress` 的 Vite 插件，在 `vitepress` 启动后扫描 markdown 文档来自动生成侧边栏。
 
 ## ✨ Feature
 
@@ -30,16 +30,14 @@ import Sidebar from "vitepress-plugin-sidebar-resolve";
 
 export default defineConfig({
   vite: {
-    plugins: [
-      Sidebar(/* options */)
-    ]
+    plugins: [Sidebar(/* options */)],
   },
-})
+});
 ```
 
 > 说明：该插件仅限项目启动时生效，已改动或新添加的 markdown 需要重启项目才能生效。
 
-插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件。
+插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 markdown 文档。
 
 ## 🛠️ Options
 
@@ -53,7 +51,7 @@ export default defineConfig({
 | scannerRootMd   | 是否扫描根目录下的 md 文件作为 sideBar，如果为 true，则扫描根目录下的 md 文件作为 sideBar，且忽略根目录下的 index.md | `boolean`  | `true`                         |
 | collapsed       | 是否折叠侧边栏                                               | `boolean`  | `true`                         |
 | fileIndexPrefix | 文件名前缀必须以「数字.」开头                                | `boolean`  | `false`                        |
-| mdTitleDeep     | 寻找 md 文件的一级标题时，是否一直寻找直到扫描文件结束为止，如果为 false，则只找第一行的一级标题，找不到则为 `undefined` | `boolean`  | `false`                        |
+| titleFormMd     | 是否从 md 文件获取第一个一级标题作为侧边栏 text              | `boolean`  | `false`                        |
 | localeRootDir   | 当 Vitepress 设置 locales 多语言后，如果将 root 语言的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh，否则侧边栏无法知道文件都放到了 zh | string     | 文档根目录                     |
 
 ### Hooks
@@ -64,13 +62,15 @@ export default defineConfig({
 | ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------- |
 | sideBarResolved          | 解析完每个 sideBar 后的回调。每个 sideBar 指的是二级目录     | `(data: DefaultTheme.SidebarMulti) => DefaultTheme.SidebarMulti` |         |
 | sideBarItemsResolved     | 解析完每个 sideBarItem 后的回调。每个 sideBarItem 指的是每个二级目录下的文件数组 | `(data: DefaultTheme.SidebarItem[]) => DefaultTheme.SidebarItem[]` |         |
-| beforeCreateSideBarItems | 创建 sideBarItem 之前的回调。每个 sideBarItem 指的是每个二级目录下的文件数组 | `(data: string[]) => string[]`                               | 、      |
+| beforeCreateSideBarItems | 创建 sideBarItem 之前的回调。每个 sideBarItem 指的是每个二级目录下的文件数组 | `(data: string[]) => string[]`                               |         |
 
 ## 📘 TypeScript
 
 ### 🛠️ Options
 
 ```typescript
+import type { DefaultTheme } from "vitepress";
+
 export interface SidebarOption {
   /**
    * 生成侧边栏时，忽略的文件/文件夹列表，支持正则表达式
@@ -97,7 +97,7 @@ export interface SidebarOption {
    */
   scannerRootMd?: boolean;
   /**
-   * 是否折叠侧边栏
+   * 是否默认折叠侧边栏
    *
    * @default true
    */
@@ -109,11 +109,14 @@ export interface SidebarOption {
    */
   fileIndexPrefix?: boolean;
   /**
-   * 寻找 md 文件的一级标题时，是否一直寻找直到扫描文件结束为止，如果为 false，则只找第一行的一级标题，找不到则为 undefined
+   * 是否从 md 文件获取第一个一级标题作为侧边栏 text
    *
    * @default false
+   * @remark 侧边栏 text 获取顺序
+   * titleFormMd 为 true：md 文件 formatter.title > [md 文件第一个一级标题] > md 文件名
+   * titleFormMd 为 false：md 文件 formatter.title > md 文件名
    */
-  mdTitleDeep?: boolean;
+  titleFormMd?: boolean;
   /**
    * 当 Vitepress 设置 locales 多语言后，如果将 root 语言的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
    * 如果 root 语言的所有文件放在文档根目录下，则不需要设置 localeRootDir
@@ -145,7 +148,6 @@ export interface SidebarOption {
    */
   beforeCreateSideBarItems?: (data: string[]) => string[];
 }
-
 ```
 
 ## 🉑 License

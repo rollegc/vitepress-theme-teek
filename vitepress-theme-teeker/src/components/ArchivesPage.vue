@@ -32,7 +32,7 @@ const posts = usePosts();
             </div>
 
             <ul>
-              <li v-for="item in p" :key="item.title">
+              <li v-for="item in p" :key="item.url">
                 <a :href="item.url">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>

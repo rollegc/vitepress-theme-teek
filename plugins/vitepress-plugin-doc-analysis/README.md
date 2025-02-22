@@ -4,7 +4,7 @@
 
 ## ✨ Feature
 
-- 🚀 自动分析 markdown 文件信息，挂载到 `themeConfig.docAnalysisInfo`
+- 🚀 自动分析 markdown 文档信息，挂载到 `themeConfig.docAnalysisInfo`
 - 🚀 支持 locales 多语言的文档分析，挂载到 `locales.[lang].themeConfig.docAnalysisInfo`
 
 ## 🕯️ Install
@@ -27,16 +27,14 @@ import DocAnalysis from "vitepress-plugin-doc-analysis";
 
 export default defineConfig({
   vite: {
-    plugins: [
-      DocAnalysis(/* options */)
-    ]
+    plugins: [DocAnalysis(/* options */)],
   },
-})
+});
 ```
 
 > 说明：该插件仅限项目启动时生效，已改动或新添加的 markdown 需要重启项目才能生效。
 
-插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件。
+插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 markdown 文档。
 
 ## 🛠️ Options
 
@@ -61,6 +59,14 @@ const { theme, localeIndex } = useData();
 const { fileList, totalFileWords, eachFileWords, lastCommitTime }: DocAnalysis = theme.value;
 
 // 如果处在多语言配置下，vitepress 会将当前语言的 themeConfig 放到 theme 里，与原先的 theme 进行合并
+```
+
+如果不希望某个 markdown 文档被插件分析，请在该文档 `frontmatter` 配置：
+
+```yaml
+---
+docAnalysis: false
+---
 ```
 
 ## 📘 TypeScript

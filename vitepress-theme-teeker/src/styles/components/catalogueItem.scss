@@ -18,6 +18,8 @@ $prefix-class2: #{$theme-namespace}-catalogueItem;
 
 // 非叶子目录样式
 .#{$prefix-class1} {
+  width: 100%;
+  margin-top: 1rem;
   margin-bottom: 1.8rem;
 
   &__title {

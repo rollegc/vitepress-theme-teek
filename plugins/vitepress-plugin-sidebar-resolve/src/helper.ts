@@ -1,9 +1,9 @@
-import { readdirSync, statSync, readFileSync } from "node:fs";
+import { readdirSync, statSync, readFileSync, existsSync } from "node:fs";
 import { join, basename, resolve } from "node:path";
 import matter from "gray-matter";
 import type { DefaultTheme } from "vitepress";
 import type { SidebarOption } from "./types";
-import { getTitleFromMd, isMdFileExtension, isIllegalIndex } from "./util";
+import { getTitleFromMd, isIllegalIndex, isSome } from "./util";
 import chalk from "chalk";
 
 export const log = (message: string, type = "yellow") => {
@@ -28,7 +28,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
   const dirPaths = readDirPaths(path, ignoreList);
 
   // 只扫描根目录的 md 文件，且不扫描 index.md（首页文档）
-  const key = prefix === "/" ? "/" : `/${prefix}`;
+  const key = prefix === "/" ? prefix : `/${prefix}`;
   if (scannerRootMd) sidebar[key] = createSideBarItems(path, { ...option, ignoreIndexMd: true }, key, scannerRootMd);
 
   // 遍历根目录下的每个子目录，生成对应的侧边栏数据
@@ -40,7 +40,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     const sidebarItems = createSideBarItems(dirPath, option, `${key}${fileName}/`);
 
     if (!sidebarItems.length) {
-      return log(`Warning：该目录「${dirPath}」内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
+      return log(`Warning：该目录 '${dirPath}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
     sidebar[`${key}${fileName}/`] = sidebarItems;
@@ -57,13 +57,13 @@ const readDirPaths = (sourceDir: string, ignoreList: SidebarOption["ignoreList"]
   const dirPaths: string[] = [];
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   // 读取目录，返回数组，成员是 root 下所有的目录名（包含文件夹和文件，不递归）
-  const secondDirNames = readdirSync(sourceDir);
+  const dirOrFilenames = readdirSync(sourceDir);
 
-  secondDirNames.forEach(secondDirName => {
+  dirOrFilenames.forEach(dirOrFilename => {
     // 将路径或路径片段的序列解析为绝对路径，等于使用 cd 命令
-    const secondDirPath = resolve(sourceDir, secondDirName);
+    const secondDirPath = resolve(sourceDir, dirOrFilename);
     // 是否为文件夹目录，并排除指定文件夹
-    if (!isSome(ignoreListAll, secondDirName) && statSync(secondDirPath).isDirectory()) {
+    if (!isSome(ignoreListAll, dirOrFilename) && statSync(secondDirPath).isDirectory()) {
       dirPaths.push(secondDirPath);
     }
   });
@@ -88,27 +88,24 @@ const createSideBarItems = (
   const {
     collapsed = true,
     ignoreList = [],
-    ignoreIndexMd,
+    ignoreIndexMd = false,
     fileIndexPrefix = false,
     sideBarItemsResolved,
     beforeCreateSideBarItems,
-    mdTitleDeep = false,
+    titleFormMd = false,
   } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
-
-  if (ignoreIndexMd && (root.includes("index.md") || root.includes("index.MD"))) return [];
-
-  // 读取目录名（文件和文件夹）
-  let secondDirNames = readdirSync(root);
 
   // 结构化文章侧边栏数据，以文件夹的序号为数字下标
   let sidebarItems: DefaultTheme.SidebarItem[] = [];
   // 存储没有序号的文件，最终生成 sidebarItems 的时候，将这些文件放到最后面
   let sidebarItemsNoIndex: DefaultTheme.SidebarItem[] = [];
+  // 读取目录名（文件和文件夹）
+  let dirOrFilenames = readdirSync(root);
 
-  secondDirNames = beforeCreateSideBarItems?.(secondDirNames) ?? secondDirNames;
+  dirOrFilenames = beforeCreateSideBarItems?.(dirOrFilenames) ?? dirOrFilenames;
 
-  secondDirNames.forEach(dirOrFilename => {
+  dirOrFilenames.forEach(dirOrFilename => {
     if (isSome(ignoreListAll, dirOrFilename)) return [];
 
     const filePath = resolve(root, dirOrFilename);
@@ -119,32 +116,19 @@ const createSideBarItems = (
 
     // 校验文件序号
     if (fileIndexPrefix && isIllegalIndex(index)) {
-      log(`Warning：该文件「${filePath}」序号出错，请填写正确的序号`);
+      log(`Warning：该文件 '${filePath}' 序号出错，请填写正确的序号`);
       return [];
     }
 
     // 判断序号是否已经存在
-    if (sidebarItems[index]) log(`Warning：该文件「${filePath}」的序号在同一级别中重复出现，将会被覆盖`);
+    if (sidebarItems[index]) log(`Warning：该文件 '${filePath}' 的序号在同一级别中重复出现，将会被覆盖`);
 
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
-      // 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取标题，一旦获取到第一个则不再继续遍历
-      const filenames = [
-        join(root, dirOrFilename, "index.md"),
-        join(root, dirOrFilename, "index.MD"),
-        join(root, dirOrFilename, dirOrFilename + ".md"),
-      ];
-
-      for (const filename of filenames) {
-        const t = getTitleFromMd(filename, mdTitleDeep);
-        if (t) {
-          title = t;
-          break;
-        }
-      }
+      const mdTitle = titleFormMd ? tryGetMdTitle(root, dirOrFilename) : "";
 
       const sidebarItem = {
-        text: title,
+        text: mdTitle || title,
         collapsed,
         items: createSideBarItems(filePath, option, `${prefix}${dirOrFilename}/`),
       };
@@ -153,27 +137,26 @@ const createSideBarItems = (
       else sidebarItems[index] = sidebarItem;
     } else {
       // 是文件
-      if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
       // 开启只扫描根目录 md 文件时，不扫描 index.md（首页文档）
       if (onlyScannerRootMd && dirOrFilename === "index.md") return [];
+      if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
 
-      if (!isMdFileExtension(type) || (ignoreIndexMd && dirOrFilename.includes("index.md"))) {
+      if (!["md", "MD"].includes(type)) {
         // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
-        !onlyScannerRootMd && log(`Warning：该文件「${filePath}」非 .md 格式文件，不支持该文件类型`);
+        !onlyScannerRootMd && log(`Warning：该文件 '${filePath}' 非 .md 格式文件，不支持该文件类型`);
         return [];
       }
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
-      const { data = {}, content: mdContent } = matter(content, {});
+      const { data: { title: frontmatterTitle } = {}, content: mdContent } = matter(content, {});
 
-      // title 获取顺序：md 文件 formatter 的 title > md 文件的 # 后面的内容 > md 文件名
-      if (data.title) title = data.title;
-      else title = getTitleFromMd(mdContent, mdTitleDeep) || title;
+      // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
+      const mdTitle = titleFormMd ? getTitleFromMd(mdContent) : "";
+      const finalTitle = frontmatterTitle || mdTitle || title;
 
-      // 当没有文件序号时，index == title
       const sidebarItem = {
-        text: title,
+        text: finalTitle,
         collapsed,
         link: prefix + name,
       };
@@ -209,8 +192,9 @@ const resolveFileName = (
   let name = "";
 
   /**
-   * 如果 filename 为 1.Ke.md，则解析为 ['1', 'Ke', 'md']，其中 index 为 1，title 为 Ke，type 为 md
-   * 如果 filename 为 1.Ke.d.md，则解析为 ['1', 'Ke.d', 'md']，其中 index 为 1，title 为 Ke.d，type 为 md
+   * 如果 filename 为 ke.md，则解析为 ['ke', 'md']，最后结果为 { index: 0, title: ke, type: md, name: ke }
+   * 如果 filename 为 1.ke.md，则解析为 ['1', 'ke', 'md']，最后结果为 { index: 1, title: ke, type: md, name: 1.ke }
+   * 如果 filename 为 1.ke.d.md，则解析为 ['1', 'ke.d', 'md']，最后结果为 { index: 1, title: ke.d, type: md, name: 1.ke.d }
    */
   const fileNameArr = filename.split(".");
 
@@ -235,11 +219,26 @@ const resolveFileName = (
 };
 
 /**
- * 判断数组中是否存在某个元素，支持正则表达式
- *
- * @param arr 数组
- * @param name 元素
+ * 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取标题，一旦获取到第一个则不再继续遍历
+ * @param root 目录绝对路径
+ * @param dirOrFilename 文件夹名
  */
-const isSome = (arr: Array<string | RegExp>, name: string) => {
-  return arr.some(item => item === name || (item instanceof RegExp && item.test(name)));
+const tryGetMdTitle = (root: string, dirOrFilename: string) => {
+  const filePaths = [
+    join(root, dirOrFilename, "index.md"),
+    join(root, dirOrFilename, "index.MD"),
+    join(root, dirOrFilename, dirOrFilename + ".md"),
+  ];
+
+  for (const filePath of filePaths) {
+    if (!existsSync(filePath)) continue;
+
+    const content = readFileSync(filePath, "utf-8");
+    const { content: mdContent } = matter(content, {});
+    const t = getTitleFromMd(mdContent);
+
+    if (t) return t;
+  }
+
+  return "";
 };

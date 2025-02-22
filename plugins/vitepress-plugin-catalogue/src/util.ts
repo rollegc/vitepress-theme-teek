@@ -1,7 +1,3 @@
-/**
- * 从 md 文件中读取一级标题
- * @param markdownContent md 文件内容
- */
 export const getTitleFromMd = (mdContent: string) => {
   // 切割换行符 \r\n 或 \n
   const lines = mdContent.trimStart().split(/\r?\n/);
@@ -22,6 +18,15 @@ export const getTitleFromMd = (mdContent: string) => {
  */
 export const isIllegalIndex = (index: number) => {
   return isNaN(index) || index < 0;
+};
+
+/**
+ * 判断是否为 md 文件
+ *
+ * @param filePath 文件绝对路径
+ */
+export const isMdFile = (filePath: string) => {
+  return filePath.includes("md") || filePath.includes("MD");
 };
 
 /**

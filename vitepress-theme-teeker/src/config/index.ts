@@ -39,11 +39,6 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
 
   const plugins: PluginOption[] = [];
 
-  if (config.tkTheme !== false) {
-    plugins.push(Catalogue(catalogueOption));
-    plugins.push(FileContentLoader<TkContentData, Post>(fileContentLoaderOptions));
-  }
-
   if (sidebar) {
     sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", "@fragment"];
     plugins.push(Sidebar(sidebarOption));
@@ -53,6 +48,11 @@ export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
   if (docAnalysis) {
     docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", /目录页/];
     plugins.push(DocAnalysis(docAnalysisOption));
+  }
+
+  if (config.tkTheme !== false) {
+    plugins.push(Catalogue(catalogueOption));
+    plugins.push(FileContentLoader<TkContentData, Post>(fileContentLoaderOptions));
   }
 
   return {

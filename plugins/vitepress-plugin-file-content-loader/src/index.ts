@@ -5,8 +5,13 @@ import { glob } from "tinyglobby";
 import { createMarkdownRenderer } from "vitepress";
 import { join, relative } from "node:path";
 import { FileContentLoaderData, FileContentLoaderOptions } from "./types";
+import chalk from "chalk";
 
 export * from "./types";
+
+export const log = (message: string, type = "yellow") => {
+  console.log((chalk as any)[type](message));
+};
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["**/node_modules/**", "**/dist/**"];
@@ -82,6 +87,8 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
       }
 
       themeConfig[themeConfigKey] = transformRaw ? await transformRaw(raw) : raw;
+
+      log(`injected ${themeConfigKey} data successfully. 注入 ${themeConfigKey} 数据成功!`, "green");
     },
   };
 }
