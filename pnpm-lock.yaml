@@ -283,8 +283,8 @@ importers:
         specifier: workspace:*
         version: link:../plugins/vitepress-plugin-file-content-loader
       vitepress-plugin-md-h1:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-md-h1
+        specifier: latest
+        version: 1.0.0(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-permalink:
         specifier: workspace:*
         version: link:../plugins/vitepress-plugin-permalink
@@ -4384,6 +4384,11 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  vitepress-plugin-md-h1@1.0.0:
+    resolution: {integrity: sha512-z3iXw71jOzZeQok7+vzl+MCowlVcVZ2TpkDkuZokB7aZIKMJnb/pZT8DQdCg7PahB88aaQ9mRQShRexQDvU9vw==}
+    peerDependencies:
+      vite: ^6.0.7
 
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
@@ -8766,6 +8771,11 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.4.2
       sass: 1.83.1
+
+  vitepress-plugin-md-h1@1.0.0(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)):
+    dependencies:
+      gray-matter: 4.0.3
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
 
   vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3):
     dependencies:

@@ -22,7 +22,7 @@
   "dependencies": {
     "vitepress-plugin-catalogue": "workspace:*",
     "vitepress-plugin-doc-analysis": "workspace:*",
-    "vitepress-plugin-md-h1": "workspace:*",
+    "vitepress-plugin-md-h1": "latest",
     "vitepress-plugin-permalink": "workspace:*",
     "vitepress-plugin-sidebar-resolve": "workspace:*",
     "vitepress-plugin-file-content-loader": "workspace:*",

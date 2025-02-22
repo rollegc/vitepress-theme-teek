@@ -32,15 +32,11 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
 export const getMdFileTitle = (filename: string) => {
   // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 frontmatter 中的 title，否则为文件名为标题
   let title = "";
-  /**
-   * 如果 filename 为 1.Ke.md，则解析为 ['1', 'Ke', 'md']，其中 index 为 1，title 为 Ke，type 为 md
-   * 如果 filename 为 1.Ke.d.md，则解析为 ['1', 'Ke.d', 'md']，其中 index 为 1，title 为 Ke.d，type 为 md
-   */
   const fileNameArr = filename.split(".");
 
-  if (fileNameArr.length === 2) {
-    title = fileNameArr[0];
-  } else {
+  if (fileNameArr.length === 2) title = fileNameArr[0];
+  else {
+    // 处理多个 . 如 01.guile.md 的情况
     const firstDotIndex = filename.indexOf(".");
     const lastDotIndex = filename.lastIndexOf(".");
     title = filename.substring(firstDotIndex + 1, lastDotIndex);
