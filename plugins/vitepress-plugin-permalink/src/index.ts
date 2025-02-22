@@ -1,13 +1,13 @@
 import type { Plugin, ViteDevServer } from "vite";
 import createPermalinks, { standardLink } from "./helper";
 import type { Permalink, PermalinkOption } from "./types";
-import chalk from "chalk";
+import picocolors from "picocolors";
 import { join } from "node:path";
 
 export * from "./types";
 
 export const log = (message: string, type = "yellow") => {
-  console.log((chalk as any)[type](message));
+  console.log((picocolors as any)[type](message));
 };
 
 export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): Plugin & { name: string } {

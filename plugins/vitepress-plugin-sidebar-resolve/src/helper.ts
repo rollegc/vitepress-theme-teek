@@ -4,10 +4,10 @@ import matter from "gray-matter";
 import type { DefaultTheme } from "vitepress";
 import type { SidebarOption } from "./types";
 import { getTitleFromMd, isIllegalIndex, isSome } from "./util";
-import chalk from "chalk";
+import picocolors from "picocolors";
 
 export const log = (message: string, type = "yellow") => {
-  console.log((chalk as any)[type](message));
+  console.log((picocolors as any)[type](message));
 };
 
 // 默认忽略的文件夹列表

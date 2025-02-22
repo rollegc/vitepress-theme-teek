@@ -6,6 +6,9 @@ export default defineBuildConfig({
   declaration: true,
   rollup: {
     emitCJS: true,
+    output: {
+      exports: "named",
+    },
   },
   externals: ["vitepress"],
 });

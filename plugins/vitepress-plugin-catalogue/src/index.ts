@@ -2,12 +2,12 @@ import type { Plugin } from "vite";
 import { Catalogue, CatalogueOption } from "./types";
 import createCatalogues from "./helper";
 import { join } from "node:path";
-import chalk from "chalk";
+import picocolors from "picocolors";
 
 export * from "./types";
 
 export const log = (message: string, type = "yellow") => {
-  console.log((chalk as any)[type](message));
+  console.log((picocolors as any)[type](message));
 };
 
 export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin & { name: string } {
