@@ -35,10 +35,20 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.cjs"
+    "./usePermalinks": {
+      "types": "./dist/usePermalinks.d.ts",
+      "import": "./dist/usePermalinks.mjs",
+      "require": "./dist/usePermalinks.cjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ],
+      "*": [
+        "./dist/*.d.ts"
+      ]
     }
   },
   "scripts": {
