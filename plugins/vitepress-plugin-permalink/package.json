@@ -51,8 +51,8 @@
       ".": [
         "./dist/index.d.ts"
       ],
-      "*": [
-        "./dist/*.d.ts"
+      "usePermalink": [
+        "./dist/usePermalink.d.ts"
       ]
     }
   },
