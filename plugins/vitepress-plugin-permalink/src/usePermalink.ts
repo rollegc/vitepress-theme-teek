@@ -3,7 +3,7 @@ import { nextTick, onMounted } from "vue";
 
 const inBrowser = typeof window !== "undefined";
 
-export default () => {
+export default function usePermalink() {
   const fakeHost = "http://a.com";
   const router = useRouter();
   const { site, theme } = useData();
@@ -97,4 +97,4 @@ export default () => {
   };
 
   return { startWatch };
-};
+}

@@ -2,7 +2,7 @@ import { computed, defineComponent, h, InjectionKey, provide, Ref, unref, type C
 import { useAnchorScroll, useViewTransition } from "./hooks";
 import type { Post } from "./post/types";
 import { useData } from "vitepress";
-import usePermalinks from "vitepress-plugin-permalink/usePermalinks";
+import usePermalink from "vitepress-plugin-permalink/usePermalink";
 import { emptyPost } from "./post/helper";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
@@ -19,7 +19,7 @@ const createConfigProvider = (Layout: Component) => {
       provide(postsSymbol, theme.posts || emptyPost);
 
       // 开启监听器
-      usePermalinks().startWatch();
+      usePermalink().startWatch();
       useAnchorScroll().startWatch();
       useViewTransition();
 
