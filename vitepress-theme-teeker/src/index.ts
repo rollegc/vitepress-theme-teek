@@ -14,6 +14,7 @@ import "element-plus/theme-chalk/el-breadcrumb.css";
 import "element-plus/theme-chalk/el-breadcrumb-item.css";
 
 export type { TkThemeConfig } from "./config/types";
+export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 
 export default {
   extends: DefaultTheme,

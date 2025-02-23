@@ -1,8 +1,8 @@
-import { onMounted, onUnmounted, reactive, watch } from "vue";
-import { useUnrefData } from "../configProvider";
+import { onMounted, onUnmounted, reactive, unref, watch } from "vue";
+import { useData } from "vitepress";
 
 export const useAnchorScroll = () => {
-  const { theme } = useUnrefData();
+  const { theme } = useData();
   // 初始化当前锚点
   const currentAnchor = reactive({
     id: "",
@@ -56,7 +56,7 @@ export const useAnchorScroll = () => {
    * 文档更新锚点的时候更新 url 中的 hash
    */
   const startWatch = () => {
-    if (theme.anchorScroll === false) return;
+    if (unref(theme).anchorScroll === false) return;
 
     watch(
       () => currentAnchor.id,

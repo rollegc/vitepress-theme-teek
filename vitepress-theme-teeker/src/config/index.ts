@@ -10,7 +10,7 @@ import { PluginOption } from "vite";
 import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
 
-export default function themeConfig(config: TkThemeConfig = {}): UserConfig {
+export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
   const { plugins: pluginsOption, ...tkThemeConfig } = config;
   const {
     sidebar = true,

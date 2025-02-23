@@ -46,12 +46,12 @@ const commentComponent = {
 </script>
 
 <template>
-  <div v-if="tkTheme" :class="`${prefixClass}-global`">
+  <template v-if="tkTheme">
     <ClientOnly>
       <RightBottomButton />
       <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
     </ClientOnly>
-  </div>
+  </template>
 
   <Layout :class="prefixClass">
     <template #home-hero-before>

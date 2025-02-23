@@ -6,7 +6,7 @@ import copyrightSvg from "../assets/svg/copyright";
 import icpRecordSvg from "../assets/svg/icpRecord";
 // @ts-ignore
 import securityRecordImg from "../assets/img/securityRecord.png";
-import packageJSON from "../../package.json";
+import { version } from "../version";
 import { computed } from "vue";
 import Icon from "./Icon.vue";
 import { FooterInfo, Social } from "../config/types";
@@ -23,9 +23,9 @@ const footerData = computed(() => {
   const data: Social[] = [];
   // 1.主题版权
   data.push({
-    name: `Theme By TK@${packageJSON.version}`,
+    name: `Theme By Teeker@${version}`,
     icon: themeSvg,
-    link: "https://notes.youngkbt.cn",
+    link: "https://teeker.tianke99.cn",
     // 可覆盖上面的配置项
     ...theme,
   });

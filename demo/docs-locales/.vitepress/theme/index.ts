@@ -1,6 +1,6 @@
-import tk from "vitepress-theme-teeker";
-import DefaultTheme from "vitepress/theme";
+import teeker from "vitepress-theme-teeker";
+import "vitepress-theme-teeker/index.css";
 
 export default {
-  extends: tk,
+  extends: teeker,
 };

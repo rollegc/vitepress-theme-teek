@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
-import themeConfig from "vitepress-theme-teeker/config";
+import tkThemeConfig from "vitepress-theme-teeker/config";
 
-const tkConfig = themeConfig({
+const tkConfig = tkThemeConfig({
   author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏

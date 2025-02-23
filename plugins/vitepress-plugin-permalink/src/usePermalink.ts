@@ -17,7 +17,7 @@ export default function usePermalink() {
    *
    * @param href 文档地址或 permalink
    */
-  (router as any).push = async (href = inBrowser ? location.href : "/") => {
+  router.push = async (href = inBrowser ? location.href : "/") => {
     if (!href) throw new Error("href is undefined");
 
     const { pathname, search, hash } = new URL(href, fakeHost);
