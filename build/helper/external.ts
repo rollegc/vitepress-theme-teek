@@ -12,6 +12,7 @@ export const globals = {
   "@element-plus/icons-vue": "ElementPlusIconsVue",
   "@giscus/vue": "Giscus",
   "@waline/client": "Waline",
+  fsevents: "fsevents"
 };
 
 // 指定外部依赖，rollup 不会将这些依赖代码打包进去

@@ -17,7 +17,7 @@ export default function usePermalink() {
    *
    * @param href 文档地址或 permalink
    */
-  router.push = async (href = inBrowser ? location.href : "/") => {
+  router.push = (href = inBrowser ? location.href : "/") => {
     if (!href) throw new Error("href is undefined");
 
     const { pathname, search, hash } = new URL(href, fakeHost);
@@ -54,7 +54,7 @@ export default function usePermalink() {
    * @param href 浏览器地址栏
    * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了（不会出现 404 页面过渡），因此现在是在插件执行后，重新触发该方法，替换 URL 为 permalink
    */
-  const processUrl = async (href: string) => {
+  const processUrl = (href: string) => {
     if (!permalinkKeys.length) return;
 
     const { pathname, search, hash } = new URL(href, fakeHost);
@@ -70,8 +70,9 @@ export default function usePermalink() {
 
     if (permalink) {
       // 存在 permalink 则在 URL 替换
-      await nextTick();
-      history.replaceState(history.state || null, "", `${permalink}${search}${decodeHash}`);
+      nextTick(() => {
+        history.replaceState(history.state || null, "", `${permalink}${search}${decodeHash}`);
+      });
     } else {
       // 第二点，不存在 permalink 则获取文档地址来跳转
       const path = permalinks.inv[`/${decodePath}`];
@@ -88,7 +89,7 @@ export default function usePermalink() {
     if (!permalinkKeys.length) return;
 
     const selfOnAfterRouteChange = router.onAfterRouteChange;
-    router.onAfterRouteChange = async (href: string) => {
+    router.onAfterRouteChange = (href: string) => {
       // 处理路由地址
       processUrl(href);
       // 调用已有的 onAfterRouteChange

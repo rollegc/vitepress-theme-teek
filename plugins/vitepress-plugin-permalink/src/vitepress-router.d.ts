@@ -2,7 +2,7 @@
 
 declare module "vitepress" {
   interface Router {
-    push: (href?: string, isPermalink?: boolean) => Promise<void>;
+    push: (href?: string, isPermalink?: boolean) => void;
   }
 }
 
