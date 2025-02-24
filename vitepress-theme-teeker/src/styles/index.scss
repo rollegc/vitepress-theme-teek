@@ -1,52 +1,34 @@
-@forward "./vp.scss";
-@forward "./tk.scss";
-@forward "./var/theme.scss";
-@forward "./var/size.scss";
+@use "./common/vp";
+@use "./common/tk";
+@use "./var/index";
+@use "./var/theme";
+@use "./var/size";
 
-@use "./namespace.scss" as *;
-
-// 基础全局样式变量，和 .dark 呼应
-:root {
-  --#{$theme-namespace}-theme-color: var(--vp-c-brand-1);
-  --#{$theme-namespace}-lower-color1: #86909c;
-  --#{$theme-namespace}-lower-color2: #4e5969;
-  --#{$theme-namespace}-lower-color3: #fdfdfd;
-  --#{$theme-namespace}-lower-color4: rgba(253, 253, 253, 0.3);
-  --#{$theme-namespace}-lower-color5: rgba(253, 253, 253, 0.5);
-  --#{$theme-namespace}-lower-color6: rgba(253, 253, 253, 0.7);
-  --#{$theme-namespace}-bg-color1: var(--vp-c-bg);
-  --#{$theme-namespace}-bg-color2: rgb(255, 255, 255, 0.7);
-  --#{$theme-namespace}-shadow-color: rgba(0, 0, 0, 0.1);
-  --#{$theme-namespace}-shadow-color-hover: rgba(0, 0, 0, 0.2);
-  --#{$theme-namespace}-line-color: rgba(0, 0, 0, 0.12);
-  --#{$theme-namespace}-item-bg-color-hover: #f8f8f8;
-}
-
-:root.dark {
-  --#{$theme-namespace}-theme-color: var(--vp-c-brand-1);
-  --#{$theme-namespace}-lower-color1: #9facba;
-  --#{$theme-namespace}-lower-color2: #bdc3cc;
-  --#{$theme-namespace}-lower-color3: #21252b;
-  --#{$theme-namespace}-lower-color4: rgba(34, 34, 34, 0.3);
-  --#{$theme-namespace}-lower-color5: rgba(34, 34, 34, 0.5);
-  --#{$theme-namespace}-lower-color6: rgba(34, 34, 34, 0.7);
-  --#{$theme-namespace}-bg-color1: var(--vp-c-bg);
-  --#{$theme-namespace}-bg-color2: rgb(20, 20, 20, 0.7);
-  --#{$theme-namespace}-shadow-color: rgba(0, 0, 0, 0.6);
-  --#{$theme-namespace}-shadow-color-hover: rgba(0, 0, 0, 0.7);
-  --#{$theme-namespace}-line-color: #30363d;
-  --#{$theme-namespace}-item-bg-color-hover: #27272b;
-}
-
-// 全局样式变量
-:root {
-  --#{$theme-namespace}-gap2: 10px;
-  --#{$theme-namespace}-gap1: 20px;
-  --#{$theme-namespace}-code-block-fold-height: 40px;
-}
-
-// 使用自定义自定义全局样式变量
-:root {
-  --#{$theme-namespace}-article-gap: var(--#{$theme-namespace}-gap2);
-  --#{$theme-namespace}-friend-gap: var(--#{$theme-namespace}-gap1);
-}
+@use "./components/archivesPage";
+@use "./components/articleAnalyze";
+@use "./components/bodyBgImage";
+@use "./components/catalogueItem";
+@use "./components/codeBlockToggle";
+@use "./components/commentArtalk";
+@use "./components/commentGiscus";
+@use "./components/commentTwikoo";
+@use "./components/commentWaline";
+@use "./components/docAnalysisCard";
+@use "./components/footer";
+@use "./components/friendLinkCard";
+@use "./components/homeBanner";
+@use "./components/homeBannerWaves";
+@use "./components/homeCard";
+@use "./components/homeCategoryCard";
+@use "./components/homeFullscreenWallpaper";
+@use "./components/homeInfo";
+@use "./components/homeMyCard";
+@use "./components/homePostItem";
+@use "./components/homePostList";
+@use "./components/homeTagCard";
+@use "./components/icon";
+@use "./components/layout";
+@use "./components/pagination";
+@use "./components/postBaseInfo";
+@use "./components/rightBottomButton";
+@use "./components/topArticleCard";

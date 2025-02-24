@@ -42,7 +42,3 @@ const getStyle = () => {
     </el-icon>
   </span>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/icon.scss";
-</style>

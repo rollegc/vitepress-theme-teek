@@ -51,11 +51,3 @@ onMounted(() => {
     <div v-if="mask" class="mask" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/bodyBgImage.scss";
-</style>
-
-<style lang="scss">
-@use "../styles/components/bodyBgImageGlobal.scss";
-</style>

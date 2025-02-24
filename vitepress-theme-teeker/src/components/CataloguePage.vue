@@ -15,14 +15,14 @@ const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter
 
 <template>
   <div :class="`${prefixClass} ${namespace}-page`">
-    <div :class="`${prefixClass}-header`">
+    <div :class="`${prefixClass}__header`">
       <div :class="`${namespace}-page-title-h2`">{{ frontmatter.title }}</div>
       <div class="description">{{ frontmatter.desc || frontmatter.description }}</div>
     </div>
 
-    <div :class="`${prefixClass}-wrapper`">
+    <div :class="`${prefixClass}__wrapper`">
       <div class="title">{{ frontmatter.pageTitle || "目录" }}</div>
-      <ul :class="`${prefixClass}-wrapper__inline flx-wrap-between`">
+      <ul class="flx-wrap-between">
         <template v-for="(item, index) in catalogues" :key="index">
           <CatalogueItem :item :index="index + 1" />
         </template>
@@ -34,7 +34,3 @@ const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/catalogue.scss";
-</style>

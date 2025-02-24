@@ -52,7 +52,7 @@ const footerData = computed(() => {
 
 <template>
   <div v-if="footerInfo || social.length" :class="prefixClass">
-    <div v-if="social.length" :class="`${prefixClass}-icons flx-center`">
+    <div v-if="social.length" :class="`${prefixClass}__icons flx-center`">
       <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
         <template v-if="item.icon">
           <Icon
@@ -71,8 +71,8 @@ const footerData = computed(() => {
     <template v-if="footerInfo">
       <p v-for="m in [footerInfo.message || []].flat()" v-html="m" />
 
-      <div :class="`${prefixClass}-list flx-wrap-justify-center`">
-        <div v-for="item in footerData" :key="item.name" :class="`${prefixClass}-list__item flx-align-center`">
+      <div :class="`${prefixClass}__list flx-wrap-justify-center`">
+        <div v-for="item in footerData" :key="item.name" :class="`${prefixClass}__list__item flx-align-center`">
           <template v-if="item.icon">
             <Icon
               :iconType="item.iconType"
@@ -94,7 +94,3 @@ const footerData = computed(() => {
     </template>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/footer.scss";
-</style>

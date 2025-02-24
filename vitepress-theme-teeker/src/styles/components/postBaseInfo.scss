@@ -1,11 +1,10 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-postBaseInfo;
-
-.#{$prefix-class} {
+@include b(postBaseInfo) {
   &.home {
-    font-size: var(--#{$theme-namespace}-home-font-size-sm);
-    color: var(--#{$theme-namespace}-lower-color2);
+    font-size: getCssVar("home-font-size-sm");
+    color: getCssVar("lower-color2");
   }
 
   &.article > div:not(:last-child) {
@@ -23,7 +22,7 @@ $prefix-class: #{$theme-namespace}-postBaseInfo;
       width: 0.8px;
       height: 8px;
       margin: 0 10px;
-      background-color: var(--#{$theme-namespace}-lower-color2);
+      background-color: getCssVar("lower-color2");
     }
   }
 
@@ -33,7 +32,7 @@ $prefix-class: #{$theme-namespace}-postBaseInfo;
       display: inline-block;
       width: 0.35rem;
       height: 0;
-      background-color: var(--#{$theme-namespace}-lower-color2);
+      background-color: getCssVar("lower-color2");
     }
   }
 }

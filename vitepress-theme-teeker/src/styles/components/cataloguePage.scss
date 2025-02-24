@@ -1,10 +1,9 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-catalogue;
-
-.#{$prefix-class} {
-  &-header {
-    border-bottom: 1px solid var(--#{$theme-namespace}-line-color);
+@include b(catalogue) {
+  @include e(header) {
+    border-bottom: 1px solid getCssVar("line-color");
     margin-top: 1rem;
     padding-bottom: 1.2rem;
 
@@ -13,7 +12,7 @@ $prefix-class: #{$theme-namespace}-catalogue;
     }
   }
 
-  &-wrapper {
+  @include e(wrapper) {
     .title {
       font-size: 1.45rem;
       margin: 2rem 0 1rem;

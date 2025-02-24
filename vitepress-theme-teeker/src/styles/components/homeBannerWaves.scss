@@ -1,8 +1,7 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-waves;
-
-.#{$prefix-class} {
+@include b(waves) {
   margin-top: -11vh;
   position: relative;
   width: 100%;
@@ -18,7 +17,7 @@ $prefix-class: #{$theme-namespace}-waves;
       &:nth-child(1) {
         animation-delay: -2s;
         animation-duration: 7s;
-        fill: var(--#{$theme-namespace}-lower-color6);
+        fill: getCssVar("lower-color6");
 
         :is(.dark .dark\:fill-black) {
           fill: #000 !important;
@@ -28,7 +27,7 @@ $prefix-class: #{$theme-namespace}-waves;
       &:nth-child(2) {
         animation-delay: -3s;
         animation-duration: 10s;
-        fill: var(--#{$theme-namespace}-lower-color5);
+        fill: getCssVar("lower-color5");
 
         :is(.dark .dark\:fill-black) {
           fill: #000;
@@ -38,15 +37,20 @@ $prefix-class: #{$theme-namespace}-waves;
       &:nth-child(3) {
         animation-delay: -4s;
         animation-duration: 13s;
-        fill: var(--#{$theme-namespace}-lower-color4);
+        fill: getCssVar("lower-color4");
       }
 
       &:nth-child(4) {
         animation-delay: -5s;
         animation-duration: 20s;
-        fill: var(--#{$theme-namespace}-lower-color3);
+        fill: getCssVar("lower-color3");
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    height: 10vh;
+    min-height: 10vh;
   }
 }
 
@@ -58,12 +62,5 @@ $prefix-class: #{$theme-namespace}-waves;
 
   100% {
     transform: translate3d(85px, 0, 0);
-  }
-}
-
-@media (max-width: 768px) {
-  .waves {
-    height: 10vh;
-    min-height: 10vh;
   }
 }

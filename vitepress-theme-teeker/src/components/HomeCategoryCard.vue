@@ -82,7 +82,7 @@ const categoriesPageLink = computed(() => {
         :name="transitionName"
         tag="div"
         mode="out-in"
-        :class="`${prefixClass}-list flx-column`"
+        :class="`${prefixClass}__list flx-column`"
       >
         <a
           ref="itemRefs"
@@ -99,19 +99,7 @@ const categoriesPageLink = computed(() => {
         <a v-if="!categoriesPage && limit < categories.length" :href="categoriesPageLink">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}-empty`">暂无热门文章</div>
+      <div v-else :class="`${prefixClass}--empty`">暂无热门文章</div>
     </template>
   </HomeCard>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homeCategoryCard.scss";
-</style>
-
-<style lang="scss">
-@use "../styles/namespace.scss" as *;
-
-.VPNavBar.home.top {
-  background-color: var(--#{$theme-namespace}-bg-color1);
-}
-</style>

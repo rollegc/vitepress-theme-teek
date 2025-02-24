@@ -1,8 +1,6 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
 
-$prefix-class: #{$theme-namespace}-pagination;
-
-.#{$prefix-class} {
+@include b(pagination) {
   padding: 15px 2px 0;
 
   &.hidden {

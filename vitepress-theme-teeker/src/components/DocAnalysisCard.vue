@@ -93,14 +93,10 @@ if (overrideInfo.length) {
 <template>
   <HomeCard :title="finalTitle" :class="`${prefixClass} card`">
     <template v-for="item in docAnalysisList" :key="item.key">
-      <div v-if="item.show !== false" :class="`${prefixClass}-item`">
+      <div v-if="item.show !== false" :class="`${prefixClass}__item`">
         <span v-html="item.label" />
         <span v-html="item.value" />
       </div>
     </template>
   </HomeCard>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/docAnalysisCard.scss";
-</style>

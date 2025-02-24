@@ -103,15 +103,11 @@ onUnmounted(() => {
 <template>
   <div :class="prefixClass">
     <ul>
-      <li
-        v-for="post in currentPosts"
-        :key="post.url"
-        :class="[`${prefixClass}-item`, { 'large-cover-wrapper': coverImgMode === 'large' }]"
-      >
+      <li v-for="post in currentPosts" :key="post.url" :class="[{ 'large-cover-wrapper': coverImgMode === 'large' }]">
         <HomePostItem :post />
       </li>
     </ul>
-    <div :class="`${prefixClass}-pagination flx-justify-center`">
+    <div :class="`${prefixClass}__pagination flx-justify-center`">
       <Pagination
         v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
         v-model="pageInfo"
@@ -121,7 +117,3 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homePostList.scss";
-</style>

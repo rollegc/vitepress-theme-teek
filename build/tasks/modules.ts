@@ -3,7 +3,16 @@ import { OutputOptions, rollup } from "rollup";
 import picocolors from "picocolors";
 import glob from "fast-glob";
 import dts from "vite-plugin-dts";
-import { tkOutput, writeBundlesFn, tkRoot, plugins, external, excludes, webTsConfig, tsOutput } from "../helper";
+import {
+  tkOutput,
+  writeBundlesFn,
+  tkRoot,
+  plugins as commonPlugins,
+  external,
+  excludes,
+  webTsConfig,
+  tsOutput,
+} from "../helper";
 
 const buildModules = async () => {
   const input = await glob("**/*.{js,ts,vue}", {
@@ -17,6 +26,7 @@ const buildModules = async () => {
    * 根据 format 生成对应的 bundle
    */
   const getBundles = async (format: "esm" | "cjs") => {
+    const plugins = commonPlugins;
     if (format === "esm") {
       plugins.push(
         dts({

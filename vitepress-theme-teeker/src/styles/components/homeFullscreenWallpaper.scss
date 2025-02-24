@@ -1,0 +1,24 @@
+@use "../mixins/config" as *;
+
+$prefix-class: #{$namespace}-fullscreen;
+$prefix-class-rightBottomButton: #{$namespace}-rightBottomButton;
+$prefix-class-content: #{$namespace}-layout-home-content;
+$prefix-class-banner: #{$namespace}-banner;
+$prefix-class-footer: #{$namespace}-footer;
+
+html {
+  &.#{$prefix-class} {
+    overflow: hidden;
+
+    .VPNav,
+    .#{$prefix-class-rightBottomButton},
+    .#{$prefix-class-content},
+    .#{$prefix-class-footer} {
+      display: none;
+    }
+
+    .display-none {
+      display: none;
+    }
+  }
+}

@@ -1,20 +1,19 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-topArticle;
-
-.#{$prefix-class} {
-  &-list {
+@include b(topArticle) {
+  @include e(list) {
     position: relative;
-    gap: var(--#{$theme-namespace}-article-gap);
+    gap: getCssVar("article-gap");
     padding-right: 5px;
 
-    &__item {
+    @include e(list__item) {
       display: flex;
       gap: 10px;
 
       .num {
-        color: var(--#{$theme-namespace}-lower-color1);
-        font-size: var(--#{$theme-namespace}-home-font-size-middle);
+        color: getCssVar("lower-color1");
+        font-size: getCssVar("home-font-size-middle");
         margin-top: 4px;
         padding: 0 6px;
         height: 18px;
@@ -24,31 +23,31 @@ $prefix-class: #{$theme-namespace}-topArticle;
         font-style: italic;
 
         &.sticky {
-          font-size: var(--#{$theme-namespace}-home-font-size-small);
-          background-color: var(--#{$theme-namespace}-num-bg-color);
+          font-size: getCssVar("home-font-size-small");
+          background-color: getCssVar("num-bg-color");
           color: #ffffff;
           border-radius: 8px 0;
         }
       }
 
-      &-info {
+      @include e(list__item__info) {
         // 让文字溢出后显示 ...
         min-width: 0;
 
         .title {
-          font-size: var(--#{$theme-namespace}-home-font-size-middle);
+          font-size: getCssVar("home-font-size-middle");
           font-weight: 450;
         }
         .date {
-          font-size: var(--#{$theme-namespace}-home-font-size-small);
+          font-size: getCssVar("home-font-size-small");
           color: var(--vp-c-text-2);
         }
       }
     }
   }
 
-  &-empty {
-    font-size: var(--#{$theme-namespace}-home-font-size-middle);
+  @include m(empty) {
+    font-size: getCssVar("home-font-size-middle");
     padding: 6px;
     text-align: center;
   }

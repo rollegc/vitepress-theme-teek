@@ -1,6 +1,6 @@
-@use "./namespace.scss" as *;
+@use "../mixins/config" as *;
 
-// 文章内容宽度加大
+/* 文章内容宽度加大 */
 .VPContent .VPDoc.has-aside .content-container {
   max-width: var(--vp-content-container, 688px);
 }
@@ -9,7 +9,7 @@
   .nav {
     .item {
       h2.text {
-        // 一级菜单字体加大
+        /* 一级菜单字体加大 */
         font-size: 18px;
       }
 
@@ -19,14 +19,14 @@
     }
 
     .items {
-      // 二级菜单添加间距
+      /* 二级菜单添加间距 */
       padding-left: 10px;
     }
   }
 }
 
-// 导航栏切换暗黑模式按钮样式调整
-.#{$theme-namespace}-layout .VPNavBar .VPSwitchAppearance {
+/* 导航栏切换暗黑模式按钮样式调整 */
+.#{$namespace}-layout .VPNavBar .VPSwitchAppearance {
   width: 22px !important;
   .check {
     transform: none;
@@ -35,7 +35,7 @@
 
 .VPNav .VPNavBarTranslations .VPMenu {
   .title {
-    color: var(--#{$theme-namespace}-theme-color);
+    color: var(--#{$namespace}-theme-color);
   }
 }
 

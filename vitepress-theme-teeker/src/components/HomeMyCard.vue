@@ -15,11 +15,11 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
 
 <template>
   <HomeCard :class="`${prefixClass}`">
-    <div :class="`${prefixClass}-avatar ${blogger.avatarStyle || 'radius'} flx-center`">
+    <div :class="`${prefixClass}__avatar ${blogger.avatarStyle || 'radius'} flx-center`">
       <img :src="blogger.avatar" alt="头像" title="我好看吗" />
     </div>
 
-    <div v-if="social.length" :class="`${prefixClass}-icons flx-justify-around`">
+    <div v-if="social.length" :class="`${prefixClass}__icons flx-justify-around`">
       <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
         <template v-if="item.icon">
           <Icon :iconType="item.iconType" :icon="item.icon" size="20px" hover :imgAlt="item.imgAlt" />
@@ -27,13 +27,9 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
       </a>
     </div>
 
-    <div :class="`${prefixClass}-blogger`">
+    <div :class="`${prefixClass}__blogger`">
       <span class="name">{{ blogger.name }}</span>
       <span class="slogan">{{ blogger.slogan }}</span>
     </div>
   </HomeCard>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homeMyCard.scss";
-</style>

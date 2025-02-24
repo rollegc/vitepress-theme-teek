@@ -46,7 +46,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const getStyle = (num: number, index: number) => {
   return {
     [`--${namespace}-num-bg-color`]: bgColor[num % bgColor.length],
-    top: `calc(${index} * (calc(var(--${namespace}-gap2) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    top: `calc(${index} * (calc(var(--${namespace}-gap1) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>
@@ -68,17 +68,17 @@ const getStyle = (num: number, index: number) => {
         :name="transitionName"
         tag="ul"
         mode="out-in"
-        :class="`${prefixClass}-list flx-column`"
+        :class="`${prefixClass}__list flx-column`"
       >
         <li
           ref="itemRefs"
           v-for="(item, index) in currentTopArticleList"
           :key="item.num"
-          :class="`${prefixClass}-list__item`"
+          :class="`${prefixClass}__list__item`"
           :style="getStyle(item.num - 1, index)"
         >
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
-          <div :class="`${prefixClass}-list__item-info`">
+          <div :class="`${prefixClass}__list__item__info`">
             <a :href="item.url" class="flx-align-center">
               <span class="title sle">{{ item.title }}</span>
             </a>
@@ -87,11 +87,7 @@ const getStyle = (num: number, index: number) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}-empty`">暂无精选内容</div>
+      <div v-else :class="`${prefixClass}--empty`">暂无精选内容</div>
     </template>
   </HomeCard>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/topArticleCard.scss";
-</style>

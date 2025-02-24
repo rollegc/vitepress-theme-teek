@@ -1,19 +1,18 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-postItem;
-
-.#{$prefix-class} {
+@include b(postItem) {
   margin-bottom: 14px;
   position: relative;
   width: 100%;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 1px 8px 0 var(--#{$theme-namespace}-shadow-color);
+  box-shadow: 0 1px 8px 0 getCssVar("shadow-color");
   transition: all 0.3s;
-  background-color: var(--#{$theme-namespace}-bg-color2);
+  background-color: getCssVar("bg-color2");
 
   &:hover {
-    box-shadow: 0 2px 16px 0 var(--#{$theme-namespace}-shadow-color-hover);
+    box-shadow: 0 2px 16px 0 getCssVar("shadow-color-hover");
   }
 
   .pin {
@@ -30,15 +29,14 @@ $prefix-class: #{$theme-namespace}-postItem;
       position: absolute;
       width: 120%;
       height: 30px;
-      background-image: linear-gradient(45deg, var(--#{$theme-namespace}-theme-color), var(--#{$theme-namespace}-theme-color));
+      background-image: linear-gradient(45deg, getCssVar("theme-color"), getCssVar("theme-color"));
       transform: rotate(-45deg) translateY(-20px);
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.23);
     }
   }
 
-  &-info {
-    display: flex;
-    &__left {
+  @include e(info) {
+    @include e(info__left) {
       padding: 16px 24px;
       flex: 1;
 
@@ -49,29 +47,40 @@ $prefix-class: #{$theme-namespace}-postItem;
         cursor: pointer;
       }
 
-      &-footer {
+      @include e(info__left__footer) {
         margin-top: 8px;
       }
 
-      &-excerpt {
+      @include e(info__left__excerpt) {
         margin: 0.5rem 0;
 
         &.bottom {
-          border-top: 1px solid var(--#{$theme-namespace}-line-color);
+          border-top: 1px solid getCssVar("line-color");
           .excerpt {
             overflow: hidden;
             display: -webkit-box;
             margin: 0.5rem 0;
             text-overflow: ellipsis;
             -webkit-box-orient: vertical;
-            line-clamp: var(--#{$theme-namespace}-home-post-line-clamp);
-            -webkit-line-clamp: var(--#{$theme-namespace}-home-post-line-clamp);
+            line-clamp: getCssVar("home-post-line-clamp");
+            -webkit-line-clamp: getCssVar("home-post-line-clamp");
           }
         }
 
         .excerpt {
-          color: var(--#{$theme-namespace}-lower-color1);
+          color: getCssVar("lower-color1");
           font-size: 14px;
+          h1,
+          h2,
+          h3 {
+            display: none;
+          }
+
+          img {
+            max-height: 280px;
+            max-width: 100%;
+            margin: 0 auto;
+          }
         }
 
         .more {
@@ -81,18 +90,18 @@ $prefix-class: #{$theme-namespace}-postItem;
           margin-right: 16px;
 
           &:hover {
-            color: var(--#{$theme-namespace}-theme-color);
+            color: getCssVar("theme-color");
           }
         }
       }
     }
 
-    &__right {
+    @include e(info__right) {
       .cover-img {
         cursor: pointer;
         .default {
-          width: var(--#{$theme-namespace}-home-post-simple-img-width);
-          height: var(--#{$theme-namespace}-home-post-simple-img-height);
+          width: getCssVar("home-post-simple-img-width");
+          height: getCssVar("home-post-simple-img-height");
           border-radius: 2px;
           margin-right: 24px;
           background-repeat: no-repeat;
@@ -100,8 +109,8 @@ $prefix-class: #{$theme-namespace}-postItem;
           background-position: center;
         }
         .large {
-          width: var(--#{$theme-namespace}-home-post-full-img-width);
-          height: var(--#{$theme-namespace}-home-post-full-img-height);
+          width: getCssVar("home-post-full-img-width");
+          height: getCssVar("home-post-full-img-height");
           clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);
         }
       }

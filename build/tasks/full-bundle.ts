@@ -11,7 +11,7 @@ import {
   writeBundles,
   PKG_NAME,
   PKG_CAMEL_CASE_NAME,
-  plugins,
+  plugins as commonPlugins,
   external,
   globals,
 } from "../helper";
@@ -22,6 +22,7 @@ const pkg = JSON.parse(readFileSync(projPackage, "utf-8"));
 const banner = `/*! ${PKG_NAME} v${pkg.version} */\n`;
 
 const buildAll = async (minify?: boolean) => {
+  const plugins = [...commonPlugins];
   if (minify) {
     plugins.push(
       minifyPlugin({

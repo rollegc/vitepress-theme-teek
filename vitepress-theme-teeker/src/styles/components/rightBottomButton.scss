@@ -1,58 +1,45 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-rightBottomButton;
-
-.#{$prefix-class} {
+@include b(rightBottomButton) {
   position: fixed;
   right: 2rem;
   bottom: 2.5rem;
   z-index: 99;
   gap: 1rem;
 
-  @media (max-width: 719px) {
-    right: 1rem;
-    bottom: 1.5rem;
-  }
-
-  &-button {
+  @include e(button) {
     width: 2.2rem;
     height: 2.2rem;
     line-height: 2.4rem;
     border-radius: 50%;
-    box-shadow: 0 1px 8px var(--#{$theme-namespace}-shadow-color);
+    box-shadow: 0 1px 8px getCssVar("shadow-color");
     text-align: center;
     cursor: pointer;
-    background: var(--#{$theme-namespace}-bg-color1);
-
-    // i :deep(svg) {
-    //   fill: var(--vp-c-text-2);
-    //   &:hover {
-    //     fill: var(--#{$theme-namespace}-theme-color);
-    //   }
-    // }
+    background: getCssVar("bg-color1");
 
     &:hover {
-      background: var(--#{$theme-namespace}-theme-color);
-      box-shadow: 0 1px 8px var(--#{$theme-namespace}-shadow-color-hover);
+      background: getCssVar("theme-color");
+      box-shadow: 0 1px 8px getCssVar("shadow-color-hover");
       .el-icon {
         color: #ffffff;
       }
     }
 
-    // 主题模式样式
-    &__size {
+    /* 主题尺寸样式 */
+    @include e(button__size) {
       position: absolute;
       bottom: 3.7rem;
       right: 1.7rem;
     }
 
-    // 主题模式样式
-    &__mode {
+    /* 主题模式样式 */
+    @include e(button__mode) {
       position: absolute;
       bottom: 0.7rem;
       right: 1.7rem;
 
-      &-title {
+      @include e(button__mode__title) {
         padding: 0 10px;
         font-size: 12px;
         color: var(--el-color-info);
@@ -62,45 +49,31 @@ $prefix-class: #{$theme-namespace}-rightBottomButton;
 
     .dropdown {
       padding: 6px 0 8px 0;
-      background: var(--#{$theme-namespace}-bg-color1);
-      box-shadow: 0 1px 8px var(--#{$theme-namespace}-shadow-color);
+      background: getCssVar("bg-color1");
+      box-shadow: 0 1px 8px getCssVar("shadow-color");
       width: 110px;
       border-radius: 6px;
       line-height: 1.6rem;
       text-align: left;
 
-      &-item {
+      .dropdown-item {
         font-size: 14px;
         padding: 0 10px 0 15px;
         &:hover {
-          background-color: var(--#{$theme-namespace}-item-bg-color-hover);
-          color: var(--#{$theme-namespace}-theme-color);
+          background-color: getCssVar("item-bg-color-hover");
+          color: getCssVar("theme-color");
         }
         &.active {
-          background-color: var(--#{$theme-namespace}-theme-color);
-          color: var(--#{$theme-namespace}-bg-color1);
+          background-color: getCssVar("theme-color");
+          color: getCssVar("bg-color1");
         }
       }
     }
   }
 
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s ease;
-  }
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-  }
-
-  .mode-enter-active,
-  .mode-leave-active {
-    transition: all 0.3s ease;
-  }
-  .mode-enter-from,
-  .mode-leave-to {
-    opacity: 0;
-    transform: scale(0.8);
+  @media (max-width: 719px) {
+    right: 1rem;
+    bottom: 1.5rem;
   }
 
   @media (max-width: 960px) {

@@ -154,10 +154,10 @@ onUnmounted(() => {
   >
     <div v-if="mask && isBigImgBgStyle && !isBodyBygImg" class="mask" />
 
-    <div :class="[`${prefixClass}-content`, { center: isBigImgBgStyle || !features.length }]">
-      <h1 :class="`${prefixClass}-content__title`">{{ title }}</h1>
+    <div :class="[`${prefixClass}__content`, { center: isBigImgBgStyle || !features.length }]">
+      <h1 :class="`${prefixClass}__content__title`">{{ title }}</h1>
 
-      <p :class="`${prefixClass}-content__desc`">
+      <p :class="`${prefixClass}__content__desc`">
         <template v-if="isDefaultDescStyle">{{ descArray[0] }}</template>
         <template v-else-if="isSwitchDescStyle">
           <span v-show="!!text" @click="switchText" class="switch">{{ text || " " }}</span>
@@ -169,8 +169,8 @@ onUnmounted(() => {
       </p>
     </div>
 
-    <div v-if="features.length && !isBigImgBgStyle" :class="`${prefixClass}-feature flx-wrap-between`">
-      <div :class="`${prefixClass}-feature__item`" v-for="(feature, index) in features" :key="index">
+    <div v-if="features.length && !isBigImgBgStyle" :class="`${prefixClass}__feature flx-wrap-between`">
+      <div :class="`${prefixClass}__feature__item`" v-for="(feature, index) in features" :key="index">
         <a v-if="feature.link" :href="feature.link" class="flx-column-center">
           <img v-if="feature.imgUrl" class="feature-img" :src="withBase(feature.imgUrl)" :alt="feature.title" />
           <p class="feature-title">{{ feature.title }}</p>
@@ -182,55 +182,3 @@ onUnmounted(() => {
 
   <HomeBannerWaves v-if="isBigImgBgStyle && !isBodyBygImg" />
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homeBanner.scss";
-</style>
-
-<style lang="scss">
-@use "../styles/namespace.scss" as *;
-
-// 大图风格时，指定顶部导航栏样式
-.VPNavBar.home.big-img-nav-bar {
-  background-color: transparent !important;
-
-  .VPNavBarTitle .title,
-  .VPNavBarMenuLink,
-  .VPNavBarMenuGroup .text,
-  .VPSocialLink {
-    color: #ffffff;
-
-    &.active,
-    &:hover {
-      color: var(--#{$theme-namespace}-theme-color);
-    }
-  }
-
-  .divider {
-    display: none;
-  }
-
-  .VPNavBarSearch .DocSearch-Button {
-    background-color: transparent;
-
-    .vp-icon,
-    .DocSearch-Button-Placeholder {
-      color: #ffffff;
-    }
-
-    .DocSearch-Button-Key {
-      color: #ffffff;
-      border: none;
-      &::after {
-        color: #ffffff;
-      }
-    }
-  }
-
-  .VPNavBarTranslations {
-    .text {
-      color: #ffffff;
-    }
-  }
-}
-</style>

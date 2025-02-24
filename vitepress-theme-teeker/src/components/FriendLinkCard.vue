@@ -84,7 +84,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         :name="transitionName"
         tag="ul"
         mode="out-in"
-        :class="`${prefixClass}-list flx-column`"
+        :class="`${prefixClass}__list flx-column`"
         @mouseenter="autoScroll ? stopAutoScroll() : autoPage ? closeAutoPage() : () => {}"
         @mouseleave="autoScroll ? startAutoScroll() : autoPage ? startAutoPage() : () => {}"
       >
@@ -92,7 +92,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
           :ref="autoScroll ? '' : 'itemRefs'"
           v-for="(item, index) in currentFriendLinkList"
           :key="item.name"
-          :class="`${prefixClass}-list__item`"
+          :class="`${prefixClass}__list__item`"
           :style="getLiStyle(index)"
         >
           <a :href="item.link" target="_blank" class="flx-align-center">
@@ -102,7 +102,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
               :alt="item.name || item.alt"
               @click="handleViewImg(item.avatar, $event)"
             />
-            <div :class="`${prefixClass}-list__item-info`">
+            <div :class="`${prefixClass}__list__item__info`">
               <div class="friend-name sle">{{ item.name }}</div>
               <div class="friend-desc sle">{{ item.desc }}</div>
             </div>
@@ -110,11 +110,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}-empty`">暂无友链</div>
+      <div v-else :class="`${prefixClass}--empty`">暂无友链</div>
     </template>
   </HomeCard>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/friendLinkCard.scss";
-</style>

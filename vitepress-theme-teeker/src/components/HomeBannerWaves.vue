@@ -27,7 +27,3 @@ const prefixClass = getPrefixClass("waves");
     </g>
   </svg>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homeBannerWaves.scss";
-</style>

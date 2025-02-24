@@ -109,7 +109,3 @@ const baseInfo = [
     <slot />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/postBaseInfo.scss";
-</style>

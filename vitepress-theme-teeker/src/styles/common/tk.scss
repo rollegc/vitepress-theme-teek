@@ -1,42 +1,41 @@
-@use "./namespace.scss" as *;
+@use "../mixins/config" as *;
 
 a:hover {
-  color: var(--#{$theme-namespace}-theme-color);
+  color: var(--#{$namespace}-theme-color);
   cursor: pointer;
 }
 
-.#{$theme-namespace}-page {
-  max-width: var(--#{$theme-namespace}-page-width);
+.#{$namespace}-page {
+  max-width: var(--#{$namespace}-page-width);
   margin: 1.5rem auto;
   padding: 20px 30px;
-  box-shadow: 0 0 16px var(--#{$theme-namespace}-shadow-color);
+  box-shadow: 0 0 16px var(--#{$namespace}-shadow-color);
   border-radius: 10px;
 
-  // 隐藏 md 内容
-  & ~ div:not(.#{$theme-namespace}-page) {
+  /* 隐藏 md 内容 */
+  & ~ div:not(.#{$namespace}-page) {
     display: none;
   }
 }
 
-.#{$theme-namespace}-page-title-h1 {
+.#{$namespace}-page-title-h1 {
   font-size: 2rem;
   line-height: 2rem;
   font-weight: 600;
 }
 
-.#{$theme-namespace}-page-title-h2 {
+.#{$namespace}-page-title-h2 {
   font-size: 1.7rem;
   line-height: 1.7rem;
   font-weight: 600;
 }
 
-.#{$theme-namespace}-page-title-h3 {
+.#{$namespace}-page-title-h3 {
   font-size: 1.4rem;
   line-height: 1.4rem;
   font-weight: 500;
 }
 
-// 滚动条样式
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -59,6 +58,10 @@ a:hover {
 }
 
 /* flex */
+.flx {
+  display: flex;
+}
+
 .flx-column {
   display: flex;
   flex-direction: column;

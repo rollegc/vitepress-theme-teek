@@ -60,9 +60,9 @@ const commentComponent = {
         <!-- 自定义首页 -->
         <div v-if="tkTheme && tkHome" :class="`${prefixClass}-home`">
           <HomeBanner v-if="isHomePage() && enabled" />
-          <div :class="`${prefixClass}-home-content flx-start-justify-center`">
-            <div :class="`${prefixClass}-home-content__list`"><HomePostList /></div>
-            <div :class="`${prefixClass}-home-content__info`"><HomeInfo /></div>
+          <div :class="`${prefixClass}__home-content flx-start-justify-center`">
+            <div :class="`${prefixClass}__home-content__post`"><HomePostList /></div>
+            <div :class="`${prefixClass}__home-content__info`"><HomeInfo /></div>
           </div>
           <HomeFullscreenWallpaper
             v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
@@ -99,7 +99,7 @@ const commentComponent = {
             v-if="provider"
             :is="commentComponent[provider]"
             :id="`${prefixClass}-comment`"
-            :class="`${prefixClass}-comment`"
+            :class="`${prefixClass}__comment`"
           />
         </ClientOnly>
       </template>
@@ -196,6 +196,6 @@ const commentComponent = {
   </Layout>
 </template>
 
-<style lang="scss" scoped>
-@use "./index.scss";
+<style lang="scss">
+@use "../styles/components/layout.scss";
 </style>

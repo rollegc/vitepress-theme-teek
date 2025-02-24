@@ -1,23 +1,23 @@
-@use "../namespace.scss" as *;
+@use "../mixins/mixins" as *;
+@use "../mixins/function" as *;
 
 html[size="large"] {
-  --#{$theme-namespace}-home-max-width: 1330px;
-  --#{$theme-namespace}-home-gap: 30px;
-  --#{$theme-namespace}-home-post-simple-img-width: 160px;
-  --#{$theme-namespace}-home-post-simple-img-height: 80px;
-  --#{$theme-namespace}-home-post-full-img-width: 360px;
-  --#{$theme-namespace}-home-post-full-img-height: 100%;
-  --#{$theme-namespace}-home-post-line-clamp: 4;
-  --#{$theme-namespace}-home-card-padding: 15px;
-  --#{$theme-namespace}-home-card-width: 350px;
-  --#{$theme-namespace}-home-card-svg-margin-left: 10px;
-  --#{$theme-namespace}-home-font-size-large: 19px;
-  --#{$theme-namespace}-home-font-size-base: 17px;
-  --#{$theme-namespace}-home-font-size-middle: 15px;
-  --#{$theme-namespace}-home-font-size-sm: 14px;
-  --#{$theme-namespace}-home-font-size-small: 13px;
-  --#{$theme-namespace}-page-width: 1100px;
-  // 数值越大，侧边栏约靠近屏幕左侧
+  @include set-css-var("home-max-width", 1330px);
+  @include set-css-var("home-gap", getCssVar("gap3"));
+  @include set-css-var("home-post-simple-img-width", 160px);
+  @include set-css-var("home-post-full-img-width", 360px);
+  @include set-css-var("home-post-full-img-height", 100%);
+  @include set-css-var("home-post-line-clamp", 4);
+  @include set-css-var("home-card-padding", 15px);
+  @include set-css-var("home-card-width", 350px);
+  @include set-css-var("home-card-svg-margin-left", 10px);
+  @include set-css-var("home-font-size-large", 19px);
+  @include set-css-var("home-font-size-base", 17px);
+  @include set-css-var("home-font-size-middle", 15px);
+  @include set-css-var("home-font-size-sm", 14px);
+  @include set-css-var("home-font-size-small", 13px);
+  @include set-css-var("home-page-width", 1100px);
+  /* 数值越大，侧边栏约靠近屏幕左侧 */
   --vp-layout-max-width: 97vw;
   --vp-sidebar-width: 290px;
   --vp-content-container: 1800px;
@@ -25,42 +25,42 @@ html[size="large"] {
 
 :root,
 html[size="default"] {
-  --#{$theme-namespace}-home-max-width: 1140px;
-  --#{$theme-namespace}-home-gap: var(--#{$theme-namespace}-gap1);
-  --#{$theme-namespace}-home-post-simple-img-width: 120px;
-  --#{$theme-namespace}-home-post-simple-img-height: 80px;
-  --#{$theme-namespace}-home-post-full-img-width: 240px;
-  --#{$theme-namespace}-home-post-full-img-height: 100%;
-  --#{$theme-namespace}-home-post-line-clamp: 3;
-  --#{$theme-namespace}-home-card-padding: 10px;
-  --#{$theme-namespace}-home-card-width: 280px;
-  --#{$theme-namespace}-home-card-svg-margin-left: 5px;
-  --#{$theme-namespace}-home-font-size-large: 18px;
-  --#{$theme-namespace}-home-font-size-base: 16px;
-  --#{$theme-namespace}-home-font-size-middle: 14px;
-  --#{$theme-namespace}-home-font-size-sm: 13px;
-  --#{$theme-namespace}-home-font-size-small: 12px;
-  --#{$theme-namespace}-page-width: 900px;
+  @include set-css-var("home-max-width", 1140px);
+  @include set-css-var("home-gap", getCssVar("gap2"));
+  @include set-css-var("home-post-simple-img-width", 120px);
+  @include set-css-var("home-post-simple-img-height", 80px);
+  @include set-css-var("home-post-full-img-width", 240px);
+  @include set-css-var("home-post-full-img-height", 100%);
+  @include set-css-var("home-post-line-clamp", 3);
+  @include set-css-var("home-card-padding", 10px);
+  @include set-css-var("home-card-width", 280px);
+  @include set-css-var("home-card-svg-margin-left", 5px);
+  @include set-css-var("home-font-size-large", 18px);
+  @include set-css-var("home-font-size-base", 16px);
+  @include set-css-var("home-font-size-middle", 14px);
+  @include set-css-var("home-font-size-sm", 13px);
+  @include set-css-var("home-font-size-small", 12px);
+  @include set-css-var("page-width", 900px);
   --vp-sidebar-width: 290px;
 }
 
 html[size="small"] {
-  --#{$theme-namespace}-home-max-width: 1000px;
-  --#{$theme-namespace}-home-gap: var(--#{$theme-namespace}-gap2);
-  --#{$theme-namespace}-home-post-simple-img-width: 100px;
-  --#{$theme-namespace}-home-post-simple-img-height: 80px;
-  --#{$theme-namespace}-home-post-full-img-width: 130px;
-  --#{$theme-namespace}-home-post-full-img-height: 100%;
-  --#{$theme-namespace}-home-post-line-clamp: 2;
-  --#{$theme-namespace}-home-card-padding: 8px;
-  --#{$theme-namespace}-home-card-width: 260px;
-  --#{$theme-namespace}-home-card-svg-margin-left: 4px;
-  --#{$theme-namespace}-home-font-size-large: 17px;
-  --#{$theme-namespace}-home-font-size-base: 15px;
-  --#{$theme-namespace}-home-font-size-middle: 13px;
-  --#{$theme-namespace}-home-font-size-sm: 13px;
-  --#{$theme-namespace}-home-font-size-small: 12px;
-  --#{$theme-namespace}-page-width: 800px;
+  @include set-css-var("home-max-width", 1000px);
+  @include set-css-var("home-gap", getCssVar("gap2"));
+  @include set-css-var("home-post-simple-img-width", 100px);
+  @include set-css-var("home-post-simple-img-height", 80px);
+  @include set-css-var("home-post-full-img-width", 130px);
+  @include set-css-var("home-post-full-img-height", 100%);
+  @include set-css-var("home-post-line-clamp", 2);
+  @include set-css-var("home-card-padding", 8px);
+  @include set-css-var("home-card-width", 260px);
+  @include set-css-var("home-card-svg-margin-left", 4px);
+  @include set-css-var("home-font-size-large", 17px);
+  @include set-css-var("home-font-size-base", 15px);
+  @include set-css-var("home-font-size-middle", 13px);
+  @include set-css-var("home-font-size-sm", 13px);
+  @include set-css-var("home-font-size-small", 12px);
+  @include set-css-var("page-width", 800px);
   --vp-layout-max-width: 1300px;
   --vp-sidebar-width: 290px;
   --vp-content-container: 688px;
@@ -71,7 +71,7 @@ html[size="small"] {
   html[size="large"],
   html[size="default"],
   html[size="small"] {
-    --#{$theme-namespace}-home-card-width: 280px;
+    @include set-css-var("home-card-width", 280px);
   }
 }
 
@@ -80,6 +80,6 @@ html[size="small"] {
   html[size="large"],
   html[size="default"],
   html[size="small"] {
-    --#{$theme-namespace}-home-card-width: 100%;
+    @include set-css-var("home-card-width", 100%);
   }
 }

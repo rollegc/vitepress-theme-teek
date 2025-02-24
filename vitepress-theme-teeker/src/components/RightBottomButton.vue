@@ -118,13 +118,13 @@ changeThemeSize(themeSize);
 <template>
   <div :class="`${prefixClass} flx-column`">
     <transition name="fade">
-      <div title="返回顶部" :class="`${prefixClass}-button`" v-show="showToTop" @click="scrollToTop">
+      <div title="返回顶部" :class="`${prefixClass}__button`" v-show="showToTop" @click="scrollToTop">
         <el-icon><ArrowUp /></el-icon>
       </div>
     </transition>
 
     <transition name="fade">
-      <div v-if="provider && showToComment" title="前往评论" :class="`${prefixClass}-button`" @click="scrollToComment">
+      <div v-if="provider && showToComment" title="前往评论" :class="`${prefixClass}__button`" @click="scrollToComment">
         <el-icon><ChatDotSquare /></el-icon>
       </div>
     </transition>
@@ -132,14 +132,14 @@ changeThemeSize(themeSize);
     <div
       v-if="useThemeSize"
       title="字体切换"
-      :class="`${prefixClass}-button size-change`"
+      :class="`${prefixClass}__button size-change`"
       @mouseenter="showThemeSizeItem = true"
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
       <i class="el-icon" v-html="sizeSvg"></i>
       <transition name="mode">
-        <ul :class="`${prefixClass}-button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
+        <ul :class="`${prefixClass}__button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
             v-for="item in themeSizeList"
             :key="item.size"
@@ -156,16 +156,16 @@ changeThemeSize(themeSize);
     <div
       v-if="useThemeMode"
       title="主题切换"
-      :class="`${prefixClass}-button`"
+      :class="`${prefixClass}__button`"
       @mouseenter="showThemeModeItem = true"
       @mouseleave="showThemeModeItem = false"
       @click="showThemeModeItem = true"
     >
       <el-icon><MagicStick /></el-icon>
       <transition name="mode">
-        <div :class="`${prefixClass}-button__mode dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
+        <div :class="`${prefixClass}__button__mode dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
           <ul v-for="item in themeModeList" :key="item.label">
-            <li :class="`${prefixClass}-button__mode-title sle`" :title="item.tip || ''">{{ item.label }}</li>
+            <li :class="`${prefixClass}__button__mode__title sle`" :title="item.tip || ''">{{ item.label }}</li>
             <li>
               <ul>
                 <li
@@ -185,7 +185,3 @@ changeThemeSize(themeSize);
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/rightBottomButton.scss";
-</style>

@@ -83,7 +83,13 @@ const tagsPageLink = computed(() => {
     :class="prefixClass"
   >
     <template #default="{ transitionName }">
-      <TransitionGroup v-if="tags.length" :name="transitionName" tag="div" mode="out-in" :class="`${prefixClass}-list`">
+      <TransitionGroup
+        v-if="tags.length"
+        :name="transitionName"
+        tag="div"
+        mode="out-in"
+        :class="`${prefixClass}__list`"
+      >
         <a
           v-for="(item, index) in currentTags"
           :key="item.name"
@@ -97,19 +103,7 @@ const tagsPageLink = computed(() => {
         <a v-if="!tagsPage && limit < tags.length" :href="tagsPageLink" class="more">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}-empty`">暂无热门标签</div>
+      <div v-else :class="`${prefixClass}--empty`">暂无热门标签</div>
     </template>
   </HomeCard>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homeTagCard.scss";
-</style>
-
-<style lang="scss">
-@use "../styles/namespace.scss" as *;
-
-.VPNavBar.home.top {
-  background-color: var(--#{$theme-namespace}-bg-color1);
-}
-</style>

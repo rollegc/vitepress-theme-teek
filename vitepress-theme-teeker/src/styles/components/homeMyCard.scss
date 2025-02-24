@@ -1,9 +1,8 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-my;
-
-.#{$prefix-class} {
-  &-avatar {
+@include b(my) {
+  @include e(avatar) {
     width: 100%;
 
     &.radius {
@@ -23,9 +22,9 @@ $prefix-class: #{$theme-namespace}-my;
     }
 
     &.full {
-      width: var(--#{$theme-namespace}-home-card-width);
+      width: getCssVar("home-card-width");
       height: 100%;
-      margin: calc(-1 * var(--#{$theme-namespace}-home-card-padding)) calc(-1 * var(--#{$theme-namespace}-home-card-padding)) 10px;
+      margin: calc(-1 * getCssVar("home-card-padding")) calc(-1 * getCssVar("home-card-padding")) 10px;
 
       img {
         width: 100%;
@@ -34,11 +33,11 @@ $prefix-class: #{$theme-namespace}-my;
     }
   }
 
-  &-icons {
+  @include e(icons) {
     margin-bottom: 5px;
   }
 
-  &-blogger {
+  @include e(blogger) {
     padding: 5px 5px 0;
     .name {
       font-size: 21px;
@@ -57,11 +56,9 @@ $prefix-class: #{$theme-namespace}-my;
 
   @media screen and (max-width: 768px) {
     text-align: center;
-    &-avatar {
-      &.full {
-        img {
-          width: 240px;
-        }
+    @include e(avatar) {
+      &.full img {
+        width: 240px;
       }
     }
   }

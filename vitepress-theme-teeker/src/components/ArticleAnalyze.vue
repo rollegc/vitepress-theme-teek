@@ -107,7 +107,7 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div v-if="isShowBaseInfo" :class="`${prefixClass}-wrapper flx-center`">
+    <div v-if="isShowBaseInfo" :class="`${prefixClass}__wrapper flx-center`">
       <PostBaseInfo :post scope="article" />
 
       <div v-if="wordCount" class="flx-center">
@@ -127,7 +127,3 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/articleAnalyze.scss";
-</style>

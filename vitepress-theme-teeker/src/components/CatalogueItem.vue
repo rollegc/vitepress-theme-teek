@@ -27,7 +27,3 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
     </template>
   </li>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/catalogueItem.scss";
-</style>

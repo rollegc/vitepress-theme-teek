@@ -83,7 +83,7 @@ onMounted(() => {
 
 <template>
   <div :class="`${prefixClass} card`">
-    <div v-if="title" :class="`${prefixClass}-header flx-justify-between`">
+    <div v-if="title" :class="`${prefixClass}__header flx-justify-between`">
       <slot name="title">
         <a v-if="titleLink" :href="titleLink">
           <span class="title flx-align-center" v-html="title"></span>
@@ -110,11 +110,3 @@ onMounted(() => {
     <slot v-bind="{ transitionName, startAutoPage, closeAutoPage }" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/homeCard.scss";
-</style>
-
-<style lang="scss">
-@use "../styles/components/homeCardGlobal.scss";
-</style>

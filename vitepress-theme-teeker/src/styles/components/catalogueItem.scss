@@ -1,31 +1,28 @@
-@use "../namespace.scss" as *;
-
-$prefix-class: #{$theme-namespace}-catalogue;
-$prefix-class1: #{$theme-namespace}-subCatalogue;
-$prefix-class2: #{$theme-namespace}-catalogueItem;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
 // 递归块样式
-.#{$prefix-class} {
-  &__inline {
+@include b(catalogue) {
+  @include e(inline) {
     margin-top: 0.7rem;
     margin-left: 1rem;
 
-    .#{$prefix-class1} {
+    @include b(subCatalogue) {
       margin-bottom: 0;
     }
   }
 }
 
-// 非叶子目录样式
-.#{$prefix-class1} {
+/* 非叶子目录样式 */
+@include b(subCatalogue) {
   width: 100%;
   margin-top: 1rem;
   margin-bottom: 1.8rem;
 
-  &__title {
-    // # 样式
+  @include e(title) {
+    /* # 样式 */
     .anchor {
-      color: var(--#{$theme-namespace}-theme-color);
+      color: getCssVar("theme-color");
       font-size: 0.85em;
       margin-left: -1em;
       padding-right: 0.38em;
@@ -46,12 +43,12 @@ $prefix-class2: #{$theme-namespace}-catalogueItem;
   }
 }
 
-// 叶子目录样式
-.#{$prefix-class2} {
+/* 叶子目录样式 */
+@include b(catalogueItem) {
   width: 48%;
   margin-bottom: 0.5rem;
   a {
-    color: var(--#{$theme-namespace}-theme-color);
+    color: getCssVar("theme-color");
     &:hover {
       color: var(--vp-c-brand-1);
     }

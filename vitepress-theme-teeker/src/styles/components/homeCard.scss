@@ -1,30 +1,29 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-homeCard;
-
-.#{$prefix-class} {
+@include b(homeCard) {
   margin: 0 auto 10px;
-  padding: var(--#{$theme-namespace}-home-card-padding);
-  width: var(--#{$theme-namespace}-home-card-width);
+  padding: getCssVar("home-card-padding");
+  width: getCssVar("home-card-width");
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 1px 8px 0 var(--#{$theme-namespace}-shadow-color);
+  box-shadow: 0 1px 8px 0 getCssVar("shadow-color");
   transition: box-shadow 0.5s;
-  background-color: var(--#{$theme-namespace}-bg-color2);
+  background-color: getCssVar("bg-color2");
 
   &:hover {
-    box-shadow: 0 2px 16px 0 var(--#{$theme-namespace}-shadow-color-hover);
+    box-shadow: 0 2px 16px 0 getCssVar("shadow-color-hover");
   }
 
-  &-header {
+  @include e(header) {
     margin-bottom: 10px;
     .title {
-      font-size: var(--#{$theme-namespace}-home-font-size-large);
+      font-size: getCssVar("home-font-size-large");
 
-      :deep(svg) {
+      svg {
         width: 16px;
         height: 16px;
-        margin-right: var(--#{$theme-namespace}-home-card-svg-margin-left);
+        margin-right: getCssVar("home-card-svg-margin-left");
       }
     }
 
@@ -33,11 +32,11 @@ $prefix-class: #{$theme-namespace}-homeCard;
       user-select: none;
 
       .el-icon {
-        font-size: var(--#{$theme-namespace}-home-font-size-middle);
+        font-size: getCssVar("home-font-size-middle");
       }
 
       &:hover {
-        color: var(--#{$theme-namespace}-theme-color);
+        color: getCssVar("theme-color");
       }
 
       &.pointer {

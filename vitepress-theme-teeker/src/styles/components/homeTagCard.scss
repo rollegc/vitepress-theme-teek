@@ -1,13 +1,12 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-tag;
-
-.#{$prefix-class} {
-  &-list {
+@include b(tag) {
+  @include e(list) {
     position: relative;
     margin-top: 5px;
     a {
-      color: var(--#{$theme-namespace}-bg-color1);
+      color: getCssVar("bg-color1");
       display: inline-block;
       padding: 0 7px;
       transition: transform 0.4s;
@@ -15,7 +14,7 @@ $prefix-class: #{$theme-namespace}-tag;
       margin: 0 5px 6px;
       height: 24px;
       line-height: 24px;
-      font-size: var(--#{$theme-namespace}-home-font-size-small);
+      font-size: getCssVar("home-font-size-small");
       text-align: center;
 
       &:hover {
@@ -32,8 +31,8 @@ $prefix-class: #{$theme-namespace}-tag;
     }
 
     .more {
-      font-size: var(--#{$theme-namespace}-home-font-size-middle);
-      line-height: var(--#{$theme-namespace}-home-font-size-middle);
+      font-size: getCssVar("home-font-size-middle");
+      line-height: getCssVar("home-font-size-middle");
       color: var(--vp-c-text-1);
       &:hover {
         transform: none;
@@ -41,9 +40,13 @@ $prefix-class: #{$theme-namespace}-tag;
     }
   }
 
-  &-empty {
-    font-size: var(--#{$theme-namespace}-home-font-size-middle);
+  @include m(empty) {
+    font-size: getCssVar("home-font-size-middle");
     padding: 6px;
     text-align: center;
   }
+}
+
+.VPNavBar.home.top {
+  background-color: getCssVar("bg-color1");
 }

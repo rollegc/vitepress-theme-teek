@@ -1,8 +1,7 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-archives;
-
-.#{$prefix-class} {
+@include b(archives) {
   .count {
     font-size: 0.85rem;
     opacity: 0.8;
@@ -10,20 +9,21 @@ $prefix-class: #{$theme-namespace}-archives;
     font-style: oblique;
   }
 
-  &-header {
+  @include e(header) {
     .count {
       font-style: normal;
     }
   }
 
-  &-timeline {
+  @include e(timeline) {
     margin: 2rem 0;
-    &__year {
-      border-bottom: 1px solid var(--#{$theme-namespace}-line-color);
+
+    @include m(year) {
+      border-bottom: 1px solid getCssVar("line-color");
       margin-top: 2rem;
       position: sticky;
       top: var(--vp-nav-height);
-      background-color: var(--#{$theme-namespace}-bg-color1);
+      background-color: getCssVar("bg-color1");
       z-index: 1;
 
       .year {
@@ -33,10 +33,11 @@ $prefix-class: #{$theme-namespace}-archives;
       }
     }
 
-    &-m {
+    @include e(timeline__m) {
       margin-top: 1rem;
-      &__month {
-        border-bottom: 1px solid var(--#{$theme-namespace}-line-color);
+
+      @include m(month) {
+        border-bottom: 1px solid getCssVar("line-color");
         margin-top: 1rem;
         .month {
           padding-bottom: 0.5rem;
@@ -53,8 +54,8 @@ $prefix-class: #{$theme-namespace}-archives;
             transition: padding 0.3s;
             &:hover {
               padding-left: 1rem;
-              color: var(--#{$theme-namespace}-theme-color);
-              background: var(--#{$theme-namespace}-item-bg-color-hover);
+              color: getCssVar("theme-color");
+              background: getCssVar("item-bg-color-hover");
             }
 
             .date {

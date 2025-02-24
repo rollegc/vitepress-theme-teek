@@ -1,18 +1,21 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/config" as *;
 
-$prefix-class: #{$theme-namespace}-icon;
+$prefix-class: #{$namespace}-icon;
 
-i.#{$prefix-class} :deep(svg),
+i.#{$prefix-class} svg,
 img.#{$prefix-class} {
   fill: var(--icon-color);
   width: var(--icon-size);
   height: var(--icon-size);
 }
-.#{$prefix-class} {
+
+@include b(icon) {
   &.iconfont {
     color: var(--icon-color);
     font-size: var(--icon-size);
   }
+
   &.hover:hover {
     color: var(--icon-color-hover);
   }

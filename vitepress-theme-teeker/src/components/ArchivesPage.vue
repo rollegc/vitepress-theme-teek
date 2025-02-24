@@ -12,21 +12,21 @@ const posts = usePosts();
 
 <template>
   <div :class="`${prefixClass} ${namespace}-page`">
-    <div :class="`${prefixClass}-header flx-justify-between`">
+    <div :class="`${prefixClass}__header flx-justify-between`">
       <div :class="`${namespace}-page-title-h1`">{{ frontmatter.title }}</div>
       <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
     </div>
 
-    <div :class="`${prefixClass}-timeline`">
+    <div :class="`${prefixClass}__timeline`">
       <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">
-        <div :class="`${prefixClass}-timeline__year flx-justify-between`">
+        <div :class="`${prefixClass}__timeline--year flx-justify-between`">
           <div class="year">{{ String(year).trim() === "NaN" ? "未指定" : String(year).trim() }}年</div>
           <div class="count">{{ posts.groupPostsByYear[year].length }}篇</div>
         </div>
 
-        <div :class="`${prefixClass}-timeline-m`">
+        <div :class="`${prefixClass}__timeline__m`">
           <template v-for="(p, month) in monthPosts" :key="month">
-            <div :class="`${prefixClass}-timeline-m__month flx-justify-between`">
+            <div :class="`${prefixClass}__timeline__m--month flx-justify-between`">
               <div class="month">{{ String(month) === "NaN" ? "未指定" : month }}月</div>
               <div class="count">{{ p.length }}篇</div>
             </div>
@@ -49,7 +49,3 @@ const posts = usePosts();
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/archivesPage.scss";
-</style>

@@ -127,7 +127,3 @@ onUnmounted(() => {
 </script>
 
 <template></template>
-
-<style lang="scss">
-@use "../styles/components/HomeFullscreenWallpaperGlobal.scss";
-</style>

@@ -1,15 +1,14 @@
-@use "../namespace.scss" as *;
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
 
-$prefix-class: #{$theme-namespace}-articleAnalyze;
-
-.#{$prefix-class} {
+@include b(articleAnalyze) {
   flex-wrap: wrap;
   color: var(--vp-c-text-2);
   font-size: 14px;
   margin-bottom: 24px;
-  gap: var(--#{$theme-namespace}-gap2);
+  gap: getCssVar("gap1");
 
-  :deep(.el-breadcrumb__separator) {
+  .el-breadcrumb__separator {
     font-weight: 400;
     margin: 0 4px;
   }
@@ -20,13 +19,13 @@ $prefix-class: #{$theme-namespace}-articleAnalyze;
       color: var(--el-text-color-regular);
 
       &:hover {
-        color: var(--#{$theme-namespace}-theme-color);
+        color: getCssVar("theme-color");
         cursor: pointer;
       }
     }
   }
 
-  &-wrapper {
+  @include e(wrapper) {
     & > div:not(:last-child) {
       margin-right: 14px;
     }

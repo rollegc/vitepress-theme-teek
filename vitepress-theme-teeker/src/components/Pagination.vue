@@ -82,7 +82,3 @@ const afterChange = () => {
     />
   </div>
 </template>
-
-<style lang="scss" scoped>
-@use "../styles/components/pagination.scss";
-</style>

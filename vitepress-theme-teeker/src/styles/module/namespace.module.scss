@@ -1,6 +1,6 @@
-@use "../namespace.scss" as *;
+@use "../mixins/config" as *;
 
 :export {
   // 命名空间，具体看 src/hooks/useDesign.ts 的使用
-  namespace: $theme-namespace;
+  namespace: #{$namespace};
 }

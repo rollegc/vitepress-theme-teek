@@ -1,0 +1,49 @@
+@use "../mixins/mixins" as *;
+@use "../mixins/function" as *;
+
+// 基础全局样式变量，和 .dark 呼应
+:root {
+  @include set-css-var("theme-color", var(--vp-c-brand-1));
+  @include set-css-var("lower-color1", #86909c);
+  @include set-css-var("lower-color2", #4e5969);
+  @include set-css-var("lower-color3", #fdfdfd);
+  @include set-css-var("lower-color4", rgba(253, 253, 253, 0.3));
+  @include set-css-var("lower-color5", rgba(253, 253, 253, 0.5));
+  @include set-css-var("lower-color6", rgba(253, 253, 253, 0.7));
+  @include set-css-var("bg-color1", var(--vp-c-bg));
+  @include set-css-var("bg-color2", rgb(255, 255, 255, 0.7));
+  @include set-css-var("shadow-color", rgba(0, 0, 0, 0.1));
+  @include set-css-var("shadow-color-hover", rgba(0, 0, 0, 0.2));
+  @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
+  @include set-css-var("item-bg-color-hover", #f8f8f8);
+}
+
+:root.dark {
+  @include set-css-var("theme-color", var(--vp-c-brand-1));
+  @include set-css-var("lower-color1", #9facba);
+  @include set-css-var("lower-color2", #bdc3cc);
+  @include set-css-var("lower-color3", #21252b);
+  @include set-css-var("lower-color4", rgba(34, 34, 34, 0.3));
+  @include set-css-var("lower-color4", rgba(34, 34, 34, 0.5));
+  @include set-css-var("lower-color4", rgba(34, 34, 34, 0.7));
+  @include set-css-var("bg-color1", var(--vp-c-bg));
+  @include set-css-var("bg-color2", rgb(20, 20, 20, 0.7));
+  @include set-css-var("shadow-color", rgba(0, 0, 0, 0.6));
+  @include set-css-var("shadow-color-hover", rgba(0, 0, 0, 0.7));
+  @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
+  @include set-css-var("item-bg-color-hover", #27272b);
+}
+
+// 全局样式变量
+:root {
+  @include set-css-var("gap1", 10px);
+  @include set-css-var("gap2", 20px);
+  @include set-css-var("gap3", 30px);
+  @include set-css-var("code-block-fold-height", 40px);
+}
+
+// 使用自定义自定义全局样式变量
+:root {
+  @include set-css-var("article-gap", getCssVar("gap1"));
+  @include set-css-var("friend-gap", getCssVar("gap2"));
+}
