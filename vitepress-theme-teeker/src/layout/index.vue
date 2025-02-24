@@ -195,7 +195,3 @@ const commentComponent = {
     </template>
   </Layout>
 </template>
-
-<style lang="scss">
-@use "../styles/components/layout.scss";
-</style>

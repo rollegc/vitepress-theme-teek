@@ -26,7 +26,7 @@ const buildModules = async () => {
    * 根据 format 生成对应的 bundle
    */
   const getBundles = async (format: "esm" | "cjs") => {
-    const plugins = commonPlugins;
+    const plugins = [...commonPlugins];
     if (format === "esm") {
       plugins.push(
         dts({
