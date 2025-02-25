@@ -1,6 +1,6 @@
 # vitepress-plugin-file-content-loader
 
-## 1.0.0
+## 1.0.1
 
 ### Patch Changes
 
