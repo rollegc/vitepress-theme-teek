@@ -5,7 +5,6 @@ import { exec } from "child_process";
 
 /**
  * 获取本站的文章总字数
- * 可以排除某个目录下的 md 文档字数
  */
 export function getTotalFileWords(filePathList: string[]) {
   let wordCount = 0;
@@ -17,12 +16,10 @@ export function getTotalFileWords(filePathList: string[]) {
     wordCount += len[0] + len[1];
   });
 
-  if (wordCount < 1000) return wordCount + "";
-  return Math.round(wordCount / 100) / 10 + "k";
+  return wordCount;
 }
 /**
  * 获取每一个文章的字数
- * 可以排除某个目录下的 md 文档字数
  */
 export function getEachFileWords(fileList: FilePathInfo[], cn: number = 300, en: number = 160) {
   const filePathListWords: FileInfo[] = [];
@@ -34,10 +31,8 @@ export function getEachFileWords(fileList: FilePathInfo[], cn: number = 300, en:
     let len = getCounter(content);
     // 计算预计的阅读时间
     let readingTime = getReadTime(len, cn, en);
-    let wordCount: any = 0;
+    let wordCount = 0;
     wordCount = len[0] + len[1];
-
-    if (wordCount >= 1000) wordCount = Math.round(wordCount / 100) / 10 + "k";
 
     filePathListWords.push({ fileInfo: item, wordCount, readingTime, frontmatter: data });
   });
@@ -87,7 +82,7 @@ export function getCounter(content: string) {
 }
 
 /**
- * 获取所有文件的最后一次修改时间
+ * 获取文件的最后一次修改时间
  */
 export function getLastUpdateTime(fileList: string[]) {
   const updateTime: string[] = [];
@@ -99,7 +94,9 @@ export function getLastUpdateTime(fileList: string[]) {
   return updateTime.sort((a, b) => getTimeNum(b) - getTimeNum(a))[0];
 }
 
-// 获取时间的时间戳
+/**
+ * 获取时间的时间戳
+ */
 function getTimeNum(dateStr: string) {
   let date: any = new Date(dateStr);
 

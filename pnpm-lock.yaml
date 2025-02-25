@@ -284,7 +284,7 @@ importers:
         version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-doc-analysis:
         specifier: latest
-        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
+        version: 1.0.2(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-file-content-loader:
         specifier: latest
         version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
@@ -292,7 +292,7 @@ importers:
         specifier: latest
         version: 1.0.0(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-permalink:
-        specifier: 1.0.3
+        specifier: latest
         version: 1.0.3(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
       vitepress-plugin-sidebar-resolve:
         specifier: latest
@@ -4412,8 +4412,8 @@ packages:
     peerDependencies:
       vite: ^6.0.7
 
-  vitepress-plugin-doc-analysis@1.0.1:
-    resolution: {integrity: sha512-hNOvBu79/dkYrq7xTCVpRSz3H170YJLhTdvzfGz7v6DrtqAZlOmxoXeGKaMTwQGKdei2VAb5BwxyGqRK4dFkVQ==}
+  vitepress-plugin-doc-analysis@1.0.2:
+    resolution: {integrity: sha512-KaoEwgUG9xyIXSQ9MQQsTMglDOxsmLuhrv3URDJVPkjx3VixKVCyMpY9MZukeCaeDvrYVEV4kfd3B7KiikXRZg==}
     peerDependencies:
       vite: ^6.0.7
 
@@ -8840,7 +8840,7 @@ snapshots:
       picocolors: 1.1.1
       vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
 
-  vitepress-plugin-doc-analysis@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)):
+  vitepress-plugin-doc-analysis@1.0.2(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)):
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1

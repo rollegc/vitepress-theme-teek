@@ -35,6 +35,15 @@ const createToNowDay = dayDiff(createTime || getNowDate());
 // 通过不蒜子获取访问量和访客数
 const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 
+/**
+ * 格式化字数
+ */
+const formatWordCount = (wordCount: number) => {
+  if (wordCount < 1000) return wordCount + "";
+  if (wordCount < 1000000) return Math.round(wordCount / 100) / 10 + "k";
+  return Math.round(wordCount / 10000) / 10 + "w";
+};
+
 const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<string> })[] = reactive([
   {
     key: "totalPosts",
@@ -52,7 +61,7 @@ const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<
     key: "totalWordCount",
     label: "本站总字数",
     originValue: unref(docAnalysisInfo).totalFileWords,
-    value: `${unref(docAnalysisInfo).totalFileWords} 字`,
+    value: `${formatWordCount(unref(docAnalysisInfo).totalFileWords)} 字`,
   },
   {
     key: "lastActiveTime",

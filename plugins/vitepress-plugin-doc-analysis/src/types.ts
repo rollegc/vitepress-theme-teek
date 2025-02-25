@@ -37,7 +37,7 @@ export interface DocAnalysis {
   /**
    * 文件总共字数
    */
-  totalFileWords: string;
+  totalFileWords: number;
   /**
    * 文件信息列表
    */
