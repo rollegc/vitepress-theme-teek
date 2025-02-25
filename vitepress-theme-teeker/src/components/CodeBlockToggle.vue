@@ -7,7 +7,6 @@ import { useNamespace } from "../hooks";
 const ns = useNamespace("");
 
 const foldClass = "fold";
-const circleClass = "circle";
 const arrowClass = "arrow";
 
 /**
@@ -18,13 +17,11 @@ const initCodeBlock = () => {
 
   Array.from(modes).forEach(item => {
     // 如果当前代码块已经初始化了，则不需要继续执行代码
-    if (item.querySelector(`.${circleClass}`) && item.querySelector(`.${arrowClass}`)) return;
+    if (item.querySelector(`.${arrowClass}`)) return;
 
     const arrowElement = createArrowElement(item);
-    const circleElement = createCircleElement();
 
     item.append(arrowElement);
-    item.append(circleElement);
   });
 };
 
@@ -32,8 +29,8 @@ const initCodeBlock = () => {
  * 创建箭头元素，添加点击事件（折叠/展开）
  */
 const createArrowElement = (item: HTMLElement) => {
-  // 获取代码块原来的高度，进行备份
-  const modeHeight = item.offsetHeight;
+  // 获取代码块原来的高度
+  const modeHeight = getElementHeight(item);
   // 初始化代码块高度，确保第一次折叠时就有动画
   item.style.height = `${modeHeight}px`;
   // 获取代码块的元素
@@ -42,6 +39,7 @@ const createArrowElement = (item: HTMLElement) => {
 
   const div = document.createElement("div");
   div.classList.add(arrowClass);
+  // 箭头图标
   div.innerHTML = arrowSvg;
 
   const codeBlockState = {
@@ -61,10 +59,10 @@ const createArrowElement = (item: HTMLElement) => {
 
     if (timeoutId) clearTimeout(timeoutId);
 
-    if (preDom && lineNumbersWrapperDom) {
+    if (preDom || lineNumbersWrapperDom) {
       timeoutId = setTimeout(() => {
-        preDom.style.display = state.display;
-        lineNumbersWrapperDom.style.display = state.display;
+        if (preDom) preDom.style.display = state.display;
+        if (lineNumbersWrapperDom) lineNumbersWrapperDom.style.display = state.display;
         if (timeoutId) clearTimeout(timeoutId);
       }, state.speed);
     }
@@ -74,13 +72,21 @@ const createArrowElement = (item: HTMLElement) => {
 
   return div;
 };
+
 /**
- * 创建三个圆圈元素
+ * 获取元素的高度
  */
-const createCircleElement = () => {
-  const div = document.createElement("div");
-  div.classList.add(circleClass);
-  return div;
+const getElementHeight = (item: HTMLElement) => {
+  const parentElementClass = item.parentElement?.className || "";
+  // blocks 代表是代码组
+  if (!parentElementClass.includes("blocks")) return item.offsetHeight;
+  if (parentElementClass.includes("blocks") && item.className.includes("active")) return item.offsetHeight;
+
+  // 如果元素 display none ，则 display block 后获取高度再 display none
+  item.style.display = "block";
+  const height = item.offsetHeight;
+  item.style.display = "";
+  return height;
 };
 
 const router = useRouter();

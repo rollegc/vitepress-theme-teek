@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" name="tkLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { useNamespace } from "../hooks";
@@ -20,8 +20,6 @@ import CommentWaline from "../components/CommentWaline.vue";
 import HomeFullscreenWallpaper from "../components/HomeFullscreenWallpaper.vue";
 import CodeBlockToggle from "../components/CodeBlockToggle.vue";
 import { Banner, CommentConfig } from "../config/types";
-
-defineOptions({ name: "TkLayout" });
 
 const { Layout } = DefaultTheme;
 

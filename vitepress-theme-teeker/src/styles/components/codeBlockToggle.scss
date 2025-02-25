@@ -14,7 +14,9 @@
   }
 
   /* 代码块三个圆圈 */
-  .circle {
+  &::before {
+    content: "";
+    display: block;
     position: absolute;
     top: calc(getCssVar("code-block-fold-height") / 2);
     left: 14px;
@@ -23,9 +25,6 @@
     height: 12px;
     border-radius: 50%;
     background: #fc625d;
-    -webkit-box-shadow:
-      20px 0 #fdbc40,
-      40px 0 #35cd4b;
     box-shadow:
       20px 0 #fdbc40,
       40px 0 #35cd4b;

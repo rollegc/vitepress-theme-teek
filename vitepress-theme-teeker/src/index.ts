@@ -3,6 +3,8 @@ import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
 import "./styles/index.scss";
+// import "./styles/external/rainbow.css";
+// import "./styles/external/container.css";
 
 import "element-plus/theme-chalk/base.css";
 import "element-plus/theme-chalk/dark/css-vars.css";

@@ -2,15 +2,7 @@
 
 正在开发 ing...
 
-开发计划已完成 90%。
-
-## TODO
-
-- 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- JS 支持修改 themeConfig
-- 构建测试、部署测试、线上效果测试
-- 项目发布 NPM 库
-- 版本号打包后自动更新
+基础功能已完成开发，剩余加强功能请看下面的 TODO。
 
 ## 使用
 
@@ -42,3 +34,11 @@ pnpm docs:locales:dev
 # 多语言文档 Demo（默认语言的文档放到指定目录下）
 pnpm docs:localesRoot:dev
 ```
+
+## TODO
+
+- 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
+- < 引用的样式多元化支持
+- 公告、TODO 列表、导航页面、路由切换进度条、时间线、鼠标特效？
+- 部署测试、线上效果测试
+- 发布 NPM 库
