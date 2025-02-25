@@ -4,7 +4,7 @@ import { useNamespace, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../helper";
 import HomeCard from "./HomeCard.vue";
 import docAnalysisSvg from "../assets/svg/docAnalysis";
-import { computed, reactive, Ref, unref } from "vue";
+import { computed, Ref, unref } from "vue";
 import { useData } from "vitepress";
 import { DocAnalysis, DocAnalysisInfo } from "../config/types";
 
@@ -44,7 +44,7 @@ const formatWordCount = (wordCount: number) => {
   return Math.round(wordCount / 10000) / 10 + "w";
 };
 
-const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<string> })[] = reactive([
+const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<string> })[] = computed(() => [
   {
     key: "totalPosts",
     label: "文章数目",
@@ -72,22 +72,22 @@ const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<
   {
     key: "viewCount",
     label: "本站被访问了",
-    originValue: computed(() => unref(sitePv)),
-    value: computed(() => (isGet ? `${unref(sitePv)} 次` : "Get...")),
+    originValue: unref(sitePv),
+    value: isGet ? `${unref(sitePv)} 次` : "Get...",
     show: siteView,
   },
   {
     key: "visitCount",
     label: "本站曾来访过",
-    originValue: computed(() => unref(siteUv)),
-    value: computed(() => (isGet ? `${unref(siteUv)} 人` : "Get...")),
+    originValue: unref(siteUv),
+    value: isGet ? `${unref(siteUv)} 人` : "Get...",
     show: siteView,
   },
   ...appendInfo,
 ]);
 
 if (overrideInfo.length) {
-  docAnalysisList.forEach(item => {
+  unref(docAnalysisList).forEach((item: (typeof docAnalysisList)[0]) => {
     const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
     if (override) {
       item.label = override.label || item.label;
