@@ -280,23 +280,23 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       vitepress-plugin-catalogue:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-catalogue
+        specifier: latest
+        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-doc-analysis:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-doc-analysis
+        specifier: latest
+        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-file-content-loader:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-file-content-loader
+        specifier: latest
+        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
       vitepress-plugin-md-h1:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-md-h1
+        specifier: latest
+        version: 1.0.0(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))
       vitepress-plugin-permalink:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-permalink
+        specifier: 1.0.3
+        version: 1.0.3(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
       vitepress-plugin-sidebar-resolve:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-sidebar-resolve
+        specifier: latest
+        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
     devDependencies:
       '@element-plus/icons-vue':
         specifier: ^2.3.1
@@ -4406,6 +4406,39 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  vitepress-plugin-catalogue@1.0.1:
+    resolution: {integrity: sha512-aXICgwhYYWObUkFSW7NEnBqvubxpuUOJcy91Y/Bo6Ime/Do7GdjBuqh2/zM/kopH7dbYkSKJOymwHYPMQ8UYSg==}
+    peerDependencies:
+      vite: ^6.0.7
+
+  vitepress-plugin-doc-analysis@1.0.1:
+    resolution: {integrity: sha512-hNOvBu79/dkYrq7xTCVpRSz3H170YJLhTdvzfGz7v6DrtqAZlOmxoXeGKaMTwQGKdei2VAb5BwxyGqRK4dFkVQ==}
+    peerDependencies:
+      vite: ^6.0.7
+
+  vitepress-plugin-file-content-loader@1.0.1:
+    resolution: {integrity: sha512-bzrHGPMWVfYG5yjFv7zhVuA6ZILa3MqPawYittkZccLI9a+3GSNjG7o6oOQfcBs4/ebp7cFUaczldeRzLoRjPg==}
+    peerDependencies:
+      vite: ^6.0.7
+      vitepress: ^1.6.3
+
+  vitepress-plugin-md-h1@1.0.0:
+    resolution: {integrity: sha512-z3iXw71jOzZeQok7+vzl+MCowlVcVZ2TpkDkuZokB7aZIKMJnb/pZT8DQdCg7PahB88aaQ9mRQShRexQDvU9vw==}
+    peerDependencies:
+      vite: ^6.0.7
+
+  vitepress-plugin-permalink@1.0.3:
+    resolution: {integrity: sha512-WNB7AJLdwkVKWAby2pIr9qN1IMiMNUVqeRSD1UaqrQuHOor/f2Hy2Kw67BiI1VN5grtPjh6qBn/hrW+k2kMGlA==}
+    peerDependencies:
+      vite: ^6.0.7
+      vitepress: ^1.6.3
+
+  vitepress-plugin-sidebar-resolve@1.0.1:
+    resolution: {integrity: sha512-T2CIKX5zS5ikwPBT5YwPTV8gxBJwSsuzTLn8javLvn3dSyAuBUT3glMOkJLHtMESMwz+7C5DtsQWGGu93MACDw==}
+    peerDependencies:
+      vite: ^6.0.7
+      vitepress: ^1.6.3
 
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
@@ -8800,6 +8833,45 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.4.2
       sass: 1.83.1
+
+  vitepress-plugin-catalogue@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+
+  vitepress-plugin-doc-analysis@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+
+  vitepress-plugin-file-content-loader@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      tinyglobby: 0.2.10
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+      vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
+
+  vitepress-plugin-md-h1@1.0.0(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)):
+    dependencies:
+      gray-matter: 4.0.3
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+
+  vitepress-plugin-permalink@1.0.3(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+      vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
+
+  vitepress-plugin-sidebar-resolve@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)
+      vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
 
   vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.4.49)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3):
     dependencies:

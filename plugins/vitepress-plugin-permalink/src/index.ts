@@ -49,6 +49,8 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath } as Permalink;
 
+      log("injected permalinks data successfully. 注入永久链接数据成功!", "green");
+
       vitepressConfig = config.vitepress;
 
       // 导航栏高亮适配 permalink
@@ -59,8 +61,6 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       localesKeys.forEach(localeKey => {
         setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls, rewrites);
       });
-
-      log("injected permalinks data successfully. 注入永久链接数据成功!", "green");
     },
     configureServer(server: ViteDevServer) {
       const {

@@ -38,12 +38,12 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "vitepress-plugin-catalogue": "workspace:*",
-    "vitepress-plugin-doc-analysis": "workspace:*",
-    "vitepress-plugin-md-h1": "workspace:*",
-    "vitepress-plugin-permalink": "workspace:*",
-    "vitepress-plugin-sidebar-resolve": "workspace:*",
-    "vitepress-plugin-file-content-loader": "workspace:*",
+    "vitepress-plugin-catalogue": "latest",
+    "vitepress-plugin-doc-analysis": "latest",
+    "vitepress-plugin-md-h1": "latest",
+    "vitepress-plugin-permalink": "latest",
+    "vitepress-plugin-sidebar-resolve": "latest",
+    "vitepress-plugin-file-content-loader": "latest",
     "gray-matter": "^4.0.3"
   },
   "devDependencies": {
