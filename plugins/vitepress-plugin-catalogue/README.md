@@ -74,55 +74,55 @@ path 是基于 [srcDir](https://vitepress.dev/zh/reference/site-config#srcdir) �
 
 ```json
 {
-    arr: [
-        { 
-            title: "vue",
-            children: [
-                {title: "getting", link: "/guide/vue/getting"},
-                {title: "getting", link: "/guide/vue/routing"}
-            ]
+  "arr": [
+    {
+      "title": "vue",
+      "children": [
+        { "title": "getting", "link": "/guide/vue/getting" },
+        { "title": "getting", "link": "/guide/vue/routing" }
+      ]
+    },
+    {
+      "title": "why",
+      "link": "/guide/why"
+    }
+  ],
+  "map": {
+    "guide/catalogue": {
+      "path": "guide",
+      "catalogues": [
+        {
+          "title": "vue",
+          "children": [
+            { "title": "getting", "link": "/guide/vue/getting" },
+            { "title": "getting", "link": "/guide/vue/routing" }
+          ]
         },
         {
-            title: "why",
-            link: "/guide/why"
+          "title": "why",
+          "link": "/guide/why"
         }
-    ],
-    map: {
-        "guide/catalogue": {
-            path: "guide",
-            catalogues: [
-                { 
-                    title: "vue",
-                    children: [
-                        {title: "getting", link: "/guide/vue/getting"},
-                        {title: "getting", link: "/guide/vue/routing"}
-                    ]
-                },
-                {
-                    title: "why",
-                    link: "/guide/why"
-                }
-            ] 
-        }
-    },
-    inv: {
-        "guide": {
-            filePath: "guide/catalogue",
-            catalogues: [
-                { 
-                    title: "vue",
-                    children: [
-                        {title: "getting", link: "/guide/vue/getting"},
-                        {title: "getting", link: "/guide/vue/routing"}
-                    ]
-                },
-                {
-                    title: "why",
-                    link: "/guide/why"
-                }
-            ] 
-        }
+      ]
     }
+  },
+  "inv": {
+    "guide": {
+      "filePath": "guide/catalogue",
+      "catalogues": [
+        {
+          "title": "vue",
+          "children": [
+            { "title": "getting", "link": "/guide/vue/getting" },
+            { "title": "getting", "link": "/guide/vue/routing" }
+          ]
+        },
+        {
+          "title": "why",
+          "link": "/guide/why"
+        }
+      ]
+    }
+  }
 }
 ```
 
@@ -224,8 +224,6 @@ export interface CatalogueItem {
   children?: CatalogueItem[];
 }
 ```
-
-
 
 ## License
 

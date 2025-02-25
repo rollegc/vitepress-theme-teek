@@ -78,8 +78,8 @@ const myFunction = () => {
 在 `.vitepress/theme/index.ts` 引入 `usePermalinks` 函数来初始化 permalinks 功能：
 
 ```typescript
-import { h } from 'vue';
-import DefaultTheme from 'vitepress/theme';
+import { h } from "vue";
+import DefaultTheme from "vitepress/theme";
 import usePermalinks from "vitepress-plugin-permalink/src/usePermalinks";
 
 export default {
@@ -87,10 +87,10 @@ export default {
   Layout() {
     // 开启监听 permalink
     usePermalinks().startWatch();
-    
-    return h(DefaultTheme.Layout, null, {})
-  }
-}
+
+    return h(DefaultTheme.Layout, null, {});
+  },
+};
 ```
 
 假设项目的目录结构如下：
