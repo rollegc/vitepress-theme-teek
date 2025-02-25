@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Footer">
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import themeSvg from "../assets/svg/footerTheme";
 import copyrightSvg from "../assets/svg/copyright";
@@ -11,8 +11,7 @@ import { computed } from "vue";
 import Icon from "./Icon.vue";
 import { FooterInfo, Social } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("footer");
+const ns = useNamespace("footer");
 
 const { theme } = useUnrefData();
 
@@ -51,8 +50,8 @@ const footerData = computed(() => {
 </script>
 
 <template>
-  <div v-if="footerInfo || social.length" :class="prefixClass">
-    <div v-if="social.length" :class="`${prefixClass}__icons flx-center`">
+  <div v-if="footerInfo || social.length" :class="ns.b()">
+    <div v-if="social.length" :class="`${ns.e('icons')} flx-center`">
       <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
         <template v-if="item.icon">
           <Icon
@@ -71,8 +70,8 @@ const footerData = computed(() => {
     <template v-if="footerInfo">
       <p v-for="m in [footerInfo.message || []].flat()" v-html="m" />
 
-      <div :class="`${prefixClass}__list flx-wrap-justify-center`">
-        <div v-for="item in footerData" :key="item.name" :class="`${prefixClass}__list__item flx-align-center`">
+      <div :class="`${ns.e('list')} flx-wrap-justify-center`">
+        <div v-for="item in footerData" :key="item.name" :class="`${ns.e('list__item')} flx-align-center`">
           <template v-if="item.icon">
             <Icon
               :iconType="item.iconType"

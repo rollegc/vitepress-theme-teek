@@ -1,18 +1,6 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-// 递归块样式
-@include b(catalogue) {
-  @include e(inline) {
-    margin-top: 0.7rem;
-    margin-left: 1rem;
-
-    @include b(subCatalogue) {
-      margin-bottom: 0;
-    }
-  }
-}
-
 /* 非叶子目录样式 */
 @include b(subCatalogue) {
   width: 100%;
@@ -39,6 +27,16 @@
       .anchor {
         opacity: 1;
       }
+    }
+  }
+
+  @include e(inline) {
+    margin-top: 0.7rem;
+    margin-left: 1rem;
+
+    /* 递归非叶子目录样式 */
+    @include b(subCatalogue) {
+      margin-bottom: 0;
     }
   }
 }

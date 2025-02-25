@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeInfo">
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
 import HomeMyCard from "./HomeMyCard.vue";
@@ -9,8 +9,7 @@ import FriendLinkCard from "./FriendLinkCard.vue";
 import TopArticleCard from "./TopArticleCard.vue";
 import DocAnalysisCard from "./DocAnalysisCard.vue";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("homeInfo");
+const ns = useNamespace("homeInfo");
 
 const { theme, frontmatter } = useData();
 const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = unref(theme);
@@ -65,7 +64,7 @@ const componentMap = computed(() => {
 </script>
 
 <template>
-  <div :class="prefixClass">
+  <div :class="ns.b()">
     <HomeMyCard v-if="isHomePage" />
     <template v-for="item in finalHomeCardSort" :key="item">
       <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props" />

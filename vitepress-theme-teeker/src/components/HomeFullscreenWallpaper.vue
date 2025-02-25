@@ -1,10 +1,9 @@
 <script setup lang="ts" name="FullScreenChange">
 import { onMounted, onUnmounted, ref, unref } from "vue";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { useUnrefData } from "../configProvider";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("fullscreen");
+const ns = useNamespace("fullscreen");
 
 // 定义一个 ref 来跟踪是否处于全屏状态
 const isFullscreen = ref(false);
@@ -50,15 +49,15 @@ const handleFullscreenChange = () => {
   // 如果滚动条不为 0，则不执行任何操作
   if (htmlDom.scrollTop !== 0) return;
 
-  const bannerContentDom = document.querySelector(`.${getPrefixClass("banner-content")}`);
-  const wavesDom = document.querySelector(`.${getPrefixClass("waves")}`);
-  const bodyBgImageMaskDom = document.querySelector(`.${getPrefixClass("bodyBgImage")} .mask`);
-  const bannerMaskDom = document.querySelector(`.${getPrefixClass("banner")} .mask`);
+  const bannerContentDom = document.querySelector(`.${ns.joinNamespace("banner-content")}`);
+  const wavesDom = document.querySelector(`.${ns.joinNamespace("waves")}`);
+  const bodyBgImageMaskDom = document.querySelector(`.${ns.joinNamespace("bodyBgImage")} .mask`);
+  const bannerMaskDom = document.querySelector(`.${ns.joinNamespace("banner")} .mask`);
 
   isFullscreen.value = !!document.fullscreenElement;
 
   const options = [
-    { el: htmlDom, executeClass: prefixClass },
+    { el: htmlDom, executeClass: ns.b() },
     {
       el: bannerContentDom,
       executeClass: "display-none",
@@ -74,12 +73,12 @@ const handleFullscreenChange = () => {
 
   // 下面注释的代码已在上面用 addOrRemoveClass 实现，否则在 if 里每次 add 一个元素，都需要在 else 里 remove 该元素，一旦多起来则不够阅读性较差，因此通过上面配置项实现
   // if (document.fullscreenElement) {
-  //   htmlDom.classList.add(prefixClass);
+  //   htmlDom.classList.add(ns.b());
   //   if (wallpaper.hideBanner) bannerDom?.classList.add("display-none");
   //   else bannerDom?.classList.add("big-img");
   // }
   // else {
-  //   htmlDom.classList.remove(prefixClass);
+  //   htmlDom.classList.remove(ns.b());
   //   if (wallpaper.hideBanner) bannerDom?.classList.remove("display-none");
   //   else bannerDom?.classList.remove("big-img");
   // }

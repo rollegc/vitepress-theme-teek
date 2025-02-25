@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { useDesign } from "../hooks";
+<script setup lang="ts" name="Pagination">
+import { useNamespace } from "../hooks";
 import { scrollTo } from "../helper";
 import { nextTick, onMounted, unref } from "vue";
 import { ElPagination } from "element-plus";
@@ -18,10 +18,7 @@ export interface PaginationProps {
   reset?: boolean; // 切换 pageSize，pageNum 重置为 1
 }
 
-defineOptions({ name: "Pagination" });
-
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("pagination");
+const ns = useNamespace("pagination");
 
 const { background = true, autoScroll = true, hidden = false, reset = true } = defineProps<PaginationProps>();
 
@@ -69,7 +66,7 @@ const afterChange = () => {
 </script>
 
 <template>
-  <div :class="[prefixClass, { hidden: hidden }]">
+  <div :class="[ns.b(), { hidden: hidden }]">
     <el-pagination
       :background="background"
       v-model:current-page="pageObj.pageNum"

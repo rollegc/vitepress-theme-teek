@@ -1,5 +1,5 @@
 <script setup lang="ts" name="RightBottomButton">
-import { useDesign } from "../hooks";
+import { useNamespace, useDebounce } from "../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { ElIcon } from "element-plus";
 import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
@@ -8,8 +8,7 @@ import { scrollTo } from "../helper";
 import sizeSvg from "../assets/svg/size";
 import { CommentConfig, ThemeSetting } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("rightBottomButton");
+const ns = useNamespace("rightBottomButton");
 
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
@@ -24,14 +23,14 @@ const showToComment = computed(() => {
   return unref(scrollTop) < height;
 });
 
-const scrollToTop = () => {
+const scrollToTop = useDebounce(() => {
   scrollTo("html", 0, 1500);
   scrollTop.value = 0;
-};
+}, 500);
 
-const scrollToComment = () => {
-  document.querySelector(`#${getPrefixClass("layout-comment")}`)?.scrollIntoView({ behavior: "smooth" });
-};
+const scrollToComment = useDebounce(() => {
+  document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
+}, 500);
 
 const watchScroll = () => {
   scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -116,15 +115,15 @@ changeThemeSize(themeSize);
 </script>
 
 <template>
-  <div :class="`${prefixClass} flx-column`">
+  <div :class="`${ns.b()} flx-column`">
     <transition name="fade">
-      <div title="返回顶部" :class="`${prefixClass}__button`" v-show="showToTop" @click="scrollToTop">
+      <div title="返回顶部" :class="ns.e('button')" v-show="showToTop" @click="scrollToTop">
         <el-icon><ArrowUp /></el-icon>
       </div>
     </transition>
 
     <transition name="fade">
-      <div v-if="provider && showToComment" title="前往评论" :class="`${prefixClass}__button`" @click="scrollToComment">
+      <div v-if="provider && showToComment" title="前往评论" :class="ns.e('button')" @click="scrollToComment">
         <el-icon><ChatDotSquare /></el-icon>
       </div>
     </transition>
@@ -132,14 +131,14 @@ changeThemeSize(themeSize);
     <div
       v-if="useThemeSize"
       title="字体切换"
-      :class="`${prefixClass}__button size-change`"
+      :class="`${ns.e('button')} size-change`"
       @mouseenter="showThemeSizeItem = true"
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
       <i class="el-icon" v-html="sizeSvg"></i>
       <transition name="mode">
-        <ul :class="`${prefixClass}__button__size dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
+        <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
             v-for="item in themeSizeList"
             :key="item.size"
@@ -156,16 +155,16 @@ changeThemeSize(themeSize);
     <div
       v-if="useThemeMode"
       title="主题切换"
-      :class="`${prefixClass}__button`"
+      :class="ns.e('button')"
       @mouseenter="showThemeModeItem = true"
       @mouseleave="showThemeModeItem = false"
       @click="showThemeModeItem = true"
     >
       <el-icon><MagicStick /></el-icon>
       <transition name="mode">
-        <div :class="`${prefixClass}__button__mode dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
+        <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
           <ul v-for="item in themeModeList" :key="item.label">
-            <li :class="`${prefixClass}__button__mode__title sle`" :title="item.tip || ''">{{ item.label }}</li>
+            <li :class="`${ns.e('button__mode__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>
             <li>
               <ul>
                 <li

@@ -26,6 +26,12 @@ git clone https://github.com/Kele-Bingtang/vitepress-theme-kt.git
 pnpm install
 ```
 
+引用包构建
+
+```bash
+pnpm stub
+```
+
 项目启动
 
 ```bash

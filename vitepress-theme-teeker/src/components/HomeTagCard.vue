@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeTagCard">
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { usePosts, useUnrefData, getBgColor } from "../configProvider";
 import { unref, watch, computed, ref } from "vue";
 import { useData, useRoute } from "vitepress";
@@ -8,8 +8,7 @@ import tagSvg from "../assets/svg/tag";
 import { isFunction } from "../helper";
 import { Tag } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("tag");
+const ns = useNamespace("tag");
 
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
@@ -80,16 +79,10 @@ const tagsPageLink = computed(() => {
     :title-link="tagsPageLink"
     :autoPage
     :pageSpeed
-    :class="prefixClass"
+    :class="ns.b()"
   >
     <template #default="{ transitionName }">
-      <TransitionGroup
-        v-if="tags.length"
-        :name="transitionName"
-        tag="div"
-        mode="out-in"
-        :class="`${prefixClass}__list`"
-      >
+      <TransitionGroup v-if="tags.length" :name="transitionName" tag="div" mode="out-in" :class="ns.e('list')">
         <a
           v-for="(item, index) in currentTags"
           :key="item.name"
@@ -103,7 +96,7 @@ const tagsPageLink = computed(() => {
         <a v-if="!tagsPage && limit < tags.length" :href="tagsPageLink" class="more">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}--empty`">暂无热门标签</div>
+      <div v-else :class="ns.m('empty')">暂无热门标签</div>
     </template>
   </HomeCard>
 </template>

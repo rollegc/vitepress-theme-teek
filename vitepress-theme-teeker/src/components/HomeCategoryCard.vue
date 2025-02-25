@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeCategoryCard">
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { usePosts, useUnrefData } from "../configProvider";
 import { computed, unref, ref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
@@ -8,8 +8,7 @@ import categorySvg from "../assets/svg/category";
 import { isFunction } from "../helper";
 import { Category } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("category");
+const ns = useNamespace("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
@@ -74,7 +73,7 @@ const categoriesPageLink = computed(() => {
     :title-link="categoriesPageLink"
     :autoPage
     :pageSpeed
-    :class="prefixClass"
+    :class="ns.b()"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -82,7 +81,7 @@ const categoriesPageLink = computed(() => {
         :name="transitionName"
         tag="div"
         mode="out-in"
-        :class="`${prefixClass}__list flx-column`"
+        :class="`${ns.e('list')} flx-column`"
       >
         <a
           ref="itemRefs"
@@ -99,7 +98,7 @@ const categoriesPageLink = computed(() => {
         <a v-if="!categoriesPage && limit < categories.length" :href="categoriesPageLink">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}--empty`">暂无热门文章</div>
+      <div v-else :class="ns.m('empty')">暂无热门文章</div>
     </template>
   </HomeCard>
 </template>

@@ -1,11 +1,10 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref } from "vue";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { ElIcon } from "element-plus";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("homeCard");
+const ns = useNamespace("homeCard");
 
 export interface HomeCardProps {
   title?: string;
@@ -82,8 +81,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="`${prefixClass} card`">
-    <div v-if="title" :class="`${prefixClass}__header flx-justify-between`">
+  <div :class="`${ns.b()} card`">
+    <div v-if="title" :class="`${ns.e('header')} flx-justify-between`">
       <slot name="title">
         <a v-if="titleLink" :href="titleLink">
           <span class="title flx-align-center" v-html="title"></span>

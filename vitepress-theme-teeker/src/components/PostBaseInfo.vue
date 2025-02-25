@@ -5,12 +5,11 @@ import { usePosts, useUnrefData } from "../configProvider";
 import { computed, unref } from "vue";
 import { formatDate, isFunction } from "../helper";
 import { TkContentData } from "../post/types";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { useRoute } from "vitepress";
 import { Post } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("postBaseInfo");
+const ns = useNamespace("postBaseInfo");
 
 export interface PostBaseInfoProps {
   post: TkContentData;
@@ -86,7 +85,7 @@ const baseInfo = [
 </script>
 
 <template>
-  <div :class="[`${prefixClass}`, 'flx-align-center', scope]">
+  <div :class="[ns.b(), 'flx-align-center', scope]">
     <template v-for="item in baseInfo" :key="item.title">
       <div v-if="item.show && (item.data || item.dataList?.length)" :class="['flx-center', `${scope}-item`, { split }]">
         <el-icon v-if="showIcon"><component :is="item.icon" /></el-icon>

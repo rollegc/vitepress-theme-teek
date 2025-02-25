@@ -2,9 +2,9 @@
 import { nextTick, onMounted } from "vue";
 import arrowSvg from "../assets/svg/arrow";
 import { useRouter } from "vitepress";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 
-const { namespace } = useDesign();
+const ns = useNamespace("");
 
 const foldClass = "fold";
 const circleClass = "circle";
@@ -46,7 +46,7 @@ const createArrowElement = (item: HTMLElement) => {
 
   const codeBlockState = {
     expand: { height: `${modeHeight}px`, display: "block", speed: 80 },
-    fold: { height: `var(--${namespace}-code-block-fold-height)`, display: "none", speed: 400 },
+    fold: { height: ns.cssVar("code-block-fold-height"), display: "none", speed: 400 },
   };
 
   let timeoutId: NodeJS.Timeout | null = null;

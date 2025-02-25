@@ -1,15 +1,14 @@
 <script setup lang="ts" name="FriendLinkCard">
 import { computed, ref, unref, onMounted } from "vue";
 import { useUnrefData } from "../configProvider";
-import { useDesign, useScrollData } from "../hooks";
+import { useNamespace, useScrollData } from "../hooks";
 import HomeCard from "./HomeCard.vue";
 import friendLinkSvg from "../assets/svg/friendLink";
 import { isFunction } from "../helper";
 import { createImageViewer } from "./ImageViewer";
 import { FriendLink } from "../config/types";
 
-const { getPrefixClass, namespace } = useDesign();
-const prefixClass = getPrefixClass("friendLink");
+const ns = useNamespace("friendLink");
 
 const { theme, frontmatter } = useUnrefData();
 // 友情链接配置项
@@ -55,7 +54,7 @@ const getLiStyle = (index: number) => {
 
   // 分页动画需要指定 top，否则默认移动到 0px 位置
   return {
-    top: `calc(${index} * (calc(var(--${namespace}-friend-gap) + ${clientRect?.height || 0}px)))`,
+    top: `calc(${index} * (calc(${ns.cssVar("friend-gap")} + ${clientRect?.height || 0}px)))`,
   };
 };
 
@@ -76,7 +75,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
     :title="finalTitle"
     :autoPage
     :pageSpeed
-    :class="prefixClass"
+    :class="ns.b()"
   >
     <template #default="{ transitionName, startAutoPage, closeAutoPage }">
       <TransitionGroup
@@ -84,7 +83,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         :name="transitionName"
         tag="ul"
         mode="out-in"
-        :class="`${prefixClass}__list flx-column`"
+        :class="`${ns.e('list')} flx-column`"
         @mouseenter="autoScroll ? stopAutoScroll() : autoPage ? closeAutoPage() : () => {}"
         @mouseleave="autoScroll ? startAutoScroll() : autoPage ? startAutoPage() : () => {}"
       >
@@ -92,7 +91,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
           :ref="autoScroll ? '' : 'itemRefs'"
           v-for="(item, index) in currentFriendLinkList"
           :key="item.name"
-          :class="`${prefixClass}__list__item`"
+          :class="ns.e('list__item')"
           :style="getLiStyle(index)"
         >
           <a :href="item.link" target="_blank" class="flx-align-center">
@@ -102,7 +101,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
               :alt="item.name || item.alt"
               @click="handleViewImg(item.avatar, $event)"
             />
-            <div :class="`${prefixClass}__list__item__info`">
+            <div :class="ns.e('list__item__info')">
               <div class="friend-name sle">{{ item.name }}</div>
               <div class="friend-desc sle">{{ item.desc }}</div>
             </div>
@@ -110,7 +109,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}--empty`">暂无友链</div>
+      <div v-else :class="ns.m('empty')">暂无友链</div>
     </template>
   </HomeCard>
 </template>

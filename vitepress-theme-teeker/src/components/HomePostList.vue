@@ -4,12 +4,11 @@ import HomePostItem from "./HomePostItem.vue";
 import { usePosts, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
 import { useRoute } from "vitepress";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { TkContentData } from "../post/types";
 import { PaginationProps } from "element-plus";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("postList");
+const ns = useNamespace("postList");
 
 const posts = usePosts();
 const { frontmatter, theme } = useUnrefData();
@@ -101,13 +100,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :class="prefixClass">
+  <div :class="ns.b()">
     <ul>
       <li v-for="post in currentPosts" :key="post.url" :class="[{ 'large-cover-wrapper': coverImgMode === 'large' }]">
         <HomePostItem :post />
       </li>
     </ul>
-    <div :class="`${prefixClass}__pagination flx-justify-center`">
+    <div :class="`${ns.e('pagination')} flx-justify-center`">
       <Pagination
         v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
         v-model="pageInfo"

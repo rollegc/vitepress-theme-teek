@@ -1,10 +1,9 @@
 <script setup lang="ts" name="Icon">
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { ElIcon } from "element-plus";
 import { isString } from "../helper";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("icon");
+const ns = useNamespace("icon");
 
 interface IconProps {
   icon: string;
@@ -34,11 +33,11 @@ const getStyle = () => {
 
 <template>
   <span :style="getStyle()">
-    <i v-if="!iconType || iconType === 'svg'" v-html="icon" :class="[prefixClass, { hover: hover }]" />
-    <i v-else-if="iconType === 'iconfont'" :class="[prefixClass, 'iconfont', icon, { hover: hover }]" />
-    <img v-else-if="iconType === 'img'" :src="icon" :alt="imgAlt" :class="[prefixClass, { hover: hover }]" />
+    <i v-if="!iconType || iconType === 'svg'" v-html="icon" :class="[ns.b(), { hover: hover }]" />
+    <i v-else-if="iconType === 'iconfont'" :class="[ns.b(), 'iconfont', icon, { hover: hover }]" />
+    <img v-else-if="iconType === 'img'" :src="icon" :alt="imgAlt" :class="[ns.b(), { hover: hover }]" />
     <el-icon v-else-if="iconType === 'el'">
-      <component :is="icon" :size :class="[prefixClass, { hover: hover }]" />
+      <component :is="icon" :size :class="[ns.b(), { hover: hover }]" />
     </el-icon>
   </span>
 </template>

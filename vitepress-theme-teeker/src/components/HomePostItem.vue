@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed } from "vue";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { withBase } from "vitepress";
 import { TkContentData } from "../post/types";
 import { createImageViewer } from "./ImageViewer";
@@ -8,8 +8,7 @@ import { useUnrefData } from "../configProvider";
 import PostBaseInfo from "./PostBaseInfo.vue";
 import { Post } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("postItem");
+const ns = useNamespace("postItem");
 
 const { post = { url: "", frontmatter: {} } } = defineProps<{ post: TkContentData }>();
 
@@ -67,36 +66,36 @@ const isShowBaseInfo = computed(() => {
 </script>
 
 <template>
-  <div :class="prefixClass">
+  <div :class="ns.b()">
     <i v-if="!!post.frontmatter.sticky" class="pin" :title="`置顶：${post.frontmatter.sticky}`" />
 
-    <div :class="[`${prefixClass}__info`, { 'large-cover': coverImgMode === 'large' }, 'flx']">
-      <div :class="`${prefixClass}__info__left`">
+    <div :class="[ns.e('info'), { 'large-cover': coverImgMode === 'large' }, 'flx']">
+      <div :class="ns.e('info__left')">
         <!-- 标题 -->
         <a class="title" :href="post.url">
           {{ post.title }}
         </a>
 
         <!-- 摘要 top -->
-        <div v-if="excerpt && excerptPosition === 'top'" :class="`${prefixClass}-info__left__excerpt top`">
+        <div v-if="excerpt && excerptPosition === 'top'" :class="`${ns.e('info__left__excerpt')} top`">
           <div class="excerpt" v-html="excerpt" />
           <a v-if="showMore" class="more" :href="post.url">{{ moreLabel }}</a>
         </div>
 
         <!-- 文章信息 -->
-        <div :class="`${prefixClass}__info__left__footer`">
+        <div :class="ns.e('__info__left__footer')">
           <PostBaseInfo v-if="isShowBaseInfo" :post scope="home" split />
         </div>
 
         <!-- 摘要 bottom -->
-        <div v-if="excerpt && excerptPosition === 'bottom'" :class="`${prefixClass}__info__left__excerpt bottom`">
+        <div v-if="excerpt && excerptPosition === 'bottom'" :class="`${ns.e('info__left__excerpt')} bottom`">
           <div class="excerpt" v-html="excerpt" />
           <a v-if="showMore" class="more" :href="post.url">{{ moreLabel }}</a>
         </div>
       </div>
 
       <!-- 右侧封面图 -->
-      <div :class="`${prefixClass}__info__right flx-align-center`">
+      <div :class="`${ns.e('info__right')} flx-align-center`">
         <div v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length" class="cover-img">
           <component :is="coverImgMap[coverImgMode].is" v-bind="coverImgMap[coverImgMode].props" />
         </div>

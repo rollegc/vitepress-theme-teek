@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBanner">
-import { useDesign, useTextTypes, useSwitchData } from "../hooks";
+import { useNamespace, useTextTypes, useSwitchData } from "../hooks";
 import { withBase } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useUnrefData } from "../configProvider";
@@ -7,8 +7,7 @@ import { isString } from "../helper";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 import { Banner } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("banner");
+const ns = useNamespace("banner");
 
 const { site, theme, frontmatter } = useUnrefData();
 
@@ -149,15 +148,15 @@ onUnmounted(() => {
 <template>
   <div
     ref="bannerRef"
-    :class="[prefixClass, { default: isDefaultBgStyle, 'big-img': isBigImgBgStyle, grid: isGridBgStyle }]"
+    :class="[ns.b(), { default: isDefaultBgStyle, 'big-img': isBigImgBgStyle, grid: isGridBgStyle }]"
     :style="getStyle()"
   >
     <div v-if="mask && isBigImgBgStyle && !isBodyBygImg" class="mask" />
 
-    <div :class="[`${prefixClass}__content`, { center: isBigImgBgStyle || !features.length }]">
-      <h1 :class="`${prefixClass}__content__title`">{{ title }}</h1>
+    <div :class="[ns.e('content'), { center: isBigImgBgStyle || !features.length }]">
+      <h1 :class="ns.e('content__title')">{{ title }}</h1>
 
-      <p :class="`${prefixClass}__content__desc`">
+      <p :class="ns.e('content__desc')">
         <template v-if="isDefaultDescStyle">{{ descArray[0] }}</template>
         <template v-else-if="isSwitchDescStyle">
           <span v-show="!!text" @click="switchText" class="switch">{{ text || " " }}</span>
@@ -169,8 +168,8 @@ onUnmounted(() => {
       </p>
     </div>
 
-    <div v-if="features.length && !isBigImgBgStyle" :class="`${prefixClass}__feature flx-wrap-between`">
-      <div :class="`${prefixClass}__feature__item`" v-for="(feature, index) in features" :key="index">
+    <div v-if="features.length && !isBigImgBgStyle" :class="`${ns.e('feature')} flx-wrap-between`">
+      <div :class="ns.e('feature__item')" v-for="(feature, index) in features" :key="index">
         <a v-if="feature.link" :href="feature.link" class="flx-column-center">
           <img v-if="feature.imgUrl" class="feature-img" :src="withBase(feature.imgUrl)" :alt="feature.title" />
           <p class="feature-title">{{ feature.title }}</p>

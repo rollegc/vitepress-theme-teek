@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
@@ -25,8 +25,7 @@ defineOptions({ name: "TkLayout" });
 
 const { Layout } = DefaultTheme;
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("layout");
+const ns = useNamespace("layout");
 
 const { theme, frontmatter } = useUnrefData();
 const { frontmatter: frontmatterRef } = useData();
@@ -53,16 +52,16 @@ const commentComponent = {
     </ClientOnly>
   </template>
 
-  <Layout :class="prefixClass">
+  <Layout :class="ns.b()">
     <template #home-hero-before>
       <slot name="home-hero-before" />
       <ClientOnly>
         <!-- 自定义首页 -->
-        <div v-if="tkTheme && tkHome" :class="`${prefixClass}-home`">
+        <div v-if="tkTheme && tkHome">
           <HomeBanner v-if="isHomePage() && enabled" />
-          <div :class="`${prefixClass}__home-content flx-start-justify-center`">
-            <div :class="`${prefixClass}__home-content__post`"><HomePostList /></div>
-            <div :class="`${prefixClass}__home-content__info`"><HomeInfo /></div>
+          <div :class="`${ns.e('home-content')} flx-start-justify-center`">
+            <div :class="ns.e('home-content__post')"><HomePostList /></div>
+            <div :class="ns.e('home-home-content__info')"><HomeInfo /></div>
           </div>
           <HomeFullscreenWallpaper
             v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
@@ -98,8 +97,8 @@ const commentComponent = {
           <component
             v-if="provider"
             :is="commentComponent[provider]"
-            :id="`${prefixClass}-comment`"
-            :class="`${prefixClass}__comment`"
+            :id="`${ns.namespace}-comment`"
+            :class="ns.e('comment')"
           />
         </ClientOnly>
       </template>

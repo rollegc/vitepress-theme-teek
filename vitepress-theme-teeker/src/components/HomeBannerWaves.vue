@@ -1,13 +1,12 @@
 <script setup lang="ts" name="FullScreenChange">
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("waves");
+const ns = useNamespace("waves");
 </script>
 
 <template>
   <svg
-    :class="prefixClass"
+    :class="ns.b()"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="0 24 150 28"

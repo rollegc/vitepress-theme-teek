@@ -1,15 +1,14 @@
 <script setup lang="ts" name="TopArticleCard">
 import { computed, ref, unref } from "vue";
 import { useUnrefData, usePosts, getBgColor } from "../configProvider";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 import HomeCard from "./HomeCard.vue";
 import topArticleSvg from "../assets/svg/topArticle";
 import { TkContentData } from "../post/types";
 import { isFunction } from "../helper";
 import { TopArticle } from "../config/types";
 
-const { getPrefixClass, namespace } = useDesign();
-const prefixClass = getPrefixClass("topArticle");
+const ns = useNamespace("topArticle");
 
 const posts = usePosts();
 
@@ -45,8 +44,8 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getStyle = (num: number, index: number) => {
   return {
-    [`--${namespace}-num-bg-color`]: bgColor[num % bgColor.length],
-    top: `calc(${index} * (calc(var(--${namespace}-gap1) + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    [ns.cssVarName("num-bg-color")]: bgColor[num % bgColor.length],
+    top: `calc(${index} * (calc(${ns.cssVar("gap1")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>
@@ -60,7 +59,7 @@ const getStyle = (num: number, index: number) => {
     :title="finalTitle"
     :autoPage
     :pageSpeed
-    :class="prefixClass"
+    :class="ns.b()"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -68,17 +67,17 @@ const getStyle = (num: number, index: number) => {
         :name="transitionName"
         tag="ul"
         mode="out-in"
-        :class="`${prefixClass}__list flx-column`"
+        :class="`${ns.e('list')} flx-column`"
       >
         <li
           ref="itemRefs"
           v-for="(item, index) in currentTopArticleList"
           :key="item.num"
-          :class="`${prefixClass}__list__item`"
+          :class="ns.e('list__item')"
           :style="getStyle(item.num - 1, index)"
         >
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
-          <div :class="`${prefixClass}__list__item__info`">
+          <div :class="ns.e('list__item__info')">
             <a :href="item.url" class="flx-align-center">
               <span class="title sle">{{ item.title }}</span>
             </a>
@@ -87,7 +86,7 @@ const getStyle = (num: number, index: number) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="`${prefixClass}--empty`">暂无精选内容</div>
+      <div v-else :class="ns.m('empty')">暂无精选内容</div>
     </template>
   </HomeCard>
 </template>

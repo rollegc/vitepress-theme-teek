@@ -1,26 +1,24 @@
 <script setup lang="ts" name="CatalogueItem">
 import type { CatalogueItem } from "vitepress-plugin-catalogue";
-import { useDesign } from "../hooks";
+import { useNamespace } from "../hooks";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("catalogue");
-const prefixClass1 = getPrefixClass("subCatalogue");
-const prefixClass2 = getPrefixClass("catalogueItem");
+const nsSub = useNamespace("subCatalogue");
+const nsItem = useNamespace("catalogueItem");
 
 defineProps<{ item: CatalogueItem; index: number | string }>();
 </script>
 
 <template>
-  <li :class="item.children ? prefixClass1 : prefixClass2">
+  <li :class="item.children ? nsSub.b() : nsItem.b()">
     <a v-if="!item.children" :href="item.link">{{ index }}. {{ item.title }}</a>
 
     <template v-else>
-      <div :id="item.title" :class="`${prefixClass1}__title`">
+      <div :id="item.title" :class="nsSub.e('title')">
         <a :href="`#${item.title}`" class="anchor">#</a>
         <span>{{ `${index}. ${item.title}` }}</span>
       </div>
 
-      <ul v-if="item.children" :class="`${prefixClass}__inline flx-wrap-between`">
+      <ul v-if="item.children" :class="`${nsSub.e('inline')} flx-wrap-between`">
         <!-- 递归自己 -->
         <CatalogueItem v-for="(item, i) in item.children" :key="i" :item :index="`${index}-${i + 1}`" />
       </ul>

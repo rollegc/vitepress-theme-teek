@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DocAnalysisCard">
 import { useUnrefData } from "../configProvider";
-import { useDesign, useBuSunZi } from "../hooks";
+import { useNamespace, useBuSunZi } from "../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../helper";
 import HomeCard from "./HomeCard.vue";
 import docAnalysisSvg from "../assets/svg/docAnalysis";
@@ -8,8 +8,7 @@ import { computed, reactive, Ref, unref } from "vue";
 import { useData } from "vitepress";
 import { DocAnalysis, DocAnalysisInfo } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("docAnalysis");
+const ns = useNamespace("docAnalysis");
 
 const { frontmatter, theme } = useUnrefData();
 // 使用 useData 的 theme 是为了监听多语言切换来动态修改站点信息的内容
@@ -91,9 +90,9 @@ if (overrideInfo.length) {
 </script>
 
 <template>
-  <HomeCard :title="finalTitle" :class="`${prefixClass} card`">
+  <HomeCard :title="finalTitle" :class="ns.b()">
     <template v-for="item in docAnalysisList" :key="item.key">
-      <div v-if="item.show !== false" :class="`${prefixClass}__item`">
+      <div v-if="item.show !== false" :class="ns.e('item')">
         <span v-html="item.label" />
         <span v-html="item.value" />
       </div>

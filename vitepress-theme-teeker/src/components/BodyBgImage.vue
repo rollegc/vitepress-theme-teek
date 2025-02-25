@@ -1,12 +1,11 @@
 <script setup lang="ts" name="BodyBgImage">
-import { useDesign, useSwitchData } from "../hooks";
+import { useNamespace, useSwitchData } from "../hooks";
 import { useUnrefData } from "../configProvider";
 import { onMounted } from "vue";
 import { isString } from "../helper";
 import { BodyBgImg } from "../config/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("bodyBgImage");
+const ns = useNamespace("bodyBgImage");
 
 const { theme } = useUnrefData();
 
@@ -33,8 +32,8 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
 });
 
 const initPageStyle = () => {
-  const tkLayoutDom = document.querySelector(`.${getPrefixClass("layout")}`);
-  tkLayoutDom?.classList.add(getPrefixClass(pageStyle));
+  const tkLayoutDom = document.querySelector(`.${ns.joinNamespace("layout")}`);
+  tkLayoutDom?.classList.add(ns.joinNamespace(pageStyle));
 };
 
 onMounted(() => {
@@ -45,7 +44,7 @@ onMounted(() => {
 
 <template>
   <div
-    :class="prefixClass"
+    :class="ns.b()"
     :style="`background-image: url(${imageSrc}); opacity:${imgOpacity}; --body-mask-bg-color: ${isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`}`"
   >
     <div v-if="mask" class="mask" />

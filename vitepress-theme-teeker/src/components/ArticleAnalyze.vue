@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import { useRoute, useData } from "vitepress";
-import { useDesign, useBuSunZi } from "../hooks";
+import { useNamespace, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
 import { computed, unref } from "vue";
 import { House, Reading, Clock, View } from "@element-plus/icons-vue";
@@ -10,8 +10,7 @@ import PostBaseInfo from "./PostBaseInfo.vue";
 import { Breadcrumb, DocAnalysis, Post } from "../config/types";
 import { TkContentData } from "../post/types";
 
-const { getPrefixClass } = useDesign();
-const prefixClass = getPrefixClass("articleAnalyze");
+const ns = useNamespace("articleAnalyze");
 
 const { theme, frontmatter } = useUnrefData();
 const { theme: themeRef, localeIndex, page } = useData();
@@ -89,7 +88,7 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
 </script>
 
 <template>
-  <div :class="`${prefixClass} flx-justify-between`">
+  <div :class="`${ns.b()} flx-justify-between`">
     <el-breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <el-breadcrumb-item>
         <a href="/" title="首页">
@@ -107,7 +106,7 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div v-if="isShowBaseInfo" :class="`${prefixClass}__wrapper flx-center`">
+    <div v-if="isShowBaseInfo" :class="`${ns.e('wrapper')} flx-center`">
       <PostBaseInfo :post scope="article" />
 
       <div v-if="wordCount" class="flx-center">

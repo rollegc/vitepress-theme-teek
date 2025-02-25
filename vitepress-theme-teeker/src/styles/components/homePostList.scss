@@ -2,21 +2,27 @@
 
 @include b(postList) {
   @include e(pagination) {
-    .el-pagination li.is-active.number {
-      background-color: var(--vp-c-brand-2);
-    }
-    .el-pagination button:hover {
-      color: var(--vp-c-brand-2);
-    }
+    .el-pagination {
+      .el-pager {
+        li.is-active.number {
+          background-color: var(--vp-c-brand-2);
+        }
+        li:not(.is-active):hover {
+          color: var(--vp-c-brand-2);
+        }
+      }
 
-    .el-pager li:not(.is-active):hover {
-      color: var(--vp-c-brand-2);
-    }
-    .el-input__wrapper.is-focus {
-      box-shadow: 0 0 0 1px var(--vp-c-brand-2) inset;
+      button.btn-prev:hover,
+      button.btn-next:hover {
+        color: var(--vp-c-brand-2);
+      }
+      .el-input__wrapper.is-focus {
+        box-shadow: 0 0 0 1px var(--vp-c-brand-2) inset;
+      }
     }
   }
 
+  /* 封面图为 large 风格样式 */
   .large-cover-wrapper:nth-child(2n) {
     .large-cover {
       flex-direction: row-reverse;
