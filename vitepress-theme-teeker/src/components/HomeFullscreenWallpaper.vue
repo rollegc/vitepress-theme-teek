@@ -125,4 +125,6 @@ onUnmounted(() => {
 });
 </script>
 
-<template></template>
+<template>
+  <div :class="ns.b()"></div>
+</template>
