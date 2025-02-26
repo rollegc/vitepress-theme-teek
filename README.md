@@ -28,11 +28,11 @@ pnpm stub
 
 ```bash
 # 基本文档 Demo
-pnpm demo:base:dev
+pnpm demo:base dev
 # 多语言文档 Demo（默认语言的文档放到根目录下）
-pnpm demo:locales:dev
+pnpm demo:locales dev
 # 多语言文档 Demo（默认语言的文档放到指定目录下）
-pnpm demo:localesRoot:dev
+pnpm demo:localesRoot dev
 ```
 
 ## 配置
