@@ -37,6 +37,10 @@ const tkConfig = tkThemeConfig({
     enabled: true,
   },
 
+  post: {
+    coverImgMode: "large", // 封面大图
+  },
+
   friendLink: {
     list: [
       { avatar: "/img/bg1.jpg", name: "测试1", desc: "这是一个友链测试1", link: "https://github.com/Kele-Bingtang" },

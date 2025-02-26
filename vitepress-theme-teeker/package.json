@@ -38,13 +38,13 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "vitepress-plugin-catalogue": "latest",
     "vitepress-plugin-doc-analysis": "latest",
+    "vitepress-plugin-file-content-loader": "latest",
     "vitepress-plugin-md-h1": "latest",
     "vitepress-plugin-permalink": "latest",
-    "vitepress-plugin-sidebar-resolve": "latest",
-    "vitepress-plugin-file-content-loader": "latest",
-    "gray-matter": "^4.0.3"
+    "vitepress-plugin-sidebar-resolve": "latest"
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.3.1",

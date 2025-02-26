@@ -157,6 +157,10 @@ export interface TkThemeConfig {
    * 首页 Post 的分页配置，完全是 ElPagination 的 props
    */
   page?: Partial<PaginationProps>;
+  /**
+   * markdown 插件列表，请不要在使用 vitepress.markdown.config 配置 md 插件，因为 config 是一个函数，vitepress 并没有做多个 config 合并，因此使用 vitepress.markdown.config 配置会覆盖主题内置 md 插件
+   */
+  markdownPlugins?: any[];
 }
 
 export interface ThemeSetting {

@@ -9,9 +9,10 @@ import { UserConfig } from "vitepress";
 import { PluginOption } from "vite";
 import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
+import todoPlugin from "../markdown/todo";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
-  const { plugins: pluginsOption, ...tkThemeConfig } = config;
+  const { plugins: pluginsOption, markdownPlugins = [], ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -63,6 +64,13 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
       css: { preprocessorOptions: { scss: { api: "modern" } } },
       optimizeDeps: {
         include: ["element-plus", "@giscus/vue", "@waline/client"],
+      },
+    },
+    markdown: {
+      config: md => {
+        md.use(todoPlugin);
+        // 用户配置的 markdown 插件
+        markdownPlugins.forEach(plugin => md.use(plugin));
       },
     },
     themeConfig: tkThemeConfig,

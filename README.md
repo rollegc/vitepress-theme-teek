@@ -42,7 +42,7 @@ pnpm demo:localesRoot:dev
 ## TODO
 
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- < 引用的样式多元化支持
-- 公告、TODO 列表、导航页面、路由切换进度条、时间线、鼠标特效？
+- 全局公告、导航页面
+- vitepress-plugin-permalink 给每个 md 自动生成永久链接
 - 部署测试、线上效果测试
 - 发布 NPM 库

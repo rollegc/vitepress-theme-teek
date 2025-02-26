@@ -1,15 +1,16 @@
 @use "../mixins/config" as *;
+@use "../mixins/function" as *;
 
 a:hover {
-  color: var(--#{$namespace}-theme-color);
+  color: getCssVar("theme-color");
   cursor: pointer;
 }
 
 .#{$namespace}-page {
-  max-width: var(--#{$namespace}-page-width);
+  max-width: getCssVar("page-width");
   margin: 1.5rem auto;
   padding: 20px 30px;
-  box-shadow: 0 0 16px var(--#{$namespace}-shadow-color);
+  box-shadow: 0 0 16px getCssVar("shadow-color");
   border-radius: 10px;
 
   /* 隐藏 md 内容 */
