@@ -102,7 +102,7 @@ onUnmounted(() => {
 <template>
   <div :class="ns.b()">
     <ul>
-      <li v-for="post in currentPosts" :key="post.url" :class="[{ 'large-cover-wrapper': coverImgMode === 'large' }]">
+      <li v-for="post in currentPosts" :key="post.url" :class="[{ 'full-cover-wrapper': coverImgMode === 'full' }]">
         <HomePostItem :post />
       </li>
     </ul>

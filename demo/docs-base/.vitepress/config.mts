@@ -38,7 +38,7 @@ const tkConfig = tkThemeConfig({
   },
 
   post: {
-    coverImgMode: "large", // 封面大图
+    coverImgMode: "full", // 封面大图
   },
 
   friendLink: {

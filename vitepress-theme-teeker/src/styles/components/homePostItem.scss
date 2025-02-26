@@ -108,10 +108,15 @@
           background-size: contain;
           background-position: center;
         }
-        .large {
+        .full {
           width: getCssVar("home-post-full-img-width");
           height: getCssVar("home-post-full-img-height");
           clip-path: polygon(0 0, 100% 0, 100% 100%, 8% 100%);
+          transition: transform 0.3s linear;
+          // 鼠标悬停图片放大，且不要模糊
+          &:hover {
+            transform: scale(1.1);
+          }
         }
       }
     }

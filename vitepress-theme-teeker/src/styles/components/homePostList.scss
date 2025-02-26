@@ -22,11 +22,11 @@
     }
   }
 
-  /* 封面图为 large 风格样式 */
-  .large-cover-wrapper:nth-child(2n) {
-    .large-cover {
+  /* 封面图为 full 风格样式 */
+  .full-cover-wrapper:nth-child(2n) {
+    .full-cover {
       flex-direction: row-reverse;
-      .cover-img .large {
+      .cover-img .full {
         clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
       }
     }

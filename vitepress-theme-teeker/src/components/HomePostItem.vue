@@ -46,10 +46,10 @@ const coverImgMap = computed(() => {
         onClick: () => handleViewImg(imgSrcList),
       },
     },
-    large: {
+    full: {
       is: "img",
       props: {
-        class: "large",
+        class: "full",
         src: withBase(imgSrcList[0]),
         onClick: () => handleViewImg(imgSrcList),
       },
@@ -69,7 +69,7 @@ const isShowBaseInfo = computed(() => {
   <div :class="ns.b()">
     <i v-if="!!post.frontmatter.sticky" class="pin" :title="`置顶：${post.frontmatter.sticky}`" />
 
-    <div :class="[ns.e('info'), { 'large-cover': coverImgMode === 'large' }, 'flx']">
+    <div :class="[ns.e('info'), { 'full-cover': coverImgMode === 'full' }, 'flx']">
       <div :class="ns.e('info__left')">
         <!-- 标题 -->
         <a class="title" :href="post.url">

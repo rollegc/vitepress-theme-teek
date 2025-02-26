@@ -698,7 +698,7 @@ export interface Post {
    *
    * @default 'default'
    */
-  coverImgMode?: "default" | "large";
+  coverImgMode?: "default" | "full";
   /**
    * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
    *
