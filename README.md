@@ -45,6 +45,7 @@ pnpm demo:localesRoot dev
 - 文章页基础信息支持配置到 h1 下
 - 全局公告、导航页面开发
 - vitepress-plugin-permalink 启动后给每个 md 自动生成永久链接
+- 样式打包
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库

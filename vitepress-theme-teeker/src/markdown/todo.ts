@@ -1,3 +1,5 @@
+import MarkdownIt from "markdown-it";
+
 const todoUncheck = "[ ] ";
 const todoCheck = "[x] ";
 
@@ -11,29 +13,23 @@ const todoCheck = "[x] ";
  *
  * - 可以换成 * 或者 +
  */
-const todoPlugin = (md: any) => {
-  md.renderer.rules.list_item_open = function (
-    tokens: any[], // Token 数组
-    idx: number, // 当前 Token 的索引
-    options: any, // 渲染选项（通常由 markdown-it 内部使用）
-    _: any, // 环境变量（通常由 markdown-it 内部使用）
-    self: any // 当前渲染器实例
-  ) {
+const todoPlugin = (md: MarkdownIt) => {
+  md.renderer.rules.list_item_open = function (tokens, idx, options, _: any, self) {
     const token = tokens[idx];
     const inlineToken = tokens[idx + 2];
-    const content = inlineToken.content;
+    const content = inlineToken.children?.[0].content;
 
     // 检查是否是列表项（以 -、* 或 + 开头）
     const isListItem = token.markup === "-" || token.markup === "*" || token.markup === "+";
 
     // 检查是否是 TODO 项
-    if (isListItem && (content.startsWith(todoUncheck) || content.startsWith(todoCheck))) {
+    if (isListItem &&  (content?.startsWith(todoUncheck) || content?.startsWith(todoCheck))) {
       const isChecked = content.startsWith(todoCheck);
       const checkbox = `<input class="todo-checkbox" type="checkbox" ${isChecked ? "checked" : ""} disabled />`;
 
       const text = content.slice(4); // 移除 "[ ] " 或 "[x] "
       inlineToken.content = text;
-      inlineToken.children[0].content = text;
+      inlineToken.children![0].content = text;
 
       return `<li class="todo">${checkbox}`;
     }

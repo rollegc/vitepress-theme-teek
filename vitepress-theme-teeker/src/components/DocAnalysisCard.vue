@@ -44,7 +44,9 @@ const formatWordCount = (wordCount: number) => {
   return Math.round(wordCount / 10000) / 10 + "w";
 };
 
-const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<string> })[] = computed(() => [
+type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number | Ref<string> };
+
+const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
   {
     key: "totalPosts",
     label: "文章数目",
@@ -87,7 +89,7 @@ const docAnalysisList: (DocAnalysisInfo & { originValue?: string | number | Ref<
 ]);
 
 if (overrideInfo.length) {
-  unref(docAnalysisList).forEach((item: (typeof docAnalysisList)[0]) => {
+  unref(docAnalysisList).forEach((item: DocAnalysisResolve) => {
     const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
     if (override) {
       item.label = override.label || item.label;

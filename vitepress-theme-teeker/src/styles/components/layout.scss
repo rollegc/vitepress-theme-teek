@@ -9,7 +9,7 @@
 
     @include e(home-content__post) {
       flex: 1;
-      min-width: 435px;
+      min-width: 400px;
     }
 
     @include e(home-content__info) {
@@ -28,7 +28,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     @include e(home-content) {
       flex-wrap: wrap;
       @include e(home-content__post) {

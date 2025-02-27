@@ -10,6 +10,8 @@ import { PluginOption } from "vite";
 import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
 import todoPlugin from "../markdown/todo";
+import shareCardPlugin from "../markdown/shareCard";
+import imgCardPlugin from "../markdown/imgCard";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
   const { plugins: pluginsOption, markdownPlugins = [], ...tkThemeConfig } = config;
@@ -69,6 +71,8 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     markdown: {
       config: md => {
         md.use(todoPlugin);
+        md.use(shareCardPlugin);
+        md.use(imgCardPlugin);
         // 用户配置的 markdown 插件
         markdownPlugins.forEach(plugin => md.use(plugin));
       },

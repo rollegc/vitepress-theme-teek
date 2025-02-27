@@ -3,7 +3,7 @@ import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
 import "./styles/index.scss";
-import "./styles/md-plugin/todo.scss";
+import "./styles/md-plugin/index.scss";
 // import "./styles/external/rainbow.css";
 // import "./styles/external/container.css";
 

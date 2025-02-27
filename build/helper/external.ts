@@ -12,8 +12,10 @@ export const globals = {
   "@element-plus/icons-vue": "ElementPlusIconsVue",
   "@giscus/vue": "Giscus",
   "@waline/client": "Waline",
-  fsevents: "fsevents"
+  fsevents: "fsevents",
+  "markdown-it": "MarkdownIt",
+  "markdown-it-container": "MarkdownItContainer",
 };
 
 // 指定外部依赖，rollup 不会将这些依赖代码打包进去
-export const external = Object.keys(globals);
+export const external = [...Object.keys(globals), "@types/markdown-it", "@types/markdown-it-container"];

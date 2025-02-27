@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@vitepress-theme-teeker/docs",
+  "name": "@vitepress-theme-teeker/docs-base",
   "version": "1.0.0",
   "description": "vitepress-theme-teeker 使用文档",
   "type": "module",

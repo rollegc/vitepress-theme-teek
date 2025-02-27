@@ -115,8 +115,15 @@
           transition: transform 0.3s linear;
           // 鼠标悬停图片放大，且不要模糊
           &:hover {
-            transform: scale(1.1);
+            transform: scale(1.1, 1.1);
           }
+        }
+      }
+
+      @media (max-width: 968px) {
+        .default,
+        .full {
+          display: none;
         }
       }
     }
