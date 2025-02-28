@@ -88,7 +88,7 @@ const categoriesPageLink = computed(() => {
           v-for="(item, index) in currentCategories"
           :key="item.name"
           :href="`${categoriesPageLink}?category=${encodeURIComponent(item.name)}`"
-          :class="{ active: item.name === category }"
+          :class="[{ active: item.name === category }, 'hover-color']"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
         >
           <span>{{ item.name }}</span>

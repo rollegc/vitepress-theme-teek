@@ -1,9 +1,9 @@
 @use "../mixins/config" as *;
 @use "../mixins/function" as *;
 
-a:hover {
-  color: getCssVar("theme-color");
-  cursor: pointer;
+a.hover-color:hover {
+  color: getCssVar("theme-color") !important;
+  cursor: pointer !important;
 }
 
 .#{$namespace}-page {

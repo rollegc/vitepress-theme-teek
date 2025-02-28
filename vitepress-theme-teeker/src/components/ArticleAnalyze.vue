@@ -91,7 +91,7 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
   <div :class="`${ns.b()} flx-justify-between`">
     <el-breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <el-breadcrumb-item>
-        <a href="/" title="首页">
+        <a href="/" title="首页" class="hover-color">
           <el-icon><House /></el-icon>
         </a>
       </el-breadcrumb-item>
@@ -100,6 +100,7 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
           :is="item.filePath ? 'a' : 'span'"
           :href="item.filePath ? `/${item.filePath}` : undefined"
           :title="item.fileName"
+          :class="[item.filePath ? 'hover-color' : '']"
         >
           {{ item.fileName }}
         </component>

@@ -94,7 +94,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
           :class="ns.e('list__item')"
           :style="getLiStyle(index)"
         >
-          <a :href="item.link" target="_blank" class="flx-align-center">
+          <a :href="item.link" target="_blank" class="hover-color flx-align-center">
             <img
               :src="item.avatar"
               class="friend-avatar"

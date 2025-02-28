@@ -9,12 +9,10 @@ import { UserConfig } from "vitepress";
 import { PluginOption } from "vite";
 import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
-import todoPlugin from "../markdown/todo";
-import shareCardPlugin from "../markdown/shareCard";
-import imgCardPlugin from "../markdown/imgCard";
+import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin } from "../markdown";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
-  const { plugins: pluginsOption, markdownPlugins = [], ...tkThemeConfig } = config;
+  const { plugins: pluginsOption, markdownPlugins = [], base = "/", ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -59,6 +57,8 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
   }
 
   return {
+    base,
+    // 使用永久链接插件需要忽略死链提醒
     ignoreDeadLinks: true,
     vite: {
       plugins: plugins as any,
@@ -70,9 +70,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     },
     markdown: {
       config: md => {
-        md.use(todoPlugin);
-        md.use(shareCardPlugin);
-        md.use(imgCardPlugin);
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin, base));
         // 用户配置的 markdown 插件
         markdownPlugins.forEach(plugin => md.use(plugin));
       },

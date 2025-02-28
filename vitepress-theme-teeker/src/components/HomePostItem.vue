@@ -72,7 +72,7 @@ const isShowBaseInfo = computed(() => {
     <div :class="[ns.e('info'), { 'full-cover': coverImgMode === 'full' }, 'flx']">
       <div :class="ns.e('info__left')">
         <!-- 标题 -->
-        <a class="title" :href="post.url">
+        <a class="title hover-color" :href="post.url">
           {{ post.title }}
         </a>
 

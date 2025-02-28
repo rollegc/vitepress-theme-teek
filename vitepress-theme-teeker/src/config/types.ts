@@ -161,6 +161,11 @@ export interface TkThemeConfig {
    * markdown 插件列表，请不要在使用 vitepress.markdown.config 配置 md 插件，因为 config 是一个函数，vitepress 并没有做多个 config 合并，因此使用 vitepress.markdown.config 配置会覆盖主题内置 md 插件
    */
   markdownPlugins?: any[];
+  /**
+   * 等于 vitepress.base，当使用 shareCard、imgCard、navCard 容器时，且图片链接为本地相对链接，则需要设置
+   * 当在官方配置设置了 vitepress.base，这里也需要设置一样的值，或者只在这里设置 base，会对 vitepress.base 生效
+   */
+  base?: string;
 }
 
 export interface ThemeSetting {
