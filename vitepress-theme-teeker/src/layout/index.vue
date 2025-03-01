@@ -3,6 +3,7 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
+import { Banner, CommentConfig, TkThemeConfig } from "../config/types";
 import HomeBanner from "../components/HomeBanner.vue";
 import HomePostList from "../components/HomePostList.vue";
 import HomeInfo from "../components/HomeInfo.vue";
@@ -19,7 +20,7 @@ import CommentGiscus from "../components/CommentGiscus.vue";
 import CommentWaline from "../components/CommentWaline.vue";
 import HomeFullscreenWallpaper from "../components/HomeFullscreenWallpaper.vue";
 import CodeBlockToggle from "../components/CodeBlockToggle.vue";
-import { Banner, CommentConfig } from "../config/types";
+import Notice from "../components/Notice.vue";
 
 const { Layout } = DefaultTheme;
 
@@ -28,7 +29,14 @@ const ns = useNamespace("layout");
 const { theme, frontmatter } = useUnrefData();
 const { frontmatter: frontmatterRef } = useData();
 
-const { tkTheme = true, tkHome = true, wallpaper = {}, codeBlock = true } = theme;
+const {
+  tkTheme = true,
+  tkHome = true,
+  wallpaper = {},
+  codeBlock = true,
+  bodyBgImg = {},
+  notice = {},
+} = theme as TkThemeConfig;
 
 const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render }: CommentConfig = { ...theme.comment };
@@ -46,7 +54,8 @@ const commentComponent = {
   <template v-if="tkTheme">
     <ClientOnly>
       <RightBottomButton />
-      <BodyBgImage v-if="theme.bodyBgImg?.imgSrc" />
+      <BodyBgImage v-if="bodyBgImg?.imgSrc" />
+      <Notice v-if="notice?.enabled" />
     </ClientOnly>
 
     <Layout :class="ns.b()">
@@ -56,7 +65,7 @@ const commentComponent = {
           <!-- 自定义首页 -->
           <div v-if="tkHome">
             <HomeBanner v-if="isHomePage() && enabled" />
-            <div :class="`${ns.e('home-content')} flx-start-justify-center`">
+            <div :class="[ns.e('home-content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
               <div :class="ns.e('home-content__post')"><HomePostList /></div>
               <div :class="ns.e('home-home-content__info')"><HomeInfo /></div>
             </div>

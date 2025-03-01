@@ -115,7 +115,7 @@ changeThemeSize(themeSize);
 </script>
 
 <template>
-  <div :class="`${ns.b()} flx-column`">
+  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
     <transition name="fade">
       <div title="返回顶部" :class="ns.e('button')" v-show="showToTop" @click="scrollToTop">
         <el-icon><ArrowUp /></el-icon>

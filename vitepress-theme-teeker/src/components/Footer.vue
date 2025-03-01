@@ -50,7 +50,7 @@ const footerData = computed(() => {
 </script>
 
 <template>
-  <div v-if="footerInfo || social.length" :class="ns.b()">
+  <div v-if="footerInfo || social.length" :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
     <div v-if="social.length" :class="`${ns.e('icons')} flx-center`">
       <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
         <template v-if="item.icon">

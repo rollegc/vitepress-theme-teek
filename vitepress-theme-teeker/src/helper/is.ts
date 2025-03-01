@@ -132,6 +132,7 @@ export const isElement = (val: unknown): val is Element => {
 };
 
 export const isServer = typeof window === "undefined";
+export const inBrowser = typeof document !== "undefined";
 
 // 是否为图片节点
 export function isImageDom(o: Element) {

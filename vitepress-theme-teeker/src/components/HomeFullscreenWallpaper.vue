@@ -70,18 +70,6 @@ const handleFullscreenChange = () => {
   ];
 
   addOrRemoveClass(!!document.fullscreenElement, options);
-
-  // 下面注释的代码已在上面用 addOrRemoveClass 实现，否则在 if 里每次 add 一个元素，都需要在 else 里 remove 该元素，一旦多起来则不够阅读性较差，因此通过上面配置项实现
-  // if (document.fullscreenElement) {
-  //   htmlDom.classList.add(ns.b());
-  //   if (wallpaper.hideBanner) bannerDom?.classList.add("display-none");
-  //   else bannerDom?.classList.add("big-img");
-  // }
-  // else {
-  //   htmlDom.classList.remove(ns.b());
-  //   if (wallpaper.hideBanner) bannerDom?.classList.remove("display-none");
-  //   else bannerDom?.classList.remove("big-img");
-  // }
 };
 
 const addOrRemoveClass = (

@@ -1,7 +1,5 @@
-import { useRouter, useData } from "vitepress";
+import { useRouter, useData, inBrowser } from "vitepress";
 import { nextTick, onMounted } from "vue";
-
-const inBrowser = typeof window !== "undefined";
 
 export default function usePermalink() {
   const fakeHost = "http://a.com";

@@ -1,10 +1,10 @@
 <script setup lang="ts" name="HomePostList">
-import { onMounted, onUnmounted, reactive, ref, unref, watch } from "vue";
+import { reactive, ref, unref, watch } from "vue";
 import HomePostItem from "./HomePostItem.vue";
 import { usePosts, useUnrefData } from "../configProvider";
 import Pagination from "./Pagination.vue";
 import { useRoute } from "vitepress";
-import { useNamespace } from "../hooks";
+import { useNamespace, useWindowSize } from "../hooks";
 import { TkContentData } from "../post/types";
 import { PaginationProps } from "element-plus";
 
@@ -65,6 +65,18 @@ watch(
   { immediate: true }
 );
 
+const pagePropsRef = reactive({ ...pageProps });
+
+if (pagePropsRef.size !== "small") {
+  /**
+   *  屏幕小于 768px 时切换为 small，反之切换为设置的值
+   */
+  useWindowSize(width => {
+    if (width <= 768) pagePropsRef.size = "small";
+    else if (pagePropsRef.size !== (pageProps.size || "default")) pagePropsRef.size = pageProps.size || "default";
+  });
+}
+
 /**
  * 切换分页时，记录到 URL 上
  */
@@ -78,25 +90,6 @@ const handlePagination = () => {
   // 更新数据
   updateData();
 };
-
-const pagePropsRef = reactive({ ...pageProps });
-
-/**
- *  屏幕小于 768px 时，切换为 small
- */
-const watchResize = () => {
-  if (window.innerWidth <= 768) pagePropsRef.size = "small";
-  else if (pagePropsRef.size !== (pageProps.size || "default")) pagePropsRef.size = pageProps.size || "default";
-};
-
-onMounted(() => {
-  if (pagePropsRef.size === "small") return;
-  window.addEventListener("resize", watchResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", watchResize);
-});
 </script>
 
 <template>
