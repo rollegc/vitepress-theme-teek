@@ -7,7 +7,7 @@ import { formatDate, isFunction } from "../helper";
 import { TkContentData } from "../post/types";
 import { useNamespace } from "../hooks";
 import { useRoute } from "vitepress";
-import { Post } from "../config/types";
+import { Article, Post } from "../config/types";
 
 const ns = useNamespace("postBaseInfo");
 
@@ -28,7 +28,7 @@ const {
   showDate = true,
   showCategory = false,
   showTag = false,
-}: Post = { ...theme.post, ...frontmatter.post, ...frontmatter.tk?.post };
+}: Article = { ...theme.article, ...frontmatter.article, ...frontmatter.tk?.article };
 
 const posts = usePosts();
 const route = useRoute();

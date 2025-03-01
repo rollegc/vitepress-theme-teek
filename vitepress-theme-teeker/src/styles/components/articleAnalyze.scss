@@ -3,7 +3,6 @@
 
 @include b(articleAnalyze) {
   flex-wrap: wrap;
-  color: var(--vp-c-text-2);
   font-size: 14px;
   margin-bottom: 24px;
   gap: getCssVar("gap1");
@@ -26,12 +25,27 @@
   }
 
   @include e(wrapper) {
+    flex-wrap: wrap;
+
+    &.teleport {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
     & > div:not(:last-child) {
       margin-right: 14px;
     }
 
+    a {
+      font-weight: 400;
+      color: var(--vp-c-text-2);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
     i {
       margin-right: 3px;
+      color: var(--vp-c-text-2);
     }
   }
 }

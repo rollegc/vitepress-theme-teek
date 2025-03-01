@@ -6,7 +6,7 @@ import { TkContentData } from "../post/types";
 import { createImageViewer } from "./ImageViewer";
 import { useUnrefData } from "../configProvider";
 import PostBaseInfo from "./PostBaseInfo.vue";
-import { Post } from "../config/types";
+import { Article, Post } from "../config/types";
 
 const ns = useNamespace("postItem");
 
@@ -20,9 +20,9 @@ const {
   moreLabel = "阅读全文 >",
   coverImgMode = "default",
   showCapture = false,
-  showBaseInfo = true,
   imageViewer = {},
 }: Post = { ...theme.post, ...frontmatter.tk?.post };
+const { showInfo = true }: Article = { ...theme.article, ...frontmatter.tk?.article };
 
 const excerpt = post.frontmatter.description || post.excerpt || (showCapture && post.capture);
 
@@ -58,9 +58,9 @@ const coverImgMap = computed(() => {
 });
 
 // 是否展示作者、日期、分类、标签等信息
-const isShowBaseInfo = computed(() => {
-  const arr = [showBaseInfo].flat();
-  if (arr.includes(true) || arr.includes("home")) return true;
+const isShowInfo = computed(() => {
+  const arr = [showInfo].flat();
+  if (arr.includes(true) || arr.includes("post")) return true;
   return false;
 });
 </script>
@@ -84,7 +84,7 @@ const isShowBaseInfo = computed(() => {
 
         <!-- 文章信息 -->
         <div :class="ns.e('__info__left__footer')">
-          <PostBaseInfo v-if="isShowBaseInfo" :post scope="home" split />
+          <PostBaseInfo v-if="isShowInfo" :post scope="home" split />
         </div>
 
         <!-- 摘要 bottom -->

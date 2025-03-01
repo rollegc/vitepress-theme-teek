@@ -98,7 +98,7 @@ export interface TkThemeConfig {
    */
   bodyBgImg?: BodyBgImg;
   /**
-   * 首页 Banner 配置，里面的属性全部支持在 frontmatter 配置 tk.banner.[key]
+   * 首页 Banner 配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.banner.[key]
    */
   banner?: Banner;
   /**
@@ -106,29 +106,33 @@ export interface TkThemeConfig {
    */
   blogger?: Blogger;
   /**
-   * 精选文章卡片配置，里面的属性全部支持在 frontmatter 配置 tk.topArticle.[key]
+   * 精选文章卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.topArticle.[key]
    */
   topArticle?: TopArticle;
   /**
-   * 分类卡片配置，里面的属性全部支持在 frontmatter 配置 tk.category.[key]
+   * 分类卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.category.[key]
    */
   category?: Category;
   /**
-   * 标签卡片配置，里面的属性全部支持在 frontmatter 配置 tk.tag.[key]
+   * 标签卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.tag.[key]
    */
   tag?: Tag;
   /**
-   * 友情链接卡片配置，里面的属性全部支持在 frontmatter 配置 tk.friendLink.[key]
+   * 友情链接卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.friendLink.[key]
    */
   friendLink?: FriendLink;
   /**
-   * 站点信息卡片配置，里面的属性全部支持在 frontmatter 配置 tk.docAnalysis.[key]
+   * 站点信息卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.docAnalysis.[key]
    */
   docAnalysis?: DocAnalysis;
   /**
-   * 文章列表配置，支持在 frontmatter 配置，如果是首页 index.md，则是 tk.post.[key]，如果是非首页 index.md，则是 post.[key]
+   * 文章列表配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.post.[key]
    */
   post?: Post;
+  /**
+   * 文章信息配置，支持在 frontmatter 配置，如果在首页（index.md），格式为 tk.article.[key]，如果在文章页（非 index.md），格式为 article.[key]
+   */
+  article?: Article;
   /**
    * 面包屑配置，里面的属性全部支持在 frontmatter 配置 breadcrumb.[key]
    */
@@ -713,7 +717,14 @@ export interface Post {
    */
   showCapture?: boolean;
   /**
-   * 作者、日期、分类、标签、字数、阅读时长、浏览量等基本信息的图标是否显示
+   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   */
+  imageViewer?: Partial<ImageViewerProps>;
+}
+
+export interface Article {
+  /**
+   * 作者、日期、分类、标签、字数、阅读时长、浏览量等文章信息的图标是否显示
    *
    * @default true
    */
@@ -725,12 +736,12 @@ export interface Post {
    */
   dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: string) => string);
   /**
-   * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等基本信息，分别作用于首页和文章页
-   * 如果 showBaseInfo 为数组，则控制在哪里显示，如 ["home"] 只在首页显示基本信息；如果为 boolean 值，则控制基本信息是否展示，如 false 则在首页和文章页都不显示基本信息
+   * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等文章信息，分别作用于首页和文章页
+   * 如果 showInfo 为数组，则控制在哪里显示，如 ["post"] 只在首页的 Post 列表显示基本信息；如果为 boolean 值，则控制基本信息是否展示，如 false 则在首页和文章页都不显示基本信息
    *
    * @default true
    */
-  showBaseInfo?: boolean | ("home" | "article")[];
+  showInfo?: boolean | ("post" | "article")[];
   /**
    * 文章页是否展示作者
    *
@@ -756,9 +767,26 @@ export interface Post {
    */
   showTag?: boolean;
   /**
-   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   * 指定文章信息的传送位置，仅限在文章页生效，默认在文章页顶部
    */
-  imageViewer?: Partial<ImageViewerProps>;
+  teleport?: {
+    /**
+     * 指定需要传送的元素选择器
+     */
+    selector?: string;
+    /**
+     * 指定传送到元素的位置，before 在元素前，after 在元素后
+     *
+     * @default 'after'
+     */
+    position?: "before" | "after";
+    /**
+     * 指定一个 class 名，如果传送的位置和其他元素太接近，可以利用 class 来修改 margin
+     *
+     * @default teleport
+     */
+    className?: string;
+  };
 }
 
 export interface Breadcrumb {

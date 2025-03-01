@@ -2,12 +2,12 @@
 import { useRoute, useData } from "vitepress";
 import { useNamespace, useBuSunZi } from "../hooks";
 import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
-import { computed, unref } from "vue";
+import { computed, nextTick, onMounted, ref, unref } from "vue";
 import { House, Reading, Clock, View } from "@element-plus/icons-vue";
 import { useUnrefData } from "../configProvider";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
 import PostBaseInfo from "./PostBaseInfo.vue";
-import { Breadcrumb, DocAnalysis, Post } from "../config/types";
+import { Article, Breadcrumb, DocAnalysis } from "../config/types";
 import { TkContentData } from "../post/types";
 
 const ns = useNamespace("articleAnalyze");
@@ -74,17 +74,38 @@ const pageViewInfo = computed(() => {
   return pageViewInfo;
 });
 
-const { showBaseInfo = true }: Post = { ...theme.post, ...frontmatter.post };
+// 文章信息配置项
+const { showInfo = true, teleport = {} }: Article = { ...theme.article, ...frontmatter.article };
 
 // 是否展示作者、日期、分类、标签等信息
-const isShowBaseInfo = computed(() => {
-  const arr = [showBaseInfo].flat();
+const isShowInfo = computed(() => {
+  const arr = [showInfo].flat();
   if (arr.includes(true) || arr.includes("article")) return true;
   return false;
 });
 
 // 通过不蒜子获取页面访问量
 const { pagePv, isGet } = useBuSunZi(pageIteration);
+
+const baseInfoRef = ref<HTMLDivElement>();
+const teleportInfo = () => {
+  const { selector, position = "after", className = "teleport" } = teleport;
+  // 没有指定选择器，则不进行传送
+  if (!selector) return;
+
+  const docDomContainer = window.document.querySelector("#VPContent");
+  let h1Dom = docDomContainer?.querySelector(selector);
+
+  // 传送前先尝试删除传送位置的自己，避免重新传送渲染
+  h1Dom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach(v => v.remove());
+
+  unref(baseInfoRef).classList.add(className);
+  h1Dom?.[position]?.(unref(baseInfoRef));
+};
+
+onMounted(() => {
+  nextTick(() => teleportInfo());
+});
 </script>
 
 <template>
@@ -107,22 +128,22 @@ const { pagePv, isGet } = useBuSunZi(pageIteration);
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <div v-if="isShowBaseInfo" :class="`${ns.e('wrapper')} flx-center`">
+    <div v-if="isShowInfo" ref="baseInfoRef" :class="`${ns.e('wrapper')} flx-align-center`">
       <PostBaseInfo :post scope="article" />
 
       <div v-if="wordCount" class="flx-center">
         <el-icon><Reading /></el-icon>
-        <a title="文章字数">{{ pageViewInfo.wordCount }}</a>
+        <a title="文章字数" class="hover-color">{{ pageViewInfo.wordCount }}</a>
       </div>
 
       <div v-if="readingTime" class="flx-center">
         <el-icon><Clock /></el-icon>
-        <a title="预计阅读时长">{{ pageViewInfo.readingTime }}</a>
+        <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
       </div>
 
       <div v-if="pageView" class="flx-center">
         <el-icon><View /></el-icon>
-        <a title="浏览量">{{ isGet ? pagePv : "Get..." }}</a>
+        <a title="浏览量" class="hover-color">{{ isGet ? pagePv : "Get..." }}</a>
       </div>
     </div>
   </div>
