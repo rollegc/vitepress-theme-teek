@@ -18,22 +18,19 @@ const navCardPlugin = (md: MarkdownIt, base = "") => {
   md.use(container, navCardName, {});
 
   // 注册成功后，就会监听到 container_xx_open，其中 xx 为注册的容器名
-  md.renderer.rules[`container_${navCardName}_open`] = (tokens, idx, options, _: any, self) => {
-    const token = tokens[idx];
-    // 如果不是 ${navCardName} 开头，则返回原内容
-    if (!token.info.trim().startsWith(navCardName)) return self.renderToken(tokens, idx, options);
-
+  md.renderer.rules[`container_${navCardName}_open`] = (tokens, idx) => {
+    const containerToken = tokens[idx];
     let html = `<div class="${rootClass}-container">`;
 
     for (let i = idx; i < tokens.length; i++) {
-      const contentToken = tokens[i];
+      const token = tokens[i];
 
-      // 循环到 ${navCardName} 的结束标签，则跳出
-      if (contentToken.type === `container_${navCardName}_close`) break;
-      if (!["yaml", "yml"].includes(contentToken.info)) continue;
+      // 如果来到 ${navCardName} 的结束标签，则跳出循环
+      if (token.type === `container_${navCardName}_close`) break;
+      if (!["yaml", "yml"].includes(token.info)) continue;
 
       // 解析 yaml 内容
-      const yamlContent = yaml.load(contentToken.content.trim()) as NavCard | NavCardItem[];
+      const yamlContent = yaml.load(token.content.trim()) as NavCard | NavCardItem[];
 
       let data: NavCardItem[] = [];
       let config: NavCardConfig = {};
@@ -44,16 +41,16 @@ const navCardPlugin = (md: MarkdownIt, base = "") => {
       }
 
       // 获取容器名后面的卡片数量
-      const cardNum = token.info.trim().slice(navCardName.length).trim();
+      const cardNum = containerToken.info.trim().slice(navCardName.length).trim();
       config.cardNum = config.cardNum || Number(cardNum || 3) || 3;
 
       html += getNavCardHtml({ config, data }, base);
 
       // 删除 yaml 代码块
       if (config.showCode !== true) {
-        contentToken.type = "";
-        contentToken.tag = "";
-        contentToken.hidden = true;
+        token.type = "";
+        token.tag = "";
+        token.hidden = true;
       }
     }
 

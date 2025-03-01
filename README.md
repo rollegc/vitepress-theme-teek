@@ -43,7 +43,7 @@ pnpm demo:localesRoot dev
 
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
 - 文章页基础信息支持配置到 h1 下
-- 全局公告、todo 插件不同位置渲染验证
+- 全局公告
 - vitepress-plugin-permalink 启动后给每个 md 自动生成永久链接
 - 样式打包
 - 主题使用文档编写
