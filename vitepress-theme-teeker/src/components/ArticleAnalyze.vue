@@ -88,19 +88,20 @@ const isShowInfo = computed(() => {
 const { pagePv, isGet } = useBuSunZi(pageIteration);
 
 const baseInfoRef = ref<HTMLDivElement>();
+
 const teleportInfo = () => {
   const { selector, position = "after", className = "teleport" } = teleport;
   // 没有指定选择器，则不进行传送
-  if (!selector) return;
+  if (!selector || !unref(baseInfoRef)) return;
 
   const docDomContainer = window.document.querySelector("#VPContent");
-  let h1Dom = docDomContainer?.querySelector(selector);
+  let targetDom = docDomContainer?.querySelector(selector);
 
-  // 传送前先尝试删除传送位置的自己，避免重新传送渲染
-  h1Dom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach(v => v.remove());
+  // 传送前先尝试删除传送位置的自己，避免传送重新渲染
+  targetDom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach(v => v.remove());
 
   unref(baseInfoRef).classList.add(className);
-  h1Dom?.[position]?.(unref(baseInfoRef));
+  targetDom?.[position]?.(unref(baseInfoRef));
 };
 
 onMounted(() => {
