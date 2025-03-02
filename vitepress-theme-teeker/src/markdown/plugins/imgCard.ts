@@ -3,6 +3,7 @@ import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
 import { ImgCard, ImgCardConfig, ImgCardItem } from "../types";
+import { SiteConfig } from "vitepress";
 
 const imgCardName = "imgCard";
 const rootClass = "img-card";
@@ -13,7 +14,10 @@ const rootClass = "img-card";
  * @param md MarkdownIt 实例
  * @param base 根路径
  */
-const imgCardPlugin = (md: MarkdownIt, base = "") => {
+const imgCardPlugin = (md: MarkdownIt) => {
+  const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
+  const { base = "/" } = siteConfig.userConfig;
+
   // 注册容器
   md.use(container, imgCardName, {});
 

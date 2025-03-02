@@ -3,6 +3,7 @@ import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
 import { NavCard, NavCardConfig, NavCardItem } from "../types";
+import { SiteConfig } from "vitepress";
 
 const navCardName = "navCard";
 const rootClass = "nav-card";
@@ -11,9 +12,11 @@ const rootClass = "nav-card";
  * 生成导航卡片容器
  *
  * @param md MarkdownIt 实例
- * @param base 根路径
  */
-const navCardPlugin = (md: MarkdownIt, base = "") => {
+const navCardPlugin = (md: MarkdownIt) => {
+  const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
+  const { base = "/" } = siteConfig.userConfig;
+
   // 注册容器
   md.use(container, navCardName, {});
 

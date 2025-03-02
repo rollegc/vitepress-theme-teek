@@ -14,7 +14,7 @@ import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlu
 import { createCategory, createPermalink } from "./addFrontmatter";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
-  const { plugins: pluginsOption, markdownPlugins = [], base = "/", ...tkThemeConfig } = config;
+  const { plugins: pluginsOption, markdownPlugins = [], ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -99,7 +99,6 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
   }
 
   return {
-    base,
     // 使用永久链接插件需要忽略死链提醒
     ignoreDeadLinks: true,
     vite: {
@@ -112,9 +111,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     },
     markdown: {
       config: md => {
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin].forEach(plugin =>
-          md.use(plugin, base)
-        );
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin].forEach(plugin => md.use(plugin));
         // 用户配置的 markdown 插件
         markdownPlugins.forEach(plugin => md.use(plugin));
       },

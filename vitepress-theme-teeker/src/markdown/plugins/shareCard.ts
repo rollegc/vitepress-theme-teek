@@ -3,6 +3,7 @@ import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
 import container from "markdown-it-container";
 import { ShareCard, ShareCardConfig, ShareCardItem } from "../types";
+import { SiteConfig } from "vitepress";
 
 const shareCardName = "shareCard";
 const rootClass = "share-card";
@@ -11,9 +12,11 @@ const rootClass = "share-card";
  * 生成分享卡片容器
  *
  * @param md MarkdownIt 实例
- * @param base 根路径
  */
-const shareCardPlugin = (md: MarkdownIt, base = "") => {
+const shareCardPlugin = (md: MarkdownIt) => {
+  const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
+  const { base = "/" } = siteConfig.userConfig;
+
   // 注册容器
   md.use(container, shareCardName, {});
 
