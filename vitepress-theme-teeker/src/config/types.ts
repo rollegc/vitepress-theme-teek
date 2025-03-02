@@ -2,6 +2,7 @@ import type { PermalinkOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
+import { AutoFrontmatterOption } from "plugins/vitepress-plugin-auto-frontmatter";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
 import type { Ref, VNode } from "vue";
 import { Route } from "vitepress";
@@ -1176,4 +1177,19 @@ export interface Plugins {
    * @default []
    */
   fileContentLoaderIgnore?: string[];
+  /**
+   * 是否启用 autoFrontmatter 插件
+   *
+   * @default false
+   */
+  autoFrontmatter?: boolean;
+  /**
+   * autoFrontmatter 插件配置项，并拓展出其他配置项
+   *
+   * permalinkPrefix 为自动生成 permalink 的固定前缀，如 pages、pages/demo。当禁用 permalink 插件后，不会自动生成 permalink
+   * categories 为是否自动生成 categories
+   *
+   * @default '{ permalinkPrefix: "pages", categories: true }'
+   */
+  autoFrontmatterOption?: AutoFrontmatterOption & { permalinkPrefix?: string; categories?: boolean };
 }

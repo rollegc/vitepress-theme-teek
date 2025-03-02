@@ -51,14 +51,12 @@ export interface FileContentLoaderOptions<T = FileContentLoaderData, R = FileCon
    * @remark 在返回转换后的数据时，建议不要返回 src 和 html，尤其是 html，容易数据过大导致容易内存溢出。src 和 html 分别是设置 includeSrc 和 render 为 true 时放入 data 中
    */
   transformData?: (data: FileContentLoaderData) => T | Promise<T>;
-
   /**
    * 转换处理好的所有数据，并返回转换后的数据
    *
    * @remark 在返回转换后的数据时，建议不要返回 src 和 html，尤其是 html，容易数据过大导致容易内存溢出。src 和 html 分别是设置 includeSrc 和 render 为 true 时放入 data 中
    */
   transformRaw?: (raw: (FileContentLoaderData | Awaited<T>)[]) => R | Promise<R>;
-
   /**
    * tinyglobby 的配置项
    * 插件默认已经忽略 node_modules 和 dist 目录的所有文件

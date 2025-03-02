@@ -41,10 +41,11 @@
     "@types/js-yaml": "^4.0.9",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
+    "vitepress-plugin-auto-frontmatter": "workspace:*",
     "vitepress-plugin-catalogue": "latest",
     "vitepress-plugin-doc-analysis": "latest",
     "vitepress-plugin-file-content-loader": "latest",
-    "vitepress-plugin-md-h1": "workspace:*",
+    "vitepress-plugin-md-h1": "latest",
     "vitepress-plugin-permalink": "latest",
     "vitepress-plugin-sidebar-resolve": "latest"
   },

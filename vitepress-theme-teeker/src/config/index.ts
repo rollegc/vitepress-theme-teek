@@ -5,11 +5,13 @@ import MdH1 from "vitepress-plugin-md-h1";
 import Catalogue from "vitepress-plugin-catalogue";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
+import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
 import { UserConfig } from "vitepress";
 import { PluginOption } from "vite";
 import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
 import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin } from "../markdown";
+import { createCategory, createPermalink } from "./addFrontmatter";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
   const { plugins: pluginsOption, markdownPlugins = [], base = "/", ...tkThemeConfig } = config;
@@ -23,36 +25,76 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     docAnalysis = true,
     docAnalysisOption = {},
     fileContentLoaderIgnore = [],
+    autoFrontmatter = false,
+    autoFrontmatterOption = {},
   } = pluginsOption || {};
-
-  const fileContentLoaderOptions: FileContentLoaderOptions<TkContentData, Post> = {
-    pattern: ["**/*.md"],
-    // 指定摘录格式
-    excerpt: "<!-- more -->",
-    includeSrc: true,
-    transformData,
-    transformRaw,
-    themeConfigKey: "posts",
-    globOptions: {
-      ignore: ["**/components/**", "**/.vitepress/**", "**/public/**", ...fileContentLoaderIgnore],
-    },
-  };
 
   const plugins: PluginOption[] = [];
 
+  const ignoreDir = {
+    autoFrontmatter: ["**/@pages/**"],
+    sidebar: ["@pages", "@fragment"],
+    docAnalysis: ["@pages", /目录页/],
+  };
+
+  if (autoFrontmatter) {
+    const {
+      pattern,
+      globOptions = {},
+      transform,
+      permalinkPrefix = "pages",
+      categories = true,
+    } = autoFrontmatterOption;
+
+    if (!pattern) autoFrontmatterOption.pattern = "**/*.md";
+
+    autoFrontmatterOption.globOptions = {
+      ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
+    };
+
+    autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
+      let transformResult = transform?.(frontmatter, fileInfo) || {};
+
+      if (permalink && !frontmatter.permalink) {
+        transformResult = { ...transformResult, ...createPermalink(permalinkPrefix) };
+      }
+      if (categories && !frontmatter.categories) {
+        transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
+      }
+
+      return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
+    };
+
+    plugins.push(AutoFrontmatter(autoFrontmatterOption));
+  }
+
   if (sidebar) {
-    sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", "@fragment"];
+    sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.sidebar];
     plugins.push(Sidebar(sidebarOption));
   }
   if (permalink) plugins.push(Permalink(permalinkOption));
   if (mdH1) plugins.push(MdH1());
   if (docAnalysis) {
-    docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), "@pages", /目录页/];
+    docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.docAnalysis];
     plugins.push(DocAnalysis(docAnalysisOption));
   }
 
   if (config.tkTheme !== false) {
     plugins.push(Catalogue(catalogueOption));
+
+    const fileContentLoaderOptions: FileContentLoaderOptions<TkContentData, Post> = {
+      pattern: ["**/*.md"],
+      // 指定摘录格式
+      excerpt: "<!-- more -->",
+      includeSrc: true,
+      transformData,
+      transformRaw,
+      themeConfigKey: "posts",
+      globOptions: {
+        ignore: ["**/components/**", "**/.vitepress/**", "**/public/**", ...fileContentLoaderIgnore],
+      },
+    };
+
     plugins.push(FileContentLoader<TkContentData, Post>(fileContentLoaderOptions));
   }
 

@@ -118,6 +118,9 @@ const tkConfig = tkThemeConfig({
       // site: "",
     },
   },
+  plugins: {
+    autoFrontmatter: true,
+  },
 });
 
 // https://vitepress.dev/reference/site-config

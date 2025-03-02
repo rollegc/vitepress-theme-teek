@@ -42,12 +42,9 @@ pnpm demo:localesRoot dev
 ## TODO
 
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- vitepress-plugin-permalink 启动后给每个 md 自动生成永久链接
 - 样式打包
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
-
-## vite 插件化
-
-- 目录页组件放到 vitepress-plugin-catalogue 里自动引入
+- 面包屑抽离成组件
+- md 插件通过全局回去 vitepress.config

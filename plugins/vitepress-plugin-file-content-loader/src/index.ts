@@ -17,12 +17,12 @@ export const log = (message: string, type = "yellow") => {
 export const DEFAULT_IGNORE_DIR = ["**/node_modules/**", "**/dist/**"];
 
 export default function VitePluginVitePressFileContentLoader<T = FileContentLoaderData, R = FileContentLoaderData[]>(
-  options: FileContentLoaderOptions<T, R>
+  option: FileContentLoaderOptions<T, R>
 ): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-file-content-loader",
     async config(config: any) {
-      let { pattern } = options;
+      let { pattern } = option;
       if (!pattern) return;
 
       const {
@@ -33,7 +33,7 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
         transformRaw,
         globOptions,
         themeConfigKey = "contentLoader",
-      } = options;
+      } = option;
 
       const {
         site: { themeConfig = {}, base },
