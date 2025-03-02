@@ -1,6 +1,6 @@
 import { normalizePath, Plugin } from "vite";
 import { AutoFrontmatterOption } from "./types";
-import { basename, extname, join, relative, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 import { glob } from "tinyglobby";
 import matter from "gray-matter";
 import { readFileSync, statSync, writeFileSync } from "node:fs";
@@ -29,14 +29,12 @@ export default function VitePluginVitePressAutoFrontmatter(
       // 基于文档源目录 srcDir 匹配
       pattern = pattern.map(p => normalizePath(join(srcDir, p)));
 
-      const filePaths = (
-        await glob(pattern, {
-          expandDirectories: false,
-          ...globOptions,
-          absolute: true,
-          ignore: ["**/node_modules/**", "**/dist/**", ...(globOptions?.ignore || [])],
-        })
-      ).sort();
+      const filePaths = await glob(pattern, {
+        expandDirectories: false,
+        ...globOptions,
+        absolute: true,
+        ignore: ["**/node_modules/**", "**/dist/**", ...(globOptions?.ignore || [])],
+      });
 
       writeFrontmatterToFile(filePaths, option, srcDir);
     },
@@ -48,7 +46,7 @@ export default function VitePluginVitePressAutoFrontmatter(
  *
  * @param filePaths 文件路径列表
  * @param option 插件配置项
- * @param srcDir vp 配置项的 srcDir
+ * @param srcDir vitepress 配置项的 srcDir
  */
 const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOption, srcDir: string) => {
   const { include, exclude, transform } = option;
@@ -56,7 +54,6 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
   for (const filePath of filePaths) {
     if (!filePath.endsWith(".md")) continue;
 
-    const filename = basename(filePath, extname(filePath));
     const fileContent = readFileSync(filePath, "utf-8");
     const { data: frontmatter, content } = matter(fileContent);
 
@@ -69,7 +66,7 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     let hasChange = false;
 
     const addInfo: Record<string, any> = {
-      title: filename,
+      title: getMdFileTitle(basename(filePath)),
       date: statSync(filePath).birthtime,
     };
 
@@ -108,7 +105,7 @@ export const checkExcludeAndInclude = (
   frontmatter: Record<string, any>,
   { exclude, include }: AutoFrontmatterOption
 ) => {
-  // 存在 include 但是不存在 frontmatter，则代表改文件不符合 include 要求
+  // 存在 include 但是不存在 frontmatter，则代表该文件不符合 include 要求
   if (include && !Object.keys(frontmatter).length) return false;
 
   if (exclude || include) {
@@ -124,9 +121,30 @@ export const checkExcludeAndInclude = (
 };
 
 /**
+ * 获取实际的文件名
+ *
+ * @param filename 文件名
+ */
+export const getMdFileTitle = (filename: string) => {
+  let title = "";
+  // 如果文件名带序号，如【1.xx.md】，则取 xx
+  const fileNameArr = filename.split(".");
+
+  if (fileNameArr.length === 2) title = fileNameArr[0];
+  else {
+    // 处理多个 . 如 01.guile.md 的情况
+    const firstDotIndex = filename.indexOf(".");
+    const lastDotIndex = filename.lastIndexOf(".");
+    title = filename.substring(firstDotIndex + 1, lastDotIndex);
+  }
+
+  return title;
+};
+
+/**
  * 获取文件信息
  *
- * @param srcDir vp 配置项的 srcDir
+ * @param srcDir vitepress 配置项的 srcDir
  * @param filePath  文件路径
  */
 export const getFileInfo = (srcDir: string, filePath: string) => {
