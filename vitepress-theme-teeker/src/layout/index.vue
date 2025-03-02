@@ -4,23 +4,25 @@ import { useData } from "vitepress";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import { Banner, CommentConfig, TkThemeConfig } from "../config/types";
-import HomeBanner from "../components/HomeBanner.vue";
-import HomePostList from "../components/HomePostList.vue";
-import HomeInfo from "../components/HomeInfo.vue";
-import ArchivesPage from "../components/ArchivesPage.vue";
-import CataloguePage from "../components/CataloguePage.vue";
-import ArticleAnalyze from "../components/ArticleAnalyze.vue";
-import ArticleImagePreview from "../components/ArticleImagePreview.vue";
-import BodyBgImage from "../components/BodyBgImage.vue";
-import Footer from "../components/Footer.vue";
-import RightBottomButton from "../components/RightBottomButton.vue";
-import CommentTwikoo from "../components/CommentTwikoo.vue";
-import CommentArtalk from "../components/CommentArtalk.vue";
-import CommentGiscus from "../components/CommentGiscus.vue";
-import CommentWaline from "../components/CommentWaline.vue";
-import HomeFullscreenWallpaper from "../components/HomeFullscreenWallpaper.vue";
-import CodeBlockToggle from "../components/CodeBlockToggle.vue";
-import Notice from "../components/Notice.vue";
+import {
+  HomeBanner,
+  HomePostList,
+  HomeInfo,
+  ArchivesPage,
+  CataloguePage,
+  ArticleAnalyze,
+  ArticleImagePreview,
+  BodyBgImage,
+  Footer,
+  RightBottomButton,
+  CommentTwikoo,
+  CommentArtalk,
+  CommentGiscus,
+  CommentWaline,
+  HomeFullscreenWallpaper,
+  CodeBlockToggle,
+  Notice,
+} from "../components";
 
 const { Layout } = DefaultTheme;
 

@@ -47,4 +47,3 @@ pnpm demo:localesRoot dev
 - 部署测试、线上效果测试
 - 发布 NPM 库
 - 面包屑抽离成组件
-- md 插件通过全局回去 vitepress.config
