@@ -41,14 +41,14 @@ const style = computed(() => {
 // 公告标题
 const noticeTitle = computed(() => {
   if (isString(title)) return title;
-  return title(localeIndex);
+  return title(unref(localeIndex));
 });
 
 // 是否在移动端隐藏公告功能
 if (mobileMinify) {
   useWindowSize(width => {
-    if (width < 768) showNoticeIcon.value = false;
-    else if (showNoticeIcon.value !== true) showNoticeIcon.value = true;
+    if (width < 768) destroyNoticeIcon.value = false;
+    else if (destroyNoticeIcon.value !== true) destroyNoticeIcon.value = true;
   });
 }
 

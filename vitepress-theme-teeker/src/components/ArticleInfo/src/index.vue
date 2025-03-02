@@ -8,14 +8,9 @@ import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
 import { useRoute } from "vitepress";
 import { Article } from "../../../config/types";
+import { PostBaseInfoProps } from "./articleInfo";
 
 const ns = useNamespace("articleInfo");
-
-export interface PostBaseInfoProps {
-  post: TkContentData;
-  scope: "home" | "article";
-  split?: boolean;
-}
 
 // 首页会传入 post，文章页不传
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();

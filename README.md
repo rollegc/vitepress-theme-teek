@@ -46,4 +46,3 @@ pnpm demo:localesRoot dev
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
-- 面包屑抽离成组件

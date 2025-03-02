@@ -7,7 +7,9 @@
 
 @use "./components/archivesPage";
 @use "./components/articleAnalyze";
+@use "./components/articleInfo";
 @use "./components/bodyBgImage";
+@use "./components/breadcrumb";
 @use "./components/catalogueItem";
 @use "./components/cataloguePage";
 @use "./components/codeBlockToggle";
@@ -32,6 +34,5 @@
 @use "./components/layout";
 @use "./components/notice";
 @use "./components/pagination";
-@use "./components/articleInfo";
 @use "./components/rightBottomButton";
 @use "./components/topArticleCard";

@@ -2,19 +2,9 @@
 import { useNamespace } from "../../../hooks";
 import { ElIcon } from "element-plus";
 import { isString } from "../../../helper";
+import { IconProps } from "./icon";
 
 const ns = useNamespace("icon");
-
-interface IconProps {
-  icon: string;
-  iconType?: "svg" | "iconfont" | "img" | "el";
-  size?: string | number;
-  color?: string;
-  hover?: boolean;
-  hoverColor?: string;
-  imgAlt?: string;
-  style?: Record<string, string>;
-}
 
 const {
   color = "var(--vp-c-text-1)",

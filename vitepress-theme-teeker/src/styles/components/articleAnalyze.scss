@@ -7,23 +7,6 @@
   margin-bottom: 24px;
   gap: getCssVar("gap1");
 
-  .el-breadcrumb__separator {
-    font-weight: 400;
-    margin: 0 4px;
-  }
-
-  .el-breadcrumb__item {
-    .el-breadcrumb__inner a {
-      font-weight: 400;
-      color: var(--el-text-color-regular);
-
-      &:hover {
-        color: getCssVar("theme-color");
-        cursor: pointer;
-      }
-    }
-  }
-
   @include e(wrapper) {
     flex-wrap: wrap;
 

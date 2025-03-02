@@ -3,18 +3,9 @@ import { unref, onMounted, ref } from "vue";
 import { useNamespace } from "../../../hooks";
 import { ElIcon } from "element-plus";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
+import { HomeCardProps } from "./homeCard";
 
 const ns = useNamespace("homeCard");
-
-export interface HomeCardProps {
-  title?: string;
-  titleLink?: string;
-  page?: boolean;
-  pageSize?: number;
-  total?: number;
-  autoPage?: boolean;
-  pageSpeed?: number;
-}
 
 const {
   title = "",

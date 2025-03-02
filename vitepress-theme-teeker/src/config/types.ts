@@ -146,6 +146,9 @@ export interface TkThemeConfig {
    * 页脚配置
    */
   footerInfo?: FooterInfo;
+  /**
+   * 公告配置
+   */
   notice?: Notice;
   /**
    * 评论配置
@@ -876,6 +879,12 @@ export interface FooterInfo {
 
 export interface Notice {
   /**
+   * 是否启用公告功能
+   *
+   * @default false
+   */
+  enabled?: boolean;
+  /**
    * 公告自定义全局样式
    *
    * @example
@@ -897,7 +906,7 @@ export interface Notice {
   /**
    * 公告标题，函数式需要和多语言搭配使用，根据不同语言环境返回不同标题
    */
-  title: string | ((localeIndex: string) => string);
+  title?: string | ((localeIndex: string) => string);
   /**
    * 第一次进入页面，是否默认打开公告弹框
    *

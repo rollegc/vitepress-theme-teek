@@ -38,7 +38,7 @@ const {
   codeBlock = true,
   bodyBgImg = {},
   notice = {},
-} = theme as TkThemeConfig;
+}: TkThemeConfig = theme;
 
 const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render }: CommentConfig = { ...theme.comment };
