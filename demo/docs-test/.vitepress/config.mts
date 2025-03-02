@@ -120,6 +120,9 @@ const tkConfig = tkThemeConfig({
   },
   plugins: {
     autoFrontmatter: true,
+    autoFrontmatterOption: {
+      include: { a: true },
+    },
   },
 });
 

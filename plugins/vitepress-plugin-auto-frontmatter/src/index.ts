@@ -62,11 +62,8 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
 
     if (frontmatter.layout === "home") continue;
 
-    for (const [key, value] of Object.entries(frontmatter)) {
-      if (exclude && exclude[key] === value) continue;
-      // 如果设置了 include，则只匹配 include
-      if (include && include[key] !== value) continue;
-    }
+    const isPass = checkExcludeAndInclude(frontmatter, { exclude, include });
+    if (!isPass) continue;
 
     let tempFrontmatter = { ...frontmatter };
     let hasChange = false;
@@ -105,6 +102,25 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
 
     log(`'${filePath}' has been successfully written to frontmatter. (成功写入 frontmatter)`, "green");
   }
+};
+
+export const checkExcludeAndInclude = (
+  frontmatter: Record<string, any>,
+  { exclude, include }: AutoFrontmatterOption
+) => {
+  // 存在 include 但是不存在 frontmatter，则代表改文件不符合 include 要求
+  if (include && !Object.keys(frontmatter).length) return false;
+
+  if (exclude || include) {
+    for (const [key, value] of Object.entries(frontmatter)) {
+      // 如果设置了 exclude，则不匹配 exclude
+      if (exclude?.[key] === value) return false;
+      // 如果设置了 include，则只匹配 include
+      if (include?.[key] !== value) return false;
+    }
+  }
+
+  return true;
 };
 
 /**
