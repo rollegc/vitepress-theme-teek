@@ -1,6 +1,5 @@
 <script setup lang="ts" name="CodeBlockToggle">
 import { nextTick, onMounted } from "vue";
-import arrowSvg from "../assets/svg/arrow";
 import { useRouter } from "vitepress";
 import { useNamespace } from "../hooks";
 
@@ -16,31 +15,37 @@ const initCodeBlock = () => {
   const modes = document.querySelectorAll(".vp-doc div[class*='language-']") as unknown as HTMLElement[];
 
   Array.from(modes).forEach(item => {
-    // 如果当前代码块已经初始化了，则不需要继续执行代码
-    if (item.querySelector(`.${arrowClass}`)) return;
+    // 获取箭头元素，箭头元素已经在 src/markdown/plugins/codeArrow.ts 中通过 MD 插件添加
+    const arrowElement: HTMLElement | null = item.querySelector(`.${arrowClass}`);
+    if (!arrowElement) return;
+    addClickEvent(arrowElement, item);
 
-    const arrowElement = createArrowElement(item);
-
-    item.append(arrowElement);
+    // 下面代码是第一版功能：手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面
+    // if (arrowElement) return;
+    // const arrowElement: HTMLElement | null = document.createElement("div");
+    // arrowElement.classList.add(arrowClass);
+    // // 添加箭头图标
+    // arrowElement.innerHTML = arrowSvg;
+    // // 给箭头图标添加点击事件
+    // addClickEvent(arrowElement, item);
+    // item.append(arrowElement);
   });
 };
 
 /**
- * 创建箭头元素，添加点击事件（折叠/展开）
+ * 给箭头图标添加点击事件（折叠/展开）
+ *
+ * @param arrowDom 箭头元素
+ * @param codeDom 代码块元素
  */
-const createArrowElement = (item: HTMLElement) => {
+const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
   // 获取代码块原来的高度
-  const modeHeight = getElementHeight(item);
+  const modeHeight = getElementHeight(codeDom);
   // 初始化代码块高度，确保第一次折叠时就有动画
-  item.style.height = `${modeHeight}px`;
+  codeDom.style.height = `${modeHeight}px`;
   // 获取代码块的元素
-  const preDom: HTMLElement | null = item.querySelector("pre");
-  const lineNumbersWrapperDom: HTMLElement | null = item.querySelector(".line-numbers-wrapper");
-
-  const div = document.createElement("div");
-  div.classList.add(arrowClass);
-  // 箭头图标
-  div.innerHTML = arrowSvg;
+  const preDom: HTMLElement | null = codeDom.querySelector("pre");
+  const lineNumbersWrapperDom: HTMLElement | null = codeDom.querySelector(".line-numbers-wrapper");
 
   const codeBlockState = {
     expand: { height: `${modeHeight}px`, display: "block", speed: 80 },
@@ -50,12 +55,12 @@ const createArrowElement = (item: HTMLElement) => {
   let timeoutId: NodeJS.Timeout | null = null;
 
   // 箭头点击事件
-  div.onclick = () => {
-    const isFold = div.classList.contains(foldClass);
+  const clickEvent = () => {
+    const isFold = arrowDom.classList.contains(foldClass);
     // 如果是折叠状态，则需要展开
     const state = codeBlockState[isFold ? "expand" : "fold"];
 
-    item.style.height = state.height;
+    codeDom.style.height = state.height;
 
     if (timeoutId) clearTimeout(timeoutId);
 
@@ -67,10 +72,10 @@ const createArrowElement = (item: HTMLElement) => {
       }, state.speed);
     }
 
-    div.classList.toggle(foldClass);
+    arrowDom.classList.toggle(foldClass);
   };
 
-  return div;
+  arrowDom.addEventListener("click", clickEvent);
 };
 
 /**

@@ -9,7 +9,7 @@ import { UserConfig } from "vitepress";
 import { PluginOption } from "vite";
 import { transformData, transformRaw } from "../post";
 import { Post, TkContentData } from "../post/types";
-import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin } from "../markdown";
+import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin } from "../markdown";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
   const { plugins: pluginsOption, markdownPlugins = [], base = "/", ...tkThemeConfig } = config;
@@ -70,7 +70,9 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     },
     markdown: {
       config: md => {
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin, base));
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin].forEach(plugin =>
+          md.use(plugin, base)
+        );
         // 用户配置的 markdown 插件
         markdownPlugins.forEach(plugin => md.use(plugin));
       },
