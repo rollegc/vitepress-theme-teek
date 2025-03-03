@@ -83,7 +83,7 @@ const isShowInfo = computed(() => {
         </div>
 
         <!-- 文章信息 -->
-        <div :class="ns.e('__info__left__footer')">
+        <div :class="ns.e('info__left__footer')">
           <PostBaseInfo v-if="isShowInfo" :post scope="home" split />
         </div>
 
