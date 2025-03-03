@@ -31,12 +31,14 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
 
   const plugins: PluginOption[] = [];
 
+  // 定义各插件扫描时忽略的目录
   const ignoreDir = {
     autoFrontmatter: ["**/@pages/**"],
     sidebar: ["@pages", "@fragment"],
     docAnalysis: ["@pages", /目录页/],
   };
 
+  // 自动生成 frontmatter 插件
   if (autoFrontmatter) {
     const {
       pattern,
@@ -46,6 +48,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
       categories = true,
     } = autoFrontmatterOption;
 
+    // 默认扫描全部 MD 文件
     if (!pattern) autoFrontmatterOption.pattern = "**/*.md";
 
     autoFrontmatterOption.globOptions = {
@@ -53,6 +56,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
       ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
     };
 
+    // 自定义 frontmatter 内容，添加永久链接和分类
     autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
       let transformResult = transform?.(frontmatter, fileInfo) || {};
 
@@ -69,18 +73,24 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     plugins.push(AutoFrontmatter(autoFrontmatterOption));
   }
 
+  // 自动添加侧边栏插件
   if (sidebar) {
     sidebarOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.sidebar];
     plugins.push(Sidebar(sidebarOption));
   }
+  // 自动生成永久链接插件
   if (permalink) plugins.push(Permalink(permalinkOption));
+  // 自动给 MD 添加一级标题插件
   if (mdH1) plugins.push(MdH1());
+  // 文档内容分析插件
   if (docAnalysis) {
     docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.docAnalysis];
     plugins.push(DocAnalysis(docAnalysisOption));
   }
 
+  // 主题强内置插件
   if (config.tkTheme !== false) {
+    // 目录页插件
     plugins.push(Catalogue(catalogueOption));
 
     const fileContentLoaderOptions: FileContentLoaderOptions<TkContentData, Post> = {
@@ -96,6 +106,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
       },
     };
 
+    // Post 数据处理插件
     plugins.push(FileContentLoader<TkContentData, Post>(fileContentLoaderOptions));
   }
 

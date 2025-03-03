@@ -79,7 +79,7 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     }
 
     const transformResult = transform?.(tempFrontmatter, getFileInfo(srcDir, filePath));
-    // 如果 frontmatter 没有修改过，且 transform 不存在，则代表下面不需要修改文件
+    // 如果 frontmatter 没有修改过，且 transform 不存在或者返回 undefined，则不需要修改文件
     if (!hasChange && !transformResult) continue;
 
     const finalFrontmatter = transformResult || tempFrontmatter;
@@ -94,7 +94,7 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
       ? matter.stringify("", finalFrontmatter).replace(/'/g, "")
       : "";
 
-    // 将修改后的内容写入文件，EOL 为换行
+    // 将修改后的内容写入文件
     writeFileSync(filePath, `${frontmatterStr}${content}`);
 
     log(`'${filePath}' has been successfully written to frontmatter. (成功写入 frontmatter)`, "green");
