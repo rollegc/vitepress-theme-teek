@@ -1,9 +1,4 @@
-@use "./common/vp";
-@use "./common/tk";
-@use "./common/transition";
-@use "./var/index";
-@use "./var/theme";
-@use "./var/size";
+@use "./base";
 
 @use "./components/archivesPage";
 @use "./components/articleAnalyze";
@@ -36,3 +31,8 @@
 @use "./components/pagination";
 @use "./components/rightBottomButton";
 @use "./components/topArticleCard";
+
+@use "./md-plugin/todo";
+@use "./md-plugin/shareCard";
+@use "./md-plugin/imgCard";
+@use "./md-plugin/navCard";

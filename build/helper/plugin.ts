@@ -4,7 +4,7 @@ import postcss from "rollup-plugin-postcss";
 import json from "@rollup/plugin-json";
 import autoprefixer from "autoprefixer";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import { target } from "../helper";
+import { PKG_NAME, target } from "../helper";
 import vuePlugin from "@vitejs/plugin-vue";
 import url from "@rollup/plugin-url";
 import cssnano from "cssnano";
@@ -12,6 +12,7 @@ import type { Plugin } from "rollup";
 
 // rollup 插件。rollup 本身只支持原生 JavaScript 文件打包，如果项目包含 vue、json 等非原生 JavaScript 文件，则利用插件来支持打包
 export const plugins = [
+  VitepressThemeTeekerAlias(),
   // vitepressThemeTeekerClearConsole(),
   vuePlugin({ isProduction: true }),
   json(),
@@ -36,6 +37,47 @@ export const plugins = [
     },
   }),
 ];
+
+/**
+ * 将组件目录下的 style/*.ts 里的 ../../../styles 替换为实际的 vitepress-theme-teeker 组件样式路径
+ */
+export function VitepressThemeTeekerAlias(): Plugin {
+  const themeChalk = "theme-chalk";
+  const sourceThemeChalk = `@${PKG_NAME}/${themeChalk}`;
+  const bundleThemeChalk = `${PKG_NAME}/${themeChalk}`;
+
+  return {
+    name: "vitepress-theme-teeker-alias-plugin",
+    resolveId(id) {
+      if (!id.startsWith(sourceThemeChalk)) return;
+      return {
+        id: id.replaceAll(sourceThemeChalk, bundleThemeChalk),
+        external: "absolute",
+      };
+    },
+  };
+}
+
+/**
+ * 将组件目录下的 style/*.ts 里的 @element-plus 替换为实际的 element-plus 组件样式路径
+ */
+export function VitepressThemeTeekerElementPlusAlias(format: "esm" | "cjs"): Plugin {
+  const sourceName = `@element-plus`;
+  const module = format === "esm" ? "es" : "lib";
+  const ext = format === "esm" ? ".mjs" : ".js";
+  const bundleStyle = `element-plus/${module}/components`;
+
+  return {
+    name: "vitepress-theme-teeker-element-plus-alias-plugin",
+    resolveId(id) {
+      if (!id.startsWith(sourceName)) return;
+      return {
+        id: id.replaceAll(sourceName, bundleStyle) + ext,
+        external: "absolute",
+      };
+    },
+  };
+}
 
 /**
  * 清除 console.log

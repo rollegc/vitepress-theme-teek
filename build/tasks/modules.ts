@@ -12,7 +12,9 @@ import {
   excludes,
   webTsConfig,
   tsOutput,
+  VitepressThemeTeekerElementPlusAlias,
 } from "../helper";
+import { cssResolver } from "../helper/util";
 
 const buildModules = async () => {
   const input = await glob("**/*.{js,ts,vue}", {
@@ -26,18 +28,25 @@ const buildModules = async () => {
    * 根据 format 生成对应的 bundle
    */
   const getBundles = async (format: "esm" | "cjs") => {
-    const plugins = [...commonPlugins];
+    const plugins = [VitepressThemeTeekerElementPlusAlias(format), ...commonPlugins];
+
     if (format === "esm") {
+      // 添加构建 Typescript 类型插件
       plugins.push(
         dts({
           entryRoot: tkRoot,
           tsconfigPath: webTsConfig,
           outDir: tsOutput,
+          staticImport: true,
           exclude: [resolve(tkRoot, "src/assets")],
+          resolvers: [cssResolver],
           beforeWriteFile: (filePath: string, content: string) => {
             let tempPath = filePath;
             // 打包默认生成的路径带有 src，因此去掉
             if (filePath.includes("dist/types/src")) tempPath = filePath.replace("dist/types/src", "dist/types");
+
+            // 在 cssResolver 里对 content 使用了 JSON.stringify，因此这里需要转换为 JSON
+            if (filePath.includes("style/index") || filePath.includes("style/css")) content = JSON.parse(content);
 
             return { filePath: tempPath, content };
           },
@@ -50,6 +59,13 @@ const buildModules = async () => {
       plugins,
       external,
       treeshake: true,
+      onwarn: (warning, defaultHandler) => {
+        // 过滤掉 "Generated an empty chunk" 的警告
+        if (warning.code === "EMPTY_BUNDLE") return;
+
+        // 打印其他警告
+        defaultHandler(warning);
+      },
     });
   };
 

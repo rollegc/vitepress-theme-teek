@@ -1,5 +1,6 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
+@use "../common/transition-card";
 
 @include b(homeCard) {
   margin: 0 auto 10px;

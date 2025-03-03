@@ -29,4 +29,5 @@ export const docPackage = resolve(docRoot, "package.json");
 /** /tsconfig.web.json */
 export const webTsConfig = resolve(projectRoot, "tsconfig.web.json");
 
+/** /dist/vitepress-theme-teeker/theme-chalk */
 export const tcOutput = resolve(tkOutput, "theme-chalk");

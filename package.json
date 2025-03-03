@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "pnpm run clean && pnpm run -C build start",
+    "build": "pnpm run clean && pnpm run -C build build",
     "clean": "rimraf dist",
     "docs:dev": "pnpm run -C docs dev",
     "docs:build": "pnpm run -C docs build",
@@ -22,7 +22,7 @@
     "demo:localesRoot": "pnpm run -C demo/docs-locales-root",
     "stub": "pnpm to:theme stub && pnpm to:build stub && pnpm to:sidebar stub && pnpm to:fileContentLoader stub && pnpm to:permalink stub && pnpm to:mdH1 stub && pnpm to:catalogue stub && pnpm to:docAnalysis stub && pnpm to:autoFrontmatter stub",
     "to:theme": "pnpm run -C vitepress-theme-teeker",
-    "to:build": "pnpm run -C build",
+    "to:build": "pnpm run clean && pnpm run -C build",
     "to:sidebar": "pnpm run -C plugins/vitepress-plugin-sidebar-resolve",
     "to:fileContentLoader": "pnpm run -C plugins/vitepress-plugin-file-content-loader",
     "to:permalink": "pnpm run -C plugins/vitepress-plugin-permalink",

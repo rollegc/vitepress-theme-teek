@@ -74,6 +74,7 @@
     "artalk",
     "giscus",
     "teeker",
-    "frontmatter"
+    "frontmatter",
+    "onwarn"
   ]
 }

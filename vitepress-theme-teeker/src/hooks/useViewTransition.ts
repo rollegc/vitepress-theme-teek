@@ -1,6 +1,5 @@
 import { useData } from "vitepress";
 import { nextTick, provide, unref } from "vue";
-import "../styles/dark-transition.css";
 
 export const useViewTransition = () => {
   const { isDark, theme } = useData();

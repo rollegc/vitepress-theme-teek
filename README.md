@@ -42,7 +42,7 @@ pnpm demo:localesRoot dev
 ## TODO
 
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- 样式打包
+- 添加全局 alert 组件
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库

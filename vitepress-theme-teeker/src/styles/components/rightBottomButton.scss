@@ -1,5 +1,8 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
+@use "../var/size";
+@use "../var/theme";
+@use "../common/transition-fade";
 
 @include b(rightBottomButton) {
   position: fixed;

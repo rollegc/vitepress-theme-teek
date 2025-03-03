@@ -11,12 +11,14 @@
   },
   "keywords": [
     "vitepress",
-    "vite",
-    "plugin",
-    "permalink"
+    "theme",
+    "markdown",
+    "vue",
+    "ui",
+    "blog"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/tree/master/plugins/vitepress-plugin-catalogue",
+  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/tree/master",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kele-Bingtang/vitepress-theme-teeker.git"

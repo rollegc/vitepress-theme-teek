@@ -3,12 +3,14 @@
   "name": "@vitepress-theme-teeker/build",
   "version": "1.0.0",
   "description": "Build Toolchain for vitepress-theme-teeker",
-  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "start": "node .",
+    "build": "pnpm build:theme && pnpm build:main",
+    "build:main": "node .",
+    "build:theme": "tsx ./theme-chalk.ts",
+    "build:theme:dev": "cross-env THEME_CHALK_DEV=true tsx watch ./theme-chalk.ts ",
     "stub": "unbuild --stub"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.83.1",
+    "tsx": "^4.19.3",
     "unbuild": "^3.2.0",
     "vite-plugin-dts": "^4.5.0"
   }
