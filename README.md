@@ -9,7 +9,7 @@
 项目拉取
 
 ```bash
-git clone https://github.com/Kele-Bingtang/vitepress-theme-kt.git
+git clone https://github.com/Kele-Bingtang/vitepress-theme-teeker.git
 ```
 
 依赖安装（只能用 pnpm 安装依赖）
