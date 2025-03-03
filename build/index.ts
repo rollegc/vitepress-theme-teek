@@ -2,7 +2,7 @@ import tasks from "./tasks";
 import { copyFile, readFile, writeFile } from "fs/promises";
 import { copy } from "fs-extra";
 import { resolve } from "path";
-import { tkPackage, tkOutput, projRoot, buildOutput } from "./helper";
+import { tkPackage, tkOutput, projectRoot, buildOutput } from "./helper";
 import picocolors from "picocolors";
 
 /**
@@ -24,7 +24,7 @@ const copyTypesDefinitions = async () => {
 const copyFiles = () =>
   Promise.all([
     copyFile(tkPackage, resolve(tkOutput, "package.json")),
-    copyFile(resolve(projRoot, "README.md"), resolve(tkOutput, "README.md")),
+    copyFile(resolve(projectRoot, "README.md"), resolve(tkOutput, "README.md")),
   ]);
 
 /**
@@ -33,7 +33,7 @@ const copyFiles = () =>
 const updateVersion = async () => {
   const tkOutputPkg = resolve(tkOutput, "package.json");
   const tkOutputPkgContent = await readFile(tkOutputPkg, "utf-8");
-  const tkPackageContent = await readFile(resolve(projRoot, "package.json"), "utf-8");
+  const tkPackageContent = await readFile(resolve(projectRoot, "package.json"), "utf-8");
   const tkOutputPkgInfo = JSON.parse(tkOutputPkgContent);
   const tkPackageInfo = JSON.parse(tkPackageContent);
   tkOutputPkgInfo.version = tkPackageInfo.version;

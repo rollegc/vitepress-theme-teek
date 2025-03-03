@@ -76,9 +76,3 @@ watch(isDark, () => {
     <div id="artalk" ref="artalkRef" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.artalk-container {
-  --at-color-main: var(--vp-c-brand-2);
-}
-</style>

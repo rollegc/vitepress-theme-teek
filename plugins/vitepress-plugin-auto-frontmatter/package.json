@@ -12,7 +12,8 @@
     "vitepress",
     "vite",
     "plugin",
-    "contentLoad"
+    "auto-frontmatter",
+    "frontmatter"
   ],
   "license": "MIT",
   "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/tree/master/plugins/vitepress-plugin-auto-frontmatter",

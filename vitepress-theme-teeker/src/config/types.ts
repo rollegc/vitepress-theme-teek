@@ -160,9 +160,9 @@ export interface TkThemeConfig {
     | CommentConfig<"artalk">
     | CommentConfig<"render">;
   /**
-   * 内置插件配置
+   * 内置 Vite 插件配置
    */
-  plugins?: Plugins;
+  vitePlugins?: Plugins;
   /**
    * 首页 Post 的分页配置，完全是 ElPagination 的 props
    */

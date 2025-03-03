@@ -14,7 +14,7 @@ import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlu
 import { createCategory, createPermalink } from "./addFrontmatter";
 
 export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
-  const { plugins: pluginsOption, markdownPlugins = [], ...tkThemeConfig } = config;
+  const { vitePlugins, markdownPlugins = [], ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -27,7 +27,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     fileContentLoaderIgnore = [],
     autoFrontmatter = false,
     autoFrontmatterOption = {},
-  } = pluginsOption || {};
+  } = vitePlugins || {};
 
   const plugins: PluginOption[] = [];
 
@@ -49,6 +49,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     if (!pattern) autoFrontmatterOption.pattern = "**/*.md";
 
     autoFrontmatterOption.globOptions = {
+      ...autoFrontmatterOption.globOptions,
       ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
     };
 
