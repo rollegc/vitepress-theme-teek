@@ -79,7 +79,7 @@ path 是基于 [srcDir](https://vitepress.dev/zh/reference/site-config#srcdir) �
       "title": "vue",
       "children": [
         { "title": "getting", "link": "/guide/vue/getting" },
-        { "title": "getting", "link": "/guide/vue/routing" }
+        { "title": "routing", "link": "/guide/vue/routing" }
       ]
     },
     {
@@ -95,7 +95,7 @@ path 是基于 [srcDir](https://vitepress.dev/zh/reference/site-config#srcdir) �
           "title": "vue",
           "children": [
             { "title": "getting", "link": "/guide/vue/getting" },
-            { "title": "getting", "link": "/guide/vue/routing" }
+            { "title": "routing", "link": "/guide/vue/routing" }
           ]
         },
         {
@@ -113,7 +113,7 @@ path 是基于 [srcDir](https://vitepress.dev/zh/reference/site-config#srcdir) �
           "title": "vue",
           "children": [
             { "title": "getting", "link": "/guide/vue/getting" },
-            { "title": "getting", "link": "/guide/vue/routing" }
+            { "title": "routing", "link": "/guide/vue/routing" }
           ]
         },
         {
@@ -187,7 +187,7 @@ export interface Catalogue {
     [key: string]: { path: string; catalogues: CatalogueItem[] };
   };
   /**
-   * key 为path：扫描的目录页路径文，value 为 { path：件相对路径, catalogues：目录页数据 }
+   * key 为 path：扫描的目录页路径文，value 为 { path：件相对路径, catalogues：目录页数据 }
    */
   inv: {
     [key: string]: { filePath: string; catalogues: CatalogueItem[] };

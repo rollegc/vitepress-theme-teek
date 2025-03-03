@@ -6,15 +6,15 @@ export interface AutoFrontmatterOption {
    */
   pattern?: string | string[];
   /**
-   * include 指定的对象如果在 markdown frontmatter 存在，则生成额外 frontmatter
+   * include 指定的对象如果不在 markdown frontmatter 存在，则忽略该文件
    */
   include?: Record<string, any>;
   /**
-   * exclude 指定的对象如果在 markdown frontmatter 存在，则不生成额外 frontmatter，相同文件优先级高于 include
+   * exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高
    */
   exclude?: Record<string, any>;
   /**
-   * 转换处理好的 frontmatter
+   * 转换处理好的 frontmatter，该函数需要返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
    */
   transform?: (frontmatter: Record<string, any>, fileInfo: FileInfo) => Record<string, any> | void;
   /**
@@ -25,6 +25,12 @@ export interface AutoFrontmatterOption {
 }
 
 export interface FileInfo {
+  /**
+   * 文件绝对路径
+   */
   filePath: string;
+  /**
+   * 文件相对路径
+   */
   relativePath: string;
 }
