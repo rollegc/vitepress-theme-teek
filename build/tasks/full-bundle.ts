@@ -61,8 +61,8 @@ const buildAll = async (minify?: boolean) => {
   ]);
 
   const msg = minify
-    ? "Successfully build compressed full-bundle For umd and esm"
-    : "Successfully build full-bundle For umd and esm";
+    ? "Successfully build compressed full-bundle for umd and esm"
+    : "Successfully build full-bundle for umd and esm";
 
   console.log(picocolors.green(msg));
 };
