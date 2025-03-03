@@ -326,8 +326,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       vitepress-plugin-auto-frontmatter:
-        specifier: workspace:*
-        version: link:../plugins/vitepress-plugin-auto-frontmatter
+        specifier: latest
+        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
       vitepress-plugin-catalogue:
         specifier: latest
         version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
@@ -4657,6 +4657,11 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  vitepress-plugin-auto-frontmatter@1.0.1:
+    resolution: {integrity: sha512-ccmo4d3XSmHVzJWVBDNcmlUbn85PvBOv+8LoOZuVmEWdapX39DtsfQW4PHayF0bR4tuY1MPscNtM0c1CAGrWMA==}
+    peerDependencies:
+      vite: ^6.0.7
 
   vitepress-plugin-catalogue@1.0.1:
     resolution: {integrity: sha512-aXICgwhYYWObUkFSW7NEnBqvubxpuUOJcy91Y/Bo6Ime/Do7GdjBuqh2/zM/kopH7dbYkSKJOymwHYPMQ8UYSg==}
@@ -9228,6 +9233,13 @@ snapshots:
       jiti: 2.4.2
       sass: 1.83.1
       tsx: 4.19.3
+
+  vitepress-plugin-auto-frontmatter@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      tinyglobby: 0.2.10
+      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)
 
   vitepress-plugin-catalogue@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)):
     dependencies:

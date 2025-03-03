@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "vitepress-theme-teeker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "vitepress-theme-teeker",
   "type": "module",
   "author": {
@@ -43,7 +43,7 @@
     "@types/js-yaml": "^4.0.9",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
-    "vitepress-plugin-auto-frontmatter": "workspace:*",
+    "vitepress-plugin-auto-frontmatter": "latest",
     "vitepress-plugin-catalogue": "latest",
     "vitepress-plugin-doc-analysis": "latest",
     "vitepress-plugin-file-content-loader": "latest",
