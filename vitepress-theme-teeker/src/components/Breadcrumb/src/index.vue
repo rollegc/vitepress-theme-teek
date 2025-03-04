@@ -1,19 +1,21 @@
-<script setup lang="ts" name="Breadcrumb">
+<script setup lang="ts" name="ArticleBreadcrumb">
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { ElBreadcrumb, ElBreadcrumbItem, ElIcon } from "element-plus";
+import Breadcrumb from "./Breadcrumb.vue";
+import BreadcrumbItem from "./BreadcrumbItem.vue";
+import Icon from "../../Icon";
 import { computed, unref } from "vue";
 import { House } from "@element-plus/icons-vue";
 import { useUnrefData } from "../../../configProvider";
-import { Breadcrumb } from "../../../config/types";
+import { Breadcrumb as BreadcrumbType } from "../../../config/types";
 
-const ns = useNamespace("breadcrumb");
+const ns = useNamespace("articleBreadcrumb");
 
 const { theme, frontmatter } = useUnrefData();
 const { localeIndex, page } = useData();
 
 // 面包屑配置项
-const breadcrumb: Breadcrumb = {
+const breadcrumb: BreadcrumbType = {
   enabled: true,
   showCurrentName: false,
   separator: "/",
@@ -44,13 +46,13 @@ const breadcrumbList = computed(() => {
 
 <template>
   <div :class="`${ns.b()}`">
-    <el-breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
-      <el-breadcrumb-item>
+    <Breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
+      <BreadcrumbItem>
         <a href="/" title="首页" class="hover-color">
-          <el-icon><House /></el-icon>
+          <Icon><House /></Icon>
         </a>
-      </el-breadcrumb-item>
-      <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
+      </BreadcrumbItem>
+      <BreadcrumbItem v-for="(item, index) in breadcrumbList" :key="index">
         <component
           :is="item.filePath ? 'a' : 'span'"
           :href="item.filePath ? `/${item.filePath}` : undefined"
@@ -59,7 +61,7 @@ const breadcrumbList = computed(() => {
         >
           {{ item.fileName }}
         </component>
-      </el-breadcrumb-item>
-    </el-breadcrumb>
+      </BreadcrumbItem>
+    </Breadcrumb>
   </div>
 </template>

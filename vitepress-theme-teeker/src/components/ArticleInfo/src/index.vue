@@ -1,5 +1,4 @@
 <script setup lang="ts" name="ArticleInfo">
-import { ElIcon } from "element-plus";
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { computed, unref } from "vue";
@@ -9,6 +8,7 @@ import { useNamespace } from "../../../hooks";
 import { useRoute } from "vitepress";
 import { Article } from "../../../config/types";
 import { PostBaseInfoProps } from "./articleInfo";
+import Icon from "../../Icon";
 
 const ns = useNamespace("articleInfo");
 
@@ -83,7 +83,7 @@ const baseInfo = [
   <div :class="[ns.b(), 'flx-align-center', scope]">
     <template v-for="item in baseInfo" :key="item.title">
       <div v-if="item.show && (item.data || item.dataList?.length)" :class="['flx-center', `${scope}-item`, { split }]">
-        <el-icon v-if="showIcon"><component :is="item.icon" /></el-icon>
+        <Icon v-if="showIcon"><component :is="item.icon" /></Icon>
         <a
           v-if="item.data"
           :title="item.title"

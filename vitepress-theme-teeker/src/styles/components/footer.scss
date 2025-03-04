@@ -30,15 +30,6 @@
         text-decoration-color: getCssVar("theme-color");
         text-decoration-style: dashed;
       }
-      i svg,
-      img {
-        fill: var(--vp-c-text-2);
-        width: 16px;
-        height: 16px;
-      }
-      .iconfont {
-        font-size: 16px;
-      }
     }
   }
 

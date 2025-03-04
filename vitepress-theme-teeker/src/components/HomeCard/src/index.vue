@@ -1,9 +1,9 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref } from "vue";
 import { useNamespace } from "../../../hooks";
-import { ElIcon } from "element-plus";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { HomeCardProps } from "./homeCard";
+import Icon from "../../Icon";
 
 const ns = useNamespace("homeCard");
 
@@ -84,13 +84,13 @@ onMounted(() => {
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? 'pointer' : 'disabled']" @click="pagination(-1, 'prev')">
-              <el-icon><ArrowLeft /></el-icon>
+              <Icon><ArrowLeft /></Icon>
             </span>
           </slot>
 
           <slot name="page-right" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? 'pointer' : 'disabled']" @click="pagination(1, 'next')">
-              <el-icon><ArrowRight /></el-icon>
+              <Icon><ArrowRight /></Icon>
             </span>
           </slot>
         </div>

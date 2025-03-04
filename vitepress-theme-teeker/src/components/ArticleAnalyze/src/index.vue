@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import { useRoute, useData } from "vitepress";
 import { useNamespace, useBuSunZi } from "../../../hooks";
-import { ElIcon } from "element-plus";
 import { computed, nextTick, onMounted, ref, unref } from "vue";
 import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { useUnrefData } from "../../../configProvider";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
 import Breadcrumb from "../../Breadcrumb";
 import ArticleInfo from "../../ArticleInfo";
+import Icon from "../../Icon";
 import { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
 
@@ -90,17 +90,17 @@ onMounted(() => {
       <ArticleInfo :post scope="article" />
 
       <div v-if="wordCount" class="flx-center">
-        <el-icon><Reading /></el-icon>
+        <Icon><Reading /></Icon>
         <a title="文章字数" class="hover-color">{{ pageViewInfo.wordCount }}</a>
       </div>
 
       <div v-if="readingTime" class="flx-center">
-        <el-icon><Clock /></el-icon>
+        <Icon><Clock /></Icon>
         <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
       </div>
 
       <div v-if="pageView" class="flx-center">
-        <el-icon><View /></el-icon>
+        <Icon><View /></Icon>
         <a title="浏览量" class="hover-color">{{ isGet ? pagePv : "Get..." }}</a>
       </div>
     </div>

@@ -1,20 +1,49 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
+@use "../mixins/config" as *;
 
 @include b(breadcrumb) {
-  .el-breadcrumb__separator {
-    font-weight: 400;
-    margin: 0 4px;
+  font-size: 14px;
+  line-height: 1;
+
+  @include e(separator) {
+    margin: 0 7px;
+    color: var(---vp-c-border);
   }
 
-  .el-breadcrumb__item {
-    .el-breadcrumb__inner a {
-      font-weight: 400;
-      color: var(--el-text-color-regular);
+  @include e(item) {
+    float: left;
+    display: inline-flex;
+    align-items: center;
 
-      &:hover {
-        color: getCssVar("theme-color");
-        cursor: pointer;
+    @include e(inner) {
+      color: var(--vp-c-text-1);
+
+      & a {
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+        &:hover {
+          color: getCssVar("theme-color");
+          cursor: pointer;
+        }
+      }
+    }
+
+    &:last-child {
+      .#{$namespace}-breadcrumb__inner,
+      .#{$namespace}-breadcrumb__inner a {
+        &,
+        &:hover {
+          font-weight: normal;
+          color: var(--vp-c-text-1);
+          cursor: text;
+        }
+      }
+
+      .#{$namespace}-breadcrumb__separator {
+        display: none;
       }
     }
   }

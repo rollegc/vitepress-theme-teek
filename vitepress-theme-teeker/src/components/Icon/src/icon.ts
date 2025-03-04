@@ -1,6 +1,6 @@
 export interface IconProps {
   icon: string;
-  iconType?: "svg" | "iconfont" | "img" | "el";
+  iconType?: "svg" | "iconfont" | "img" | "component";
   size?: string | number;
   color?: string;
   hover?: boolean;

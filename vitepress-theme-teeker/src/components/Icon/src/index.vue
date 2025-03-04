@@ -1,8 +1,8 @@
 <script setup lang="ts" name="Icon">
 import { useNamespace } from "../../../hooks";
-import { ElIcon } from "element-plus";
 import { isString } from "../../../helper";
 import { IconProps } from "./icon";
+import { useSlots } from "vue";
 
 const ns = useNamespace("icon");
 
@@ -10,8 +10,11 @@ const {
   color = "var(--vp-c-text-1)",
   hover = false,
   hoverColor = "var(--vp-c-brand-1)",
+  iconType = "svg",
   ...props
 } = defineProps<IconProps>();
+
+const slot = useSlots();
 
 const getStyle = () => {
   return {
@@ -24,7 +27,10 @@ const getStyle = () => {
 </script>
 
 <template>
-  <i v-if="!iconType || iconType === 'svg'" v-html="icon" :class="[ns.b(), { hover: hover }]" :style="getStyle()" />
+  <i v-if="slot.default" :class="ns.b()" :style="getStyle()">
+    <slot />
+  </i>
+  <i v-else-if="iconType === 'svg'" v-html="icon" :class="[ns.b(), { hover: hover }]" :style="getStyle()" />
   <i v-else-if="iconType === 'iconfont'" :class="[ns.b(), 'iconfont', icon, { hover: hover }]" :style="getStyle()" />
   <img
     v-else-if="iconType === 'img'"
@@ -33,8 +39,7 @@ const getStyle = () => {
     :class="[ns.b(), { hover: hover }]"
     :style="getStyle()"
   />
-  <el-icon v-else-if="iconType === 'el'" :style="getStyle()">
+  <i v-else-if="iconType === 'component'" :class="ns.b()" :style="getStyle()">
     <component :is="icon" :size :class="[ns.b(), { hover: hover }]" />
-  </el-icon>
-  <slot v-else />
+  </i>
 </template>

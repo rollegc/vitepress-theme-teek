@@ -36,8 +36,8 @@ export const useNamespace = (block: string, namespaceOverrides?: string) => {
     return createBem(finalNamespace, block, blockSuffix, element, modifier);
   };
 
-  const is = (name: string) => {
-    return `is-${name}`;
+  const is = (name: string, bool = true) => {
+    return bool ? `is-${name}` : "";
   };
 
   /**

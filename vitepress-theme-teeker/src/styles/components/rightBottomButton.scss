@@ -1,5 +1,6 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
+@use "../mixins/config" as *;
 @use "../var/size";
 @use "../var/theme";
 @use "../common/transition-fade";
@@ -24,7 +25,7 @@
     &:hover {
       background: getCssVar("theme-color");
       box-shadow: 0 1px 8px getCssVar("shadow-color-hover");
-      .el-icon {
+      .#{$namespace}-icon {
         color: #ffffff;
       }
     }

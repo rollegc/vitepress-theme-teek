@@ -831,7 +831,7 @@ export interface Social {
    * 1、iconType 为 svg 时，需要填写 svg 代码
    * 2、iconType 为 iconfont 时，需要填写 class 名
    * 3、iconType 为 img 时，需要填写图片链接
-   * 4、iconType 为 el 时，需要传入 ElIcon 的组件
+   * 4、iconType 为 component 时，需要传入 SVG 组件
    */
   icon?: string;
   /**
@@ -839,7 +839,7 @@ export interface Social {
    *
    * @default 'svg'
    */
-  iconType?: "svg" | "iconfont" | "img" | "el";
+  iconType?: "svg" | "iconfont" | "img" | "component";
   /**
    * 链接，点击后跳转到新窗口，如果不设置，则无法点击
    */

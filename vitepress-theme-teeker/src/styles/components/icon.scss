@@ -11,9 +11,25 @@ img.#{$prefix-class} {
 }
 
 @include b(icon) {
+  height: 1em;
+  width: 1em;
+  line-height: 1em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  fill: currentColor;
+  color: var(--icon-color);
+  font-size: var(--icon-size, inherit);
+
+  svg {
+    height: 1em;
+    width: 1em;
+  }
+
   &.iconfont {
     color: var(--icon-color);
-    font-size: var(--icon-size);
+    font-size: var(--icon-size, 1em);
   }
 
   &.hover:hover {

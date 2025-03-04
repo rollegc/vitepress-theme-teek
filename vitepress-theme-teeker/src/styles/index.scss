@@ -3,8 +3,10 @@
 @use "./components/archivesPage";
 @use "./components/articleAnalyze";
 @use "./components/articleInfo";
+@use "./components/articleBreadcrumb";
 @use "./components/bodyBgImage";
 @use "./components/breadcrumb";
+@use "./components/breadcrumbItem";
 @use "./components/catalogueItem";
 @use "./components/cataloguePage";
 @use "./components/codeBlockToggle";

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="RightBottomButton">
 import { useNamespace, useDebounce } from "../../../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
-import { ElIcon } from "element-plus";
+import Icon from "../../Icon";
 import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useUnrefData } from "../../../configProvider";
 import { scrollTo } from "../../../helper";
@@ -118,13 +118,13 @@ changeThemeSize(themeSize);
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
     <transition name="fade">
       <div title="返回顶部" :class="ns.e('button')" v-show="showToTop" @click="scrollToTop">
-        <el-icon><ArrowUp /></el-icon>
+        <Icon><ArrowUp /></Icon>
       </div>
     </transition>
 
     <transition name="fade">
       <div v-if="provider && showToComment" title="前往评论" :class="ns.e('button')" @click="scrollToComment">
-        <el-icon><ChatDotSquare /></el-icon>
+        <Icon><ChatDotSquare /></Icon>
       </div>
     </transition>
 
@@ -136,7 +136,7 @@ changeThemeSize(themeSize);
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
-      <i class="el-icon" v-html="sizeSvg"></i>
+      <i :class="ns.joinNamespace('icon')" v-html="sizeSvg"></i>
       <transition name="mode">
         <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
@@ -160,7 +160,7 @@ changeThemeSize(themeSize);
       @mouseleave="showThemeModeItem = false"
       @click="showThemeModeItem = true"
     >
-      <el-icon><MagicStick /></el-icon>
+      <Icon><MagicStick /></Icon>
       <transition name="mode">
         <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
           <ul v-for="item in themeModeList" :key="item.label">
