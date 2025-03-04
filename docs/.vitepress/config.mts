@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
 import tkThemeConfig from "vitepress-theme-teeker/config";
 
-const description = ["Hd Security 使用文档", "认证框架"].toString();
+const description = ["vitepress-theme-teeker 使用文档", "vitepress 主题框架"].toString();
 
 const tkConfig = tkThemeConfig({
   author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
@@ -22,33 +22,11 @@ const tkConfig = tkThemeConfig({
     pageIteration: 2500,
   },
   banner: {
-    bgStyle: "bigImg",
-    imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+    bgStyle: "default",
     descStyle: "types",
-  },
-  bodyBgImg: {
-    // imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
-  },
-
-  friendLink: {
-    list: [
-      { avatar: "/img/other.png", name: "测试1", desc: "这是一个友链测试1" },
-      { avatar: "/img/ui.png", name: "测试2", desc: "这是一个友链测试2222111啊" },
-      { avatar: "/img/web.png", name: "测试3测试3测试3测试3测试3测试3", desc: "这是一个友链测试3" },
-      { avatar: "/img/more.png", name: "测试4", desc: "这是一个友链测试4" },
-      { avatar: "/img/ui.png", name: "测试22", desc: "这是一个友链测试2" },
-      { avatar: "/img/other.png", name: "测试11", desc: "这是一个友链测试1" },
-      { avatar: "/img/more.png", name: "测试44", desc: "这是一个友链测试4" },
-      { avatar: "/img/web.png", name: "测试33", desc: "这是一个友链测试3" },
-      { avatar: "/img/other.png", name: "测试111", desc: "这是一个友链测试1" },
-      { avatar: "/img/web.png", name: "测试333", desc: "这是一个友链测试3" },
-      { avatar: "/img/more.png", name: "测试444", desc: "这是一个友链测试4" },
-      { avatar: "/img/ui.png", name: "测试222", desc: "这是一个友链测试2" },
-    ],
   },
 
   footerInfo: {
-    message: ["下面的内容和图标都可以修改（本条内容也可以隐藏的）"],
     copyright: {
       createYear: 2021,
       suffix: "天客 Blog",
@@ -85,10 +63,10 @@ const tkConfig = tkThemeConfig({
     },
   ],
   comment: {
-    provider: "twikoo",
+    provider: "giscus",
     options: {
       // twikoo 配置，官网：https://twikoo.js.org/
-      envId: "https://twikoo.youngkbt.cn/",
+      // envId: "https://twikoo.youngkbt.cn/",
       // link: "https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.min.js",
 
       // waline 配置，官网：https://waline.js.org/
@@ -97,10 +75,10 @@ const tkConfig = tkThemeConfig({
       // cssLink: "https://unpkg.com/@waline/client@v3/dist/waline.css",
 
       // giscus 配置，官网：https://giscus.app/zh-CN
-      // repo: "Kele-Bingtang/vitepress-theme-kt",
-      // repoId: "R_kgDONpVfBA",
-      // category: "Announcements",
-      // categoryId: "DIC_kwDONpVfBM4Cm3v9",
+      repo: "Kele-Bingtang/vitepress-theme-kt",
+      repoId: "R_kgDONpVfBA",
+      category: "Announcements",
+      categoryId: "DIC_kwDONpVfBM4Cm3v9",
 
       // artalk 配置，官网：https://artalk.js.org/
       // server: "",
@@ -113,7 +91,7 @@ const tkConfig = tkThemeConfig({
 export default defineConfig({
   extends: tkConfig,
   base: "/",
-  title: "Hd Security",
+  title: "vitepress-theme-teeker",
   description: description,
   cleanUrls: true,
   lastUpdated: true,
@@ -176,14 +154,14 @@ export default defineConfig({
       { text: "API", link: "/07.API/01.API - 登录" },
       { text: "归档", link: "/archives" },
     ],
-    socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/hd-security" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teeker" }],
 
     search: {
       provider: "local",
     },
     editLink: {
       text: "在 GitHub 上编辑此页",
-      pattern: "https://github.com/Kele-Bingtang/hd-security/edit/master/hd-security-docs/docs/:path",
+      pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teeker/edit/master/hd-security-docs/docs/:path",
     },
   },
 });

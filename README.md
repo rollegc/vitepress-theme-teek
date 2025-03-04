@@ -1,7 +1,5 @@
 # vitepress-theme-teeker
 
-正在开发 ing...
-
 基础功能已完成开发，剩余加强功能请看下面的 TODO。
 
 ## 使用
@@ -41,8 +39,8 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
-- 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- 添加全局 alert 组件
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
+- 支持无障碍
+- 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
