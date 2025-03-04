@@ -8,7 +8,7 @@ import {
   writeBundlesFn,
   tkRoot,
   plugins as commonPlugins,
-  external,
+  externalModule,
   excludes,
   webTsConfig,
   tsOutput,
@@ -57,7 +57,7 @@ const buildModules = async () => {
     return await rollup({
       input,
       plugins,
-      external,
+      external: externalModule,
       treeshake: true,
       onwarn: (warning, defaultHandler) => {
         // 过滤掉 "Generated an empty chunk" 的警告

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="DocAnalysisCard">
-import { useUnrefData } from "../../../configProvider";
+import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useBuSunZi } from "../../../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../../../helper";
 import HomeCard from "../../HomeCard";
@@ -35,6 +35,31 @@ const createToNowDay = dayDiff(createTime || getNowDate());
 // 通过不蒜子获取访问量和访客数
 const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
 
+const posts = usePosts();
+
+/**
+ * 本周新增的文章数
+ */
+const postAddNum = computed(() => {
+  const sortPostsByDate = unref(posts).sortPostsByDate;
+  let weekAddNum = 0;
+  let monthAddNum = 0;
+
+  const currentDate = new Date(getNowDate());
+
+  for (const item of sortPostsByDate) {
+    if (!item.date) continue;
+
+    const postDate = new Date(item.date);
+
+    if (postDate.getTime() > currentDate.getTime() - 7 * 24 * 60 * 60 * 1000) weekAddNum++;
+    if (postDate.getTime() > currentDate.getTime() - 30 * 24 * 60 * 60 * 1000) monthAddNum++;
+    else return { weekAddNum, monthAddNum }; // sortPostsByDate 本身已经对时间排好序了，因此不满足近一月，也就不需要遍历了
+  }
+
+  return { weekAddNum, monthAddNum };
+});
+
 /**
  * 格式化字数
  */
@@ -52,6 +77,18 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
     label: "文章数目",
     originValue: unref(docAnalysisInfo).fileList.length,
     value: `${unref(docAnalysisInfo).fileList.length} 篇`,
+  },
+  {
+    key: "weekAddNum",
+    label: "近一周新增",
+    originValue: unref(postAddNum)?.weekAddNum,
+    value: `${unref(postAddNum)?.weekAddNum} 篇`,
+  },
+  {
+    key: "monthAddNum",
+    label: "近一月新增",
+    originValue: unref(postAddNum)?.monthAddNum,
+    value: `${unref(postAddNum)?.monthAddNum} 篇`,
   },
   {
     key: "runtime",

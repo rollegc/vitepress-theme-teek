@@ -668,7 +668,16 @@ export interface DocAnalysisInfo {
   /**
    * 站点信息唯一标识
    */
-  key: "totalPosts" | "runtime" | "totalWordCount" | "lastActiveTime" | "viewCount" | "visitCount" | string;
+  key:
+    | "totalPosts"
+    | "weekAddNum"
+    | "monthAddNum"
+    | "runtime"
+    | "totalWordCount"
+    | "lastActiveTime"
+    | "viewCount"
+    | "visitCount"
+    | string;
   /**
    * 站点信息标签
    */

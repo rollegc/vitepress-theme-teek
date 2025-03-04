@@ -46,5 +46,3 @@ pnpm demo:localesRoot dev
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
-- 文档分析插件，添加本周更新和本月更新功能
-- 打包文件存在 node_modules 修复

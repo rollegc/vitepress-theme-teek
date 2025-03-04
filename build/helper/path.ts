@@ -23,7 +23,7 @@ export const tkOutput = resolve(buildOutput, PKG_NAME);
 export const tsOutput = resolve(buildOutput, "types");
 
 export const tkPackage = resolve(tkRoot, "package.json");
-export const projPackage = resolve(projectRoot, "package.json");
+export const projectPackage = resolve(projectRoot, "package.json");
 export const docPackage = resolve(docRoot, "package.json");
 
 /** /tsconfig.web.json */

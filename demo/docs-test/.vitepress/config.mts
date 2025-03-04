@@ -21,7 +21,7 @@ const tkConfig = tkThemeConfig({
     siteIteration: 2500,
     pageIteration: 2500,
     overrideInfo: [{ key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` }],
-    appendInfo: [{ key: "index", label: "序号", value: "天客1024" }],
+    appendInfo: [{ key: "index", label: "序号", value: "天客99" }],
   },
   banner: {
     bgStyle: "bigImg",

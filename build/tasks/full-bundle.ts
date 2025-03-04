@@ -2,9 +2,10 @@ import { resolve } from "path";
 import { readFileSync } from "fs";
 import { rollup } from "rollup";
 import { minify as minifyPlugin } from "rollup-plugin-esbuild";
+import banner2 from "rollup-plugin-banner2";
 import picocolors from "picocolors";
 import {
-  projPackage,
+  projectPackage,
   target,
   tkOutput,
   tkRoot,
@@ -16,13 +17,13 @@ import {
   globals,
 } from "../helper";
 
-const pkg = JSON.parse(readFileSync(projPackage, "utf-8"));
+const pkg = JSON.parse(readFileSync(projectPackage, "utf-8"));
 
 // 在 Rollup 中，banner 用于在打包生成的输出文件顶部添加一段文本。这段文本可以是版权声明、警告信息、版本号等任何你希望在文件开头显示的内容。
 const banner = `/*! ${PKG_NAME} v${pkg.version} */\n`;
 
 const buildAll = async (minify?: boolean) => {
-  const plugins = [...commonPlugins];
+  const plugins = [...commonPlugins, banner2(() => banner)];
   if (minify) {
     plugins.push(
       minifyPlugin({
@@ -49,13 +50,11 @@ const buildAll = async (minify?: boolean) => {
       exports: "named",
       name: PKG_CAMEL_CASE_NAME, // 全局变量名称，通过这个变量名来访问打包后的入口文件，如浏览器端如果 window.${PKG_CAMEL_CASE_NAME} 访问
       sourcemap: false,
-      banner,
-      // 指定外部依赖: 当你将某些模块标记为 external 时，Rollup 不会将它们打包进最终的输出文件中。为了确保这些模块在运行时能够被正确引用，通过 globals 来指定这些模块对应的全局变量名称
-      globals,
+      globals, // 指定外部依赖: 当你将某些模块标记为 external 时，Rollup 不会将它们打包进最终的输出文件中。为了确保这些模块在运行时能够被正确引用，通过 globals 来指定这些模块对应的全局变量名称
     },
     {
       format: "esm",
-      file: resolve(tkOutput, `index${minify ? ".min" : ""}.js`),
+      file: resolve(tkOutput, `index${minify ? ".min" : ""}.mjs`),
       sourcemap: false,
     },
   ]);

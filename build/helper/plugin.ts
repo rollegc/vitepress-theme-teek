@@ -95,3 +95,31 @@ export function vitepressThemeTeekerClearConsole(): Plugin {
     },
   };
 }
+
+export function updateReferences() {
+  return {
+    name: "update-references",
+    generateBundle(outputOptions, bundle) {
+      // 遍历所有输出文件
+      for (const fileName in bundle) {
+        const file = bundle[fileName];
+
+        if (file.type === "chunk") {
+          // 如果是代码块文件，更新其内容中的引用路径
+          file.code = file.code.replace(/node_modules\/.pnpm/g, "'../new-folder");
+
+          // 如果需要重命名文件
+          if (fileName.includes("old-folder")) {
+            const newFileName = fileName.replace("old-folder", "new-folder");
+            this.emitFile({
+              type: "asset", // 或者 'chunk'，根据文件类型选择
+              fileName: newFileName,
+              source: file.code,
+            });
+            delete bundle[fileName]; // 删除旧文件
+          }
+        }
+      }
+    },
+  };
+}

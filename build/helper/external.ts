@@ -7,15 +7,30 @@ export const globals = {
   "node:path": "node:path",
   "node:fs": "node:fs",
   fs: "fs",
-  "gray-matter": "GrayMatter",
   "element-plus": "ElementPlus",
-  "@element-plus/icons-vue": "ElementPlusIconsVue",
   "@giscus/vue": "Giscus",
   "@waline/client": "Waline",
-  fsevents: "fsevents",
-  "markdown-it": "MarkdownIt",
-  "markdown-it-container": "MarkdownItContainer",
 };
 
-// 指定外部依赖，rollup 不会将这些依赖代码打包进去
-export const external = [...Object.keys(globals), "@types/markdown-it", "@types/markdown-it-container"];
+// full-bundle 打包时，忽略 globals 中的依赖
+export const external = Object.keys(globals);
+
+// module 打包时，忽略 globals 中的依赖和其他必备依赖（下载本项目后自动下载这些必备依赖，因为 package.json 中的 dependencies 指定了这些依赖）
+export const externalModule = [
+  ...Object.keys(globals),
+  "gray-matter",
+  "@element-plus/icons-vue",
+  "markdown-it",
+  "markdown-it-container",
+  "js-yaml",
+  "picocolors",
+  "tinyglobby",
+  "vitepress-plugin-auto-frontmatter",
+  "vitepress-plugin-catalogue",
+  "vitepress-plugin-doc-analysis",
+  "vitepress-plugin-file-content-loader",
+  "vitepress-plugin-md-h1",
+  "vitepress-plugin-permalink",
+  "vitepress-plugin-permalink/usePermalink",
+  "vitepress-plugin-sidebar-resolve",
+];

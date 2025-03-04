@@ -40,9 +40,11 @@
     "stub": "unbuild --stub"
   },
   "dependencies": {
-    "@types/js-yaml": "^4.0.9",
+    "@element-plus/icons-vue": "^2.3.1",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-container": "^4.0.0",
     "vitepress-plugin-auto-frontmatter": "latest",
     "vitepress-plugin-catalogue": "latest",
     "vitepress-plugin-doc-analysis": "latest",
@@ -52,14 +54,12 @@
     "vitepress-plugin-sidebar-resolve": "latest"
   },
   "devDependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
     "@giscus/vue": "^3.1.1",
+    "@types/js-yaml": "^4.0.9",
     "@types/markdown-it": "^14.1.2",
     "@types/markdown-it-container": "^2.0.10",
     "@waline/client": "^3.5.1",
     "element-plus": "^2.9.3",
-    "markdown-it": "^14.1.0",
-    "markdown-it-container": "^4.0.0",
     "sass": "^1.83.1",
     "unbuild": "^3.2.0",
     "vite": "^6.0.7",
