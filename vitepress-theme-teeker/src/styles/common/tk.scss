@@ -11,7 +11,7 @@ a.hover-color:hover {
   max-width: getCssVar("page-width");
   margin: 1.5rem auto;
   padding: 20px 30px;
-  box-shadow: 0 0 16px getCssVar("shadow-color");
+  box-shadow: var(--vp-shadow-3);
   border-radius: 10px;
 
   /* 隐藏 md 内容 */

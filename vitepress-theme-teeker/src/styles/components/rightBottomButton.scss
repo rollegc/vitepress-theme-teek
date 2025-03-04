@@ -17,14 +17,14 @@
     height: 2.2rem;
     line-height: 2.4rem;
     border-radius: 50%;
-    box-shadow: 0 1px 8px getCssVar("shadow-color");
+    box-shadow: getCssVar("shadow-1");
     text-align: center;
     cursor: pointer;
-    background: getCssVar("bg-color1");
+    background: getCssVar("bg-color-1");
 
     &:hover {
       background: getCssVar("theme-color");
-      box-shadow: 0 1px 8px getCssVar("shadow-color-hover");
+      box-shadow: getCssVar("shadow-2");
       .#{$namespace}-icon {
         color: #ffffff;
       }
@@ -53,8 +53,8 @@
 
     .dropdown {
       padding: 6px 0 8px 0;
-      background: getCssVar("bg-color1");
-      box-shadow: 0 1px 8px getCssVar("shadow-color");
+      background: getCssVar("bg-color-1");
+      box-shadow: getCssVar("shadow-1");
       width: 110px;
       border-radius: 6px;
       line-height: 1.6rem;
@@ -69,7 +69,7 @@
         }
         &.active {
           background-color: getCssVar("theme-color");
-          color: getCssVar("bg-color1");
+          color: getCssVar("bg-color-1");
         }
       }
     }

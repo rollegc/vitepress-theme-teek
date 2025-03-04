@@ -7,12 +7,12 @@
   width: 100%;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 1px 8px 0 getCssVar("shadow-color");
+  box-shadow: getCssVar("shadow-1");
   transition: all 0.3s;
-  background-color: getCssVar("bg-color2");
+  background-color: getCssVar("bg-color-2");
 
   &:hover {
-    box-shadow: 0 2px 16px 0 getCssVar("shadow-color-hover");
+    box-shadow: getCssVar("shadow-2");
   }
 
   .pin {
@@ -68,7 +68,7 @@
         }
 
         .excerpt {
-          color: getCssVar("lower-color1");
+          color: getCssVar("lower-color-1");
           font-size: 14px;
           h1,
           h2,

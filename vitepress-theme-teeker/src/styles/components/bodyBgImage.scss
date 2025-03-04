@@ -21,7 +21,7 @@
 /* 官方默认样式 */
 @include b(default) {
   .VPContent:not(.is-home) {
-    background-color: getCssVar("bg-color1");
+    background-color: getCssVar("bg-color-1");
   }
 }
 
@@ -29,7 +29,7 @@
 @include multiple-b((card, card-nav)) {
   .VPContent:not(.is-home) {
     .VPDoc.has-sidebar {
-      background-color: getCssVar("bg-color1");
+      background-color: getCssVar("bg-color-1");
       padding-top: 0;
       padding-left: 10px;
     }
@@ -37,7 +37,7 @@
     .VPDoc:not(.has-sidebar) {
       padding-top: 0;
       .container {
-        background-color: getCssVar("bg-color1");
+        background-color: getCssVar("bg-color-1");
         & > .content {
           padding-left: 0;
           padding-right: 10px;
@@ -56,7 +56,7 @@
     .VPDoc {
       padding: 0;
       .container > .content {
-        background-color: getCssVar("bg-color1");
+        background-color: getCssVar("bg-color-1");
         .content-container {
           padding-left: 10px;
         }
@@ -68,7 +68,7 @@
             padding-bottom: 20px;
             .content {
               padding-bottom: 10px;
-              background-color: getCssVar("bg-color1");
+              background-color: getCssVar("bg-color-1");
             }
           }
         }
@@ -87,13 +87,13 @@
     .VPNav {
       /* 如果导航栏要透明效果，打开 background-color，如果导航栏要透明磨砂效果，打开这两个样式 */
       // .VPNavBar:not(.home) {
-      //   background-color: getCssVar("bg-color2") !important;
+      //   background-color: getCssVar("bg-color-2") !important;
       //   backdrop-filter: saturate(200%) blur(20px);
       // }
 
       /* 带侧边栏的导航栏 */
       .VPNavBar.has-sidebar:not(.home) {
-        background-color: getCssVar("bg-color1");
+        background-color: getCssVar("bg-color-1");
         .title {
           padding-left: 20px;
         }
@@ -137,7 +137,7 @@
   @media (max-width: 1440px) {
     .VPNav {
       .VPNavBar.has-sidebar:not(.home) {
-        background-color: getCssVar("bg-color1");
+        background-color: getCssVar("bg-color-1");
       }
     }
   }
@@ -145,7 +145,7 @@
   @media (min-width: 1440px) {
     /* 侧边栏 */
     .VPSidebar {
-      background-color: getCssVar("bg-color2");
+      background-color: getCssVar("bg-color-2");
       padding: 0;
       width: var(--vp-sidebar-width);
       top: var(--vp-nav-height);

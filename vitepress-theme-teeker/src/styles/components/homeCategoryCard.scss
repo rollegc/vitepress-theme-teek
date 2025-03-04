@@ -26,7 +26,7 @@
 
       &.active {
         background: getCssVar("theme-color");
-        color: getCssVar("bg-color1");
+        color: getCssVar("bg-color-1");
         padding-left: 13px;
         border-radius: 1px;
         border-color: transparent;
@@ -42,5 +42,5 @@
 }
 
 .VPNavBar.home.top {
-  background-color: getCssVar("bg-color1");
+  background-color: getCssVar("bg-color-1");
 }

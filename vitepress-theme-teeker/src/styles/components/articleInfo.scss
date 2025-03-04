@@ -4,7 +4,7 @@
 @include b(articleInfo) {
   &.home {
     font-size: getCssVar("home-font-size-sm");
-    color: getCssVar("lower-color2");
+    color: getCssVar("lower-color-2");
   }
 
   &.article > div:not(:last-child) {
@@ -22,7 +22,7 @@
       width: 0.8px;
       height: 8px;
       margin: 0 10px;
-      background-color: getCssVar("lower-color2");
+      background-color: getCssVar("lower-color-2");
     }
   }
 
@@ -32,7 +32,7 @@
       display: inline-block;
       width: 0.35rem;
       height: 0;
-      background-color: getCssVar("lower-color2");
+      background-color: getCssVar("lower-color-2");
     }
   }
 }

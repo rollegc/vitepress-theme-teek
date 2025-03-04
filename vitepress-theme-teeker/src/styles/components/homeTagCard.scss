@@ -6,7 +6,7 @@
     position: relative;
     margin-top: 5px;
     a {
-      color: getCssVar("bg-color1");
+      color: getCssVar("bg-color-1");
       display: inline-block;
       padding: 0 7px;
       transition: transform 0.4s;
@@ -48,5 +48,5 @@
 }
 
 .VPNavBar.home.top {
-  background-color: getCssVar("bg-color1");
+  background-color: getCssVar("bg-color-1");
 }
