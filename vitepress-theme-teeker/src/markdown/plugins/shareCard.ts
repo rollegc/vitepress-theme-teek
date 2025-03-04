@@ -2,7 +2,7 @@ import MarkdownIt from "markdown-it";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
 import container from "markdown-it-container";
-import { ShareCard, ShareCardConfig, ShareCardItem } from "../types";
+import { ShareCard } from "../types";
 import { SiteConfig } from "vitepress";
 
 const shareCardName = "shareCard";
@@ -33,10 +33,10 @@ const shareCardPlugin = (md: MarkdownIt) => {
       if (!["yaml", "yml"].includes(token.info)) continue;
 
       // 解析 yaml 内容
-      const yamlContent = yaml.load(token.content.trim()) as ShareCard | ShareCardItem[];
+      const yamlContent = yaml.load(token.content.trim()) as ShareCard.Props | ShareCard.Item[];
 
-      let data: ShareCardItem[] = [];
-      let config: ShareCardConfig = {};
+      let data: ShareCard.Item[] = [];
+      let config: ShareCard.Config = {};
       if (Array.isArray(yamlContent)) data = yamlContent;
       else {
         data = yamlContent.data || [];
@@ -68,7 +68,7 @@ const shareCardPlugin = (md: MarkdownIt) => {
  * @param navCard 分享卡片数据
  * @param base 根路径
  */
-const renderShareCard = (shareCard: ShareCard, base: string) => {
+const renderShareCard = (shareCard: ShareCard.Props, base: string) => {
   const { data = [], config = {} } = shareCard;
   if (!data.length) return "";
 

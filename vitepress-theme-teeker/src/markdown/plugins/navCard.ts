@@ -2,7 +2,7 @@ import MarkdownIt from "markdown-it";
 import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
-import { NavCard, NavCardConfig, NavCardItem } from "../types";
+import { NavCard } from "../types";
 import { SiteConfig } from "vitepress";
 
 const navCardName = "navCard";
@@ -33,10 +33,10 @@ const navCardPlugin = (md: MarkdownIt) => {
       if (!["yaml", "yml"].includes(token.info)) continue;
 
       // 解析 yaml 内容
-      const yamlContent = yaml.load(token.content.trim()) as NavCard | NavCardItem[];
+      const yamlContent = yaml.load(token.content.trim()) as NavCard.Props | NavCard.Item[];
 
-      let data: NavCardItem[] = [];
-      let config: NavCardConfig = {};
+      let data: NavCard.Item[] = [];
+      let config: NavCard.Config = {};
       if (Array.isArray(yamlContent)) data = yamlContent;
       else {
         data = yamlContent.data || [];
@@ -68,7 +68,7 @@ const navCardPlugin = (md: MarkdownIt) => {
  * @param navCard 导航卡片数据
  * @param base 根路径
  */
-const getNavCardHtml = (navCard: NavCard, base: string) => {
+const getNavCardHtml = (navCard: NavCard.Props, base: string) => {
   const { data = [], config = {} } = navCard;
   if (!data.length) return "";
 

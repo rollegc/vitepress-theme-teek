@@ -2,3 +2,8 @@
 @use "./common/vp";
 @use "./common/transition-dark";
 @use "./var/var";
+
+@use "./md-plugin/todo";
+@use "./md-plugin/share-card";
+@use "./md-plugin/img-card";
+@use "./md-plugin/nav-card";

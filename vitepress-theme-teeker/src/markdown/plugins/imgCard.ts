@@ -2,7 +2,7 @@ import MarkdownIt from "markdown-it";
 import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
-import { ImgCard, ImgCardConfig, ImgCardItem } from "../types";
+import { ImgCard } from "../types";
 import { SiteConfig } from "vitepress";
 
 const imgCardName = "imgCard";
@@ -34,10 +34,10 @@ const imgCardPlugin = (md: MarkdownIt) => {
       if (!["yaml", "yml"].includes(token.info)) continue;
 
       // 解析 yaml 内容
-      const yamlContent = yaml.load(token.content.trim()) as ImgCard | ImgCardItem[];
+      const yamlContent = yaml.load(token.content.trim()) as ImgCard.Props | ImgCard.Item[];
 
-      let data: ImgCardItem[] = [];
-      let config: ImgCardConfig = {};
+      let data: ImgCard.Item[] = [];
+      let config: ImgCard.Config = {};
       if (Array.isArray(yamlContent)) data = yamlContent;
       else {
         data = yamlContent.data || [];
@@ -69,7 +69,7 @@ const imgCardPlugin = (md: MarkdownIt) => {
  * @param imgCard 图片卡片数据
  * @param base 根路径
  */
-const renderImgCard = (imgCard: ImgCard, base: string) => {
+const renderImgCard = (imgCard: ImgCard.Props, base: string) => {
   const { data = [], config = {} } = imgCard;
   if (!data.length) return "";
 
