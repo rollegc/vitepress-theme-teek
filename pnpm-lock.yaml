@@ -319,12 +319,21 @@ importers:
 
   vitepress-theme-teeker:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.5.13(typescript@5.7.3))
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
+      markdown-it:
+        specifier: ^14.1.0
+        version: 14.1.0
+      markdown-it-container:
+        specifier: ^4.0.0
+        version: 4.0.0
       vitepress-plugin-auto-frontmatter:
         specifier: latest
         version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
@@ -338,8 +347,8 @@ importers:
         specifier: latest
         version: 1.0.2(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
       vitepress-plugin-md-h1:
-        specifier: latest
-        version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
+        specifier: workspace:*
+        version: link:../plugins/vitepress-plugin-md-h1
       vitepress-plugin-permalink:
         specifier: latest
         version: 1.0.3(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
@@ -347,9 +356,6 @@ importers:
         specifier: latest
         version: 1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
     devDependencies:
-      '@element-plus/icons-vue':
-        specifier: ^2.3.1
-        version: 2.3.1(vue@3.5.13(typescript@5.7.3))
       '@giscus/vue':
         specifier: ^3.1.1
         version: 3.1.1(vue@3.5.13(typescript@5.7.3))
@@ -368,12 +374,6 @@ importers:
       element-plus:
         specifier: ^2.9.3
         version: 2.9.3(vue@3.5.13(typescript@5.7.3))
-      markdown-it:
-        specifier: ^14.1.0
-        version: 14.1.0
-      markdown-it-container:
-        specifier: ^4.0.0
-        version: 4.0.0
       sass:
         specifier: ^1.83.1
         version: 1.83.1
@@ -4692,11 +4692,6 @@ packages:
     peerDependencies:
       vite: ^6.0.7
       vitepress: ^1.6.3
-
-  vitepress-plugin-md-h1@1.0.1:
-    resolution: {integrity: sha512-uVT1iQSNw4OQK5Z9q3xoKUuduVdhsNHVSGQSRjLdst/3nbva2Ys2ppROE/HNgEwnkkD9i1Nm5Az0bIjGaFb/sQ==}
-    peerDependencies:
-      vite: ^6.0.7
 
   vitepress-plugin-permalink@1.0.3:
     resolution: {integrity: sha512-WNB7AJLdwkVKWAby2pIr9qN1IMiMNUVqeRSD1UaqrQuHOor/f2Hy2Kw67BiI1VN5grtPjh6qBn/hrW+k2kMGlA==}
@@ -9284,11 +9279,6 @@ snapshots:
       tinyglobby: 0.2.10
       vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)
       vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
-
-  vitepress-plugin-md-h1@1.0.1(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)):
-    dependencies:
-      gray-matter: 4.0.3
-      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)
 
   vitepress-plugin-permalink@1.0.3(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
     dependencies:

@@ -3,7 +3,8 @@ import { readFileSync } from "node:fs";
 import { basename } from "node:path";
 import matter from "gray-matter";
 
-const specialPrefix = `return (_openBlock(), _createElementBlock("div", null, [`;
+const specialPrefix1 = `return (_openBlock(), _createElementBlock("div", null, [`;
+const specialPrefix2 = `return (_openBlock(), _createElementBlock("div", null, _cache[0] || (_cache[0] = [`;
 const createStaticVNodeTag = `_createStaticVNode("`;
 
 export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
@@ -23,20 +24,25 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
 
       // 将 " 替换为 \"，因为 " 会导致页面解析失败
       const finalTitle = title.replace(/"+/g, '\\"');
-      // 提前截取 code，防止 code 太长导致 replace 性能边差
-      const newCode = code.split(createStaticVNodeTag);
 
-      if (newCode.length === 2 && newCode[0].includes(specialPrefix)) {
+      if (code.includes(specialPrefix1)) {
         // 第一个 replace 先将 _cache 的下标加 1，第二个 replace 把 h1 标题加到 _cache[0] 里
-        return newCode[0]
+        return code
           .replace(/_cache\[(\d+)\]/g, (_, p1) => {
             const newIndex = parseInt(p1, 10) + 1;
             return `_cache[${newIndex}]`;
           })
           .replace(
-            specialPrefix,
-            `${specialPrefix}
-              _cache[0] || (_cache[0] = _createElementVNode("h1", {
+            specialPrefix1,
+            `${specialPrefix1}
+              _cache[0] || (_cache[0] = _createStaticVNode("<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\">​</a></h1>", 1)),
+            `
+          );
+      } else if (code.includes(specialPrefix2)) {
+        return code.replace(
+          specialPrefix2,
+          `${specialPrefix2}
+              _createElementVNode("h1", {
                 id: "${titleId}",
                 tabindex: "-1"
               }, [
@@ -46,10 +52,9 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
                   href: "#${titleId}",
                   "aria-label": "Permalink to \\"${finalTitle}\\""
                 }, "​")
-              ], -1 /* HOISTED */)),
+              ], -1 /* HOISTED */),
             `
-          )
-          .concat(createStaticVNodeTag + newCode[1]); // 最后拼接上截取的代码
+        );
       }
 
       return code.replace(

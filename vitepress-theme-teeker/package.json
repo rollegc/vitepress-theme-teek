@@ -49,7 +49,7 @@
     "vitepress-plugin-catalogue": "latest",
     "vitepress-plugin-doc-analysis": "latest",
     "vitepress-plugin-file-content-loader": "latest",
-    "vitepress-plugin-md-h1": "latest",
+    "vitepress-plugin-md-h1": "workspace:*",
     "vitepress-plugin-permalink": "latest",
     "vitepress-plugin-sidebar-resolve": "latest"
   },
