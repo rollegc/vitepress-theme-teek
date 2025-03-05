@@ -3,6 +3,8 @@ import { onMounted, provide, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
 import { breadcrumbKey, type BreadcrumbProps } from "./breadcrumb";
 
+defineOptions({ name: "Breadcrumb" });
+
 const ns = useNamespace("breadcrumb");
 
 const { separator = "/" } = defineProps<BreadcrumbProps>();

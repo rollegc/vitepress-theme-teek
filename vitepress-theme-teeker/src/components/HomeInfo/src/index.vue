@@ -1,13 +1,10 @@
 <script setup lang="ts" name="HomeInfo">
-import { useNamespace } from "../../../hooks";
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
-import HomeMyCard from "../../HomeMyCard";
-import HomeCategoryCard from "../../HomeCategoryCard";
-import HomeTagCard from "../../HomeTagCard";
-import FriendLinkCard from "../../FriendLinkCard";
-import TopArticleCard from "../../TopArticleCard";
-import DocAnalysisCard from "../../DocAnalysisCard";
+import { useNamespace } from "../../../hooks";
+import { HomeMyCard, HomeCategoryCard, HomeTagCard, FriendLinkCard, TopArticleCard, DocAnalysisCard } from "../../";
+
+defineOptions({ name: "HomeInfo" });
 
 const ns = useNamespace("homeInfo");
 

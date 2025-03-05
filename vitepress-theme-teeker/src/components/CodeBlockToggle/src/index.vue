@@ -3,6 +3,8 @@ import { nextTick, onMounted } from "vue";
 import { useRouter } from "vitepress";
 import { useNamespace } from "../../../hooks";
 
+defineOptions({ name: "CodeBlockToggle" });
+
 const ns = useNamespace("");
 
 const foldClass = "fold";

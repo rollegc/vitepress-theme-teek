@@ -1,8 +1,10 @@
 <script setup lang="ts" name="CataloguePage">
 import { computed, unref } from "vue";
-import { useNamespace } from "../../../hooks";
-import CatalogueItem from "./CatalogueItem.vue";
 import { useData } from "vitepress";
+import { useNamespace } from "../../../hooks";
+import { CatalogueItem } from "../../";
+
+defineOptions({ name: "CataloguePage" });
 
 const ns = useNamespace("catalogue");
 

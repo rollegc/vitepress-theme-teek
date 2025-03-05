@@ -1,12 +1,14 @@
 <script setup lang="ts" name="HomeTagCard">
-import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData, getBgColor } from "../../../configProvider";
 import { unref, watch, computed, ref } from "vue";
 import { useData, useRoute } from "vitepress";
-import HomeCard from "../../HomeCard";
+import { useNamespace } from "../../../hooks";
+import { usePosts, useUnrefData, getBgColor } from "../../../configProvider";
+import { HomeCard } from "../../";
 import tagSvg from "../../../assets/svg/tag";
 import { isFunction } from "../../../helper";
 import { Tag } from "../../../config/types";
+
+defineOptions({ name: "HomeTagCard" });
 
 const ns = useNamespace("tag");
 

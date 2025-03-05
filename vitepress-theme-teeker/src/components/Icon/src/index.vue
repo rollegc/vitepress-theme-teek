@@ -1,8 +1,10 @@
 <script setup lang="ts" name="Icon">
+import { useSlots } from "vue";
 import { useNamespace } from "../../../hooks";
 import { isString } from "../../../helper";
 import { IconProps } from "./icon";
-import { useSlots } from "vue";
+
+defineOptions({ name: "Icon" });
 
 const ns = useNamespace("icon");
 

@@ -1,6 +1,8 @@
 <script setup lang="ts" name="HomeBannerWaves">
 import { useNamespace } from "../../../hooks";
 
+defineOptions({ name: "HomeBannerWaves" });
+
 const ns = useNamespace("waves");
 </script>
 

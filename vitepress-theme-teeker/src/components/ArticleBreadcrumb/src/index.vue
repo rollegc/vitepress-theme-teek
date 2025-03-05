@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArticleBreadcrumb">
-import { useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
-import Breadcrumb from "./Breadcrumb.vue";
-import BreadcrumbItem from "./BreadcrumbItem.vue";
-import Icon from "../../Icon";
 import { computed, unref } from "vue";
+import { useData } from "vitepress";
 import { House } from "@element-plus/icons-vue";
+import { useNamespace } from "../../../hooks";
+import { Breadcrumb, BreadcrumbItem, Icon } from "../../";
 import { useUnrefData } from "../../../configProvider";
 import { Breadcrumb as BreadcrumbType } from "../../../config/types";
+
+defineOptions({ name: "ArticleBreadcrumb" });
 
 const ns = useNamespace("articleBreadcrumb");
 

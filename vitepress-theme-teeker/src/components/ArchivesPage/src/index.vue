@@ -2,6 +2,8 @@
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData } from "../../../configProvider";
 
+defineOptions({ name: "ArchivesPage" });
+
 const ns = useNamespace("archives");
 
 const { frontmatter } = useUnrefData();

@@ -1,12 +1,14 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed } from "vue";
-import { useNamespace } from "../../../hooks";
 import { withBase } from "vitepress";
+import { useNamespace } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
 import { useUnrefData } from "../../../configProvider";
-import PostBaseInfo from "../../ArticleInfo";
+import { ArticleInfo } from "../../";
 import { Article, Post } from "../../../config/types";
+
+defineOptions({ name: "HomePostItem" });
 
 const ns = useNamespace("postItem");
 
@@ -84,7 +86,7 @@ const isShowInfo = computed(() => {
 
         <!-- 文章信息 -->
         <div :class="ns.e('info__left__footer')">
-          <PostBaseInfo v-if="isShowInfo" :post scope="home" split />
+          <ArticleInfo v-if="isShowInfo" :post scope="home" split />
         </div>
 
         <!-- 摘要 bottom -->

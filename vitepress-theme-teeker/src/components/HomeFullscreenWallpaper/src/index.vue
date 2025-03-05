@@ -3,7 +3,9 @@ import { onMounted, onUnmounted, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 
-const ns = useNamespace("fullscreen");
+defineOptions({ name: "HomeFullscreenWallpaper" });
+
+const ns = useNamespace("homeFullscreenWallpaper");
 
 // 定义一个 ref 来跟踪是否处于全屏状态
 const isFullscreen = ref(false);

@@ -2,6 +2,8 @@
 import type { CatalogueItem } from "vitepress-plugin-catalogue";
 import { useNamespace } from "../../../hooks";
 
+defineOptions({ name: "CatalogueItem" });
+
 const nsSub = useNamespace("subCatalogue");
 const nsItem = useNamespace("catalogueItem");
 

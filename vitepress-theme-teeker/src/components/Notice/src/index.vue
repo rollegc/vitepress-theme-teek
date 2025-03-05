@@ -1,12 +1,14 @@
 <script setup lang="ts" name="Notice">
 import { computed, onMounted, ref, unref, watch } from "vue";
-import { useNamespace, useWindowSize } from "../../../hooks";
 import { useData, useRouter } from "vitepress";
-import Icon from "../../Icon";
+import { useNamespace, useWindowSize } from "../../../hooks";
+import { Icon } from "../../";
 import noticeSvg from "../../../assets/svg/notice";
 import closeSvg from "../../../assets/svg/close";
 import { isString } from "../../../helper";
 import { Notice } from "../../../config/types";
+
+defineOptions({ name: "Notice" });
 
 const ns = useNamespace("notice");
 const { theme, localeIndex } = useData();
@@ -84,10 +86,10 @@ onMounted(() => {
 });
 
 /**
- * 如果公告弹框的 position 为 center，则当遮罩层出现时禁止滚动，即将 body 的滚动去掉
- * @param action 对 Body 滚动条的行为
+ * 如果公告弹框的 position 为 center，则当遮罩层出现时禁止滚动，即将滚动去掉
+ * @param action 对滚动条的行为
  */
-const openOrDisableBodyScroll = (action: "open" | "disable") => {
+const openOrDisableScroll = (action: "open" | "disable") => {
   if (position !== "center") return;
 
   const actions: Record<"open" | "disable", "add" | "remove"> = {
@@ -110,7 +112,7 @@ if (useStorage) {
         const isShowPopover = oldValue === "true";
         showPopover.value = isShowPopover;
 
-        if (isShowPopover) openOrDisableBodyScroll("disable");
+        if (isShowPopover) openOrDisableScroll("disable");
       }
     },
     { immediate: true }
@@ -125,7 +127,7 @@ const handleOpenPopover = () => {
   storagePopoverState("true");
   closePopoverWhenTimeout();
 
-  openOrDisableBodyScroll("disable");
+  openOrDisableScroll("disable");
 };
 
 /**
@@ -138,7 +140,7 @@ const handleClosePopover = () => {
   if (!reopen) destroyNoticeIcon.value = true;
 
   if (timer) clearTimeout(timer);
-  openOrDisableBodyScroll("open");
+  openOrDisableScroll("open");
 };
 
 /**
@@ -182,7 +184,7 @@ const storagePopoverState = (state: string) => {
       </div>
     </div>
 
-    <!-- 蒙版，与公告弹窗一起出现 -->
+    <!-- 遮罩层，与公告弹窗一起出现 -->
     <div v-show="showPopover && position === 'center'" :class="ns.e('mask')"></div>
   </div>
 </template>

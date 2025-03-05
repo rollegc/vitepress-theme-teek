@@ -1,9 +1,11 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref } from "vue";
-import { useNamespace } from "../../../hooks";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
+import { useNamespace } from "../../../hooks";
 import { HomeCardProps } from "./homeCard";
-import Icon from "../../Icon";
+import { Icon } from "../../";
+
+defineOptions({ name: "HomeCard" });
 
 const ns = useNamespace("homeCard");
 

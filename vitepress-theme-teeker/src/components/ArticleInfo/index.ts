@@ -1,6 +1,6 @@
-import ArchivesInfo from "./src/index.vue";
+import ArticleInfo from "./src/index.vue";
 
 export * from "./src/articleInfo";
 
-export { ArchivesInfo };
-export default ArchivesInfo;
+export { ArticleInfo };
+export default ArticleInfo;

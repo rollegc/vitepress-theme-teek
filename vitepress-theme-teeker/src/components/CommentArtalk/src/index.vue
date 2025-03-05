@@ -1,8 +1,10 @@
 <script setup lang="ts" name="CommentArtalk">
 import { onMounted, onUnmounted, ref, unref, watch } from "vue";
-import { useUnrefData } from "../../../configProvider";
 import { useData, useRouter } from "vitepress";
+import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
+
+defineOptions({ name: "CommentArtalk" });
 
 const { isDark, page } = useData();
 const { theme } = useUnrefData();

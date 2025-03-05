@@ -1,9 +1,11 @@
 <script setup lang="ts" name="BodyBgImage">
+import { onMounted } from "vue";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
-import { onMounted } from "vue";
 import { isString } from "../../../helper";
 import { BodyBgImg } from "../../../config/types";
+
+defineOptions({ name: "BodyBgImage" });
 
 const ns = useNamespace("bodyBgImage");
 

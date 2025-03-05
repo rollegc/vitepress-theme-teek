@@ -1,12 +1,14 @@
 <script setup lang="ts" name="DocAnalysisCard">
+import { computed, Ref, unref } from "vue";
+import { useData } from "vitepress";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useBuSunZi } from "../../../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../../../helper";
-import HomeCard from "../../HomeCard";
+import { HomeCard } from "../../";
 import docAnalysisSvg from "../../../assets/svg/docAnalysis";
-import { computed, Ref, unref } from "vue";
-import { useData } from "vitepress";
 import { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
+
+defineOptions({ name: "DocAnalysisCard" });
 
 const ns = useNamespace("docAnalysis");
 

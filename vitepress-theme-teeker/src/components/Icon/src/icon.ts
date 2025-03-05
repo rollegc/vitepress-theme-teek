@@ -1,5 +1,5 @@
 export interface IconProps {
-  icon: string;
+  icon?: string;
   iconType?: "svg" | "iconfont" | "img" | "component";
   size?: string | number;
   color?: string;

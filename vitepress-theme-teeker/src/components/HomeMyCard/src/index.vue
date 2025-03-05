@@ -1,11 +1,12 @@
 <script setup lang="ts" name="HomeMyCard">
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
-import Icon from "../../Icon";
+import { HomeCard, Icon } from "../../";
 import { Blogger, Social } from "../../../config/types";
-import HomeCard from "../../HomeCard";
 
-const ns = useNamespace("my");
+defineOptions({ name: "HomeMyCard" });
+
+const ns = useNamespace("homeMyCard");
 
 const { theme } = useUnrefData();
 

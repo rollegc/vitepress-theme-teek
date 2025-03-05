@@ -1,14 +1,16 @@
 <script setup lang="ts" name="ArticleInfo">
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { useRoute } from "vitepress";
 import { computed, unref } from "vue";
+import { usePosts, useUnrefData } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
-import { useRoute } from "vitepress";
 import { Article } from "../../../config/types";
 import { PostBaseInfoProps } from "./articleInfo";
-import Icon from "../../Icon";
+import { Icon } from "../../";
+
+defineOptions({ name: "ArticleInfo" });
 
 const ns = useNamespace("articleInfo");
 

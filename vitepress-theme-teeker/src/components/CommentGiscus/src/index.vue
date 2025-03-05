@@ -1,10 +1,12 @@
 <script setup lang="ts" name="CommentGiscus">
-import { useUnrefData } from "../../../configProvider";
-import Giscus from "@giscus/vue";
-import { useRouter, useData } from "vitepress";
 import { ref, nextTick, onMounted, computed, unref } from "vue";
+import { useRouter, useData } from "vitepress";
+import Giscus from "@giscus/vue";
+import { useUnrefData } from "../../../configProvider";
 import { isFunction } from "../../../helper";
 import { CommentProvider } from "../../../config/types";
+
+defineOptions({ name: "CommentGiscus" });
 
 const { isDark } = useData();
 const { theme } = useUnrefData();

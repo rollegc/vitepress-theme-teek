@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleImagePreview">
 import { onMounted, onUnmounted } from "vue";
-import { createImageViewer } from "../../ImageViewer";
+import { createImageViewer } from "../../";
 
 const selector = ".content-container .main";
 

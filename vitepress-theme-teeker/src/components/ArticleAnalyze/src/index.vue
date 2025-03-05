@@ -1,15 +1,15 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { useRoute, useData } from "vitepress";
-import { useNamespace, useBuSunZi } from "../../../hooks";
 import { computed, nextTick, onMounted, ref, unref } from "vue";
+import { useRoute, useData } from "vitepress";
 import { Reading, Clock, View } from "@element-plus/icons-vue";
-import { useUnrefData } from "../../../configProvider";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
-import Breadcrumb from "../../Breadcrumb";
-import ArticleInfo from "../../ArticleInfo";
-import Icon from "../../Icon";
+import { useNamespace, useBuSunZi } from "../../../hooks";
+import { useUnrefData } from "../../../configProvider";
+import { Breadcrumb, ArticleInfo, Icon } from "../../";
 import { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
+
+defineOptions({ name: "ArticleAnalyze" });
 
 const ns = useNamespace("articleAnalyze");
 

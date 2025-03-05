@@ -1,9 +1,11 @@
 <script setup lang="ts" name="Pagination">
-import { useNamespace } from "../../../hooks";
-import { scrollTo } from "../../../helper";
 import { nextTick, onMounted, unref } from "vue";
 import { ElPagination } from "element-plus";
+import { useNamespace } from "../../../hooks";
+import { scrollTo } from "../../../helper";
 import { PaginationProps, PaginationEmits, Paging } from "./pagination";
+
+defineOptions({ name: "Pagination" });
 
 const ns = useNamespace("pagination");
 

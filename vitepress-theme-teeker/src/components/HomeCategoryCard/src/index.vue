@@ -1,12 +1,14 @@
 <script setup lang="ts" name="HomeCategoryCard">
-import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData } from "../../../configProvider";
 import { computed, unref, ref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import HomeCard from "../../HomeCard";
+import { useNamespace } from "../../../hooks";
+import { usePosts, useUnrefData } from "../../../configProvider";
+import { HomeCard } from "../../";
 import categorySvg from "../../../assets/svg/category";
 import { isFunction } from "../../../helper";
 import { Category } from "../../../config/types";
+
+defineOptions({ name: "HomeCategoryCard" });
 
 const ns = useNamespace("category");
 

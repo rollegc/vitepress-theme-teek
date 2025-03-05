@@ -1,14 +1,10 @@
-<template>
-  <ElImageViewer v-if="visible" v-bind="$attrs" @close="close" />
-</template>
-
-<script setup lang="ts">
+<script setup lang="ts" name="ImageViewer">
 import { ElImageViewer, ImageViewerProps as ElImageViewerProps } from "element-plus";
 import { Writable } from "element-plus/es/utils";
 
-defineOptions({ name: "ImageViewer" });
-
 export type ImageViewerProps = Writable<Partial<ElImageViewerProps>> & { modelValue?: boolean };
+
+defineOptions({ name: "ImageViewer" });
 
 const visible = defineModel({ default: false });
 
@@ -17,3 +13,7 @@ const close = () => {
   visible.value = false;
 };
 </script>
+
+<template>
+  <ElImageViewer v-if="visible" v-bind="$attrs" @close="close" />
+</template>

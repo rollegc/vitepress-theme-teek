@@ -2,11 +2,12 @@
 import { computed, ref, unref, onMounted } from "vue";
 import { useUnrefData } from "../../../configProvider";
 import { useNamespace, useScrollData } from "../../../hooks";
-import HomeCard from "../../HomeCard";
+import { HomeCard, createImageViewer } from "../../";
 import friendLinkSvg from "../../../assets/svg/friendLink";
 import { isFunction } from "../../../helper";
-import { createImageViewer } from "../../ImageViewer";
 import { FriendLink } from "../../../config/types";
+
+defineOptions({ name: "FriendLinkCard" });
 
 const ns = useNamespace("friendLink");
 

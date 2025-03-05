@@ -2,6 +2,8 @@ export * from "./ArchivesPage";
 export * from "./ArticleAnalyze";
 export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
+export * from "./ArticleBreadcrumb";
+export * from "./BodyBgImage";
 export * from "./BodyBgImage";
 export * from "./CataloguePage";
 export * from "./CodeBlockToggle";

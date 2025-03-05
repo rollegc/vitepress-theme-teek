@@ -118,6 +118,9 @@ export function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatte
   return formatDate(statSync(filePath).birthtime || new Date());
 }
 
+/**
+ * 截取 markdown 文件前 count 数的内容
+ */
 export const getCaptureText = (post: TkContentData, count = 400) => {
   const { content = "" } = matter(post.src || "", {});
   return (

@@ -1,12 +1,13 @@
 <script setup lang="ts" name="HomePostList">
 import { reactive, ref, unref, watch } from "vue";
-import HomePostItem from "./HomePostItem.vue";
-import { usePosts, useUnrefData } from "../../../configProvider";
-import Pagination from "../../Pagination";
 import { useRoute } from "vitepress";
+import { PaginationProps } from "element-plus";
+import { HomePostItem, Pagination } from "../../";
+import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
-import { PaginationProps } from "element-plus";
+
+defineOptions({ name: "HomePostList" });
 
 const ns = useNamespace("postList");
 

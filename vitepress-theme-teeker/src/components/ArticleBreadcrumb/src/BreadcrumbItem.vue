@@ -3,6 +3,8 @@ import { inject } from "vue";
 import { useNamespace } from "../../../hooks";
 import { breadcrumbKey } from "./breadcrumb";
 
+defineOptions({ name: "BreadcrumbItem" });
+
 const ns = useNamespace("breadcrumb");
 
 const breadcrumbContext = inject(breadcrumbKey, undefined);

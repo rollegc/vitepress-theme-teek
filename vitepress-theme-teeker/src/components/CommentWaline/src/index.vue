@@ -1,11 +1,12 @@
 <script setup lang="ts" name="CommentWaline">
-import { useUnrefData } from "../../../configProvider";
+import { onMounted } from "vue";
 import { useRouter } from "vitepress";
 import { init, type WalineInstance } from "@waline/client";
 import "@waline/client/style";
-
-import { onMounted } from "vue";
+import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
+
+defineOptions({ name: "CommentWaline" });
 
 const { theme } = useUnrefData();
 const router = useRouter();

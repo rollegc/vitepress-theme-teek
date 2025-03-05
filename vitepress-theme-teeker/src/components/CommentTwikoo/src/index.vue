@@ -4,6 +4,8 @@ import { useRouter } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
 
+defineOptions({ name: "CommentTwikoo" });
+
 const { theme } = useUnrefData();
 
 const {

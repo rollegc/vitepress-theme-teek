@@ -1,4 +1,5 @@
 <script setup lang="ts" name="Footer">
+import { computed } from "vue";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 import themeSvg from "../../../assets/svg/footerTheme";
@@ -7,9 +8,10 @@ import icpRecordSvg from "../../../assets/svg/icpRecord";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
 import { version } from "../../../version";
-import { computed } from "vue";
-import Icon from "../../Icon";
+import { Icon } from "../../";
 import { FooterInfo, Social } from "../../../config/types";
+
+defineOptions({ name: "Footer" });
 
 const ns = useNamespace("footer");
 

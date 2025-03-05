@@ -1,6 +1,6 @@
 @use "../mixins/config" as *;
 
-$prefix-class: #{$namespace}-fullscreen;
+$prefix-class: #{$namespace}-homeFullscreenWallpaper;
 $prefix-class-outside: #{$namespace}-wallpaper-outside;
 
 html {

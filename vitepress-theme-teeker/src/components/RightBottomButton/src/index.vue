@@ -1,12 +1,14 @@
 <script setup lang="ts" name="RightBottomButton">
-import { useNamespace, useDebounce } from "../../../hooks";
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
-import Icon from "../../Icon";
 import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
+import { useNamespace, useDebounce } from "../../../hooks";
+import { Icon } from "../../";
 import { useUnrefData } from "../../../configProvider";
 import { scrollTo } from "../../../helper";
 import sizeSvg from "../../../assets/svg/size";
 import { CommentConfig, ThemeSetting } from "../../../config/types";
+
+defineOptions({ name: "RightBottomButton" });
 
 const ns = useNamespace("rightBottomButton");
 
