@@ -39,8 +39,10 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
+- MdH1 插件问题修复
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
+- 文章内引用的 permalink 替换为文档实际地址
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

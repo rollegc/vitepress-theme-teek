@@ -9,13 +9,13 @@ import { Route } from "vitepress";
 
 export interface TkThemeConfig {
   /**
-   * 是否启用主题
+   * 是否启用主题，如果为 false，则不会主题的 99% 功能，只保留永久链接、锚点滚动、深色、浅色模式过渡动画这三个功能。
    *
    * @default true
    */
   tkTheme?: boolean;
   /**
-   * 是否启用主题的首页风格
+   * 是否启用主题的首页风格，如果为 false，则首页还原到 vitepress 的默认首页，其他功能不变。
    *
    * @default true
    */
@@ -27,11 +27,13 @@ export interface TkThemeConfig {
    */
   anchorScroll?: boolean;
   /**
-   * 暗黑、亮白模式切换时是否开启过渡动画
+   * 深色、浅色模式切换时是否开启过渡动画
+   *
+   * @default true
    */
   viewTransition?: boolean;
   /**
-   * 首页卡片的排序
+   * 首页卡片的排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序。
    *
    * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
    */
@@ -91,7 +93,7 @@ export interface TkThemeConfig {
     link?: string;
   };
   /**
-   * 主题全局配置
+   * 右下角的主题设置配置
    */
   themeSetting?: ThemeSetting;
   /**
@@ -103,31 +105,31 @@ export interface TkThemeConfig {
    */
   banner?: Banner;
   /**
-   * 博主信息 (显示在首页侧边栏)
+   * 博主信息，显示在首页左边第一个卡片
    */
   blogger?: Blogger;
   /**
-   * 精选文章卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.topArticle.[key]
+   * 精选文章卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.topArticle.[key]
    */
   topArticle?: TopArticle;
   /**
-   * 分类卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.category.[key]
+   * 分类卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.category.[key]
    */
   category?: Category;
   /**
-   * 标签卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.tag.[key]
+   * 标签卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.tag.[key]
    */
   tag?: Tag;
   /**
-   * 友情链接卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.friendLink.[key]
+   * 友情链接卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.friendLink.[key]
    */
   friendLink?: FriendLink;
   /**
-   * 站点信息卡片配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.docAnalysis.[key]
+   * 站点信息卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.docAnalysis.[key]
    */
   docAnalysis?: DocAnalysis;
   /**
-   * 文章列表配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.post.[key]
+   * 文章列表配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.post.[key]
    */
   post?: Post;
   /**
@@ -135,7 +137,7 @@ export interface TkThemeConfig {
    */
   article?: Article;
   /**
-   * 面包屑配置，里面的属性全部支持在 frontmatter 配置 breadcrumb.[key]
+   * 面包屑配置，里面的属性全部支持在文章页的 frontmatter 配置 breadcrumb.[key]
    */
   breadcrumb?: Breadcrumb;
   /**
@@ -164,7 +166,7 @@ export interface TkThemeConfig {
    */
   vitePlugins?: Plugins;
   /**
-   * 首页 Post 的分页配置，完全是 ElPagination 的 props
+   * 首页 Post 文章列表的分页配置，完全是 ElPagination 的 props，支持在首页文档 index.md 的 frontmatter 配置，格式为 tk.page.[key]
    */
   page?: Partial<PaginationProps>;
   /**
@@ -175,7 +177,7 @@ export interface TkThemeConfig {
 
 export interface ThemeSetting {
   /**
-   * 是否使用主题模式切换功能
+   * 是否启用主题模式，如果为 false，则不会显示深色、浅色模式切换按钮。
    *
    * @default true
    */
