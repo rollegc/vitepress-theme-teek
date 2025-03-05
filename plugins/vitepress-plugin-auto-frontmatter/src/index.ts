@@ -65,9 +65,11 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     let tempFrontmatter = { ...frontmatter };
     let hasChange = false;
 
+    const stat = statSync(filePath);
+
     const addInfo: Record<string, any> = {
       title: getMdFileTitle(basename(filePath)),
-      date: statSync(filePath).birthtime,
+      date: stat.birthtime || stat.atime,
     };
 
     for (const [key, value] of Object.entries(addInfo)) {

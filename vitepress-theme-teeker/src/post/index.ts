@@ -115,7 +115,8 @@ export function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatte
 
   // 如果目录下面有 index.md，则 url 不是目录名/index，而是目录名/，因此通过后面的 / 来补 index.md
   const filePath = join(srcDir, `${url.endsWith("/") ? `${url}/index` : url.replace(/\.html$/, "")}.md`);
-  return formatDate(statSync(filePath).birthtime || new Date());
+  const stat = statSync(filePath);
+  return formatDate(stat.birthtime || stat.atime);
 }
 
 /**
