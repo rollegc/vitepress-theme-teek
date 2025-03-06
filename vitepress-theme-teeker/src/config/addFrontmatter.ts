@@ -33,7 +33,7 @@ export const createCategory = (fileInfo: FileInfo, ignore: string[] = []) => {
     // 去除「序号.」的前缀，并获取文件名
     const filename = item.replace(/^\d+\./, "").split(".")?.[0] || "";
 
-    // 兼容多语言功能，如果使用多语言，则不添加多语言根目录名
+    // 兼容国际化功能，如果配置多语言，则不添加多语言根目录名
     if (index !== relativePathArr.length - 1 && !locales[filename] && !ignore.includes(filename))
       categories.push(filename);
   });

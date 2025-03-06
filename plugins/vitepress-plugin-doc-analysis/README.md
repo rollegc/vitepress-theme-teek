@@ -5,7 +5,7 @@
 ## ✨ Feature
 
 - 🚀 自动分析 markdown 文档信息，挂载到 `themeConfig.docAnalysisInfo`
-- 🚀 支持 locales 多语言的文档分析，挂载到 `locales.[lang].themeConfig.docAnalysisInfo`
+- 🚀 支持 locales 国际化的文档分析，挂载到 `locales.[lang].themeConfig.docAnalysisInfo`
 
 ## 🕯️ Install
 
@@ -58,7 +58,7 @@ const { theme, localeIndex } = useData();
 
 const { fileList, totalFileWords, eachFileWords, lastCommitTime }: DocAnalysis = theme.value;
 
-// 如果处在多语言配置下，vitepress 会将当前语言的 themeConfig 放到 theme 里，与原先的 theme 进行合并
+// 如果处在国际化环境下，vitepress 会将当前语言的 themeConfig 放到 theme 里，与原先的 theme 进行合并
 ```
 
 如果不希望某个 markdown 文档被插件分析，请在该文档 `frontmatter` 配置：

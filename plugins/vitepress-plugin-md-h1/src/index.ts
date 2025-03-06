@@ -14,12 +14,12 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
       if (!id.endsWith(".md")) return code;
 
       const content = readFileSync(id, "utf-8");
-      const { data = {}, content: mdContent } = matter(content, {});
+      const { data: frontmatter = {}, content: mdContent } = matter(content, {});
       // 如果已经存在一级标题，则不需要往下处理
       if (mdContent.trimStart().split(/\r?\n/)[0].startsWith("# ")) return code;
 
       // 获取文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 frontmatter 中的 title，否则为文件名为标题
-      const title = data.title || getMdFileTitle(basename(id)) || "";
+      const title = frontmatter.title || getMdFileTitle(basename(id)) || "";
       const titleId = formatSpecialStr(title);
 
       // 将 " 替换为 \"，因为 " 会导致页面解析失败

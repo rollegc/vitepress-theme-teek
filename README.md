@@ -22,14 +22,20 @@ pnpm install
 pnpm stub
 ```
 
-项目启动（三选一）
+使用文档项目启动
+
+```bash
+pnpm docs:dev
+```
+
+Demo 项目启动（三选一）
 
 ```bash
 # 基本文档 Demo
 pnpm demo:base dev
-# 多语言文档 Demo（默认语言的文档放到根目录下）
+# 国际化文档 Demo（默认语言的文档放到根目录下）
 pnpm demo:locales dev
-# 多语言文档 Demo（默认语言的文档放到指定目录下）
+# 国际化文档 Demo（默认语言的文档放到指定目录下）
 pnpm demo:localesRoot dev
 ```
 
@@ -39,9 +45,13 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
+- 代码块语言支持配置小写
+- mdH1 支持空文档渲染一级标题
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
 - 文章内引用的 permalink 替换为文档实际地址
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
+- 除了目录页插件，其余插件需要发布新版
+- 目录页通过 layout 指定（注册全局组件）

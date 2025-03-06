@@ -31,14 +31,9 @@ const ns = useNamespace("layout");
 const { theme, frontmatter } = useUnrefData();
 const { frontmatter: frontmatterRef } = useData();
 
-const {
-  tkTheme = true,
-  tkHome = true,
-  wallpaper = {},
-  codeBlock = true,
-  bodyBgImg = {},
-  notice = {},
-}: TkThemeConfig = theme;
+const { tkTheme = true, wallpaper = {}, codeBlock = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
+// tkHome 支持 theme 或 index.md 的 frontmatter 配置
+const { tkHome = true } = { ...theme, ...frontmatter.tk };
 
 const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 const { provider, render }: CommentConfig = { ...theme.comment };

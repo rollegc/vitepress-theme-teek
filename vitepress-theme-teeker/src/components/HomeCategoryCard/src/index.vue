@@ -19,6 +19,7 @@ const route = useRoute();
 const pageNum = ref(1);
 // 分类配置项
 const {
+  path = "/categories",
   pageTitle = `${categorySvg}全部分类`,
   homeTitle = `${categorySvg}文章分类`,
   limit = 5,
@@ -60,8 +61,8 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  // 兼容多语言功能，如果没有使用多语言，则返回 '/categories'
-  return `${localeName}/categories${site.cleanUrls ? "" : ".html"}`;
+  // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
+  return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
 });
 </script>
 

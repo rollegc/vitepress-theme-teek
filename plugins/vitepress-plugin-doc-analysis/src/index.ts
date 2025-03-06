@@ -23,12 +23,12 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
       const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
       const newOption = { ...option, baseDir };
 
-      // 多语言 key 数组
+      // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
       // 如果不是多语言，则不需要处理多语言的文档分析
       if (!localesKeys.length) return doDocAnalysisThenSet(themeConfig, readFileList(newOption), newOption);
 
-      // 多语言处理，针对每个语言的目录进行单独的扫描（除了 root）
+      // 国际化处理，针对每个语言的目录进行单独的扫描（除了 root）
       localesKeys.forEach(localesKey => {
         const fileList = readFileList({ ...newOption, path: `${baseDir}/${localesKey}` }, localesKey);
         doDocAnalysisThenSet(locales[localesKey].themeConfig, fileList, newOption);

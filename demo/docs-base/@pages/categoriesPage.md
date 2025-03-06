@@ -1,7 +1,7 @@
 ---
 categoriesPage: true
 title: 分类
-permalink: /categories/
+permalink: /categories
 article: false
 layout: home
 ---

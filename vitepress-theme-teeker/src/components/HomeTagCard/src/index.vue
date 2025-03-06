@@ -19,6 +19,7 @@ const route = useRoute();
 const pageNum = ref(1);
 // 标签配置项
 const {
+  path = "/tags",
   pageTitle = `${tagSvg}全部标签`,
   homeTitle = `${tagSvg}热门标签`,
   limit = 21,
@@ -64,10 +65,10 @@ const getTagStyle = (index: number) => {
 };
 
 const tagsPageLink = computed(() => {
-  // 兼容多语言功能，如果没有使用多语言，则返回 '/tags'
+  // 兼容国际化功能，如果没有配置国际化，则返回 '/tags'
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  return `${localeName}/tags${site.cleanUrls ? "" : ".html"}`;
+  return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
 });
 </script>
 

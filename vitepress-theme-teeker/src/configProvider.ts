@@ -53,13 +53,13 @@ export const useAllPosts = (): Post => {
 };
 
 /**
- * 返回 Posts 数据，当处于多语言功能时，返回对应语言的 Posts 数据，否则返回全部 Posts 数据
+ * 返回 Posts 数据，当处于国际化环境时，返回对应语言的 Posts 数据，否则返回全部 Posts 数据
  */
 export const usePosts = (): Ref<Post> => {
   const { localeIndex } = useData();
   const posts = useAllPosts();
 
-  // 兼容多语言功能，先从多语言下获取 posts 数据，获取不到说明没有使用多语言功能，则获取所有 posts 数据。因为多语言可以随时切换，因此使用 computed
+  // 兼容国际化功能，先从多语言下获取 posts 数据，获取不到说明没有使用多语言功能，则获取所有 posts 数据。因为多语言可以随时切换，因此使用 computed
   return computed(() => posts.locales?.[unref(localeIndex)] || posts);
 };
 

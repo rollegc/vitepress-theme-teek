@@ -37,12 +37,12 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       const { path, ignoreList, localeRootDir } = option;
       const baseDir = path ? join(process.cwd(), path) : srcDir;
 
-      // 多语言 key 数组
+      // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
       // 如果不是多语言，直接自动生成结构化侧边栏
       if (!localesKeys.length) return setSideBar(themeConfig, createSidebar({ ...option, path: baseDir }));
 
-      // 多语言处理，针对每个语言的目录进行单独的扫描（除了 root）
+      // 国际化处理，针对每个语言的目录进行单独的扫描（除了 root）
       localesKeys.forEach(localesKey => {
         const sidebar: DefaultTheme.SidebarMulti = createSidebar(
           { ...option, path: `${baseDir}/${localesKey}` },

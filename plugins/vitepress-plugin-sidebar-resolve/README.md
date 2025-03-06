@@ -6,7 +6,7 @@
 
 - 🚀 扫描项目的目录，自动生成侧边栏数据，挂载到 `themeConfig.sidebar`
 - 🚀 支持 `01.guide.md` 带有序号的文件格式，在渲染侧边栏数据时，带序号的文件位置比不带序号的文件高
-- 🚀 支持 locales 多语言，挂载到 `locales.[lang].themeConfig.sidebar`
+- 🚀 支持 locales 国际化，挂载到 `locales.[lang].themeConfig.sidebar`
 
 > 说明：在同层目录下，如果存在相同序号的文件时，后面的文件会覆盖前面的文件
 
@@ -52,7 +52,7 @@ export default defineConfig({
 | collapsed       | 是否折叠侧边栏                                               | `boolean`  | `true`                         |
 | fileIndexPrefix | 文件名前缀必须以「数字.」开头                                | `boolean`  | `false`                        |
 | titleFormMd     | 是否从 md 文件获取第一个一级标题作为侧边栏 text              | `boolean`  | `false`                        |
-| localeRootDir   | 当 Vitepress 设置 locales 多语言后，如果将 root 语言的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh，否则侧边栏无法知道文件都放到了 zh | string     | 文档根目录                     |
+| localeRootDir   | 当 Vitepress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh，否则侧边栏无法知道文件都放到了 zh | string     | 文档根目录                     |
 
 ### Hooks
 
@@ -118,8 +118,8 @@ export interface SidebarOption {
    */
   titleFormMd?: boolean;
   /**
-   * 当 Vitepress 设置 locales 多语言后，如果将 root 语言的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
-   * 如果 root 语言的所有文件放在文档根目录下，则不需要设置 localeRootDir
+   * 当 Vitepress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
+   * 如果 root 语言（默认语言）的所有文件放在文档根目录下，则不需要设置 localeRootDir
    *
    * @default 文档根目录
    */

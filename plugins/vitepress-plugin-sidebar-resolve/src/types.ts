@@ -47,8 +47,8 @@ export interface SidebarOption {
    */
   titleFormMd?: boolean;
   /**
-   * 当 Vitepress 设置 locales 多语言后，如果将 root 语言的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
-   * 如果 root 语言的所有文件放在文档根目录下，则不需要设置 localeRootDir
+   * 当 Vitepress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
+   * 如果 root 语言（默认语言）的所有文件放在文档根目录下，则不需要设置 localeRootDir
    *
    * @default 文档根目录
    */

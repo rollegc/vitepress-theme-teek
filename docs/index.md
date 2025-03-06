@@ -3,6 +3,9 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
+tk:
+  tkHome: false
+
 hero:
   name: Hd Security
   text: 高纬度认证框架

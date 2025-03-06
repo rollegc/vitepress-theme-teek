@@ -15,7 +15,7 @@ export interface TkThemeConfig {
    */
   tkTheme?: boolean;
   /**
-   * 是否启用主题的首页风格，如果为 false，则首页还原到 vitepress 的默认首页，其他功能不变。
+   * 是否启用主题的首页风格，如果为 false，则首页还原到 vitepress 的默认首页，其他功能不变，支持在首页 index.md 的 frontmatter 配置 tk.tkHome。
    *
    * @default true
    */
@@ -80,7 +80,7 @@ export interface TkThemeConfig {
     hideWaves?: boolean;
   };
   /**
-   * 文章默认的作者信息
+   * 文章默认的作者信息，支持在文章页的 frontmatter 配置 author.[key]
    */
   author?: {
     /**
@@ -280,7 +280,7 @@ export interface BodyBgImg {
    */
   maskBg?: string | number;
   /**
-   * 文章页的样式风格，default 为官方风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
+   * 文章页的样式风格，default 为 Vitepress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
    */
   pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
 }
@@ -450,6 +450,12 @@ export interface Category {
    */
   enable?: boolean;
   /**
+   * 分类页访问地址
+   *
+   * @default '/categories'
+   */
+  path?: string;
+  /**
    * 分类页卡片标题
    *
    * @default '${svg}全部分类'
@@ -488,6 +494,12 @@ export interface Tag {
    * @default true
    */
   enabled?: boolean;
+  /**
+   * 标签页访问地址
+   *
+   * @default '/tags'
+   */
+  path?: string;
   /**
    * 标签页页卡片标题
    *
@@ -915,7 +927,7 @@ export interface Notice {
    */
   popoverStyle?: Record<string, any>;
   /**
-   * 公告标题，函数式需要和多语言搭配使用，根据不同语言环境返回不同标题
+   * 公告标题，函数式需要和国际化搭配使用，根据不同语言环境返回不同标题
    */
   title?: string | ((localeIndex: string) => string);
   /**

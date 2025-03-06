@@ -32,7 +32,7 @@ const breadcrumbList = computed(() => {
     // 去除「序号.」的前缀，并获取文件名
     const fileName = item.replace(/^\d+\./, "").split(".")?.[0] || "";
 
-    // 兼容多语言功能，如果使用多语言，在面包屑去掉多语言根目录名
+    // 兼容国际化功能，如果配置多语言，在面包屑去掉多语言根目录名
     if ((index !== relativePathArrConst.length - 1 || breadcrumb?.showCurrentName) && fileName !== unref(localeIndex)) {
       classifyList.push({
         fileName,

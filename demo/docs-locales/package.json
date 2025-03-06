@@ -2,7 +2,7 @@
   "private": true,
   "name": "@vitepress-theme-teeker/docs-locales",
   "version": "1.0.0",
-  "description": "vitepress-theme-teeker 多语言文档 Demo",
+  "description": "vitepress-theme-teeker 国际化文档 Demo",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev",

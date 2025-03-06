@@ -25,7 +25,6 @@ const {
   maskBg = "rgba(0, 0, 0, 0.4)",
   defaultBgColor = "#e5e5e5",
   textColor,
-  features = [],
   typesInTime = 200,
   typesOutTime = 100,
   typesNextTime = 800,
@@ -34,6 +33,7 @@ const {
   descFontSize = "1.4rem",
   descStyle = "default",
 }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
 
 const isDefaultBgStyle = bgStyle === "default";
 const isBigImgBgStyle = bgStyle === "bigImg";

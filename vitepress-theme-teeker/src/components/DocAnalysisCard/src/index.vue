@@ -13,7 +13,7 @@ defineOptions({ name: "DocAnalysisCard" });
 const ns = useNamespace("docAnalysis");
 
 const { frontmatter, theme } = useUnrefData();
-// 使用 useData 的 theme 是为了监听多语言切换来动态修改站点信息的内容
+// 使用 useData 的 theme 是为了监听国际化切换来动态修改站点信息的内容
 const { theme: themeRef } = useData();
 // 站点信息配置项
 const {

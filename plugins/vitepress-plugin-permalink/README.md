@@ -7,7 +7,7 @@
 - 🚀🚀 支持给 markdown 文档设置唯一的访问 **永久链接**，不再因为 markdown 文档路径移动而导致访问地址发生变化
 - 🚀 读取 markdown 文档 `frontmatter` 的 `permalink`，挂载到 `themeConfig.permalinks`
 - 🚀 提供 `usePermalinks` hooks 函数拓展 `router` 方法，支持 `router.push(href)` 跳转到永久链接或实际的文件路径
-- 🚀 支持 locales 多语言，自动给 **永久链接** 添加语言前缀，不同语言的永久链接不会重复
+- 🚀 支持 locales 国际化，自动给 **永久链接** 添加语言前缀，不同语言的永久链接不会重复
 - 🚀 支持 rewrite 路由重写，最终得到的文档路径是 rewrite 路由重写后的路径
 - 🚀 **永久链接** 支持导航栏激活高亮
 

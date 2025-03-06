@@ -69,7 +69,7 @@ export interface Post {
     tags: GroupCardItem[];
   };
   /**
-   * 多语言启用后，key 为语言，value 为该语言目录下的 Posts。如果没有开启多语言，则没有 locales
+   * 国际化启用后，key 为语言，value 为该语言目录下的 Posts。如果没有开启国际化，则没有 locales
    */
   locales?: Record<string, Post>;
 }

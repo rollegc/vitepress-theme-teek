@@ -48,10 +48,10 @@ export const transformRaw = (posts: TkContentData[]): Post => {
   const postsData = resolvePosts(posts);
 
   const localesKeys = Object.keys(locales);
-  // 没有配置多语言，则返回所有 posts 数据
+  // 没有配置国际化，则返回所有 posts 数据
   if (!localesKeys.length) return postsData;
 
-  // 多语言处理，计算每个语言目录下的 posts 数据
+  // 国际化处理，计算每个语言目录下的 posts 数据
   const postsLocale: Record<string, Post> = {};
   localesKeys
     .filter(localesKey => localesKey !== "root")

@@ -49,13 +49,13 @@ date: yyyy-MM-dd hh:mm:ss
 
 ## 🛠️ Options
 
-| name        | description                                                  | type                                                         | default |
-| ----------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------- |
-| pattern     | 扫描的文件路径表达式，为 global 表达式                       | `string | string[]`                                          |         |
-| include     | include 指定的对象如果不在 markdown frontmatter 存在，则忽略该文件 | `Record<string, any>`                                        |         |
-| exclude     | exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高 | `Record<string, any>`                                        |         |
-| transform   | 转换处理好的 frontmatter，该函数需要返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter | `(frontmatter: Record<string, any>, fileInfo: FileInfo) => Record<string, any> | void` |         |
-| globOptions | tinyglobby 的配置项，*插件默认已经忽略 node_modules 和 dist 目录的所有文件 | `GlobOptions`                                                |         |
+| name        | description                                                                                                                        | type                                                                           | default   |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | --------- | --- |
+| pattern     | 扫描的文件路径表达式，为 global 表达式                                                                                             | `string                                                                        | string[]` |     |
+| include     | include 指定的对象如果不在 markdown frontmatter 存在，则忽略该文件                                                                 | `Record<string, any>`                                                          |           |
+| exclude     | exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高           | `Record<string, any>`                                                          |           |
+| transform   | 转换处理好的 frontmatter，该函数需要返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter | `(frontmatter: Record<string, any>, fileInfo: FileInfo) => Record<string, any> | void`     |     |
+| globOptions | tinyglobby 的配置项，\*插件默认已经忽略 node_modules 和 dist 目录的所有文件                                                        | `GlobOptions`                                                                  |           |
 
 `globOptions` 是 `tinyglobby` 插件配置项，如果你需要忽略某些路径，可以使用该配置项 `globOptions.ignore`。更多用法请去 tinyglobby 官网查看。
 
@@ -130,8 +130,8 @@ date: 2025-03-04
 const addPermalink = () => {
   const plugins: PluginOption[] = [];
   const autoFrontmatterOption = { pattern: "**/*.md" };
-  
-  autoFrontmatterOption.transform = (frontmatter) => {
+
+  autoFrontmatterOption.transform = frontmatter => {
     // 调用可能存在的 transform（支持外界使用）
     let transformResult = transform?.(frontmatter, fileInfo) || {};
 
@@ -139,19 +139,19 @@ const addPermalink = () => {
     if (!frontmatter.permalink) {
       transformResult = { ...transformResult, ...createPermalink() };
     }
-		
+
     // 确保返回值存在，如果返回 {} 将会清空文件本身的 frontmatter，返回 undefined 则告诉插件不使用 transform 返回的数据
     return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
   };
-  
+
   plugins.push(AutoFrontmatter(autoFrontmatterOption));
-  
+
   return {
     vite: {
-      plugins
-    }
-  }
-}
+      plugins,
+    },
+  };
+};
 
 /**
  * 创建 permalink 永久链接
@@ -201,7 +201,7 @@ categories:
 const addCategories = () => {
   const plugins: PluginOption[] = [];
   const autoFrontmatterOption = { pattern: "**/*.md" };
-  
+
   autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
     // 调用可能存在的 transform（支持外界使用）
     let transformResult = transform?.(frontmatter, fileInfo) || {};
@@ -210,13 +210,13 @@ const addCategories = () => {
     if (!frontmatter.categories) {
       transformResult = { ...transformResult, ...createCategories(fileInfo) };
     }
-		
+
     // 确保返回值存在，如果返回 {} 将会清空文件本身的 frontmatter，返回 undefined 则告诉插件不使用 transform 返回的数据
     return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
   };
-  
+
   plugins.push(AutoFrontmatter(autoFrontmatterOption));
-  
+
   return {
     vite: {
       plugins
