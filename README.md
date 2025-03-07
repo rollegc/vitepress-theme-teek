@@ -22,7 +22,7 @@ pnpm install
 pnpm stub
 ```
 
-使用文档项目启动
+使用文档启动
 
 ```bash
 pnpm docs:dev
