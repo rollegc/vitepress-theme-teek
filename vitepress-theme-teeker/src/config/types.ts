@@ -21,7 +21,7 @@ export interface TkThemeConfig {
    */
   tkHome?: boolean;
   /**
-   * 是否启用锚点滚动功能，即阅读文章时，自动将 h1~ h6 标题添加到地址栏 # 后面
+   * 是否启用锚点滚动功能，即阅读文章时，自动将 h1 ~ h6 标题添加到地址栏 # 后面
    *
    * @default true
    */
@@ -33,7 +33,7 @@ export interface TkThemeConfig {
    */
   viewTransition?: boolean;
   /**
-   * 首页卡片的排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序。
+   * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序。
    *
    * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
    */
@@ -177,17 +177,17 @@ export interface TkThemeConfig {
 
 export interface ThemeSetting {
   /**
-   * 是否启用主题模式，如果为 false，则不会显示深色、浅色模式切换按钮。
+   * 是否启用主题风格，如果为 false，则不会显示切换按钮
    *
    * @default true
    */
-  useThemeMode?: boolean;
+  useThemeStyle?: boolean;
   /**
-   * 设置当前主题模式
+   * 设置当前主题风格
    *
    * @default 'vp-default'
    */
-  themeMode?:
+  themeStyle?:
     | "vp-default"
     | "vp-green"
     | "vp-yellow"
@@ -198,9 +198,9 @@ export interface ThemeSetting {
     | "el-red"
     | string;
   /**
-   * 自定义主题模式，将会追加到内置主题模式后面
+   * 自定义主题风格，将会追加到内置主题风格后面
    */
-  themeModeAppend?: {
+  themeStyleAppend?: {
     /**
      * 主题组名称
      */

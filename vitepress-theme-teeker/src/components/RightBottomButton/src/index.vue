@@ -48,9 +48,9 @@ onUnmounted(() => {
 
 const { theme } = useUnrefData();
 const {
-  useThemeMode = true,
-  themeMode = "vp-default",
-  themeModeAppend = [],
+  useThemeStyle = true,
+  themeStyle = "vp-default",
+  themeStyleAppend = [],
   useThemeSize = true,
   themeSize = "default",
   themeSizeAppend = [],
@@ -59,10 +59,10 @@ const {
 const { provider }: CommentConfig = theme.comment || {};
 
 // 主题切换
-const showThemeModeItem = ref(false);
-const currentThemeMode = ref(themeMode);
+const showThemeStyleItem = ref(false);
+const currentThemeStyle = ref(themeStyle);
 
-const themeModeList = [
+const themeStyleList = [
   {
     label: "VP 主题",
     tip: "VitePress 主题",
@@ -83,17 +83,17 @@ const themeModeList = [
       { name: "红色", theme: "el-red" },
     ],
   },
-  ...themeModeAppend,
+  ...themeStyleAppend,
 ];
 
-const changeThemeMode = (themeMode: string) => {
-  if (themeMode === unref(currentThemeMode)) return;
-  currentThemeMode.value = themeMode;
-  document.documentElement.setAttribute("theme", themeMode);
+const changeThemeStyle = (themeStyle: string) => {
+  if (themeStyle === unref(currentThemeStyle)) return;
+  currentThemeStyle.value = themeStyle;
+  document.documentElement.setAttribute("theme", themeStyle);
 };
 
-// 初始化主题模式
-changeThemeMode(themeMode);
+// 初始化主题风格
+changeThemeStyle(themeStyle);
 
 // 主题尺寸
 const showThemeSizeItem = ref(false);
@@ -132,7 +132,7 @@ changeThemeSize(themeSize);
 
     <div
       v-if="useThemeSize"
-      title="字体切换"
+      title="主题尺寸切换"
       :class="`${ns.e('button')} size-change`"
       @mouseenter="showThemeSizeItem = true"
       @mouseleave="showThemeSizeItem = false"
@@ -155,17 +155,17 @@ changeThemeSize(themeSize);
     </div>
 
     <div
-      v-if="useThemeMode"
-      title="主题切换"
+      v-if="useThemeStyle"
+      title="主题风格切换"
       :class="ns.e('button')"
-      @mouseenter="showThemeModeItem = true"
-      @mouseleave="showThemeModeItem = false"
-      @click="showThemeModeItem = true"
+      @mouseenter="showThemeStyleItem = true"
+      @mouseleave="showThemeStyleItem = false"
+      @click="showThemeStyleItem = true"
     >
       <Icon><MagicStick /></Icon>
       <transition name="mode">
-        <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeModeItem" @click.stop @touchstart.stop>
-          <ul v-for="item in themeModeList" :key="item.label">
+        <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
+          <ul v-for="item in themeStyleList" :key="item.label">
             <li :class="`${ns.e('button__mode__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>
             <li>
               <ul>
@@ -173,8 +173,8 @@ changeThemeSize(themeSize);
                   v-for="option in item.options"
                   :key="item.label + option.theme"
                   title=""
-                  :class="['dropdown-item', 'sle', { active: option.theme === currentThemeMode }]"
-                  @click="changeThemeMode(option.theme)"
+                  :class="['dropdown-item', 'sle', { active: option.theme === currentThemeStyle }]"
+                  @click="changeThemeStyle(option.theme)"
                 >
                   {{ option.name }}
                 </li>
