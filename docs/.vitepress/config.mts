@@ -97,6 +97,14 @@ export default defineConfig({
   lastUpdated: true,
   lang: "zh-CN",
   head: [
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/teeker-logo-mini.svg" }],
+    ["link", { rel: "icon", type: "image/png", href: "/teeker-logo-mini.png" }],
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:locale", content: "zh-CN" }],
+    ["meta", { property: "og:title", content: "Teeker | Vitepress Theme" }],
+    ["meta", { property: "og:site_name", content: "Teeker" }],
+    ["meta", { property: "og:image", content: "" }],
+    ["meta", { property: "og:url", content: "" }],
     ["meta", { name: "author", content: "Tianke" }],
     [
       "meta",
@@ -113,8 +121,6 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "keywords", description }],
-    ["link", { rel: "icon", href: "/favicon.ico", type: "image/png" }],
-    ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
   ],
   markdown: {
     // 开启行号
@@ -134,7 +140,7 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: " https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
+    logo: "/teeker-logo-mini.svg",
     darkModeSwitchLabel: "主题",
     sidebarMenuLabel: "菜单",
     returnToTopLabel: "返回顶部",
