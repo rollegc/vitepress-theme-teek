@@ -28,9 +28,9 @@ export interface SidebarOption {
   /**
    * 是否默认折叠侧边栏
    *
-   * @default true
+   * @default undefined
    */
-  collapsed?: boolean;
+  collapsed?: boolean | ((path: string, title: string) => boolean);
   /**
    * 文件名前缀必须以「数字.」开头
    *

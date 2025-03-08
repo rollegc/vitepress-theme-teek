@@ -5,7 +5,7 @@ const tkConfig = tkThemeConfig({
   author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
-    avatar: " https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
+    avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
     avatarStyle: "full",
     name: "天客",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
@@ -138,7 +138,7 @@ export default defineConfig({
 
   // https://vitepress.dev/reference/default-theme-config
   themeConfig: {
-    logo: " https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
+    logo: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/hd-security" }],
     search: {
       provider: "local",

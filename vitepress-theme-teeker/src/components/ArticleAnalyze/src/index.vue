@@ -5,7 +5,7 @@ import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useNamespace, useBuSunZi } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
-import { Breadcrumb, ArticleInfo, Icon } from "../../";
+import { ArticleBreadcrumb, ArticleInfo, Icon } from "../../";
 import { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
 
@@ -84,7 +84,7 @@ onMounted(() => {
 
 <template>
   <div :class="`${ns.b()} flx-justify-between`">
-    <Breadcrumb />
+    <ArticleBreadcrumb />
 
     <div v-if="isShowInfo" ref="baseInfoRef" :class="`${ns.e('wrapper')} flx-align-center`">
       <ArticleInfo :post scope="article" />

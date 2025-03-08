@@ -15,9 +15,9 @@ defineOptions({ name: "Footer" });
 
 const ns = useNamespace("footer");
 
-const { theme } = useUnrefData();
+const { theme, frontmatter } = useUnrefData();
 
-const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = theme;
+const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = { ...theme, ...frontmatter.tk };
 
 const footerData = computed(() => {
   const { theme, copyright, icpRecord, securityRecord }: FooterInfo = footerInfo || {};

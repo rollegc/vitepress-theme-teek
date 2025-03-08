@@ -28,6 +28,7 @@ const {
   noticeIcon = noticeSvg,
   closeIcon = closeSvg,
   onAfterRouteChange,
+  render,
 }: Notice = unref(theme).notice || {};
 
 const destroyNoticeIcon = ref(false);
@@ -180,7 +181,8 @@ const storagePopoverState = (state: string) => {
       </slot>
 
       <div :class="ns.e('popover__content')">
-        <slot name="notice-content" />
+        <component v-if="render" :is="render" />
+        <slot v-else name="notice-content" />
       </div>
     </div>
 

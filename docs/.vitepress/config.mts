@@ -1,88 +1,34 @@
-import { defineConfig } from "vitepress";
+import { defineConfig, DefaultTheme } from "vitepress";
 import tkThemeConfig from "vitepress-theme-teeker/config";
 
 const description = ["vitepress-theme-teeker 使用文档", "vitepress 主题框架"].toString();
 
 const tkConfig = tkThemeConfig({
   author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
-  blogger: {
-    // 博主信息，显示在首页侧边栏
-    avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
-    avatarStyle: "full",
-    name: "天客",
-    slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
-  },
-  docAnalysis: {
-    createTime: "2021-10-19",
-    siteView: true,
-    pageView: true,
-    wordCount: true,
-    readingTime: true,
-    siteIteration: 2500,
-    pageIteration: 2500,
-  },
-  banner: {
-    bgStyle: "default",
-    descStyle: "types",
-  },
-
   footerInfo: {
     copyright: {
       createYear: 2021,
-      suffix: "天客 Blog",
+      suffix: "Teeker Docs",
     },
     icpRecord: {
       name: "桂ICP备2021009994号",
       link: "http://beian.miit.gov.cn/",
     },
   },
-  social: [
-    {
-      icon: "icon-github",
-      iconType: "iconfont",
-      name: "GitHub",
-      link: "https://github.com/kele-bingtang",
-    },
-    {
-      icon: "icon-gitee2",
-      iconType: "iconfont",
-      name: "Gitee",
-      link: "https://gitee.com/kele-bingtang",
-    },
-    {
-      icon: "icon-qq",
-      iconType: "iconfont",
-      name: "QQ",
-      link: "http://wpa.qq.com/msgrd?v=3&uin=28761025&site=qq&menu=yes",
-    },
-    {
-      icon: "icon-mobile",
-      iconType: "iconfont",
-      name: "联系我",
-      link: "https://www.youngkbt.cn/?contact=true",
-    },
-  ],
-  comment: {
-    provider: "giscus",
-    options: {
-      // twikoo 配置，官网：https://twikoo.js.org/
-      // envId: "https://twikoo.youngkbt.cn/",
-      // link: "https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.min.js",
-
-      // waline 配置，官网：https://waline.js.org/
-      // serverURL: "https://tk.waline.youngkbt.cn/",
-      // jsLink: "https://unpkg.com/@waline/client@v3/dist/waline.js",
-      // cssLink: "https://unpkg.com/@waline/client@v3/dist/waline.css",
-
-      // giscus 配置，官网：https://giscus.app/zh-CN
-      repo: "Kele-Bingtang/vitepress-theme-kt",
-      repoId: "R_kgDONpVfBA",
-      category: "Announcements",
-      categoryId: "DIC_kwDONpVfBM4Cm3v9",
-
-      // artalk 配置，官网：https://artalk.js.org/
-      // server: "",
-      // site: "",
+  vitePlugins: {
+    sidebarOption: {
+      sideBarResolved: data => {
+        const targetDirName = "/10.配置/";
+        if (data[targetDirName]) {
+          data[targetDirName] = [
+            {
+              text: "配置",
+              items: data[targetDirName] as DefaultTheme.SidebarItem[],
+            },
+          ];
+        }
+        return data;
+      },
     },
   },
 });
@@ -156,7 +102,7 @@ export default defineConfig({
     nav: [
       { text: "首页", link: "/" },
       { text: "指南", link: "/guild/intro" },
-      { text: "配置", link: "/config/theme" },
+      { text: "配置", link: "/reference/config" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teeker" }],
 

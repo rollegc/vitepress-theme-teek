@@ -86,7 +86,7 @@ const createSideBarItems = (
   onlyScannerRootMd = false
 ): DefaultTheme.SidebarItem[] => {
   const {
-    collapsed = true,
+    collapsed,
     ignoreList = [],
     ignoreIndexMd = false,
     fileIndexPrefix = false,
@@ -129,7 +129,7 @@ const createSideBarItems = (
 
       const sidebarItem = {
         text: mdTitle || title,
-        collapsed,
+        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, title) : collapsed,
         items: createSideBarItems(filePath, option, `${prefix}${dirOrFilename}/`),
       };
 
@@ -157,7 +157,7 @@ const createSideBarItems = (
 
       const sidebarItem = {
         text: finalTitle,
-        collapsed,
+        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, title) : collapsed,
         link: prefix + name,
       };
 

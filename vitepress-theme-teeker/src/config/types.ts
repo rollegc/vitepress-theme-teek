@@ -2,20 +2,20 @@ import type { PermalinkOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import { AutoFrontmatterOption } from "plugins/vitepress-plugin-auto-frontmatter";
+import type { AutoFrontmatterOption } from "plugins/vitepress-plugin-auto-frontmatter";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
 import type { Ref, VNode } from "vue";
-import { Route } from "vitepress";
+import type { Route } from "vitepress";
 
 export interface TkThemeConfig {
   /**
-   * 是否启用主题，如果为 false，则不会主题的 99% 功能，只保留永久链接、锚点滚动、深色、浅色模式过渡动画这三个功能。
+   * 是否启用主题，如果为 false，则不会主题的 99% 功能，只保留永久链接、锚点滚动、深色、浅色模式过渡动画这三个功能，支持在首页 index.md 的 frontmatter 配置 tk.tkTheme
    *
    * @default true
    */
   tkTheme?: boolean;
   /**
-   * 是否启用主题的首页风格，如果为 false，则首页还原到 vitepress 的默认首页，其他功能不变，支持在首页 index.md 的 frontmatter 配置 tk.tkHome。
+   * 是否启用主题的首页风格，如果为 false，则首页还原到 vitepress 的默认首页，其他功能不变，支持在首页 index.md 的 frontmatter 配置 tk.tkHome
    *
    * @default true
    */
@@ -33,13 +33,13 @@ export interface TkThemeConfig {
    */
   viewTransition?: boolean;
   /**
-   * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序。
+   * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序，支持在首页 index.md 的 frontmatter 配置 tk.homeCardSort
    *
    * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
    */
   homeCardSort?: ("topArticle" | "category" | "tag" | "friendLink" | "docAnalysis")[];
   /**
-   * 主题背景色，用于精选文章卡片的 top + sticky 功能和标签卡片的背景色
+   * 主题背景色，用于精选文章卡片的 top + sticky 功能和标签卡片的背景色，支持在首页 index.md 的 frontmatter 配置 tk.bgColor
    *
    * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
    */
@@ -51,7 +51,7 @@ export interface TkThemeConfig {
    */
   codeBlock?: boolean;
   /**
-   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'bigImg' && banner.imgSrc 存在) 或 bodyBgImg.imgSrc 存在才生效
+   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'bigImg' && banner.imgSrc 不存在) 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
    */
   wallpaper?: {
     /**
@@ -101,35 +101,35 @@ export interface TkThemeConfig {
    */
   bodyBgImg?: BodyBgImg;
   /**
-   * 首页 Banner 配置，里面的属性全部支持在 frontmatter 配置，格式为 tk.banner.[key]
+   * 首页 Banner 配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.banner.[key]
    */
   banner?: Banner;
   /**
-   * 博主信息，显示在首页左边第一个卡片
+   * 博主信息，显示在首页左边第一个卡片，支持在首页 `index.md` 的 `frontmatter` 配置，格式为 `tk.blogger.[key]`
    */
   blogger?: Blogger;
   /**
-   * 精选文章卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.topArticle.[key]
+   * 精选文章卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.topArticle.[key]
    */
   topArticle?: TopArticle;
   /**
-   * 分类卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.category.[key]
+   * 分类卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.category.[key]
    */
   category?: Category;
   /**
-   * 标签卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.tag.[key]
+   * 标签卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.tag.[key]
    */
   tag?: Tag;
   /**
-   * 友情链接卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.friendLink.[key]
+   * 友情链接卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.friendLink.[key]
    */
   friendLink?: FriendLink;
   /**
-   * 站点信息卡片配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.docAnalysis.[key]
+   * 站点信息卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.docAnalysis.[key]
    */
   docAnalysis?: DocAnalysis;
   /**
-   * 文章列表配置，里面的属性全部支持在首页 index.md 的 frontmatter 配置，格式为 tk.post.[key]
+   * 文章列表配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.post.[key]
    */
   post?: Post;
   /**
@@ -137,11 +137,11 @@ export interface TkThemeConfig {
    */
   article?: Article;
   /**
-   * 面包屑配置，里面的属性全部支持在文章页的 frontmatter 配置 breadcrumb.[key]
+   * 面包屑配置，支持在文章页的 frontmatter 配置 breadcrumb.[key]
    */
   breadcrumb?: Breadcrumb;
   /**
-   * 社交配置
+   * 社交信息配置
    */
   social?: Social[];
   /**
@@ -357,7 +357,7 @@ export interface Banner {
    */
   descStyle?: "default" | "types" | "switch";
   /**
-   * 描述信息
+   * 描述信息，在首页 index.md 的 frontmatter 中，除了 tk.banner.description 设置，也可以使用 tk.description 设置
    *
    * @default ''
    */
@@ -404,7 +404,7 @@ export interface Blogger {
   /**
    * 头像风格：radius 为圆形头像，可支持鼠标悬停旋转，full 为方形头像
    *
-   * @default 'radius'
+   * @default 'full'
    */
   avatarStyle?: "radius" | "full";
 }
@@ -709,7 +709,7 @@ export interface DocAnalysisInfo {
 
 export interface Post {
   /**
-   * 摘要位置
+   * 文章摘要位置
    *
    * @default bottom
    */
@@ -765,25 +765,25 @@ export interface Article {
    */
   showInfo?: boolean | ("post" | "article")[];
   /**
-   * 文章页是否展示作者
+   * 是否展示作者
    *
    * @default true
    */
   showAuthor?: boolean;
   /**
-   * 文章页是否展示日期
+   * 是否展示日期
    *
    * @default true
    */
   showDate?: boolean;
   /**
-   * 文章页是否展示分类
+   * 是否展示分类
    *
    * @default false
    */
   showCategory?: boolean;
   /**
-   * 文章页是否展示标签
+   * 是否展示标签
    *
    * @default false
    */
@@ -928,6 +928,8 @@ export interface Notice {
   popoverStyle?: Record<string, any>;
   /**
    * 公告标题，函数式需要和国际化搭配使用，根据不同语言环境返回不同标题
+   *
+   * @default '公告'
    */
   title?: string | ((localeIndex: string) => string);
   /**
@@ -1003,6 +1005,10 @@ export interface Notice {
    * @param to 切换到的目标路由
    */
   onAfterRouteChange?: (to: Route, noticeShow: Ref<boolean>, showPopover: Ref<boolean>) => void;
+  /**
+   * 自定义内容组件，返回一个 VNode，比如一个 vue 组件
+   */
+  render?: () => VNode;
 }
 
 export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" | "giscus" | "artalk" | "render"> = {

@@ -14,7 +14,6 @@ const ns = useNamespace("banner");
 const { site, theme, frontmatter } = useUnrefData();
 
 const title = frontmatter.tk?.name || site.title || "";
-const descArray = [...new Set([frontmatter.tk?.description || []].flat()?.filter((v: string) => !!v))] as string[];
 
 // Banner 配置项
 const {
@@ -28,11 +27,15 @@ const {
   typesInTime = 200,
   typesOutTime = 100,
   typesNextTime = 800,
+  description = [],
   switchTime = 4000,
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
   descStyle = "default",
 }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+const descArray: string[] = [
+  ...new Set([frontmatter.tk?.description || description || []].flat()?.filter((v: string) => !!v)),
+];
 const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
 
 const isDefaultBgStyle = bgStyle === "default";

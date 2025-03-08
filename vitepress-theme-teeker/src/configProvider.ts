@@ -106,8 +106,9 @@ export const isCataloguePage = () => {
  * 获取默认背景色
  */
 export const getBgColor = () => {
-  const { theme } = useData();
+  const { theme, frontmatter } = useData();
   return (
+    unref(frontmatter).frontmatter ||
     unref(theme).bgColor || [
       "#e74c3c",
       "#409EFF",

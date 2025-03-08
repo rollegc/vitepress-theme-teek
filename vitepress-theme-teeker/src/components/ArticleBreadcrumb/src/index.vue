@@ -22,6 +22,7 @@ const breadcrumb: BreadcrumbType = {
   ...theme.breadcrumb,
   ...frontmatter.breadcrumb,
 };
+
 const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);
 
 const breadcrumbList = computed(() => {

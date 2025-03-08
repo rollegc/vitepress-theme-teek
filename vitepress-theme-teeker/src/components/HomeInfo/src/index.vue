@@ -2,14 +2,16 @@
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
+import { useUnrefData } from "../../../configProvider";
 import { HomeMyCard, HomeCategoryCard, HomeTagCard, FriendLinkCard, TopArticleCard, DocAnalysisCard } from "../../";
 
 defineOptions({ name: "HomeInfo" });
 
 const ns = useNamespace("homeInfo");
 
-const { theme, frontmatter } = useData();
-const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = unref(theme);
+const { frontmatter: frontmatterRef } = useData();
+const { theme, frontmatter } = useUnrefData();
+const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = { ...theme, ...frontmatter };
 
 const enabledTopArticleCard = topArticle?.enabled !== false;
 const enabledCategoryCard = category?.enabled !== false;
@@ -23,8 +25,8 @@ const finalHomeCardSort = computed(() => {
   return [...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
-const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);
-const isTagsPage = computed(() => unref(frontmatter).tagsPage);
+const isCategoriesPage = computed(() => unref(frontmatterRef).categoriesPage);
+const isTagsPage = computed(() => unref(frontmatterRef).tagsPage);
 const isHomePage = computed(() => !unref(isCategoriesPage) && !unref(isTagsPage));
 
 // 定义组件映射

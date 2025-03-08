@@ -51,7 +51,7 @@
     "vitepress-plugin-file-content-loader": "latest",
     "vitepress-plugin-md-h1": "workspace:*",
     "vitepress-plugin-permalink": "latest",
-    "vitepress-plugin-sidebar-resolve": "latest"
+    "vitepress-plugin-sidebar-resolve": "workspace:*"
   },
   "devDependencies": {
     "@giscus/vue": "^3.1.1",

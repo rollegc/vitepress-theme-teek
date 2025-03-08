@@ -1,6 +1,7 @@
 <script setup lang="ts" name="tkLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
+import { computed } from "vue";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import { Banner, CommentConfig, TkThemeConfig } from "../config/types";
@@ -36,15 +37,22 @@ const { tkTheme = true, wallpaper = {}, codeBlock = true, bodyBgImg = {}, notice
 const { tkHome = true } = { ...theme, ...frontmatter.tk };
 
 const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
-const { provider, render }: CommentConfig = { ...theme.comment };
 
-const commentComponent = {
-  twikoo: CommentTwikoo,
-  waline: CommentWaline,
-  giscus: CommentGiscus,
-  artalk: CommentArtalk,
-  render,
-};
+const comment: CommentConfig = computed(() => {
+  const commentOption = { ...theme.comment, ...frontmatter.tk?.comment };
+  return {
+    enabled: frontmatterRef.enabled || true,
+    components: {
+      twikoo: CommentTwikoo,
+      waline: CommentWaline,
+      giscus: CommentGiscus,
+      artalk: CommentArtalk,
+      render: commentOption.render,
+    },
+    provider: commentOption.provider,
+    options: commentOption.options,
+  };
+});
 </script>
 
 <template>
@@ -93,11 +101,11 @@ const commentComponent = {
       <template #doc-after>
         <slot name="doc-after" />
         <!-- 评论区 -->
-        <template v-if="frontmatterRef.comment !== false">
+        <template v-if="comment.enabled">
           <ClientOnly>
             <component
-              v-if="provider"
-              :is="commentComponent[provider]"
+              v-if="comment.provider"
+              :is="comment.components[comment.provider]"
               :id="`${ns.namespace}-comment`"
               :class="ns.e('comment')"
             />
