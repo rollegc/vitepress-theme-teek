@@ -59,7 +59,13 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       }
 
       localesKeys.forEach(localeKey => {
-        setActiveMatchWhenUsePermalink(locales[localeKey].themeConfig?.nav, permalinkToPath, cleanUrls, rewrites);
+        setActiveMatchWhenUsePermalink(
+          locales[localeKey].themeConfig?.nav,
+          permalinkToPath,
+          cleanUrls,
+          rewrites,
+          localeKey
+        );
       });
     },
     configureServer(server: ViteDevServer) {
@@ -118,12 +124,14 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
  * @param permalinkToPath permalink 和文件路径的映射关系
  * @param cleanUrls cleanUrls
  * @param rewrites 如果设置了 rewrites，则取 rewrites 后的文件路径
+ * @param localeKey 多语言名称
  */
 const setActiveMatchWhenUsePermalink = (
   nav: any[] = [],
   permalinkToPath: Record<string, string>,
   cleanUrls = false,
-  rewrites: Record<string, any> = {}
+  rewrites: Record<string, any> = {},
+  localeKey = ""
 ) => {
   if (!nav.length) return;
 
@@ -136,9 +144,10 @@ const setActiveMatchWhenUsePermalink = (
 
     if (path && !item.activeMatch) {
       // 如果设置了 rewrites，则取 rewrites 后的文件路径
-      const rewritesPath = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
-      // 只传入一级目录，这样访问里面的 Markdown 文件后，对应导航都可以高亮（官方规定 activeMatch 是一个正则表达式字符串）
-      item.activeMatch = rewritesPath?.split("/")[0];
+      const finalPathArr = (rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path).split("/");
+      // 只传入父目录（兼容国际化目录），这样访问里面的 Markdown 文件后，对应导航都可以高亮（官方规定 activeMatch 是一个正则表达式字符串）
+      if (finalPathArr[0] === localeKey) item.activeMatch = `${finalPathArr[0]}/${finalPathArr[1]}`;
+      else item.activeMatch = finalPathArr[0];
     }
     if (item.items?.length) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
   });
