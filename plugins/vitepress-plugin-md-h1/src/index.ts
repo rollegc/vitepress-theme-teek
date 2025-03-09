@@ -59,7 +59,8 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
             `
         );
 
-        if (code.includes(createTextVNode)) return newCode;
+        if (newCode.includes(createTextVNode)) return newCode;
+        // 如果没有引入 createTextVNode，则手动引入
         return newCode.replace("import {", `import { ${createTextVNode},`);
       }
 
