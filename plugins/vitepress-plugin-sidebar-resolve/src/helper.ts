@@ -241,7 +241,7 @@ const resolveFileName = (
 };
 
 /**
- * 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取标题，一旦获取到第一个则不再继续遍历
+ * 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取一级标题，一旦获取到第一个则不再继续遍历
  * @param root 目录绝对路径
  * @param dirOrFilename 文件夹名
  */

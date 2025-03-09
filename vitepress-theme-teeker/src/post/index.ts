@@ -88,7 +88,7 @@ const resolvePosts = (posts: TkContentData[]): Post => {
 };
 
 /**
- * 获取文章标题，获取顺序：frontmatter.title > md 文件开头的 # 标题 > 文件名
+ * 获取文章标题，获取顺序：frontmatter.title > md 文件开头的一级标题 > 文件名
  *
  * @param post 文章数据
  */
@@ -97,7 +97,7 @@ export function getTitle(post: RequiredKeyPartialOther<TkContentData, "frontmatt
 
   const { content = "" } = matter(post.src || "", {});
   const splitName = basename(post.url).split(".");
-  // 如果目录下有 index.md 且没有 # 一级标题，则使用目录名作为文章标题
+  // 如果目录下有 index.md 且没有一级标题，则使用目录名作为文章标题
   const name = splitName.length > 1 ? splitName[1] : splitName[0];
   return getTitleFromMd(content) || name || "";
 }

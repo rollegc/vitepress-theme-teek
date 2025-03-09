@@ -45,7 +45,6 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
-- 插件获取标题统一顺序
 - bodyBgImg 的 pageStyle 抽离出来
 - mdH1 支持空文档渲染一级标题
 - 同级文档下，导航栏支持高亮
