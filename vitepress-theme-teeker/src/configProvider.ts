@@ -99,7 +99,7 @@ export const isArchivesPage = () => {
  */
 export const isCataloguePage = () => {
   const { frontmatter } = useData();
-  return unref(frontmatter).catalogue;
+  return unref(frontmatter).cataloguePage;
 };
 
 /**

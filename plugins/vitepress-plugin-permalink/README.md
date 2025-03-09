@@ -6,7 +6,7 @@
 
 - 🚀🚀 支持给 markdown 文档设置唯一的访问 **永久链接**，不再因为 markdown 文档路径移动而导致访问地址发生变化
 - 🚀 读取 markdown 文档 `frontmatter` 的 `permalink`，挂载到 `themeConfig.permalinks`
-- 🚀 提供 `usePermalinks` hooks 函数拓展 `router` 方法，支持 `router.push(href)` 跳转到永久链接或实际的文件路径
+- 🚀 提供 `usePermalink` hooks 函数拓展 `router` 方法，支持 `router.push(href)` 跳转到永久链接或实际的文件路径
 - 🚀 支持 locales 国际化，自动给 **永久链接** 添加语言前缀，不同语言的永久链接不会重复
 - 🚀 支持 rewrite 路由重写，最终得到的文档路径是 rewrite 路由重写后的路径
 - 🚀 **永久链接** 支持导航栏激活高亮
@@ -49,7 +49,7 @@ export default defineConfig({
 
 ## ❗ Warning
 
-插件的 `usePermalinks` 函数使用了 `router.onAfterRouteChange` 方法，如果你也需要使用该方法，请按照下面格式进行拓展：
+插件的 `usePermalink` 函数使用了 `router.onAfterRouteChange` 方法，如果你也需要使用该方法，请按照下面格式进行拓展：
 
 ```typescript
 import { useRouter } from "vitepress";
@@ -75,18 +75,18 @@ const myFunction = () => {
 
 ## 📖 Usage
 
-在 `.vitepress/theme/index.ts` 引入 `usePermalinks` 函数来初始化 permalinks 功能：
+在 `.vitepress/theme/index.ts` 引入 `usePermalink` 函数来初始化 permalinks 功能：
 
 ```typescript
 import { h } from "vue";
 import DefaultTheme from "vitepress/theme";
-import usePermalinks from "vitepress-plugin-permalink/src/usePermalinks";
+import usePermalink from "vitepress-plugin-permalink/src/usePermalink";
 
 export default {
   extends: DefaultTheme,
   Layout() {
     // 开启监听 permalink
-    usePermalinks().startWatch();
+    usePermalink().startWatch();
 
     return h(DefaultTheme.Layout, null, {});
   },
@@ -115,7 +115,7 @@ permalink: /guide-api
 
 永久链接是唯一的，如果出现两个一样的永久链接，则后面的永久链接覆盖前面的，但不影响 vitepress 自带访问路径。
 
-如果永久链接不生效，代表 `usePermalinks().startWatch()` 并没有被执行，请在注册 vitepress 或者任意主题前加载该函数，如何注册请看 ([扩展默认主题 | VitePress](https://vitepress.dev/zh/guide/extending-default-theme#layout-slots))
+如果永久链接不生效，代表 `usePermalink().startWatch()` 并没有被执行，请在注册 vitepress 或者任意主题前加载该函数，如何注册请看 ([扩展默认主题 | VitePress](https://vitepress.dev/zh/guide/extending-default-theme#layout-slots))
 
 ## 📘 TypeScript
 

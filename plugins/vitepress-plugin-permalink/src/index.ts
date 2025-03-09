@@ -30,7 +30,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
       const pathToPermalink: Record<string, string> = {};
       // Key 为 permalink，Value 为 path
       const permalinkToPath: Record<string, string> = {};
-      // 国际化多语言 key 数组，排除 root 根目录
+      // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales || {});
 
       for (const [key, value] of Object.entries(permalinks)) {

@@ -36,6 +36,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
     autoFrontmatter: ["**/@pages/**"],
     sidebar: ["@pages", "@fragment"],
     docAnalysis: ["@pages", /目录页/],
+    fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**"],
   };
 
   // 自动生成 frontmatter 插件
@@ -102,7 +103,7 @@ export default function tkThemeConfig(config: TkThemeConfig = {}): UserConfig {
       transformRaw,
       themeConfigKey: "posts",
       globOptions: {
-        ignore: ["**/components/**", "**/.vitepress/**", "**/public/**", ...fileContentLoaderIgnore],
+        ignore: [...ignoreDir.fileContentLoader, ...fileContentLoaderIgnore],
       },
     };
 

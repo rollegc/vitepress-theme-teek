@@ -20,7 +20,7 @@ export const emptyPost: Post = {
  */
 export const filterPosts = (posts: TkContentData[]): TkContentData[] => {
   return posts.filter(
-    ({ frontmatter: { catalogue, article, layout } }) => catalogue !== true && article !== false && layout !== "home"
+    ({ frontmatter: { catalogue, article, layout } }) => article !== false && layout !== "home"
   );
 };
 
