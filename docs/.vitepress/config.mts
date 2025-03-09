@@ -15,22 +15,6 @@ const tkConfig = tkThemeConfig({
       link: "http://beian.miit.gov.cn/",
     },
   },
-  vitePlugins: {
-    sidebarOption: {
-      sideBarResolved: data => {
-        const targetDirName = "/10.配置/";
-        if (data[targetDirName]) {
-          data[targetDirName] = [
-            {
-              text: "配置",
-              items: data[targetDirName] as DefaultTheme.SidebarItem[],
-            },
-          ];
-        }
-        return data;
-      },
-    },
-  },
 });
 
 // https://vitepress.dev/reference/site-config

@@ -118,6 +118,11 @@ const tkConfig = tkThemeConfig({
       // site: "",
     },
   },
+  vitePlugins: {
+    sidebarOption: {
+      initItems: false,
+    },
+  },
 });
 
 // https://vitepress.dev/reference/site-config

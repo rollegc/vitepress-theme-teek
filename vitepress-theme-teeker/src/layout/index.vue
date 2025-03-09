@@ -1,7 +1,7 @@
 <script setup lang="ts" name="tkLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed } from "vue";
+import { computed, unref } from "vue";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import { Banner, CommentConfig, TkThemeConfig } from "../config/types";
@@ -34,7 +34,7 @@ const { frontmatter: frontmatterRef } = useData();
 
 const { tkTheme = true, wallpaper = {}, codeBlock = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
 // tkHome 支持 theme 或 index.md 的 frontmatter 配置
-const { tkHome = true } = { ...theme, ...frontmatter.tk };
+const tkHome = computed(() => unref(frontmatterRef).tk?.tkHome ?? theme.tkHome ?? true);
 
 const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 

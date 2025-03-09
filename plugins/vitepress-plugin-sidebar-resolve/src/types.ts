@@ -26,11 +26,35 @@ export interface SidebarOption {
    */
   scannerRootMd?: boolean;
   /**
-   * 是否默认折叠侧边栏
+   * 是否初始化第一层 items
+   *
+   * 假设根目录下有目录名为 guide：
+   * 1、当 initItems 为 true，则最终结果为 sidebar: { "/guide": { items: [], collapsed }}
+   * 2、当 initItems 为 false，则最终结果为 sidebar: { "/guide": [] }
+   *
+   * @default true
+   */
+  initItems?: boolean;
+  /**
+   * 是否初始化第一层 items 的 text 为当前目录名。当 initItems 为 true 时生效
+   *
+   * 假设根目录下有目录名为 guide，且 initItems 为 true：
+   * 1、当 initItemsText 为 true，则最终结果为 sidebar: { "/guide": { text: "guide", items: [], collapsed }}
+   * 2、当 initItemsText 为 false，则最终结果为 sidebar: { "/guide": { items: [] }}
+   *
+   * @default false
+   */
+  initItemsText?: boolean;
+  /**
+   * 是否默认折叠侧边栏，可以是 boolean 或者一个函数
+   *
+   * 函数的 2 个参数为：
+   * 1、当前文件的相对路径（基于根目录）
+   * 2、侧边栏的 text
    *
    * @default undefined
    */
-  collapsed?: boolean | ((path: string, title: string) => boolean);
+  collapsed?: boolean | ((relativePath: string, text: string | undefined) => boolean);
   /**
    * 文件名前缀必须以「数字.」开头
    *

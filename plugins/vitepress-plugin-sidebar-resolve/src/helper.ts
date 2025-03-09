@@ -19,7 +19,16 @@ export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public
  * @param prefix 指定前缀，在生成侧边栏的 link 时，会自动加上前缀
  */
 export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarMulti => {
-  const { path = process.cwd(), ignoreList = [], scannerRootMd = true, sideBarResolved } = option;
+  const {
+    path = process.cwd(),
+    ignoreList = [],
+    scannerRootMd = true,
+    collapsed,
+    titleFormMd = false,
+    initItems = true,
+    initItemsText = false,
+    sideBarResolved,
+  } = option;
   // 确保 prefix 始终都有 / 结尾
   prefix = prefix.replace(/\/$/, "") + "/";
 
@@ -43,7 +52,19 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
       return log(`Warning：该目录 '${dirPath}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
-    sidebar[`${key}${fileName}/`] = sidebarItems;
+    const { name, title } = resolveFileName(fileName, dirPath);
+    const mdTitle = titleFormMd ? tryGetMdTitle(dirPath, fileName) : "";
+    const text = initItemsText ? mdTitle || title : undefined;
+
+    sidebar[`${key}${fileName}/`] = initItems
+      ? [
+          {
+            text,
+            collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
+            items: sidebarItems,
+          },
+        ]
+      : sidebarItems;
   });
 
   return sideBarResolved?.(sidebar) ?? sidebar;
@@ -126,10 +147,11 @@ const createSideBarItems = (
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
       const mdTitle = titleFormMd ? tryGetMdTitle(root, dirOrFilename) : "";
+      const text = mdTitle || title;
 
       const sidebarItem = {
-        text: mdTitle || title,
-        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, title) : collapsed,
+        text,
+        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
         items: createSideBarItems(filePath, option, `${prefix}${dirOrFilename}/`),
       };
 
@@ -153,11 +175,11 @@ const createSideBarItems = (
 
       // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
       const mdTitle = titleFormMd ? getTitleFromMd(mdContent) : "";
-      const finalTitle = frontmatterTitle || mdTitle || title;
+      const text = frontmatterTitle || mdTitle || title;
 
       const sidebarItem = {
-        text: finalTitle,
-        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, title) : collapsed,
+        text,
+        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
         link: prefix + name,
       };
 
@@ -209,7 +231,7 @@ const resolveFileName = (
     const lastDotIndex = filename.lastIndexOf(".");
     index = filename.substring(0, firstDotIndex);
     type = filename.substring(lastDotIndex + 1);
-    name = filename.substring(0, lastDotIndex);
+    name = stat.isDirectory() ? filename : filename.substring(0, lastDotIndex);
 
     if (stat.isDirectory()) title = filename.substring(firstDotIndex + 1);
     else title = filename.substring(firstDotIndex + 1, lastDotIndex);

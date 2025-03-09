@@ -106,8 +106,11 @@ const tkConfig = tkThemeConfig({
     },
   },
 
-  plugins: {
-    sidebarOption: { localeRootDir: "zh" },
+  vitePlugins: {
+    sidebarOption: {
+      localeRootDir: "zh",
+      initItems: false,
+    },
   },
 });
 
