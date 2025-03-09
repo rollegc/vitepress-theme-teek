@@ -134,8 +134,12 @@ const setActiveMatchWhenUsePermalink = (
     // cleanUrls 为 false 时，permalinkToPath 的 key 都会带上 .html
     const path = permalinkToPath[cleanUrls ? link : `${link.replace(/\.html/, "")}.html`];
 
-    // 官方规定 activeMatch 是一个正则表达式字符串
-    if (path && !item.activeMatch) item.activeMatch = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
+    if (path && !item.activeMatch) {
+      // 如果设置了 rewrites，则取 rewrites 后的文件路径
+      const rewritesPath = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
+      // 只传入一级目录，这样访问里面的 Markdown 文件后，对应导航都可以高亮（官方规定 activeMatch 是一个正则表达式字符串）
+      item.activeMatch = rewritesPath?.split("/")[0];
+    }
     if (item.items?.length) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
   });
 };
