@@ -40,6 +40,7 @@
   @include set-css-var("gap2", 20px);
   @include set-css-var("gap3", 30px);
   @include set-css-var("code-block-fold-height", 40px);
+  @include set-css-var("code-block-lang-transform", uppercase);
 }
 
 // 使用自定义自定义全局样式变量

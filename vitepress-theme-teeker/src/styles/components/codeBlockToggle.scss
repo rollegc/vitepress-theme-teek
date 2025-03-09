@@ -54,7 +54,7 @@
     transform: translateY(-50%);
     font-size: 18px;
     color: var(--vp-c-text-1);
-    text-transform: uppercase;
+    text-transform: getCssVar("code-block-lang-transform");
     font-weight: bold;
     width: fit-content;
   }

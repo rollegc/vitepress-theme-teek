@@ -47,7 +47,6 @@ pnpm demo:localesRoot dev
 
 - 插件获取标题统一顺序
 - bodyBgImg 的 pageStyle 抽离出来
-- 代码块语言支持配置小写
 - mdH1 支持空文档渲染一级标题
 - 同级文档下，导航栏支持高亮
 - 自定义徽章风格
