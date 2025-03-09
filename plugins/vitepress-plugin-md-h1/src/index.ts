@@ -3,9 +3,10 @@ import { readFileSync } from "node:fs";
 import { basename } from "node:path";
 import matter from "gray-matter";
 
-const specialPrefix1 = `return (_openBlock(), _createElementBlock("div", null, [`;
-const specialPrefix2 = `return (_openBlock(), _createElementBlock("div", null, _cache[0] || (_cache[0] = [`;
+const multipleBlockTag = `return (_openBlock(), _createElementBlock("div", null, [`;
+const singleBlockTag = `return (_openBlock(), _createElementBlock("div", null, _cache[0] || (_cache[0] = [`;
 const createStaticVNodeTag = `_createStaticVNode("`;
+const createTextVNode = "createTextVNode as _createTextVNode";
 
 export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
   return {
@@ -25,7 +26,7 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
       // 将 " 替换为 \"，因为 " 会导致页面解析失败
       const finalTitle = title.replace(/"+/g, '\\"');
 
-      if (code.includes(specialPrefix1)) {
+      if (code.includes(multipleBlockTag)) {
         // 第一个 replace 先将 _cache 的下标加 1，第二个 replace 把 h1 标题加到 _cache[0] 里
         return code
           .replace(/_cache\[(\d+)\]/g, (_, p1) => {
@@ -33,15 +34,17 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
             return `_cache[${newIndex}]`;
           })
           .replace(
-            specialPrefix1,
-            `${specialPrefix1}
+            multipleBlockTag,
+            `${multipleBlockTag}
               _cache[0] || (_cache[0] = _createStaticVNode("<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\">​</a></h1>", 1)),
             `
           );
-      } else if (code.includes(specialPrefix2)) {
-        return code.replace(
-          specialPrefix2,
-          `${specialPrefix2}
+      }
+
+      if (code.includes(singleBlockTag)) {
+        const newCode = code.replace(
+          singleBlockTag,
+          `${singleBlockTag}
               _createElementVNode("h1", {
                 id: "${titleId}",
                 tabindex: "-1"
@@ -55,12 +58,19 @@ export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
               ], -1 /* HOISTED */),
             `
         );
+
+        if (code.includes(createTextVNode)) return newCode;
+        return newCode.replace("import {", `import { ${createTextVNode},`);
       }
 
-      return code.replace(
-        createStaticVNodeTag,
-        `${createStaticVNodeTag}<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\">​</a></h1>`
-      );
+      if (code.includes(createStaticVNodeTag)) {
+        return code.replace(
+          createStaticVNodeTag,
+          `${createStaticVNodeTag}<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\">​</a></h1>`
+        );
+      }
+
+      return code;
     },
   };
 }

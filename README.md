@@ -45,7 +45,6 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
-- mdH1 支持空文档渲染一级标题
 - 同级文档下，导航栏支持高亮
 - 自定义徽章风格
 - 文章内引用的 permalink 替换为文档实际地址
