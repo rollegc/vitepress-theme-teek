@@ -17,7 +17,6 @@ let {
   imgInterval = 15000,
   mask = false,
   maskBg = "rgba(0, 0, 0, 0.2)",
-  pageStyle = "default",
 }: BodyBgImg = theme.bodyBgImg || {};
 
 // body 背景图片定时轮播
@@ -33,21 +32,15 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   },
 });
 
-const initPageStyle = () => {
-  const tkLayoutDom = document.querySelector(`.${ns.joinNamespace("layout")}`);
-  tkLayoutDom?.classList.add(ns.joinNamespace(pageStyle));
-};
-
 onMounted(() => {
   switchImg();
-  initPageStyle();
 });
 </script>
 
 <template>
   <div
     :class="ns.b()"
-    :style="`background-image: url(${imageSrc}); opacity:${imgOpacity}; --body-mask-bg-color: ${isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`}`"
+    :style="`background-image: url(${imageSrc}); opacity:${imgOpacity}; ${ns.cssVarName('body-mask-bg-color')}: ${isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`}`"
   >
     <div v-if="mask" class="mask" />
   </div>

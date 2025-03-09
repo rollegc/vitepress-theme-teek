@@ -33,6 +33,12 @@ export interface TkThemeConfig {
    */
   viewTransition?: boolean;
   /**
+   * 是否使用新版代码块样式，如果为 false 则使用官方默认样式。新版代码块支持折叠
+   *
+   * @default true
+   */
+  codeBlock?: boolean;
+  /**
    * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序，支持在首页 index.md 的 frontmatter 配置 tk.homeCardSort
    *
    * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
@@ -45,65 +51,41 @@ export interface TkThemeConfig {
    */
   bgColor?: string[];
   /**
-   * 是否使用新版代码块样式，如果为 false 则使用官方默认样式。新版代码块支持折叠
+   * 文章页的样式风格，default 为 Vitepress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
    *
-   * @default true
+   * 支持在文章页的 frontmatter 配置 pageStyle，因此可以针对不同的文章页开启不同的样式风格
+   *
+   * @default 'default'
    */
-  codeBlock?: boolean;
-  /**
-   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'bigImg' && banner.imgSrc 不存在) 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
-   */
-  wallpaper?: {
-    /**
-     * 是否启用壁纸模式
-     *
-     * @default false
-     */
-    enabled?: boolean;
-    /**
-     * 开启壁纸模式后，是否隐藏 Banner
-     *
-     * @default false
-     */
-    hideBanner?: boolean;
-    /**
-     * 开启壁纸模式后，是否隐藏 Banner 或 bodyBgImage 的遮罩层，则确保 banner.mask 和 bodyBgImage.mask 为 true 才生效
-     *
-     * @default false
-     */
-    hideMask?: boolean;
-    /**
-     * 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'bigImg' 生效
-     *
-     * @default false
-     */
-    hideWaves?: boolean;
-  };
-  /**
-   * 文章默认的作者信息，支持在文章页的 frontmatter 配置 author.[key]
-   */
-  author?: {
-    /**
-     * 作者名称，作用在首页的 PostItem 和文章页
-     */
-    name: string;
-    /**
-     * 点击作者名称后跳转的链接
-     */
-    link?: string;
-  };
-  /**
-   * 右下角的主题设置配置
-   */
-  themeSetting?: ThemeSetting;
+  pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
   /**
    *  body 背景大图配置
    */
   bodyBgImg?: BodyBgImg;
   /**
+   * 右下角的主题设置配置
+   */
+  themeSetting?: ThemeSetting;
+  /**
+   * 文章默认的作者信息，支持在文章页的 frontmatter 配置 author.[key]
+   */
+  author?: Author;
+  /**
    * 首页 Banner 配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.banner.[key]
    */
   banner?: Banner;
+  /**
+   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'bigImg' && banner.imgSrc 不存在) 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
+   */
+  wallpaper?: Wallpaper;
+  /**
+   * 文章列表配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.post.[key]
+   */
+  post?: Post;
+  /**
+   * 首页 Post 文章列表的分页配置，完全是 ElPagination 的 props，支持在首页文档 index.md 的 frontmatter 配置，格式为 tk.page.[key]
+   */
+  page?: Partial<PaginationProps>;
   /**
    * 博主信息，显示在首页左边第一个卡片，支持在首页 `index.md` 的 `frontmatter` 配置，格式为 `tk.blogger.[key]`
    */
@@ -129,9 +111,13 @@ export interface TkThemeConfig {
    */
   docAnalysis?: DocAnalysis;
   /**
-   * 文章列表配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.post.[key]
+   * 社交信息配置
    */
-  post?: Post;
+  social?: Social[];
+  /**
+   * 页脚配置
+   */
+  footerInfo?: FooterInfo;
   /**
    * 文章信息配置，支持在 frontmatter 配置，如果在首页（index.md），格式为 tk.article.[key]，如果在文章页（非 index.md），格式为 article.[key]
    */
@@ -140,14 +126,6 @@ export interface TkThemeConfig {
    * 面包屑配置，支持在文章页的 frontmatter 配置 breadcrumb.[key]
    */
   breadcrumb?: Breadcrumb;
-  /**
-   * 社交信息配置
-   */
-  social?: Social[];
-  /**
-   * 页脚配置
-   */
-  footerInfo?: FooterInfo;
   /**
    * 公告配置
    */
@@ -166,13 +144,40 @@ export interface TkThemeConfig {
    */
   vitePlugins?: Plugins;
   /**
-   * 首页 Post 文章列表的分页配置，完全是 ElPagination 的 props，支持在首页文档 index.md 的 frontmatter 配置，格式为 tk.page.[key]
-   */
-  page?: Partial<PaginationProps>;
-  /**
    * markdown 插件列表，请不要在使用 vitepress.markdown.config 配置 md 插件，因为 config 是一个函数，vitepress 并没有做多个 config 合并，因此使用 vitepress.markdown.config 配置会覆盖主题内置 md 插件
    */
   markdownPlugins?: any[];
+}
+
+export interface BodyBgImg {
+  /**
+   * body 背景大图链接。单张图片 string | 多张图片 string[], 多张图片时每隔 imgInterval 秒换一张
+   */
+  imgSrc?: string | string[];
+  /**
+   * body 背景图透明度，选值 0.1 ~ 1.0
+   *
+   * @default 1
+   */
+  imgOpacity?: 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1;
+  /**
+   * body 当多张背景图时（imgSrc 为数组），设置切换时间，单位：毫秒
+   *
+   * @default 15000 (15秒)
+   */
+  imgInterval?: number;
+  /**
+   * body 背景图遮罩
+   *
+   * @default false
+   */
+  mask?: boolean;
+  /**
+   * body 背景图遮罩颜色，如果为数字，则是 rgba(0, 0, 0, ${maskBg})，如果为字符串，则作为背景色。mask 为 true 时生效
+   *
+   * @default 'rgba(0, 0, 0, 0.2)'
+   */
+  maskBg?: string | number;
 }
 
 export interface ThemeSetting {
@@ -250,39 +255,15 @@ export interface ThemeSetting {
   }[];
 }
 
-export interface BodyBgImg {
+export interface Author {
   /**
-   * body 背景大图链接。单张图片 string | 多张图片 string[], 多张图片时每隔 imgInterval 秒换一张
+   * 作者名称，作用在首页的 PostItem 和文章页
    */
-  imgSrc?: string | string[];
+  name: string;
   /**
-   * body 背景图透明度，选值 0.1 ~ 1.0
-   *
-   * @default 1
+   * 点击作者名称后跳转的链接
    */
-  imgOpacity?: 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1;
-  /**
-   * body 当多张背景图时（imgSrc 为数组），设置切换时间，单位：毫秒
-   *
-   * @default 15000 (15秒)
-   */
-  imgInterval?: number;
-  /**
-   * body 背景图遮罩
-   *
-   * @default false
-   */
-  mask?: boolean;
-  /**
-   * body 背景图遮罩颜色，如果为数字，则是 rgba(0, 0, 0, ${maskBg})，如果为字符串，则作为背景色。mask 为 true 时生效
-   *
-   * @default 'rgba(0, 0, 0, 0.2)'
-   */
-  maskBg?: string | number;
-  /**
-   * 文章页的样式风格，default 为 Vitepress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
-   */
-  pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
+  link?: string;
 }
 
 export interface Banner {
@@ -386,6 +367,70 @@ export interface Banner {
    * @default 800 (0.8秒)
    */
   typesNextTime?: number;
+}
+
+export interface Wallpaper {
+  /**
+   * 是否启用壁纸模式
+   *
+   * @default false
+   */
+  enabled?: boolean;
+  /**
+   * 开启壁纸模式后，是否隐藏 Banner
+   *
+   * @default false
+   */
+  hideBanner?: boolean;
+  /**
+   * 开启壁纸模式后，是否隐藏 Banner 或 bodyBgImage 的遮罩层，则确保 banner.mask 和 bodyBgImage.mask 为 true 才生效
+   *
+   * @default false
+   */
+  hideMask?: boolean;
+  /**
+   * 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'bigImg' 生效
+   *
+   * @default false
+   */
+  hideWaves?: boolean;
+}
+
+export interface Post {
+  /**
+   * 文章摘要位置
+   *
+   * @default bottom
+   */
+  excerptPosition?: "top" | "bottom";
+  /**
+   * 是否显示更多按钮
+   *
+   * @default true
+   */
+  showMore?: boolean;
+  /**
+   * 更多按钮文字
+   *
+   * @default '阅读全文 >'
+   */
+  moreLabel?: string;
+  /**
+   * 文章封面图模式
+   *
+   * @default 'default'
+   */
+  coverImgMode?: "default" | "full";
+  /**
+   * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
+   *
+   * @default false
+   */
+  showCapture?: boolean;
+  /**
+   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   */
+  imageViewer?: Partial<ImageViewerProps>;
 }
 
 export interface Blogger {
@@ -707,41 +752,72 @@ export interface DocAnalysisInfo {
   show?: boolean;
 }
 
-export interface Post {
+export interface Social {
   /**
-   * 文章摘要位置
+   * 名称，如果作用在 a 标签，则鼠标悬停显示名称，否则在页面文字显示
+   */
+  name?: string;
+  /**
+   * 图标地址
    *
-   * @default bottom
-   */
-  excerptPosition?: "top" | "bottom";
-  /**
-   * 是否显示更多按钮
+   * @remark 与 iconType 配合使用
    *
-   * @default true
+   * 1、iconType 为 svg 时，需要填写 svg 代码
+   * 2、iconType 为 iconfont 时，需要填写 class 名
+   * 3、iconType 为 img 时，需要填写图片链接
+   * 4、iconType 为 component 时，需要传入 SVG 组件
    */
-  showMore?: boolean;
+  icon?: string;
   /**
-   * 更多按钮文字
+   * 图标类型
    *
-   * @default '阅读全文 >'
+   * @default 'svg'
    */
-  moreLabel?: string;
+  iconType?: "svg" | "iconfont" | "img" | "component";
   /**
-   * 文章封面图模式
-   *
-   * @default 'default'
+   * 链接，点击后跳转到新窗口，如果不设置，则无法点击
    */
-  coverImgMode?: "default" | "full";
+  link?: string;
   /**
-   * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
-   *
-   * @default false
+   * img 标签的 alt，当 iconType 为 img 时生效
    */
-  showCapture?: boolean;
+  imgAlt?: string;
+}
+
+export interface FooterInfo {
   /**
-   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   * 页脚信息
    */
-  imageViewer?: Partial<ImageViewerProps>;
+  message?: string | string[];
+  /**
+   * 主题版权配置
+   */
+  theme?: Social;
+  /**
+   * 博客版权配置
+   */
+  copyright?: Social & {
+    /**
+     * 创建年份
+     */
+    createYear: number | string;
+    /**
+     * 后缀
+     */
+    suffix: string;
+  };
+  /**
+   * ICP 备案信息配置
+   */
+  icpRecord?: Social;
+  /**
+   * 网络安全备案信息配置
+   */
+  securityRecord?: Social;
+  /**
+   * 自定义 HTML 片段到 footer 最底部
+   */
+  customerHtml?: string;
 }
 
 export interface Article {
@@ -830,74 +906,6 @@ export interface Breadcrumb {
    * @default '/'
    */
   separator?: string;
-}
-
-export interface Social {
-  /**
-   * 名称，如果作用在 a 标签，则鼠标悬停显示名称，否则在页面文字显示
-   */
-  name?: string;
-  /**
-   * 图标地址
-   *
-   * @remark 与 iconType 配合使用
-   *
-   * 1、iconType 为 svg 时，需要填写 svg 代码
-   * 2、iconType 为 iconfont 时，需要填写 class 名
-   * 3、iconType 为 img 时，需要填写图片链接
-   * 4、iconType 为 component 时，需要传入 SVG 组件
-   */
-  icon?: string;
-  /**
-   * 图标类型
-   *
-   * @default 'svg'
-   */
-  iconType?: "svg" | "iconfont" | "img" | "component";
-  /**
-   * 链接，点击后跳转到新窗口，如果不设置，则无法点击
-   */
-  link?: string;
-  /**
-   * img 标签的 alt，当 iconType 为 img 时生效
-   */
-  imgAlt?: string;
-}
-
-export interface FooterInfo {
-  /**
-   * 页脚信息
-   */
-  message?: string | string[];
-  /**
-   * 主题版权配置
-   */
-  theme?: Social;
-  /**
-   * 博客版权配置
-   */
-  copyright?: Social & {
-    /**
-     * 创建年份
-     */
-    createYear: number | string;
-    /**
-     * 后缀
-     */
-    suffix: string;
-  };
-  /**
-   * ICP 备案信息配置
-   */
-  icpRecord?: Social;
-  /**
-   * 网络安全备案信息配置
-   */
-  securityRecord?: Social;
-  /**
-   * 自定义 HTML 片段到 footer 最底部
-   */
-  customerHtml?: string;
 }
 
 export interface Notice {

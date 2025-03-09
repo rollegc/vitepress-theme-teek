@@ -13,6 +13,7 @@ a.hover-color:hover {
   padding: 20px 30px;
   box-shadow: var(--vp-shadow-3);
   border-radius: 10px;
+  background-color: getCssVar("bg-color-1");
 
   /* 隐藏 md 内容 */
   & ~ div:not(.#{$namespace}-page) {

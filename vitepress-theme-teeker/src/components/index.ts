@@ -3,7 +3,7 @@ export * from "./ArticleAnalyze";
 export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
 export * from "./ArticleBreadcrumb";
-export * from "./BodyBgImage";
+export * from "./ArticlePageStyle";
 export * from "./BodyBgImage";
 export * from "./CataloguePage";
 export * from "./CodeBlockToggle";

@@ -22,6 +22,7 @@ import {
   CommentWaline,
   HomeFullscreenWallpaper,
   CodeBlockToggle,
+  ArticlePageStyle,
   Notice,
 } from "../components";
 
@@ -94,6 +95,7 @@ const comment: CommentConfig = computed(() => {
         <ClientOnly>
           <ArticleAnalyze />
           <ArticleImagePreview />
+          <ArticlePageStyle />
           <CodeBlockToggle v-if="codeBlock" />
         </ClientOnly>
       </template>

@@ -12,7 +12,7 @@ const posts = usePosts();
 </script>
 
 <template>
-  <div :class="`${ns.b} ${ns.joinNamespace('page')}`">
+  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`">
     <div :class="`${ns.e('header')} flx-justify-between`">
       <div :class="ns.joinNamespace('page-title-h1')">{{ frontmatter.title }}</div>
       <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>

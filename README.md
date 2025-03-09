@@ -45,14 +45,13 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
-- bodyBgImg 的 pageStyle 抽离出来
 - mdH1 支持空文档渲染一级标题
 - 同级文档下，导航栏支持高亮
 - 自定义徽章风格
+- 文章内引用的 permalink 替换为文档实际地址
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
-- 文章内引用的 permalink 替换为文档实际地址
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
 - 除了目录页插件，其余插件需要发布新版

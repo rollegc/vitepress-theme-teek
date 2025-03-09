@@ -12,6 +12,7 @@
   @include set-css-var("lower-color-6", rgba(253, 253, 253, 0.7));
   @include set-css-var("bg-color-1", var(--vp-c-bg));
   @include set-css-var("bg-color-2", rgb(255, 255, 255, 0.7));
+  @include set-css-var("bg-color-3", #f4f4f4);
   @include set-css-var("shadow-1", 0 1px 8px 0 rgba(0, 0, 0, 0.1));
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.2));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
@@ -28,6 +29,7 @@
   @include set-css-var("lower-color-4", rgba(34, 34, 34, 0.7));
   @include set-css-var("bg-color-1", var(--vp-c-bg));
   @include set-css-var("bg-color-2", rgb(20, 20, 20, 0.7));
+  @include set-css-var("bg-color-3", #27272b);
   @include set-css-var("shadow-1", 0 1px 8px 0 rgba(0, 0, 0, 0.6));
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.7));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
