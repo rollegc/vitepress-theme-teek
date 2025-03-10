@@ -1,5 +1,6 @@
 <script setup lang="ts" name="Footer">
 import { computed } from "vue";
+import { withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 import themeSvg from "../../../assets/svg/footerTheme";
@@ -54,7 +55,13 @@ const footerData = computed(() => {
 <template>
   <div v-if="footerInfo || social.length" :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
     <div v-if="social.length" :class="`${ns.e('icons')} flx-center`">
-      <a v-for="(item, index) in social" :key="index" :href="item.link" :title="item.name" target="_blank">
+      <a
+        v-for="(item, index) in social"
+        :key="index"
+        :href="item.link && withBase(item.link)"
+        :title="item.name"
+        target="_blank"
+      >
         <template v-if="item.icon">
           <Icon
             :iconType="item.iconType"
@@ -84,7 +91,7 @@ const footerData = computed(() => {
             />
           </template>
 
-          <a v-if="item.link" :href="item.link" target="_blank">
+          <a v-if="item.link" :href="withBase(item.link)" target="_blank">
             {{ item.name }}
           </a>
           <span v-else>{{ item.name }}</span>

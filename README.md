@@ -45,7 +45,6 @@ pnpm demo:localesRoot dev
 
 ## TODO
 
-- 文章内引用的 permalink 在多语言跳转自带补上多语言名
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库

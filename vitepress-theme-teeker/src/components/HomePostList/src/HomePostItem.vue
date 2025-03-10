@@ -26,6 +26,7 @@ const {
 }: Post = { ...theme.post, ...frontmatter.tk?.post };
 const { showInfo = true }: Article = { ...theme.article, ...frontmatter.tk?.article };
 
+const postUrl = post.url && withBase(post.url);
 const excerpt = post.frontmatter.description || post.excerpt || (showCapture && post.capture);
 
 /**
@@ -74,14 +75,14 @@ const isShowInfo = computed(() => {
     <div :class="[ns.e('info'), { 'full-cover': coverImgMode === 'full' }, 'flx']">
       <div :class="ns.e('info__left')">
         <!-- 标题 -->
-        <a class="title hover-color" :href="post.url">
+        <a class="title hover-color" :href="postUrl">
           {{ post.title }}
         </a>
 
         <!-- 摘要 top -->
         <div v-if="excerpt && excerptPosition === 'top'" :class="`${ns.e('info__left__excerpt')} top`">
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="showMore" class="more" :href="post.url">{{ moreLabel }}</a>
+          <a v-if="showMore" class="more" :href="postUrl">{{ moreLabel }}</a>
         </div>
 
         <!-- 文章信息 -->
@@ -92,7 +93,7 @@ const isShowInfo = computed(() => {
         <!-- 摘要 bottom -->
         <div v-if="excerpt && excerptPosition === 'bottom'" :class="`${ns.e('info__left__excerpt')} bottom`">
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="showMore" class="more" :href="post.url">{{ moreLabel }}</a>
+          <a v-if="showMore" class="more" :href="postUrl">{{ moreLabel }}</a>
         </div>
       </div>
 

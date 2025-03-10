@@ -1,5 +1,6 @@
 <script setup lang="ts" name="TopArticleCard">
 import { computed, ref, unref } from "vue";
+import { withBase } from "vitepress";
 import { useUnrefData, usePosts, getBgColor } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import { HomeCard } from "../../";
@@ -80,7 +81,7 @@ const getStyle = (num: number, index: number) => {
         >
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
           <div :class="ns.e('list__item__info')">
-            <a :href="item.url" class="hover-color flx-align-center">
+            <a :href="item.url && withBase(item.url)" class="hover-color flx-align-center">
               <span class="title sle">{{ item.title }}</span>
             </a>
             <div class="date">{{ item.date }}</div>

@@ -50,7 +50,7 @@
     "vitepress-plugin-doc-analysis": "latest",
     "vitepress-plugin-file-content-loader": "latest",
     "vitepress-plugin-md-h1": "workspace:*",
-    "vitepress-plugin-permalink": "latest",
+    "vitepress-plugin-permalink": "workspace:*",
     "vitepress-plugin-sidebar-resolve": "workspace:*"
   },
   "devDependencies": {

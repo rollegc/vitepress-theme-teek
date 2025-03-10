@@ -1,5 +1,6 @@
 <script setup lang="ts" name="FriendLinkCard">
 import { computed, ref, unref, onMounted } from "vue";
+import { withBase } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
 import { useNamespace, useScrollData } from "../../../hooks";
 import { HomeCard, createImageViewer } from "../../";
@@ -12,6 +13,7 @@ defineOptions({ name: "FriendLinkCard" });
 const ns = useNamespace("friendLink");
 
 const { theme, frontmatter } = useUnrefData();
+
 // 友情链接配置项
 const {
   list = [],
@@ -95,9 +97,9 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
           :class="ns.e('list__item')"
           :style="getLiStyle(index)"
         >
-          <a :href="item.link" target="_blank" class="hover-color flx-align-center">
+          <a :href="item.link && withBase(item.link)" target="_blank" class="hover-color flx-align-center">
             <img
-              :src="item.avatar"
+              :src="item.avatar && withBase(item.avatar)"
               class="friend-avatar"
               :alt="item.name || item.alt"
               @click="handleViewImg(item.avatar, $event)"

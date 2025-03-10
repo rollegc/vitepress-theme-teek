@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import { computed, unref, ref, watch } from "vue";
-import { useRoute, useData } from "vitepress";
+import { useRoute, useData, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { HomeCard } from "../../";
@@ -15,6 +15,7 @@ const ns = useNamespace("category");
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
 const { frontmatter, theme, site } = useUnrefData();
+
 const route = useRoute();
 const pageNum = ref(1);
 // 分类配置项
@@ -90,7 +91,7 @@ const categoriesPageLink = computed(() => {
           ref="itemRefs"
           v-for="(item, index) in currentCategories"
           :key="item.name"
-          :href="`${categoriesPageLink}?category=${encodeURIComponent(item.name)}`"
+          :href="withBase(`${categoriesPageLink}?category=${encodeURIComponent(item.name)}`)"
           :class="[{ active: item.name === category }, 'hover-color']"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
         >
@@ -98,7 +99,7 @@ const categoriesPageLink = computed(() => {
           <span>{{ item.length }}</span>
         </a>
 
-        <a v-if="!categoriesPage && limit < categories.length" :href="categoriesPageLink">更多 ...</a>
+        <a v-if="!categoriesPage && limit < categories.length" :href="withBase(categoriesPageLink)">更多 ...</a>
       </TransitionGroup>
 
       <div v-else :class="ns.m('empty')">暂无热门文章</div>

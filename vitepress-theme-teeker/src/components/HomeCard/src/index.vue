@@ -1,5 +1,6 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref } from "vue";
+import { withBase } from "vitepress";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { useNamespace } from "../../../hooks";
 import { HomeCardProps } from "./homeCard";
@@ -77,7 +78,7 @@ onMounted(() => {
   <div :class="`${ns.b()} card`">
     <div v-if="title" :class="`${ns.e('header')} flx-justify-between`">
       <slot name="title">
-        <a v-if="titleLink" :href="titleLink">
+        <a v-if="titleLink" :href="withBase(titleLink)">
           <span class="title flx-align-center" v-html="title"></span>
         </a>
         <span v-else class="title flx-align-center" v-html="title"></span>

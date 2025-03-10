@@ -1,4 +1,5 @@
 <script setup lang="ts" name="CatalogueItem">
+import { withBase } from "vitepress";
 import type { CatalogueItem } from "vitepress-plugin-catalogue";
 import { useNamespace } from "../../../hooks";
 
@@ -12,7 +13,7 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
 
 <template>
   <li :class="item.children ? nsSub.b() : nsItem.b()">
-    <a v-if="!item.children" :href="item.link">{{ index }}. {{ item.title }}</a>
+    <a v-if="!item.children" :href="item.link && withBase(item.link)">{{ index }}. {{ item.title }}</a>
 
     <template v-else>
       <div :id="item.title" :class="nsSub.e('title')">

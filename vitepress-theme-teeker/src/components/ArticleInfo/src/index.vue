@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleInfo">
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
-import { useRoute } from "vitepress";
+import { useRoute, withBase } from "vitepress";
 import { computed, unref } from "vue";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
@@ -18,6 +18,7 @@ const ns = useNamespace("articleInfo");
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
 const { frontmatter, theme } = useUnrefData();
+// 文章信息配置项
 const {
   showIcon = true,
   dateFormat = "yyyy-MM-dd",
@@ -89,7 +90,7 @@ const baseInfo = [
         <a
           v-if="item.data"
           :title="item.title"
-          :href="item.href"
+          :href="item.href && withBase(item.href)"
           :target="item.target"
           :class="[item.class, 'hover-color']"
         >
@@ -100,7 +101,7 @@ const baseInfo = [
           v-for="(data, index) in item.dataList"
           :key="index"
           :title="item.title"
-          :href="item.href?.replace('{data}', encodeURIComponent(data))"
+          :href="item.href && withBase(item.href.replace('{data}', encodeURIComponent(data)))"
           :class="[item.class, 'hover-color']"
         >
           {{ data }}

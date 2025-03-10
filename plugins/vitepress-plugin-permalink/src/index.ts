@@ -92,7 +92,7 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
           // 如果设置了 rewrites，则取没有 rewrites 前的实际文件地址
           const realFilePath = rewrites.inv[`${filePath}.md`]?.replace(/\.md/, "") || filePath;
 
-          // 如果找到文档路由，则跳转，防止页面 404。当开启 cleanUrls 后，得到的文档地址为 .html 结尾，因此需要替换为空
+          // 如果文档路由 realFilePath 存在，则替换 URL 实现跳转，防止页面 404
           if (realFilePath) req.url = req.url.replace(encodeURI(reqUrl), encodeURI(realFilePath));
         }
         next();

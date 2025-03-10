@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleBreadcrumb">
 import { computed, unref } from "vue";
-import { useData } from "vitepress";
+import { useData, withBase } from "vitepress";
 import { House } from "@element-plus/icons-vue";
 import { useNamespace } from "../../../hooks";
 import { Breadcrumb, BreadcrumbItem, Icon } from "../../";
@@ -49,14 +49,14 @@ const breadcrumbList = computed(() => {
   <div :class="`${ns.b()}`">
     <Breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <BreadcrumbItem>
-        <a href="/" title="首页" class="hover-color">
+        <a :href="withBase('/')" title="首页" class="hover-color">
           <Icon><House /></Icon>
         </a>
       </BreadcrumbItem>
       <BreadcrumbItem v-for="(item, index) in breadcrumbList" :key="index">
         <component
           :is="item.filePath ? 'a' : 'span'"
-          :href="item.filePath ? `/${item.filePath}` : undefined"
+          :href="item.filePath && withBase(`/${item.filePath}`)"
           :title="item.fileName"
           :class="[item.filePath ? 'hover-color' : '']"
         >

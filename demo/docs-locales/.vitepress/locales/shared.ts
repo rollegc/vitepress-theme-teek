@@ -115,7 +115,7 @@ const tkConfig = tkThemeConfig({
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: tkConfig,
-  base: "/",
+  base: "/b/",
   title: "Hd Security",
   cleanUrls: false,
   lastUpdated: true,

@@ -4,6 +4,7 @@ import { useNamespace, useSwitchData } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 import { isString } from "../../../helper";
 import { BodyBgImg } from "../../../config/types";
+import { withBase } from "vitepress";
 
 defineOptions({ name: "BodyBgImage" });
 
@@ -21,7 +22,7 @@ let {
 
 // body 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
-  dataArray: [imgSrc || []].flat(),
+  dataArray: [imgSrc || []].flat().map(item => item && withBase(item)),
   timeout: imgInterval,
   onAfterUpdate: newValue => {
     // 预加载下一张图片

@@ -1,4 +1,5 @@
 <script setup lang="ts" name="ArchivesPage">
+import { withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData } from "../../../configProvider";
 
@@ -34,7 +35,7 @@ const posts = usePosts();
 
             <ul>
               <li v-for="item in p" :key="item.url">
-                <a :href="item.url">
+                <a :href="item.url && withBase(item.url)">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>
                 </a>

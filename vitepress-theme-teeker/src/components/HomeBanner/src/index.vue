@@ -12,7 +12,6 @@ defineOptions({ name: "HomeBanner" });
 const ns = useNamespace("banner");
 
 const { site, theme, frontmatter } = useUnrefData();
-
 const title = frontmatter.tk?.name || site.title || "";
 
 // Banner 配置项
@@ -48,7 +47,7 @@ const isSwitchDescStyle = descStyle === "switch";
 
 // banner 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
-  dataArray: [imgSrc || []].flat(),
+  dataArray: [imgSrc || []].flat().map(item => item && withBase(item)),
   timeout: imgInterval,
   onAfterUpdate: newValue => {
     // 预加载下一张图片
@@ -175,7 +174,7 @@ onUnmounted(() => {
 
     <div v-if="features.length && !isBigImgBgStyle" :class="`${ns.e('feature')} flx-wrap-between`">
       <div :class="ns.e('feature__item')" v-for="(feature, index) in features" :key="index">
-        <a v-if="feature.link" :href="feature.link" class="flx-column-center">
+        <a v-if="feature.link" :href="withBase(feature.link)" class="flx-column-center">
           <img v-if="feature.imgUrl" class="feature-img" :src="withBase(feature.imgUrl)" :alt="feature.title" />
           <p class="feature-title">{{ feature.title }}</p>
           <p class="feature-description">{{ feature.description }}</p>

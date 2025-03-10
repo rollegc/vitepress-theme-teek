@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeTagCard">
 import { unref, watch, computed, ref } from "vue";
-import { useData, useRoute } from "vitepress";
+import { useData, useRoute, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData, getBgColor } from "../../../configProvider";
 import { HomeCard } from "../../";
@@ -15,6 +15,7 @@ const ns = useNamespace("tag");
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
 const { frontmatter, theme, site } = useUnrefData();
+
 const route = useRoute();
 const pageNum = ref(1);
 // 标签配置项
@@ -90,13 +91,13 @@ const tagsPageLink = computed(() => {
           v-for="(item, index) in currentTags"
           :key="item.name"
           :style="getTagStyle(index)"
-          :href="`${tagsPageLink}?tag=${encodeURIComponent(item.name)}`"
+          :href="withBase(`${tagsPageLink}?tag=${encodeURIComponent(item.name)}`)"
           :class="{ active: item.name === tag }"
         >
           {{ item.name }}
         </a>
 
-        <a v-if="!tagsPage && limit < tags.length" :href="tagsPageLink" class="more">更多 ...</a>
+        <a v-if="!tagsPage && limit < tags.length" :href="withBase(tagsPageLink)" class="more">更多 ...</a>
       </TransitionGroup>
 
       <div v-else :class="ns.m('empty')">暂无热门标签</div>
