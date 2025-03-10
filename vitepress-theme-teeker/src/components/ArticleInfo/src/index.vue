@@ -24,7 +24,7 @@ const {
   dateFormat = "yyyy-MM-dd",
   showAuthor = true,
   showDate = true,
-  showCategory = false,
+  showCategory = true,
   showTag = false,
 }: Article = { ...theme.article, ...frontmatter.article, ...frontmatter.tk?.article };
 
@@ -83,9 +83,9 @@ const baseInfo = [
 </script>
 
 <template>
-  <div :class="[ns.b(), 'flx-align-center', scope]">
+  <div :class="[ns.b(), scope]">
     <template v-for="item in baseInfo" :key="item.title">
-      <div v-if="item.show && (item.data || item.dataList?.length)" :class="['flx-center', `${scope}-item`, { split }]">
+      <span v-if="item.show && (item.data || item.dataList?.length)" :class="[ns.e('item'), `${scope}-item`, { split }]">
         <Icon v-if="showIcon"><component :is="item.icon" /></Icon>
         <a
           v-if="item.data"
@@ -106,7 +106,7 @@ const baseInfo = [
         >
           {{ data }}
         </a>
-      </div>
+      </span>
     </template>
 
     <slot />

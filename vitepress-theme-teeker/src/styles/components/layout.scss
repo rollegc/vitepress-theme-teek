@@ -35,6 +35,7 @@
         width: 100%;
       }
       @include e(home-content__info) {
+        width: 100%;
         flex: 1;
       }
     }

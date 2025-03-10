@@ -37,6 +37,7 @@
 
   @include e(info) {
     @include e(info__left) {
+      width: 100%;
       padding: 16px 24px;
       flex: 1;
 

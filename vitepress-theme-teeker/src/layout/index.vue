@@ -73,7 +73,7 @@ const comment: CommentConfig = computed(() => {
             <HomeBanner v-if="isHomePage() && enabled" />
             <div :class="[ns.e('home-content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
               <div :class="ns.e('home-content__post')"><HomePostList /></div>
-              <div :class="ns.e('home-home-content__info')"><HomeInfo /></div>
+              <div :class="ns.e('home-content__info')"><HomeInfo /></div>
             </div>
             <HomeFullscreenWallpaper
               v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"

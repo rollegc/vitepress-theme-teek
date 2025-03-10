@@ -34,7 +34,8 @@
     "./config": {
       "types": "./dist/config/index.d.ts",
       "import": "./dist/config/index.mjs"
-    }
+    },
+    "./vp-plus/*.scss": "./src/styles/vp-plus/*.scss"
   },
   "scripts": {
     "stub": "unbuild --stub"

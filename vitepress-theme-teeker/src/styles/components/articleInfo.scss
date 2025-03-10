@@ -11,8 +11,14 @@
     margin-right: 14px;
   }
 
-  i {
-    margin-right: 3px;
+  @include e(item) {
+    &:not(.split):not(:last-child) {
+      margin-right: 14px;
+    }
+    i {
+      vertical-align: -2px;
+      margin-right: 3px;
+    }
   }
 
   .split:not(:last-child) {

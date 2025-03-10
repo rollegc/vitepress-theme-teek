@@ -73,8 +73,13 @@ if (pagePropsRef.size !== "small") {
    *  屏幕小于 768px 时切换为 small，反之切换为设置的值
    */
   useWindowSize(width => {
+    const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = pageProps;
+
     if (width <= 768) pagePropsRef.size = "small";
-    else if (pagePropsRef.size !== (pageProps.size || "default")) pagePropsRef.size = pageProps.size || "default";
+    else if (pagePropsRef.size !== size) pagePropsRef.size = size;
+
+    if (width < 960) pagePropsRef.layout = "prev, pager, next";
+    else if (pagePropsRef.layout !== layout) pagePropsRef.layout = layout;
   });
 }
 
