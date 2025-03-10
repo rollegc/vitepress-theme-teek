@@ -2,16 +2,18 @@ import { Ref, ref, unref } from "vue";
 import { isString } from "../helper";
 
 export interface DataSwitchOption {
-  dataArray: string[];
-  timeout?: number;
-  onBeforeUpdate?: (newValue: string) => void;
-  onUpdate?: (data: Ref<string>, newValue: string) => void;
-  onAfterUpdate?: (newValue: string) => void;
+  dataArray: string[]; // 数据数组
+  timeout?: number; // 切换间隔时间，单位：毫秒
+  shuffle?: boolean; // 是否随机切换数据
+  onBeforeUpdate?: (newValue: string) => void; // 切换数据之前执行的回调函数
+  onUpdate?: (data: Ref<string>, newValue: string) => void; // 自定义切换逻辑
+  onAfterUpdate?: (newValue: string) => void; // 切换数据之后执行的回调函数
 }
 
 export const useSwitchData = ({
   dataArray,
   timeout = 4000,
+  shuffle = false,
   onBeforeUpdate,
   onUpdate,
   onAfterUpdate,
@@ -39,8 +41,22 @@ export const useSwitchData = ({
     // 启动定时器
     startTimer();
 
-    index.value = (unref(index) + 1) % dataArray.length;
-    const newValue = dataArray[unref(index)];
+    let newValue: string;
+
+    if (shuffle) {
+      // 随机选择一个不同的值
+      let newIndex: number;
+      do {
+        newIndex = Math.floor(Math.random() * dataArray.length);
+      } while (newIndex === unref(index)); // 确保随机切换时，不会切换到相同的数据
+
+      index.value = newIndex;
+      newValue = dataArray[newIndex];
+    } else {
+      // 按顺序选择下一个值
+      index.value = (unref(index) + 1) % dataArray.length;
+      newValue = dataArray[unref(index)];
+    }
 
     if (newValue === unref(data)) return;
 

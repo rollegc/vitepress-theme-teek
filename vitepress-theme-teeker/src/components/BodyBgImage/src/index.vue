@@ -16,6 +16,7 @@ let {
   imgSrc,
   imgOpacity = 1,
   imgInterval = 15000,
+  imgShuffle = false,
   mask = false,
   maskBg = "rgba(0, 0, 0, 0.2)",
 }: BodyBgImg = theme.bodyBgImg || {};
@@ -24,6 +25,7 @@ let {
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   dataArray: [imgSrc || []].flat().map(item => item && withBase(item)),
   timeout: imgInterval,
+  shuffle: imgShuffle,
   onAfterUpdate: newValue => {
     // 预加载下一张图片
     if (newValue) {

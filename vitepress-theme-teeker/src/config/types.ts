@@ -167,6 +167,10 @@ export interface BodyBgImg {
    */
   imgInterval?: number;
   /**
+   * body 背景图是否随机切换，为 false 时按顺序切换
+   */
+  imgShuffle?: boolean;
+  /**
    * body 背景图遮罩
    *
    * @default false
@@ -292,11 +296,17 @@ export interface Banner {
    */
   imgSrc?: string | string[];
   /**
-   * 当多张大图时（imgSrc 为数组），设置切换时间，单位：毫秒
+   * 当多张大图时（imgSrc 为数组），设置切换时间，单位：毫秒，bgStyle 为 bigImg 时生效
    *
    * @default 15000 (15秒)
    */
   imgInterval?: number;
+  /**
+   * 大图是否随机切换，为 false 时按顺序切换，bgStyle 为 bigImg 时生效
+   *
+   * @default false
+   */
+  imgShuffle?: boolean;
   /**
    * Banner 大图遮罩，bgStyle 为 bigImg 时生效
    *
@@ -350,6 +360,12 @@ export interface Banner {
    */
   switchTime?: number;
   /**
+   * 描述信息是否随机切换，为 false 时按顺序切换。descStyle 为 switch 时生效
+   *
+   * @default false
+   */
+  switchShuffle?: boolean;
+  /**
    * 输出一个文字的时间，单位：毫秒。descStyle 为 types 时生效
    *
    * @default 200 (0.2秒)
@@ -367,6 +383,12 @@ export interface Banner {
    * @default 800 (0.8秒)
    */
   typesNextTime?: number;
+  /**
+   * 描述信息是否随机打字，为 false 时按顺序打字，descStyle 为 types 时生效
+   *
+   * @default false
+   */
+  typesShuffle?: boolean;
 }
 
 export interface Wallpaper {

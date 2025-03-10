@@ -1,15 +1,14 @@
 import { ref, unref } from "vue";
 
 export interface TypesOption {
-  typesInTime?: number;
-  typesOutTime?: number;
-  typesNextTime?: number;
+  typesInTime?: number; // 打字间隔时间，单位：毫秒
+  typesOutTime?: number; // 删字间隔时间，单位：毫秒
+  typesNextTime?: number; // 换行间隔时间，单位：毫秒
+  shuffle?: boolean; // 是否随机切换文本
 }
 
 export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
-  const typesInTime = option?.typesInTime || 200;
-  const typesOutTime = option?.typesOutTime || 100;
-  const typesNextTime = option?.typesNextTime || 800;
+  const { typesInTime = 200, typesOutTime = 100, typesNextTime = 800, shuffle = false } = option || {};
 
   const text = ref("");
   const shouldAnimate = ref(false);
@@ -60,9 +59,18 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
       shouldAnimate.value = true;
 
       setTimeout(() => {
-        length++;
-        // typesArray 展示完，重新开始计数
-        if (length >= unref(typesArray).length) length = 0;
+        if (shuffle) {
+          // 随机选择下一个文本
+          let newIndex: number;
+          do {
+            newIndex = Math.floor(Math.random() * unref(typesArray).length);
+          } while (newIndex === length);
+
+          length = newIndex;
+        } else {
+          // 按顺序选择下一个文本
+          length = (length + 1) % unref(typesArray).length;
+        }
 
         typesInInterval = setInterval(() => {
           typesIn();

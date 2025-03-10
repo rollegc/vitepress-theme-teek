@@ -19,18 +19,21 @@ const {
   bgStyle = "default",
   imgSrc,
   imgInterval = 15000,
+  imgShuffle = false,
   mask = true,
   maskBg = "rgba(0, 0, 0, 0.4)",
   defaultBgColor = "#e5e5e5",
   textColor,
-  typesInTime = 200,
-  typesOutTime = 100,
-  typesNextTime = 800,
-  description = [],
-  switchTime = 4000,
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
   descStyle = "default",
+  description = [],
+  switchTime = 4000,
+  switchShuffle = false,
+  typesInTime = 200,
+  typesOutTime = 100,
+  typesNextTime = 800,
+  typesShuffle = false,
 }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 const descArray: string[] = [
   ...new Set([frontmatter.tk?.description || description || []].flat()?.filter((v: string) => !!v)),
@@ -49,6 +52,7 @@ const isSwitchDescStyle = descStyle === "switch";
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   dataArray: [imgSrc || []].flat().map(item => item && withBase(item)),
   timeout: imgInterval,
+  shuffle: imgShuffle,
   onAfterUpdate: newValue => {
     // 预加载下一张图片
     if (newValue) {
@@ -121,12 +125,13 @@ const {
   shouldAnimate,
   startTypes,
   stopTypes,
-} = useTextTypes(descArray, { typesInTime, typesOutTime, typesNextTime });
+} = useTextTypes(descArray, { typesInTime, typesOutTime, typesNextTime, shuffle: typesShuffle });
 
 // 文字淡入淡出效果
 const { data: text, startAutoSwitch: switchText } = useSwitchData({
   dataArray: descArray,
   timeout: switchTime,
+  shuffle: switchShuffle,
   onUpdate: (data, newValue) => {
     // 重新渲染数据，同时触发动画
     data.value = "";
