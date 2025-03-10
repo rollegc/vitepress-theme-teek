@@ -37,12 +37,12 @@ const initArtalk = () => {
 
 const reloadArtalk = () => {
   const a = unref(artalk);
-  a.update({
+  a?.update({
     pageKey: router.route.path,
     pageTitle: unref(page).title,
   });
 
-  a.reload();
+  a?.reload();
 };
 
 const initRoute = () => {

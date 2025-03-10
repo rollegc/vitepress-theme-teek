@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CodeBlockToggle">
-import { nextTick, onMounted } from "vue";
-import { useRouter } from "vitepress";
+import { nextTick, watch } from "vue";
+import { useRoute } from "vitepress";
 import { useNamespace } from "../../../hooks";
 
 defineOptions({ name: "CodeBlockToggle" });
@@ -96,24 +96,9 @@ const getElementHeight = (item: HTMLElement) => {
   return height;
 };
 
-const router = useRouter();
+const route = useRoute();
 
-const initRoute = () => {
-  const selfOnAfterRouteChange = router.onAfterRouteChange;
-  // 路由切换后的回调
-  router.onAfterRouteChange = (href: string) => {
-    selfOnAfterRouteChange?.(href);
-    // 路由切换后初始化代码块
-    initCodeBlock();
-  };
-};
-
-onMounted(() => {
-  nextTick(() => {
-    initCodeBlock();
-    initRoute();
-  });
-});
+watch(route, () => nextTick(() => initCodeBlock()), { immediate: true });
 </script>
 
 <template></template>

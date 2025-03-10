@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { computed, nextTick, onMounted, ref, unref } from "vue";
+import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
@@ -56,8 +56,11 @@ const isShowInfo = computed(() => {
   return false;
 });
 
-// 通过不蒜子获取页面访问量
-const { pagePv, isGet } = useBuSunZi(pageIteration);
+const { pagePv, isGet, request } = useBuSunZi(true, pageIteration);
+
+watch(route, () => {
+  request();
+});
 
 const baseInfoRef = ref<HTMLDivElement>();
 

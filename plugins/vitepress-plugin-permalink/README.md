@@ -49,23 +49,48 @@ export default defineConfig({
 
 ## ❗ Warning
 
-插件的 `usePermalink` 函数使用了 `router.onAfterRouteChange` 方法，如果你也需要使用该方法，请按照下面格式进行拓展：
+插件的 `usePermalink` 函数使用了 `router.onBeforeRouteChange` 和 `router.onAfterRouteChange` 回调方法。
+
+如果您也需要使用这些回调函数，请不要直接这样使用：
 
 ```typescript
-import { useRouter } from "vitepress";
+router.onAfterRouteChange = (href: string) => {
+  // 你的逻辑
+};
+```
 
-const router = useRouter();
+`onAfterRouteChange` 是一个函数，您这样使用将会 **覆盖** Teeker 在该回调函数的逻辑，因此您需要这样使用：
 
-const initRoute = () => {
-  const selfOnAfterRouteChange = router.onAfterRouteChange;
-  // 路由切换后的回调
-  router.onAfterRouteChange = (href: string) => {
-    // 调用可能已有的函数
-    selfOnAfterRouteChange?.(href);
+```typescript
+// 获取可能已有的 onAfterRouteChange
+const selfOnAfterRouteChange = router.onAfterRouteChange;
 
-    // 调用自己的函数
-    myFunction();
-  };
+router.onAfterRouteChange = (href: string) => {
+  // 调用可能已有的 onAfterRouteChange
+  selfOnAfterRouteChange?.(href);
+
+  // 调用自己的函数
+  myFunction();
+};
+
+const myFunction = () => {
+  /* */
+};
+```
+
+`onBeforeRouteChange` 支持返回 false 来阻止路由跳转，因此请这样使用：
+
+```typescript
+// 获取可能已有的 onBeforeRouteChange
+const selfOnBeforeRouteChange = router.onBeforeRouteChange;
+
+router.onBeforeRouteChange = (href: string) => {
+  // 调用已有的 onBeforeRouteChange
+  const selfResult = selfOnBeforeRouteChange?.(href);
+  if (selfResult === false) return false;
+
+  // 调用自己的函数
+  myFunction();
 };
 
 const myFunction = () => {

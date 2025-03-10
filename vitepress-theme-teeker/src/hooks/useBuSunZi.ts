@@ -7,13 +7,17 @@ export interface BusuanziData {
   site_uv: number;
 }
 
-export const useBuSunZi = (iterationTime = 2000) => {
+export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
   const sitePv = ref(9999);
   const siteUv = ref(9999);
   const pagePv = ref(9999);
-  const isGet = ref(false);
+  const isGet = ref<boolean | null>(null);
 
   const request = () => {
+    // 防止重复调用
+    if (unref(isGet) === false) return;
+
+    isGet.value = false;
     // 调用不蒜子接口
     bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback", data => {
       sitePv.value = data.site_pv || unref(sitePv);
@@ -24,7 +28,7 @@ export const useBuSunZi = (iterationTime = 2000) => {
   };
 
   // 第一次调用
-  request();
+  if (initRequest) request();
 
   let interval: NodeJS.Timeout;
   let i = 0;
@@ -41,5 +45,5 @@ export const useBuSunZi = (iterationTime = 2000) => {
     if (interval) clearInterval(interval);
   });
 
-  return { sitePv, siteUv, pagePv, isGet };
+  return { sitePv, siteUv, pagePv, isGet, request };
 };

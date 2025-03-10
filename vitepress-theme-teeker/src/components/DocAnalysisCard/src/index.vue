@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DocAnalysisCard">
-import { computed, Ref, unref } from "vue";
-import { useData } from "vitepress";
+import { computed, Ref, unref, watch } from "vue";
+import { useData, useRoute } from "vitepress";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useBuSunZi } from "../../../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../../../helper";
@@ -35,7 +35,12 @@ const finalTitle = computed(() => {
 const createToNowDay = dayDiff(createTime || getNowDate());
 
 // 通过不蒜子获取访问量和访客数
-const { sitePv, siteUv, isGet } = useBuSunZi(siteIteration);
+const { sitePv, siteUv, isGet, request } = useBuSunZi(true, siteIteration);
+const route = useRoute();
+
+watch(route, () => {
+  request();
+});
 
 const posts = usePosts();
 
