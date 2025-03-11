@@ -1,11 +1,6 @@
 @use "../mixins/config" as *;
 @use "../mixins/function" as *;
 
-a.hover-color:hover {
-  color: getCssVar("theme-color") !important;
-  cursor: pointer !important;
-}
-
 /* 自定义页面样式 */
 .#{$namespace}-page {
   max-width: getCssVar("page-width");
@@ -40,6 +35,16 @@ a.hover-color:hover {
   font-size: 1.4rem;
   line-height: 1.4rem;
   font-weight: 500;
+}
+
+/* 文章内容宽度加大 */
+.VPContent .VPDoc.has-aside .content-container {
+  max-width: var(--vp-content-container, 688px);
+}
+
+a.hover-color:hover {
+  color: getCssVar("theme-color") !important;
+  cursor: pointer !important;
 }
 
 ::-webkit-scrollbar {
