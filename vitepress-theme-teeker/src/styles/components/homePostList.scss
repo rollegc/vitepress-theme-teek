@@ -1,4 +1,6 @@
 @use "../mixins/bem" as *;
+@use "../mixins/config" as *;
+@use "../mixins/function" as *;
 
 @include b(postList) {
   @include e(pagination) {
@@ -23,12 +25,10 @@
   }
 
   /* 封面图为 full 风格样式 */
-  .full-cover-wrapper:nth-child(2n) {
-    .full-cover {
-      flex-direction: row-reverse;
-      .cover-img .full {
-        clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
-      }
+  .full-cover:nth-child(2n) .#{$namespace}-postItem__info {
+    flex-direction: row-reverse;
+    .cover-img .full {
+      clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
     }
   }
 }

@@ -17,7 +17,8 @@ const { frontmatter, theme } = useUnrefData();
 // 自定义一页数量 & 分页组件的 Props
 const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.page, ...frontmatter.tk?.page };
 
-const { coverImgMode = "default" } = { ...theme.post, ...frontmatter.tk?.post };
+const { coverImgMode: coverImgModeConst = "default" } = { ...theme.post, ...frontmatter.tk?.post };
+const coverImgMode = ref(coverImgModeConst);
 
 // 分页信息
 const pageInfo = ref({
@@ -67,21 +68,26 @@ watch(
 );
 
 const pagePropsRef = reactive({ ...pageProps });
+const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = pageProps;
+const targetSize = "small";
+const targetLayout = "prev, pager, next";
 
-if (pagePropsRef.size !== "small") {
-  /**
-   *  屏幕小于 768px 时切换为 small，反之切换为设置的值
-   */
-  useWindowSize(width => {
-    const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = pageProps;
+/**
+ * 响应式监听屏幕宽度，小于指定值后分页组件尺寸改为 small，布局改为 prev, pager, next，封面模式改为 default
+ */
+useWindowSize(width => {
+  if (width <= 768) {
+    if (pagePropsRef.size !== targetSize) pagePropsRef.size = targetSize;
+  } else if (pagePropsRef.size !== size) pagePropsRef.size = size;
 
-    if (width <= 768) pagePropsRef.size = "small";
-    else if (pagePropsRef.size !== size) pagePropsRef.size = size;
+  if (width <= 960) {
+    if (pagePropsRef.layout !== targetLayout) pagePropsRef.layout = targetLayout;
+  } else if (pagePropsRef.layout !== layout) pagePropsRef.layout = layout;
 
-    if (width < 960) pagePropsRef.layout = "prev, pager, next";
-    else if (pagePropsRef.layout !== layout) pagePropsRef.layout = layout;
-  });
-}
+  if (width < 960) {
+    if (coverImgMode.value !== "default") coverImgMode.value = "default";
+  } else if (coverImgMode.value !== coverImgModeConst) coverImgMode.value = coverImgModeConst;
+});
 
 /**
  * 切换分页时，记录到 URL 上
@@ -101,8 +107,8 @@ const handlePagination = () => {
 <template>
   <div :class="ns.b()">
     <ul>
-      <li v-for="post in currentPosts" :key="post.url" :class="[{ 'full-cover-wrapper': coverImgMode === 'full' }]">
-        <HomePostItem :post />
+      <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
+        <HomePostItem :post :coverImgMode />
       </li>
     </ul>
     <div :class="`${ns.e('pagination')} flx-justify-center`">
