@@ -58,8 +58,12 @@ const {
 
 const { provider }: CommentConfig = theme.comment || {};
 
+const themeStyleStorageKey = ns.b("themeStyle");
+const themeSizeStorageKey = ns.b("themeSize");
+
 // 主题切换
 const showThemeStyleItem = ref(false);
+
 const currentThemeStyle = ref(themeStyle);
 
 const themeStyleList = [
@@ -90,10 +94,11 @@ const changeThemeStyle = (themeStyle: string) => {
   if (themeStyle === unref(currentThemeStyle)) return;
   currentThemeStyle.value = themeStyle;
   document.documentElement.setAttribute("theme", themeStyle);
+  localStorage.setItem(themeStyleStorageKey, themeStyle);
 };
 
 // 初始化主题风格
-changeThemeStyle(themeStyle);
+changeThemeStyle(localStorage.getItem(themeStyleStorageKey) || themeStyle);
 
 // 主题尺寸
 const showThemeSizeItem = ref(false);
@@ -110,10 +115,11 @@ const changeThemeSize = (themeSize: string) => {
   if (themeSize === unref(currentThemeSize)) return;
   currentThemeSize.value = themeSize;
   document.documentElement.setAttribute("size", themeSize);
+  localStorage.setItem(themeSizeStorageKey, themeSize);
 };
 
 // 初始化主题尺寸
-changeThemeSize(themeSize);
+changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
 </script>
 
 <template>
