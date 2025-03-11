@@ -1,5 +1,5 @@
 <script setup lang="ts" name="DocAnalysisCard">
-import { computed, Ref, unref, watch } from "vue";
+import { computed, reactive, Ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useBuSunZi } from "../../../hooks";
@@ -18,9 +18,8 @@ const { theme: themeRef } = useData();
 // 站点信息配置项
 const {
   createTime,
-  siteView = true,
-  siteIteration,
   title = `${docAnalysisSvg}站点信息`,
+  statistics = {},
   overrideInfo = [],
   appendInfo = [],
 }: DocAnalysis = { ...theme.docAnalysis, ...frontmatter.tk?.docAnalysis };
@@ -33,14 +32,6 @@ const finalTitle = computed(() => {
 });
 
 const createToNowDay = dayDiff(createTime || getNowDate());
-
-// 通过不蒜子获取访问量和访客数
-const { sitePv, siteUv, isGet, request } = useBuSunZi(true, siteIteration);
-const route = useRoute();
-
-watch(route, () => {
-  request();
-});
 
 const posts = usePosts();
 
@@ -75,6 +66,24 @@ const formatWordCount = (wordCount: number) => {
   if (wordCount < 1000000) return Math.round(wordCount / 100) / 10 + "k";
   return Math.round(wordCount / 10000) / 10 + "w";
 };
+
+const route = useRoute();
+
+const statisticsInfo = reactive({ sitePv: 0, siteUv: 0, isGet: false });
+const { provider = "", siteView = true, siteIteration = 2000 }: DocAnalysis["statistics"] = statistics;
+const useSiteView = provider === "busuanzi" && siteView;
+
+if (useSiteView) {
+  // 通过不蒜子获取访问量和访客数
+  const { sitePv, siteUv, isGet, request } = useBuSunZi(true, siteIteration);
+  statisticsInfo.sitePv = sitePv;
+  statisticsInfo.siteUv = siteUv;
+  statisticsInfo.isGet = isGet;
+
+  watch(route, () => {
+    request();
+  });
+}
 
 type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number | Ref<string> };
 
@@ -118,28 +127,30 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
   {
     key: "viewCount",
     label: "本站被访问了",
-    originValue: unref(sitePv),
-    value: isGet ? `${unref(sitePv)} 次` : "Get...",
-    show: siteView,
+    originValue: statisticsInfo.sitePv,
+    value: statisticsInfo.isGet ? `${statisticsInfo.sitePv} 次` : "Get...",
+    show: useSiteView,
   },
   {
     key: "visitCount",
     label: "本站曾来访过",
-    originValue: unref(siteUv),
-    value: isGet ? `${unref(siteUv)} 人` : "Get...",
-    show: siteView,
+    originValue: statisticsInfo.siteUv,
+    value: statisticsInfo.isGet ? `${statisticsInfo.siteUv} 人` : "Get...",
+    show: useSiteView,
   },
   ...appendInfo,
 ]);
 
 if (overrideInfo.length) {
-  unref(docAnalysisList).forEach((item: DocAnalysisResolve) => {
-    const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
-    if (override) {
-      item.label = override.label || item.label;
-      item.value = override.value ? override.value(item.originValue || "", item.value) : item.value;
-      item.show = override.show !== false;
-    }
+  watch(docAnalysisList, (newValue: typeof docAnalysisList) => {
+    newValue.forEach((item: DocAnalysisResolve) => {
+      const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
+      if (override) {
+        item.label = override.label || item.label;
+        item.value = override.value ? override.value(item.originValue || "", item.value) : item.value;
+        item.show = override.show !== false;
+      }
+    });
   });
 }
 </script>

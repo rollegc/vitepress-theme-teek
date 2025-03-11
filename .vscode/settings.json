@@ -75,6 +75,7 @@
     "giscus",
     "teeker",
     "frontmatter",
-    "onwarn"
+    "onwarn",
+    "busuanzi"
   ]
 }

@@ -12,12 +12,11 @@ const tkConfig = tkThemeConfig({
   },
   docAnalysis: {
     createTime: "2021-10-19",
-    siteView: true,
-    pageView: true,
+    statistics: {
+      provider: "busuanzi",
+    },
     wordCount: true,
     readingTime: true,
-    siteIteration: 2500,
-    pageIteration: 2500,
   },
   banner: {
     bgStyle: "bigImg",

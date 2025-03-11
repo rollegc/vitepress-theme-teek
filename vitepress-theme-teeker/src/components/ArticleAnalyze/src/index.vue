@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
@@ -28,13 +28,10 @@ const post: TkContentData = {
 const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
 // 站点信息配置项
 const {
-  pageView = true,
   wordCount = true,
   readingTime = true,
-  pageIteration = 2000,
+  statistics = {},
 }: DocAnalysis = { ...theme.docAnalysis, ...frontmatter.docAnalysis };
-
-const route = useRoute();
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
@@ -56,11 +53,22 @@ const isShowInfo = computed(() => {
   return false;
 });
 
-const { pagePv, isGet, request } = useBuSunZi(true, pageIteration);
+const route = useRoute();
 
-watch(route, () => {
-  request();
-});
+const statisticsInfo = reactive({ pagePv: 0, isGet: false });
+const { provider = "", pageView = true, pageIteration = 2000 }: DocAnalysis["statistics"] = statistics;
+const usePageView = provider === "busuanzi" && pageView;
+
+if (usePageView) {
+  // 通过不蒜子获取访问量和访客数
+  const { pagePv, isGet, request } = useBuSunZi(true, pageIteration);
+  statisticsInfo.pagePv = pagePv;
+  statisticsInfo.isGet = isGet;
+
+  watch(route, () => {
+    request();
+  });
+}
 
 const baseInfoRef = ref<HTMLDivElement>();
 
@@ -102,9 +110,9 @@ onMounted(() => {
         <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
       </div>
 
-      <div v-if="pageView" class="flx-center">
+      <div v-if="usePageView" class="flx-center">
         <Icon><View /></Icon>
-        <a title="浏览量" class="hover-color">{{ isGet ? pagePv : "Get..." }}</a>
+        <a title="浏览量" class="hover-color">{{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}</a>
       </div>
     </div>
   </div>

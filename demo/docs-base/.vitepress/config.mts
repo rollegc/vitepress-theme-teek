@@ -14,12 +14,11 @@ const tkConfig = tkThemeConfig({
   },
   docAnalysis: {
     createTime: "2021-10-19",
-    siteView: true,
-    pageView: true,
+    statistics: {
+      provider: "busuanzi",
+    },
     wordCount: true,
     readingTime: true,
-    siteIteration: 2500,
-    pageIteration: 2500,
     overrideInfo: [{ key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` }],
     appendInfo: [{ key: "index", label: "序号", value: "天客99" }],
   },
@@ -153,6 +152,7 @@ export default defineConfig({
     ["meta", { name: "keywords", description }],
     ["link", { rel: "icon", href: "/favicon.ico", type: "image/png" }],
     ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
+    ["meta", { name: "referrer", content: "no-referrer-when-downgrade" }], // 不蒜子 API 统计需要
   ],
   markdown: {
     // 开启行号

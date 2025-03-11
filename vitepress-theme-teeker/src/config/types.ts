@@ -693,18 +693,6 @@ export interface DocAnalysis {
    */
   createTime?: string;
   /**
-   * 是否开启首页的访问量和排名统计
-   *
-   * @default true
-   */
-  siteView?: boolean;
-  /**
-   * 是否开启文章页的浏览量统计
-   *
-   * @default true
-   */
-  pageView?: boolean;
-  /**
    * 是否开启文章页的字数统计
    *
    * @default true
@@ -717,17 +705,40 @@ export interface DocAnalysis {
    */
   readingTime?: boolean;
   /**
-   * 如果首页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
-   *
-   * @default 2000 (2秒)
+   * 访问量、访客数统计配置
    */
-  siteIteration?: number;
-  /**
-   * 如果文章页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
-   *
-   * @default 2000 (2秒)
-   */
-  pageIteration?: number;
+  statistics?: {
+    /**
+     * 统计服务提供商
+     *
+     * @default ''
+     */
+    provider?: "" | "busuanzi";
+    /**
+     * 是否开启首页的访问量和排名统计
+     *
+     * @default true
+     */
+    siteView?: boolean;
+    /**
+     * 是否开启文章页的浏览量统计
+     *
+     * @default true
+     */
+    pageView?: boolean;
+    /**
+     * 如果首页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
+     *
+     * @default 2000 (2秒)
+     */
+    siteIteration?: number;
+    /**
+     * 如果文章页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
+     *
+     * @default 2000 (2秒)
+     */
+    pageIteration?: number;
+  };
   /**
    * 自定义现有信息
    * originValue 为计算前的数据，currentValue 为计算后的数据（加单位的数据），针对 lastActiveTime 这些需要判断 N 分、N 时、N 天的 key，originValue 为具体的时间，需要自行计算
@@ -1041,29 +1052,31 @@ export interface Notice {
   render?: () => VNode;
 }
 
-export type CommentConfig<T extends keyof CommentProvider = "twikoo" | "waline" | "giscus" | "artalk" | "render"> = {
-  /**
-   * 评论区提供者
-   * twikoo 官网：https://twikoo.js.org/
-   * waline 官网：https://waline.js.org/
-   * giscus 官网：https://giscus.app/zh-CN
-   * artalk 官网：https://artalk.js.org/
-   * render 需要自定义评论区组件
-   */
-  provider: T;
-  /**
-   * 评论区配置项，根据 provider 不同而不同，具体看对应官网的使用介绍
-   */
-  options?: CommentProvider[T];
-  /**
-   * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如一个 vue 组件。当自定义组件时，请将 provider 设为 render
-   *
-   * @remark 例：{ provider: "render", render: () => <MyCommentVueComponent /> }
-   */
-  render?: () => VNode;
-};
+export type CommentConfig<T extends keyof CommentProvider = "" | "twikoo" | "waline" | "giscus" | "artalk" | "render"> =
+  {
+    /**
+     * 评论区提供者
+     * twikoo 官网：https://twikoo.js.org/
+     * waline 官网：https://waline.js.org/
+     * giscus 官网：https://giscus.app/zh-CN
+     * artalk 官网：https://artalk.js.org/
+     * render 需要自定义评论区组件
+     */
+    provider: T;
+    /**
+     * 评论区配置项，根据 provider 不同而不同，具体看对应官网的使用介绍
+     */
+    options?: CommentProvider[T];
+    /**
+     * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如一个 vue 组件。当自定义组件时，请将 provider 设为 render
+     *
+     * @remark 例：{ provider: "render", render: () => <MyCommentVueComponent /> }
+     */
+    render?: () => VNode;
+  };
 
 export type CommentProvider = {
+  "": {};
   /**
    * twikoo 评论区配置项
    */
