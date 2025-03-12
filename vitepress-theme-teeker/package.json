@@ -46,13 +46,13 @@
     "js-yaml": "^4.1.0",
     "markdown-it": "^14.1.0",
     "markdown-it-container": "^4.0.0",
-    "vitepress-plugin-auto-frontmatter": "workspace:*",
-    "vitepress-plugin-catalogue": "workspace:*",
-    "vitepress-plugin-doc-analysis": "workspace:*",
-    "vitepress-plugin-file-content-loader": "workspace:*",
-    "vitepress-plugin-md-h1": "workspace:*",
-    "vitepress-plugin-permalink": "workspace:*",
-    "vitepress-plugin-sidebar-resolve": "workspace:*"
+    "vitepress-plugin-auto-frontmatter": "latest",
+    "vitepress-plugin-catalogue": "latest",
+    "vitepress-plugin-doc-analysis": "latest",
+    "vitepress-plugin-file-content-loader": "latest",
+    "vitepress-plugin-md-h1": "latest",
+    "vitepress-plugin-permalink": "latest",
+    "vitepress-plugin-sidebar-resolve": "latest"
   },
   "devDependencies": {
     "@giscus/vue": "^3.1.1",
