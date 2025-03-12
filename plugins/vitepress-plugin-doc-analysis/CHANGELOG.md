@@ -1,5 +1,11 @@
 # vitepress-plugin-doc-analysis
 
+## 1.0.3
+
+### Patch Changes
+
+- 修复已知问题
+
 ## 1.0.2
 
 ### Patch Changes

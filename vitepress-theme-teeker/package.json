@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "vitepress-theme-teeker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "vitepress-theme-teeker",
   "type": "module",
   "author": {
