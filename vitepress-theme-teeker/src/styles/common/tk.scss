@@ -43,8 +43,8 @@
 }
 
 a.hover-color:hover {
-  color: getCssVar("theme-color") !important;
-  cursor: pointer !important;
+  color: getCssVar("theme-color");
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {

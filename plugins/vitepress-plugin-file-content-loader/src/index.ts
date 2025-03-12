@@ -43,6 +43,9 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
         logger,
       } = config.vitepress;
 
+      // 防止 vitepress build 时重复执行
+      if (themeConfig[themeConfigKey]) return;
+
       if (typeof pattern === "string") pattern = [pattern];
       // 基于文档源目录 srcDir 匹配
       pattern = pattern.map(p => normalizePath(join(srcDir, p)));
@@ -88,7 +91,7 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
 
       themeConfig[themeConfigKey] = transformRaw ? await transformRaw(raw) : raw;
 
-      log(`injected ${themeConfigKey} data successfully. 注入 ${themeConfigKey} 数据成功!`, "green");
+      log(`Injected ${themeConfigKey} Data Successfully. 注入 ${themeConfigKey} 数据成功!`, "green");
     },
   };
 }

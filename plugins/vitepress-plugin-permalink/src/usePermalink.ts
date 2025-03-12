@@ -20,43 +20,28 @@ export default function usePermalink() {
     if (href === base) return router.go(href);
 
     const { pathname, search, hash } = new URL(href, fakeHost);
+    // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
+    const filePath = teyGetFilePathByPathname(pathname);
 
-    // 这里假设 decodePath 是 permalink
-    const decodePath =
-      "/" +
-      decodeURIComponent(pathname.slice(base.length))
-        .replace(/\.html/, "")
-        .replace(/\/$/, "");
-    const decodeHash = decodeURIComponent(hash);
-
-    const li = localeIndex.value;
-    const finalPath = cleanUrls ? decodePath : decodePath + ".html";
-    // 根据 permalink 获取 filePath
-    const filePath = (li === "root" ? "" : permalinks.inv[`/${li}${finalPath}`]) || permalinks.inv[finalPath];
-
-    if (filePath && filePath !== decodePath) router.go(`${filePath}${search}${decodeHash}`);
-
-    // 走到这里已经 href 确定为 filePath，直接走 vitepress 默认的 go 方法
-    router.go(href);
+    if (filePath) router.go(`${base}${filePath}${search}${hash}`);
+    // 走到这里已经确定 href 为 filePath（不是 permalink），直接走 vitepress 默认的 go 方法
+    router.go(href.startsWith(base) ? href : base + href);
   };
 
   /**
-   * 判断路由是否为文档路由
-   * 1. 如果为文档路由，则替换为 permalink
-   * 2. 如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink（先加载 404 页面再瞬间跳转文档路由）
+   * 判断路由是否为文档路由，
+   * 1、如果为文档路由，则替换为 permalink
+   * 2、如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink（先加载 404 页面再瞬间跳转文档路由）
    *
-   * @param href 浏览器地址栏
-   * @remark 第 2 点的逻辑已由 vitepress-plugin-permalink 插件实现了（不会出现 404 页面过渡），因此现在是在插件执行后，重新触发该方法，替换 URL 为 permalink
+   * @param href 访问的文档地址或 permalink
    */
   const replaceUrlWhenPermalinkExist = (href: string) => {
     if (!permalinkKeys.length) return;
 
     const b = base.replace(/\/$/, "");
     const { pathname, search, hash } = new URL(href, fakeHost);
-
     // 解码，支持中文
     const decodePath = decodeURIComponent(pathname.startsWith(base) ? pathname.slice(b.length) : pathname);
-    const decodeHash = decodeURIComponent(hash);
 
     const permalink = permalinks.map[decodePath.replace(/^\//, "").replace(/\.html/, "")];
 
@@ -66,33 +51,42 @@ export default function usePermalink() {
     if (permalink) {
       // 存在 permalink 则在 URL 替换
       nextTick(() => {
-        history.replaceState(history.state || null, "", `${b}${permalink}${search}${decodeHash}`);
+        history.replaceState(history.state || null, "", `${b}${permalink}${search}${hash}`);
       });
     } else {
-      // 第二点，不存在 permalink 则获取文档地址来跳转
-      const path = permalinks.inv[decodePath];
-      if (path) return router.push(`${base}${path}${search}${decodeHash}`);
+      // 不存在 permalink 则获取文档地址来跳转（router.onBeforeRouteChange 在跳转前已经执行了该逻辑，因此这里触发率 0%，只是用于兜底，因为 router.onBeforeRouteChange 可能因为用户使用不当被覆盖）
+      const filePath = teyGetFilePathByPathname(pathname);
+      if (filePath) return router.go(`${base}${filePath}${search}${hash}`);
     }
   };
 
   onMounted(() => replaceUrlWhenPermalinkExist(window.location.href));
 
   /**
-   * 尝试获取国际化环境下的路由地址
-   * 使用场景；当文档内通过 []() 来引入一个 permalink 且 permalink 为 /xx 时，该方法自动拼接多语言 如 /en/xx 来获取文件地址
+   * 尝试通过路由地址获取文件地址（当路由地址为 permalink 时才有值返回，否则返回空）
    *
-   * @param href 路由地址
+   * @param pathname 访问的文档地址或 permalink
    */
-  const getLocaleFilePath = (href: string) => {
-    const { pathname } = new URL(href, fakeHost);
-    if (href === base) return;
+  const teyGetFilePathByPathname = (pathname: string) => {
+    const decodePath =
+      "/" +
+      decodeURIComponent(pathname.slice(base.length))
+        .replace(/\.html/, "")
+        .replace(/\/$/, "");
 
-    const decodePath = decodeURIComponent(pathname.slice(base.length)).replace(/\/$/, "");
-    // 如果 permalink 已经带有多语言前缀，则不执行该方法
-    if (decodePath.startsWith(`${localeIndex.value}/`)) return;
+    const li = localeIndex.value;
+    // 假设为 permalink
+    const maybeIsPermalink = cleanUrls ? decodePath : decodePath + ".html";
+    // 实际的文件路径
+    let filePath = "";
 
-    const finalPath = cleanUrls ? decodePath : decodePath + ".html";
-    return permalinks.inv[`/${localeIndex.value}/${finalPath}`];
+    // 使用场景；当文档内通过 []() 来引入一个 permalink 且 permalink 为 /xx 时，该方法自动拼接多语言 如 /en/xx 来获取文件地址
+    if (li != "root" && !maybeIsPermalink.startsWith(`${li}/`)) filePath = permalinks.inv[`/${li}${maybeIsPermalink}`];
+    else filePath = permalinks.inv[maybeIsPermalink];
+
+    // 如果获取的文件路径和访问的路由地址一致，则返回空，代表不需要重复跳转
+    if (filePath == decodePath) return "";
+    return filePath;
   };
 
   /**
@@ -107,13 +101,15 @@ export default function usePermalink() {
       const selfResult = selfOnBeforeRouteChange?.(href);
       if (selfResult === false) return false;
 
-      // 如果不是国际化环境，则不处理
-      if (localeIndex.value === "root") return;
-      const filePath = getLocaleFilePath(href);
+      const { pathname, search, hash } = new URL(href, fakeHost);
+      if (href === base) return;
+      // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
+      const filePath = teyGetFilePathByPathname(pathname);
 
       if (filePath) {
-        // 如果存在多语言文件地址，则跳转
-        router.go(base + filePath);
+        router.go(`${base}${filePath}${search}${hash}`);
+
+        // 阻止本次路由跳转
         return false;
       }
     };

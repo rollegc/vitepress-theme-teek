@@ -6,55 +6,29 @@ export interface BusuanziData {
   site_uv: number;
 }
 
-let isLoaded = false;
-let fnArray: Array<() => void> = [];
-
-const ready = (callback: () => void) => {
-  return isLoaded || ["interactive", "complete"].includes(document.readyState)
-    ? callback.call(document)
-    : fnArray.push(() => callback.call(document));
-};
-
-const fnCallback = () => {
-  for (const fn of fnArray) {
-    fn();
-  }
-  fnArray = [];
-};
-
-const domContentLoadedFn = () => {
-  if (!isLoaded) {
-    isLoaded = true;
-    fnCallback.call(window);
-    if (document.removeEventListener) document.removeEventListener("DOMContentLoaded", domContentLoadedFn, false);
-  }
-};
-
-if (document.addEventListener) document.addEventListener("DOMContentLoaded", domContentLoadedFn, false);
-
-const callBsz = (
-  requestCallback: (data: BusuanziData) => void,
-  url = "//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback"
-) => {
+const callBsz = (url = "//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback"): Promise<BusuanziData> => {
   const jsonpCallback = "BusuanziCallback_" + Math.floor(1099511627776 * Math.random());
   url = url.replace("=BusuanziCallback", "=" + jsonpCallback);
-  const scriptTag = document.createElement("script") as HTMLScriptElement;
-  scriptTag.type = "text/javascript";
-  scriptTag.defer = true;
-  scriptTag.src = url;
 
-  // 确保 <head> 存在
-  document.getElementsByTagName("HEAD")[0]?.appendChild(scriptTag);
-  (window as any)[jsonpCallback] = (data: BusuanziData) => {
-    ready(() => {
-      try {
-        requestCallback(data);
-        if (scriptTag.parentElement) scriptTag.parentElement.removeChild(scriptTag);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-  };
+  const scriptDom = document.createElement("script") as HTMLScriptElement;
+  scriptDom.type = "text/javascript";
+  scriptDom.defer = true;
+  scriptDom.src = url;
+  document.body.appendChild(scriptDom);
+
+  let response: BusuanziData;
+
+  (window as any)[jsonpCallback] = (data: BusuanziData) => (response = data);
+
+  return new Promise((resolve, reject) => {
+    scriptDom.onload = () => {
+      resolve(response);
+      setTimeout(() => {
+        document.body.removeChild(scriptDom);
+      }, 10);
+    };
+    scriptDom.onerror = () => reject("Error Loading " + url);
+  });
 };
 
 export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
@@ -66,10 +40,10 @@ export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
   const request = () => {
     // 防止重复调用
     if (unref(isGet) === false) return;
-
     isGet.value = false;
+
     // 调用不蒜子接口
-    callBsz(data => {
+    callBsz().then(data => {
       sitePv.value = data.site_pv || unref(sitePv);
       siteUv.value = data.site_uv || unref(siteUv);
       pagePv.value = data.page_pv || unref(pagePv);
@@ -79,10 +53,10 @@ export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
 
   // 第一次调用
   if (initRequest) request();
-
   let interval: NodeJS.Timeout;
   let i = 0;
-  // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
+
+  // 如果第一次调用获取失败，每 3 s 后重新调用，直至尝试 5 次或调用成功
   interval = setInterval(() => {
     if (!unref(isGet)) {
       i += iterationTime;

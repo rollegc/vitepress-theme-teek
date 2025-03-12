@@ -19,7 +19,7 @@ pnpm install
 引用包构建
 
 ```bash
-pnpm stub
+pnpm plugin:build
 ```
 
 使用文档启动

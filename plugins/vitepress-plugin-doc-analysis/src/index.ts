@@ -25,6 +25,11 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
 
       // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
+
+      // 防止 vitepress build 时重复执行
+      if (themeConfig.docAnalysisInfo) return;
+      if (localesKeys.length && locales[localesKeys[0]]?.themeConfig.docAnalysisInfo) return;
+
       // 如果不是多语言，则不需要处理多语言的文档分析
       if (!localesKeys.length) return doDocAnalysisThenSet(themeConfig, readFileList(newOption), newOption);
 
@@ -60,5 +65,5 @@ const doDocAnalysisThenSet = async (themeConfig: any, fileList: FilePathInfo[], 
     lastCommitTime,
   } as DocAnalysis;
 
-  log("injected docAnalysisInfo data successfully. 注入文档分析数据成功!", "green");
+  log("Injected DocAnalysisInfo Data Successfully. 注入文档分析数据成功!", "green");
 };

@@ -22,6 +22,9 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         rewrites,
       } = config.vitepress;
 
+      // 防止 vitepress build 时重复执行
+      if (themeConfig.permalinks) return;
+
       const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
 
       const permalinks = createPermalinks({ ...option, path: baseDir }, cleanUrls);
@@ -49,13 +52,20 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath } as Permalink;
 
-      log("injected permalinks data successfully. 注入永久链接数据成功!", "green");
+      log("Injected Permalinks Data Successfully. 注入永久链接数据成功!", "green");
 
       vitepressConfig = config.vitepress;
 
       // 导航栏高亮适配 permalink
       if (!localesKeys.length) {
-        return setActiveMatchWhenUsePermalink(themeConfig.nav, permalinkToPath, cleanUrls, rewrites);
+        return setActiveMatchWhenUsePermalink(
+          themeConfig.nav,
+          permalinkToPath,
+          cleanUrls,
+          rewrites,
+          "",
+          option.activeMatchDir
+        );
       }
 
       localesKeys.forEach(localeKey => {
@@ -64,7 +74,8 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
           permalinkToPath,
           cleanUrls,
           rewrites,
-          localeKey
+          localeKey,
+          option.activeMatchDir
         );
       });
     },
@@ -77,10 +88,9 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
         },
         rewrites,
       } = vitepressConfig;
-      // 将 permalink 重写实际文件路径，这是在服务器环境中执行，此时还未到浏览器环境，因此在浏览器地址栏变化之前执行，即浏览器地址栏无延迟变化
+      // 将 permalink 重写实际文件路径，仅限 dev 环境生效
       server.middlewares.use((req, _res, next) => {
-        // req.url 为实际的文件资源地址，如 /guide/index.md，而不是浏览器的请求地址 /guide/index.html
-        if (req.url) {
+        if (req.url && req.url.includes(".md")) {
           const reqUrl = decodeURI(req.url)
             .replace(/[?#].*$/, "")
             .replace(/\.md$/, "")
@@ -125,13 +135,15 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
  * @param cleanUrls cleanUrls
  * @param rewrites 如果设置了 rewrites，则取 rewrites 后的文件路径
  * @param localeKey 多语言名称
+ * @param activeMatchDir activeMatch 精确匹配指定目录下的 Markdown 文件
  */
 const setActiveMatchWhenUsePermalink = (
   nav: any[] = [],
   permalinkToPath: Record<string, string>,
   cleanUrls = false,
   rewrites: Record<string, any> = {},
-  localeKey = ""
+  localeKey = "",
+  activeMatchDir = [""]
 ) => {
   if (!nav.length) return;
 
@@ -143,12 +155,21 @@ const setActiveMatchWhenUsePermalink = (
     const path = permalinkToPath[cleanUrls ? link : `${link.replace(/\.html/, "")}.html`];
 
     if (path && !item.activeMatch) {
+      const finalPath = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
       // 如果设置了 rewrites，则取 rewrites 后的文件路径
       const finalPathArr = (rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path).split("/");
-      // 只传入父目录（兼容国际化目录），这样访问里面的 Markdown 文件后，对应导航都可以高亮（官方规定 activeMatch 是一个正则表达式字符串）
-      if (finalPathArr[0] === localeKey) item.activeMatch = `${finalPathArr[0]}/${finalPathArr[1]}`;
-      else item.activeMatch = finalPathArr[0];
+
+      // 访问一级目录里面的 Markdown 文件，对应导航都可以高亮，同时兼容国际化目录（官方规定 activeMatch 是一个正则表达式字符串）
+      const activeMatch =
+        finalPathArr[0] === localeKey
+          ? `${finalPathArr[0]}${finalPathArr[1] ? `/${finalPathArr[1]}` : ""}`
+          : finalPathArr[0];
+
+      // 精确匹配指定目录下的 Markdown 文件
+      if (activeMatchDir.includes(activeMatch)) item.activeMatch = finalPath;
+      else item.activeMatch = activeMatch;
     }
+
     if (item.items?.length) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
   });
 };
