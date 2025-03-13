@@ -4,7 +4,7 @@ import { withBase } from "vitepress";
 import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { useNamespace } from "../../../hooks";
 import { HomeCardProps } from "./homeCard";
-import { Icon } from "../../";
+import Icon from "../../Icon";
 
 defineOptions({ name: "HomeCard" });
 

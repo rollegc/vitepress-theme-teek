@@ -2,7 +2,8 @@
 import { withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
-import { HomeCard, Icon } from "../../";
+import HomeCard from "../../HomeCard";
+import Icon from "../../Icon";
 import { Blogger, Social } from "../../../config/types";
 
 defineOptions({ name: "HomeMyCard" });

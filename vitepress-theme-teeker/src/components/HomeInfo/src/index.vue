@@ -3,7 +3,12 @@ import { computed, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
-import { HomeMyCard, HomeCategoryCard, HomeTagCard, FriendLinkCard, TopArticleCard, DocAnalysisCard } from "../../";
+import HomeMyCard from "../../HomeMyCard";
+import HomeCategoryCard from "../../HomeCategoryCard";
+import HomeTagCard from "../../HomeTagCard";
+import FriendLinkCard from "../../FriendLinkCard";
+import TopArticleCard from "../../TopArticleCard";
+import DocAnalysisCard from "../../DocAnalysisCard";
 
 defineOptions({ name: "HomeInfo" });
 

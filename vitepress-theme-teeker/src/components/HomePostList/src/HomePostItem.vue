@@ -1,11 +1,11 @@
 <script setup lang="ts" name="HomePostItem">
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace, useWindowSize } from "../../../hooks";
+import { useNamespace } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
 import { useUnrefData } from "../../../configProvider";
-import { ArticleInfo } from "../../";
+import ArticleInfo from "../../ArticleInfo";
 import { Article, Post } from "../../../config/types";
 
 defineOptions({ name: "HomePostItem" });

@@ -8,7 +8,7 @@ import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
 import { Article } from "../../../config/types";
 import { PostBaseInfoProps } from "./articleInfo";
-import { Icon } from "../../";
+import Icon from "../../Icon";
 
 defineOptions({ name: "ArticleInfo" });
 

@@ -3,7 +3,7 @@ import { unref, watch, computed, ref } from "vue";
 import { useData, useRoute, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData, getBgColor } from "../../../configProvider";
-import { HomeCard } from "../../";
+import HomeCard from "../../HomeCard";
 import tagSvg from "../../../assets/svg/tag";
 import { isFunction } from "../../../helper";
 import { Tag } from "../../../config/types";

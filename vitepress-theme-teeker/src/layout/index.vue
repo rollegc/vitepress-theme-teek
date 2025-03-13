@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { computed, unref } from "vue";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
-import { Banner, CommentConfig, TkThemeConfig } from "../config/types";
+import { Banner, TkThemeConfig } from "../config/types";
 import {
   HomeBanner,
   HomePostList,
@@ -39,10 +39,10 @@ const tkHome = computed(() => unref(frontmatterRef).tk?.tkHome ?? theme.tkHome ?
 
 const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 
-const comment: CommentConfig = computed(() => {
+const comment = computed(() => {
   const commentOption = { ...theme.comment, ...frontmatter.tk?.comment };
   return {
-    enabled: frontmatterRef.enabled || true,
+    enabled: unref(frontmatterRef).enabled || true,
     components: {
       twikoo: CommentTwikoo,
       waline: CommentWaline,

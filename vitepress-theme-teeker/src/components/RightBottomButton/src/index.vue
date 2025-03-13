@@ -2,7 +2,7 @@
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useNamespace, useDebounce } from "../../../hooks";
-import { Icon } from "../../";
+import Icon from "../../Icon";
 import { useUnrefData } from "../../../configProvider";
 import { scrollTo } from "../../../helper";
 import sizeSvg from "../../../assets/svg/size";

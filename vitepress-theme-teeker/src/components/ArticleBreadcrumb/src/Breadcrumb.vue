@@ -14,9 +14,9 @@ const breadcrumb = ref<HTMLDivElement>();
 provide(breadcrumbKey, { separator });
 
 onMounted(() => {
-  const items = unref(breadcrumb).querySelectorAll(`.${ns.e("item")}`);
+  const items = unref(breadcrumb)?.querySelectorAll(`.${ns.e("item")}`);
 
-  if (items.length) {
+  if (items?.length) {
     items[items.length - 1].setAttribute("aria-current", "page");
   }
 });

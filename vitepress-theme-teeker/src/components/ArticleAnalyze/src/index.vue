@@ -1,11 +1,13 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import { computed, nextTick, onMounted, reactive, ref, unref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
-import { useNamespace, useBuSunZi } from "../../../hooks";
+import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
-import { ArticleBreadcrumb, ArticleInfo, Icon } from "../../";
+import ArticleBreadcrumb from "../../ArticleBreadcrumb";
+import ArticleInfo from "../../ArticleInfo";
+import Icon from "../../Icon";
 import { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
 
@@ -55,7 +57,10 @@ const isShowInfo = computed(() => {
 
 const route = useRoute();
 
-const statisticsInfo = reactive({ pagePv: 0, isGet: false });
+const statisticsInfo: UseBuSunZi = {
+  pagePv: ref(0),
+  isGet: ref(false),
+};
 const { provider = "", pageView = true, pageIteration = 2000 }: DocAnalysis["statistics"] = statistics;
 const usePageView = provider === "busuanzi" && pageView;
 

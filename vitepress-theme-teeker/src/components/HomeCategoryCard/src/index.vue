@@ -3,7 +3,7 @@ import { computed, unref, ref, watch } from "vue";
 import { useRoute, useData, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData } from "../../../configProvider";
-import { HomeCard } from "../../";
+import HomeCard from "../../HomeCard";
 import categorySvg from "../../../assets/svg/category";
 import { isFunction } from "../../../helper";
 import { Category } from "../../../config/types";

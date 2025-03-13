@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { CatalogueItem } from "../../";
+import CatalogueItem from "./CatalogueItem.vue";
 
 defineOptions({ name: "CataloguePage" });
 

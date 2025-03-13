@@ -1,10 +1,10 @@
 <script setup lang="ts" name="DocAnalysisCard">
-import { computed, reactive, Ref, unref, watch } from "vue";
+import { computed, ref, Ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { usePosts, useUnrefData } from "../../../configProvider";
-import { useNamespace, useBuSunZi } from "../../../hooks";
+import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../../../helper";
-import { HomeCard } from "../../";
+import HomeCard from "../../HomeCard";
 import docAnalysisSvg from "../../../assets/svg/docAnalysis";
 import { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
 
@@ -69,7 +69,11 @@ const formatWordCount = (wordCount: number) => {
 
 const route = useRoute();
 
-const statisticsInfo = reactive({ sitePv: 0, siteUv: 0, isGet: false });
+const statisticsInfo: UseBuSunZi = {
+  sitePv: ref(0),
+  siteUv: ref(0),
+  isGet: ref(false),
+};
 const { provider = "", siteView = true, siteIteration = 2000 }: DocAnalysis["statistics"] = statistics;
 const useSiteView = provider === "busuanzi" && siteView;
 
@@ -138,11 +142,11 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
     value: statisticsInfo.isGet ? `${statisticsInfo.siteUv} 人` : "Get...",
     show: useSiteView,
   },
-  ...appendInfo,
+  ...appendInfo as any[],
 ]);
 
 if (overrideInfo.length) {
-  watch(docAnalysisList, (newValue: typeof docAnalysisList) => {
+  watch(docAnalysisList, (newValue: DocAnalysisResolve[]) => {
     newValue.forEach((item: DocAnalysisResolve) => {
       const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
       if (override) {

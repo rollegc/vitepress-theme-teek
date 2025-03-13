@@ -9,7 +9,7 @@ import icpRecordSvg from "../../../assets/svg/icpRecord";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
 import { version } from "../../../version";
-import { Icon } from "../../";
+import Icon from "../../Icon";
 import { FooterInfo, Social } from "../../../config/types";
 
 defineOptions({ name: "Footer" });

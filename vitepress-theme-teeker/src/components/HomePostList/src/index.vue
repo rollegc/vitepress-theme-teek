@@ -2,7 +2,8 @@
 import { reactive, ref, unref, watch } from "vue";
 import { useRoute } from "vitepress";
 import { PaginationProps } from "element-plus";
-import { HomePostItem, Pagination } from "../../";
+import HomePostItem from "./HomePostItem.vue";
+import Pagination from "../../Pagination";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import { TkContentData } from "../../../post/types";

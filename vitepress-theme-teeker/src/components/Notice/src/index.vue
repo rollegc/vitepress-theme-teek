@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData, useRouter } from "vitepress";
 import { useNamespace, useWindowSize } from "../../../hooks";
-import { Icon } from "../../";
+import Icon from "../../Icon";
 import noticeSvg from "../../../assets/svg/notice";
 import closeSvg from "../../../assets/svg/close";
 import { isString } from "../../../helper";

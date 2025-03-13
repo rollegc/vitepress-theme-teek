@@ -3,7 +3,7 @@ import { computed, ref, unref } from "vue";
 import { withBase } from "vitepress";
 import { useUnrefData, usePosts, getBgColor } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
-import { HomeCard } from "../../";
+import HomeCard from "../../HomeCard";
 import topArticleSvg from "../../../assets/svg/topArticle";
 import { TkContentData } from "../../../post/types";
 import { isFunction } from "../../../helper";

@@ -4,7 +4,7 @@ import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 import { isString } from "../../../helper";
-import { HomeBannerWaves } from "../../";
+import HomeBannerWaves from "./HomeBannerWaves.vue";
 import { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBanner" });

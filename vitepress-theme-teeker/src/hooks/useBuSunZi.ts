@@ -1,4 +1,4 @@
-import { onBeforeUnmount, ref, unref } from "vue";
+import { onBeforeUnmount, Ref, ref, unref } from "vue";
 
 export interface BusuanziData {
   site_pv: number;
@@ -30,6 +30,13 @@ const callBsz = (url = "//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCa
     scriptDom.onerror = () => reject("Error Loading " + url);
   });
 };
+
+export interface UseBuSunZi {
+  sitePv?: Ref<number>;
+  siteUv?: Ref<number>;
+  pagePv?: Ref<number>;
+  isGet?: Ref<boolean | null>;
+}
 
 export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
   const sitePv = ref(9999);
