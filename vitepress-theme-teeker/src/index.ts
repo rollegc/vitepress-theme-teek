@@ -1,8 +1,8 @@
 import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
-import "./styles/index.scss";
 import { CataloguePage, ArchivesPage } from "./components";
+import "./styles/index.scss";
 
 import "element-plus/theme-chalk/base.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
@@ -13,6 +13,8 @@ import "element-plus/theme-chalk/el-input.css";
 export type { TkThemeConfig } from "./config/types";
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 
+export type DefaultThemeType = typeof DefaultTheme;
+
 export default {
   extends: DefaultTheme,
   Layout: configProvider(Layout),
@@ -20,4 +22,4 @@ export default {
     app.component("cataloguePage", CataloguePage);
     app.component("archivesPage", ArchivesPage);
   },
-} as typeof DefaultTheme;
+} as DefaultThemeType & { extends: DefaultThemeType };

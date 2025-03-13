@@ -55,7 +55,6 @@ const comment = computed(() => {
       waline: CommentWaline,
       giscus: CommentGiscus,
       artalk: CommentArtalk,
-      render: commentOption.render,
     },
     provider: commentOption.provider,
     options: commentOption.options,
@@ -125,8 +124,9 @@ onMounted(() => {
         <!-- 评论区 -->
         <template v-if="comment.enabled">
           <ClientOnly>
+            <slot v-if="comment.provider === 'render'" name="comment" />
             <component
-              v-if="comment.provider"
+              v-else-if="comment.provider"
               :is="comment.components[comment.provider]"
               :id="`${ns.namespace}-comment`"
               :class="ns.e('comment')"

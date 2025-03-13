@@ -4,7 +4,7 @@ import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
 import type { AutoFrontmatterOption } from "plugins/vitepress-plugin-auto-frontmatter";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
-import type { Ref, VNode } from "vue";
+import type { Ref } from "vue";
 import type { Route } from "vitepress";
 
 export interface TkThemeConfig {
@@ -1055,10 +1055,6 @@ export interface Notice {
    * @param to 切换到的目标路由
    */
   onAfterRouteChange?: (to: Route, noticeShow: Ref<boolean>, showPopover: Ref<boolean>) => void;
-  /**
-   * 自定义内容组件，返回一个 VNode，比如一个 vue 组件
-   */
-  render?: () => VNode;
 }
 
 export type CommentConfig<T extends keyof CommentProvider = "" | "twikoo" | "waline" | "giscus" | "artalk" | "render"> =
@@ -1069,19 +1065,13 @@ export type CommentConfig<T extends keyof CommentProvider = "" | "twikoo" | "wal
      * waline 官网：https://waline.js.org/
      * giscus 官网：https://giscus.app/zh-CN
      * artalk 官网：https://artalk.js.org/
-     * render 需要自定义评论区组件
+     * render 需要自定义评论区组件，并通过 comment 插槽传入
      */
     provider: T;
     /**
      * 评论区配置项，根据 provider 不同而不同，具体看对应官网的使用介绍
      */
     options?: CommentProvider[T];
-    /**
-     * 自定义评论区组件，如果 provider 不满足，则可以自定义组件，返回一个 VNode，比如一个 vue 组件。当自定义组件时，请将 provider 设为 render
-     *
-     * @remark 例：{ provider: "render", render: () => <MyCommentVueComponent /> }
-     */
-    render?: () => VNode;
   };
 
 export type CommentProvider = {

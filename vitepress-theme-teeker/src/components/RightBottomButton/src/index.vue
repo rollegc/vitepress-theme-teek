@@ -1,6 +1,6 @@
 <script setup lang="ts" name="RightBottomButton">
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
-import { ArrowUp, MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
+import { MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import { useUnrefData } from "../../../configProvider";
