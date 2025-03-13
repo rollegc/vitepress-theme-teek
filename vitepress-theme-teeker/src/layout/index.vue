@@ -1,7 +1,7 @@
 <script setup lang="ts" name="tkLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed, unref } from "vue";
+import { computed, onMounted, ref, unref } from "vue";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
 import { Banner, TkThemeConfig } from "../config/types";
@@ -33,7 +33,14 @@ const ns = useNamespace("layout");
 const { theme, frontmatter } = useUnrefData();
 const { frontmatter: frontmatterRef } = useData();
 
-const { tkTheme = true, wallpaper = {}, codeBlock = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
+const {
+  tkTheme = true,
+  wallpaper = {},
+  codeBlock = true,
+  bodyBgImg = {},
+  notice = {},
+  notFoundPageDelayLoad = 100,
+}: TkThemeConfig = theme;
 // tkHome 支持 theme 或 index.md 的 frontmatter 配置
 const tkHome = computed(() => unref(frontmatterRef).tk?.tkHome ?? theme.tkHome ?? true);
 
@@ -53,6 +60,14 @@ const comment = computed(() => {
     provider: commentOption.provider,
     options: commentOption.options,
   };
+});
+
+// 禁止加载 404 页面
+const disableNotFoundPage = ref(true);
+
+onMounted(() => {
+  // 延迟 100 毫秒再加载 404 页面。因为 permalink 插件支持自定义 URL，但是 VP 初始化时根据自定义 URL 寻找文档会 404，因此这里延迟来给 permalink 插件寻找正确的文档路径
+  setTimeout(() => (disableNotFoundPage.value = false), notFoundPageDelayLoad);
 });
 </script>
 
@@ -123,6 +138,13 @@ const comment = computed(() => {
       </template>
       <template #page-bottom>
         <slot name="page-bottom" />
+      </template>
+
+      <!-- 404 页面延迟出现 -->
+      <template #not-found>
+        <!-- VP 认为插槽内容为空则插槽不起作用，因此添加空内容来起作用 -->
+        <template v-if="disableNotFoundPage">{{}}</template>
+        <template v-else><slot name="not-found" /></template>
       </template>
 
       <template v-for="(_, name) in $slots" #[name]="slotData" :key="name">

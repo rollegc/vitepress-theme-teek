@@ -131,18 +131,18 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
   {
     key: "viewCount",
     label: "本站被访问了",
-    originValue: statisticsInfo.sitePv,
-    value: statisticsInfo.isGet ? `${statisticsInfo.sitePv} 次` : "Get...",
+    originValue: unref(statisticsInfo.sitePv),
+    value: unref(statisticsInfo.isGet) ? `${unref(statisticsInfo.sitePv)} 次` : "Get...",
     show: useSiteView,
   },
   {
     key: "visitCount",
     label: "本站曾来访过",
-    originValue: statisticsInfo.siteUv,
-    value: statisticsInfo.isGet ? `${statisticsInfo.siteUv} 人` : "Get...",
+    originValue: unref(statisticsInfo.siteUv),
+    value: unref(statisticsInfo.isGet) ? `${unref(statisticsInfo.siteUv)} 人` : "Get...",
     show: useSiteView,
   },
-  ...appendInfo as any[],
+  ...(appendInfo as any[]),
 ]);
 
 if (overrideInfo.length) {

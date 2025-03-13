@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.5
+
+### Patch Changes
+
+- 初始化 permalink 替换 URL 功能由 onMouted 改为 onBeforeMount
+
 ## 1.0.4
 
 ### Patch Changes
