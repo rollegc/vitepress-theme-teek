@@ -1,5 +1,5 @@
 import { useRouter, useData, inBrowser } from "vitepress";
-import { nextTick, onMounted } from "vue";
+import { nextTick, onBeforeMount } from "vue";
 
 export default function usePermalink() {
   const fakeHost = "http://a.com";
@@ -60,7 +60,7 @@ export default function usePermalink() {
     }
   };
 
-  onMounted(() => replaceUrlWhenPermalinkExist(window.location.href));
+  onBeforeMount(() => replaceUrlWhenPermalinkExist(window.location.href));
 
   /**
    * 尝试通过路由地址获取文件地址（当路由地址为 permalink 时才有值返回，否则返回空）

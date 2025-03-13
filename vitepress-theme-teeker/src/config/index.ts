@@ -1,4 +1,4 @@
-import type { DefaultTheme, UserConfig } from "vitepress";
+import type { DefaultTheme, HeadConfig, UserConfig } from "vitepress";
 import type { PluginOption } from "vite";
 import type { TkThemeConfig } from "./types";
 import type { Post, TkContentData } from "../post/types";
@@ -82,10 +82,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
   }
   // 自动生成永久链接插件
   if (permalink) {
-    permalinkOption.activeMatchDir = [
-      ...(permalinkOption?.activeMatchDir || []),
-      ...ignoreDir.permalinkActiveMatch,
-    ];
+    permalinkOption.activeMatchDir = [...(permalinkOption?.activeMatchDir || []), ...ignoreDir.permalinkActiveMatch];
     plugins.push(Permalink(permalinkOption));
   }
   // 自动给 MD 添加一级标题插件
@@ -118,10 +115,18 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     plugins.push(FileContentLoader<TkContentData, Post>(fileContentLoaderOptions));
   }
 
+  const head: HeadConfig[] = [];
+
+  if (tkThemeConfig.docAnalysis?.statistics?.provider === "busuanzi") {
+    // 不蒜子 API 统计需要
+    head.push(["meta", { name: "referrer", content: "no-referrer-when-downgrade" }]);
+  }
+
   return {
     // 使用永久链接插件需要忽略死链提醒
     ignoreDeadLinks: true,
     metaChunk: true,
+    head,
     vite: {
       plugins: plugins as any,
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
