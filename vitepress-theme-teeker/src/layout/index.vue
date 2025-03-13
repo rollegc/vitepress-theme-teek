@@ -76,12 +76,17 @@ onMounted(() => {
     <ClientOnly>
       <RightBottomButton />
       <BodyBgImage v-if="bodyBgImg?.imgSrc" />
-      <Notice v-if="notice?.enabled" />
+      <Notice v-if="notice?.enabled">
+        <template #notice-content>
+          <slot name="notice-content" />
+        </template>
+      </Notice>
     </ClientOnly>
 
     <Layout :class="ns.b()">
       <template #home-hero-before>
         <slot name="home-hero-before" />
+
         <ClientOnly>
           <!-- 自定义首页 -->
           <div v-if="tkHome">

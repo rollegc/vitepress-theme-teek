@@ -6,6 +6,7 @@ import Icon from "../../Icon";
 import { useUnrefData } from "../../../configProvider";
 import { scrollTo } from "../../../helper";
 import sizeSvg from "../../../assets/svg/size";
+import rocketSvg from "../../../assets/svg/rocket";
 import { CommentConfig, ThemeSetting } from "../../../config/types";
 
 defineOptions({ name: "RightBottomButton" });
@@ -126,7 +127,7 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
     <transition name="fade">
       <div title="返回顶部" :class="ns.e('button')" v-show="showToTop" @click="scrollToTop">
-        <Icon><ArrowUp /></Icon>
+        <Icon :icon="rocketSvg"></Icon>
       </div>
     </transition>
 
@@ -144,7 +145,7 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
-      <i :class="ns.joinNamespace('icon')" v-html="sizeSvg"></i>
+      <Icon :icon="sizeSvg"></Icon>
       <transition name="mode">
         <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li

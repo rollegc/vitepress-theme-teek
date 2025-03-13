@@ -1,4 +1,3 @@
-import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
@@ -21,4 +20,4 @@ export default {
     app.component("cataloguePage", CataloguePage);
     app.component("archivesPage", ArchivesPage);
   },
-} as Theme;
+} as typeof DefaultTheme;

@@ -161,7 +161,7 @@ const storagePopoverState = (state: string) => {
     <div
       v-if="!destroyNoticeIcon"
       v-show="showNoticeIcon"
-      :class="[ns.e('icon'), { twinkle: twinkle }]"
+      :class="[ns.e('icon'), { twinkle: twinkle }, 'flx']"
       :style="iconStyle"
       @click="handleOpenPopover"
     >
@@ -176,7 +176,13 @@ const storagePopoverState = (state: string) => {
             <Icon :icon="noticeIcon" color="#ffffff" size="20px"></Icon>
             <span class="title sle">{{ noticeTitle }}</span>
           </div>
-          <Icon :icon="closeIcon" size="20px" :style="{ cursor: 'pointer' }" @click="handleClosePopover"></Icon>
+          <Icon
+            :icon="closeIcon"
+            color="#ffffff"
+            size="20px"
+            :style="{ cursor: 'pointer' }"
+            @click="handleClosePopover"
+          ></Icon>
         </div>
       </slot>
 

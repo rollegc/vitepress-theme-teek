@@ -117,6 +117,10 @@ const tkConfig = tkThemeConfig({
       // site: "",
     },
   },
+  notice: {
+    enabled: true,
+    position: "center",
+  },
   vitePlugins: {
     sidebarOption: {
       initItems: false,

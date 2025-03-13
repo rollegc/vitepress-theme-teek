@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BodyBgImage">
-import { onMounted } from "vue";
+import { onMounted, unref } from "vue";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 import { isString } from "../../../helper";
@@ -38,13 +38,18 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
 onMounted(() => {
   switchImg();
 });
+
+const getStyle = () => {
+  return {
+    "--tk-body-bg-img": `url(${unref(imageSrc)})`,
+    "--tk-body-bg-img-opacity": imgOpacity,
+    [ns.cssVarName("body-mask-bg-color")]: isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
+  };
+};
 </script>
 
 <template>
-  <div
-    :class="ns.b()"
-    :style="`background-image: url(${imageSrc}); opacity:${imgOpacity}; ${ns.cssVarName('body-mask-bg-color')}: ${isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`}`"
-  >
+  <div :class="ns.b()" :style="getStyle()">
     <div v-if="mask" class="mask" />
   </div>
 </template>

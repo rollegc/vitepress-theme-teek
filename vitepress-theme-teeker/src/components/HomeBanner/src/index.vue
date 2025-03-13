@@ -66,12 +66,12 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
  * 根据不同的 Banner 风格获取对应的样式
  */
 const getStyle = () => {
-  let baseStyle = { "--banner-title-text": titleFontSize, "--banner-desc-text": descFontSize };
+  let baseStyle = { "--tk-banner-title-text": titleFontSize, "--tk-banner-desc-text": descFontSize };
 
-  if (isBodyBygImg) return { ...baseStyle, "--banner-text-color": textColor || "#ffffff" };
+  if (isBodyBygImg) return { ...baseStyle, "--tk-banner-text-color": textColor || "#ffffff" };
 
   if (isDefaultBgStyle) {
-    return { ...baseStyle, backgroundColor: defaultBgColor, "--banner-text-color": textColor || "#000000" };
+    return { ...baseStyle, backgroundColor: defaultBgColor, "--tk-banner-text-color": textColor || "#000000" };
   }
 
   if (isGridBgStyle) {
@@ -79,16 +79,16 @@ const getStyle = () => {
       ...baseStyle,
       background:
         "rgb(40, 40, 45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)",
-      "--banner-text-color": textColor || "#ffffff",
+      "--tk-banner-text-color": textColor || "#ffffff",
     };
   }
 
   if (isBigImgBgStyle) {
     return {
       ...baseStyle,
-      backgroundImage: `url(${unref(imageSrc)})`,
-      "--banner-text-color": textColor || "#ffffff",
-      "--banner-mask-bg-color": isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
+      "--tk-banner-bg-img": `url(${unref(imageSrc)})`,
+      "--tk-banner-text-color": textColor || "#ffffff",
+      "--tk-banner-mask-bg-color": isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
     };
   }
 };

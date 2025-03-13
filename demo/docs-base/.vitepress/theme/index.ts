@@ -1,4 +1,6 @@
 import Teeker from "vitepress-theme-teeker";
+import NoticeContent from "./components/NoticeContent.vue";
+import { h } from "vue";
 // import "vitepress-theme-teeker/index.css";
 import "vitepress-theme-teeker/vp-plus/code-block-mobile.scss";
 import "vitepress-theme-teeker/vp-plus/sidebar.scss";
@@ -11,4 +13,9 @@ import "vitepress-theme-teeker/vp-plus/doc-h1.scss";
 
 export default {
   extends: Teeker,
+  Layout() {
+    return h(Teeker.Layout, null, {
+      "notice-content": () => h(NoticeContent),
+    });
+  },
 };
