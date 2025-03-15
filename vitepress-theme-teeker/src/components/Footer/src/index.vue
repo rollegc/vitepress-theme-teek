@@ -25,24 +25,28 @@ const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } 
 };
 
 const footerData = computed(() => {
-  const { theme, copyright, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
+  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
   const data: Social[] = [];
   // 1.主题版权
-  data.push({
-    name: `Theme By Teeker@${version}`,
-    icon: themeSvg,
-    link: "https://teeker.tianke99.cn",
-    // 可覆盖上面的配置项
-    ...theme,
-  });
+  if (theme.show !== false) {
+    data.push({
+      name: `Theme By Teeker@${version}`,
+      icon: themeSvg,
+      link: "https://teeker.tianke99.cn",
+      // 可覆盖上面的配置项
+      ...theme,
+    });
+  }
 
   // 2.博客版权
-  const { createYear = "", suffix = "" } = copyright || {};
-  data.push({
-    name: `Copyright ${createYear ? `${createYear}-` : ""}${new Date().getFullYear()} ${suffix}`,
-    icon: copyrightSvg,
-    ...copyright,
-  });
+  const { show = true, createYear = "", suffix = "" } = copyright;
+  if (show) {
+    data.push({
+      name: `Copyright ${createYear ? `${createYear}-` : ""}${new Date().getFullYear()} ${suffix}`,
+      icon: copyrightSvg,
+      ...copyright,
+    });
+  }
 
   // 3.ICP 备案信息
   if (icpRecord) data.push({ icon: icpRecordSvg, ...icpRecord });
@@ -81,7 +85,7 @@ const footerData = computed(() => {
     </div>
 
     <template v-if="footerInfo">
-      <p v-for="m in [footerInfo.message || []].flat()" v-html="m" />
+      <p v-for="m in [footerInfo.topMessage || []].flat()" v-html="m" />
 
       <div :class="`${ns.e('list')} flx-wrap-justify-center`">
         <div v-for="item in footerData" :key="item.name" :class="`${ns.e('list__item')} flx-align-center`">
@@ -101,8 +105,10 @@ const footerData = computed(() => {
           <span v-else>{{ item.name }}</span>
         </div>
 
-        <span v-if="footerInfo.customerHtml" v-html="footerInfo.customerHtml"></span>
+        <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml"></span>
       </div>
+
+      <p v-for="m in [footerInfo.bottomMessage || []].flat()" v-html="m" />
     </template>
   </div>
 </template>

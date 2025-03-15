@@ -58,7 +58,8 @@ const tkConfig = tkThemeConfig({
   },
 
   footerInfo: {
-    message: ["下面的内容和图标都可以修改（本条内容也可以隐藏的）"],
+    topMessage: ["下面的内容和图标都可以修改（本条内容也可以隐藏的）"],
+    bottomMessage: ["上面的内容和图标都可以修改（本条内容也可以隐藏的）"],
     copyright: {
       createYear: 2021,
       suffix: "天客 Blog",
@@ -67,6 +68,7 @@ const tkConfig = tkThemeConfig({
       name: "桂ICP备2021009994号",
       link: "http://beian.miit.gov.cn/",
     },
+    customHtml: `<p>小破站已运行了 <span id="footer-runtime"></span></p>`,
   },
   social: [
     {

@@ -49,7 +49,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const getStyle = (num: number, index: number) => {
   return {
     [ns.cssVarName("num-bg-color")]: bgColor[num % bgColor.length],
-    top: `calc(${index} * (calc(${ns.cssVar("gap1")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    top: `calc(${index} * (calc(${ns.cssVar("top-article-gap")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>

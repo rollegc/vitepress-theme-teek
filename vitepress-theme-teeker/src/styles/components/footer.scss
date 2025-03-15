@@ -6,7 +6,7 @@
   text-align: center;
 
   @include e(icons) {
-    gap: getCssVar("gap2");
+    gap: getCssVar("footer-gap");
     margin-bottom: 10px;
   }
 
