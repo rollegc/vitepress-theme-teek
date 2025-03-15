@@ -12,9 +12,10 @@ import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
 import { transformData, transformRaw } from "../post";
 import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin } from "../markdown";
 import { createCategory, createPermalink } from "./addFrontmatter";
+import { containerPlugins, createContainersThenUse } from "../markdown/plugins/container";
 
 export default function tkThemeConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
-  const { vitePlugins, markdownPlugins = [], ...tkThemeConfig } = config;
+  const { vitePlugins, markdownPlugins = [], markdownContainers = [], ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -40,7 +41,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     permalinkActiveMatch: ["@pages"],
   };
 
-  // 自动生成 frontmatter 插件
+  // 自动生成 frontmatter 插件，必须放在第一位
   if (autoFrontmatter) {
     const {
       pattern,
@@ -137,7 +138,11 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     },
     markdown: {
       config: md => {
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin].forEach(plugin => md.use(plugin));
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin, containerPlugins].forEach(plugin =>
+          md.use(plugin)
+        );
+        createContainersThenUse(md, markdownContainers);
+
         // 用户配置的 markdown 插件
         markdownPlugins.forEach(plugin => md.use(plugin));
       },

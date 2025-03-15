@@ -12,7 +12,7 @@ const codeArrow = (md: MarkdownIt) => {
   md.renderer.rules.fence = function (tokens, idx, options, env, self) {
     return fence(tokens, idx, options, env, self).replace(
       /(<button title="[^"]*" class="[^"]*copy[^"]*"><\/button>)/,
-      `<div class="arrow">${arrowSvg}</div> $1`
+      `<div class="code-arrow">${arrowSvg}</div> $1`
     );
   };
 };

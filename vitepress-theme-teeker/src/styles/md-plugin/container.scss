@@ -1,0 +1,14 @@
+.center-container {
+  text-align: center;
+}
+
+.right-container {
+  text-align: right;
+}
+
+.custom-block {
+  .right-container {
+    margin: -8px 0 0 0;
+    font-size: 14px;
+  }
+}

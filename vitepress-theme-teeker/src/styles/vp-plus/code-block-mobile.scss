@@ -6,7 +6,8 @@
 @media (max-width: 640px) {
   // 移动端代码块与文档宽度保持一致
   .vp-doc div[class*="language-"],
-  .vp-block {
+  .vp-block,
+  .vp-code-group .tabs {
     margin-left: 0;
     margin-right: 0;
   }

@@ -1,0 +1,23 @@
+@use "../mixins/function" as *;
+
+/* 代码块箭头 */
+.code-arrow {
+  cursor: pointer;
+  position: absolute;
+  z-index: 3;
+  top: calc(getCssVar("code-block-fold-height") / 2);
+  right: 14px;
+  transform: translateY(-50%);
+  transition: all 0.3s;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--vp-c-text-1);
+  }
+
+  /* 代码块折叠后后旋转 -90 度 */
+  &.fold {
+    transform: rotate(90deg) translateX(-50%);
+  }
+}
