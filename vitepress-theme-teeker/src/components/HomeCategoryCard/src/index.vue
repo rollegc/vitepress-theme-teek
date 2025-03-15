@@ -69,6 +69,8 @@ const categoriesPageLink = computed(() => {
 </script>
 
 <template>
+  <slot name="teeker-home-category-before" />
+
   <HomeCard
     :page="!categoriesPage"
     v-model="pageNum"
@@ -106,4 +108,6 @@ const categoriesPageLink = computed(() => {
       <div v-else :class="ns.m('empty')">暂无热门文章</div>
     </template>
   </HomeCard>
+
+  <slot name="teeker-home-category-after" />
 </template>

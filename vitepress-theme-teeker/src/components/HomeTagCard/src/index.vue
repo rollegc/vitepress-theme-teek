@@ -74,6 +74,8 @@ const tagsPageLink = computed(() => {
 </script>
 
 <template>
+  <slot name="teeker-home-tag-before" />
+
   <HomeCard
     :page="!tagsPage"
     v-model="pageNum"
@@ -103,4 +105,6 @@ const tagsPageLink = computed(() => {
       <div v-else :class="ns.m('empty')">暂无热门标签</div>
     </template>
   </HomeCard>
+
+  <slot name="teeker-home-tag-after" />
 </template>

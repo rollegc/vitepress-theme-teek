@@ -2,17 +2,24 @@ import type { Plugin } from "vite";
 import { readFileSync } from "node:fs";
 import { basename } from "node:path";
 import matter from "gray-matter";
+import { MdH1Option } from "./types";
+
+export * from "./types";
 
 const multipleBlockTag = `return (_openBlock(), _createElementBlock("div", null, [`;
 const singleBlockTag = `return (_openBlock(), _createElementBlock("div", null, _cache[0] || (_cache[0] = [`;
 const createStaticVNodeTag = `_createStaticVNode("`;
 const createTextVNode = "createTextVNode as _createTextVNode";
 
-export default function VitePluginVitePressMdH1(): Plugin & { name: string } {
+export default function VitePluginVitePressMdH1(option: MdH1Option = {}): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-md-h1",
     transform: (code: string, id: string) => {
       if (!id.endsWith(".md")) return code;
+
+      const { ignoreList = [] } = option;
+
+      if (ignoreList.length && isSome(ignoreList, id)) return code;
 
       const content = readFileSync(id, "utf-8");
       const { data: frontmatter = {}, content: mdContent } = matter(content, {});
@@ -106,4 +113,14 @@ export const formatSpecialStr = (str: string): string => {
     .toLowerCase()
     .replace(/[\s+]/g, "") // 清除空格
     .replace(/['"`*]+/g, ""); // 去除反引号、星号等 Markdown 语法字符
+};
+
+/**
+ * 判断数组中是否存在某个元素，支持正则表达式
+ *
+ * @param arr 数组
+ * @param name 元素
+ */
+const isSome = (arr: Array<string | RegExp>, name: string) => {
+  return arr.some(item => name.includes(name) || (item instanceof RegExp && item.test(name)));
 };

@@ -22,6 +22,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     permalink = true,
     permalinkOption = {},
     mdH1 = true,
+    mdH1Option = {},
     catalogueOption = {},
     docAnalysis = true,
     docAnalysisOption = {},
@@ -36,6 +37,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
   const ignoreDir = {
     autoFrontmatter: ["**/@pages/**"],
     sidebar: ["@pages", "@fragment"],
+    mdH1: ["@pages"],
     docAnalysis: ["@pages", /目录页/],
     fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**"],
     permalinkActiveMatch: ["@pages"],
@@ -87,7 +89,10 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     plugins.push(Permalink(permalinkOption));
   }
   // 自动给 MD 添加一级标题插件
-  if (mdH1) plugins.push(MdH1());
+  if (mdH1) {
+    mdH1Option.ignoreList = [...(mdH1Option?.ignoreList || []), ...ignoreDir.sidebar];
+    plugins.push(MdH1(mdH1Option));
+  }
   // 文档内容分析插件
   if (docAnalysis) {
     docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.docAnalysis];

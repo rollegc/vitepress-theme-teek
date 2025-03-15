@@ -156,6 +156,8 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <slot name="teeker-home-banner-before" />
+
   <div
     ref="bannerRef"
     :class="[ns.b(), { default: isDefaultBgStyle, 'big-img': isBigImgBgStyle, grid: isGridBgStyle }]"
@@ -190,4 +192,6 @@ onUnmounted(() => {
   </div>
 
   <HomeBannerWaves v-if="isBigImgBgStyle && !isBodyBygImg" />
+
+  <slot name="teeker-home-banner-before" />
 </template>

@@ -1,4 +1,4 @@
-<script setup lang="ts" name="DocAnalysisCard">
+<script setup lang="ts" name="HomeDocAnalysisCard">
 import { computed, ref, Ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { usePosts, useUnrefData } from "../../../configProvider";
@@ -8,7 +8,7 @@ import HomeCard from "../../HomeCard";
 import docAnalysisSvg from "../../../assets/svg/docAnalysis";
 import { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
 
-defineOptions({ name: "DocAnalysisCard" });
+defineOptions({ name: "HomeDocAnalysisCard" });
 
 const ns = useNamespace("docAnalysis");
 
@@ -160,6 +160,8 @@ if (overrideInfo.length) {
 </script>
 
 <template>
+  <slot name="teeker-home-doc-analysis-before" />
+
   <HomeCard :title="finalTitle" :class="ns.b()">
     <template v-for="item in docAnalysisList" :key="item.key">
       <div v-if="item.show !== false" :class="ns.e('item')">
@@ -168,4 +170,6 @@ if (overrideInfo.length) {
       </div>
     </template>
   </HomeCard>
+
+  <slot name="teeker-home-doc-analysis-after" />
 </template>

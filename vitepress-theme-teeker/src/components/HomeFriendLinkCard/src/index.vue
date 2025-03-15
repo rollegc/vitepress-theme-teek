@@ -1,4 +1,4 @@
-<script setup lang="ts" name="FriendLinkCard">
+<script setup lang="ts" name="HomeFriendLinkCard">
 import { computed, ref, unref, onMounted } from "vue";
 import { withBase, useData } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
@@ -9,7 +9,7 @@ import friendLinkSvg from "../../../assets/svg/friendLink";
 import { isFunction } from "../../../helper";
 import { FriendLink } from "../../../config/types";
 
-defineOptions({ name: "FriendLinkCard" });
+defineOptions({ name: "HomeFriendLinkCard" });
 
 const ns = useNamespace("friendLink");
 
@@ -59,7 +59,7 @@ const getLiStyle = (index: number) => {
 
   // 分页动画需要指定 top，否则默认移动到 0px 位置
   return {
-    top: `calc(${index} * (calc(${ns.cssVar("friend-gap")} + ${clientRect?.height || 0}px)))`,
+    top: `calc(${index} * (calc(${ns.cssVar("home-friend-link-gap")} + ${clientRect?.height || 0}px)))`,
   };
 };
 
@@ -72,6 +72,8 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
 </script>
 
 <template>
+  <slot name="teeker-home-friend-link-before" />
+
   <HomeCard
     :page="!autoScroll"
     v-model="pageNum"
@@ -117,4 +119,6 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
       <div v-else :class="ns.m('empty')">暂无友链</div>
     </template>
   </HomeCard>
+
+  <slot name="teeker-home-friend-link-after" />
 </template>

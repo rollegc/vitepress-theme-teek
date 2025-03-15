@@ -125,6 +125,8 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
 
 <template>
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
+    <slot name="teeker-right-bottom-before" />
+
     <transition name="fade">
       <div title="返回顶部" :class="ns.e('button')" v-show="showToTop" @click="scrollToTop">
         <Icon :icon="rocketSvg"></Icon>
@@ -191,5 +193,7 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
         </div>
       </transition>
     </div>
+
+    <slot name="teeker-right-bottom-after" />
   </div>
 </template>

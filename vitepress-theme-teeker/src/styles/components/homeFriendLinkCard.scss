@@ -4,7 +4,7 @@
 @include b(friendLink) {
   @include e(list) {
     position: relative;
-    gap: getCssVar("friend-gap");
+    gap: getCssVar("home-friend-link-gap");
     padding-right: 5px;
 
     @include e(list__item) {

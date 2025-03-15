@@ -21,6 +21,8 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
 </script>
 
 <template>
+  <slot name="teeker-home-my-before" />
+
   <HomeCard :class="ns.b()">
     <div :class="`${ns.e('avatar')} ${blogger.avatarStyle || 'full'} flx-center`">
       <img :src="blogger.avatar && withBase(blogger.avatar)" alt="头像" title="我好看吗" />
@@ -45,4 +47,6 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
       <span class="slogan">{{ blogger.slogan }}</span>
     </div>
   </HomeCard>
+
+  <slot name="teeker-home-my-after" />
 </template>

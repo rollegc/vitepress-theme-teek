@@ -1,8 +1,9 @@
 import type { PermalinkOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
+import type { MdH1Option } from "vitepress-plugin-md-h1";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import type { AutoFrontmatterOption } from "plugins/vitepress-plugin-auto-frontmatter";
+import type { AutoFrontmatterOption } from "vitepress-plugin-auto-frontmatter";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
 import type { Ref } from "vue";
 import type { Route } from "vitepress";
@@ -875,7 +876,7 @@ export interface FooterInfo {
    */
   securityRecord?: Social;
   /**
-   * 自定义 HTML 片段到 footer 最底部
+   * 自定义 HTML 片段
    */
   customHtml?: string;
 }
@@ -1251,6 +1252,10 @@ export interface Plugins {
    */
   mdH1?: boolean;
   /**
+   * mdH1 插件配置项
+   */
+  mdH1Option?: MdH1Option;
+  /**
    * catalogues 插件配置项
    */
   catalogueOption?: CatalogueOption;
@@ -1279,7 +1284,7 @@ export interface Plugins {
   /**
    * autoFrontmatter 插件配置项，并拓展出其他配置项
    *
-   * permalinkPrefix 为自动生成 permalink 的固定前缀，如 pages、pages/demo。当禁用 permalink 插件后，不会自动生成 permalink
+   * permalinkPrefix 为自动生成 permalink 的固定前缀，如 pages、pages/demo，默认为 pages。当禁用 permalink 插件后，不会自动生成 permalink
    * categories 为是否自动生成 categories
    *
    * @default '{ permalinkPrefix: "pages", categories: true }'

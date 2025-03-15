@@ -3,7 +3,6 @@
 @use "../common/transition-card";
 
 @include b(homeCard) {
-  margin: 0 auto 10px;
   padding: getCssVar("home-card-padding");
   width: getCssVar("home-card-width");
   overflow: hidden;

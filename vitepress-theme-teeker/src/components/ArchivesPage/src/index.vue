@@ -14,10 +14,14 @@ const posts = usePosts();
 
 <template>
   <div :class="`${ns.b()} ${ns.joinNamespace('page')}`">
+    <slot name="teeker-archives-top-before" />
+
     <div :class="`${ns.e('header')} flx-justify-between`">
       <div :class="ns.joinNamespace('page-title-h1')">{{ frontmatter.title }}</div>
       <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
     </div>
+
+    <slot name="teeker-archives-top-after" />
 
     <div :class="ns.e('timeline')">
       <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">

@@ -4,7 +4,7 @@
 @include b(topArticle) {
   @include e(list) {
     position: relative;
-    gap: getCssVar("article-gap");
+    gap: getCssVar("home-top-article-gap");
     padding-right: 5px;
 
     @include e(list__item) {

@@ -73,11 +73,18 @@ onMounted(() => {
 <template>
   <template v-if="tkTheme">
     <ClientOnly>
-      <RightBottomButton />
+      <RightBottomButton>
+        <!-- 通用插槽 -->
+        <template v-for="(_, name) in $slots" :key="name" #[name]>
+          <slot :name="name"></slot>
+        </template>
+      </RightBottomButton>
+
       <BodyBgImage v-if="bodyBgImg?.imgSrc" />
+
       <Notice v-if="notice?.enabled">
-        <template #notice-content>
-          <slot name="notice-content" />
+        <template v-for="(_, name) in $slots" :key="name" #[name]>
+          <slot :name="name"></slot>
         </template>
       </Notice>
     </ClientOnly>
@@ -85,46 +92,72 @@ onMounted(() => {
     <Layout :class="ns.b()">
       <template #home-hero-before>
         <slot name="home-hero-before" />
+        <slot name="teeker-home-before" />
 
         <ClientOnly>
           <!-- 自定义首页 -->
           <div v-if="tkHome">
-            <HomeBanner v-if="isHomePage() && enabled" />
+            <HomeBanner v-if="isHomePage() && enabled">
+              <template v-for="(_, name) in $slots" :key="name" #[name]>
+                <slot :name="name"></slot>
+              </template>
+            </HomeBanner>
+
             <div :class="[ns.e('home-content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
-              <div :class="ns.e('home-content__post')"><HomePostList /></div>
-              <div :class="ns.e('home-content__info')"><HomeInfo /></div>
+              <div :class="ns.e('home-content__post')">
+                <slot name="teeker-home-post-before" />
+                <HomePostList />
+                <slot name="teeker-home-post-after" />
+              </div>
+
+              <div :class="ns.e('home-content__info')">
+                <HomeInfo>
+                  <template v-for="(_, name) in $slots" :key="name" #[name]>
+                    <slot :name="name"></slot>
+                  </template>
+                </HomeInfo>
+              </div>
             </div>
+
             <HomeFullscreenWallpaper
               v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
             />
           </div>
         </ClientOnly>
+
+        <slot name="teeker-home-after" />
       </template>
 
-      <template #layout-top>
-        <slot name="layout-top" />
-      </template>
       <template #layout-bottom>
+        <slot name="teeker-footer-before" />
+
         <Footer v-if="isHomePage()" />
+
+        <slot name="teeker-footer-after" />
         <slot name="layout-bottom" />
       </template>
 
       <template #doc-before>
         <slot name="doc-before" />
+        <slot name="teeker-article-analyze-before" />
+
         <ClientOnly>
           <ArticleAnalyze />
           <ArticleImagePreview />
           <ArticlePageStyle />
           <CodeBlockToggle v-if="codeBlock" />
         </ClientOnly>
+        <slot name="teeker-article-analyze-after" />
       </template>
 
       <template #doc-after>
         <slot name="doc-after" />
+        <slot name="teeker-comment-before" />
+
         <!-- 评论区 -->
         <template v-if="comment.enabled">
           <ClientOnly>
-            <slot v-if="comment.provider === 'render'" name="comment" />
+            <slot v-if="comment.provider === 'render'" name="teeker-comment" />
             <component
               v-else-if="comment.provider"
               :is="comment.components[comment.provider]"
@@ -133,16 +166,27 @@ onMounted(() => {
             />
           </ClientOnly>
         </template>
+
+        <slot name="teeker-comment-after" />
       </template>
 
       <!-- content -->
       <template #page-top>
         <slot name="page-top" />
-        <ArchivesPage v-if="isArchivesPage()" />
-        <CataloguePage v-if="isCataloguePage()" />
-      </template>
-      <template #page-bottom>
-        <slot name="page-bottom" />
+        <slot name="teeker-page-top-before" />
+
+        <ArchivesPage v-if="isArchivesPage()">
+          <template v-for="(_, name) in $slots" :key="name" #[name]>
+            <slot :name="name"></slot>
+          </template>
+        </ArchivesPage>
+        <CataloguePage v-if="isCataloguePage()">
+          <template v-for="(_, name) in $slots" :key="name" #[name]>
+            <slot :name="name"></slot>
+          </template>
+        </CataloguePage>
+
+        <slot name="teeker-page-top-after" />
       </template>
 
       <!-- 404 页面延迟出现 -->
@@ -152,7 +196,8 @@ onMounted(() => {
         <template v-else><slot name="not-found" /></template>
       </template>
 
-      <template v-for="(_, name) in $slots" #[name]="slotData" :key="name">
+      <!-- 其他 VP 插槽 -->
+      <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
         <slot :name="name" v-bind="slotData"></slot>
       </template>
     </Layout>
@@ -160,7 +205,7 @@ onMounted(() => {
 
   <template v-else>
     <Layout>
-      <template v-for="(_, name) in $slots" #[name]="slotData" :key="name">
+      <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
         <slot :name="name" v-bind="slotData"></slot>
       </template>
     </Layout>

@@ -338,8 +338,8 @@ importers:
         specifier: latest
         version: 1.0.3(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
       vitepress-plugin-md-h1:
-        specifier: latest
-        version: 1.0.2(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
+        specifier: workspace:*
+        version: link:../plugins/vitepress-plugin-md-h1
       vitepress-plugin-permalink:
         specifier: latest
         version: 1.0.5(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
@@ -4683,11 +4683,6 @@ packages:
     peerDependencies:
       vite: ^6.0.7
       vitepress: ^1.6.3
-
-  vitepress-plugin-md-h1@1.0.2:
-    resolution: {integrity: sha512-RmVOjTVuCIIFW3voX6ks1ADs+7nuWa61x2QGYliyMFF3QeVMnTMt3ufxll0clvEyCKU3zBN/3qL6ZUuAbaxqZw==}
-    peerDependencies:
-      vite: ^6.0.7
 
   vitepress-plugin-permalink@1.0.5:
     resolution: {integrity: sha512-AIWcAX3RBLboDNZ+1Hg4Qk7z6Rghp19Uo4Oog1ugTa7jPq9Ityk6LlGPupmUFdaVkwVhHfQv00vSrtF5VwnQiA==}
@@ -9275,11 +9270,6 @@ snapshots:
       tinyglobby: 0.2.10
       vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)
       vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
-
-  vitepress-plugin-md-h1@1.0.2(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)):
-    dependencies:
-      gray-matter: 4.0.3
-      vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)
 
   vitepress-plugin-permalink@1.0.5(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
     dependencies:

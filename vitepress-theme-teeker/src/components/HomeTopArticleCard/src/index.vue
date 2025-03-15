@@ -1,4 +1,4 @@
-<script setup lang="ts" name="TopArticleCard">
+<script setup lang="ts" name="HomeTopArticleCard">
 import { computed, ref, unref } from "vue";
 import { withBase, useData } from "vitepress";
 import { useUnrefData, usePosts, getBgColor } from "../../../configProvider";
@@ -9,7 +9,7 @@ import { TkContentData } from "../../../post/types";
 import { isFunction } from "../../../helper";
 import { TopArticle } from "../../../config/types";
 
-defineOptions({ name: "TopArticleCard" });
+defineOptions({ name: "HomeTopArticleCard" });
 
 const ns = useNamespace("topArticle");
 
@@ -49,12 +49,14 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 const getStyle = (num: number, index: number) => {
   return {
     [ns.cssVarName("num-bg-color")]: bgColor[num % bgColor.length],
-    top: `calc(${index} * (calc(${ns.cssVar("top-article-gap")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    top: `calc(${index} * (calc(${ns.cssVar("home-top-article-gap")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>
 
 <template>
+  <slot name="teeker-home-top-article-before" />
+
   <HomeCard
     page
     v-model="pageNum"
@@ -93,4 +95,6 @@ const getStyle = (num: number, index: number) => {
       <div v-else :class="ns.m('empty')">暂无精选内容</div>
     </template>
   </HomeCard>
+
+  <slot name="teeker-home-top-article-after" />
 </template>

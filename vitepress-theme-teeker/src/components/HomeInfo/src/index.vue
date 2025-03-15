@@ -6,9 +6,9 @@ import { useUnrefData } from "../../../configProvider";
 import HomeMyCard from "../../HomeMyCard";
 import HomeCategoryCard from "../../HomeCategoryCard";
 import HomeTagCard from "../../HomeTagCard";
-import FriendLinkCard from "../../FriendLinkCard";
-import TopArticleCard from "../../TopArticleCard";
-import DocAnalysisCard from "../../DocAnalysisCard";
+import HomeFriendLinkCard from "../../HomeFriendLinkCard";
+import HomeTopArticleCard from "../../HomeTopArticleCard";
+import HomeDocAnalysisCard from "../../HomeDocAnalysisCard";
 
 defineOptions({ name: "HomeInfo" });
 
@@ -27,7 +27,7 @@ const enabledFriendLinkCard = friendLink?.enabled !== false;
 // 获取用户配置 + 默认的卡片排序
 const finalHomeCardSort = computed(() => {
   const configCardSort = homeCardSort || [];
-  return [...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
+  return ["my", ...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
 const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);
@@ -41,37 +41,54 @@ const componentMap = computed(() => {
   const tagsPage = unref(isTagsPage);
 
   return {
+    my: {
+      el: HomeMyCard,
+      show: homePage,
+      slot: ["teeker-home-my-before", "teeker-home-my-after"],
+    },
     topArticle: {
-      el: TopArticleCard,
+      el: HomeTopArticleCard,
       show: homePage && enabledTopArticleCard,
+      slot: ["teeker-home-top-article-before", "teeker-home-top-article-after"],
     },
     category: {
       el: HomeCategoryCard,
       props: { categoriesPage: categoriesPage },
       show: (homePage || categoriesPage) && enabledCategoryCard,
+      slot: ["teeker-home-category-before", "teeker-home-category-after"],
     },
     tag: {
       el: HomeTagCard,
       props: { tagsPage: tagsPage },
       show: (homePage || tagsPage) && enabledTagCard,
+      slot: ["teeker-home-tag-before", "teeker-home-tag-after"],
     },
     docAnalysis: {
-      el: DocAnalysisCard,
+      el: HomeDocAnalysisCard,
       show: homePage && enabledDocAnalysisCard,
+      slot: ["teeker-home-doc-analysis-before", "teeker-home-doc-analysis-after"],
     },
     friendLink: {
-      el: FriendLinkCard,
+      el: HomeFriendLinkCard,
       show: homePage && enabledFriendLinkCard,
+      slot: ["teeker-home-friend-link-before", "teeker-home-friend-link-after"],
     },
   };
 });
 </script>
 
 <template>
-  <div :class="ns.b()">
-    <HomeMyCard v-if="isHomePage" />
+  <div :class="[ns.b(), 'flx-column']">
+    <slot name="teeker-home-info-before" />
+
     <template v-for="item in finalHomeCardSort" :key="item">
-      <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props" />
+      <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
+        <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
+          <slot :name="name"></slot>
+        </template>
+      </component>
     </template>
+
+    <slot name="teeker-home-info-after" />
   </div>
 </template>

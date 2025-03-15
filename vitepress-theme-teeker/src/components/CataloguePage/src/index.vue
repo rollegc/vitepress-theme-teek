@@ -16,10 +16,14 @@ const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter
 
 <template>
   <div :class="`${ns.b()} ${ns.joinNamespace('page')}`">
+    <slot name="teeker-catalogue-top-before" />
+
     <div :class="ns.e('header')">
       <div :class="ns.joinNamespace('page-title-h2')">{{ frontmatter.title }}</div>
       <div class="description">{{ frontmatter.desc || frontmatter.description }}</div>
     </div>
+
+    <slot name="teeker-catalogue-top-after" />
 
     <div :class="ns.e('wrapper')">
       <div class="title">{{ frontmatter.pageTitle || "目录" }}</div>

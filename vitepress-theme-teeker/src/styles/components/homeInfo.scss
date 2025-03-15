@@ -1,0 +1,6 @@
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
+
+@include b(homeInfo) {
+  gap: getCssVar(home-info-gap);
+}
