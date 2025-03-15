@@ -15,16 +15,16 @@ defineOptions({ name: "ArticleAnalyze" });
 
 const ns = useNamespace("articleAnalyze");
 
-const { theme, frontmatter } = useUnrefData();
-const { theme: themeRef } = useData();
+const { theme } = useUnrefData();
+const { theme: themeRef, frontmatter } = useData();
 
 // 文章基本信息
-const post: TkContentData = {
-  author: { ...theme.author, ...frontmatter.author },
-  date: frontmatter.date,
-  frontmatter: frontmatter,
+const post = computed<TkContentData>(() => ({
+  author: { ...theme.author, ...unref(frontmatter).author },
+  date: unref(frontmatter).date,
+  frontmatter: unref(frontmatter),
   url: "",
-};
+}));
 
 // 站点信息数据
 const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
@@ -33,7 +33,7 @@ const {
   wordCount = true,
   readingTime = true,
   statistics = {},
-}: DocAnalysis = { ...theme.docAnalysis, ...frontmatter.docAnalysis };
+}: DocAnalysis = { ...theme.docAnalysis, ...unref(frontmatter).docAnalysis };
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
@@ -46,7 +46,7 @@ const pageViewInfo = computed(() => {
 });
 
 // 文章信息配置项
-const { showInfo = true, teleport = {} }: Article = { ...theme.article, ...frontmatter.article };
+const { showInfo = true, teleport = {} }: Article = { ...theme.article, ...unref(frontmatter).article };
 
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {

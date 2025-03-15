@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBanner">
-import { withBase } from "vitepress";
+import { withBase, useData } from "vitepress";
 import { onMounted, onUnmounted, unref, ref, nextTick } from "vue";
 import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
@@ -11,8 +11,9 @@ defineOptions({ name: "HomeBanner" });
 
 const ns = useNamespace("banner");
 
-const { site, theme, frontmatter } = useUnrefData();
-const title = frontmatter.tk?.name || site.title || "";
+const { site, theme } = useUnrefData();
+const { frontmatter } = useData();
+const title = unref(frontmatter).tk?.name || site.title || "";
 
 // Banner 配置项
 const {
@@ -34,11 +35,11 @@ const {
   typesOutTime = 100,
   typesNextTime = 800,
   typesShuffle = false,
-}: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+}: Banner = { ...theme.banner, ...unref(frontmatter).tk?.banner };
 const descArray: string[] = [
-  ...new Set([frontmatter.tk?.description || description || []].flat()?.filter((v: string) => !!v)),
+  ...new Set([unref(frontmatter).tk?.description || description || []].flat()?.filter((v: string) => !!v)),
 ];
-const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
+const { features = [] }: Banner = { ...theme.banner, ...unref(frontmatter).tk, ...unref(frontmatter).tk?.banner };
 
 const isDefaultBgStyle = bgStyle === "default";
 const isBigImgBgStyle = bgStyle === "bigImg";

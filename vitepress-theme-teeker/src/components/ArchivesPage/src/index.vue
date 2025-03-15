@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArchivesPage">
-import { withBase } from "vitepress";
+import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 
 defineOptions({ name: "ArchivesPage" });
 
 const ns = useNamespace("archives");
 
-const { frontmatter } = useUnrefData();
+const { frontmatter } = useData();
 
 const posts = usePosts();
 </script>

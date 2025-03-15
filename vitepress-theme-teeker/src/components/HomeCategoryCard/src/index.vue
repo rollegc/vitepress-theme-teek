@@ -14,7 +14,8 @@ const ns = useNamespace("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
-const { frontmatter, theme, site } = useUnrefData();
+const { theme, site } = useUnrefData();
+const { frontmatter, localeIndex } = useData();
 
 const route = useRoute();
 const pageNum = ref(1);
@@ -26,10 +27,10 @@ const {
   limit = 5,
   autoPage = false,
   pageSpeed = 4000,
-}: Category = { ...theme.category, ...frontmatter.tk?.category };
+}: Category = { ...theme.category, ...unref(frontmatter).tk?.category };
 
 const posts = usePosts();
-const { localeIndex } = useData();
+
 const categories = computed(() => unref(posts).groupCards.categories);
 
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示

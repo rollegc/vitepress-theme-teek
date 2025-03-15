@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomePostList">
 import { reactive, ref, unref, watch } from "vue";
-import { useRoute } from "vitepress";
+import { useRoute, useData } from "vitepress";
 import { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
@@ -13,12 +13,13 @@ defineOptions({ name: "HomePostList" });
 const ns = useNamespace("postList");
 
 const posts = usePosts();
-const { frontmatter, theme } = useUnrefData();
+const { theme } = useUnrefData();
+const { frontmatter } = useData();
 
 // 自定义一页数量 & 分页组件的 Props
-const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.page, ...frontmatter.tk?.page };
+const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.page, ...unref(frontmatter).tk?.page };
 
-const { coverImgMode: coverImgModeConst = "default" } = { ...theme.post, ...frontmatter.tk?.post };
+const { coverImgMode: coverImgModeConst = "default" } = { ...theme.post, ...unref(frontmatter).tk?.post };
 const coverImgMode = ref(coverImgModeConst);
 
 // 分页信息
@@ -34,23 +35,24 @@ const currentPosts = ref<TkContentData[]>([]);
 const pageNumKey = "pageNum";
 
 const updateData = () => {
-  const { frontmatter } = route.data;
-
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
   const p = Number(searchParams.get(pageNumKey)) || 1;
   if (p !== unref(pageInfo).pageNum) unref(pageInfo).pageNum = p;
 
-  let post = unref(posts).sortPostsByDateAndSticky;
+  const postConst = unref(posts);
+  const frontmatterConst = unref(frontmatter);
 
-  if (frontmatter.categoriesPage) {
+  let post = postConst.sortPostsByDateAndSticky;
+
+  if (frontmatterConst.categoriesPage) {
     // 在分类页时，如果 URL 查询参数存在 category，则加载该 category 的 post，不存在则加载所有 post
     const c = searchParams.get("category");
-    post = c ? unref(posts).groupPosts.categories[c] : post;
-  } else if (frontmatter.tagsPage) {
+    post = c ? postConst.groupPosts.categories[c] : post.filter((item: TkContentData) => item.frontmatter.categories);
+  } else if (frontmatterConst.tagsPage) {
     // 在标签页时，如果 URL 查询参数存在 tag，则加载该 tag 的 post，不存在则加载所有 post
     const t = searchParams.get("tag");
-    post = t ? unref(posts).groupPosts.tags[t] : post;
+    post = t ? postConst.groupPosts.tags[t] : post.filter((item: TkContentData) => item.frontmatter.tags);
   }
 
   const { pageNum, pageSize, total } = unref(pageInfo);

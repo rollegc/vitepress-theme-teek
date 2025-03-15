@@ -13,8 +13,8 @@ defineOptions({ name: "ArticleBreadcrumb" });
 
 const ns = useNamespace("articleBreadcrumb");
 
-const { theme, frontmatter } = useUnrefData();
-const { localeIndex, page } = useData();
+const { theme } = useUnrefData();
+const { localeIndex, frontmatter, page } = useData();
 
 // 面包屑配置项
 const breadcrumb: BreadcrumbType = {
@@ -22,7 +22,7 @@ const breadcrumb: BreadcrumbType = {
   showCurrentName: false,
   separator: "/",
   ...theme.breadcrumb,
-  ...frontmatter.breadcrumb,
+  ...unref(frontmatter).breadcrumb,
 };
 
 const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);

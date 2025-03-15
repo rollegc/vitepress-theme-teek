@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleInfo">
 import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
-import { useRoute, withBase } from "vitepress";
+import { useRoute, withBase, useData } from "vitepress";
 import { computed, unref } from "vue";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
@@ -14,19 +14,19 @@ defineOptions({ name: "ArticleInfo" });
 
 const ns = useNamespace("articleInfo");
 
-// 首页会传入 post，文章页不传
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
-const { frontmatter, theme } = useUnrefData();
+const { theme } = useUnrefData();
+const { frontmatter } = useData();
 // 文章信息配置项
 const {
   showIcon = true,
   dateFormat = "yyyy-MM-dd",
   showAuthor = true,
   showDate = true,
-  showCategory = true,
+  showCategory = false,
   showTag = false,
-}: Article = { ...theme.article, ...frontmatter.article, ...frontmatter.tk?.article };
+}: Article = { ...theme.article, ...unref(frontmatter).article, ...unref(frontmatter).tk?.article };
 
 const posts = usePosts();
 const route = useRoute();
@@ -48,7 +48,7 @@ const date = computed(() => {
   return formatDate(targetPost[0]?.date || new Date(), dateFormat);
 });
 
-const baseInfo = [
+const baseInfo = computed(() => [
   {
     title: "作者",
     icon: User,
@@ -60,7 +60,7 @@ const baseInfo = [
   {
     title: "创建时间",
     icon: Calendar,
-    data: unref(date),
+    data: date,
     show: showDate,
   },
   {
@@ -79,13 +79,16 @@ const baseInfo = [
     class: "or",
     show: scope === "home" || showTag,
   },
-];
+]);
 </script>
 
 <template>
   <div :class="[ns.b(), scope]">
     <template v-for="item in baseInfo" :key="item.title">
-      <span v-if="item.show && (item.data || item.dataList?.length)" :class="[ns.e('item'), `${scope}-item`, { split }]">
+      <span
+        v-if="item.show && (item.data || item.dataList?.length)"
+        :class="[ns.e('item'), `${scope}-item`, { split }]"
+      >
         <Icon v-if="showIcon"><component :is="item.icon" /></Icon>
         <a
           v-if="item.data"

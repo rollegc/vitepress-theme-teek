@@ -14,7 +14,8 @@ const ns = useNamespace("tag");
 
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
-const { frontmatter, theme, site } = useUnrefData();
+const { theme, site } = useUnrefData();
+const { frontmatter, localeIndex } = useData();
 
 const route = useRoute();
 const pageNum = ref(1);
@@ -27,10 +28,9 @@ const {
   autoPage = false,
   pageSpeed = 4000,
   bgColor,
-}: Tag = { ...theme.tag, ...frontmatter.tk?.tag };
+}: Tag = { ...theme.tag, ...unref(frontmatter).tk?.tag };
 
 const posts = usePosts();
-const { localeIndex } = useData();
 const tags = computed(() => unref(posts).groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签

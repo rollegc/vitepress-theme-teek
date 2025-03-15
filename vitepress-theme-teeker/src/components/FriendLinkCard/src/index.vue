@@ -1,6 +1,6 @@
 <script setup lang="ts" name="FriendLinkCard">
 import { computed, ref, unref, onMounted } from "vue";
-import { withBase } from "vitepress";
+import { withBase, useData } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
 import { useNamespace, useScrollData } from "../../../hooks";
 import HomeCard from "../../HomeCard";
@@ -13,7 +13,8 @@ defineOptions({ name: "FriendLinkCard" });
 
 const ns = useNamespace("friendLink");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme } = useUnrefData();
+const { frontmatter } = useData();
 
 // 友情链接配置项
 const {
@@ -24,7 +25,7 @@ const {
   scrollSpeed = 2500,
   autoPage = false,
   pageSpeed = 4000,
-}: FriendLink = { ...theme.friendLink, ...frontmatter.tk?.friendLink };
+}: FriendLink = { ...theme.friendLink, ...unref(frontmatter).tk?.friendLink };
 
 // 使用上下滚动功能
 const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollSpeed);
