@@ -1,6 +1,9 @@
+import { inBrowser } from "vitepress";
+
 export const useFooterRuntime = () => {
   const startTime = new Date("2021-10-19 00:00:00"); // 替换为你的网站启动时间
   let runtimeElement: HTMLElement | null = null;
+  let intervalId: NodeJS.Timeout | null = null;
 
   const updateFooterRuntime = () => {
     if (!runtimeElement) return;
@@ -17,13 +20,23 @@ export const useFooterRuntime = () => {
   };
 
   const start = () => {
+    if (!inBrowser) return;
+
     runtimeElement = document.getElementById("footer-runtime");
 
     if (runtimeElement) {
-      updateFooterRuntime(); // 初始化显示
-      setInterval(updateFooterRuntime, 1000);
+      // 初始化显示
+      updateFooterRuntime();
+      intervalId = setInterval(updateFooterRuntime, 1000);
     }
   };
 
-  return { start };
+  const stop = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  };
+
+  return { start, stop };
 };

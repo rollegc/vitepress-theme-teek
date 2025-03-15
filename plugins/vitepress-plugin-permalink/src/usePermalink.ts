@@ -50,13 +50,18 @@ export default function usePermalink() {
 
     if (permalink) {
       // 存在 permalink 则在 URL 替换
-      nextTick(() => {
+      return nextTick(() => {
         history.replaceState(history.state || null, "", `${b}${permalink}${search}${hash}`);
       });
-    } else {
-      // 不存在 permalink 则获取文档地址来跳转（router.onBeforeRouteChange 在跳转前已经执行了该逻辑，因此这里触发率 0%，只是用于兜底，因为 router.onBeforeRouteChange 可能因为用户使用不当被覆盖）
-      const filePath = teyGetFilePathByPathname(pathname);
-      if (filePath) return router.go(`${base}${filePath}${search}${hash}`);
+    }
+
+    // 不存在 permalink 则获取文档地址来跳转（router.onBeforeRouteChange 在跳转前已经执行了该逻辑，因此这里触发率 0%，只是用于兜底，因为 router.onBeforeRouteChange 可能因为用户使用不当被覆盖）
+    const filePath = teyGetFilePathByPathname(pathname);
+    if (filePath) {
+      const targetUrl = base + filePath + search + hash;
+      // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
+      history.replaceState(history.state || null, "", targetUrl);
+      router.go(targetUrl);
     }
   };
 
@@ -107,7 +112,10 @@ export default function usePermalink() {
       const filePath = teyGetFilePathByPathname(pathname);
 
       if (filePath) {
-        router.go(`${base}${filePath}${search}${hash}`);
+        const targetUrl = base + filePath + search + hash;
+        // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
+        history.replaceState(history.state || null, "", targetUrl);
+        router.go(targetUrl);
 
         // 阻止本次路由跳转
         return false;

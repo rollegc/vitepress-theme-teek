@@ -8,7 +8,7 @@ defineOptions({ name: "CodeBlockToggle" });
 const ns = useNamespace("");
 
 const foldClass = "fold";
-const arrowClass = "arrow";
+const arrowClass = "code-arrow";
 
 /**
  * 初始化代码块

@@ -11,4 +11,5 @@ export default defineBuildConfig({
     },
   },
   externals: ["vitepress", "vue"],
+  failOnWarn: false,
 });

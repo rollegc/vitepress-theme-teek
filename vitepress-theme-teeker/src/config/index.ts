@@ -40,7 +40,6 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     mdH1: ["@pages"],
     docAnalysis: ["@pages", /目录页/],
     fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**"],
-    permalinkActiveMatch: ["@pages"],
   };
 
   // 自动生成 frontmatter 插件，必须放在第一位
@@ -85,8 +84,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
   }
   // 自动生成永久链接插件
   if (permalink) {
-    permalinkOption.activeMatchDir = [...(permalinkOption?.activeMatchDir || []), ...ignoreDir.permalinkActiveMatch];
-    plugins.push(Permalink(permalinkOption));
+    plugins.push(...Permalink({ permalinkOption: permalinkOption, notFoundOption: permalinkOption }));
   }
   // 自动给 MD 添加一级标题插件
   if (mdH1) {

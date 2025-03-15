@@ -1,13 +1,13 @@
-import type { PermalinkOption } from "vitepress-plugin-permalink";
+import type { Route } from "vitepress";
+import type { Ref } from "vue";
+import type { PermalinkOption, NotFoundOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { MdH1Option } from "vitepress-plugin-md-h1";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
 import type { AutoFrontmatterOption } from "vitepress-plugin-auto-frontmatter";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
-import type { Ref } from "vue";
-import type { Route } from "vitepress";
-import { ContainerOption } from "../markdown/plugins/container";
+import type { ContainerOption } from "../markdown/plugins/container";
 
 export interface TkThemeConfig {
   /**
@@ -60,15 +60,6 @@ export interface TkThemeConfig {
    * @default 'default'
    */
   pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
-  /**
-   * 404 页面延迟加载时间，单位为毫秒，仅限第一次进入页面或刷新页面生效
-   *
-   * 兼容 permalink 插件，因为 permalink 插件支持自定义 URL，但是 VP 初始化页面时根据自定义 URL 寻找文档会 404，因此需要延迟时间来给 permalink 插件寻找正确的文档路径
-   * 如果发现刷新页面有 404 页面短暂出现，则将 notFoundPageDelayLoad 配置项的时间调大
-   *
-   * @default 100
-   */
-  notFoundPageDelayLoad?: number;
   /**
    *  body 背景大图配置
    */
@@ -1244,7 +1235,7 @@ export interface Plugins {
   /**
    * permalinks 插件配置项
    */
-  permalinkOption?: PermalinkOption;
+  permalinkOption?: PermalinkOption & NotFoundOption;
   /**
    * 是否启用 mdH1 插件
    *

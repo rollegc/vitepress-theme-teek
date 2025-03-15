@@ -10,15 +10,18 @@ export interface PermalinkOption {
    * @default 'vitepress 的 srcDir 配置项'
    */
   path?: string;
+}
+
+export interface NotFoundOption {
   /**
-   * activeMatch 精确匹配指定目录下的 Markdown 文件，仅当 path 为 permalink 时生效
+   * 404 页面延迟加载时间，单位为毫秒，仅限第一次进入页面或刷新/回退/前进页面生效
    *
-   * 当导航的 link 设置了 permalink，插件默认会把该导航的 activeMatch 设置为 permalink 文档所在的一级目录名，以此来达到访问同一级目录下的其他 permalink 文件时（模糊匹配），导航有高亮效果
-   * 有些场景需要导航精确匹配该 permalink 文档，因此可以传入该 permalink 文档所在的一级目录
+   * VP 404 页面兼容 permalink 插件，因为 permalink 插件支持自定义 URL，但是 VP 初始化页面时根据自定义 URL 寻找文档会 404，因此需要延迟时间来给 permalink 插件寻找正确的文档路径
+   * 如果发现刷新页面有 404 页面短暂出现，则将 notFoundDelayLoad 配置项的时间调大
    *
-   * @default []
+   * @default 200
    */
-  activeMatchDir?: string[];
+  notFoundDelayLoad?: number;
 }
 
 export interface Permalink {

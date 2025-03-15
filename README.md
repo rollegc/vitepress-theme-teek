@@ -50,3 +50,4 @@ pnpm demo:localesRoot dev
 - 发布 NPM 库
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
+- mdH1、permalink 插件发布

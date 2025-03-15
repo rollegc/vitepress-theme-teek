@@ -194,7 +194,14 @@ export default defineConfig({
       { text: "首页", link: "/" },
       { text: "指南", link: "/01.指南/" },
       { text: "设计", link: "/design" },
-      { text: "API", link: "/07.API/01.API - 登录" },
+      {
+        text: "API",
+        items: [
+          { text: "API - 登录", link: "/api/login" },
+          { text: "API - Session 会话", link: "/api/session" },
+          { text: "API - Token", link: "/api/token" },
+        ],
+      },
       { text: "归档", link: "/archives" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/hd-security" }],

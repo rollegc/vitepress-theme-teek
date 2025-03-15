@@ -1,8 +1,11 @@
-import type { Plugin, ViteDevServer } from "vite";
+import type { Plugin } from "vite";
+import type { DefaultTheme } from "vitepress";
 import createPermalinks, { standardLink } from "./helper";
-import type { Permalink, PermalinkOption } from "./types";
+import type { NotFoundOption, Permalink, PermalinkOption } from "./types";
 import picocolors from "picocolors";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 export * from "./types";
 
@@ -10,11 +13,24 @@ export const log = (message: string, type = "yellow") => {
   console.log((picocolors as any)[type](message));
 };
 
-export default function VitePluginVitePressPermalink(option: PermalinkOption = {}): Plugin & { name: string } {
-  let vitepressConfig: any = {};
+/**
+ * 默认暴露 2 个插件集
+ */
+export default function VitePluginVitePressPermalink(
+  option: { permalinkOption?: PermalinkOption; notFoundOption?: NotFoundOption } = {}
+) {
+  return [
+    VitePluginVitePressNotFoundDelayLoad(option.notFoundOption),
+    VitePluginVitePressAutoPermalink(option.permalinkOption),
+  ];
+}
 
+/**
+ * 扫描项目目录，生成 permalink
+ */
+export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): Plugin & { name: string } {
   return {
-    name: "vite-plugin-vitepress-sidebar-permalink",
+    name: "vite-plugin-vitepress-auto-permalink",
     config(config: any) {
       const {
         site: { themeConfig, cleanUrls, locales },
@@ -54,58 +70,23 @@ export default function VitePluginVitePressPermalink(option: PermalinkOption = {
 
       log("Injected Permalinks Data Successfully. 注入永久链接数据成功!", "green");
 
-      vitepressConfig = config.vitepress;
-
       // 导航栏高亮适配 permalink
       if (!localesKeys.length) {
-        return setActiveMatchWhenUsePermalink(
-          themeConfig.nav,
+        return setActiveMatchWhenUsePermalink({
+          nav: themeConfig.nav,
           permalinkToPath,
-          cleanUrls,
           rewrites,
-          "",
-          option.activeMatchDir
-        );
+          cleanUrls,
+        });
       }
 
       localesKeys.forEach(localeKey => {
-        setActiveMatchWhenUsePermalink(
-          locales[localeKey].themeConfig?.nav,
+        setActiveMatchWhenUsePermalink({
+          nav: locales[localeKey].themeConfig?.nav,
           permalinkToPath,
-          cleanUrls,
           rewrites,
-          localeKey,
-          option.activeMatchDir
-        );
-      });
-    },
-    configureServer(server: ViteDevServer) {
-      const {
-        site: {
-          base,
-          themeConfig: { permalinks },
           cleanUrls,
-        },
-        rewrites,
-      } = vitepressConfig;
-      // 将 permalink 重写实际文件路径，仅限 dev 环境生效
-      server.middlewares.use((req, _res, next) => {
-        if (req.url && req.url.includes(".md")) {
-          const reqUrl = decodeURI(req.url)
-            .replace(/[?#].*$/, "")
-            .replace(/\.md$/, "")
-            .slice(base.length);
-
-          const finalReqUrl = reqUrl.startsWith("/") ? reqUrl : `/${reqUrl}`;
-          // 如果访问链接 reqUrl 为 permalink，则找到对应的文档路由。当开启 cleanUrls 后，permalinks 内容都是 .html 结尾
-          const filePath = permalinks.inv[cleanUrls ? finalReqUrl : `${finalReqUrl}.html`];
-          // 如果设置了 rewrites，则取没有 rewrites 前的实际文件地址
-          const realFilePath = rewrites.inv[`${filePath}.md`]?.replace(/\.md/, "") || filePath;
-
-          // 如果文档路由 realFilePath 存在，则替换 URL 实现跳转，防止页面 404
-          if (realFilePath) req.url = req.url.replace(encodeURI(reqUrl), encodeURI(realFilePath));
-        }
-        next();
+        });
       });
     },
   };
@@ -126,50 +107,102 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
   return permalink;
 };
 
+interface SetActiveMatchWhenUsePermalinkOption {
+  nav: (DefaultTheme.NavItemWithLink & { items: any })[]; // 导航栏
+  permalinkToPath: Record<string, string>; // permalink 和文件路径的映射关系
+  rewrites?: Record<string, any>; // 如果设置了 rewrites，则取 rewrites 后的文件路径
+  cleanUrls?: boolean; // vitepress 配置项，true 关闭 .html 后缀，false 开启 .html 后缀
+}
+
 /**
  * 如果 nav 有 link 且 link 为 permalink，则添加 activeMatch 为 permalink 对应的文件路径
  * 这里的处理是导航栏兼容 permalink 的高亮功能，默认访问 permalink 后，导航栏不会高亮，因为导航栏是根据实际的文件路径进行匹配
  *
- * @param nav 导航栏
- * @param permalinkToPath permalink 和文件路径的映射关系
- * @param cleanUrls cleanUrls
- * @param rewrites 如果设置了 rewrites，则取 rewrites 后的文件路径
- * @param localeKey 多语言名称
- * @param activeMatchDir activeMatch 精确匹配指定目录下的 Markdown 文件
+ * @param option 配置项
  */
 const setActiveMatchWhenUsePermalink = (
-  nav: any[] = [],
-  permalinkToPath: Record<string, string>,
-  cleanUrls = false,
-  rewrites: Record<string, any> = {},
-  localeKey = "",
-  activeMatchDir = [""]
+  option: SetActiveMatchWhenUsePermalinkOption,
+  parentNav?: DefaultTheme.NavItemWithLink
 ) => {
+  const { nav = [], permalinkToPath, rewrites = {}, cleanUrls = false } = option;
+
   if (!nav.length) return;
 
   nav.forEach(item => {
-    if (item.link === "/") return;
+    if (item.link === "/" || item.activeMatch) return;
 
     const link = standardLink(item.link);
     // cleanUrls 为 false 时，permalinkToPath 的 key 都会带上 .html
     const path = permalinkToPath[cleanUrls ? link : `${link.replace(/\.html/, "")}.html`];
 
-    if (path && !item.activeMatch) {
-      const finalPath = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
+    if (path) {
       // 如果设置了 rewrites，则取 rewrites 后的文件路径
-      const finalPathArr = (rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path).split("/");
+      const finalPath = rewrites.map[`${path}.md`]?.replace(/\.md/, "") || path;
 
-      // 访问一级目录里面的 Markdown 文件，对应导航都可以高亮，同时兼容国际化目录（官方规定 activeMatch 是一个正则表达式字符串）
-      const activeMatch =
-        finalPathArr[0] === localeKey
-          ? `${finalPathArr[0]}${finalPathArr[1] ? `/${finalPathArr[1]}` : ""}`
-          : finalPathArr[0];
-
-      // 精确匹配指定目录下的 Markdown 文件
-      if (activeMatchDir.includes(activeMatch)) item.activeMatch = finalPath;
-      else item.activeMatch = activeMatch;
+      item.activeMatch = finalPath;
+      // 父级的 activeMatch 为子级的上一层目录，这样访问任意子级 Markdown 链接，父级导航会高亮
+      if (parentNav) parentNav.activeMatch = finalPath.slice(0, finalPath.lastIndexOf("/"));
     }
 
-    if (item.items?.length) setActiveMatchWhenUsePermalink(item.items, permalinkToPath, cleanUrls, rewrites);
+    if (item.items?.length) {
+      setActiveMatchWhenUsePermalink({ nav: item.items, permalinkToPath, rewrites, cleanUrls }, item);
+    }
   });
 };
+
+// ---------- VitePluginVitePressNotFoundDelayLoad 插件 ---------
+
+const isESM = () => {
+  return typeof __filename === "undefined" || typeof __dirname === "undefined";
+};
+
+const getDirname = () => {
+  return isESM() ? dirname(fileURLToPath(import.meta.url)) : __dirname;
+};
+
+const componentName = "NotFoundDelay";
+const componentFile = `${componentName}.vue`;
+const aliasComponentFile = `${getDirname()}/components/${componentFile}`;
+const virtualModuleId = "virtual:not-found-option";
+const resolvedVirtualModuleId = `\0${virtualModuleId}`;
+
+/**
+ * 将 NotFoundDelay 组件传入 Vitepress 的 not-found 插槽
+ */
+export function VitePluginVitePressNotFoundDelayLoad(option: NotFoundOption = {}): Plugin & { name: string } {
+  return {
+    name: "vite-plugin-vitepress-not-found-delay-load",
+    config() {
+      return {
+        resolve: {
+          alias: {
+            [`./${componentFile}`]: aliasComponentFile,
+          },
+        },
+      };
+    },
+    resolveId(id: string) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId;
+      }
+    },
+    load(id: string) {
+      // 使用虚拟模块将 option 传入组件里
+      if (id === resolvedVirtualModuleId) return `export default ${JSON.stringify(option)}`;
+
+      // 在 Layout.vue 插槽插入自定义组件
+      if (id.endsWith("vitepress/dist/client/theme-default/Layout.vue")) {
+        // 读取原始的 Vue 文件内容
+        const code = readFileSync(id, "utf-8");
+
+        // 插入自定义组件
+        const slotPosition = '<slot name="not-found" />';
+        const setupPosition = '<script setup lang="ts">';
+
+        return code
+          .replace(slotPosition, `<${componentName}><template #not-found>${slotPosition}</template></${componentName}>`)
+          .replace(setupPosition, `${setupPosition}\nimport ${componentName} from './${componentFile}'`);
+      }
+    },
+  };
+}

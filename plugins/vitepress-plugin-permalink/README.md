@@ -42,11 +42,11 @@ export default defineConfig({
 
 ## 🛠️ Options
 
-| name           | description                                                  | type       | default                        |
-| -------------- | ------------------------------------------------------------ | ---------- | ------------------------------ |
-| ignoreList     | 忽略的文件/文件夹列表，支持正则表达式                        | `string[]` | `[]`                           |
-| path           | 指定扫描的根目录                                             | `string`   | `vitepress` 的 `srcDir` 配置项 |
-| activeMatchDir | activeMatch 精确匹配指定目录下的 Markdown 文件，仅当 path 为 permalink 时生效 | `string[]` | `[]`                           |
+| name              | description                                                                  | type       | default                        |
+| ----------------- | ---------------------------------------------------------------------------- | ---------- | ------------------------------ |
+| ignoreList        | 忽略的文件/文件夹列表，支持正则表达式                                        | `string[]` | `[]`                           |
+| path              | 指定扫描的根目录                                                             | `string`   | `vitepress` 的 `srcDir` 配置项 |
+| notFoundDelayLoad | 404 页面延迟加载时间，单位为毫秒，仅限第一次进入页面或刷新/回退/前进页面生效 | `number`   | 200                            |
 
 ## ❗ Warning
 
@@ -101,6 +101,8 @@ const myFunction = () => {
 
 ## 📖 Usage
 
+### usePermalink 函数
+
 在 `.vitepress/theme/index.ts` 引入 `usePermalink` 函数来初始化 permalinks 功能：
 
 ```typescript
@@ -143,9 +145,19 @@ permalink: /guide-api
 
 如果永久链接不生效，代表 `usePermalink().startWatch()` 并没有被执行，请在注册 vitepress 或者任意主题前加载该函数，如何注册请看 ([扩展默认主题 | VitePress](https://vitepress.dev/zh/guide/extending-default-theme#layout-slots))
 
-## 📘 TypeScript
+### notFoundDelayLoad 配置项
 
-### 🛠️ Options
+使用了 `usePermalink` 函数来提供 `permalink` 功能，但是在第一次进入页面或刷新、回退、前进时，会有 404 页面短暂出现，因此需要引用 `NotFoundDelay.vue` 组件来延迟 404 页面的加载时间。
+
+`NotFoundDelay.vue` 组件已经集成了 Vitepress，您可以无需手动引入 `NotFoundDelay.vue` 组件。
+
+您需要了解的是搭配 `NotFoundDelay.vue` 组件的一个核心配置项：`notFoundDelayLoad`。
+
+`vitepress-plugin-permalink` 插件在 `onBeforeMounted` 里根据自定义 URL 寻找对应的文档进行加载，但是 Vitepress 初始化页面在 ``onBeforeMounted` 之前执行，因此需要延迟时间来等待 `vitepress-plugin-permalink` 插件执行完成，于是需要使用 `notFoundDelayLoad` 配置项来决定 404 页面延迟加载时间，单位为毫秒，默认为 200 毫秒。
+
+如果发现第一次进入页面或刷新、回退、前进时有 404 页面短暂出现，则将 `notFoundDelayLoad` 配置项的时间调大。
+
+## 📘 TypeScript
 
 ```typescript
 export interface PermalinkOption {
@@ -160,6 +172,29 @@ export interface PermalinkOption {
    * @default 'vitepress 的 srcDir 配置项'
    */
   path?: string;
+}
+
+export interface NotFoundOption {
+  /**
+   * 404 页面延迟加载时间，单位为毫秒，仅限第一次进入页面或刷新/回退/前进页面生效
+   *
+   * VP 404 页面兼容 permalink 插件，因为 permalink 插件支持自定义 URL，但是 VP 初始化页面时根据自定义 URL 寻找文档会 404，因此需要延迟时间来给 permalink 插件寻找正确的文档路径
+   * 如果发现刷新页面有 404 页面短暂出现，则将 notFoundDelayLoad 配置项的时间调大
+   *
+   * @default 200
+   */
+  notFoundDelayLoad?: number;
+}
+
+export interface Permalink {
+  /**
+   * key 为文件相对路径，value 为永久链接
+   */
+  map: Record<string, string>;
+  /**
+   * key 为永久链接，value 为文件相对路径
+   */
+  inv: Record<string, string>;
 }
 ```
 

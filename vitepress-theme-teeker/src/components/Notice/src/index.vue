@@ -186,7 +186,7 @@ const storagePopoverState = (state: string) => {
       </slot>
 
       <div :class="ns.e('popover__content')">
-        <slot name="notice-content" />
+        <slot name="teeker-notice-content" />
       </div>
     </div>
 
