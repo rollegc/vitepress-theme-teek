@@ -29,17 +29,17 @@ const router = useRouter();
 
 const initJs = () => {
   const t = unref(twikooJs);
-  if (t) {
-    t.onload = initTwikoo;
+  if (t) t.onload = initTwikoo;
+};
 
-    const selfOnAfterRouteChange = router.onAfterRouteChange;
-    // 路由切换后的回调
-    router.onAfterRouteChange = (href: string) => {
-      selfOnAfterRouteChange?.(href);
-      // 路由切换后更新评论内容
-      reloadTwikoo(href);
-    };
-  }
+const initRoute = () => {
+  const selfOnAfterRouteChange = router.onAfterRouteChange;
+  // 路由切换后的回调
+  router.onAfterRouteChange = (href: string) => {
+    selfOnAfterRouteChange?.(href);
+    // 路由切换后更新评论内容
+    reloadTwikoo(href);
+  };
 };
 
 const reloadTwikoo = (to: string) => {
@@ -49,8 +49,8 @@ const reloadTwikoo = (to: string) => {
 onMounted(() => {
   if (!envId) return;
 
-  initTwikoo();
   initJs();
+  initRoute();
 });
 </script>
 

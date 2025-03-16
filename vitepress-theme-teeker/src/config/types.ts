@@ -152,7 +152,7 @@ export interface TkThemeConfig {
   /**
    * 内置 markdown 容器的 Label 配置
    */
-  containerLabel?: ContainerLabel,
+  containerLabel?: ContainerLabel;
   /**
    * 自定义 markdown 容器配置
    */
@@ -317,6 +317,12 @@ export interface Banner {
    * @default false
    */
   imgShuffle?: boolean;
+  /**
+   * 是否开启 Banner 大图波浪纹，bgStyle 为 bigImg 时生效
+   *
+   * @default true
+   */
+  imgWaves?: boolean;
   /**
    * Banner 大图遮罩，bgStyle 为 bigImg 时生效
    *

@@ -12,37 +12,30 @@ const { theme } = useUnrefData();
 const { server, site }: CommentProvider["artalk"] = { ...theme.comment?.options };
 
 const router = useRouter();
-const artalkRef = ref();
+const artalkRef = ref<HTMLElement | null>(null);
+const artalkJs = ref<HTMLScriptElement | null>(null);
 const artalk = ref();
 
 const initArtalk = () => {
   const Artalk = (window as any).Artalk;
 
-  const observer = new MutationObserver((_, observer) => {
-    if (Artalk && unref(artalkRef)) {
-      artalk.value = Artalk.init({
-        el: unref(artalkRef),
-        darkMode: unref(isDark),
-        pageKey: router.route.path,
-        pageTitle: unref(page).title,
-        server: server,
-        site: site,
-      });
-      observer.disconnect();
-    }
-  });
+  if (!Artalk || !unref(artalkRef)) return;
 
-  observer.observe(document.head, { subtree: true, childList: true, attributes: true, attributeFilter: ["id"] });
-};
-
-const reloadArtalk = () => {
-  const a = unref(artalk);
-  a?.update({
+  artalk.value = Artalk.init({
+    el: unref(artalkRef),
+    darkMode: unref(isDark),
     pageKey: router.route.path,
     pageTitle: unref(page).title,
+    server: server,
+    site: site,
   });
 
-  a?.reload();
+  switchDark();
+};
+
+const initJs = () => {
+  const t = unref(artalkJs);
+  if (t) t.onload = initArtalk;
 };
 
 const initRoute = () => {
@@ -55,10 +48,20 @@ const initRoute = () => {
   };
 };
 
+const reloadArtalk = () => {
+  const a = unref(artalk);
+  a?.update({
+    pageKey: router.route.path,
+    pageTitle: unref(page).title,
+  });
+
+  a?.reload();
+};
+
 onMounted(() => {
   if (!server) return;
 
-  initArtalk();
+  initJs();
   initRoute();
 });
 
@@ -67,14 +70,18 @@ onUnmounted(() => {
   if (a) a.destroy();
 });
 
-watch(isDark, () => {
+const switchDark = () => {
   const a = unref(artalk);
   if (a) a.setDarkMode(unref(isDark));
-});
+};
+
+watch(isDark, () => switchDark());
 </script>
 
 <template>
   <div class="artalk-container">
+    <link v-if="server" rel="stylesheet" :href="`${server}/dist/Artalk.css`" crossorigin="anonymous" />
     <div id="artalk" ref="artalkRef" />
+    <component v-if="server" :is="'script'" :src="`${server}/dist/Artalk.js`" crossorigin="anonymous" ref="artalkJs" />
   </div>
 </template>

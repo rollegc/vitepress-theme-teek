@@ -21,6 +21,7 @@ const {
   imgSrc,
   imgInterval = 15000,
   imgShuffle = false,
+  imgWaves = true,
   mask = true,
   maskBg = "rgba(0, 0, 0, 0.4)",
   defaultBgColor = "#e5e5e5",
@@ -106,7 +107,8 @@ const toggleClass = () => {
 
   if (!vPNavDom || !windowH) return;
 
-  if (unref(bannerRef) && document.documentElement.scrollTop + 100 < windowH) {
+  const offset = isBodyBygImg ? 0 : 100;
+  if (unref(bannerRef) && document.documentElement.scrollTop + offset < windowH) {
     vPNavDom.classList.add("big-img-nav-bar");
   } else vPNavDom.classList.remove("big-img-nav-bar");
 };
@@ -194,7 +196,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <HomeBannerWaves v-if="isBigImgBgStyle && !isBodyBygImg" />
+  <HomeBannerWaves v-if="imgWaves && isBigImgBgStyle && !isBodyBygImg" />
 
   <slot name="teeker-home-banner-before" />
 </template>
