@@ -3,18 +3,18 @@ import NoticeContent from "./components/NoticeContent.vue";
 import { defineComponent, h, nextTick, watch } from "vue";
 import { useData } from "vitepress";
 // import "vitepress-theme-teeker/index.css";
-import "vitepress-theme-teeker/vp-plus/code-block-mobile.scss";
-import "vitepress-theme-teeker/vp-plus/sidebar.scss";
-import "vitepress-theme-teeker/vp-plus/nav.scss";
-import "vitepress-theme-teeker/vp-plus/aside.scss";
-import "vitepress-theme-teeker/vp-plus/doc-h1.scss";
-// import "vitepress-theme-teeker/vp-plus/nav-blur.scss";
-import "vitepress-theme-teeker/vp-plus/mark.scss";
-import "vitepress-theme-teeker/vp-plus/container.scss";
-// import "vitepress-theme-teeker/vp-plus/container-left.scss";
-// import "vitepress-theme-teeker/vp-plus/container-flow.scss";
-// import "vitepress-theme-teeker/vp-plus/blockquote.scss";
-// import "vitepress-theme-teeker/vp-plus/rainbow.scss";
+import "vitepress-theme-teeker/vp-plus/code-block-mobile.scss"; // 移动端代码块样式加 padding
+import "vitepress-theme-teeker/vp-plus/sidebar.scss"; // 侧边栏字体样式
+import "vitepress-theme-teeker/vp-plus/nav.scss"; // 导航栏样式
+// import "vitepress-theme-teeker/vp-plus/nav-blur.scss"; // 导航栏毛玻璃样式
+import "vitepress-theme-teeker/vp-plus/aside.scss"; // 文章目录样式
+import "vitepress-theme-teeker/vp-plus/doc-h1.scss"; // 文档以及标题样式
+import "vitepress-theme-teeker/vp-plus/mark.scss"; // 文章 mark 标签样式
+import "vitepress-theme-teeker/vp-plus/container.scss"; // Markdown 容器样式
+// import "vitepress-theme-teeker/vp-plus/container-left.scss"; // Markdown 容器左框样式
+// import "vitepress-theme-teeker/vp-plus/container-flow.scss"; // Markdown 容器流体样式
+// import "vitepress-theme-teeker/vp-plus/blockquote.scss"; // 引用样式
+// import "vitepress-theme-teeker/vp-plus/rainbow.scss"; // Vitepress 首页彩虹渐变样式
 
 import { useFooterRuntime } from "./helper/useFooterRuntime";
 
