@@ -42,7 +42,7 @@ const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontm
 const comment = computed(() => {
   const commentOption = { ...theme.comment, ...frontmatter.tk?.comment };
   return {
-    enabled: unref(frontmatterRef).enabled !== false,
+    enabled: unref(frontmatterRef).comment !== false,
     components: {
       twikoo: CommentTwikoo,
       waline: CommentWaline,

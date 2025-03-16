@@ -71,8 +71,10 @@ onUnmounted(() => {
 });
 
 const switchDark = () => {
-  const a = unref(artalk);
-  if (a) a.setDarkMode(unref(isDark));
+  setTimeout(() => {
+    const a = unref(artalk);
+    if (a) a.setDarkMode(unref(isDark));
+  }, 100);
 };
 
 watch(isDark, () => switchDark());
