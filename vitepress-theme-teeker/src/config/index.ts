@@ -15,7 +15,7 @@ import { createCategory, createPermalink } from "./addFrontmatter";
 import { containerPlugins, createContainersThenUse } from "../markdown/plugins/container";
 
 export default function tkThemeConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
-  const { vitePlugins, markdownPlugins = [], markdownContainers = [], ...tkThemeConfig } = config;
+  const { vitePlugins, markdownPlugins = [], markdownContainers = [], containerLabel, ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -141,9 +141,13 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     },
     markdown: {
       config: md => {
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin, containerPlugins].forEach(plugin =>
-          md.use(plugin)
+        md.use(containerPlugins, containerLabel);
+
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, codeArrowPlugin].forEach(plugin =>
+          md.use(plugin, containerLabel)
         );
+
+        // 创建用户配置的自定义容器
         createContainersThenUse(md, markdownContainers);
 
         // 用户配置的 markdown 插件

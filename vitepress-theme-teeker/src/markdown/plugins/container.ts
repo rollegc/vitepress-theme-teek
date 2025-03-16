@@ -11,14 +11,19 @@ export interface ContainerOption {
   className?: string; // 容器类名
 }
 
+export interface ContainerLabel {
+  noteLabel?: string;
+}
+
 /**
  * 创建 Teeker 内置的 markdown-it-container 插件
  * @param md markdown-it 实例
  */
-export const containerPlugins = (md: MarkdownIt) => {
+export const containerPlugins = (md: MarkdownIt, containerLabel?: ContainerLabel) => {
   const markdownContainer = [
-    { name: "center", useTitle: false, className: "center-container" },
-    { name: "right", useTitle: false, className: "right-container" },
+    { name: "center", useTitle: false, className: `tk-center-container` },
+    { name: "right", useTitle: false, className: `tk-right-container` },
+    { name: "note", useTitle: true, defaultTitle: containerLabel?.noteLabel || "NOTE", className: `custom-block` },
   ];
 
   createContainersThenUse(md, markdownContainer);
