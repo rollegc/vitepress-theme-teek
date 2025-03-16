@@ -15,6 +15,13 @@ export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/typ
 
 export type DefaultThemeType = typeof DefaultTheme;
 
+export {
+  createContainerThenUse,
+  createContainerThenGet,
+  createContainersThenUse,
+  createContainersThenGet,
+} from "./markdown/plugins/container";
+
 export default {
   extends: DefaultTheme,
   Layout: configProvider(Layout),

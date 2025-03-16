@@ -1,5 +1,11 @@
 # vitepress-plugin-md-h1
 
+## 1.0.3
+
+### Patch Changes
+
+- 添加 ignoreList 配置项
+
 ## 1.0.2
 
 ### Patch Changes

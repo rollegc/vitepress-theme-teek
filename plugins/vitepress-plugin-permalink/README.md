@@ -106,18 +106,21 @@ const myFunction = () => {
 在 `.vitepress/theme/index.ts` 引入 `usePermalink` 函数来初始化 permalinks 功能：
 
 ```typescript
-import { h } from "vue";
+import { h, defineComponent } from "vue";
 import DefaultTheme from "vitepress/theme";
 import usePermalink from "vitepress-plugin-permalink/src/usePermalink";
 
 export default {
   extends: DefaultTheme,
-  Layout() {
-    // 开启监听 permalink
-    usePermalink().startWatch();
+  Layout: defineComponent({
+    name: "LayoutProvider",
+    setup() {
+      // 开启监听 permalink
+      usePermalink().startWatch();
 
-    return h(DefaultTheme.Layout, null, {});
-  },
+      return h(DefaultTheme.Layout, null, {});
+    },
+  }),
 };
 ```
 

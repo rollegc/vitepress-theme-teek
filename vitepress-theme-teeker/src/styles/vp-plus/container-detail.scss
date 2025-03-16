@@ -1,0 +1,22 @@
+@use "../mixins/mixins" as *;
+@use "../mixins/function" as *;
+
+/* 背景色 */
+:root {
+  @include set-css-var("--custom-block-details-bg", #f0f6ff);
+}
+
+:root.dark {
+  @include set-css-var("--custom-block-details-bg", #65758529);
+}
+
+/* 边框色 */
+:root {
+  @include set-css-var("--custom-block-details-border", #5c6bc0);
+}
+
+// Details 容器背景色
+.custom-block.details {
+  background-color: getCssVar("--custom-block-details-bg");
+  border: 1px solid getCssVar("--custom-block-details-border");
+}

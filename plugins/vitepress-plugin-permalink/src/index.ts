@@ -108,17 +108,30 @@ const getLocalePermalink = (localesKeys: string[] = [], path = "", permalink = "
 };
 
 interface SetActiveMatchWhenUsePermalinkOption {
-  nav: (DefaultTheme.NavItemWithLink & { items: any })[]; // 导航栏
-  permalinkToPath: Record<string, string>; // permalink 和文件路径的映射关系
-  rewrites?: Record<string, any>; // 如果设置了 rewrites，则取 rewrites 后的文件路径
-  cleanUrls?: boolean; // vitepress 配置项，true 关闭 .html 后缀，false 开启 .html 后缀
+  /**
+   * 导航栏
+   */
+  nav: (DefaultTheme.NavItemWithLink & { items: any })[];
+  /**
+   * permalink 和文件路径的映射关系
+   */
+  permalinkToPath: Record<string, string>;
+  /**
+   * 如果设置了 rewrites，则取 rewrites 后的文件路径
+   */
+  rewrites?: Record<string, any>;
+  /**
+   * vitepress 配置项，true 关闭 .html 后缀，false 开启 .html 后缀
+   */
+  cleanUrls?: boolean;
 }
 
 /**
- * 如果 nav 有 link 且 link 为 permalink，则添加 activeMatch 为 permalink 对应的文件路径
+ * 如果 nav 有 link 且 link 为 permalink，则添加 activeMatch 为 permalink 对应的文件路径，如果没有 link，则代表是下拉组，activeMatch 为子级的上一层目录
  * 这里的处理是导航栏兼容 permalink 的高亮功能，默认访问 permalink 后，导航栏不会高亮，因为导航栏是根据实际的文件路径进行匹配
  *
  * @param option 配置项
+ * @param parentNav 父级导航
  */
 const setActiveMatchWhenUsePermalink = (
   option: SetActiveMatchWhenUsePermalinkOption,
@@ -182,9 +195,7 @@ export function VitePluginVitePressNotFoundDelayLoad(option: NotFoundOption = {}
       };
     },
     resolveId(id: string) {
-      if (id === virtualModuleId) {
-        return resolvedVirtualModuleId;
-      }
+      if (id === virtualModuleId) return resolvedVirtualModuleId;
     },
     load(id: string) {
       // 使用虚拟模块将 option 传入组件里

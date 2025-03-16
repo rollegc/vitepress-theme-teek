@@ -1,0 +1,51 @@
+@use "../mixins/function" as *;
+@use "./container-var";
+
+/* 标题字体大小 */
+.custom-block-title {
+  font-size: getCssVar("--custom-block-title-size");
+}
+
+/* INFO 容器背景色、左侧 */
+.custom-block.info {
+  border-left: 5px solid getCssVar("--custom-block-info-left");
+  background-color: getCssVar("--custom-block-info-bg");
+}
+
+/* TIP 容器边框色、背景色、左侧 */
+.custom-block.tip {
+  border-left: 5px solid getCssVar("--custom-block-tip-left");
+  background-color: getCssVar("--custom-block-tip-bg");
+}
+
+/* Warning 容器背景色、左侧 */
+.custom-block.warning {
+  border-left: 5px solid getCssVar("--custom-block-warning-left");
+  background-color: getCssVar("--custom-block-warning-bg");
+}
+
+/* Danger 容器背景色、左侧 */
+.custom-block.danger {
+  border-left: 5px solid getCssVar("--custom-block-danger-left");
+  background-color: getCssVar("--custom-block-danger-bg");
+}
+
+/* GitHub 风格警告 */
+
+/* NOTE 容器背景色、左侧 */
+.custom-block.note {
+  border-left: 5px solid getCssVar("--custom-block-note-left");
+  background-color: getCssVar("--custom-block-note-bg");
+}
+
+/* IMPORTANT 容器背景色、左侧 */
+.custom-block.important {
+  border-left: 5px solid getCssVar("--custom-block-important-left");
+  background-color: getCssVar("--custom-block-important-bg");
+}
+
+/* CAUTION 容器背景色、左侧 */
+.custom-block.caution {
+  border-left: 5px solid getCssVar("--custom-block-caution-left");
+  background-color: getCssVar("--custom-block-caution-bg");
+}

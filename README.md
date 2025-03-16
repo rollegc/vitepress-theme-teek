@@ -22,7 +22,7 @@ pnpm install
 pnpm to:theme stub
 ```
 
-使用文档启动
+使用文档项目启动
 
 ```bash
 pnpm docs:dev
@@ -39,15 +39,21 @@ pnpm demo:locales dev
 pnpm demo:localesRoot dev
 ```
 
+如果启动项目失败，则执行如下命令：
+
+```base
+pnpm plugin:build
+```
+
 ## 配置
 
 主题提供了大量的配置，可以在 `src/config/types.ts` 文件阅读配置项。
 
 ## TODO
 
+- 背景大图逻辑和 Banner 大图逻辑拆开
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
-- mdH1、permalink 插件发布

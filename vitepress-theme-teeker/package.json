@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "vitepress-theme-teeker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "vitepress-theme-teeker",
   "type": "module",
   "author": {
@@ -50,8 +50,8 @@
     "vitepress-plugin-catalogue": "latest",
     "vitepress-plugin-doc-analysis": "latest",
     "vitepress-plugin-file-content-loader": "latest",
-    "vitepress-plugin-md-h1": "workspace:*",
-    "vitepress-plugin-permalink": "workspace:*",
+    "vitepress-plugin-md-h1": "latest",
+    "vitepress-plugin-permalink": "latest",
     "vitepress-plugin-sidebar-resolve": "latest"
   },
   "devDependencies": {

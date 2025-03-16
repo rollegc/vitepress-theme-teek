@@ -31,14 +31,9 @@
 
       @media (min-width: 1280px) {
         /* 导航栏 */
-        .VPNav {
-          /* 如果导航栏要透明效果，打开 background-color，如果导航栏要透明磨砂效果，打开这两个样式 */
-          .VPNavBar:not(.home) {
-            background-color: getCssVar("bg-color-2") !important;
-            backdrop-filter: saturate(200%) blur(20px);
-            .content-body {
-              background-color: transparent;
-            }
+        .VPNav .VPNavBar:not(.home) {
+          .content-body {
+            background-color: transparent;
           }
         }
         .VPSidebar {
@@ -48,6 +43,10 @@
           }
         }
       }
+    }
+
+    .VPNavBar.home .divider {
+      display: none;
     }
   }
 }
