@@ -1,4 +1,4 @@
-<script setup lang="ts" name="tkLayout">
+<script setup lang="ts" name="TeekerLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { computed, unref } from "vue";

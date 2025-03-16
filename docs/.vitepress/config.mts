@@ -87,6 +87,7 @@ export default defineConfig({
       { text: "首页", link: "/" },
       { text: "指南", link: "/guild/intro" },
       { text: "配置", link: "/reference/config" },
+      { text: "开发", link: "/develop/intro" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teeker" }],
 

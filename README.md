@@ -51,7 +51,10 @@ pnpm plugin:build
 
 ## TODO
 
-- 背景大图逻辑和 Banner 大图逻辑拆开
+- Banner 支持半图背景
+- 文章页添加 updateTime
+- mdH1 配置项 ignoreList 导致不生成一级标题修复
+- 新增、删除、修改 md 后自动重启，参考 Vitepress 修改 config 重启方式
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库
