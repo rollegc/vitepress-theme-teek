@@ -30,19 +30,17 @@ const { Layout } = DefaultTheme;
 
 const ns = useNamespace("layout");
 
-const { theme, frontmatter } = useUnrefData();
-const { frontmatter: frontmatterRef } = useData();
+const { theme } = useUnrefData();
+const { frontmatter } = useData();
 
-const { tkTheme = true, wallpaper = {}, codeBlock = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
-// tkHome 支持 theme 或 index.md 的 frontmatter 配置
-const tkHome = computed(() => unref(frontmatterRef).tk?.tkHome ?? theme.tkHome ?? true);
-
-const { enabled = true, bgStyle, imgSrc }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+const { tkTheme = true, wallpaper = {}, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
+// 支持 theme 或 frontmatter
+const themeConfig = computed(() => ({ ...theme, ...unref(frontmatter), ...unref(frontmatter).tk }));
 
 const comment = computed(() => {
-  const commentOption = { ...theme.comment, ...frontmatter.tk?.comment };
+  const commentOption = unref(themeConfig).comment || {};
   return {
-    enabled: unref(frontmatterRef).comment !== false,
+    enabled: commentOption.comment ?? true,
     components: {
       twikoo: CommentTwikoo,
       waline: CommentWaline,
@@ -81,8 +79,8 @@ const comment = computed(() => {
 
         <ClientOnly>
           <!-- 自定义首页 -->
-          <div v-if="tkHome">
-            <HomeBanner v-if="isHomePage() && enabled">
+          <div v-if="themeConfig.tkHome ?? true">
+            <HomeBanner v-if="isHomePage() && (themeConfig.banner?.enabled ?? true)">
               <template v-for="(_, name) in $slots" :key="name" #[name]>
                 <slot :name="name"></slot>
               </template>
@@ -105,7 +103,10 @@ const comment = computed(() => {
             </div>
 
             <HomeFullscreenWallpaper
-              v-if="wallpaper.enabled && ((bgStyle === 'bigImg' && imgSrc) || theme.bodyBgImg?.imgSrc)"
+              v-if="
+                wallpaper.enabled &&
+                ((themeConfig.banner?.bgStyle === 'bigImg' && themeConfig.banner?.imgSrc) || theme.bodyBgImg?.imgSrc)
+              "
             />
           </div>
         </ClientOnly>
@@ -130,7 +131,7 @@ const comment = computed(() => {
           <ArticleAnalyze />
           <ArticleImagePreview />
           <ArticlePageStyle />
-          <CodeBlockToggle v-if="codeBlock" />
+          <CodeBlockToggle v-if="themeConfig.codeBlock ?? true" />
         </ClientOnly>
         <slot name="teeker-article-analyze-after" />
       </template>

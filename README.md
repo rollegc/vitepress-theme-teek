@@ -53,6 +53,8 @@ pnpm plugin:build
 
 - Banner 支持半图背景
 - 文章页添加 updateTime
+- 代码块 codeBlock 配置没有关闭 md 文档和样式，支持官方 [xxx] 命名
+- 引用 frontmatter 都支持 computed
 - mdH1 配置项 ignoreList 导致不生成一级标题修复
 - 新增、删除、修改 md 后自动重启，参考 Vitepress 修改 config 重启方式
 - 主题使用文档编写
