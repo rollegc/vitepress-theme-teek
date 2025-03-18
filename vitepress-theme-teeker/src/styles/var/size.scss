@@ -41,7 +41,6 @@ html[size="default"] {
   @include set-css-var("home-font-size-sm", 13px);
   @include set-css-var("home-font-size-small", 12px);
   @include set-css-var("page-width", 900px);
-  --vp-sidebar-width: 290px;
 }
 
 html[size="small"] {

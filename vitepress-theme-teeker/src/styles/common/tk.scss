@@ -47,27 +47,6 @@ a.hover-color:hover {
   cursor: pointer;
 }
 
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-::-webkit-scrollbar-track-piece {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-::-webkit-scrollbar-thumb:vertical {
-  height: 4px;
-  border-radius: 4px;
-  background-color: var(--vp-c-brand-1);
-}
-
-::-webkit-scrollbar-thumb:horizontal {
-  width: 4px;
-  border-radius: 4px;
-  background-color: var(--vp-c-brand-1);
-}
-
 /* flex */
 .flx {
   display: flex;

@@ -5,8 +5,8 @@ import "vitepress-theme-teeker/vp-plus/sidebar.scss";
 import "vitepress-theme-teeker/vp-plus/nav.scss";
 import "vitepress-theme-teeker/vp-plus/aside.scss";
 import "vitepress-theme-teeker/vp-plus/doc-h1.scss";
-// import "vitepress-theme-teeker/vp-plus/container.scss";
-// import "vitepress-theme-teeker/vp-plus/blockquote.scss";
+import "vitepress-theme-teeker/vp-plus/mark.scss";
+import "vitepress-theme-teeker/vp-plus/blockquote.scss";
 import "vitepress-theme-teeker/vp-plus/rainbow.scss";
 
 export default {

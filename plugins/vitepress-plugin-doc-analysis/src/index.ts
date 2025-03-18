@@ -14,7 +14,7 @@ export const log = (message: string, type = "yellow") => {
 export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption = {}): Plugin & { name: string } {
   return {
     name: "vitepress-plugin-doc-analysis",
-    async config(config: any) {
+    config(config: any) {
       const {
         site: { themeConfig = {}, locales = {} },
         srcDir,
