@@ -23,6 +23,7 @@ npm install vitepress-plugin-doc-analysis
 添加 `vitepress-plugin-doc-analysis` 插件到 `.vitepress/config.ts`
 
 ```typescript
+import { defineConfig } from "vitepress";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
 
 export default defineConfig({

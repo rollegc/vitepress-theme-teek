@@ -22,6 +22,7 @@ npm install vitepress-plugin-catalogue
 添加 `vitepress-plugin-catalogue` 插件到 `.vitepress/config.ts`
 
 ```typescript
+import { defineConfig } from "vitepress";
 import Catalogue from "vitepress-plugin-catalogue";
 
 export default defineConfig({

@@ -22,6 +22,7 @@ npm install vitepress-plugin-file-content-loader
 添加 `vitepress-plugin-file-content-loader` 插件到 `.vitepress/config.ts`
 
 ```typescript
+import { defineConfig } from "vitepress";
 import FileContentLoader from "vitepress-plugin-file-content-loader";
 
 export default defineConfig({

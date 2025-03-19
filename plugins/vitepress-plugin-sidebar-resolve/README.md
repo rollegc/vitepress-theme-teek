@@ -31,6 +31,7 @@ npm install vitepress-plugin-sidebar-resolve
 添加 `vitepress-plugin-sidebar-resolve` 插件到 `.vitepress/config.ts`
 
 ```typescript
+import { defineConfig } from "vitepress";
 import Sidebar from "vitepress-plugin-sidebar-resolve";
 
 export default defineConfig({

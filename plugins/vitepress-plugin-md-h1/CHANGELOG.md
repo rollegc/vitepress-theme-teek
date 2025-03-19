@@ -1,5 +1,17 @@
 # vitepress-plugin-md-h1
 
+## 1.0.5
+
+### Patch Changes
+
+- 修复打包问题
+
+## 1.0.4
+
+### Patch Changes
+
+- 重构代码，采用 Vite 的 load 钩子来替换 transom 钩子；修复 ignoreList 配置项失效问题，添加 beforeInject 钩子
+
 ## 1.0.3
 
 ### Patch Changes

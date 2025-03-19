@@ -23,6 +23,7 @@ npm install vitepress-plugin-auto-frontmatter
 添加 `vitepress-plugin-auto-frontmatter` 插件到 `.vitepress/config.ts`
 
 ```typescript
+import { defineConfig } from "vitepress";
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
 
 export default defineConfig({

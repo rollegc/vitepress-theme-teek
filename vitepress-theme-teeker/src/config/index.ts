@@ -88,7 +88,15 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
   }
   // 自动给 MD 添加一级标题插件
   if (mdH1) {
-    // mdH1Option.ignoreList = [...(mdH1Option?.ignoreList || []), ...ignoreDir.mdH1];
+    const selfBeforeInject = mdH1Option.beforeInject;
+    mdH1Option.beforeInject = (frontmatter, id, title) => {
+      if (frontmatter.layout === "cataloguePage" || frontmatter.catalogue) return false;
+      if (frontmatter.layout === "archivesPage" || frontmatter.archivesPage) return false;
+
+      return selfBeforeInject?.(frontmatter, id, title);
+    };
+    mdH1Option.ignoreList = [...(mdH1Option?.ignoreList || []), ...ignoreDir.mdH1];
+
     plugins.push(MdH1(mdH1Option));
   }
   // 文档内容分析插件

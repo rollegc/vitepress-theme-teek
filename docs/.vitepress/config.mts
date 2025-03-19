@@ -1,4 +1,4 @@
-import { defineConfig, DefaultTheme } from "vitepress";
+import { defineConfig } from "vitepress";
 import tkThemeConfig from "vitepress-theme-teeker/config";
 
 const description = ["vitepress-theme-teeker 使用文档", "vitepress 主题框架"].toString();

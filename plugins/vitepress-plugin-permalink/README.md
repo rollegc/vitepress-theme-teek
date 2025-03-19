@@ -27,6 +27,7 @@ npm install vitepress-plugin-permalink
 添加 `vitepress-plugin-permalink` 插件到 `.vitepress/config.ts`
 
 ```typescript
+import { defineConfig } from "vitepress";
 import Permalink from "vitepress-plugin-permalink";
 
 export default defineConfig({
