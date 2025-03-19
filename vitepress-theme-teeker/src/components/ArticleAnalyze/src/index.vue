@@ -28,12 +28,6 @@ const post = computed<TkContentData>(() => ({
 
 // 站点信息数据
 const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
-// 站点信息配置项
-const {
-  wordCount = true,
-  readingTime = true,
-  statistics = {},
-}: DocAnalysis = { ...theme.docAnalysis, ...unref(frontmatter).docAnalysis };
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
@@ -46,39 +40,22 @@ const pageViewInfo = computed(() => {
 });
 
 // 文章信息配置项
-const { showInfo = true, teleport = {} }: Article = { ...theme.article, ...unref(frontmatter).article };
+const articleConfig = computed<Article>(() => {
+  const { showInfo = true, showIcon = true, teleport = {} } = { ...theme.article, ...unref(frontmatter).article };
+  return { showInfo, showIcon, teleport };
+});
 
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {
-  const arr = [showInfo].flat();
+  const arr = [unref(articleConfig).showInfo].flat();
   if (arr.includes(true) || arr.includes("article")) return true;
   return false;
 });
 
-const route = useRoute();
-
-const statisticsInfo: UseBuSunZi = {
-  pagePv: ref(0),
-  isGet: ref(false),
-};
-const { provider = "", pageView = true, pageIteration = 2000 }: DocAnalysis["statistics"] = statistics;
-const usePageView = provider === "busuanzi" && pageView;
-
-if (usePageView) {
-  // 通过不蒜子获取访问量和访客数
-  const { pagePv, isGet, request } = useBuSunZi(true, pageIteration);
-  statisticsInfo.pagePv = pagePv;
-  statisticsInfo.isGet = isGet;
-
-  watch(route, () => {
-    request();
-  });
-}
-
 const baseInfoRef = ref<HTMLDivElement>();
 
 const teleportInfo = () => {
-  const { selector, position = "after", className = "teleport" } = teleport;
+  const { selector, position = "after", className = "teleport" } = unref(articleConfig).teleport;
   const baseInfoRefConst = unref(baseInfoRef);
   // 没有指定选择器，则不进行传送
   if (!selector || !baseInfoRefConst) return;
@@ -96,6 +73,35 @@ const teleportInfo = () => {
 onMounted(() => {
   nextTick(() => teleportInfo());
 });
+
+const docAnalysisConfig = computed<DocAnalysis>(() => {
+  const {
+    wordCount = true,
+    readingTime = true,
+    statistics = {},
+  }: DocAnalysis = { ...theme.docAnalysis, ...unref(frontmatter).docAnalysis };
+
+  return { wordCount, readingTime, statistics };
+});
+
+const statisticsConfig = computed<DocAnalysis["statistics"]>(() => {
+  const { provider = "", pageView = true, pageIteration = 2000 } = unref(docAnalysisConfig).statistics;
+
+  return { provider, pageView, pageIteration };
+});
+// 是否使用访问量功能
+const usePageView = computed(() => unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
+
+const statisticsInfo: UseBuSunZi = { pagePv: ref(0), isGet: ref(false) };
+// 通过不蒜子获取访问量
+const { pagePv, isGet, request } = useBuSunZi(true, unref(statisticsConfig).pageIteration);
+statisticsInfo.pagePv = pagePv;
+statisticsInfo.isGet = isGet;
+
+const route = useRoute();
+watch(route, () => {
+  if (unref(usePageView)) request();
+});
 </script>
 
 <template>
@@ -105,18 +111,18 @@ onMounted(() => {
     <div v-if="isShowInfo" ref="baseInfoRef" :class="`${ns.e('wrapper')} flx-align-center`">
       <ArticleInfo :post scope="article" />
 
-      <div v-if="wordCount" class="flx-center">
-        <Icon><Reading /></Icon>
+      <div v-if="docAnalysisConfig.wordCount" class="flx-center">
+        <Icon v-if="articleConfig.showIcon"><Reading /></Icon>
         <a title="文章字数" class="hover-color">{{ pageViewInfo.wordCount }}</a>
       </div>
 
-      <div v-if="readingTime" class="flx-center">
-        <Icon><Clock /></Icon>
+      <div v-if="docAnalysisConfig.readingTime" class="flx-center">
+        <Icon v-if="articleConfig.showIcon"><Clock /></Icon>
         <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
       </div>
 
       <div v-if="usePageView" class="flx-center">
-        <Icon><View /></Icon>
+        <Icon v-if="articleConfig.showIcon"><View /></Icon>
         <a title="浏览量" class="hover-color">{{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}</a>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomePostItem">
-import { computed, unref } from "vue";
-import { withBase, useData } from "vitepress";
+import { computed } from "vue";
+import { withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
@@ -17,8 +17,7 @@ const { post = { url: "", frontmatter: {} } } = defineProps<{
   coverImgMode: "default" | "full";
 }>();
 
-const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useUnrefData();
 
 const {
   excerptPosition = "bottom",
@@ -26,8 +25,8 @@ const {
   moreLabel = "阅读全文 >",
   showCapture = false,
   imageViewer = {},
-}: Post = { ...theme.post, ...unref(frontmatter).tk?.post };
-const { showInfo = true }: Article = { ...theme.article, ...unref(frontmatter).tk?.article };
+}: Post = { ...theme.post, ...frontmatter.tk?.post };
+const { showInfo = true }: Article = { ...theme.article, ...frontmatter.tk?.article };
 
 const postUrl = post.url && withBase(post.url);
 const excerpt = post.frontmatter.description || post.excerpt || (showCapture && post.capture);

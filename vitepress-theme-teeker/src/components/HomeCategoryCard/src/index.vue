@@ -14,8 +14,8 @@ const ns = useNamespace("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
-const { theme, site } = useUnrefData();
-const { frontmatter, localeIndex } = useData();
+const { theme, site, frontmatter } = useUnrefData();
+const { localeIndex } = useData();
 
 const route = useRoute();
 const pageNum = ref(1);
@@ -27,7 +27,7 @@ const {
   limit = 5,
   autoPage = false,
   pageSpeed = 4000,
-}: Category = { ...theme.category, ...unref(frontmatter).tk?.category };
+}: Category = { ...theme.category, ...frontmatter.tk?.category };
 
 const posts = usePosts();
 
@@ -47,13 +47,13 @@ const finalTitle = computed(() => {
 });
 
 // 当前选中的分类，从 URL 查询参数中获取
-const category = ref("");
+const selectedCategory = ref("");
 
 watch(
   route,
   () => {
     const c = new URL(window.location.href).searchParams.get("category");
-    if (c && c != unref(category)) category.value = c;
+    if (c && c != unref(selectedCategory)) selectedCategory.value = c;
   },
   { immediate: true }
 );
@@ -95,7 +95,7 @@ const categoriesPageLink = computed(() => {
           v-for="(item, index) in currentCategories"
           :key="item.name"
           :href="withBase(`${categoriesPageLink}?category=${encodeURIComponent(item.name)}`)"
-          :class="[{ active: item.name === category }, 'hover-color']"
+          :class="[{ active: item.name === selectedCategory }, 'hover-color']"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
         >
           <span>{{ item.name }}</span>

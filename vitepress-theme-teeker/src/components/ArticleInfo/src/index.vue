@@ -19,14 +19,22 @@ const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 const { theme } = useUnrefData();
 const { frontmatter } = useData();
 // 文章信息配置项
-const {
-  showIcon = true,
-  dateFormat = "yyyy-MM-dd",
-  showAuthor = true,
-  showDate = true,
-  showCategory = false,
-  showTag = false,
-}: Article = { ...theme.article, ...unref(frontmatter).article, ...unref(frontmatter).tk?.article };
+const articleConfig = computed<Article>(() => {
+  const {
+    showIcon = true,
+    dateFormat = "yyyy-MM-dd",
+    showAuthor = true,
+    showDate = true,
+    showCategory = false,
+    showTag = false,
+  }: Article = {
+    ...theme.article,
+    ...unref(frontmatter).article,
+    ...unref(frontmatter).tk?.article,
+  };
+
+  return { showIcon, dateFormat, showAuthor, showDate, showCategory, showTag };
+});
 
 const posts = usePosts();
 const route = useRoute();
@@ -35,17 +43,19 @@ const route = useRoute();
 const date = computed(() => {
   // 如果 date 是函数，则调用获取返回值作为 date
   const date = post.date;
+  const dateFormatConst = unref(articleConfig).dateFormat;
+
   if (date) {
-    if (isFunction(dateFormat)) return dateFormat(date);
-    return formatDate(date, dateFormat);
+    if (isFunction(dateFormatConst)) return dateFormatConst(date);
+    return formatDate(date, dateFormatConst);
   }
 
   // 如果 frontmatter 没有配置 date，则从 posts 中获取文档的创建时间
   const originPosts: TkContentData[] = unref(posts).originPosts;
   const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
 
-  if (isFunction(dateFormat)) return dateFormat(targetPost[0]?.date || "");
-  return formatDate(targetPost[0]?.date || new Date(), dateFormat);
+  if (isFunction(dateFormatConst)) return dateFormatConst(targetPost[0]?.date || "");
+  return formatDate(targetPost[0]?.date || new Date(), dateFormatConst);
 });
 
 const baseInfo = computed(() => [
@@ -55,13 +65,13 @@ const baseInfo = computed(() => [
     data: post.author?.name,
     href: post.author?.link,
     target: post.author?.link ? "_blank" : "_self",
-    show: showAuthor,
+    show: unref(articleConfig).showAuthor,
   },
   {
     title: "创建时间",
     icon: Calendar,
     data: date,
-    show: showDate,
+    show: unref(articleConfig).showDate,
   },
   {
     title: "分类",
@@ -69,7 +79,7 @@ const baseInfo = computed(() => [
     dataList: post.frontmatter?.categories || [],
     href: "/categories?category={data}",
     class: "or",
-    show: scope === "home" || showCategory,
+    show: scope === "home" || unref(articleConfig).showCategory,
   },
   {
     title: "标签",
@@ -77,7 +87,7 @@ const baseInfo = computed(() => [
     dataList: post.frontmatter?.tags || [],
     href: "/tags?tag={data}",
     class: "or",
-    show: scope === "home" || showTag,
+    show: scope === "home" || unref(articleConfig).showTag,
   },
 ]);
 </script>
@@ -89,7 +99,7 @@ const baseInfo = computed(() => [
         v-if="item.show && (item.data || item.dataList?.length)"
         :class="[ns.e('item'), `${scope}-item`, { split }]"
       >
-        <Icon v-if="showIcon"><component :is="item.icon" /></Icon>
+        <Icon v-if="articleConfig.showIcon"><component :is="item.icon" /></Icon>
         <a
           v-if="item.data"
           :title="item.title"

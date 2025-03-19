@@ -14,8 +14,8 @@ const ns = useNamespace("tag");
 
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
-const { theme, site } = useUnrefData();
-const { frontmatter, localeIndex } = useData();
+const { theme, site, frontmatter } = useUnrefData();
+const { localeIndex } = useData();
 
 const route = useRoute();
 const pageNum = ref(1);
@@ -28,7 +28,7 @@ const {
   autoPage = false,
   pageSpeed = 4000,
   bgColor,
-}: Tag = { ...theme.tag, ...unref(frontmatter).tk?.tag };
+}: Tag = { ...theme.tag, ...frontmatter.tk?.tag };
 
 const posts = usePosts();
 const tags = computed(() => unref(posts).groupCards.tags);
@@ -47,12 +47,12 @@ const finalTitle = computed(() => {
 });
 
 // 当前选中的标签，从 URL 查询参数中获取
-const tag = ref("");
+const selectedTag = ref("");
 watch(
   route,
   () => {
     const t = new URL(window.location.href).searchParams.get("tag");
-    if (t && t != unref(tag)) tag.value = t;
+    if (t && t != unref(selectedTag)) selectedTag.value = t;
   },
   { immediate: true }
 );
@@ -94,7 +94,7 @@ const tagsPageLink = computed(() => {
           :key="item.name"
           :style="getTagStyle(index)"
           :href="withBase(`${tagsPageLink}?tag=${encodeURIComponent(item.name)}`)"
-          :class="{ active: item.name === tag }"
+          :class="{ active: item.name === selectedTag }"
         >
           {{ item.name }}
         </a>

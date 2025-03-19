@@ -15,15 +15,14 @@ const ns = useNamespace("topArticle");
 
 const posts = usePosts();
 
-const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useUnrefData();
 // 精选文章配置项
 const {
   limit = 4,
   title = `${topArticleSvg}精选文章`,
   autoPage = false,
   pageSpeed = 4000,
-}: TopArticle = { ...theme.topArticle, ...unref(frontmatter).tk?.topArticle };
+}: TopArticle = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
 
 const topArticleList = computed(() => {
   const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;

@@ -51,11 +51,11 @@ pnpm plugin:build
 
 ## TODO
 
+- permalink 重新点击菜单不重新加载，分类页、标签页每次切换进去都是重新加载，需要重新渲染数据即可
 - Banner 支持半图背景
 - 文章页添加 updateTime
 - 代码块 codeBlock 配置没有关闭 md 文档和样式，支持官方 [xxx] 命名
-- 引用 frontmatter 都支持 computed
-- mdH1 配置项 ignoreList 导致不生成一级标题修复
+- 卡片栏的 title 为函数时，额外传入 localesIndex
 - 新增、删除、修改 md 后自动重启，参考 Vitepress 修改 config 重启方式
 - 主题使用文档编写
 - 部署测试、线上效果测试

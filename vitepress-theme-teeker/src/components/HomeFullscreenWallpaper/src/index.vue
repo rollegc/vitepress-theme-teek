@@ -1,6 +1,5 @@
 <script setup lang="ts" name="HomeFullscreenWallpaper">
 import { onMounted, onUnmounted, ref, unref } from "vue";
-import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
 
@@ -11,13 +10,12 @@ const ns = useNamespace("homeFullscreenWallpaper");
 // 定义一个 ref 来跟踪是否处于全屏状态
 const isFullscreen = ref(false);
 
-const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useUnrefData();
 const {
   hideBanner = false,
   hideWaves = false,
   hideMask = false,
-} = { ...theme.wallpaper, ...unref(frontmatter).tk?.wallpaper };
+} = { ...theme.wallpaper, ...frontmatter.tk?.wallpaper };
 
 /**
  * 监听键盘事件

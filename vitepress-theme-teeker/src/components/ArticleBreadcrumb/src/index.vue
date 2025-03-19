@@ -17,13 +17,13 @@ const { theme } = useUnrefData();
 const { localeIndex, frontmatter, page } = useData();
 
 // 面包屑配置项
-const breadcrumb: BreadcrumbType = {
+const breadcrumb = computed<BreadcrumbType>(() => ({
   enabled: true,
   showCurrentName: false,
   separator: "/",
   ...theme.breadcrumb,
   ...unref(frontmatter).breadcrumb,
-};
+}));
 
 const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);
 
@@ -36,7 +36,10 @@ const breadcrumbList = computed(() => {
     const fileName = item.replace(/^\d+\./, "").split(".")?.[0] || "";
 
     // 兼容国际化功能，如果配置多语言，在面包屑去掉多语言根目录名
-    if ((index !== relativePathArrConst.length - 1 || breadcrumb?.showCurrentName) && fileName !== unref(localeIndex)) {
+    if (
+      (index !== relativePathArrConst.length - 1 || unref(breadcrumb).showCurrentName) &&
+      fileName !== unref(localeIndex)
+    ) {
       classifyList.push({
         fileName,
         filePath: theme.catalogues?.inv[item]?.filePath || "",
