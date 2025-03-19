@@ -7,6 +7,7 @@ import { SiteConfig } from "vitepress";
 
 const shareCardName = "shareCard";
 const rootClass = "share-card";
+const defaultCardNum = 2;
 
 /**
  * 生成分享卡片容器
@@ -45,7 +46,7 @@ const shareCardPlugin = (md: MarkdownIt) => {
 
       // 获取容器名后面的卡片数量
       const cardNum = containerToken.info.trim().slice(shareCardName.length).trim();
-      config.cardNum = config.cardNum || Number(cardNum || 3) || 3;
+      config.cardNum = config.cardNum || Number(cardNum || defaultCardNum) || defaultCardNum;
 
       html += renderShareCard({ config, data }, base);
 
@@ -73,8 +74,8 @@ const renderShareCard = (shareCard: ShareCard.Props, base: string) => {
   if (!data.length) return "";
 
   const { cardGap = 20, target = "_blank" } = config;
-  let { cardNum = 3 } = config;
-  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = 3;
+  let cardNum = config.cardNum;
+  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = defaultCardNum;
 
   return `
     <div

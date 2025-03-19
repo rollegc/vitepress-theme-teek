@@ -7,6 +7,7 @@ import { SiteConfig } from "vitepress";
 
 const navCardName = "navCard";
 const rootClass = "nav-card";
+const defaultCardNum = 2;
 
 /**
  * 生成导航卡片容器
@@ -45,7 +46,7 @@ const navCardPlugin = (md: MarkdownIt) => {
 
       // 获取容器名后面的卡片数量
       const cardNum = containerToken.info.trim().slice(navCardName.length).trim();
-      config.cardNum = config.cardNum || Number(cardNum || 3) || 3;
+      config.cardNum = config.cardNum || Number(cardNum || defaultCardNum) || defaultCardNum;
 
       html += getNavCardHtml({ config, data }, base);
 
@@ -73,8 +74,8 @@ const getNavCardHtml = (navCard: NavCard.Props, base: string) => {
   if (!data.length) return "";
 
   const { cardGap = 20, lineClamp = 2, target = "_blank" } = config;
-  let { cardNum = 3 } = config;
-  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = 3;
+  let cardNum = config.cardNum;
+  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = defaultCardNum;
 
   return `
     <div
