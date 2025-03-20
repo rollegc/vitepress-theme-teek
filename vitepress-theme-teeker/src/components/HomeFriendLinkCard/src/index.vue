@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
 import { computed, ref, unref, onMounted } from "vue";
-import { withBase } from "vitepress";
+import { useData, withBase } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
 import { useNamespace, useScrollData } from "../../../hooks";
 import HomeCard from "../../HomeCard";
@@ -14,6 +14,7 @@ defineOptions({ name: "HomeFriendLinkCard" });
 const ns = useNamespace("friendLink");
 
 const { theme, frontmatter } = useUnrefData();
+const { localeIndex } = useData();
 
 // 友情链接配置项
 const {
@@ -41,7 +42,7 @@ const currentFriendLinkList = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(friendLinkSvg);
+  if (isFunction(title)) return title(unref(localeIndex), friendLinkSvg);
   return title;
 });
 

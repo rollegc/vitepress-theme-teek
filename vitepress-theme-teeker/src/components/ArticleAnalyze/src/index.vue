@@ -55,7 +55,7 @@ const isShowInfo = computed(() => {
 const baseInfoRef = ref<HTMLDivElement>();
 
 const teleportInfo = () => {
-  const { selector, position = "after", className = "teleport" } = unref(articleConfig).teleport;
+  const { selector, position = "after", className = "teleport" } = unref(articleConfig).teleport || {};
   const baseInfoRefConst = unref(baseInfoRef);
   // 没有指定选择器，则不进行传送
   if (!selector || !baseInfoRefConst) return;
@@ -84,8 +84,8 @@ const docAnalysisConfig = computed<DocAnalysis>(() => {
   return { wordCount, readingTime, statistics };
 });
 
-const statisticsConfig = computed<DocAnalysis["statistics"]>(() => {
-  const { provider = "", pageView = true, pageIteration = 2000 } = unref(docAnalysisConfig).statistics;
+const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => {
+  const { provider = "", pageView = true, pageIteration = 2000 } = unref(docAnalysisConfig).statistics || {};
 
   return { provider, pageView, pageIteration };
 });

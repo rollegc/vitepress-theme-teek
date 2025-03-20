@@ -39,7 +39,7 @@ const {
 const descArray: string[] = [
   ...new Set([frontmatter.tk?.description || description || []].flat()?.filter((v: string) => !!v)),
 ];
-const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
+const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 
 const isDefaultBgStyle = bgStyle === "default";
 const isBigImgBgStyle = bgStyle === "bigImg";

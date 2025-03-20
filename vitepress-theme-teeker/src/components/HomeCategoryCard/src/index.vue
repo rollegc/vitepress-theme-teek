@@ -41,8 +41,8 @@ const currentCategories = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(categorySvg) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(categorySvg) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), categorySvg) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), categorySvg) : homeTitle;
   return { pt, ht };
 });
 

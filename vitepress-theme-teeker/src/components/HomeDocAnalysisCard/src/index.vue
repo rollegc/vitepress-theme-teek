@@ -12,9 +12,9 @@ defineOptions({ name: "HomeDocAnalysisCard" });
 
 const ns = useNamespace("docAnalysis");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme: themeConst, frontmatter } = useUnrefData();
 // 使用 useData 的 theme 是为了监听国际化切换来动态修改站点信息的内容
-const { theme: themeRef } = useData();
+const { theme, localeIndex } = useData();
 // 站点信息配置项
 const {
   createTime,
@@ -22,12 +22,12 @@ const {
   statistics = {},
   overrideInfo = [],
   appendInfo = [],
-}: DocAnalysis = { ...theme.docAnalysis, ...frontmatter.tk?.docAnalysis };
+}: DocAnalysis = { ...themeConst.docAnalysis, ...frontmatter.tk?.docAnalysis };
 
-const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
+const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(docAnalysisSvg);
+  if (isFunction(title)) return title(unref(localeIndex), docAnalysisSvg);
   return title;
 });
 

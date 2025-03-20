@@ -16,6 +16,8 @@ const ns = useNamespace("topArticle");
 const posts = usePosts();
 
 const { theme, frontmatter } = useUnrefData();
+const { localeIndex } = useData();
+
 // 精选文章配置项
 const {
   limit = 4,
@@ -38,7 +40,7 @@ const currentTopArticleList = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(topArticleSvg);
+  if (isFunction(title)) return title(unref(localeIndex), topArticleSvg);
   return title;
 });
 

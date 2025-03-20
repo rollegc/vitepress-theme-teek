@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { computed, unref } from "vue";
 import { useNamespace } from "../hooks";
 import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
-import { Banner, TkThemeConfig } from "../config/types";
+import { TkThemeConfig } from "../config/types";
 import {
   HomeBanner,
   HomePostList,

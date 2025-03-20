@@ -504,7 +504,7 @@ export interface TopArticle {
    *
    * @default '${svg}精选文章'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 一页显示的数量
    *
@@ -543,13 +543,13 @@ export interface Category {
    *
    * @default '${svg}全部分类'
    */
-  pageTitle?: string | ((svg: string) => string);
+  pageTitle?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 首页卡片标题
    *
    * @default '${svg}文章分类'
    */
-  homeTitle?: string | ((svg: string) => string);
+  homeTitle?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 一页显示的数量
    *
@@ -588,13 +588,13 @@ export interface Tag {
    *
    * @default '${svg}全部标签'
    */
-  pageTitle?: string | ((svg: string) => string);
+  pageTitle?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 首页卡片标题
    *
    * @default '${svg}热门标签'
    */
-  homeTitle?: string | ((svg: string) => string);
+  homeTitle?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 一页显示的数量
    *
@@ -658,7 +658,7 @@ export interface FriendLink {
    *
    * @default '${svg}友情链接'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 一页显示的数量
    *
@@ -703,7 +703,7 @@ export interface DocAnalysis {
    *
    * @default '${svg}站点信息'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((localeIndex: string, svg: string) => string);
   /**
    * 项目创建时间
    */

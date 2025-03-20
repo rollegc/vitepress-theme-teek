@@ -41,8 +41,8 @@ const currentTags = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(tagSvg) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(tagSvg) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), tagSvg) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), tagSvg) : homeTitle;
   return { pt, ht };
 });
 
