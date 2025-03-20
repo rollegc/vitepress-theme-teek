@@ -51,7 +51,8 @@ pnpm plugin:build
 
 ## TODO
 
-- permalink 重新点击菜单不重新加载，分类页、标签页每次切换进去都是重新加载，需要重新渲染数据即可
+- permalink 重新点击菜单不重新加载，permalink 导航栏同级文档访问不高亮问题
+- 分类页、标签页每次切换进去都是重新加载，需要重新渲染数据即可
 - Banner 支持半图背景
 - 文章页添加 updateTime
 - 代码块 codeBlock 配置没有关闭 md 文档和样式，支持官方 [xxx] 命名
