@@ -3,3 +3,5 @@ import HomePostItem from "./src/HomePostItem.vue";
 
 export { HomePostList, HomePostItem };
 export default HomePostList;
+
+export * from "./src/instance";

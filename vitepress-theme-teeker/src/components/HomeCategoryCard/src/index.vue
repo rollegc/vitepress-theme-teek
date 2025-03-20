@@ -1,12 +1,13 @@
 <script setup lang="ts" name="HomeCategoryCard">
-import { computed, unref, ref, watch } from "vue";
-import { useRoute, useData, withBase } from "vitepress";
+import { computed, unref, ref, inject, onMounted, watch } from "vue";
+import { useRouter, useData, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import categorySvg from "../../../assets/svg/category";
 import { isFunction } from "../../../helper";
 import { Category } from "../../../config/types";
+import { postDataUpdateSymbol } from "../../Home";
 
 defineOptions({ name: "HomeCategoryCard" });
 
@@ -17,7 +18,6 @@ const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 const { theme, site, frontmatter } = useUnrefData();
 const { localeIndex } = useData();
 
-const route = useRoute();
 const pageNum = ref(1);
 // 分类配置项
 const {
@@ -40,32 +40,70 @@ const currentCategories = computed(() => {
   return categoriesPage ? c : c.slice((p - 1) * limit, p * limit);
 });
 
+// 标题
 const finalTitle = computed(() => {
   let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), categorySvg) : pageTitle;
   let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), categorySvg) : homeTitle;
   return { pt, ht };
 });
 
-// 当前选中的分类，从 URL 查询参数中获取
-const selectedCategory = ref("");
-
-watch(
-  route,
-  () => {
-    const c = new URL(window.location.href).searchParams.get("category");
-    if (c && c != unref(selectedCategory)) selectedCategory.value = c;
-  },
-  { immediate: true }
-);
-
-const itemRefs = ref<HTMLLIElement[]>([]);
-
+// 分类页链接
 const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
   return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
 });
+
+const updatePostListData = inject(postDataUpdateSymbol, () => {});
+const router = useRouter();
+const selectedCategory = ref("");
+const categoryKey = "category";
+
+/**
+ * 点击分类，更新文章列表数据
+ */
+const handleSwitchCategory = (category = "") => {
+  const { pathname, searchParams } = new URL(window.location.href);
+  const categoriesPageLinkConst = withBase(unref(categoriesPageLink));
+  const inCategoriesPage = categoriesPageLinkConst === pathname;
+
+  // 先删除旧的参数再追加新的
+  searchParams.delete(categoryKey);
+  if (category) searchParams.append(categoryKey, category);
+
+  const searchParamsStr = category ? `?${searchParams.toString()}` : "";
+
+  // 避免重复点击
+  if (inCategoriesPage && unref(selectedCategory) === category) return;
+  selectedCategory.value = category;
+
+  // 如果此时不在分类页，则跳转至分类页
+  const to = (router as any).push ? (router as any).push : router.go;
+  if (!inCategoriesPage) return to(categoriesPageLinkConst + searchParamsStr);
+
+  // 如果在分类页，则替换 URL，但不刷新
+  window.history.pushState({}, "", pathname + searchParamsStr);
+  // 更新文章列表数据
+  updatePostListData();
+};
+
+onMounted(() => {
+  const { searchParams } = new URL(window.location.href);
+  const category = searchParams.get(categoryKey);
+  // 更新激活的分类
+  if (category) selectedCategory.value = category;
+});
+
+watch(
+  () => categoriesPage,
+  () => {
+    // 离开分类页后，激活状态清楚
+    if (!categoriesPage) selectedCategory.value = "";
+  }
+);
+
+const itemRefs = ref<HTMLLIElement[]>([]);
 </script>
 
 <template>
@@ -77,7 +115,7 @@ const categoriesPageLink = computed(() => {
     :pageSize="limit"
     :total="categories.length"
     :title="finalTitle[categoriesPage ? 'pt' : 'ht']"
-    :title-link="categoriesPageLink"
+    :titleClick="handleSwitchCategory"
     :autoPage
     :pageSpeed
     :class="ns.b()"
@@ -94,7 +132,7 @@ const categoriesPageLink = computed(() => {
           ref="itemRefs"
           v-for="(item, index) in currentCategories"
           :key="item.name"
-          :href="withBase(`${categoriesPageLink}?category=${encodeURIComponent(item.name)}`)"
+          @click="handleSwitchCategory(item.name)"
           :class="[{ active: item.name === selectedCategory }, 'hover-color']"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
         >
@@ -105,7 +143,7 @@ const categoriesPageLink = computed(() => {
         <a v-if="!categoriesPage && limit < categories.length" :href="withBase(categoriesPageLink)">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">暂无热门文章</div>
+      <div v-else :class="ns.m('empty')">暂无文章分类</div>
     </template>
   </HomeCard>
 

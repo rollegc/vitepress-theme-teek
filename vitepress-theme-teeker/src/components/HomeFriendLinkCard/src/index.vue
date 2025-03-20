@@ -116,7 +116,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">暂无友链</div>
+      <div v-else :class="ns.m('empty')">暂无友情链接</div>
     </template>
   </HomeCard>
 

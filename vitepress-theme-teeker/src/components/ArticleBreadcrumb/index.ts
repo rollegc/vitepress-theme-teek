@@ -4,3 +4,5 @@ import BreadcrumbItem from "./src/BreadcrumbItem.vue";
 
 export { ArticleBreadcrumb, Breadcrumb, BreadcrumbItem };
 export default ArticleBreadcrumb;
+
+export * from "./src/instance";

@@ -47,7 +47,7 @@ export default defineConfig({
 | ----------------- | ---------------------------------------------------------------------------- | ---------- | ------------------------------ |
 | ignoreList        | 忽略的文件/文件夹列表，支持正则表达式                                        | `string[]` | `[]`                           |
 | path              | 指定扫描的根目录                                                             | `string`   | `vitepress` 的 `srcDir` 配置项 |
-| notFoundDelayLoad | 404 页面延迟加载时间，单位为毫秒，仅限第一次进入页面或刷新/回退/前进页面生效 | `number`   | 200                            |
+| notFoundDelayLoad | 404 页面延迟加载时间，单位为毫秒，仅限第一次进入页面或刷新/回退/前进页面生效 | `number`   | 400                            |
 
 ## ❗ Warning
 
@@ -157,7 +157,7 @@ permalink: /guide-api
 
 您需要了解的是搭配 `NotFoundDelay.vue` 组件的一个核心配置项：`notFoundDelayLoad`。
 
-`vitepress-plugin-permalink` 插件在 `onBeforeMounted` 里根据自定义 URL 寻找对应的文档进行加载，但是 Vitepress 初始化页面在 ``onBeforeMounted` 之前执行，因此需要延迟时间来等待 `vitepress-plugin-permalink` 插件执行完成，于是需要使用 `notFoundDelayLoad` 配置项来决定 404 页面延迟加载时间，单位为毫秒，默认为 200 毫秒。
+`vitepress-plugin-permalink` 插件在 `onBeforeMounted` 里根据自定义 URL 寻找对应的文档进行加载，但是 Vitepress 初始化页面在 ``onBeforeMounted` 之前执行，因此需要延迟时间来等待 `vitepress-plugin-permalink` 插件执行完成，于是需要使用 `notFoundDelayLoad` 配置项来决定 404 页面延迟加载时间，单位为毫秒，默认为 400 毫秒。
 
 如果发现第一次进入页面或刷新、回退、前进时有 404 页面短暂出现，则将 `notFoundDelayLoad` 配置项的时间调大。
 
@@ -185,7 +185,7 @@ export interface NotFoundOption {
    * VP 404 页面兼容 permalink 插件，因为 permalink 插件支持自定义 URL，但是 VP 初始化页面时根据自定义 URL 寻找文档会 404，因此需要延迟时间来给 permalink 插件寻找正确的文档路径
    * 如果发现刷新页面有 404 页面短暂出现，则将 notFoundDelayLoad 配置项的时间调大
    *
-   * @default 200
+   * @default 400
    */
   notFoundDelayLoad?: number;
 }

@@ -1,12 +1,13 @@
 <script setup lang="ts" name="HomeTagCard">
-import { unref, watch, computed, ref } from "vue";
-import { useData, useRoute, withBase } from "vitepress";
+import { unref, watch, computed, ref, inject, onMounted } from "vue";
+import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData, getBgColor } from "../../../configProvider";
+import { usePosts, useUnrefData, useBgColor } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import tagSvg from "../../../assets/svg/tag";
 import { isFunction } from "../../../helper";
 import { Tag } from "../../../config/types";
+import { postDataUpdateSymbol } from "../../Home";
 
 defineOptions({ name: "HomeTagCard" });
 
@@ -17,7 +18,6 @@ const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 const { theme, site, frontmatter } = useUnrefData();
 const { localeIndex } = useData();
 
-const route = useRoute();
 const pageNum = ref(1);
 // 标签配置项
 const {
@@ -46,18 +46,7 @@ const finalTitle = computed(() => {
   return { pt, ht };
 });
 
-// 当前选中的标签，从 URL 查询参数中获取
-const selectedTag = ref("");
-watch(
-  route,
-  () => {
-    const t = new URL(window.location.href).searchParams.get("tag");
-    if (t && t != unref(selectedTag)) selectedTag.value = t;
-  },
-  { immediate: true }
-);
-
-const tagBgColor = bgColor || getBgColor();
+const tagBgColor = bgColor || useBgColor();
 
 const getTagStyle = (index: number) => {
   // 标签背景色
@@ -71,6 +60,54 @@ const tagsPageLink = computed(() => {
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
 });
+
+const updatePostListData = inject(postDataUpdateSymbol, () => {});
+const router = useRouter();
+const selectedTag = ref("");
+const tagKey = "tag";
+
+/**
+ * 点击分类，更新文章列表数据
+ */
+const handleSwitchTag = (tag = "") => {
+  const { pathname, searchParams } = new URL(window.location.href);
+  const categoriesPageLinkConst = withBase(unref(tagsPageLink));
+  const inCategoriesPage = categoriesPageLinkConst === pathname;
+
+  // 先删除旧的参数再追加新的
+  searchParams.delete(tagKey);
+  if (tag) searchParams.append(tagKey, tag);
+
+  const searchParamsStr = tag ? `?${searchParams.toString()}` : "";
+
+  // 避免重复点击
+  if (inCategoriesPage && unref(selectedTag) === tag) return;
+  selectedTag.value = tag;
+
+  // 如果此时不在分类页，则跳转至分类页
+  const to = (router as any).push ? (router as any).push : router.go;
+  if (!inCategoriesPage) return to(categoriesPageLinkConst + searchParamsStr);
+
+  // 如果在分类页，则替换 URL，但不刷新
+  window.history.pushState({}, "", pathname + searchParamsStr);
+  // 更新文章列表数据
+  updatePostListData();
+};
+
+onMounted(() => {
+  const { searchParams } = new URL(window.location.href);
+  const tag = searchParams.get(tagKey);
+  // 更新激活的分类
+  if (tag) selectedTag.value = tag;
+});
+
+watch(
+  () => tagsPage,
+  () => {
+    // 离开分类页后，激活状态清楚
+    if (!tagsPage) selectedTag.value = "";
+  }
+);
 </script>
 
 <template>
@@ -82,7 +119,7 @@ const tagsPageLink = computed(() => {
     :pageSize="limit"
     :total="tags.length"
     :title="finalTitle[tagsPage ? 'pt' : 'ht']"
-    :title-link="tagsPageLink"
+    :titleClick="handleSwitchTag"
     :autoPage
     :pageSpeed
     :class="ns.b()"
@@ -93,8 +130,8 @@ const tagsPageLink = computed(() => {
           v-for="(item, index) in currentTags"
           :key="item.name"
           :style="getTagStyle(index)"
-          :href="withBase(`${tagsPageLink}?tag=${encodeURIComponent(item.name)}`)"
-          :class="{ active: item.name === selectedTag }"
+          @click="handleSwitchTag(item.name)"
+          :class="[{ active: item.name === selectedTag }, 'pointer']"
         >
           {{ item.name }}
         </a>

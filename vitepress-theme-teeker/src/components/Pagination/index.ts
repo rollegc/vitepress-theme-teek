@@ -4,3 +4,5 @@ export * from "./src/pagination";
 
 export { Pagination };
 export default Pagination;
+
+export * from "./src/instance";

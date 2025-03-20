@@ -16,6 +16,7 @@
 @use "./components/commentTwikoo";
 @use "./components/commentWaline";
 @use "./components/footer";
+@use "./components/home";
 @use "./components/homeBanner";
 @use "./components/homeBannerWaves";
 @use "./components/homeCard";
@@ -23,10 +24,10 @@
 @use "./components/homeDocAnalysisCard";
 @use "./components/homeFriendLinkCard";
 @use "./components/homeFullscreenWallpaper";
-@use "./components/homeInfo";
 @use "./components/homeMyCard";
 @use "./components/homePostItem";
 @use "./components/homePostList";
+@use "./components/homeRightInfo";
 @use "./components/homeTagCard";
 @use "./components/homeTopArticleCard";
 @use "./components/icon";

@@ -3,3 +3,5 @@ import HomeBannerWaves from "./src/HomeBannerWaves.vue";
 
 export { HomeBanner, HomeBannerWaves };
 export default HomeBanner;
+
+export * from "./src/instance";

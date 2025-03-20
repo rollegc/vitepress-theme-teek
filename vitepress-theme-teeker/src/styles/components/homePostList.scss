@@ -24,6 +24,15 @@
     }
   }
 
+  @include e(empty) {
+    padding: 1.5rem;
+    margin: 0.5px;
+
+    @include e(empty__title) {
+      margin-top: 20px;
+    }
+  }
+
   /* 封面图为 full 风格样式 */
   .full-cover:nth-child(2n) .#{$namespace}-postItem__info {
     flex-direction: row-reverse;

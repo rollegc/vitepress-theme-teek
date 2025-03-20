@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.7
+
+### Patch Changes
+
+- 修复 router.push 重复跳转问题
+
 ## 1.0.6
 
 ### Patch Changes

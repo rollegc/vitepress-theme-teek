@@ -3,12 +3,10 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { computed, unref } from "vue";
 import { useNamespace } from "../hooks";
-import { isHomePage, isArchivesPage, isCataloguePage, useUnrefData } from "../configProvider";
+import { usePage, useUnrefData } from "../configProvider";
 import { TkThemeConfig } from "../config/types";
 import {
-  HomeBanner,
-  HomePostList,
-  HomeInfo,
+  Home,
   ArchivesPage,
   CataloguePage,
   ArticleAnalyze,
@@ -20,7 +18,6 @@ import {
   CommentArtalk,
   CommentGiscus,
   CommentWaline,
-  HomeFullscreenWallpaper,
   CodeBlockToggle,
   ArticlePageStyle,
   Notice,
@@ -30,14 +27,22 @@ const { Layout } = DefaultTheme;
 
 const ns = useNamespace("layout");
 
+const { isHomePage, isArchivesPage, isCataloguePage } = usePage();
 const { theme } = useUnrefData();
 const { frontmatter } = useData();
 
-const { tkTheme = true, wallpaper = {}, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
-// 支持 theme 或 frontmatter
-const themeConfig = computed(() => ({ ...theme, ...unref(frontmatter), ...unref(frontmatter).tk }));
+const { tkTheme = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
+// 支持 theme 或 frontmatter 配置
+const themeConfig = computed(() => {
+  const {
+    tkHome = true,
+    codeBlock = true,
+    comment = {},
+  } = { ...theme, ...unref(frontmatter), ...unref(frontmatter).tk };
+  return { tkHome, codeBlock, comment };
+});
 
-const comment = computed(() => {
+const commentConfig = computed(() => {
   const commentOption = unref(themeConfig).comment || {};
   return {
     enabled: commentOption.comment ?? true,
@@ -59,7 +64,8 @@ const comment = computed(() => {
       <RightBottomButton>
         <!-- 通用插槽 -->
         <template v-for="(_, name) in $slots" :key="name" #[name]>
-          <slot :name="name"></slot>
+          ``
+          <slot :name="name" />
         </template>
       </RightBottomButton>
 
@@ -67,7 +73,7 @@ const comment = computed(() => {
 
       <Notice v-if="notice?.enabled">
         <template v-for="(_, name) in $slots" :key="name" #[name]>
-          <slot :name="name"></slot>
+          <slot :name="name" />
         </template>
       </Notice>
     </ClientOnly>
@@ -79,36 +85,11 @@ const comment = computed(() => {
 
         <ClientOnly>
           <!-- 自定义首页 -->
-          <div v-if="themeConfig.tkHome ?? true">
-            <HomeBanner v-if="isHomePage() && (themeConfig.banner?.enabled ?? true)">
-              <template v-for="(_, name) in $slots" :key="name" #[name]>
-                <slot :name="name"></slot>
-              </template>
-            </HomeBanner>
-
-            <div :class="[ns.e('home-content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
-              <div :class="ns.e('home-content__post')">
-                <slot name="teeker-home-post-before" />
-                <HomePostList />
-                <slot name="teeker-home-post-after" />
-              </div>
-
-              <div :class="ns.e('home-content__info')">
-                <HomeInfo>
-                  <template v-for="(_, name) in $slots" :key="name" #[name]>
-                    <slot :name="name"></slot>
-                  </template>
-                </HomeInfo>
-              </div>
-            </div>
-
-            <HomeFullscreenWallpaper
-              v-if="
-                wallpaper.enabled &&
-                ((themeConfig.banner?.bgStyle === 'bigImg' && themeConfig.banner?.imgSrc) || theme.bodyBgImg?.imgSrc)
-              "
-            />
-          </div>
+          <Home v-if="themeConfig.tkHome">
+            <template v-for="(_, name) in $slots" :key="name" #[name]>
+              <slot :name="name" />
+            </template>
+          </Home>
         </ClientOnly>
 
         <slot name="teeker-home-after" />
@@ -117,7 +98,7 @@ const comment = computed(() => {
       <template #layout-bottom>
         <slot name="teeker-footer-before" />
 
-        <Footer v-if="isHomePage()" />
+        <Footer v-if="isHomePage" />
 
         <slot name="teeker-footer-after" />
         <slot name="layout-bottom" />
@@ -131,7 +112,7 @@ const comment = computed(() => {
           <ArticleAnalyze />
           <ArticleImagePreview />
           <ArticlePageStyle />
-          <CodeBlockToggle v-if="themeConfig.codeBlock ?? true" />
+          <CodeBlockToggle v-if="themeConfig.codeBlock" />
         </ClientOnly>
         <slot name="teeker-article-analyze-after" />
       </template>
@@ -141,12 +122,12 @@ const comment = computed(() => {
         <slot name="teeker-comment-before" />
 
         <!-- 评论区 -->
-        <template v-if="comment.enabled">
+        <template v-if="commentConfig.enabled">
           <ClientOnly>
-            <slot v-if="comment.provider === 'render'" name="teeker-comment" />
+            <slot v-if="commentConfig.provider === 'render'" name="teeker-comment" />
             <component
-              v-else-if="comment.provider"
-              :is="comment.components[comment.provider]"
+              v-else-if="commentConfig.provider"
+              :is="commentConfig.components[commentConfig.provider]"
               :id="`${ns.namespace}-comment`"
               :class="ns.e('comment')"
             />
@@ -161,14 +142,14 @@ const comment = computed(() => {
         <slot name="page-top" />
         <slot name="teeker-page-top-before" />
 
-        <ArchivesPage v-if="isArchivesPage()">
+        <ArchivesPage v-if="isArchivesPage">
           <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name"></slot>
+            <slot :name="name" />
           </template>
         </ArchivesPage>
-        <CataloguePage v-if="isCataloguePage()">
+        <CataloguePage v-if="isCataloguePage">
           <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name"></slot>
+            <slot :name="name" />
           </template>
         </CataloguePage>
 

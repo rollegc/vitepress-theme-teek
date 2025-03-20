@@ -4,9 +4,11 @@ import { useRoute, useData } from "vitepress";
 import { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
+import Icon from "../../Icon";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
+import emptySvg from "../../../assets/svg/empty";
 
 defineOptions({ name: "HomePostList" });
 
@@ -57,9 +59,9 @@ const updateData = () => {
 
   const { pageNum, pageSize, total } = unref(pageInfo);
   // 总数处理
-  if (total !== post.length) unref(pageInfo).total = post.length || 0;
+  if (total !== post?.length) unref(pageInfo).total = post?.length || 0;
 
-  currentPosts.value = post.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+  currentPosts.value = post?.slice((pageNum - 1) * pageSize, pageNum * pageSize);
 };
 
 watch(
@@ -105,22 +107,30 @@ const handlePagination = () => {
   // 更新数据
   updateData();
 };
+
+defineExpose({ updateData });
 </script>
 
 <template>
   <div :class="ns.b()">
-    <ul>
-      <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
-        <HomePostItem :post :coverImgMode />
-      </li>
-    </ul>
-    <div :class="`${ns.e('pagination')} flx-justify-center`">
-      <Pagination
-        v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
-        v-model="pageInfo"
-        v-bind="pagePropsRef"
-        @pagination="handlePagination"
-      />
+    <template v-if="currentPosts">
+      <ul>
+        <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
+          <HomePostItem :post :coverImgMode />
+        </li>
+      </ul>
+      <div :class="`${ns.e('pagination')} flx-justify-center`">
+        <Pagination
+          v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
+          v-model="pageInfo"
+          v-bind="pagePropsRef"
+          @pagination="handlePagination"
+        />
+      </div>
+    </template>
+    <div v-else :class="[ns.e('empty'), 'flx-column-center']">
+      <Icon :icon="emptySvg" :size="160" color="var(--vp-c-text-3)" />
+      <span :class="ns.e('empty__title')">文章列表为空</span>
     </div>
   </div>
 </template>

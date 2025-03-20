@@ -18,3 +18,5 @@ export const createImageViewer = (options: ImageViewerProps) => {
   instance = createVNode(ImageViewer, options);
   render(instance, container);
 };
+
+export * from "./src/instance";

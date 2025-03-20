@@ -4,3 +4,5 @@ export * from "./src/icon";
 
 export { Icon };
 export default Icon;
+
+export * from "./src/instance";

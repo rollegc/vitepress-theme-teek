@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeTopArticleCard">
 import { computed, ref, unref } from "vue";
 import { withBase, useData } from "vitepress";
-import { useUnrefData, usePosts, getBgColor } from "../../../configProvider";
+import { useUnrefData, usePosts, useBgColor } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import topArticleSvg from "../../../assets/svg/topArticle";
@@ -44,7 +44,7 @@ const finalTitle = computed(() => {
   return title;
 });
 
-const bgColor = getBgColor();
+const bgColor = useBgColor();
 const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getStyle = (num: number, index: number) => {

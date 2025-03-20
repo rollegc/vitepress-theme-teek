@@ -40,6 +40,25 @@ export const useUnrefData = () => {
   return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
+export const usePage = () => {
+  const { frontmatter } = useData();
+
+  // 当前页面是否为首页
+  const isHomePage = computed(
+    () => !unref(isCategoriesPage) && !unref(isTagsPage) && unref(frontmatter).layout === "home"
+  );
+  // 当前页面是否为分类页
+  const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);
+  // 当前页面是否为标签页
+  const isTagsPage = computed(() => unref(frontmatter).tagsPage);
+  // 当前页面是否为归档页
+  const isArchivesPage = computed(() => unref(frontmatter).archivesPage);
+  // 当前页面是否为目录页
+  const isCataloguePage = computed(() => unref(frontmatter).catalogue);
+
+  return { isHomePage, isCategoriesPage, isTagsPage, isArchivesPage, isCataloguePage };
+};
+
 /**
  * 返回全部 Posts 数据
  */
@@ -64,48 +83,9 @@ export const usePosts = (): Ref<Post> => {
 };
 
 /**
- * 是否为首页
- */
-export const isHomePage = () => {
-  const { frontmatter } = useData();
-  return !isCategoriesPage() && !isTagsPage() && unref(frontmatter).layout === "home";
-};
-
-/**
- * 是否为分类页
- */
-export const isCategoriesPage = () => {
-  const { frontmatter } = useData();
-  return unref(frontmatter).categoriesPage;
-};
-/**
- * 是否为标签页
- */
-export const isTagsPage = () => {
-  const { frontmatter } = useData();
-  return unref(frontmatter).tagsPage;
-};
-
-/**
- * 是否为归档页
- */
-export const isArchivesPage = () => {
-  const { frontmatter } = useData();
-  return unref(frontmatter).archivesPage;
-};
-
-/**
- * 是否为目录页
- */
-export const isCataloguePage = () => {
-  const { frontmatter } = useData();
-  return unref(frontmatter).catalogue;
-};
-
-/**
  * 获取默认背景色
  */
-export const getBgColor = () => {
+export const useBgColor = () => {
   const { theme, frontmatter } = useData();
   return (
     unref(frontmatter).frontmatter ||

@@ -1,8 +1,8 @@
-<script setup lang="ts" name="HomeInfo">
+<script setup lang="ts" name="HomeRightInfo">
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
+import { usePage, useUnrefData } from "../../../configProvider";
 import HomeMyCard from "../../HomeMyCard";
 import HomeCategoryCard from "../../HomeCategoryCard";
 import HomeTagCard from "../../HomeTagCard";
@@ -10,9 +10,9 @@ import HomeFriendLinkCard from "../../HomeFriendLinkCard";
 import HomeTopArticleCard from "../../HomeTopArticleCard";
 import HomeDocAnalysisCard from "../../HomeDocAnalysisCard";
 
-defineOptions({ name: "HomeInfo" });
+defineOptions({ name: "HomeRightInfo" });
 
-const ns = useNamespace("homeInfo");
+const ns = useNamespace("homeRightInfo");
 
 const { frontmatter } = useData();
 const { theme } = useUnrefData();
@@ -30,9 +30,7 @@ const finalHomeCardSort = computed(() => {
   return ["my", ...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
-const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);
-const isTagsPage = computed(() => unref(frontmatter).tagsPage);
-const isHomePage = computed(() => !unref(isCategoriesPage) && !unref(isTagsPage));
+const { isHomePage, isCategoriesPage, isTagsPage } = usePage();
 
 // 定义组件映射
 const componentMap = computed(() => {
@@ -84,7 +82,7 @@ const componentMap = computed(() => {
     <template v-for="item in finalHomeCardSort" :key="item">
       <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
         <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
-          <slot :name="name"></slot>
+          <slot :name="name" />
         </template>
       </component>
     </template>

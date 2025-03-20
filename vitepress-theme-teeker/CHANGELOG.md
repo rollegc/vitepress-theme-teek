@@ -1,5 +1,12 @@
 # vitepress-theme-teeker
 
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies
+  - vitepress-plugin-permalink@1.0.7
+
 ## 1.0.6
 
 ### Patch Changes

@@ -23,7 +23,7 @@ export default function usePermalink() {
     // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
     const filePath = teyGetFilePathByPathname(pathname);
 
-    if (filePath) router.go(`${base}${filePath}${search}${hash}`);
+    if (filePath) return router.go(`${base}${filePath}${search}${hash}`);
     // 走到这里已经确定 href 为 filePath（不是 permalink），直接走 vitepress 默认的 go 方法
     router.go(href.startsWith(base) ? href : base + href);
   };

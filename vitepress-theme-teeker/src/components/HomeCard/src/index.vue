@@ -13,6 +13,7 @@ const ns = useNamespace("homeCard");
 const {
   title = "",
   titleLink,
+  titleClick,
   page = false,
   pageSize = 4,
   total = 0,
@@ -79,6 +80,9 @@ onMounted(() => {
     <div v-if="title" :class="`${ns.e('header')} flx-justify-between`">
       <slot name="title">
         <a v-if="titleLink" :href="withBase(titleLink)">
+          <span class="title flx-align-center" v-html="title"></span>
+        </a>
+        <a v-else-if="titleClick" @click="() => titleClick()" class="pointer">
           <span class="title flx-align-center" v-html="title"></span>
         </a>
         <span v-else class="title flx-align-center" v-html="title"></span>
