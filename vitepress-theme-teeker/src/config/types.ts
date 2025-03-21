@@ -901,31 +901,37 @@ export interface Article {
    *
    * @default true
    */
-  showInfo?: boolean | ("post" | "article")[];
+  showInfo?: boolean | ArticleInfoPosition[];
   /**
    * 是否展示作者
    *
    * @default true
    */
-  showAuthor?: boolean;
+  showAuthor?: boolean | ArticleInfoPosition[];
   /**
-   * 是否展示日期
+   * 是否展示创建日期
    *
    * @default true
    */
-  showDate?: boolean;
+  showCreateDate?: boolean | ArticleInfoPosition[];
+  /**
+   * 是否展示更新时间，仅在文章页显示
+   *
+   * @default true
+   */
+  showUpdateDate?: boolean;
   /**
    * 是否展示分类
    *
    * @default false
    */
-  showCategory?: boolean;
+  showCategory?: boolean | ArticleInfoPosition[];
   /**
    * 是否展示标签
    *
    * @default false
    */
-  showTag?: boolean;
+  showTag?: boolean | ArticleInfoPosition[];
   /**
    * 指定文章信息的传送位置，仅限在文章页生效，默认在文章页顶部
    */
@@ -948,6 +954,8 @@ export interface Article {
     className?: string;
   };
 }
+
+export type ArticleInfoPosition = "post" | "article";
 
 export interface Breadcrumb {
   /**

@@ -2,7 +2,7 @@
 @use "../mixins/function" as *;
 
 @include b(articleInfo) {
-  &.home {
+  &.post {
     font-size: getCssVar("home-font-size-sm");
     color: getCssVar("lower-color-2");
   }

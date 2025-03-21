@@ -1,12 +1,12 @@
 <script setup lang="ts" name="ArticleInfo">
-import { User, Calendar, FolderOpened, CollectionTag } from "@element-plus/icons-vue";
+import { User, Calendar, FolderOpened, CollectionTag, EditPen } from "@element-plus/icons-vue";
 import { useRoute, withBase, useData } from "vitepress";
 import { computed, unref } from "vue";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
-import { Article } from "../../../config/types";
+import { Article, ArticleInfoPosition } from "../../../config/types";
 import { PostBaseInfoProps } from "./articleInfo";
 import Icon from "../../Icon";
 
@@ -17,14 +17,15 @@ const ns = useNamespace("articleInfo");
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
 const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { frontmatter, page } = useData();
 // 文章信息配置项
 const articleConfig = computed<Article>(() => {
   const {
     showIcon = true,
     dateFormat = "yyyy-MM-dd",
     showAuthor = true,
-    showDate = true,
+    showCreateDate = true,
+    showUpdateDate = true,
     showCategory = false,
     showTag = false,
   }: Article = {
@@ -33,72 +34,89 @@ const articleConfig = computed<Article>(() => {
     ...unref(frontmatter).tk?.article,
   };
 
-  return { showIcon, dateFormat, showAuthor, showDate, showCategory, showTag };
+  return { showIcon, dateFormat, showAuthor, showCreateDate, showUpdateDate, showCategory, showTag };
 });
 
 const posts = usePosts();
 const route = useRoute();
 
 // 文章创建时间，先读取 post.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在文档的 frontmatter 配置 date，让文章扫描耗费性能降低）
-const date = computed(() => {
-  // 如果 date 是函数，则调用获取返回值作为 date
-  const date = post.date;
+const createDate = computed(() => {
+  const originPosts: TkContentData[] = unref(posts).originPosts;
+  const date =
+    post.date ||
+    originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`))[0]?.date ||
+    new Date();
   const dateFormatConst = unref(articleConfig).dateFormat;
 
-  if (date) {
-    if (isFunction(dateFormatConst)) return dateFormatConst(date);
-    return formatDate(date, dateFormatConst);
-  }
-
-  // 如果 frontmatter 没有配置 date，则从 posts 中获取文档的创建时间
-  const originPosts: TkContentData[] = unref(posts).originPosts;
-  const targetPost = originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`));
-
-  if (isFunction(dateFormatConst)) return dateFormatConst(targetPost[0]?.date || "");
-  return formatDate(targetPost[0]?.date || new Date(), dateFormatConst);
+  if (isFunction(dateFormatConst)) return dateFormatConst(date);
+  return formatDate(date, dateFormatConst);
 });
 
-const baseInfo = computed(() => [
-  {
-    title: "作者",
-    icon: User,
-    data: post.author?.name,
-    href: post.author?.link,
-    target: post.author?.link ? "_blank" : "_self",
-    show: unref(articleConfig).showAuthor,
-  },
-  {
-    title: "创建时间",
-    icon: Calendar,
-    data: date,
-    show: unref(articleConfig).showDate,
-  },
-  {
-    title: "分类",
-    icon: FolderOpened,
-    dataList: post.frontmatter?.categories || [],
-    href: "/categories?category={data}",
-    class: "or",
-    show: scope === "home" || unref(articleConfig).showCategory,
-  },
-  {
-    title: "标签",
-    icon: CollectionTag,
-    dataList: post.frontmatter?.tags || [],
-    href: "/tags?tag={data}",
-    class: "or",
-    show: scope === "home" || unref(articleConfig).showTag,
-  },
-]);
+// 文章更新时间，取 git 的最后一次提交时间
+const updateDate = computed(() => {
+  const date = unref(page).lastUpdated;
+  if (!date) return "";
+
+  const dateFormatConst = unref(articleConfig).dateFormat;
+
+  if (isFunction(dateFormatConst)) return dateFormatConst(date);
+  return formatDate(date, dateFormatConst);
+});
+
+const baseInfo = computed(() => {
+  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag } = unref(articleConfig);
+  return [
+    {
+      title: "作者",
+      icon: User,
+      data: post.author?.name,
+      href: post.author?.link,
+      target: post.author?.link ? "_blank" : "_self",
+      show: isShow(showAuthor),
+    },
+    {
+      title: "创建时间",
+      icon: Calendar,
+      data: createDate,
+      show: isShow(showCreateDate),
+    },
+    {
+      title: "更新时间",
+      icon: EditPen,
+      data: updateDate,
+      show: unref(updateDate) && scope === "article" && showUpdateDate,
+    },
+    {
+      title: "分类",
+      icon: FolderOpened,
+      dataList: post.frontmatter?.categories || [],
+      href: "/categories?category={data}",
+      class: "or",
+      show: scope === "home" || isShow(showCategory),
+    },
+    {
+      title: "标签",
+      icon: CollectionTag,
+      dataList: post.frontmatter?.tags || [],
+      href: "/tags?tag={data}",
+      class: "or",
+      show: scope === "home" || isShow(showTag),
+    },
+  ];
+});
+
+const isShow = (showInfo: boolean | ArticleInfoPosition[]) => {
+  const arr = [showInfo].flat();
+  if (arr.includes(true) || arr.includes(scope)) return true;
+  return false;
+};
 </script>
 
 <template>
   <div :class="[ns.b(), scope]">
     <template v-for="item in baseInfo" :key="item.title">
-      <span
-        v-if="item.show && (item.data || item.dataList?.length)"
-        :class="[ns.e('item'), `${scope}-item`, { split }]"
-      >
+      <span v-if="item.show && (item.data || item.dataList?.length)" :class="[ns.e('item'), { split }]">
         <Icon v-if="articleConfig.showIcon"><component :is="item.icon" /></Icon>
         <a
           v-if="item.data"

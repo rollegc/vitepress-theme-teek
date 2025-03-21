@@ -9,6 +9,8 @@ import HomeBanner from "../../HomeBanner";
 import HomePostList, { type HomePostListInstance } from "../../HomePostList";
 import HomeRightInfo from "../../HomeRightInfo";
 
+defineOptions({ name: "Home" });
+
 const ns = useNamespace("home");
 
 const { isHomePage } = usePage();

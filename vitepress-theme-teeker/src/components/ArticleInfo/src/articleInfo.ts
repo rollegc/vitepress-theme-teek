@@ -1,7 +1,8 @@
-import { TkContentData } from "../../../post/types";
+import type { TkContentData } from "../../../post/types";
+import type { ArticleInfoPosition } from "../../../config/types";
 
 export interface PostBaseInfoProps {
   post: TkContentData;
-  scope: "home" | "article";
+  scope: ArticleInfoPosition;
   split?: boolean;
 }

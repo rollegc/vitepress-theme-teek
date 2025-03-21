@@ -64,7 +64,6 @@ const commentConfig = computed(() => {
       <RightBottomButton>
         <!-- 通用插槽 -->
         <template v-for="(_, name) in $slots" :key="name" #[name]>
-          ``
           <slot :name="name" />
         </template>
       </RightBottomButton>

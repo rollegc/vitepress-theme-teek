@@ -87,7 +87,7 @@ const isShowInfo = computed(() => {
 
         <!-- 文章信息 -->
         <div :class="ns.e('info__left__footer')">
-          <ArticleInfo v-if="isShowInfo" :post scope="home" split />
+          <ArticleInfo v-if="isShowInfo" :post scope="post" split />
         </div>
 
         <!-- 摘要 bottom -->
