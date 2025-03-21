@@ -1,14 +1,33 @@
 <script setup lang="ts" name="CodeBlockToggle">
-import { nextTick, watch } from "vue";
-import { useRoute } from "vitepress";
+import { nextTick, unref, watch } from "vue";
+import { useRoute, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
+import arrowSvg from "../../../assets/svg/arrow";
 
 defineOptions({ name: "CodeBlockToggle" });
 
 const ns = useNamespace("");
+const { frontmatter, theme } = useData();
 
+const documentAttribute = "code-block";
 const foldClass = "fold";
 const arrowClass = "code-arrow";
+
+if (unref(theme).codeBlock !== false) {
+  const route = useRoute();
+
+  watch(
+    route,
+    () => {
+      const { codeBlock = true } = unref(frontmatter);
+      if (codeBlock == false) return document.documentElement.removeAttribute(documentAttribute);
+
+      document.documentElement.setAttribute(documentAttribute, ns.namespace);
+      nextTick(() => initCodeBlock());
+    },
+    { immediate: true }
+  );
+}
 
 /**
  * 初始化代码块
@@ -17,20 +36,17 @@ const initCodeBlock = () => {
   const modes = document.querySelectorAll(".vp-doc div[class*='language-']") as unknown as HTMLElement[];
 
   Array.from(modes).forEach(item => {
-    // 获取箭头元素，箭头元素已经在 src/markdown/plugins/codeArrow.ts 中通过 MD 插件添加
     const arrowElement: HTMLElement | null = item.querySelector(`.${arrowClass}`);
-    if (!arrowElement) return;
-    addClickEvent(arrowElement, item);
+    // 手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面
+    if (arrowElement) return;
 
-    // 下面代码是第一版功能：手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面
-    // if (arrowElement) return;
-    // const arrowElement: HTMLElement | null = document.createElement("div");
-    // arrowElement.classList.add(arrowClass);
-    // // 添加箭头图标
-    // arrowElement.innerHTML = arrowSvg;
-    // // 给箭头图标添加点击事件
-    // addClickEvent(arrowElement, item);
-    // item.append(arrowElement);
+    const newArrowElement: HTMLElement | null = document.createElement("div");
+    newArrowElement.classList.add(arrowClass);
+    // 添加箭头图标
+    newArrowElement.innerHTML = arrowSvg;
+    // 给箭头图标添加点击事件
+    addClickEvent(newArrowElement, item);
+    item.append(newArrowElement);
   });
 };
 
@@ -95,10 +111,6 @@ const getElementHeight = (item: HTMLElement) => {
   item.style.display = "";
   return height;
 };
-
-const route = useRoute();
-
-watch(route, () => nextTick(() => initCodeBlock()), { immediate: true });
 </script>
 
 <template></template>

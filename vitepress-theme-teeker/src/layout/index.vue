@@ -112,7 +112,7 @@ const commentConfig = computed(() => {
           <ArticleAnalyze />
           <ArticleImagePreview />
           <ArticlePageStyle />
-          <CodeBlockToggle v-if="themeConfig.codeBlock" />
+          <CodeBlockToggle />
         </ClientOnly>
         <slot name="teeker-article-analyze-after" />
       </template>
