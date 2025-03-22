@@ -4,11 +4,7 @@ import matter from "gray-matter";
 import type { DefaultTheme } from "vitepress";
 import type { SidebarOption } from "./types";
 import { getTitleFromMd, isIllegalIndex, isSome } from "./util";
-import picocolors from "picocolors";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((picocolors as any)[type](message));
-};
+import logger from "./log";
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
@@ -49,7 +45,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     const sidebarItems = createSideBarItems(dirPath, option, `${key}${fileName}/`);
 
     if (!sidebarItems.length) {
-      return log(`Warning：该目录 '${dirPath}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
+      return logger.warn(`该目录 '${dirPath}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
     const { name, title } = resolveFileName(fileName, dirPath);
@@ -137,12 +133,12 @@ const createSideBarItems = (
 
     // 校验文件序号
     if (fileIndexPrefix && isIllegalIndex(index)) {
-      log(`Warning：该文件 '${filePath}' 序号出错，请填写正确的序号`);
+      logger.warn(`该文件 '${filePath}' 序号出错，请填写正确的序号`);
       return [];
     }
 
     // 判断序号是否已经存在
-    if (sidebarItems[index]) log(`Warning：该文件 '${filePath}' 的序号在同一级别中重复出现，将会被覆盖`);
+    if (sidebarItems[index]) logger.warn(`该文件 '${filePath}' 的序号在同一级别中重复出现，将会被覆盖`);
 
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
@@ -165,7 +161,7 @@ const createSideBarItems = (
 
       if (!["md", "MD"].includes(type)) {
         // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
-        !onlyScannerRootMd && log(`Warning：该文件 '${filePath}' 非 .md 格式文件，不支持该文件类型`);
+        !onlyScannerRootMd && logger.warn(`该文件 '${filePath}' 非 .md 格式文件，不支持该文件类型`);
         return [];
       }
 

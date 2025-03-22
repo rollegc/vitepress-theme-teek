@@ -38,7 +38,7 @@
     "lint": "yarn lint:eslint && yarn lint:prettier",
     "cs": "pnpm changeset",
     "cs:version": "pnpm changeset version",
-    "cs:release": "changeset publish",
+    "cs:release": "pnpm run plugin:build && changeset publish",
     "cs:pre": "changeset pre enter",
     "cs:pre:exit": "changeset pre enter exit",
     "release": "standard-version",

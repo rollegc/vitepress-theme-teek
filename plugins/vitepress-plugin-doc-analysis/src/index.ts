@@ -3,13 +3,9 @@ import { DocAnalysis, DocAnalysisOption, FilePathInfo } from "./types";
 import { join } from "node:path";
 import readFileList from "./helper";
 import { getLastCommitTime, getEachFileWords, getTotalFileWords, getLastUpdateTime } from "./util";
-import picocolors from "picocolors";
+import logger from "./log";
 
 export * from "./types";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((picocolors as any)[type](message));
-};
 
 export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption = {}): Plugin & { name: string } {
   return {
@@ -65,5 +61,5 @@ const doDocAnalysisThenSet = async (themeConfig: any, fileList: FilePathInfo[], 
     lastCommitTime,
   } as DocAnalysis;
 
-  log("Injected DocAnalysisInfo Data Successfully. 注入文档分析数据成功!", "green");
+  logger.info("Injected DocAnalysisInfo Data Successfully. 注入文档分析数据成功!");
 };

@@ -350,7 +350,7 @@ export interface Banner {
    */
   textColor?: string;
   /**
-   * Banner 功能列表
+   * Banner 显示新特性列表
    */
   features?: { title: string; description?: string; link?: string; imgUrl?: string }[];
   /**

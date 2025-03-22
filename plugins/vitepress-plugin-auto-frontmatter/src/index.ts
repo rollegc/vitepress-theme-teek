@@ -5,13 +5,9 @@ import { glob } from "tinyglobby";
 import matter from "gray-matter";
 import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { formatDate } from "./util";
-import picocolors from "picocolors";
+import logger from "./log";
 
 export * from "./types";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((picocolors as any)[type](message));
-};
 
 export default function VitePluginVitePressAutoFrontmatter(
   option: AutoFrontmatterOption = {}
@@ -99,7 +95,7 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     // 将修改后的内容写入文件
     writeFileSync(filePath, `${frontmatterStr}${content}`);
 
-    log(`'${filePath}' has been successfully written to frontmatter. (成功写入 frontmatter)`, "green");
+    logger.info(`'${filePath}' has been successfully written to frontmatter. (成功写入 frontmatter)`);
   }
 };
 

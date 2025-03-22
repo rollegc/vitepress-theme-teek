@@ -59,7 +59,7 @@ const handleFullscreenChange = () => {
   const bannerContentDom = document.querySelector(`.${ns.joinNamespace("bannerContent")}`);
   const wavesDom = document.querySelector(`.${ns.joinNamespace("waves")}`);
   const bodyBgImageMaskDom = document.querySelector(`.${ns.joinNamespace("bodyBgImage")} .mask`);
-  const bannerMaskDom = document.querySelector(`.${ns.joinNamespace("bannerImgBg")} .mask`);
+  const bannerMaskDom = document.querySelector(`.${ns.joinNamespace("bannerBgImage")} .mask`);
 
   isFullscreen.value = !!document.fullscreenElement;
 

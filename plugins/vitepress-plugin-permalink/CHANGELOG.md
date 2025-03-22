@@ -1,5 +1,17 @@
 # vitepress-plugin-permalink
 
+## 1.0.9
+
+### Patch Changes
+
+- 修复版本输出不正确问题
+
+## 1.0.8
+
+### Patch Changes
+
+- 新增日志功能，优化日志输出格式
+
 ## 1.0.7
 
 ### Patch Changes

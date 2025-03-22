@@ -2,16 +2,12 @@ import type { Plugin } from "vite";
 import type { DefaultTheme } from "vitepress";
 import createPermalinks, { standardLink } from "./helper";
 import type { NotFoundOption, Permalink, PermalinkOption } from "./types";
-import picocolors from "picocolors";
 import { dirname, join } from "node:path";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import logger from "./log";
 
 export * from "./types";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((picocolors as any)[type](message));
-};
 
 /**
  * 默认暴露 2 个插件集
@@ -59,7 +55,7 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
         let newValue = getLocalePermalink(localesKeys, key, value);
 
         if (permalinkToPath[newValue]) {
-          log(`永久链接「${newValue}」已存在，其对应的 '${permalinkToPath[newValue]}' 将会被 「${key}」 覆盖`);
+          logger.warn(`永久链接 '${newValue}' 已存在，其对应的 '${permalinkToPath[newValue]}' 将会被 '${key}' 覆盖`);
         }
 
         pathToPermalink[rewriteFilePath] = newValue;
@@ -68,7 +64,7 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
 
       themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath } as Permalink;
 
-      log("Injected Permalinks Data Successfully. 注入永久链接数据成功!", "green");
+      logger.info("Injected Permalinks Data Successfully. 注入永久链接数据成功!");
 
       // 导航栏高亮适配 permalink
       if (!localesKeys.length) {

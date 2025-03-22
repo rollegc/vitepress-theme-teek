@@ -2,13 +2,9 @@ import type { Plugin } from "vite";
 import { Catalogue, CatalogueOption } from "./types";
 import createCatalogues from "./helper";
 import { join } from "node:path";
-import picocolors from "picocolors";
+import logger from "./log";
 
 export * from "./types";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((picocolors as any)[type](message));
-};
 
 export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin & { name: string } {
   return {
@@ -36,7 +32,7 @@ export default function VitePluginVitePressCatalogue(option: CatalogueOption = {
 
       themeConfig.catalogues = finalCatalogues;
 
-      log("Injected Catalogues Data Successfully. 注入目录页数据成功!", "green");
+      logger.info("Injected Catalogues Data Successfully. 注入目录页数据成功!");
     },
   };
 }

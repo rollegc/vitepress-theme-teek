@@ -5,13 +5,9 @@ import { glob } from "tinyglobby";
 import { createMarkdownRenderer } from "vitepress";
 import { join, relative } from "node:path";
 import { FileContentLoaderData, FileContentLoaderOptions } from "./types";
-import picocolors from "picocolors";
+import log, { logger } from "./log";
 
 export * from "./types";
-
-export const log = (message: string, type = "yellow") => {
-  console.log((picocolors as any)[type](message));
-};
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["**/node_modules/**", "**/dist/**"];
@@ -40,7 +36,6 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
         srcDir,
         cleanUrls,
         markdown,
-        logger,
       } = config.vitepress;
 
       // 防止 vitepress build 时重复执行
@@ -91,7 +86,8 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
 
       themeConfig[themeConfigKey] = transformRaw ? await transformRaw(raw) : raw;
 
-      log(`Injected ${themeConfigKey} Data Successfully. 注入 ${themeConfigKey} 数据成功!`, "green");
+      const logName = themeConfigKey.charAt(0).toUpperCase() + themeConfigKey.slice(1);
+      log.info(`Injected ${logName} Data Successfully. 注入 ${logName} 数据成功!`);
     },
   };
 }

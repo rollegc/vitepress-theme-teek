@@ -1,8 +1,9 @@
-import type { Plugin, ViteDevServer } from "vite";
+import { type Plugin, type ViteDevServer } from "vite";
 import type { SidebarOption } from "./types";
-import createSidebar, { log } from "./helper";
+import createSidebar from "./helper";
 import { join } from "node:path";
 import { DefaultTheme } from "vitepress";
+import logger from "./log";
 
 export * from "./types";
 export * from "./util";
@@ -10,24 +11,22 @@ export * from "./util";
 export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin & { name: string } {
   return {
     name: "vite-plugin-vitepress-sidebar-resolve",
-    configureServer({ watcher, restart }: ViteDevServer) {
-      const fsWatcher = watcher.add("*.md");
+    configureServer(server: ViteDevServer) {
+      server.watcher.add("*.md");
       // 监听文件系统事件
-      fsWatcher.on("add", async path => {
-        // 过滤非 .md 文件
-        if (!path.endsWith(".md")) return;
-
-        // 重启服务器并来更新侧边栏
-        await restart();
-      });
-
-      fsWatcher.on("unlink", async path => {
-        // 过滤非 .md 文件
-        if (!path.endsWith(".md")) return;
-
-        // 重启服务器并来更新侧边栏
-        await restart();
-      });
+      server.watcher
+        .on("add", async path => {
+          // 过滤非 .md 文件
+          if (!path.endsWith(".md")) return;
+          // 重启服务器来更新侧边栏
+          await server.restart();
+        })
+        .on("unlink", async path => {
+          // 过滤非 .md 文件
+          if (!path.endsWith(".md")) return;
+          // 重启服务器来更新侧边栏
+          await server.restart();
+        });
     },
     config(config: any) {
       const {
@@ -73,10 +72,11 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
 const setSideBar = (themeConfig: any, sidebar: DefaultTheme.SidebarMulti) => {
   // 防止 themeConfig 为 undefined
   themeConfig = themeConfig || {};
+
   themeConfig.sidebar = {
     ...sidebar,
-    ...(Array.isArray(themeConfig.sidebar) ? log("Warning: 自定义 Sidebar 必须是对象形式") : themeConfig.sidebar),
+    ...(Array.isArray(themeConfig.sidebar) ? logger.warn("自定义 Sidebar 必须是对象形式") : themeConfig.sidebar),
   };
 
-  log("Injected Sidebar Data Successfully. 注入侧边栏数据成功!", "green");
+  logger.info("Injected Sidebar Data Successfully. 注入侧边栏数据成功!");
 };

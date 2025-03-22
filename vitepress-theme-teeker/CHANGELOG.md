@@ -1,5 +1,24 @@
 # vitepress-theme-teeker
 
+## 1.0.9
+
+### Patch Changes
+
+- Updated dependencies
+  - vitepress-plugin-catalogue@1.0.5
+
+## 1.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  - vitepress-plugin-auto-frontmatter@1.0.3
+  - vitepress-plugin-catalogue@1.0.4
+  - vitepress-plugin-doc-analysis@1.0.4
+  - vitepress-plugin-file-content-loader@1.0.4
+  - vitepress-plugin-permalink@1.0.8
+  - vitepress-plugin-sidebar-resolve@1.0.3
+
 ## 1.0.7
 
 ### Patch Changes
