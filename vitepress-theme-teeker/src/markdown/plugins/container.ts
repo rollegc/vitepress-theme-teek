@@ -5,7 +5,7 @@ import { Token } from "markdown-it";
 export type ContainerArgs = [typeof container, string, { render: (tokens: Token[], idx: number) => string }];
 
 export interface ContainerOption {
-  name: string; // 容器名称
+  type: string; // 容器名称
   useTitle?: boolean; // 是否使用标题
   defaultTitle?: string; // 默认标题
   className?: string; // 容器类名
@@ -21,9 +21,9 @@ export interface ContainerLabel {
  */
 export const containerPlugins = (md: MarkdownIt, containerLabel?: ContainerLabel) => {
   const markdownContainer = [
-    { name: "center", useTitle: false, className: `tk-center-container` },
-    { name: "right", useTitle: false, className: `tk-right-container` },
-    { name: "note", useTitle: true, defaultTitle: containerLabel?.noteLabel || "NOTE", className: `custom-block` },
+    { type: "center", useTitle: false, className: `tk-center-container` },
+    { type: "right", useTitle: false, className: `tk-right-container` },
+    { type: "note", useTitle: true, defaultTitle: containerLabel?.noteLabel || "NOTE", className: `custom-block` },
   ];
 
   createContainersThenUse(md, markdownContainer);
@@ -46,18 +46,18 @@ export const createContainerThenUse = (md: MarkdownIt, option: ContainerOption) 
  * @param option 容器配置项
  */
 export const createContainerThenGet = (md: MarkdownIt, option: ContainerOption): ContainerArgs => {
-  const { name, useTitle, defaultTitle, className } = option;
+  const { type, useTitle, defaultTitle, className } = option;
   return [
     container,
-    name,
+    type,
     {
       render(tokens: Token[], idx: number) {
         const token = tokens[idx];
-        const info = token.info.trim().slice(name.length).trim();
+        const info = token.info.trim().slice(type.length).trim();
 
         if (token.nesting === 1) {
           const title = useTitle ? md.renderInline(info || defaultTitle || "") : "";
-          return `<div class="${name} ${className}">${useTitle ? `<p class="title ${name}-title ${className ? `${className}-title` : ""}">${title}</p>` : ""}\n`;
+          return `<div class="${type} ${className}">${useTitle ? `<p class="title ${type}-title ${className ? `${className}-title` : ""}">${title}</p>` : ""}\n`;
         } else return `</div>\n`;
       },
     },

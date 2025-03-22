@@ -19,7 +19,7 @@ const tkConfig = tkThemeConfig({
     readingTime: true,
   },
   banner: {
-    bgStyle: "bigImg",
+    bgStyle: "fullImg",
     imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
     descStyle: "types",
   },
@@ -45,7 +45,8 @@ const tkConfig = tkThemeConfig({
   },
 
   footerInfo: {
-    message: ["下面的内容和图标都可以修改（本条内容也可以隐藏的）"],
+    topMessage: ["下面的内容和图标都可以修改（本条内容也可以隐藏的）"],
+    bottomMessage: ["上面的内容和图标都可以修改（本条内容也可以隐藏的）"],
     copyright: {
       createYear: 2021,
       suffix: "天客 Blog",

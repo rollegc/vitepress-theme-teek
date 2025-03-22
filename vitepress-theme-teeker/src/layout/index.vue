@@ -21,7 +21,11 @@ import {
   CodeBlockToggle,
   ArticlePageStyle,
   Notice,
+  VpContainer,
 } from "../components";
+import { isBoolean } from "../helper";
+
+defineOptions({ name: "TeekerLayout" });
 
 const { Layout } = DefaultTheme;
 
@@ -29,7 +33,7 @@ const ns = useNamespace("layout");
 
 const { isHomePage, isArchivesPage, isCataloguePage } = usePage();
 const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { frontmatter, localeIndex, page } = useData();
 
 const { tkTheme = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = theme;
 // 支持 theme 或 frontmatter 配置
@@ -37,24 +41,32 @@ const themeConfig = computed(() => {
   const {
     tkHome = true,
     codeBlock = true,
-    comment = {},
-  } = { ...theme, ...unref(frontmatter), ...unref(frontmatter).tk };
-  return { tkHome, codeBlock, comment };
+    comment = { provider: "" },
+    article = {},
+  }: TkThemeConfig = { ...theme, ...unref(frontmatter), ...unref(frontmatter).tk };
+
+  return { tkHome, codeBlock, comment, topTip: article.topTip };
 });
 
 const commentConfig = computed(() => {
-  const commentOption = unref(themeConfig).comment || {};
+  const comment = unref(themeConfig).comment;
+  if (isBoolean(comment)) return { enabled: comment };
+
   return {
-    enabled: commentOption.comment ?? true,
+    enabled: true,
     components: {
       twikoo: CommentTwikoo,
       waline: CommentWaline,
       giscus: CommentGiscus,
       artalk: CommentArtalk,
     },
-    provider: commentOption.provider,
-    options: commentOption.options,
+    provider: comment.provider,
+    options: comment.options,
   };
+});
+
+const topTipConfig = computed(() => {
+  return unref(themeConfig).topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
 });
 </script>
 
@@ -113,6 +125,9 @@ const commentConfig = computed(() => {
           <ArticlePageStyle />
           <CodeBlockToggle />
         </ClientOnly>
+
+        <VpContainer v-if="topTipConfig" v-bind="topTipConfig" />
+
         <slot name="teeker-article-analyze-after" />
       </template>
 
@@ -121,12 +136,12 @@ const commentConfig = computed(() => {
         <slot name="teeker-comment-before" />
 
         <!-- 评论区 -->
-        <template v-if="commentConfig.enabled">
+        <template v-if="commentConfig.enabled && commentConfig.provider">
           <ClientOnly>
             <slot v-if="commentConfig.provider === 'render'" name="teeker-comment" />
             <component
-              v-else-if="commentConfig.provider"
-              :is="commentConfig.components[commentConfig.provider]"
+              v-else
+              :is="commentConfig.components?.[commentConfig.provider]"
               :id="`${ns.namespace}-comment`"
               :class="ns.e('comment')"
             />

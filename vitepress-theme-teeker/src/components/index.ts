@@ -29,3 +29,4 @@ export * from "./ImageViewer";
 export * from "./Notice";
 export * from "./Pagination";
 export * from "./RightBottomButton";
+export * from "./VpContainer";

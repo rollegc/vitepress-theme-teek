@@ -67,7 +67,7 @@ const handleFullscreenChange = () => {
     {
       el: bannerContentDom,
       executeClass: "display-none",
-      notExecuteClass: "big-img", // 如果不隐藏 banner，则给 banner 添加 big-img 大图样式，目的让文字居中
+      notExecuteClass: "full-img", // 如果不隐藏 banner，则给 banner 添加 full-img 大图样式，目的让文字居中
       execute: hideBanner,
     },
     { el: wavesDom, executeClass: "display-none", execute: hideWaves },

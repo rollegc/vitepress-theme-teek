@@ -3,22 +3,38 @@
 
 @include b(banner) {
   position: relative;
-  &.big-img {
-    height: 100vh;
-    margin-top: calc(-1 * var(--vp-nav-height));
-    background: getCssVar("banner-bg-img") center center / cover no-repeat;
+  &.pure,
+  &.part-img {
+    min-height: 450px;
+  }
+
+  &.part-img,
+  &.full-img {
+    background: getCssVar("banner-img-bg") center center / cover no-repeat;
     transition: background 1s;
 
+    &.default-img {
+      background: getCssVar("banner-img-bg");
+    }
+
     .mask {
+      position: absolute;
       width: 100%;
       height: 100%;
       background-color: getCssVar("banner-mask-bg-color");
     }
   }
 
-  &.grid,
-  &.default {
-    min-height: 450px;
+  &.part-img {
+    z-index: -5;
+    .mask {
+      z-index: -1;
+    }
+  }
+
+  &.full-img {
+    height: 100vh;
+    margin-top: calc(-1 * var(--vp-nav-height));
   }
 
   @include e(content) {
@@ -112,7 +128,7 @@
 }
 
 /* 大图风格时，指定顶部导航栏样式 */
-.VPNavBar.home.big-img-nav-bar {
+.VPNavBar.home.full-img-nav-bar {
   background-color: transparent !important;
 
   .VPNavBarTitle .title,

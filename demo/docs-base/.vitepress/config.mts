@@ -1,3 +1,4 @@
+import { title } from "process";
 import { defineConfig } from "vitepress";
 import tkThemeConfig from "vitepress-theme-teeker/config";
 
@@ -23,8 +24,8 @@ const tkConfig = tkThemeConfig({
     appendInfo: [{ key: "index", label: "序号", value: "天客99" }],
   },
   banner: {
-    bgStyle: "bigImg",
-    imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+    bgStyle: "partImg",
+    // imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
     descStyle: "types",
   },
   // bodyBgImg: {
@@ -38,6 +39,23 @@ const tkConfig = tkThemeConfig({
 
   post: {
     coverImgMode: "full", // 封面大图
+  },
+
+  article: {
+    topTip: frontmatter => {
+      const tip: Record<string, string> = {
+        type: "warning",
+        title: "注意",
+        text: "文章发布较早，内容可能过时，阅读注意甄别。",
+      };
+
+      // frontmatter.long 为 true，则添加提示
+      if (frontmatter.long) return tip;
+
+      // frontmatter.date 大于半年，则添加提示
+      const longTime = 6 * 30 * 24 * 60 * 60 * 1000;
+      if (frontmatter.date && Date.now() - new Date(frontmatter.date).getTime() > longTime) return tip;
+    },
   },
 
   friendLink: {

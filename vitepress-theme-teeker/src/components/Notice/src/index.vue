@@ -64,7 +64,7 @@ const bindCallBackToRouter = () => {
   router.onAfterRouteChange = (href: string) => {
     selfOnAfterRouteChange?.(href);
     // 调用自定义的切换后回调
-    onAfterRouteChange?.(router.route, showNoticeIcon, showPopover);
+    onAfterRouteChange?.(router.route, unref(showNoticeIcon), unref(showPopover));
   };
 };
 

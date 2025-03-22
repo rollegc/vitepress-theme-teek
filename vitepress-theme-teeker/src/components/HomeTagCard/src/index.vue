@@ -7,7 +7,7 @@ import HomeCard from "../../HomeCard";
 import tagSvg from "../../../assets/svg/tag";
 import { isFunction } from "../../../helper";
 import { Tag } from "../../../config/types";
-import { postDataUpdateSymbol } from "../../Home";
+import { postDataUpdateSymbol } from "../../Home/src/home";
 
 defineOptions({ name: "HomeTagCard" });
 

@@ -51,7 +51,6 @@ pnpm plugin:build
 
 ## TODO
 
-- Banner 支持半图背景
 - 新增、删除、修改 md 后自动重启，参考 Vitepress 修改 config 重启方式
 - 主题使用文档编写
 - 部署测试、线上效果测试

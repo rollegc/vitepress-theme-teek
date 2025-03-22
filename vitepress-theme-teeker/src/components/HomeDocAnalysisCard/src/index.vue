@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeDocAnalysisCard">
-import { computed, ref, Ref, unref, watch } from "vue";
+import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { usePosts, useUnrefData } from "../../../configProvider";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
@@ -89,7 +89,7 @@ if (useSiteView) {
   });
 }
 
-type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number | Ref<string> };
+type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number };
 
 const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
   {

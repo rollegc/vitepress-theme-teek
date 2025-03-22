@@ -18,7 +18,7 @@ export const useSwitchData = ({
   onUpdate,
   onAfterUpdate,
 }: DataSwitchOption) => {
-  const data = ref("");
+  const data = ref(dataArray[0]);
   const index = ref(-1);
   let timer: NodeJS.Timeout;
 

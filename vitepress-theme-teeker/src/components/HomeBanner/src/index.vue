@@ -16,14 +16,14 @@ const title = frontmatter.tk?.name || site.title || "";
 
 // Banner 配置项
 const {
-  bgStyle = "default",
+  bgStyle = "pure",
   imgSrc,
   imgInterval = 15000,
   imgShuffle = false,
   imgWaves = true,
   mask = true,
   maskBg = "rgba(0, 0, 0, 0.4)",
-  defaultBgColor = "#e5e5e5",
+  pureBgColor = "#e5e5e5",
   textColor,
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
@@ -39,14 +39,25 @@ const {
 const descArray: string[] = [
   ...new Set([frontmatter.tk?.description || description || []].flat()?.filter((v: string) => !!v)),
 ];
-const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
 
-const isDefaultBgStyle = bgStyle === "default";
-const isBigImgBgStyle = bgStyle === "bigImg";
-const isGridBgStyle = bgStyle === "grid";
+// 纯色背景风格
+const isPureBgStyle = bgStyle === "pure";
+// 局部图片背景风格
+const isPartImgBgStyle = bgStyle === "partImg";
+// 全屏图片背景风格
+const isFullImgBgStyle = bgStyle === "fullImg";
+// 栅格背景风格
+const isSquareShapeBgStyle = (isPartImgBgStyle || isFullImgBgStyle) && !imgSrc;
+// 是否使用 bodyBgImg 配置
 const isBodyBygImg = !!theme.bodyBgImg?.imgSrc;
+// 是否使用遮罩层，仅当图片模式且非栅格模式时启用
+const useMask = mask && (isPartImgBgStyle || isFullImgBgStyle) && !isSquareShapeBgStyle && !isBodyBygImg;
+// 文本描述默认风格
 const isDefaultDescStyle = descStyle === "default";
+// 文本描述打字机风格
 const isTypesDescStyle = descStyle === "types";
+// 文本描述切换风格
 const isSwitchDescStyle = descStyle === "switch";
 
 // banner 背景图片定时轮播
@@ -63,33 +74,36 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
   },
 });
 
+// 栅格背景样式
+const squareBg =
+  "rgb(40,40,45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)";
 /**
  * 根据不同的 Banner 风格获取对应的样式
  */
 const getStyle = () => {
-  let baseStyle = { "--tk-banner-title-text": titleFontSize, "--tk-banner-desc-text": descFontSize };
+  const titleTextVar = ns.cssVarName("banner-title-text");
+  const descTextVar = ns.cssVarName("banner-desc-text");
+  const textColorVar = ns.cssVarName("banner-text-color");
+  const imgBgVar = ns.cssVarName("banner-img-bg");
+  const maskBgColorVar = ns.cssVarName("banner-mask-bg-color");
 
-  if (isBodyBygImg) return { ...baseStyle, "--tk-banner-text-color": textColor || "#ffffff" };
+  const baseStyle = { [titleTextVar]: titleFontSize, [descTextVar]: descFontSize };
 
-  if (isDefaultBgStyle) {
-    return { ...baseStyle, backgroundColor: defaultBgColor, "--tk-banner-text-color": textColor || "#000000" };
+  if (isBodyBygImg) return { ...baseStyle, [textColorVar]: textColor || "#ffffff" };
+
+  if (isPureBgStyle) {
+    return { ...baseStyle, backgroundColor: pureBgColor, [textColorVar]: textColor || "#000000" };
   }
 
-  if (isGridBgStyle) {
-    return {
-      ...baseStyle,
-      background:
-        "rgb(40, 40, 45) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)",
-      "--tk-banner-text-color": textColor || "#ffffff",
-    };
-  }
+  if (isSquareShapeBgStyle) return { ...baseStyle, [imgBgVar]: squareBg, [textColorVar]: textColor || "#ffffff" };
 
-  if (isBigImgBgStyle) {
+  // 图片风格
+  if (isPartImgBgStyle || isFullImgBgStyle) {
     return {
       ...baseStyle,
-      "--tk-banner-bg-img": `url(${unref(imageSrc)})`,
-      "--tk-banner-text-color": textColor || "#ffffff",
-      "--tk-banner-mask-bg-color": isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
+      [imgBgVar]: `url(${unref(imageSrc)})`,
+      [textColorVar]: textColor || "#ffffff",
+      [maskBgColorVar]: isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
     };
   }
 };
@@ -108,12 +122,12 @@ const toggleClass = () => {
 
   const offset = isBodyBygImg ? 0 : 100;
   if (unref(bannerRef) && document.documentElement.scrollTop + offset < windowH) {
-    vPNavDom.classList.add("big-img-nav-bar");
-  } else vPNavDom.classList.remove("big-img-nav-bar");
+    vPNavDom.classList.add("full-img-nav-bar");
+  } else vPNavDom.classList.remove("full-img-nav-bar");
 };
 
 /**
- * 大图模式，监听滚轮，修改导航栏样式
+ * 大图模式，监听滚轮，修改导航栏样式（透明化）
  */
 const watchScroll = () => {
   // 第一次初始化
@@ -146,8 +160,8 @@ const { data: text, startAutoSwitch: switchText } = useSwitchData({
 onMounted(() => {
   if (isTypesDescStyle) startTypes();
   if (isSwitchDescStyle) switchText();
-  if (isBigImgBgStyle) switchImg();
-  if (isBigImgBgStyle || isBodyBygImg) nextTick(() => watchScroll());
+  if (isPartImgBgStyle || isFullImgBgStyle) switchImg();
+  if (isFullImgBgStyle || isBodyBygImg) nextTick(() => watchScroll());
 });
 
 onUnmounted(() => {
@@ -161,12 +175,20 @@ onUnmounted(() => {
 
   <div
     ref="bannerRef"
-    :class="[ns.b(), { default: isDefaultBgStyle, 'big-img': isBigImgBgStyle, grid: isGridBgStyle }]"
+    :class="[
+      ns.b(),
+      {
+        pure: isPureBgStyle,
+        'full-img': isFullImgBgStyle,
+        'part-img': isPartImgBgStyle,
+        'default-img': isSquareShapeBgStyle,
+      },
+    ]"
     :style="getStyle()"
   >
-    <div v-if="mask && isBigImgBgStyle && !isBodyBygImg" class="mask" />
+    <div v-if="useMask" class="mask" />
 
-    <div :class="[ns.e('content'), { center: isBigImgBgStyle || !features.length }]">
+    <div :class="[ns.e('content'), { center: isFullImgBgStyle || !features.length }]">
       <h1 :class="ns.e('content__title')">{{ title }}</h1>
 
       <p :class="ns.e('content__desc')">
@@ -182,7 +204,7 @@ onUnmounted(() => {
     </div>
 
     <div
-      v-if="features.length && !isBigImgBgStyle"
+      v-if="features.length && !isFullImgBgStyle"
       :class="[ns.e('feature'), 'flx-wrap-between', ns.joinNamespace('wallpaper-outside')]"
     >
       <div :class="ns.e('feature__item')" v-for="(feature, index) in features" :key="index">
@@ -195,7 +217,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <HomeBannerWaves v-if="imgWaves && isBigImgBgStyle && !isBodyBygImg" />
+  <HomeBannerWaves v-if="imgWaves && isFullImgBgStyle && !isBodyBygImg" />
 
   <slot name="teeker-home-banner-before" />
 </template>

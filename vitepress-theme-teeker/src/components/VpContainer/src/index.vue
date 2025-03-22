@@ -1,0 +1,21 @@
+<script setup lang="ts" name="VpContainer">
+import { computed } from "vue";
+import { useNamespace } from "../../../hooks";
+import { VpContainerProps } from "./vpContainer";
+
+const ns = useNamespace("vpContainer");
+
+const { type = "tip", title, text = "", textHtml = "" } = defineProps<VpContainerProps>();
+
+const useContainer = computed(() => text || textHtml);
+</script>
+
+<template>
+  <div v-if="useContainer" :class="[ns.b(), 'vp-doc']">
+    <div :class="[type, 'custom-block', { 'no-title': !title }]">
+      <div v-if="title" class="custom-block-title">{{ title }}</div>
+      <p v-if="textHtml" v-html="textHtml"></p>
+      <p v-else>{{ text }}</p>
+    </div>
+  </div>
+</template>

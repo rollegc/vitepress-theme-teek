@@ -45,12 +45,11 @@ const createDate = computed(() => {
   const originPosts: TkContentData[] = unref(posts).originPosts;
   const date =
     post.date ||
-    originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`))[0]?.date ||
-    new Date();
+    originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`))[0]?.date;
   const dateFormatConst = unref(articleConfig).dateFormat;
 
-  if (isFunction(dateFormatConst)) return dateFormatConst(date);
-  return formatDate(date, dateFormatConst);
+  if (isFunction(dateFormatConst)) return dateFormatConst(date || "");
+  return formatDate(date || new Date(), dateFormatConst);
 });
 
 // 文章更新时间，取 git 的最后一次提交时间
@@ -93,7 +92,7 @@ const baseInfo = computed(() => {
       dataList: post.frontmatter?.categories || [],
       href: "/categories?category={data}",
       class: "or",
-      show: scope === "home" || isShow(showCategory),
+      show: scope === "post" || isShow(showCategory),
     },
     {
       title: "标签",
@@ -101,13 +100,13 @@ const baseInfo = computed(() => {
       dataList: post.frontmatter?.tags || [],
       href: "/tags?tag={data}",
       class: "or",
-      show: scope === "home" || isShow(showTag),
+      show: scope === "post" || isShow(showTag),
     },
   ];
 });
 
-const isShow = (showInfo: boolean | ArticleInfoPosition[]) => {
-  const arr = [showInfo].flat();
+const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
+  const arr = [showInfo || []].flat();
   if (arr.includes(true) || arr.includes(scope)) return true;
   return false;
 };

@@ -1,13 +1,13 @@
 <script setup lang="ts" name="Home">
 import { computed, ref, unref, provide } from "vue";
 import { useData } from "vitepress";
-import { postDataUpdateSymbol } from "..";
+import { postDataUpdateSymbol } from "./home";
 import { useNamespace } from "../../../hooks";
 import { usePage, useUnrefData } from "../../../configProvider";
 import HomeFullscreenWallpaper from "../../HomeFullscreenWallpaper";
 import HomeBanner from "../../HomeBanner";
-import HomePostList, { type HomePostListInstance } from "../../HomePostList";
 import HomeRightInfo from "../../HomeRightInfo";
+import HomePostList, { type HomePostListInstance } from "../../HomePostList";
 
 defineOptions({ name: "Home" });
 
@@ -18,8 +18,8 @@ const { theme } = useUnrefData();
 const { frontmatter } = useData();
 
 const themeConfig = computed(() => {
-  const { tkHome = true, banner = {}, wallpaper = {} } = { ...theme, ...unref(frontmatter).tk };
-  return { tkHome, banner, wallpaper };
+  const { tkHome = true, banner = {}, wallpaper = {}, bodyBgImg = {} } = { ...theme, ...unref(frontmatter).tk };
+  return { tkHome, banner, wallpaper, bodyBgImg };
 });
 
 const homePostListInstance = ref<HomePostListInstance | null>(null);
@@ -54,7 +54,7 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
     <HomeFullscreenWallpaper
       v-if="
         themeConfig.wallpaper.enabled &&
-        ((themeConfig.banner.bgStyle === 'bigImg' && themeConfig.banner.imgSrc) || theme.bodyBgImg.imgSrc)
+        ((themeConfig.banner.bgStyle === 'fullImg' && themeConfig.banner.imgSrc) || themeConfig.bodyBgImg.imgSrc)
       "
     />
   </div>

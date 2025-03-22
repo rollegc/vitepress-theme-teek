@@ -1,5 +1,4 @@
-import type { Route } from "vitepress";
-import type { Ref } from "vue";
+import type { PageData, Route } from "vitepress";
 import type { PermalinkOption, NotFoundOption } from "vitepress-plugin-permalink";
 import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
@@ -8,6 +7,7 @@ import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
 import type { AutoFrontmatterOption } from "vitepress-plugin-auto-frontmatter";
 import type { ImageViewerProps, PaginationProps } from "element-plus";
 import type { ContainerLabel, ContainerOption } from "../markdown/plugins/container";
+import type { VpContainerProps } from "../components/VpContainer/src/vpContainer";
 
 export interface TkThemeConfig {
   /**
@@ -77,7 +77,7 @@ export interface TkThemeConfig {
    */
   banner?: Banner;
   /**
-   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'bigImg' && banner.imgSrc 不存在) 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
+   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'fullImg' && banner.imgSrc 不存在) 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
    */
   wallpaper?: Wallpaper;
   /**
@@ -136,11 +136,13 @@ export interface TkThemeConfig {
    * 评论配置
    */
   comment?:
+    | CommentConfig<"">
     | CommentConfig<"twikoo">
     | CommentConfig<"waline">
     | CommentConfig<"giscus">
     | CommentConfig<"artalk">
-    | CommentConfig<"render">;
+    | CommentConfig<"render">
+    | boolean;
   /**
    * 内置 Vite 插件配置
    */
@@ -288,49 +290,49 @@ export interface Banner {
    */
   enabled?: boolean;
   /**
-   * Banner 背景风格：default 为纯色背景，bigImg 为大图背景，grid 为网格背景
+   * Banner 背景风格：pure 为纯色背景，partImg 为局部图片背景，fullImg 为全屏图片背景
    *
    * @default 'default'
    */
-  bgStyle?: "default" | "bigImg" | "grid";
+  bgStyle?: "pure" | "partImg" | "fullImg";
   /**
-   * Banner 背景色。bgStyle 为 default 时生效
+   * Banner 背景色。bgStyle 为 pure 时生效
    *
    * @default '#e5e5e5'
    */
-  defaultBgColor?: string;
+  pureBgColor?: string;
   /**
-   * Banner 大图链接。bgStyle 为 bigImg 时生效
+   * Banner 大图链接。bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default []
    */
   imgSrc?: string | string[];
   /**
-   * 当多张大图时（imgSrc 为数组），设置切换时间，单位：毫秒，bgStyle 为 bigImg 时生效
+   * 当多张大图时（imgSrc 为数组），设置切换时间，单位：毫秒，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default 15000 (15秒)
    */
   imgInterval?: number;
   /**
-   * 大图是否随机切换，为 false 时按顺序切换，bgStyle 为 bigImg 时生效
+   * 大图是否随机切换，为 false 时按顺序切换，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default false
    */
   imgShuffle?: boolean;
   /**
-   * 是否开启 Banner 大图波浪纹，bgStyle 为 bigImg 时生效
+   * 是否开启 Banner 大图波浪纹，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default true
    */
   imgWaves?: boolean;
   /**
-   * Banner 大图遮罩，bgStyle 为 bigImg 时生效
+   * Banner 大图遮罩，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default true
    */
   mask?: boolean;
   /**
-   * Banner 遮罩颜色，如果为数字，则是 rgba(0, 0, 0, ${maskBg})，如果为字符串，则作为背景色。bgStyle 为 bigImg 且 mask 为 true 时生效
+   * Banner 遮罩颜色，如果为数字，则是 rgba(0, 0, 0, ${maskBg})，如果为字符串，则作为背景色。bgStyle 为 partImg 或 fullImg 且 mask 为 true 时生效
    *
    * @default 'rgba(0, 0, 0, 0.4)'
    */
@@ -338,7 +340,7 @@ export interface Banner {
   /**
    * Banner 字体颜色
    *
-   * @default bgStyle 为 default 时为 '#000000'，其他为 '#ffffff'
+   * @default 'bgStyle 为 pure 时为 #000000，其他为 #ffffff'
    */
   textColor?: string;
   /**
@@ -427,7 +429,7 @@ export interface Wallpaper {
    */
   hideMask?: boolean;
   /**
-   * 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'bigImg' 生效
+   * 开启壁纸模式后，是否隐藏 Banner 波浪组件，仅 banner.bgStyle = 'fullImg' 生效
    *
    * @default false
    */
@@ -760,10 +762,7 @@ export interface DocAnalysis {
    * originValue 为计算前的数据，currentValue 为计算后的数据（加单位的数据），针对 lastActiveTime 这些需要判断 N 分、N 时、N 天的 key，originValue 为具体的时间，需要自行计算
    */
   overrideInfo?: (Omit<PartialKey<DocAnalysisInfo, "label">, "value"> & {
-    value?: (
-      originValue: string | number | Ref<string>,
-      currentValue?: string | number | Ref<string>
-    ) => string | Ref<string>;
+    value?: (originValue: string | number, currentValue?: string | number) => string;
   })[];
   /**
    * 自定义额外信息，类型和 overrideInfo 一样
@@ -793,9 +792,10 @@ export interface DocAnalysisInfo {
   /**
    * 站点信息值的描述
    */
-  value: string | Ref<string>;
+  value: string;
   /**
    * 是否显示在站点信息
+   *
    * @default true
    */
   show?: boolean;
@@ -894,7 +894,7 @@ export interface Article {
    *
    * @default 'yyyy-MM-dd'
    */
-  dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: string) => string);
+  dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: number | string) => string);
   /**
    * 是否展示作者、日期、分类、标签、字数、阅读时长、浏览量等文章信息，分别作用于首页和文章页
    * 如果 showInfo 为数组，则控制在哪里显示，如 ["post"] 只在首页的 Post 列表显示基本信息；如果为 boolean 值，则控制基本信息是否展示，如 false 则在首页和文章页都不显示基本信息
@@ -953,6 +953,7 @@ export interface Article {
      */
     className?: string;
   };
+  topTip?: (frontmatter: PageData["frontmatter"], localeIndex: string, page: PageData) => VpContainerProps | void;
 }
 
 export type ArticleInfoPosition = "post" | "article";
@@ -1082,7 +1083,7 @@ export interface Notice {
    *
    * @param to 切换到的目标路由
    */
-  onAfterRouteChange?: (to: Route, noticeShow: Ref<boolean>, showPopover: Ref<boolean>) => void;
+  onAfterRouteChange?: (to: Route, noticeShow: boolean, showPopover: boolean) => void;
 }
 
 export type CommentConfig<T extends keyof CommentProvider = "" | "twikoo" | "waline" | "giscus" | "artalk" | "render"> =

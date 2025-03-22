@@ -7,7 +7,7 @@ import HomeCard from "../../HomeCard";
 import categorySvg from "../../../assets/svg/category";
 import { isFunction } from "../../../helper";
 import { Category } from "../../../config/types";
-import { postDataUpdateSymbol } from "../../Home";
+import { postDataUpdateSymbol } from "../../Home/src/home";
 
 defineOptions({ name: "HomeCategoryCard" });
 
