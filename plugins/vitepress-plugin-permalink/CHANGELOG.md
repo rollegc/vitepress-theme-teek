@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.10
+
+### Patch Changes
+
+- push 改为 to
+
 ## 1.0.9
 
 ### Patch Changes

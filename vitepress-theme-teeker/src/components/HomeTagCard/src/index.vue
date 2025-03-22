@@ -85,7 +85,7 @@ const handleSwitchTag = (tag = "") => {
   selectedTag.value = tag;
 
   // 如果此时不在分类页，则跳转至分类页
-  const to = (router as any).push ? (router as any).push : router.go;
+  const to = router.to || router.go;
   if (!inCategoriesPage) return to(categoriesPageLinkConst + searchParamsStr);
 
   // 如果在分类页，则替换 URL，但不刷新

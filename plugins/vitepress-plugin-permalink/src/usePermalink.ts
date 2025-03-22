@@ -10,12 +10,12 @@ export default function usePermalink() {
   const permalinkKeys = Object.keys(permalinks);
 
   /**
-   * 为 vitepress 的 router 添加 push 方法，支持手动跳转 permalink
+   * 为 vitepress 的 router 添加 to 方法，支持手动跳转 permalink
    * 根据传入的 href 动态判断是否为文档地址或 permalink，如果为文档地址，则走 vitepress 默认的 go 方法，如果为 permalink，则根据 permalink 跳转对应的文档地址
    *
    * @param href 访问的文档地址或 permalink
    */
-  router.push = (href = inBrowser ? location.href : "/") => {
+  router.to = (href = inBrowser ? location.href : "/") => {
     if (!href) throw new Error("href is undefined");
     if (href === base) return router.go(href);
 
