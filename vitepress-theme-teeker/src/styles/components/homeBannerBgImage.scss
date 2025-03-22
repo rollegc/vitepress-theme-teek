@@ -1,0 +1,25 @@
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
+
+@include b(bannerBgImage) {
+  &.part {
+    min-height: 450px;
+    z-index: -5;
+    .mask {
+      z-index: -1;
+    }
+  }
+
+  &.part,
+  &.full {
+    background: getCssVar("banner-img-bg");
+    transition: background 1s;
+
+    .mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: getCssVar("banner-mask-bg-color");
+    }
+  }
+}

@@ -9,6 +9,7 @@ import Icon from "../../Icon";
 defineOptions({ name: "HomeCard" });
 
 const ns = useNamespace("homeCard");
+const pointClass = ns.joinNamespace("pointer");
 
 const {
   title = "",
@@ -82,7 +83,7 @@ onMounted(() => {
         <a v-if="titleLink" :href="withBase(titleLink)">
           <span class="title flx-align-center" v-html="title"></span>
         </a>
-        <a v-else-if="titleClick" @click="() => titleClick()" class="pointer">
+        <a v-else-if="titleClick" @click="() => titleClick()" :class="pointClass">
           <span class="title flx-align-center" v-html="title"></span>
         </a>
         <span v-else class="title flx-align-center" v-html="title"></span>
@@ -90,13 +91,13 @@ onMounted(() => {
       <slot name="page" v-bind="{ pagination }">
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">
-            <span :class="['page-button', hasNextData ? 'pointer' : 'disabled']" @click="pagination(-1, 'prev')">
+            <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(-1, 'prev')">
               <Icon :size="14"><ArrowLeft /></Icon>
             </span>
           </slot>
 
           <slot name="page-right" v-bind="{ pagination }">
-            <span :class="['page-button', hasNextData ? 'pointer' : 'disabled']" @click="pagination(1, 'next')">
+            <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(1, 'next')">
               <Icon :size="14"><ArrowRight /></Icon>
             </span>
           </slot>

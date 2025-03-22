@@ -52,10 +52,7 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
     </div>
 
     <HomeFullscreenWallpaper
-      v-if="
-        themeConfig.wallpaper.enabled &&
-        ((themeConfig.banner.bgStyle === 'fullImg' && themeConfig.banner.imgSrc) || themeConfig.bodyBgImg.imgSrc)
-      "
+      v-if="themeConfig.wallpaper.enabled && (themeConfig.banner.bgStyle === 'fullImg' || themeConfig.bodyBgImg.imgSrc)"
     />
   </div>
 </template>

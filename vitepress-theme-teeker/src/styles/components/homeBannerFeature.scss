@@ -1,0 +1,34 @@
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
+
+@include b(bannerFeature) {
+  max-width: 1100px;
+  margin: 2.5rem auto 0;
+  overflow: hidden;
+  padding: 2rem 0;
+
+  @include e(feature__item) {
+    flex-grow: 1;
+    flex-basis: 30%;
+    max-width: 30%;
+    color: getCssVar("banner-text-color");
+
+    .feature-img {
+      width: 10rem;
+      height: 10rem;
+      animation: heart 1.2s ease-in-out 0s infinite alternate;
+      animation-play-state: paused;
+    }
+
+    .feature-title {
+      font-weight: 500;
+      font-size: 1.3rem;
+      margin-top: 1rem;
+    }
+
+    .feature-description {
+      opacity: 0.8;
+      margin: 1rem;
+    }
+  }
+}

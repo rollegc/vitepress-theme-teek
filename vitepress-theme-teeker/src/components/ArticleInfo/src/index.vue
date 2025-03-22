@@ -25,7 +25,7 @@ const articleConfig = computed<Article>(() => {
     dateFormat = "yyyy-MM-dd",
     showAuthor = true,
     showCreateDate = true,
-    showUpdateDate = true,
+    showUpdateDate = false,
     showCategory = false,
     showTag = false,
   }: Article = {

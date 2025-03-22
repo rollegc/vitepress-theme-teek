@@ -179,7 +179,7 @@ const storagePopoverState = (state: string) => {
             :icon="closeIcon"
             color="#ffffff"
             size="20px"
-            :style="{ cursor: 'pointer' }"
+            :class="ns.joinNamespace('pointer')"
             @click="handleClosePopover"
           ></Icon>
         </div>

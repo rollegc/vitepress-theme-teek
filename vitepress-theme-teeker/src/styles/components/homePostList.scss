@@ -2,6 +2,8 @@
 @use "../mixins/config" as *;
 @use "../mixins/function" as *;
 
+@use "./homePostItem";
+
 @include b(postList) {
   @include e(pagination) {
     .el-pagination {

@@ -17,6 +17,12 @@
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.2));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
   @include set-css-var("item-bg-color-hover", #f8f8f8);
+  // 网状背景图
+  @include set-css-var(
+    "bg-img-default",
+    rgb(40, 40, 45)
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)
+  );
 }
 
 :root.dark {

@@ -61,7 +61,7 @@ export interface TkThemeConfig {
    */
   pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
   /**
-   *  body 背景大图配置
+   *  body 背景图片配置
    */
   bodyBgImg?: BodyBgImg;
   /**
@@ -163,7 +163,7 @@ export interface TkThemeConfig {
 
 export interface BodyBgImg {
   /**
-   * body 背景大图链接。单张图片 string | 多张图片 string[], 多张图片时每隔 imgInterval 秒换一张
+   * body 背景图片链接。单张图片 string | 多张图片 string[], 多张图片时每隔 imgInterval 秒换一张
    */
   imgSrc?: string | string[];
   /**
@@ -194,6 +194,12 @@ export interface BodyBgImg {
    * @default 'rgba(0, 0, 0, 0.2)'
    */
   maskBg?: string | number;
+  /**
+   * Banner 风格，part 为局部 Banner，显示 feature；full 为全屏 Banner，不显示 feature
+   *
+   * @default 'full'
+   */
+  bannerStyle?: "part" | "full";
 }
 
 export interface ThemeSetting {
@@ -298,35 +304,35 @@ export interface Banner {
   /**
    * Banner 背景色。bgStyle 为 pure 时生效
    *
-   * @default '#e5e5e5'
+   * @default '#28282d'
    */
   pureBgColor?: string;
   /**
-   * Banner 大图链接。bgStyle 为 partImg 或 fullImg 时生效
+   * Banner 图片链接。bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default []
    */
   imgSrc?: string | string[];
   /**
-   * 当多张大图时（imgSrc 为数组），设置切换时间，单位：毫秒，bgStyle 为 partImg 或 fullImg 时生效
+   * 当多张图片时（imgSrc 为数组），设置切换时间，单位：毫秒，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default 15000 (15秒)
    */
   imgInterval?: number;
   /**
-   * 大图是否随机切换，为 false 时按顺序切换，bgStyle 为 partImg 或 fullImg 时生效
+   * 图片是否随机切换，为 false 时按顺序切换，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default false
    */
   imgShuffle?: boolean;
   /**
-   * 是否开启 Banner 大图波浪纹，bgStyle 为 partImg 或 fullImg 时生效
+   * 是否开启 Banner 图片波浪纹，bgStyle 为 fullImg 时生效
    *
    * @default true
    */
   imgWaves?: boolean;
   /**
-   * Banner 大图遮罩，bgStyle 为 partImg 或 fullImg 时生效
+   * Banner 图片遮罩，bgStyle 为 partImg 或 fullImg 时生效
    *
    * @default true
    */
@@ -417,7 +423,7 @@ export interface Wallpaper {
    */
   enabled?: boolean;
   /**
-   * 开启壁纸模式后，是否隐藏 Banner
+   * 开启壁纸模式后，是否隐藏 Banner 文字
    *
    * @default false
    */
@@ -915,9 +921,9 @@ export interface Article {
    */
   showCreateDate?: boolean | ArticleInfoPosition[];
   /**
-   * 是否展示更新时间，仅在文章页显示
+   * 是否展示更新日期，仅在文章页显示
    *
-   * @default true
+   * @default false
    */
   showUpdateDate?: boolean;
   /**

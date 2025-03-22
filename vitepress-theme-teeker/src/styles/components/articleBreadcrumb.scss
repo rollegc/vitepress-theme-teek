@@ -1,6 +1,9 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
+@use "./breadcrumb";
+@use "./breadcrumbItem";
+
 @include b(articleBreadcrumb) {
   .el-breadcrumb__separator {
     font-weight: 400;

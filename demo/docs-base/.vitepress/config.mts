@@ -24,8 +24,8 @@ const tkConfig = tkThemeConfig({
     appendInfo: [{ key: "index", label: "序号", value: "天客99" }],
   },
   banner: {
-    bgStyle: "partImg",
-    // imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+    bgStyle: "fullImg",
+    imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
     descStyle: "types",
   },
   // bodyBgImg: {

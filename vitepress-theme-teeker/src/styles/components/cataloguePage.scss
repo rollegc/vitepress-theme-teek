@@ -1,6 +1,8 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
+@use "./catalogueItem";
+
 @include b(catalogue) {
   @include e(header) {
     border-bottom: 1px solid getCssVar("line-color");

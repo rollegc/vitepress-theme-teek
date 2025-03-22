@@ -131,7 +131,7 @@ watch(
           :key="item.name"
           :style="getTagStyle(index)"
           @click="handleSwitchTag(item.name)"
-          :class="[{ active: item.name === selectedTag }, 'pointer']"
+          :class="[{ active: item.name === selectedTag }, ns.joinNamespace('pointer')]"
         >
           {{ item.name }}
         </a>

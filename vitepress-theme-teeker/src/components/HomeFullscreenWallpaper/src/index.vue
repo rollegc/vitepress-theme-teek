@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
 import { useUnrefData } from "../../../configProvider";
+import { Wallpaper } from "../../../config/types";
 
 defineOptions({ name: "HomeFullscreenWallpaper" });
 
@@ -15,7 +16,7 @@ const {
   hideBanner = false,
   hideWaves = false,
   hideMask = false,
-} = { ...theme.wallpaper, ...frontmatter.tk?.wallpaper };
+}: Wallpaper = { ...theme.wallpaper, ...frontmatter.tk?.wallpaper };
 
 /**
  * 监听键盘事件
@@ -55,10 +56,10 @@ const handleFullscreenChange = () => {
   // 如果滚动条不为 0，则不执行任何操作
   if (htmlDom.scrollTop !== 0) return;
 
-  const bannerContentDom = document.querySelector(`.${ns.joinNamespace("banner-content")}`);
+  const bannerContentDom = document.querySelector(`.${ns.joinNamespace("bannerContent")}`);
   const wavesDom = document.querySelector(`.${ns.joinNamespace("waves")}`);
   const bodyBgImageMaskDom = document.querySelector(`.${ns.joinNamespace("bodyBgImage")} .mask`);
-  const bannerMaskDom = document.querySelector(`.${ns.joinNamespace("banner")} .mask`);
+  const bannerMaskDom = document.querySelector(`.${ns.joinNamespace("bannerImgBg")} .mask`);
 
   isFullscreen.value = !!document.fullscreenElement;
 
@@ -67,7 +68,6 @@ const handleFullscreenChange = () => {
     {
       el: bannerContentDom,
       executeClass: "display-none",
-      notExecuteClass: "full-img", // 如果不隐藏 banner，则给 banner 添加 full-img 大图样式，目的让文字居中
       execute: hideBanner,
     },
     { el: wavesDom, executeClass: "display-none", execute: hideWaves },
