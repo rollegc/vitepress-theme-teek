@@ -85,9 +85,9 @@ export default defineConfig({
     },
     nav: [
       { text: "首页", link: "/" },
-      { text: "指南", link: "/guild/intro" },
-      { text: "配置", link: "/reference/config" },
-      { text: "开发", link: "/develop/intro" },
+      { text: "指南", link: "/guild/intro", activeMatch: "/01.指南/" },
+      { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
+      { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teeker" }],
 
