@@ -16,6 +16,12 @@
     .feature-img {
       width: 10rem;
       height: 10rem;
+      animation: heart 1.2s ease-in-out 0s infinite alternate;
+      animation-play-state: paused;
+
+      &:hover {
+        animation-play-state: running;
+      }
     }
 
     .feature-title {
@@ -33,6 +39,15 @@
   @media (max-width: 719px) {
     @include e(feature__item) {
       width: 100%;
+    }
+  }
+
+  @keyframes heart {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(0, 8px);
     }
   }
 }

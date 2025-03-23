@@ -10,7 +10,7 @@
 @include b(banner) {
   position: relative;
 
-  .full {
+  .body-img.full {
     height: 100vh;
     margin-top: calc(-1 * var(--vp-nav-height));
   }

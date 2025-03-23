@@ -49,7 +49,7 @@ useWindowSize(width => {
       :key="index"
       v-show="!isMobile || active === index"
     >
-      <a v-if="feature.link" :href="withBase(feature.link)" class="flx-column-center">
+      <a v-if="feature.link" :href="withBase(feature.link)" class="flx-column-center hover-color">
         <img v-if="feature.imgUrl" class="feature-img" :src="withBase(feature.imgUrl)" :alt="feature.title" />
         <p class="feature-title">{{ feature.title }}</p>
         <p class="feature-description">{{ feature.description }}</p>

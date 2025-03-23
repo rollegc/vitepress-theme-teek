@@ -15,8 +15,9 @@ import "vitepress-theme-teeker/vp-plus/container.scss"; // Markdown 容器样式
 // import "vitepress-theme-teeker/vp-plus/container-flow.scss"; // Markdown 容器流体样式
 // import "vitepress-theme-teeker/vp-plus/blockquote.scss"; // 引用样式
 // import "vitepress-theme-teeker/vp-plus/rainbow.scss"; // Vitepress 首页彩虹渐变样式
+import "vitepress-theme-teeker/vp-plus/banner-desc.scss"; // Banner 描述渐变样式
 
-import { useFooterRuntime } from "./helper/useFooterRuntime";
+import { useFooterRuntime } from "./helper/useFooterRuntime"; // 首页底部添加运行时间
 
 export default {
   extends: Teeker,

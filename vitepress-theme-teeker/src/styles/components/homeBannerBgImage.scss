@@ -10,9 +10,14 @@
     }
   }
 
+  &.full {
+    height: 100vh;
+    margin-top: calc(-1 * var(--vp-nav-height));
+  }
+
   &.part,
   &.full {
-    background: getCssVar("banner-img-bg");
+    background: getCssVar("banner-img-bg") fixed;
     transition: background 1s;
 
     .mask {

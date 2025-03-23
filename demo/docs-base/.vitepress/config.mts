@@ -30,6 +30,7 @@ const tkConfig = tkThemeConfig({
   },
   // bodyBgImg: {
   //   imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+  //   bannerStyle: "full",
   // },
 
   // 首页顶部按 F11 开启壁纸模式

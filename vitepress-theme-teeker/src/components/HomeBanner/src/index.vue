@@ -79,7 +79,7 @@ onUnmounted(() => {
   <slot name="teeker-home-banner-before" />
 
   <div ref="bannerRef" :class="ns.b()" :style="getStyle()">
-    <div v-if="isBodyImgBg" :class="bannerStyle">
+    <div v-if="isBodyImgBg" :class="[bannerStyle, 'body-img']">
       <div :class="{ [centerClass]: isBodyImgBgFull }">
         <HomeBannerContent />
         <HomeBannerFeature />

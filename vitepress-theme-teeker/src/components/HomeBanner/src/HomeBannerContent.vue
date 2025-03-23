@@ -74,7 +74,9 @@ onUnmounted(() => {
     <h1 :class="ns.e('content__title')">{{ title }}</h1>
 
     <p :class="ns.e('content__desc')">
-      <template v-if="isDefaultDescStyle">{{ descArray[0] }}</template>
+      <template v-if="isDefaultDescStyle">
+        <span>{{ descArray[0] }}</span>
+      </template>
       <template v-else-if="isSwitchDescStyle">
         <span v-show="!!text" @click="switchText" class="switch">{{ text || " " }}</span>
       </template>
