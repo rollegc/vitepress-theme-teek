@@ -12,7 +12,7 @@ import { copy } from "fs-extra";
 
 const isDev = process.env.THEME_CHALK_DEV === "true";
 
-/** /vitepress-theme-teeker/src/styles  */
+/** /vitepress-theme-teek/src/styles  */
 const styleRoot = resolve(tkRoot, "src/styles");
 /** ./dist/theme-chalk  */
 const distRoot = resolve(__dirname, "dist/theme-chalk");
@@ -48,10 +48,10 @@ const buildStyle = async () => {
   // 复制源文件到 ./dist/theme-chalk/src
   await copy(styleRoot, resolve(distRoot, "src"));
 
-  // 复制打包后的文件 ./dist/theme-chalk 到 /dist/vitepress-theme-teeker/theme-chalk
+  // 复制打包后的文件 ./dist/theme-chalk 到 /dist/vitepress-theme-teek/theme-chalk
   await copy(distRoot, resolve(tcOutput));
 
-  // 复制打包后的 /dist/index.css 文件到 /dist/vitepress-theme-teeker/index.css
+  // 复制打包后的 /dist/index.css 文件到 /dist/vitepress-theme-teek/index.css
   // await copy(resolve(distRoot, "index.css"), resolve(tkOutput, "index.css"));
 };
 

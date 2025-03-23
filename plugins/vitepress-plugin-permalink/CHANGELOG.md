@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.11
+
+### Patch Changes
+
+- 仓库地址更新
+
 ## 1.0.10
 
 ### Patch Changes

@@ -61,7 +61,7 @@ router.onAfterRouteChange = (href: string) => {
 };
 ```
 
-`onAfterRouteChange` 是一个函数，您这样使用将会 **覆盖** Teeker 在该回调函数的逻辑，因此您需要这样使用：
+`onAfterRouteChange` 是一个函数，您这样使用将会 **覆盖** Teek 在该回调函数的逻辑，因此您需要这样使用：
 
 ```typescript
 // 获取可能已有的 onAfterRouteChange

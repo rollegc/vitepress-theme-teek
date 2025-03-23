@@ -1,6 +1,5 @@
-import { title } from "process";
 import { defineConfig } from "vitepress";
-import tkThemeConfig from "vitepress-theme-teeker/config";
+import tkThemeConfig from "vitepress-theme-teek/config";
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 

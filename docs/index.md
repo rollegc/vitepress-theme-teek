@@ -9,7 +9,7 @@ tk:
     -  #409EFF
 
 hero:
-  name: Teeker
+  name: Teek
   text: Vitepress 主题框架
   tagline: 一个轻量、简易的 Vitepress 主题框架
   actions:
@@ -20,8 +20,8 @@ hero:
       text: 配置
       link: /reference/config
   image:
-    src: /teeker-logo-large.png
-    alt: Teeker
+    src: /teek-logo-large.png
+    alt: Teek
 
 features:
   - icon: 📝

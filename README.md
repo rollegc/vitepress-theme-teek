@@ -1,4 +1,4 @@
-# vitepress-theme-teeker
+# vitepress-theme-teek
 
 基础功能已完成开发，剩余加强功能请看下面的 TODO。
 
@@ -7,7 +7,7 @@
 项目拉取
 
 ```bash
-git clone https://github.com/Kele-Bingtang/vitepress-theme-teeker.git
+git clone https://github.com/Kele-Bingtang/vitepress-theme-teek.git
 ```
 
 依赖安装（只能用 pnpm 安装依赖）
@@ -51,7 +51,6 @@ pnpm plugin:build
 
 ## TODO
 
-- Teeker 改为 Teek
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库

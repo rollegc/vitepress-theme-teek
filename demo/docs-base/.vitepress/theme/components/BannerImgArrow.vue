@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BannerImgArrow">
-import { TkIcon } from "vitepress-theme-teeker";
+import { TkIcon } from "vitepress-theme-teek";
 import arrowSvg from "../svg/arrow";
 
 const handleClickArrow = () => {

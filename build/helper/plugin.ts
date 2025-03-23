@@ -12,8 +12,8 @@ import type { Plugin } from "rollup";
 
 // rollup 插件。rollup 本身只支持原生 JavaScript 文件打包，如果项目包含 vue、json 等非原生 JavaScript 文件，则利用插件来支持打包
 export const plugins = [
-  vitepressThemeTeekerClearConsole(),
-  VitepressThemeTeekerStyleAlias(),
+  vitepressThemeTeekClearConsole(),
+  VitepressThemeTeekStyleAlias(),
   vuePlugin({ isProduction: true }),
   json(),
   // 解析和处理 Node.js 风格的模块导入语句（如 `import something from 'my-package'`），因为 Rollup 本身默认仅支持 ES 模块导入（即通过相对或绝对路径导入本地文件）
@@ -39,15 +39,15 @@ export const plugins = [
 ];
 
 /**
- * 将组件目录下的 style/*.ts 里的 ../../../styles 替换为实际的 vitepress-theme-teeker 组件样式路径
+ * 将组件目录下的 style/*.ts 里的 ../../../styles 替换为实际的 vitepress-theme-teek 组件样式路径
  */
-export function VitepressThemeTeekerStyleAlias(): Plugin {
+export function VitepressThemeTeekStyleAlias(): Plugin {
   const themeChalk = "theme-chalk";
   const sourceThemeChalk = `@${PKG_NAME}/${themeChalk}`;
   const bundleThemeChalk = `${PKG_NAME}/${themeChalk}`;
 
   return {
-    name: "vitepress-theme-teeker-alias-plugin",
+    name: "vitepress-theme-teek-alias-plugin",
     resolveId(id) {
       if (!id.startsWith(sourceThemeChalk)) return;
       return {
@@ -61,14 +61,14 @@ export function VitepressThemeTeekerStyleAlias(): Plugin {
 /**
  * 将组件目录下的 style/*.ts 里的 @element-plus 替换为实际的 element-plus 组件样式路径
  */
-export function VitepressThemeTeekerElementPlusAlias(format: "esm" | "cjs"): Plugin {
+export function VitepressThemeTeekElementPlusAlias(format: "esm" | "cjs"): Plugin {
   const sourceName = `@element-plus`;
   const module = format === "esm" ? "es" : "lib";
   const ext = format === "esm" ? ".mjs" : ".js";
   const bundleStyle = `element-plus/${module}/components`;
 
   return {
-    name: "vitepress-theme-teeker-element-plus-alias-plugin",
+    name: "vitepress-theme-teek-element-plus-alias-plugin",
     resolveId(id) {
       if (!id.startsWith(sourceName)) return;
       return {
@@ -82,10 +82,10 @@ export function VitepressThemeTeekerElementPlusAlias(format: "esm" | "cjs"): Plu
 /**
  * 清除 console.log
  */
-export function vitepressThemeTeekerClearConsole(): Plugin {
+export function vitepressThemeTeekClearConsole(): Plugin {
   const reg = /console\.log\([^)]*\);?\n?/g;
   return {
-    name: "vitepress-theme-teeker-clear-console-plugin",
+    name: "vitepress-theme-teek-clear-console-plugin",
     transform(code, id) {
       if (id.endsWith(".ts") || id.endsWith(".vue")) {
         const transformedCode = code.replace(reg, "");

@@ -5,10 +5,10 @@ import { PKG_NAME, tkRoot } from "./path";
  * dts 插件生成 .d.ts 文件时，默认会把组件目录下的 styles/*.ts 内容去掉，这里让插件保留
  */
 export const cssResolver: any = {
-  name: "vitepress-theme-teeker-css-resolver",
+  name: "vitepress-theme-teek-css-resolver",
   supports: (id: string) => id.includes("/style/css.ts") || id.includes("/style/index.ts"),
   transform: ({ id, code }: { id: string; code: string }) => {
-    // 逻辑与 VitepressThemeTeekerAlias、VitepressThemeTeekerElementPlusAlias 方法一样（位于 ./plugin）
+    // 逻辑与 VitepressThemeTeekAlias、VitepressThemeTeekElementPlusAlias 方法一样（位于 ./plugin）
     const sourceThemeChalk = `@${PKG_NAME}/theme-chalk`;
     const bundleThemeChalk = `${PKG_NAME}/theme-chalk`;
 

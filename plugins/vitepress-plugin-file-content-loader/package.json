@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-file-content-loader",
   "type": "module",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "扫描项目里的指定文件，处理文件内容",
   "author": {
     "name": "teeker",
@@ -15,13 +15,13 @@
     "contentLoad"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/tree/master/plugins/vitepress-plugin-catalogue",
+  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teek/tree/master/plugins/vitepress-plugin-catalogue",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kele-Bingtang/vitepress-theme-teeker.git"
+    "url": "git+https://github.com/Kele-Bingtang/vitepress-theme-teek.git"
   },
   "bugs": {
-    "url": "https://github.com/Kele-Bingtang/vitepress-theme-teeker/issues"
+    "url": "https://github.com/Kele-Bingtang/vitepress-theme-teek/issues"
   },
   "files": [
     "dist"

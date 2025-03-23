@@ -1,14 +1,14 @@
 import { defineConfig } from "vitepress";
-import tkThemeConfig from "vitepress-theme-teeker/config";
+import tkThemeConfig from "vitepress-theme-teek/config";
 
-const description = ["vitepress-theme-teeker 使用文档", "vitepress 主题框架"].toString();
+const description = ["vitepress-theme-teek 使用文档", "vitepress 主题框架"].toString();
 
 const tkConfig = tkThemeConfig({
   author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
   footerInfo: {
     copyright: {
       createYear: 2021,
-      suffix: "Teeker Docs",
+      suffix: "Teek Docs",
     },
     icpRecord: {
       name: "桂ICP备2021009994号",
@@ -21,18 +21,18 @@ const tkConfig = tkThemeConfig({
 export default defineConfig({
   extends: tkConfig,
   base: "/",
-  title: "vitepress-theme-teeker",
+  title: "vitepress-theme-teek",
   description: description,
   cleanUrls: true,
   lastUpdated: true,
   lang: "zh-CN",
   head: [
-    ["link", { rel: "icon", type: "image/svg+xml", href: "/teeker-logo-mini.svg" }],
-    ["link", { rel: "icon", type: "image/png", href: "/teeker-logo-mini.png" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg" }],
+    ["link", { rel: "icon", type: "image/png", href: "/teek-logo-mini.png" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:locale", content: "zh-CN" }],
-    ["meta", { property: "og:title", content: "Teeker | Vitepress Theme" }],
-    ["meta", { property: "og:site_name", content: "Teeker" }],
+    ["meta", { property: "og:title", content: "Teek | Vitepress Theme" }],
+    ["meta", { property: "og:site_name", content: "Teek" }],
     ["meta", { property: "og:image", content: "" }],
     ["meta", { property: "og:url", content: "" }],
     ["meta", { name: "author", content: "Tianke" }],
@@ -70,7 +70,7 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: "/teeker-logo-mini.svg",
+    logo: "/teek-logo-mini.svg",
     darkModeSwitchLabel: "主题",
     sidebarMenuLabel: "菜单",
     returnToTopLabel: "返回顶部",
@@ -89,14 +89,14 @@ export default defineConfig({
       { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
       { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
     ],
-    socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teeker" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek" }],
 
     search: {
       provider: "local",
     },
     editLink: {
       text: "在 GitHub 上编辑此页",
-      pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teeker/edit/master/hd-security-docs/docs/:path",
+      pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/hd-security-docs/docs/:path",
     },
   },
 });

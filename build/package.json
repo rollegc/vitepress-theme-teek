@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "@vitepress-theme-teeker/build",
+  "name": "@vitepress-theme-teek/build",
   "version": "1.0.0",
-  "description": "Build Toolchain for vitepress-theme-teeker",
+  "description": "Build Toolchain for vitepress-theme-teek",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

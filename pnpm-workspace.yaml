@@ -1,5 +1,5 @@
 packages:
-  - vitepress-theme-teeker
+  - vitepress-theme-teek
   - plugins/*
   - docs
   - build
