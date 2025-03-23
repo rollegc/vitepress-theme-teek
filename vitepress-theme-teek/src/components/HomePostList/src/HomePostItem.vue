@@ -37,8 +37,7 @@ const excerpt = post.frontmatter.description || post.excerpt || (showCapture && 
  */
 const handleViewImg = (imgUrl: string | string[]) => {
   const urlList = [imgUrl || []].flat() as string[];
-  const imageViewerOptions = { ...imageViewer, urlList };
-  createImageViewer(imageViewerOptions);
+  createImageViewer({ ...imageViewer, urlList });
 };
 
 const coverImgMap = computed(() => {

@@ -1,6 +1,15 @@
 <script setup lang="ts" name="ArticleImagePreview">
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, computed, unref } from "vue";
+import { useData } from "vitepress";
 import { createImageViewer } from "../../ImageViewer";
+
+const { theme, frontmatter } = useData();
+
+// 文章图片配置
+const imageViewer = computed<Article>(() => {
+  const { imageViewer = {} } = { ...unref(theme).article, ...unref(frontmatter).article };
+  return imageViewer;
+});
 
 const selector = ".content-container .main";
 
@@ -22,7 +31,7 @@ const previewImage = (e: Event) => {
       initialIndex = urlList.length - 1;
     }
 
-    createImageViewer({ urlList, initialIndex, infinite: false });
+    createImageViewer({ ...unref(imageViewer), urlList, initialIndex, infinite: false });
   }
 };
 

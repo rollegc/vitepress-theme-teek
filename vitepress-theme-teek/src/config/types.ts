@@ -971,7 +971,18 @@ export interface Article {
      */
     className?: string;
   };
+  /**
+   * 文章页顶部使用 Vitepress 容器添加提示
+   *
+   * @param frontmatter 文档 frontmatter
+   * @param localeIndex 当前国际化语言
+   * @param page 文章信息，即 useData().page 的信息
+   */
   topTip?: (frontmatter: PageData["frontmatter"], localeIndex: string, page: PageData) => VpContainerProps | void;
+  /**
+   * 文章页的图片查看器配置，完全是 ElImageViewer 的 props
+   */
+  imageViewer?: Partial<ImageViewerProps>;
 }
 
 export type ArticleInfoPosition = "post" | "article";
