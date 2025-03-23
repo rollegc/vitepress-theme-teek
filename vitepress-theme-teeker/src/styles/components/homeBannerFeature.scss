@@ -6,18 +6,16 @@
   margin: 2.5rem auto 0;
   overflow: hidden;
   padding: 2rem 0;
+  position: relative;
 
   @include e(feature__item) {
-    flex-grow: 1;
-    flex-basis: 30%;
-    max-width: 30%;
+    width: 30%;
+    text-align: center;
     color: getCssVar("banner-text-color");
 
     .feature-img {
       width: 10rem;
       height: 10rem;
-      animation: heart 1.2s ease-in-out 0s infinite alternate;
-      animation-play-state: paused;
     }
 
     .feature-title {
@@ -29,6 +27,12 @@
     .feature-description {
       opacity: 0.8;
       margin: 1rem;
+    }
+  }
+
+  @media (max-width: 719px) {
+    @include e(feature__item) {
+      width: 100%;
     }
   }
 }

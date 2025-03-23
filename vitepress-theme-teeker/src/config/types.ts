@@ -350,10 +350,6 @@ export interface Banner {
    */
   textColor?: string;
   /**
-   * Banner 显示新特性列表
-   */
-  features?: { title: string; description?: string; link?: string; imgUrl?: string }[];
-  /**
    * 标题字体大小
    *
    * @default '3.2rem'
@@ -413,6 +409,16 @@ export interface Banner {
    * @default false
    */
   typesShuffle?: boolean;
+  /**
+   * Banner 新特性列表
+   */
+  features?: { title: string; description?: string; link?: string; imgUrl?: string }[];
+  /**
+   * feature 轮播间隔时间，单位：毫秒。仅在移动端生效（屏幕小于 719px）
+   *
+   * @default 4000
+   */
+  featureCarousel?: number;
 }
 
 export interface Wallpaper {
@@ -473,6 +479,12 @@ export interface Post {
    * @default false
    */
   showCapture?: boolean;
+  /**
+   * 文章信息（作者、创建时间、分类、标签等信息）是否添加 | 分隔符
+   *
+   * @default false
+   */
+  splitSeparator?: boolean;
   /**
    * 首页的图片查看器配置，完全是 ElImageViewer 的 props
    */

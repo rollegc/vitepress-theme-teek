@@ -51,7 +51,7 @@ pnpm plugin:build
 
 ## TODO
 
-- 新增、删除、修改 md 后自动重启，参考 Vitepress 修改 config 重启方式
+- Teeker 改为 Teek
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库

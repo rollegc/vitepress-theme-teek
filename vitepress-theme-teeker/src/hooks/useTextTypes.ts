@@ -14,8 +14,8 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
   const shouldAnimate = ref(false);
 
   let originText = "";
-  let typesInInterval: NodeJS.Timeout;
-  let typesOutInterval: NodeJS.Timeout;
+  let typesInIntervalIdId: NodeJS.Timeout;
+  let typesOutIntervalId: NodeJS.Timeout;
   // 为 originText 的长度服务
   let index = 0;
   // 为 typesArray 组下标服务
@@ -35,11 +35,11 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
     text.value = originText.substring(0, index++);
 
     if (index > originText.length) {
-      if (typesInInterval) clearInterval(typesInInterval);
+      if (typesInIntervalIdId) clearInterval(typesInIntervalIdId);
       // 打字结束，开启动画效果
       shouldAnimate.value = true;
       setTimeout(() => {
-        typesOutInterval = setInterval(() => {
+        typesOutIntervalId = setInterval(() => {
           typesOut();
         }, typesOutTime);
       }, typesNextTime);
@@ -54,7 +54,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
       shouldAnimate.value = false;
       text.value = originText.substring(0, index--);
     } else {
-      if (typesOutInterval) clearInterval(typesOutInterval);
+      if (typesOutIntervalId) clearInterval(typesOutIntervalId);
       // 删字结束，开启动画效果
       shouldAnimate.value = true;
 
@@ -72,7 +72,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
           length = (length + 1) % unref(typesArray).length;
         }
 
-        typesInInterval = setInterval(() => {
+        typesInIntervalIdId = setInterval(() => {
           typesIn();
         }, typesInTime);
       }, typesNextTime);
@@ -84,7 +84,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
    */
   const startTypes = () => {
     shouldAnimate.value = false;
-    typesInInterval = setInterval(() => {
+    typesInIntervalIdId = setInterval(() => {
       typesIn();
     }, typesInTime);
   };
@@ -93,8 +93,8 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
    * 停止打字
    */
   const stopTypes = () => {
-    if (typesInInterval) clearInterval(typesInInterval);
-    if (typesOutInterval) clearInterval(typesOutInterval);
+    if (typesInIntervalIdId) clearInterval(typesInIntervalIdId);
+    if (typesOutIntervalId) clearInterval(typesOutIntervalId);
     shouldAnimate.value = false;
   };
 

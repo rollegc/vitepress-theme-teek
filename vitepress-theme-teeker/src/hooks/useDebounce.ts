@@ -9,19 +9,19 @@ export const useDebounce = <T extends (...args: any[]) => any>(
   delay: number,
   immediate = true
 ): ((...args: Parameters<T>) => void) => {
-  let timeoutId: ReturnType<typeof setTimeout>;
+  let timer: ReturnType<typeof setTimeout>;
 
   return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
     const context = this;
 
     const later = () => {
-      timeoutId = null as any;
+      timer = null as any;
       if (!immediate) func.apply(context, args);
     };
 
-    const callNow = immediate && !timeoutId;
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(later, delay);
+    const callNow = immediate && !timer;
+    clearTimeout(timer);
+    timer = setTimeout(later, delay);
 
     if (callNow) func.apply(context, args);
   };

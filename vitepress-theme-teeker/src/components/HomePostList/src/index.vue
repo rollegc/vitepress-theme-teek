@@ -89,7 +89,7 @@ useWindowSize(width => {
     if (pagePropsRef.layout !== targetLayout) pagePropsRef.layout = targetLayout;
   } else if (pagePropsRef.layout !== layout) pagePropsRef.layout = layout;
 
-  if (width < 960) {
+  if (width <= 960) {
     if (coverImgMode.value !== "default") coverImgMode.value = "default";
   } else if (coverImgMode.value !== coverImgModeConst) coverImgMode.value = coverImgModeConst;
 });

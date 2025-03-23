@@ -49,7 +49,7 @@ const noticeTitle = computed(() => {
 // 是否在移动端隐藏公告功能
 if (mobileMinify) {
   useWindowSize(width => {
-    if (width < 768) destroyNoticeIcon.value = false;
+    if (width <= 768) destroyNoticeIcon.value = false;
     else if (destroyNoticeIcon.value !== true) destroyNoticeIcon.value = true;
   });
 }

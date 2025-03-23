@@ -24,6 +24,7 @@ const {
   showMore = true,
   moreLabel = "阅读全文 >",
   showCapture = false,
+  splitSeparator = false,
   imageViewer = {},
 }: Post = { ...theme.post, ...frontmatter.tk?.post };
 const { showInfo = true }: Article = { ...theme.article, ...frontmatter.tk?.article };
@@ -87,7 +88,7 @@ const isShowInfo = computed(() => {
 
         <!-- 文章信息 -->
         <div :class="ns.e('info__left__footer')">
-          <ArticleInfo v-if="isShowInfo" :post scope="post" split />
+          <ArticleInfo v-if="isShowInfo" :post scope="post" :split="splitSeparator" />
         </div>
 
         <!-- 摘要 bottom -->

@@ -7,13 +7,13 @@
     color: getCssVar("lower-color-2");
   }
 
-  &.article > div:not(:last-child) {
+  &.article > span:not(:last-child) {
     margin-right: 14px;
   }
 
   @include e(item) {
     &:not(.split):not(:last-child) {
-      margin-right: 14px;
+      margin-right: 16px;
     }
     i {
       vertical-align: -2px;
