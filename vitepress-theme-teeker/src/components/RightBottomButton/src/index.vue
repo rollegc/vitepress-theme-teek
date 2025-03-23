@@ -37,9 +37,18 @@ const scrollToComment = useDebounce(() => {
 
 const watchScroll = () => {
   scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop || 0;
+  updateScrollProgress();
+};
+
+const progress = ref(0);
+
+const updateScrollProgress = () => {
+  const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progress.value = Math.round(p * 100);
 };
 
 onMounted(() => {
+  updateScrollProgress();
   window.addEventListener("scroll", watchScroll);
 });
 
@@ -128,7 +137,13 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
     <slot name="teeker-right-bottom-before" />
 
     <transition name="fade">
-      <div title="返回顶部" :class="ns.e('button')" v-show="showToTop" @click="scrollToTop">
+      <div
+        title="返回顶部"
+        :class="[ns.e('button'), 'back-top']"
+        v-show="showToTop"
+        @click="scrollToTop"
+        :style="{ [ns.cssVarName('progress')]: progress }"
+      >
         <Icon :icon="rocketSvg"></Icon>
       </div>
     </transition>
