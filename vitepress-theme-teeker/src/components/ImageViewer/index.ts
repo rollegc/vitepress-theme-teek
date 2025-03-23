@@ -1,7 +1,7 @@
 import ImageViewer, { type ImageViewerProps } from "./src/index.vue";
 import { createVNode, render, type VNode } from "vue";
 
-export { ImageViewer };
+export { ImageViewer as TkImageViewer };
 
 let instance: VNode | null = null;
 

@@ -1,3 +1,3 @@
 import type CommentTwikoo from "./index.vue";
 
-export type CommentTwikooInstance = InstanceType<typeof CommentTwikoo>;
+export type TkCommentTwikooInstance = InstanceType<typeof CommentTwikoo>;

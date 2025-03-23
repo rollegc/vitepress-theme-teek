@@ -1,3 +1,3 @@
 import type CommentGiscus from "./index.vue";
 
-export type CommentGiscusInstance = InstanceType<typeof CommentGiscus>;
+export type TkCommentGiscusInstance = InstanceType<typeof CommentGiscus>;

@@ -1,2 +1,2 @@
 import "../../base/style/index";
-import "@vitepress-theme-teeker/theme-chalk/src/components/homeFullscreenWallpaper.scss";
+import "@vitepress-theme-teeker/theme-chalk/src/components/home-fullscreen-wallpaper.scss";

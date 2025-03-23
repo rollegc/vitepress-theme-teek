@@ -1,3 +1,3 @@
 import type HomeMyCard from "./index.vue";
 
-export type HomeMyCardInstance = InstanceType<typeof HomeMyCard>;
+export type TkHomeMyCardInstance = InstanceType<typeof HomeMyCard>;

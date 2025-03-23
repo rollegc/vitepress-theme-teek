@@ -6,22 +6,22 @@ import { useNamespace } from "../hooks";
 import { usePage, useUnrefData } from "../configProvider";
 import { TkThemeConfig } from "../config/types";
 import {
-  Home,
-  ArchivesPage,
-  CataloguePage,
-  ArticleAnalyze,
-  ArticleImagePreview,
-  BodyBgImage,
-  Footer,
-  RightBottomButton,
-  CommentTwikoo,
-  CommentArtalk,
-  CommentGiscus,
-  CommentWaline,
-  CodeBlockToggle,
-  ArticlePageStyle,
-  Notice,
-  VpContainer,
+  TkHome,
+  TkArchivesPage,
+  TkCataloguePage,
+  TkArticleAnalyze,
+  TkArticleImagePreview,
+  TkBodyBgImage,
+  TkFooter,
+  TkRightBottomButton,
+  TkCommentTwikoo,
+  TkCommentArtalk,
+  TkCommentGiscus,
+  TkCommentWaline,
+  TkCodeBlockToggle,
+  TkArticlePageStyle,
+  TkNotice,
+  TkVpContainer,
 } from "../components";
 import { isBoolean } from "../helper";
 
@@ -55,10 +55,10 @@ const commentConfig = computed(() => {
   return {
     enabled: true,
     components: {
-      twikoo: CommentTwikoo,
-      waline: CommentWaline,
-      giscus: CommentGiscus,
-      artalk: CommentArtalk,
+      twikoo: TkCommentTwikoo,
+      waline: TkCommentWaline,
+      giscus: TkCommentGiscus,
+      artalk: TkCommentArtalk,
     },
     provider: comment.provider,
     options: comment.options,
@@ -73,20 +73,20 @@ const topTipConfig = computed(() => {
 <template>
   <template v-if="tkTheme">
     <ClientOnly>
-      <RightBottomButton>
+      <TkRightBottomButton>
         <!-- 通用插槽 -->
         <template v-for="(_, name) in $slots" :key="name" #[name]>
           <slot :name="name" />
         </template>
-      </RightBottomButton>
+      </TkRightBottomButton>
 
-      <BodyBgImage v-if="bodyBgImg?.imgSrc" />
+      <TkBodyBgImage v-if="bodyBgImg?.imgSrc" />
 
-      <Notice v-if="notice?.enabled">
+      <tkNotice v-if="notice?.enabled">
         <template v-for="(_, name) in $slots" :key="name" #[name]>
           <slot :name="name" />
         </template>
-      </Notice>
+      </tkNotice>
     </ClientOnly>
 
     <Layout :class="ns.b()">
@@ -96,11 +96,11 @@ const topTipConfig = computed(() => {
 
         <ClientOnly>
           <!-- 自定义首页 -->
-          <Home v-if="themeConfig.tkHome">
+          <TkHome v-if="themeConfig.tkHome">
             <template v-for="(_, name) in $slots" :key="name" #[name]>
               <slot :name="name" />
             </template>
-          </Home>
+          </TkHome>
         </ClientOnly>
 
         <slot name="teeker-home-after" />
@@ -109,7 +109,7 @@ const topTipConfig = computed(() => {
       <template #layout-bottom>
         <slot name="teeker-footer-before" />
 
-        <Footer v-if="isHomePage" />
+        <TkFooter v-if="isHomePage" />
 
         <slot name="teeker-footer-after" />
         <slot name="layout-bottom" />
@@ -120,13 +120,13 @@ const topTipConfig = computed(() => {
         <slot name="teeker-article-analyze-before" />
 
         <ClientOnly>
-          <ArticleAnalyze />
-          <ArticleImagePreview />
-          <ArticlePageStyle />
-          <CodeBlockToggle />
+          <TkArticleAnalyze />
+          <TkArticleImagePreview />
+          <TkArticlePageStyle />
+          <TkCodeBlockToggle />
         </ClientOnly>
 
-        <VpContainer v-if="topTipConfig" v-bind="topTipConfig" />
+        <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
 
         <slot name="teeker-article-analyze-after" />
       </template>
@@ -156,16 +156,16 @@ const topTipConfig = computed(() => {
         <slot name="page-top" />
         <slot name="teeker-page-top-before" />
 
-        <ArchivesPage v-if="isArchivesPage">
+        <TkArchivesPage v-if="isArchivesPage">
           <template v-for="(_, name) in $slots" :key="name" #[name]>
             <slot :name="name" />
           </template>
-        </ArchivesPage>
-        <CataloguePage v-if="isCataloguePage">
+        </TkArchivesPage>
+        <TkCataloguePage v-if="isCataloguePage">
           <template v-for="(_, name) in $slots" :key="name" #[name]>
             <slot :name="name" />
           </template>
-        </CataloguePage>
+        </TkCataloguePage>
 
         <slot name="teeker-page-top-after" />
       </template>

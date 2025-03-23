@@ -1,7 +1,7 @@
 import DefaultTheme from "vitepress/theme";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
-import { CataloguePage, ArchivesPage } from "./components";
+import { TkCataloguePage, TkArchivesPage } from "./components";
 import "./styles/index.scss";
 
 import "element-plus/theme-chalk/base.css";
@@ -28,7 +28,7 @@ export default {
   extends: DefaultTheme,
   Layout: configProvider(Layout),
   enhanceApp({ app, router, siteData }) {
-    app.component("cataloguePage", CataloguePage);
-    app.component("archivesPage", ArchivesPage);
+    app.component("TkCataloguePage", TkCataloguePage);
+    app.component("TkArchivesPage", TkArchivesPage);
   },
 } as DefaultThemeType & { extends: DefaultThemeType };

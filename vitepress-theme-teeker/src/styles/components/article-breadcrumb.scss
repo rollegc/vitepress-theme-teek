@@ -2,7 +2,7 @@
 @use "../mixins/function" as *;
 
 @use "./breadcrumb";
-@use "./breadcrumbItem";
+@use "./breadcrumb-item";
 
 @include b(articleBreadcrumb) {
   .el-breadcrumb__separator {

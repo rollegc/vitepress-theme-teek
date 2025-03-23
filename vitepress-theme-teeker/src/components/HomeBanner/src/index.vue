@@ -1,5 +1,7 @@
 <script setup lang="ts" name="HomeBanner">
+import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
+import { upperFirst } from "../../../helper";
 import { useUnrefData } from "../../../configProvider";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
@@ -7,12 +9,10 @@ import HomeBannerContent from "./HomeBannerContent.vue";
 import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 import { Banner, BodyBgImg } from "../../../config/types";
-import { onMounted, onUnmounted, ref, unref } from "vue";
 
 defineOptions({ name: "HomeBanner" });
 
 const ns = useNamespace("banner");
-const centerClass = ns.joinNamespace("center");
 
 const { theme, frontmatter } = useUnrefData();
 
@@ -25,16 +25,18 @@ const {
   descFontSize = "1.4rem",
 }: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
 const { imgSrc, bannerStyle = "full" }: BodyBgImg = theme.bodyBgImg || {};
+const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
 
 // 纯色背景风格
-const isPureBgStyle = bgStyle === "pure";
+const isBannerPureBgStyle = bgStyle === "pure";
 // 局部图片背景风格
-const isPartImgBgStyle = bgStyle === "partImg";
+const isBannerPartImgBgStyle = bgStyle === "partImg";
 // 全屏图片背景风格
-const isFullImgBgStyle = bgStyle === "fullImg";
+const isBannerFullImgBgStyle = bgStyle === "fullImg";
 // 是否使用 bodyBgImg 配置
-const isBodyImgBg = !!imgSrc;
-const isBodyImgBgFull = isBodyImgBg && bannerStyle === "full";
+const isBodyImgBgStyle = !!imgSrc;
+const isBodyPartImgBgStyle = isBodyImgBgStyle && bannerStyle === "part";
+const isBodyFullImgBgStyle = isBodyImgBgStyle && bannerStyle === "full";
 
 const getStyle = () => {
   const titleTextVar = ns.cssVarName("banner-title-text");
@@ -56,14 +58,14 @@ const toggleClass = () => {
 
   if (!vPNavDom || !windowH) return;
 
-  const offset = isBodyImgBg ? 0 : 100;
+  const offset = isBodyImgBgStyle ? 0 : 100;
   if (unref(bannerRef) && document.documentElement.scrollTop + offset < windowH) {
     vPNavDom.classList.add("full-img-nav-bar");
   } else vPNavDom.classList.remove("full-img-nav-bar");
 };
 
 onMounted(() => {
-  if (isFullImgBgStyle || isBodyImgBgFull) {
+  if (isBannerFullImgBgStyle || isBodyFullImgBgStyle) {
     // 全屏图片模式，监听滚轮，修改导航栏样式（透明化）
     toggleClass();
     window.addEventListener("scroll", toggleClass);
@@ -71,35 +73,84 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (isFullImgBgStyle || isBodyImgBg) window.removeEventListener("scroll", toggleClass);
+  if (isBannerFullImgBgStyle || isBodyImgBgStyle) window.removeEventListener("scroll", toggleClass);
+});
+
+// full 模式（全屏图片模式）需要将内容和 Feature 居中，所以需要添加 class: center
+const styleComponentMap: Record<string, any> = {
+  bodyPart: { el: "div", className: `body-pure` },
+  bodyFull: { el: "div", className: `body-full`, centerClass: ns.joinNamespace("center") },
+  bannerPure: { el: HomeBannerBgPure },
+  bannerPartImg: { el: HomeBannerBgImage },
+  bannerFullImg: { el: HomeBannerBgImage, centerClass: ns.joinNamespace("center") },
+};
+
+const styleComponent = computed(() => {
+  const currentStyle = isBodyImgBgStyle ? `body${upperFirst(bannerStyle)}` : `banner${upperFirst(bgStyle)}`;
+
+  return styleComponentMap[currentStyle];
 });
 </script>
 
 <template>
   <slot name="teeker-home-banner-before" />
 
-  <div ref="bannerRef" :class="ns.b()" :style="getStyle()">
-    <div v-if="isBodyImgBg" :class="[bannerStyle, 'body-img']">
-      <div :class="{ [centerClass]: isBodyImgBgFull }">
+  <div
+    ref="bannerRef"
+    :class="[
+      ns.b(),
+      {
+        [ns.is('pure')]: isBannerPureBgStyle,
+        [ns.is('part-img')]: isBannerPartImgBgStyle || isBodyPartImgBgStyle,
+        [ns.is('full-img')]: isBannerFullImgBgStyle || isBodyFullImgBgStyle,
+      },
+    ]"
+    :style="getStyle()"
+  >
+    <component :is="styleComponent.el" :class="styleComponent.className">
+      <div :class="[styleComponent.centerClass, { 'no-feature': !features.length }]">
+        <slot name="teeker-home-banner-content-before" />
         <HomeBannerContent />
-        <HomeBannerFeature />
-      </div>
-    </div>
+        <slot name="teeker-home-banner-content-after" />
 
-    <HomeBannerBgPure v-else-if="isPureBgStyle">
-      <HomeBannerContent />
-      <HomeBannerFeature />
-    </HomeBannerBgPure>
-
-    <HomeBannerBgImage v-else-if="isPartImgBgStyle || isFullImgBgStyle">
-      <div :class="{ [centerClass]: isFullImgBgStyle }">
-        <HomeBannerContent />
         <HomeBannerFeature />
+        <slot name="teeker-home-banner-feature-after" />
       </div>
-    </HomeBannerBgImage>
+    </component>
+
+    <HomeBannerWaves v-if="imgWaves && isBannerFullImgBgStyle && !isBodyImgBgStyle" />
   </div>
-
-  <HomeBannerWaves v-if="imgWaves && isFullImgBgStyle && !isBodyImgBg" />
 
   <slot name="teeker-home-banner-before" />
 </template>
+
+<!-- 上面的 `<component :is="styleComponent.el" :class="styleComponent.className"> xxx </component>` 等于下面的代码 -->
+<!-- <template>
+  <div v-if="isBodyImgBgStyle" :class="`body-${bannerStyle}`">
+    <div :class="{ [centerClass]: isBodyFullImgBgStyle, 'no-feature': !features.length }">
+      <HomeBannerContent />
+
+      <slot name="teeker-home-banner-feature-before" />
+      <HomeBannerFeature />
+      <slot name="teeker-home-banner-feature-after" />
+    </div>
+  </div>
+
+  <HomeBannerBgPure v-else-if="isBannerPureBgStyle">
+    <HomeBannerContent />
+
+    <slot name="teeker-home-banner-feature-before" />
+    <HomeBannerFeature />
+    <slot name="teeker-home-banner-feature-after" />
+  </HomeBannerBgPure>
+
+  <HomeBannerBgImage v-else-if="isBannerPartImgBgStyle || isBannerFullImgBgStyle">
+    <div :class="{ [centerClass]: isBannerFullImgBgStyle, 'no-feature': !features.length }">
+      <HomeBannerContent />
+
+      <slot name="teeker-home-banner-feature-before" />
+      <HomeBannerFeature />
+      <slot name="teeker-home-banner-feature-after" />
+    </div>
+  </HomeBannerBgImage>
+</template> -->

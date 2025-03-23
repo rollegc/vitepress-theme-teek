@@ -1,6 +1,6 @@
 import CommentGiscus from "./src/index.vue";
 
-export { CommentGiscus };
+export { CommentGiscus as TkCommentGiscus };
 export default CommentGiscus;
 
 export * from "./src/instance";

@@ -1,3 +1,3 @@
 import type VpContainer from "./index.vue";
 
-export type VpContainerInstance = InstanceType<typeof VpContainer>;
+export type TkVpContainerInstance = InstanceType<typeof VpContainer>;

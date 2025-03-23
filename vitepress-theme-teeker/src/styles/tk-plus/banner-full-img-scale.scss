@@ -1,0 +1,29 @@
+@use "../mixins/bem" as *;
+@use "../mixins/mixins" as *;
+@use "../mixins/function" as *;
+
+@include b(banner) {
+  @include when(full-img) {
+    overflow: hidden;
+    margin-top: calc(-1 * var(--vp-nav-height));
+    margin-bottom: calc(1 * var(--vp-nav-height));
+  }
+
+  @include b(bannerBgImage) {
+    .full {
+      animation: enlarge getCssVar("banner-img-switch-interval-s") linear infinite;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      margin-top: 0;
+
+      @keyframes enlarge {
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}

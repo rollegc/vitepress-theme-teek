@@ -1,2 +1,2 @@
 import "../../base/style/css";
-import "@vitepress-theme-teeker/theme-chalk/home.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-home.css";

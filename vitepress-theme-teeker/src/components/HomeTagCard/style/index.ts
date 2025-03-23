@@ -1,2 +1,2 @@
 import "../../base/style/index";
-import "@vitepress-theme-teeker/theme-chalk/src/components/homeTagCard.scss";
+import "@vitepress-theme-teeker/theme-chalk/src/components/home-tag-card.scss";

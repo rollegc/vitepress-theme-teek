@@ -1,3 +1,3 @@
 import type ArticleAnalyze from "./index.vue";
 
-export type ArticleAnalyzeInstance = InstanceType<typeof ArticleAnalyze>;
+export type TkArticleAnalyzeInstance = InstanceType<typeof ArticleAnalyze>;

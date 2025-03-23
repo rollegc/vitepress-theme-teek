@@ -1,2 +1,2 @@
 import "../../base/style/css";
-import "@vitepress-theme-teeker/theme-chalk/homeRightInfo.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-home-right-info.css";

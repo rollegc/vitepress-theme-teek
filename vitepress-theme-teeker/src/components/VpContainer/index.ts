@@ -1,7 +1,7 @@
 import VpContainer from "./src/index.vue";
 
-export { VpContainer };
+export { VpContainer as TkVpContainer };
 export default VpContainer;
 
-export * from "./src/vpContainer";
+export type { VpContainerProps as TkVpContainerProps } from "./src/vpContainer";
 export * from "./src/instance";

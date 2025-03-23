@@ -2,7 +2,7 @@
 @use "../mixins/function" as *;
 
 @include b(bannerBgImage) {
-  &.part {
+  .part {
     min-height: 450px;
     z-index: -5;
     .mask {
@@ -10,13 +10,13 @@
     }
   }
 
-  &.full {
+  .full {
     height: 100vh;
     margin-top: calc(-1 * var(--vp-nav-height));
   }
 
-  &.part,
-  &.full {
+  .part,
+  .full {
     background: getCssVar("banner-img-bg") fixed;
     transition: background 1s;
 

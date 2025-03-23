@@ -1,2 +1,2 @@
 import "../../base/style/index";
-import "@vitepress-theme-teeker/theme-chalk/src/components/commentWaline.scss";
+import "@vitepress-theme-teeker/theme-chalk/src/components/comment-waline.scss";

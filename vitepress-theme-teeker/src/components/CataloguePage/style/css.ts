@@ -1,3 +1,3 @@
 import "../../base/style/css";
-import "@vitepress-theme-teeker/theme-chalk/cataloguePage.css";
-import "@vitepress-theme-teeker/theme-chalk/catalogueItem.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-catalogue-page.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-catalogue-item.css";

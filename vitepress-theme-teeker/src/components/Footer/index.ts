@@ -1,6 +1,6 @@
 import Footer from "./src/index.vue";
 
-export { Footer };
+export { Footer as TkFooter };
 export default Footer;
 
 export * from "./src/instance";

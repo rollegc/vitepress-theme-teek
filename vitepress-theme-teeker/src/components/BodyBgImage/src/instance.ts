@@ -1,3 +1,3 @@
 import type BodyBgImage from "./index.vue";
 
-export type BodyBgImageInstance = InstanceType<typeof BodyBgImage>;
+export type TkBodyBgImageInstance = InstanceType<typeof BodyBgImage>;

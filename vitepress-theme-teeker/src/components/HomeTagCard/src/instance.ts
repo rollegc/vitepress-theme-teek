@@ -1,3 +1,3 @@
 import type HomeTagCard from "./index.vue";
 
-export type HomeTagCardInstance = InstanceType<typeof HomeTagCard>;
+export type TkHomeTagCardInstance = InstanceType<typeof HomeTagCard>;

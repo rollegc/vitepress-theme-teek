@@ -57,6 +57,8 @@
       "types": "./es/config/index.d.ts",
       "import": "./es/config/index.mjs"
     },
+    "./vp-plus/*.scss": "./theme-chalk/src/vp-plus/*.scss",
+    "./tk-plus/*.scss": "./theme-chalk/src/tk-plus/*.scss",
     "./*": "./*"
   },
   "dependencies": {

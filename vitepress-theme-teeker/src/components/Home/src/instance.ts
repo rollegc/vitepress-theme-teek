@@ -1,3 +1,3 @@
 import type Home from "./index.vue";
 
-export type HomeInstance = InstanceType<typeof Home>;
+export type TkHomeInstance = InstanceType<typeof Home>;

@@ -1,3 +1,3 @@
 import type CommentArtalk from "./index.vue";
 
-export type CommentArtalkInstance = InstanceType<typeof CommentArtalk>;
+export type TkCommentArtalkInstance = InstanceType<typeof CommentArtalk>;

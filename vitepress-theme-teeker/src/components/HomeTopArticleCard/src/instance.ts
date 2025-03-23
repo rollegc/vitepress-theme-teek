@@ -1,3 +1,3 @@
 import type HomeTopArticleCard from "./index.vue";
 
-export type HomeTopArticleCardInstance = InstanceType<typeof HomeTopArticleCard>;
+export type TkHomeTopArticleCardInstance = InstanceType<typeof HomeTopArticleCard>;

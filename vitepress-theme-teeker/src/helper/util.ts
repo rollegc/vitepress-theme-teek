@@ -5,3 +5,7 @@ export const withBase = (base: string, path?: string) => {
   if (!path) return;
   return /^(?:[a-z]+:|\/\/)/i.test(path) || !path.startsWith("/") ? path : `${base}${path}`.replace(/\/+/g, "/");
 };
+
+export const upperFirst = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

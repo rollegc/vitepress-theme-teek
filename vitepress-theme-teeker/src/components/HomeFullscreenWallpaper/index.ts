@@ -1,6 +1,6 @@
 import HomeFullscreenWallpaper from "./src/index.vue";
 
-export { HomeFullscreenWallpaper };
+export { HomeFullscreenWallpaper as TkHomeFullscreenWallpaper };
 export default HomeFullscreenWallpaper;
 
 export * from "./src/instance";

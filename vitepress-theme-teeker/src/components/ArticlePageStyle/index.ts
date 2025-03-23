@@ -1,6 +1,6 @@
 import ArticlePageStyle from "./src/index.vue";
 
-export { ArticlePageStyle };
+export { ArticlePageStyle as TkArticlePageStyle };
 export default ArticlePageStyle;
 
 export * from "./src/instance";

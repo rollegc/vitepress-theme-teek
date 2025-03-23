@@ -40,7 +40,7 @@ const buildStyle = async () => {
     // 生产环境开启压缩
     if (!isDev) plugins.push(cssnano);
     const result = await postcss(plugins).process(content.css, { from: undefined });
-    const filename = name === "index" ? "index.css" : `${name}.css`;
+    const filename = name === "index" ? "index.css" : `tk-${name}.css`;
     // 在 .//dist/theme-chalk 创建 css 文件
     await writeFile(resolve(distRoot, filename), result.css);
   }

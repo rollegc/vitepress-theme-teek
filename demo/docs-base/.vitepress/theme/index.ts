@@ -1,5 +1,6 @@
 import Teeker from "vitepress-theme-teeker";
 import NoticeContent from "./components/NoticeContent.vue";
+import BannerImgArrow from "./components/BannerImgArrow.vue";
 import { defineComponent, h, nextTick, watch } from "vue";
 import { useData } from "vitepress";
 // import "vitepress-theme-teeker/index.css";
@@ -8,14 +9,15 @@ import "vitepress-theme-teeker/vp-plus/sidebar.scss"; // 侧边栏字体样式
 import "vitepress-theme-teeker/vp-plus/nav.scss"; // 导航栏样式
 // import "vitepress-theme-teeker/vp-plus/nav-blur.scss"; // 导航栏毛玻璃样式
 import "vitepress-theme-teeker/vp-plus/aside.scss"; // 文章目录样式
-import "vitepress-theme-teeker/vp-plus/doc-h1.scss"; // 文档以及标题样式
+import "vitepress-theme-teeker/vp-plus/doc-h1-gradient.scss"; // 文档以及标题样式
 import "vitepress-theme-teeker/vp-plus/mark.scss"; // 文章 mark 标签样式
 import "vitepress-theme-teeker/vp-plus/container.scss"; // Markdown 容器样式
 // import "vitepress-theme-teeker/vp-plus/container-left.scss"; // Markdown 容器左框样式
 // import "vitepress-theme-teeker/vp-plus/container-flow.scss"; // Markdown 容器流体样式
 // import "vitepress-theme-teeker/vp-plus/blockquote.scss"; // 引用样式
-// import "vitepress-theme-teeker/vp-plus/rainbow.scss"; // Vitepress 首页彩虹渐变样式
-import "vitepress-theme-teeker/vp-plus/banner-desc.scss"; // Banner 描述渐变样式
+// import "vitepress-theme-teeker/vp-plus/index-rainbow.scss"; // Vitepress 首页彩虹渐变样式
+import "vitepress-theme-teeker/tk-plus/banner-desc-gradient.scss"; // Banner 描述渐变样式
+import "vitepress-theme-teeker/tk-plus/banner-full-img-scale.scss";
 
 import { useFooterRuntime } from "./helper/useFooterRuntime"; // 首页底部添加运行时间
 
@@ -41,6 +43,7 @@ export default {
       return () =>
         h(Teeker.Layout, null, {
           "teeker-notice-content": () => h(NoticeContent),
+          "teeker-home-banner-feature-after": () => h(BannerImgArrow),
 
           // "teeker-home-before": () => h("div", null, "teeker-home-before"),
           // "teeker-home-after": () => h("div", null, "teeker-home-after"),

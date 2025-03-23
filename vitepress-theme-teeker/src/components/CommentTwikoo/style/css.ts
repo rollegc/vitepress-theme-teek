@@ -1,2 +1,2 @@
 import "../../base/style/css";
-import "@vitepress-theme-teeker/theme-chalk/commentTwikoo.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-comment-twikoo.css";

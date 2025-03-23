@@ -1,3 +1,3 @@
 import type Notice from "./index.vue";
 
-export type NoticeInstance = InstanceType<typeof Notice>;
+export type TkNoticeInstance = InstanceType<typeof Notice>;

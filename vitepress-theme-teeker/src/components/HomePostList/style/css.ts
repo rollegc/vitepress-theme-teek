@@ -1,3 +1,3 @@
 import "../../base/style/css";
-import "@vitepress-theme-teeker/theme-chalk/homePostList.css";
-import "@vitepress-theme-teeker/theme-chalk/homePostItem.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-home-post-list.css";
+import "@vitepress-theme-teeker/theme-chalk/tk-home-post-item.css";

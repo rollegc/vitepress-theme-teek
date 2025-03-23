@@ -2,7 +2,7 @@
 @use "../mixins/config" as *;
 @use "../mixins/function" as *;
 
-@use "./homePostItem";
+@use "./home-post-item";
 
 @include b(postList) {
   @include e(pagination) {

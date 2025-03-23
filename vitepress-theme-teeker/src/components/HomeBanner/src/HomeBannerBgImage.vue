@@ -48,6 +48,7 @@ onMounted(() => {
 const getStyle = () => {
   const imgBgVar = ns.cssVarName("banner-img-bg");
   const maskBgColorVar = ns.cssVarName("banner-mask-bg-color");
+  const imgSwitchIntervalVar = ns.cssVarName("banner-img-switch-interval-s");
 
   // 如果没有传入图片，则加载默认图片
   if (!imgSrc?.length) return { [imgBgVar]: ns.cssVar("bg-img-default") };
@@ -55,23 +56,16 @@ const getStyle = () => {
   return {
     [imgBgVar]: `url(${unref(imageSrc)}) center center / cover no-repeat`,
     [maskBgColorVar]: isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
+    [imgSwitchIntervalVar]: imgInterval / 1000 + "s",
   };
 };
 </script>
 
 <template>
-  <div
-    ref="bannerRef"
-    :class="[
-      ns.b(),
-      {
-        part: isPartImgBgStyle,
-        full: isFullImgBgStyle,
-      },
-    ]"
-    :style="getStyle()"
-  >
-    <div v-if="mask && imgSrc" class="mask" />
-    <slot />
+  <div ref="bannerRef" :class="ns.b()" :style="getStyle()">
+    <div :class="{ part: isPartImgBgStyle, full: isFullImgBgStyle }">
+      <div v-if="mask && imgSrc" class="mask" />
+      <slot />
+    </div>
   </div>
 </template>
