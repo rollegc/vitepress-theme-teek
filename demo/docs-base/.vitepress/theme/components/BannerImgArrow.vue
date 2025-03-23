@@ -26,7 +26,6 @@ const handleClickArrow = () => {
 }
 .banner-arrow {
   text-align: center;
-  position: fixed;
   bottom: -15%;
   left: 50%;
   transform: translateX(-50%);

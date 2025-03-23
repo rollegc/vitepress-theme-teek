@@ -160,7 +160,7 @@ if (overrideInfo.length) {
 </script>
 
 <template>
-  <slot name="-home-doc-analysis-before" />
+  <slot name="teek-home-doc-analysis-before" />
 
   <HomeCard :title="finalTitle" :class="ns.b()">
     <template v-for="item in docAnalysisList" :key="item.key">
@@ -171,5 +171,5 @@ if (overrideInfo.length) {
     </template>
   </HomeCard>
 
-  <slot name="-home-doc-analysis-after" />
+  <slot name="teek-home-doc-analysis-after" />
 </template>

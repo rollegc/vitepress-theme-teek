@@ -72,7 +72,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
 </script>
 
 <template>
-  <slot name="-home-friend-link-before" />
+  <slot name="teek-home-friend-link-before" />
 
   <HomeCard
     :page="!autoScroll"
@@ -120,5 +120,5 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
     </template>
   </HomeCard>
 
-  <slot name="-home-friend-link-after" />
+  <slot name="teek-home-friend-link-after" />
 </template>

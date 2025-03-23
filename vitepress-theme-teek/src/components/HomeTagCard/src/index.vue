@@ -111,7 +111,7 @@ watch(
 </script>
 
 <template>
-  <slot name="-home-tag-before" />
+  <slot name="teek-home-tag-before" />
 
   <HomeCard
     :page="!tagsPage"
@@ -143,5 +143,5 @@ watch(
     </template>
   </HomeCard>
 
-  <slot name="-home-tag-after" />
+  <slot name="teek-home-tag-after" />
 </template>

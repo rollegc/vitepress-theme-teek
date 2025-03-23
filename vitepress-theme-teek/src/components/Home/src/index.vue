@@ -37,9 +37,9 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
       <div :class="ns.e('content__post')">
-        <slot name="-home-post-before" />
+        <slot name="teek-home-post-before" />
         <HomePostList ref="homePostListInstance" />
-        <slot name="-home-post-after" />
+        <slot name="teek-home-post-after" />
       </div>
 
       <div :class="ns.e('content__info')">

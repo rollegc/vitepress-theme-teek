@@ -56,7 +56,7 @@ const getStyle = (num: number, index: number) => {
 </script>
 
 <template>
-  <slot name="-home-top-article-before" />
+  <slot name="teek-home-top-article-before" />
 
   <HomeCard
     page
@@ -97,5 +97,5 @@ const getStyle = (num: number, index: number) => {
     </template>
   </HomeCard>
 
-  <slot name="-home-top-article-after" />
+  <slot name="teek-home-top-article-after" />
 </template>

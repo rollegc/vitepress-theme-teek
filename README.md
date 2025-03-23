@@ -22,7 +22,9 @@ pnpm install
 pnpm to:theme stub
 ```
 
-使用文档项目启动
+## 项目启动
+
+文档项目启动
 
 ```bash
 pnpm docs:dev
@@ -39,7 +41,7 @@ pnpm demo:locales dev
 pnpm demo:localesRoot dev
 ```
 
-如果启动项目失败，则执行如下命令：
+如果项目启动失败，则执行如下命令后再启动：
 
 ```base
 pnpm plugin:build
@@ -51,6 +53,8 @@ pnpm plugin:build
 
 ## TODO
 
+- permalink 把 404 标题去掉
+- `fullImg` 的 `bannerContent`、`bannerFeature` 不使用 `position: absolute` 来居中
 - 主题使用文档编写
 - 部署测试、线上效果测试
 - 发布 NPM 库

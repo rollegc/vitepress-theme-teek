@@ -20,7 +20,7 @@ const tkConfig = tkThemeConfig({
     wordCount: true,
     readingTime: true,
     overrideInfo: [{ key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` }],
-    appendInfo: [{ key: "index", label: "序号", value: "天客99" }],
+    appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
   },
   banner: {
     bgStyle: "fullImg",
@@ -86,7 +86,7 @@ const tkConfig = tkThemeConfig({
       name: "桂ICP备2021009994号",
       link: "http://beian.miit.gov.cn/",
     },
-    customHtml: `<p>小破站已运行了 <span id="footer-runtime"></span></p>`,
+    customHtml: `<p>小破站已运行了 <span id="footer-runtime"></span></p>`, // 搭配 ./theme/helper/useFooterRuntime.ts 使用才有效果
   },
   social: [
     {

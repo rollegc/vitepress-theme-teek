@@ -77,7 +77,7 @@ const componentMap = computed(() => {
 
 <template>
   <div :class="[ns.b(), 'flx-column']">
-    <slot name="-home-info-before" />
+    <slot name="teek-home-info-before" />
 
     <template v-for="item in finalHomeCardSort" :key="item">
       <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
@@ -87,6 +87,6 @@ const componentMap = computed(() => {
       </component>
     </template>
 
-    <slot name="-home-info-after" />
+    <slot name="teek-home-info-after" />
   </div>
 </template>

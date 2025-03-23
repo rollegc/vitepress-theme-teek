@@ -93,7 +93,7 @@ const styleComponent = computed(() => {
 </script>
 
 <template>
-  <slot name="-home-banner-before" />
+  <slot name="teek-home-banner-before" />
 
   <div
     ref="bannerRef"
@@ -109,19 +109,19 @@ const styleComponent = computed(() => {
   >
     <component :is="styleComponent.el" :class="styleComponent.className">
       <div :class="[styleComponent.centerClass, { 'no-feature': !features.length }]">
-        <slot name="-home-banner-content-before" />
+        <slot name="teek-home-banner-content-before" />
         <HomeBannerContent />
-        <slot name="-home-banner-content-after" />
+        <slot name="teek-home-banner-content-after" />
 
         <HomeBannerFeature />
-        <slot name="-home-banner-feature-after" />
+        <slot name="teek-home-banner-feature-after" />
       </div>
     </component>
 
     <HomeBannerWaves v-if="imgWaves && isBannerFullImgBgStyle && !isBodyImgBgStyle" />
   </div>
 
-  <slot name="-home-banner-before" />
+  <slot name="teek-home-banner-before" />
 </template>
 
 <!-- 上面的 `<component :is="styleComponent.el" :class="styleComponent.className"> xxx </component>` 等于下面的代码 -->
@@ -130,27 +130,27 @@ const styleComponent = computed(() => {
     <div :class="{ [centerClass]: isBodyFullImgBgStyle, 'no-feature': !features.length }">
       <HomeBannerContent />
 
-      <slot name="-home-banner-feature-before" />
+      <slot name="teek-home-banner-feature-before" />
       <HomeBannerFeature />
-      <slot name="-home-banner-feature-after" />
+      <slot name="teek-home-banner-feature-after" />
     </div>
   </div>
 
   <HomeBannerBgPure v-else-if="isBannerPureBgStyle">
     <HomeBannerContent />
 
-    <slot name="-home-banner-feature-before" />
+    <slot name="teek-home-banner-feature-before" />
     <HomeBannerFeature />
-    <slot name="-home-banner-feature-after" />
+    <slot name="teek-home-banner-feature-after" />
   </HomeBannerBgPure>
 
   <HomeBannerBgImage v-else-if="isBannerPartImgBgStyle || isBannerFullImgBgStyle">
     <div :class="{ [centerClass]: isBannerFullImgBgStyle, 'no-feature': !features.length }">
       <HomeBannerContent />
 
-      <slot name="-home-banner-feature-before" />
+      <slot name="teek-home-banner-feature-before" />
       <HomeBannerFeature />
-      <slot name="-home-banner-feature-after" />
+      <slot name="teek-home-banner-feature-after" />
     </div>
   </HomeBannerBgImage>
 </template> -->

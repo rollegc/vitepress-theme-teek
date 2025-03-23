@@ -16,7 +16,7 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
 </script>
 
 <template>
-  <slot name="-home-my-before" />
+  <slot name="teek-home-my-before" />
 
   <HomeCard :class="ns.b()">
     <div :class="`${ns.e('avatar')} ${blogger.avatarStyle || 'full'} flx-center`">
@@ -43,5 +43,5 @@ const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social
     </div>
   </HomeCard>
 
-  <slot name="-home-my-after" />
+  <slot name="teek-home-my-after" />
 </template>

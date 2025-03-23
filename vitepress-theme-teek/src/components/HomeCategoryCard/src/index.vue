@@ -107,7 +107,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 </script>
 
 <template>
-  <slot name="-home-category-before" />
+  <slot name="teek-home-category-before" />
 
   <HomeCard
     :page="!categoriesPage"
@@ -147,5 +147,5 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     </template>
   </HomeCard>
 
-  <slot name="-home-category-after" />
+  <slot name="teek-home-category-after" />
 </template>
