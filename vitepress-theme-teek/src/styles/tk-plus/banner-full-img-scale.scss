@@ -13,7 +13,6 @@
     .full {
       animation: enlarge getCssVar("banner-img-switch-interval-s") linear infinite;
       transform-style: preserve-3d;
-      backface-visibility: hidden;
       margin-top: 0;
 
       @keyframes enlarge {
