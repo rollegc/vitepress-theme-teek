@@ -20,7 +20,6 @@ export const externalModule = [
   ...Object.keys(globals),
   "gray-matter",
   "@element-plus/icons-vue",
-  "markdown-it",
   "markdown-it-container",
   "js-yaml",
   "picocolors",

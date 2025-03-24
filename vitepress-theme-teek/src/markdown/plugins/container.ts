@@ -1,6 +1,6 @@
 import type MarkdownIt from "markdown-it";
 import container from "markdown-it-container";
-import { Token } from "markdown-it";
+import type { Token } from "markdown-it";
 
 export type ContainerArgs = [typeof container, string, { render: (tokens: Token[], idx: number) => string }];
 

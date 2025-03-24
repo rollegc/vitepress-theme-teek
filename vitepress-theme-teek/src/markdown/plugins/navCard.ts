@@ -1,4 +1,4 @@
-import MarkdownIt from "markdown-it";
+import type MarkdownIt from "markdown-it";
 import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
