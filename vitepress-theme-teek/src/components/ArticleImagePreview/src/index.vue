@@ -6,7 +6,7 @@ import { createImageViewer } from "../../ImageViewer";
 const { theme, frontmatter } = useData();
 
 // 文章图片配置
-const imageViewer = computed<Article>(() => {
+const imageViewer = computed(() => {
   const { imageViewer = {} } = { ...unref(theme).article, ...unref(frontmatter).article };
   return imageViewer;
 });
