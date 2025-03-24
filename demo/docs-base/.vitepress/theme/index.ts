@@ -3,7 +3,7 @@ import NoticeContent from "./components/NoticeContent.vue";
 import BannerImgArrow from "./components/BannerImgArrow.vue";
 import { defineComponent, h, nextTick, watch } from "vue";
 import { useData } from "vitepress";
-// import "vitepress-theme-teek/index.css";
+import "./style/index.scss"; // 引入Demo\docs-base\.vitepress\theme\style\index.scss全局样式
 import "vitepress-theme-teek/vp-plus/code-block-mobile.scss"; // 移动端代码块样式加 padding
 import "vitepress-theme-teek/vp-plus/sidebar.scss"; // 侧边栏字体样式
 import "vitepress-theme-teek/vp-plus/nav.scss"; // 导航栏样式
@@ -18,9 +18,6 @@ import "vitepress-theme-teek/vp-plus/container.scss"; // Markdown 容器样式
 // import "vitepress-theme-teek/vp-plus/index-rainbow.scss"; // Vitepress 首页彩虹渐变样式
 import "vitepress-theme-teek/tk-plus/banner-desc-gradient.scss"; // Banner 描述渐变样式
 import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全屏图片放大样式
-
-import "./styles/doc-code-shadow.scss"; // 文章页代码块阴影样式
-import "./styles/doc-img-shadow.scss"; // 文章页图片阴影样式
 
 import { useFooterRuntime } from "./helper/useFooterRuntime"; // 首页底部添加运行时间
 
