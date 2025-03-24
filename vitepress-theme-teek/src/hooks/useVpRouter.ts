@@ -1,8 +1,8 @@
 import { useRouter } from "vitepress";
 
-type Router = ReturnType<typeof useRouter>;
-type RouterFn<fn extends keyof Router> = NonNullable<Router[fn]>;
-type BindPosition = "before" | "after";
+export type VpRouter = ReturnType<typeof useRouter>;
+export type VpRouterFn<fn extends keyof VpRouter> = NonNullable<VpRouter[fn]>;
+export type BindPosition = "before" | "after";
 
 /**
  * 绑定自定义函数到 Router 的钩子里，为了防止覆盖掉其他人已添加在 Router 钩子的逻辑，useVpRouter 不是直接覆盖，而是追加。
@@ -18,7 +18,7 @@ export const useVpRouter = () => {
 
   const bindBeforeRouteChange = (
     stateFlag: string,
-    bindFn: RouterFn<"onBeforeRouteChange">,
+    bindFn: VpRouterFn<"onBeforeRouteChange">,
     bindPosition: BindPosition = "after"
   ) => {
     const { state = {}, onBeforeRouteChange } = router;
@@ -38,7 +38,7 @@ export const useVpRouter = () => {
 
   const bindBeforePageLoad = (
     stateFlag: string,
-    bindFn: RouterFn<"onBeforePageLoad">,
+    bindFn: VpRouterFn<"onBeforePageLoad">,
     bindPosition: BindPosition = "after"
   ) => {
     const { state = {}, onBeforePageLoad } = router;
@@ -58,7 +58,7 @@ export const useVpRouter = () => {
 
   const bindAfterPageLoad = (
     stateFlag: string,
-    bindFn: RouterFn<"onAfterPageLoad">,
+    bindFn: VpRouterFn<"onAfterPageLoad">,
     bindPosition: BindPosition = "after"
   ) => {
     const { state = {}, onAfterPageLoad } = router;
@@ -77,7 +77,7 @@ export const useVpRouter = () => {
 
   const bindAfterRouteChange = (
     stateFlag: string,
-    bindFn: RouterFn<"onAfterRouteChange">,
+    bindFn: VpRouterFn<"onAfterRouteChange">,
     bindPosition: BindPosition = "after"
   ) => {
     const { state = {}, onAfterRouteChange } = router;
@@ -93,7 +93,7 @@ export const useVpRouter = () => {
     router.state = { ...state, [stateFlag]: true };
   };
 
-  const bindMoreRouterFn = (stateFlag: string, bindFn: (router: Router) => void) => {
+  const bindRouterFn = (stateFlag: string, bindFn: (router: VpRouter) => void) => {
     const { state = {} } = router;
     if (state[stateFlag]) return;
 
@@ -108,6 +108,6 @@ export const useVpRouter = () => {
     bindBeforePageLoad,
     bindAfterPageLoad,
     bindAfterRouteChange,
-    bindMoreRouterFn,
+    bindRouterFn,
   };
 };

@@ -77,7 +77,7 @@ export interface TkThemeConfig {
    */
   banner?: Banner;
   /**
-   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 (banner.bgStyle = 'fullImg' && banner.imgSrc 不存在) 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
+   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 banner.bgStyle = 'fullImg' 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
    */
   wallpaper?: Wallpaper;
   /**

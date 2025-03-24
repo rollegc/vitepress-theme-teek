@@ -124,7 +124,7 @@ const styleComponent = computed(() => {
   <slot name="teek-home-banner-after" />
 </template>
 
-<!-- 上面的 `<component :is="styleComponent.el" :class="styleComponent.className"> xxx </component>` 等于下面的代码 -->
+<!-- 上面的 `<component :is="styleComponent.el" v-bind="styleComponent.props"> xxx </component>` 等于下面的代码 -->
 <!-- <template>
   <div v-if="isBodyImgBgStyle" :class="`body-${bannerStyle}`">
     <div :class="[styleComponent.centerClass, { 'no-feature': !features.length }]">
