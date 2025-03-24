@@ -232,4 +232,11 @@ export default defineConfig({
       pattern: "https://github.com/Kele-Bingtang/hd-security/edit/master/hd-security-docs/docs/:path",
     },
   },
+
+  // 运行后自动打开网页
+  vite: {
+    server: {
+      open: true
+    },
+  },    
 });

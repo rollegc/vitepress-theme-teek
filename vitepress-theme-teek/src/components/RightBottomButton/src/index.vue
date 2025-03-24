@@ -1,4 +1,6 @@
 <script setup lang="ts" name="RightBottomButton">
+import { ElMessage } from 'element-plus'; // 引入消息提示功能
+import 'element-plus/es/components/message/style/css';
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useNamespace, useDebounce } from "../../../hooks";
@@ -27,7 +29,14 @@ const showToComment = computed(() => {
 });
 
 const scrollToTop = useDebounce(() => {
-  scrollTo("html", 0, 1500);
+  scrollTo("html", 0, 1500, () => {
+    // 添加Element Plus消息提示
+    ElMessage({
+      message: '已回到顶部',// 消息内容
+      type: 'success',  // 消息类型为成功
+      duration: 3000  // 持续时间为3秒
+    });
+  });
   scrollTop.value = 0;
 }, 500);
 
