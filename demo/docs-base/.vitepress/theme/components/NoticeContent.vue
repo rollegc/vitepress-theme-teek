@@ -10,7 +10,7 @@ const namespace = "notice";
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .notice {
   img {
     width: 100%;

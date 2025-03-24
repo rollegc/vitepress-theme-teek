@@ -76,13 +76,24 @@ onUnmounted(() => {
   if (isBannerFullImgBgStyle || isBodyImgBgStyle) window.removeEventListener("scroll", toggleClass);
 });
 
+const getClass = () => {
+  // body 优先级高
+  if (isBodyPartImgBgStyle) return ns.is("part-img");
+  if (isBodyFullImgBgStyle) return ns.is("full-img");
+  if (isBannerPureBgStyle) return ns.is("pure");
+  if (isBannerPartImgBgStyle) return ns.is("part-img");
+  if (isBannerFullImgBgStyle) return ns.is("full-img");
+
+  return "";
+};
+
 // full 模式（全屏图片模式）需要将内容和 Feature 居中，所以需要添加 class: center
 const styleComponentMap: Record<string, any> = {
   bodyPart: { el: "div", className: `body-pure` },
-  bodyFull: { el: "div", className: `body-full`, centerClass: ns.joinNamespace("center") },
+  bodyFull: { el: "div", className: `body-full`, centerClass: ns.joinNamespace("center1") },
   bannerPure: { el: HomeBannerBgPure },
   bannerPartImg: { el: HomeBannerBgImage },
-  bannerFullImg: { el: HomeBannerBgImage, centerClass: ns.joinNamespace("center") },
+  bannerFullImg: { el: HomeBannerBgImage, centerClass: ns.joinNamespace("center1") },
 };
 
 const styleComponent = computed(() => {
@@ -95,20 +106,9 @@ const styleComponent = computed(() => {
 <template>
   <slot name="teek-home-banner-before" />
 
-  <div
-    ref="bannerRef"
-    :class="[
-      ns.b(),
-      {
-        [ns.is('pure')]: isBannerPureBgStyle,
-        [ns.is('part-img')]: isBannerPartImgBgStyle || isBodyPartImgBgStyle,
-        [ns.is('full-img')]: isBannerFullImgBgStyle || isBodyFullImgBgStyle,
-      },
-    ]"
-    :style="getStyle()"
-  >
+  <div ref="bannerRef" :class="[ns.b(), getClass()]" :style="getStyle()">
     <component :is="styleComponent.el" :class="styleComponent.className">
-      <div :class="[styleComponent.centerClass, { 'no-feature': !features.length }]">
+      <div :class="[ns.e('content'), { 'no-feature': !features.length }]">
         <slot name="teek-home-banner-content-before" />
         <HomeBannerContent />
         <slot name="teek-home-banner-content-after" />
@@ -121,13 +121,13 @@ const styleComponent = computed(() => {
     <HomeBannerWaves v-if="imgWaves && isBannerFullImgBgStyle && !isBodyImgBgStyle" />
   </div>
 
-  <slot name="teek-home-banner-before" />
+  <slot name="teek-home-banner-after" />
 </template>
 
 <!-- 上面的 `<component :is="styleComponent.el" :class="styleComponent.className"> xxx </component>` 等于下面的代码 -->
 <!-- <template>
   <div v-if="isBodyImgBgStyle" :class="`body-${bannerStyle}`">
-    <div :class="{ [centerClass]: isBodyFullImgBgStyle, 'no-feature': !features.length }">
+    <div :class="[styleComponent.centerClass, { 'no-feature': !features.length }]">
       <HomeBannerContent />
 
       <slot name="teek-home-banner-feature-before" />

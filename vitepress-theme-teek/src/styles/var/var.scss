@@ -54,6 +54,7 @@
 // 使用自定义自定义全局样式变量
 :root {
   @include set-css-var("home-info-gap", getCssVar("gap1"));
+  @include set-css-var("home-banner-feature-row-gap", getCssVar("gap2"));
   @include set-css-var("home-top-article-gap", getCssVar("gap1"));
   @include set-css-var("home-friend-link-gap", getCssVar("gap2"));
   @include set-css-var("home-article-analyze-gap", getCssVar("gap1"));

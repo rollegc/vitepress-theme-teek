@@ -134,7 +134,7 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
 
 <template>
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
-    <slot name="-right-bottom-before" />
+    <slot name="teek-right-bottom-before" />
 
     <transition name="fade">
       <div
@@ -209,6 +209,6 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
       </transition>
     </div>
 
-    <slot name="-right-bottom-after" />
+    <slot name="teek-right-bottom-after" />
   </div>
 </template>

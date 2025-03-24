@@ -62,10 +62,9 @@ const getStyle = () => {
 </script>
 
 <template>
-  <div ref="bannerRef" :class="ns.b()" :style="getStyle()">
-    <div :class="{ part: isPartImgBgStyle, full: isFullImgBgStyle }">
-      <div v-if="mask && imgSrc" class="mask" />
-      <slot />
-    </div>
+  <div :class="[ns.b(), { part: isPartImgBgStyle, full: isFullImgBgStyle }]" :style="getStyle()">
+    <div v-if="mask && imgSrc" class="mask" />
+    <slot v-if="isPartImgBgStyle" />
   </div>
+  <slot v-if="isFullImgBgStyle" />
 </template>

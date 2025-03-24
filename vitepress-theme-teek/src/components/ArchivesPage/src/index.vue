@@ -21,7 +21,7 @@ const posts = usePosts();
       <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
     </div>
 
-    <slot name="-archives-top-after" />
+    <slot name="teek-archives-top-after" />
 
     <div :class="ns.e('timeline')">
       <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">

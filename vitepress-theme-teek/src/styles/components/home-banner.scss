@@ -1,4 +1,5 @@
 @use "../mixins/bem" as *;
+@use "../mixins/config" as *;
 @use "../mixins/function" as *;
 
 @use "./home-banner-content";
@@ -11,13 +12,17 @@
   position: relative;
 
   @include when(full-img) {
-    .body-full {
+    @include e(content) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
       height: 100vh;
       margin-top: calc(-1 * var(--vp-nav-height));
-    }
 
-    .no-feature {
-      top: 40%;
+      &.no-feature {
+        padding-bottom: 15vh;
+      }
     }
   }
 }

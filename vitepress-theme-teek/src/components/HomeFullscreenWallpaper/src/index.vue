@@ -56,7 +56,7 @@ const handleFullscreenChange = () => {
   // 如果滚动条不为 0，则不执行任何操作
   if (htmlDom.scrollTop !== 0) return;
 
-  const bannerCenterDom = document.querySelector(`.${ns.joinNamespace("banner")} .${ns.joinNamespace("center")}`);
+  const bannerCenterDom = document.querySelector(`.${ns.joinNamespace("banner__content")}`);
   const bannerContentDom = document.querySelector(`.${ns.joinNamespace("bannerContent")}`);
   const wavesDom = document.querySelector(`.${ns.joinNamespace("waves")}`);
   const bodyBgImageMaskDom = document.querySelector(`.${ns.joinNamespace("bodyBgImage")} .mask`);

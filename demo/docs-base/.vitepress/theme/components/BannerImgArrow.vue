@@ -1,32 +1,40 @@
 <script setup lang="ts" name="BannerImgArrow">
 import { TkIcon } from "vitepress-theme-teek";
 import arrowSvg from "../svg/arrow";
+import { useData } from "vitepress";
+
+const { theme } = useData();
+
+const namespace = "banner";
 
 const handleClickArrow = () => {
   // 获取窗口高度
   const windowH = document.getElementsByClassName("tk-banner")[0].clientHeight;
   window.scrollTo({
-    top: windowH,
+    top: windowH - 20,
     behavior: "smooth",
   });
 };
 </script>
 
 <template>
-  <div class="banner-arrow tk-wallpaper-outside">
-    <TkIcon :icon="arrowSvg" size="50px" color="#ffffff" class="banner-arrow__icon" @click="handleClickArrow" />
+  <div v-if="theme.banner.bgStyle === 'fullImg'" :class="`${namespace}-arrow tk-wallpaper-outside`">
+    <TkIcon
+      :icon="arrowSvg"
+      size="50px"
+      color="#ffffff"
+      :class="`${namespace}-arrow__icon`"
+      @click="handleClickArrow"
+    />
   </div>
 </template>
 
-<style lang="scss">
-.no-feature {
-  .banner-arrow {
-    bottom: -190%;
-  }
-}
-.banner-arrow {
-  text-align: center;
-  bottom: -15%;
+<style lang="scss" scoped>
+$namespace: banner;
+
+.#{$namespace}-arrow {
+  position: absolute;
+  bottom: 130px;
   left: 50%;
   transform: translateX(-50%);
 

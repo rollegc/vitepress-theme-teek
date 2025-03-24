@@ -2,11 +2,13 @@
 @use "../mixins/function" as *;
 
 @include b(bannerFeature) {
+  width: 100%;
   max-width: 1100px;
   margin: 2.5rem auto 0;
   overflow: hidden;
   padding: 2rem 0;
   position: relative;
+  row-gap: getCssVar("home-banner-feature-row-gap");
 
   @include e(feature__item) {
     width: 30%;
