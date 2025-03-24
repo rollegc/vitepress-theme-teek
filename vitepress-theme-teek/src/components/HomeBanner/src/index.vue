@@ -89,11 +89,11 @@ const getClass = () => {
 
 // full 模式（全屏图片模式）需要将内容和 Feature 居中，所以需要添加 class: center
 const styleComponentMap: Record<string, any> = {
-  bodyPart: { el: "div", className: `body-pure` },
-  bodyFull: { el: "div", className: `body-full`, centerClass: ns.joinNamespace("center1") },
+  bodyPart: { el: "div", props: { class: `body-pure` } },
+  bodyFull: { el: "div", props: { class: `body-full` } },
   bannerPure: { el: HomeBannerBgPure },
   bannerPartImg: { el: HomeBannerBgImage },
-  bannerFullImg: { el: HomeBannerBgImage, centerClass: ns.joinNamespace("center1") },
+  bannerFullImg: { el: HomeBannerBgImage },
 };
 
 const styleComponent = computed(() => {
@@ -107,7 +107,7 @@ const styleComponent = computed(() => {
   <slot name="teek-home-banner-before" />
 
   <div ref="bannerRef" :class="[ns.b(), getClass()]" :style="getStyle()">
-    <component :is="styleComponent.el" :class="styleComponent.className">
+    <component :is="styleComponent.el" v-bind="styleComponent.props">
       <div :class="[ns.e('content'), { 'no-feature': !features.length }]">
         <slot name="teek-home-banner-content-before" />
         <HomeBannerContent />

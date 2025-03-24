@@ -2,6 +2,7 @@
 import { TkIcon } from "vitepress-theme-teek";
 import arrowSvg from "../svg/arrow";
 import { useData } from "vitepress";
+import { ref } from "vue";
 
 const { theme } = useData();
 
@@ -15,10 +16,18 @@ const handleClickArrow = () => {
     behavior: "smooth",
   });
 };
+
+const isMobile = ref(false);
+
+// 移动端不显示箭头，则打开下面注释，并引入 useWindowSize：import { useWindowSize } from "vitepress-theme-teek";
+// useWindowSize(width => {
+//   // if (width <= 719) isMobile.value = true;
+//   // else isMobile.value = false;
+// });
 </script>
 
 <template>
-  <div v-if="theme.banner.bgStyle === 'fullImg'" :class="`${namespace}-arrow tk-wallpaper-outside`">
+  <div v-if="theme.banner.bgStyle === 'fullImg' && !isMobile" :class="`${namespace}-arrow tk-wallpaper-outside`">
     <TkIcon
       :icon="arrowSvg"
       size="50px"
@@ -34,7 +43,7 @@ $namespace: banner;
 
 .#{$namespace}-arrow {
   position: absolute;
-  bottom: 130px;
+  bottom: 120px;
   left: 50%;
   transform: translateX(-50%);
 

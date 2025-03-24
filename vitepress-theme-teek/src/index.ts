@@ -16,6 +16,8 @@ export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/typ
 export type DefaultThemeType = typeof DefaultTheme;
 
 export * from "./components";
+export * from "./helper";
+export * from "./hooks";
 
 export {
   createContainerThenUse,
