@@ -41,7 +41,9 @@ const watchScroll = () => {
 };
 
 const progress = ref(0);
-
+/**
+ * 更新返回顶部的进度条
+ */
 const updateScrollProgress = () => {
   const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
   progress.value = Math.round(p * 100);
@@ -67,7 +69,6 @@ const {
 }: ThemeSetting = theme.themeSetting || {};
 
 const { provider }: CommentConfig = theme.comment || {};
-
 const themeStyleStorageKey = ns.b("themeStyle");
 const themeSizeStorageKey = ns.b("themeSize");
 

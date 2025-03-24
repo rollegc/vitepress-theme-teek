@@ -1,5 +1,11 @@
 # vitepress-plugin-doc-analysis
 
+## 1.0.7
+
+### Patch Changes
+
+- 修复项目为非 Git 仓库时，启动 Vitepress 报错
+
 ## 1.0.6
 
 ### Patch Changes

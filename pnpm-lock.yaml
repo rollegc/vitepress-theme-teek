@@ -342,7 +342,7 @@ importers:
         version: 1.0.6(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
       vitepress-plugin-doc-analysis:
         specifier: latest
-        version: 1.0.6(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
+        version: 1.0.7(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))
       vitepress-plugin-file-content-loader:
         specifier: latest
         version: 1.0.6(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3))(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
@@ -4682,8 +4682,8 @@ packages:
     peerDependencies:
       vite: ^6.0.7
 
-  vitepress-plugin-doc-analysis@1.0.6:
-    resolution: {integrity: sha512-DyVRNL4ZCfu6xk6tz9HGF7YpFSeETWV6hVDOS5hUn21WtoTO9ERyr5ReNyDmQNm+CCCfoZOTf89FhrSbk8jm9g==}
+  vitepress-plugin-doc-analysis@1.0.7:
+    resolution: {integrity: sha512-4jpee12cj6J2KmD2OzrJK0yqoo2MAHgHZEOYrK7Xf1Q9GdQMte8O5jfKtcRnREAmfJMzSmt+bmUkNwMMYHMc6g==}
     peerDependencies:
       vite: ^6.0.7
 
@@ -9271,7 +9271,7 @@ snapshots:
       picocolors: 1.1.1
       vite: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)
 
-  vitepress-plugin-doc-analysis@1.0.6(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)):
+  vitepress-plugin-doc-analysis@1.0.7(vite@6.0.7(@types/node@22.10.5)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)):
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1

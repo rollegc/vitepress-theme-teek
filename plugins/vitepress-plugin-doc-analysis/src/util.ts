@@ -108,11 +108,10 @@ function getTimeNum(dateStr: string) {
 /**
  * 获取最后一次 git commit 提交时间
  */
-export function getLastCommitTime() {
-  return new Promise((resolve, reject) => {
+export function getGitLastCommitTime() {
+  return new Promise(resolve => {
     exec('git log -1 --format=%cd --date=format:"%Y-%m-%d %H:%M:%S"', (error, stdout, stderr) => {
-      if (error) return reject(error);
-      if (stderr) return reject(stderr);
+      if (error || stderr) return resolve(0);
       resolve(stdout.trim());
     });
   });

@@ -2,7 +2,7 @@ import type { Plugin } from "vite";
 import { DocAnalysis, DocAnalysisOption, FilePathInfo } from "./types";
 import { join } from "node:path";
 import readFileList from "./helper";
-import { getLastCommitTime, getEachFileWords, getTotalFileWords, getLastUpdateTime } from "./util";
+import { getGitLastCommitTime, getEachFileWords, getTotalFileWords, getLastUpdateTime } from "./util";
 import logger from "./log";
 
 export * from "./types";
@@ -50,7 +50,7 @@ const doDocAnalysisThenSet = async (themeConfig: any, fileList: FilePathInfo[], 
 
   const totalFileWords = getTotalFileWords(filePathList);
   const eachFileWords = getEachFileWords(fileList, option.cn, option.en);
-  const lastCommitTime = (await getLastCommitTime()) || getLastUpdateTime(filePathList);
+  const lastCommitTime = (await getGitLastCommitTime()) || getLastUpdateTime(filePathList);
 
   // 防止 themeConfig 为 undefined
   themeConfig = themeConfig || {};
