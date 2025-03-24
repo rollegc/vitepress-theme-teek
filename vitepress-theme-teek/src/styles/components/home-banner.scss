@@ -12,13 +12,15 @@
   position: relative;
 
   @include when(full-img) {
+    overflow: hidden;
+    margin-top: calc(-1 * var(--vp-nav-height));
+
     @include e(content) {
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
       height: 100vh;
-      margin-top: calc(-1 * var(--vp-nav-height));
 
       &.no-feature {
         padding-bottom: 15vh;
