@@ -1,5 +1,12 @@
 # vitepress-theme-teek
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies
+  - vitepress-plugin-permalink@1.0.12
+
 ## 1.0.10
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Notice">
 import { computed, onMounted, ref, unref, watch } from "vue";
-import { useData, useRouter } from "vitepress";
-import { useNamespace, useWindowSize } from "../../../hooks";
+import { useData } from "vitepress";
+import { useNamespace, useWindowSize, useVpRouter } from "../../../hooks";
 import Icon from "../../Icon";
 import noticeSvg from "../../../assets/svg/notice";
 import closeSvg from "../../../assets/svg/close";
@@ -11,6 +11,7 @@ import { Notice } from "../../../config/types";
 defineOptions({ name: "Notice" });
 
 const ns = useNamespace("notice");
+const vpRouter = useVpRouter();
 const { theme, localeIndex } = useData();
 
 const {
@@ -54,20 +55,6 @@ if (mobileMinify) {
   });
 }
 
-const router = useRouter();
-
-/**
- * 将自定义的路由切换后回调绑定到路由上
- */
-const bindCallBackToRouter = () => {
-  const selfOnAfterRouteChange = router.onAfterRouteChange;
-  router.onAfterRouteChange = (href: string) => {
-    selfOnAfterRouteChange?.(href);
-    // 调用自定义的切换后回调
-    onAfterRouteChange?.(router.route, unref(showNoticeIcon), unref(showPopover));
-  };
-};
-
 let timer: NodeJS.Timeout | null = null;
 
 /**
@@ -81,7 +68,10 @@ const closePopoverWhenTimeout = () => {
 };
 
 onMounted(() => {
-  bindCallBackToRouter();
+  // 调用自定义的切换后回调
+  vpRouter.bindAfterRouteChange(ns.joinNamespace("notice"), () =>
+    onAfterRouteChange?.(vpRouter.route, unref(showNoticeIcon), unref(showPopover))
+  );
   closePopoverWhenTimeout();
 });
 

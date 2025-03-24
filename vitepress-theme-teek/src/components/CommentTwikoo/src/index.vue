@@ -1,10 +1,13 @@
 <script setup lang="ts" name="CommentTwikoo">
 import { ref, onMounted, unref } from "vue";
-import { useRouter } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
+import { useNamespace, useVpRouter } from "../../../hooks";
 
 defineOptions({ name: "CommentTwikoo" });
+
+const ns = useNamespace("");
+const vpRouter = useVpRouter();
 
 const { theme } = useUnrefData();
 
@@ -25,21 +28,10 @@ const initTwikoo = () => {
 };
 
 const twikooJs = ref<HTMLScriptElement | null>(null);
-const router = useRouter();
 
 const initJs = () => {
   const t = unref(twikooJs);
   if (t) t.onload = initTwikoo;
-};
-
-const initRoute = () => {
-  const selfOnAfterRouteChange = router.onAfterRouteChange;
-  // 路由切换后的回调
-  router.onAfterRouteChange = (href: string) => {
-    selfOnAfterRouteChange?.(href);
-    // 路由切换后更新评论内容
-    reloadTwikoo(href);
-  };
 };
 
 const reloadTwikoo = (to: string) => {
@@ -50,7 +42,8 @@ onMounted(() => {
   if (!envId) return;
 
   initJs();
-  initRoute();
+  // 路由切换后更新评论内容
+  vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));
 });
 </script>
 

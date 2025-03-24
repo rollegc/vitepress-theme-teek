@@ -100,6 +100,10 @@ export default function usePermalink() {
   const startWatch = () => {
     if (!permalinkKeys.length) return;
 
+    const state = router.state || {};
+    // 防止重复在 router 添加函数
+    if (state.permalinkPlugin) return;
+
     const selfOnBeforeRouteChange = router.onBeforeRouteChange;
     router.onBeforeRouteChange = (href: string) => {
       // 调用已有的 onBeforeRouteChange
@@ -129,6 +133,8 @@ export default function usePermalink() {
       // 调用已有的 onAfterRouteChange
       selfOnAfterRouteChange?.(href);
     };
+
+    router.state = { ...router.state, permalinkPlugin: true };
   };
 
   return { startWatch };

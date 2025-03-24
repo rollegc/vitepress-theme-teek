@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.12
+
+### Patch Changes
+
+- 修复 router 跳转前置路由重复绑定问题
+
 ## 1.0.11
 
 ### Patch Changes

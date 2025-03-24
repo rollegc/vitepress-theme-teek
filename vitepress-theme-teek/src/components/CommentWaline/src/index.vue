@@ -1,15 +1,17 @@
 <script setup lang="ts" name="CommentWaline">
 import { onMounted } from "vue";
-import { useRouter } from "vitepress";
 import { init, type WalineInstance } from "@waline/client";
 import "@waline/client/style";
 import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
+import { useNamespace, useVpRouter } from "../../../hooks";
 
 defineOptions({ name: "CommentWaline" });
 
+const ns = useNamespace("");
+const vpRouter = useVpRouter();
+
 const { theme } = useUnrefData();
-const router = useRouter();
 
 const {
   serverURL,
@@ -30,16 +32,6 @@ const initWaline = async () => {
   } else waline = init({ ...options, serverURL, dark, el: "#waline" });
 };
 
-const initRoute = () => {
-  const selfOnAfterRouteChange = router.onAfterRouteChange;
-  // 路由切换后的回调
-  router.onAfterRouteChange = (href: string) => {
-    selfOnAfterRouteChange?.(href);
-    // 路由切换后更新评论内容
-    waline?.update();
-  };
-};
-
 /**
  * 默认点击个人头像会滚动到页面顶部，因为个人头像由 a 标签包裹，且 href="#"，所以删除 href 属性
  */
@@ -52,7 +44,9 @@ onMounted(async () => {
   if (!serverURL && !waline) return;
 
   await initWaline();
-  initRoute();
+  // 路由切换后更新评论内容
+  vpRouter.bindAfterRouteChange(ns.joinNamespace("waline"), () => waline?.update());
+
   preventJump();
 });
 </script>

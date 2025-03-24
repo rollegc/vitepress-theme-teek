@@ -1,12 +1,16 @@
 <script setup lang="ts" name="CommentGiscus">
 import { ref, nextTick, onMounted, computed, unref } from "vue";
-import { useRouter, useData } from "vitepress";
+import { useData } from "vitepress";
 import Giscus from "@giscus/vue";
 import { useUnrefData } from "../../../configProvider";
 import { isFunction } from "../../../helper";
 import { CommentProvider } from "../../../config/types";
+import { useNamespace, useVpRouter } from "../../../hooks";
 
 defineOptions({ name: "CommentGiscus" });
+
+const ns = useNamespace("");
+const vpRouter = useVpRouter();
 
 const { isDark } = useData();
 const { theme } = useUnrefData();
@@ -35,7 +39,6 @@ const giscusTheme = computed(() => {
   return giscusThemeConfig || (unref(isDark) ? "dark" : "light");
 });
 
-const router = useRouter();
 const isShow = ref(false);
 
 const reloadGiscus = () => {
@@ -45,19 +48,12 @@ const reloadGiscus = () => {
   });
 };
 
-const initRoute = () => {
-  const selfOnAfterRouteChange = router.onAfterRouteChange;
-  // 路由切换后的回调
-  router.onAfterRouteChange = (href: string) => {
-    selfOnAfterRouteChange?.(href);
-    // 路由切换后更新评论内容
-    reloadGiscus();
-  };
-};
-
 onMounted(() => {
-  initRoute();
   reloadGiscus();
+  // 路由切换后更新评论内容
+  vpRouter.bindAfterRouteChange(ns.joinNamespace("giscus"), () => {
+    reloadGiscus();
+  });
 });
 </script>
 
