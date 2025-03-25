@@ -763,6 +763,12 @@ export interface DocAnalysis {
      */
     pageView?: boolean;
     /**
+     * 是否开启重试机制，当获取访问量失败会尝试重新获取
+     *
+     * @default false
+     */
+    iteration?: boolean;
+    /**
      * 如果首页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
      *
      * @default 2000 (2秒)

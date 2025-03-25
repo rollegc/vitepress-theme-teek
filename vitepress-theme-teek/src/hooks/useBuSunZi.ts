@@ -38,7 +38,7 @@ export interface UseBuSunZi {
   isGet?: Ref<boolean | null>;
 }
 
-export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
+export const useBuSunZi = (initRequest = false, iteration = false, iterationTime = 2000) => {
   const sitePv = ref(9999);
   const siteUv = ref(9999);
   const pagePv = ref(9999);
@@ -60,21 +60,24 @@ export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
 
   // 第一次调用
   if (initRequest) request();
-  let intervalId: NodeJS.Timeout;
-  let i = 0;
 
-  // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
-  intervalId = setInterval(() => {
-    if (!unref(isGet)) {
-      i += iterationTime;
-      if (i > iterationTime * 5) clearInterval(intervalId);
-      request();
-    } else clearInterval(intervalId);
-  }, iterationTime);
+  if (iteration) {
+    let intervalId: NodeJS.Timeout;
+    let i = 0;
 
-  onBeforeUnmount(() => {
-    if (intervalId) clearInterval(intervalId);
-  });
+    // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
+    intervalId = setInterval(() => {
+      if (!unref(isGet)) {
+        i += iterationTime;
+        if (i > iterationTime * 5) clearInterval(intervalId);
+        request();
+      } else clearInterval(intervalId);
+    }, iterationTime);
+
+    onBeforeUnmount(() => {
+      if (intervalId) clearInterval(intervalId);
+    });
+  }
 
   return { sitePv, siteUv, pagePv, isGet, request };
 };

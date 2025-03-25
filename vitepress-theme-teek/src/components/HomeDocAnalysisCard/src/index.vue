@@ -74,12 +74,12 @@ const statisticsInfo: UseBuSunZi = {
   siteUv: ref(0),
   isGet: ref(false),
 };
-const { provider = "", siteView = true, siteIteration = 2000 }: DocAnalysis["statistics"] = statistics;
+const { provider = "", siteView = true, iteration, siteIteration = 2000 }: DocAnalysis["statistics"] = statistics;
 const useSiteView = provider === "busuanzi" && siteView;
 
 if (useSiteView) {
   // 通过不蒜子获取访问量和访客数
-  const { sitePv, siteUv, isGet, request } = useBuSunZi(true, siteIteration);
+  const { sitePv, siteUv, isGet, request } = useBuSunZi(true, iteration, siteIteration);
   statisticsInfo.sitePv = sitePv;
   statisticsInfo.siteUv = siteUv;
   statisticsInfo.isGet = isGet;

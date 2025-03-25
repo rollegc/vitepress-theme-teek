@@ -85,16 +85,25 @@ const docAnalysisConfig = computed<DocAnalysis>(() => {
 });
 
 const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => {
-  const { provider = "", pageView = true, pageIteration = 2000 } = unref(docAnalysisConfig).statistics || {};
+  const {
+    provider = "",
+    pageView = true,
+    iteration = false,
+    pageIteration = 2000,
+  } = unref(docAnalysisConfig).statistics || {};
 
-  return { provider, pageView, pageIteration };
+  return { provider, pageView, iteration, pageIteration };
 });
 // 是否使用访问量功能
 const usePageView = computed(() => unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
 
 const statisticsInfo: UseBuSunZi = { pagePv: ref(0), isGet: ref(false) };
 // 通过不蒜子获取访问量
-const { pagePv, isGet, request } = useBuSunZi(true, unref(statisticsConfig).pageIteration);
+const { pagePv, isGet, request } = useBuSunZi(
+  true,
+  unref(statisticsConfig).iteration,
+  unref(statisticsConfig).pageIteration
+);
 statisticsInfo.pagePv = pagePv;
 statisticsInfo.isGet = isGet;
 
