@@ -5,12 +5,12 @@
         /* 一级菜单字体加大 */
         font-size: 18px;
       }
-
       p.text {
         font-size: 15px;
       }
-
-      .items {
+    }
+    .VPSidebarItem.level-0 {
+      & > .items {
         /* 二级菜单添加间距 */
         padding-left: 10px;
       }

@@ -7,12 +7,20 @@ const tkConfig = tkThemeConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   footerInfo: {
     copyright: {
-      createYear: 2021,
-      suffix: "Teek Docs",
+      createYear: 2025,
+      suffix: "Teek",
     },
     icpRecord: {
       name: "桂ICP备2021009994号",
       link: "http://beian.miit.gov.cn/",
+    },
+  },
+  themeSetting: {
+    themeSize: "large",
+  },
+  vitePlugins: {
+    sidebarOption: {
+      initItems: false,
     },
   },
 });
@@ -88,6 +96,22 @@ export default defineConfig({
       { text: "指南", link: "/guild/intro", activeMatch: "/01.指南/" },
       { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
       { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
+      { text: "常见问题", link: "/theme/qa", activeMatch: "/20.常见问题/" },
+      {
+        text: "生态",
+        items: [
+          { text: "Helper", link: "/ecosystem/helper" },
+          { text: "Hooks", link: "/ecosystem/hooks" },
+          { text: "MD Plugin Utils", link: "/ecosystem/md-plugin-utils" },
+        ],
+      },
+      {
+        text: "v1.0.0",
+        items: [
+          { text: "历史版本", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/release" },
+          { text: "更新日志", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/dev/CHANGELOG.md" },
+        ],
+      },
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek" }],
 

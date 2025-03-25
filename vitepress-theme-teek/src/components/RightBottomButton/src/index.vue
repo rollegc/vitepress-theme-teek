@@ -131,17 +131,13 @@ const changeDocTheme = (attribute: "theme-style" | "theme-size", value: string) 
  */
 const changeTheme = (attribute: "theme-style" | "theme-size", value: string, isDoc = false) => {
   const currentTheme = attribute === "theme-style" ? currentThemeStyle : currentThemeSize;
-  const defaultTheme = attribute === "theme-style" ? defaultThemeStyle : defaultThemeSize;
   const themeStorageKey = attribute === "theme-style" ? themeStyleStorageKey : themeSizeStorageKey;
 
-  // value 可能是 "undefined" 字符串
+  // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
   if ([unref(currentTheme), undefined, "undefined"].includes(value)) return;
-  currentTheme.value = value;
-  const documentElement = document.documentElement;
 
-  // 默认配置不需要设置，所以删除
-  if (value === defaultTheme) documentElement.removeAttribute(attribute);
-  else documentElement.setAttribute(attribute, value);
+  currentTheme.value = value;
+  document.documentElement.setAttribute(attribute, value);
 
   // 只存储全局配置到本地
   if (!isDoc) localStorage.setItem(themeStorageKey, value);
