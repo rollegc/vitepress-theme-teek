@@ -1,5 +1,5 @@
 <script setup lang="ts" name="RightBottomButton">
-import { computed, ref, unref, onMounted, onUnmounted } from "vue";
+import { computed, ref, unref, onMounted, onUnmounted, watch } from "vue";
 import { MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
@@ -8,6 +8,7 @@ import { scrollTo } from "../../../helper";
 import sizeSvg from "../../../assets/svg/size";
 import rocketSvg from "../../../assets/svg/rocket";
 import { CommentConfig, ThemeSetting } from "../../../config/types";
+import { useData } from "vitepress";
 
 defineOptions({ name: "RightBottomButton" });
 
@@ -58,13 +59,14 @@ onUnmounted(() => {
   window.removeEventListener("scroll", watchScroll);
 });
 
+const { frontmatter } = useData();
 const { theme } = useUnrefData();
 const {
   useThemeStyle = true,
-  themeStyle = "vp-default",
+  themeStyle: defaultThemeStyle = "vp-default",
   themeStyleAppend = [],
   useThemeSize = true,
-  themeSize = "default",
+  themeSize: defaultThemeSize = "default",
   themeSizeAppend = [],
 }: ThemeSetting = theme.themeSetting || {};
 
@@ -74,9 +76,7 @@ const themeSizeStorageKey = ns.b("themeSize");
 
 // 主题切换
 const showThemeStyleItem = ref(false);
-
-const currentThemeStyle = ref(themeStyle);
-
+const currentThemeStyle = ref(defaultThemeStyle);
 const themeStyleList = [
   {
     label: "VP 主题",
@@ -101,36 +101,77 @@ const themeStyleList = [
   ...themeStyleAppend,
 ];
 
-const changeThemeStyle = (themeStyle: string) => {
-  if (themeStyle === unref(currentThemeStyle)) return;
-  currentThemeStyle.value = themeStyle;
-  document.documentElement.setAttribute("theme", themeStyle);
-  localStorage.setItem(themeStyleStorageKey, themeStyle);
-};
-
-// 初始化主题风格
-changeThemeStyle(localStorage.getItem(themeStyleStorageKey) || themeStyle);
-
 // 主题尺寸
 const showThemeSizeItem = ref(false);
-const currentThemeSize = ref(themeSize);
-
+const currentThemeSize = ref(defaultThemeSize);
 const themeSizeList = [
+  { name: "Wide", size: "wide" },
   { name: "Large", size: "large" },
   { name: "Default", size: "default" },
   { name: "Small", size: "small" },
   ...themeSizeAppend,
 ];
 
-const changeThemeSize = (themeSize: string) => {
-  if (themeSize === unref(currentThemeSize)) return;
-  currentThemeSize.value = themeSize;
-  document.documentElement.setAttribute("size", themeSize);
-  localStorage.setItem(themeSizeStorageKey, themeSize);
+/**
+ * 修改文章页的主题风格或尺寸，仅当 frontmatter.themeStyle 或 frontmatter.themeSize 存在时生效
+ */
+const changeDocTheme = (type: "style" | "size", attribute: "doc-theme-style" | "doc-theme-size", value: string) => {
+  if (value) changeTheme(type, attribute, value);
+  else {
+    document.documentElement.removeAttribute(attribute);
+    const themeStorageKey = type === "style" ? themeStyleStorageKey : themeSizeStorageKey;
+    const defaultTheme = type === "style" ? defaultThemeStyle : defaultThemeSize;
+    const themeAttribute = type === "style" ? "theme-style" : "theme-size";
+
+    // 初始化/还原主题风格
+    changeTheme(type, themeAttribute, localStorage.getItem(themeStorageKey) || defaultTheme);
+  }
 };
 
-// 初始化主题尺寸
-changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
+/**
+ * 修改全局的主题风格或尺寸
+ */
+const changeTheme = (
+  type: "style" | "size",
+  attribute: "theme-style" | "doc-theme-style" | "theme-size" | "doc-theme-size",
+  value: string
+) => {
+  const currentTheme = type === "style" ? currentThemeStyle : currentThemeSize;
+  const defaultTheme = type === "style" ? defaultThemeStyle : defaultThemeSize;
+  const themeStorageKey = type === "style" ? themeStyleStorageKey : themeSizeStorageKey;
+
+  // value 可能是 "undefined" 字符串
+  if ([unref(currentTheme), "undefined"].includes(value)) return;
+  currentTheme.value = value;
+  const documentElement = document.documentElement;
+
+  // 默认配置不需要设置，所以删除
+  if (value === defaultTheme) {
+    documentElement.removeAttribute(attribute);
+    documentElement.removeAttribute("doc-" + attribute);
+  } else documentElement.setAttribute(attribute, value);
+
+  // 切换文章页主题配置，则删除全局配置，反之亦然
+  if (attribute.startsWith("doc-")) return documentElement.removeAttribute(attribute.replace("doc-", ""));
+
+  documentElement.removeAttribute("doc-" + attribute);
+  // 只存储全局配置到本地
+  localStorage.setItem(themeStorageKey, value);
+};
+
+// 文章页主题风格设置
+watch(
+  () => unref(frontmatter).themeStyle,
+  (themeStyle: string) => changeDocTheme("style", "doc-theme-style", themeStyle),
+  { immediate: true }
+);
+
+// 文章页主题尺寸设置
+watch(
+  () => unref(frontmatter).themeSize,
+  (docThemeSize: string) => changeDocTheme("size", "doc-theme-size", docThemeSize),
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -171,7 +212,7 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
             :key="item.size"
             title=""
             :class="['dropdown-item', 'sle', { active: item.size === currentThemeSize }]"
-            @click="changeThemeSize(item.size)"
+            @click="changeTheme('size', 'theme-size', item.size)"
           >
             {{ item.name }}
           </li>
@@ -199,7 +240,7 @@ changeThemeSize(localStorage.getItem(themeSizeStorageKey) || themeSize);
                   :key="item.label + option.theme"
                   title=""
                   :class="['dropdown-item', 'sle', { active: option.theme === currentThemeStyle }]"
-                  @click="changeThemeStyle(option.theme)"
+                  @click="changeTheme('style', 'theme-style', option.theme)"
                 >
                   {{ option.name }}
                 </li>

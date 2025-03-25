@@ -63,7 +63,7 @@ export const useBuSunZi = (initRequest = false, iterationTime = 2000) => {
   let intervalId: NodeJS.Timeout;
   let i = 0;
 
-  // 如果第一次调用获取失败，每 3 s 后重新调用，直至尝试 5 次或调用成功
+  // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
   intervalId = setInterval(() => {
     if (!unref(isGet)) {
       i += iterationTime;

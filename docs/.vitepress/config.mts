@@ -4,7 +4,7 @@ import tkThemeConfig from "vitepress-theme-teek/config";
 const description = ["vitepress-theme-teek 使用文档", "vitepress 主题框架"].toString();
 
 const tkConfig = tkThemeConfig({
-  author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
+  author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   footerInfo: {
     copyright: {
       createYear: 2021,

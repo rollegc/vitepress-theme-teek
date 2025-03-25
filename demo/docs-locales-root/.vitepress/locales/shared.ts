@@ -2,7 +2,7 @@ import { defineConfig } from "vitepress";
 import tkThemeConfig from "vitepress-theme-teek/config";
 
 const tkConfig = tkThemeConfig({
-  author: { name: "Tianke", link: "https://github.com/Kele-Bingtang" },
+  author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
@@ -95,7 +95,7 @@ const tkConfig = tkThemeConfig({
       // cssLink: "https://unpkg.com/@waline/client@v3/dist/waline.css",
 
       // giscus 配置，官网：https://giscus.app/zh-CN
-      repo: "Kele-Bingtang/vitepress-theme-kt",
+      repo: "Kele-Bingtang/vitepress-theme-teek",
       repoId: "R_kgDONpVfBA",
       category: "Announcements",
       categoryId: "DIC_kwDONpVfBM4Cm3v9",

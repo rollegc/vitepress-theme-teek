@@ -40,6 +40,9 @@ export const useUnrefData = () => {
   return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
+/**
+ * 返回自定义页面标识
+ */
 export const usePage = () => {
   const { frontmatter } = useData();
 
@@ -66,9 +69,7 @@ export const useAllPosts = (): Post => {
   const { theme } = useData();
   const posts = unref(theme).posts;
 
-  if (!posts) return emptyPost;
-
-  return posts;
+  return posts || emptyPost;
 };
 
 /**

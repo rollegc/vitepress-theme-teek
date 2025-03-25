@@ -1,7 +1,9 @@
 @use "../mixins/mixins" as *;
 @use "../mixins/function" as *;
 
-html[size="large"] {
+/* html[theme-size="*"] 为全局主题尺寸，html[doc-theme-size="*"] 为文章页主题尺寸，在文章页 frontmatter 配置 themeSize */
+
+html[theme-size="wide"] {
   @include set-css-var("home-max-width", 1330px);
   @include set-css-var("home-gap", getCssVar("gap3"));
   @include set-css-var("home-post-simple-img-width", 160px);
@@ -23,8 +25,39 @@ html[size="large"] {
   --vp-content-container: 1800px;
 }
 
+html[doc-theme-size="wide"] {
+  --vp-layout-max-width: 97vw;
+  --vp-sidebar-width: 290px;
+  --vp-content-container: 1800px;
+}
+
+html[theme-size="large"] {
+  @include set-css-var("home-max-width", 1330px);
+  @include set-css-var("home-gap", getCssVar("gap3"));
+  @include set-css-var("home-post-simple-img-width", 160px);
+  @include set-css-var("home-post-full-img-width", 360px);
+  @include set-css-var("home-post-full-img-height", 100%);
+  @include set-css-var("home-post-line-clamp", 4);
+  @include set-css-var("home-card-padding", 15px);
+  @include set-css-var("home-card-width", 350px);
+  @include set-css-var("home-card-svg-margin-left", 10px);
+  @include set-css-var("home-font-size-large", 19px);
+  @include set-css-var("home-font-size-base", 17px);
+  @include set-css-var("home-font-size-middle", 15px);
+  @include set-css-var("home-font-size-sm", 14px);
+  @include set-css-var("home-font-size-small", 13px);
+  @include set-css-var("home-page-width", 1100px);
+  --vp-layout-max-width: 90%;
+  --vp-content-container: 1200px;
+}
+
+html[doc-theme-size="large"] {
+  --vp-layout-max-width: 90%;
+  --vp-content-container: 1200px;
+}
+
 :root,
-html[size="default"] {
+html[theme-size="default"] {
   @include set-css-var("home-max-width", 1140px);
   @include set-css-var("home-gap", getCssVar("gap2"));
   @include set-css-var("home-post-simple-img-width", 120px);
@@ -43,7 +76,7 @@ html[size="default"] {
   @include set-css-var("page-width", 900px);
 }
 
-html[size="small"] {
+html[theme-size="small"] {
   @include set-css-var("home-max-width", 1000px);
   @include set-css-var("home-gap", getCssVar("gap2"));
   @include set-css-var("home-post-simple-img-width", 100px);
@@ -65,20 +98,26 @@ html[size="small"] {
   --vp-content-container: 688px;
 }
 
+html[doc-theme-size="small"] {
+  --vp-layout-max-width: 1300px;
+  --vp-sidebar-width: 290px;
+  --vp-content-container: 688px;
+}
+
 @media (min-width: 768px) {
   :root,
-  html[size="large"],
-  html[size="default"],
-  html[size="small"] {
+  html[theme-size="large"],
+  html[theme-size="default"],
+  html[theme-size="small"] {
     @include set-css-var("home-card-width", 280px);
   }
 }
 
 @media (max-width: 768px) {
   :root,
-  html[size="large"],
-  html[size="default"],
-  html[size="small"] {
+  html[theme-size="large"],
+  html[theme-size="default"],
+  html[theme-size="small"] {
     @include set-css-var("home-card-width", 100%);
   }
 }
