@@ -82,20 +82,20 @@ const themeStyleList = [
     label: "VP 主题",
     tip: "VitePress 主题",
     options: [
-      { name: "默认", theme: "vp-default" },
-      { name: "绿色", theme: "vp-green" },
-      { name: "黄色", theme: "vp-yellow" },
-      { name: "红色", theme: "vp-red" },
+      { name: "默认", style: "vp-default" },
+      { name: "绿色", style: "vp-green" },
+      { name: "黄色", style: "vp-yellow" },
+      { name: "红色", style: "vp-red" },
     ],
   },
   {
     label: "EP 主题",
     tip: "Element Plus 主题",
     options: [
-      { name: "蓝色", theme: "el-blue" },
-      { name: "绿色", theme: "el-green" },
-      { name: "黄色", theme: "el-yellow" },
-      { name: "红色", theme: "el-red" },
+      { name: "蓝色", style: "el-blue" },
+      { name: "绿色", style: "el-green" },
+      { name: "黄色", style: "el-yellow" },
+      { name: "红色", style: "el-red" },
     ],
   },
   ...themeStyleAppend,
@@ -225,10 +225,10 @@ watch(
               <ul>
                 <li
                   v-for="option in item.options"
-                  :key="item.label + option.theme"
+                  :key="item.label + option.style"
                   title=""
-                  :class="['dropdown-item', 'sle', { active: option.theme === currentThemeStyle }]"
-                  @click="changeTheme('theme-style', option.theme)"
+                  :class="['dropdown-item', 'sle', { active: option.style === currentThemeStyle }]"
+                  @click="changeTheme('theme-style', option.style)"
                 >
                   {{ option.name }}
                 </li>

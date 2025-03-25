@@ -247,7 +247,7 @@ export interface ThemeSetting {
       /**
        * 主题标识，在 html 标签的 theme 属性添加该标识
        */
-      theme: string;
+      style: string;
     }[];
   }[];
   /**
