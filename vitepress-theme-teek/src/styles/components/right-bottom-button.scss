@@ -1,8 +1,8 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 @use "../mixins/config" as *;
-@use "../var/size";
-@use "../var/theme";
+@use "../var/theme-size";
+@use "../var/theme-style";
 @use "../common/transition-fade";
 
 $button-size: 2.3rem;

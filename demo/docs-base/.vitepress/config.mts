@@ -19,7 +19,10 @@ const tkConfig = tkThemeConfig({
     },
     wordCount: true,
     readingTime: true,
-    overrideInfo: [{ key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` }],
+    overrideInfo: [
+      { key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` },
+      { key: "totalPosts", label: "文章总数目" },
+    ],
     appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
   },
   banner: {

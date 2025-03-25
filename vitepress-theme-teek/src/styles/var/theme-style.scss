@@ -1,10 +1,7 @@
 /* 所有变量：https://github.com/vuejs/vitepress/blob/main/src/client/theme-style-default/styles/vars.css */
 
-/* html[theme-style="*"] 为全局主题风格，html[doc-theme-style="*"] 为文章页主题风格，在文章页 frontmatter 配置 themeStyle */
-
 /* VitePress 绿色 */
-html[theme-style="vp-green"],
-html[doc-theme-style="vp-green"] {
+html[theme-style="vp-green"] {
   --vp-c-brand-1: var(--vp-c-green-1);
   --vp-c-brand-2: var(--vp-c-green-2);
   --vp-c-brand-3: var(--vp-c-green-3);
@@ -12,8 +9,7 @@ html[doc-theme-style="vp-green"] {
 }
 
 /* VitePress 黄色 */
-html[theme-style="vp-yellow"],
-html[doc-theme-style="vp-yellow"] {
+html[theme-style="vp-yellow"] {
   --vp-c-brand-1: var(--vp-c-yellow-1);
   --vp-c-brand-2: var(--vp-c-yellow-2);
   --vp-c-brand-3: var(--vp-c-yellow-3);
@@ -21,8 +17,7 @@ html[doc-theme-style="vp-yellow"] {
 }
 
 /* VitePress 红色 */
-html[theme-style="vp-red"],
-html[doc-theme-style="vp-red"] {
+html[theme-style="vp-red"] {
   --vp-c-brand-1: var(--vp-c-red-1);
   --vp-c-brand-2: var(--vp-c-red-2);
   --vp-c-brand-3: var(--vp-c-red-3);
@@ -30,8 +25,7 @@ html[doc-theme-style="vp-red"] {
 }
 
 /* element plus 蓝色 */
-html[theme-style="el-blue"],
-html[doc-theme-style="el-blue"] {
+html[theme-style="el-blue"] {
   --vp-c-brand-1: var(--el-color-primary);
   --vp-c-brand-2: var(--el-color-primary-light-3);
   --vp-c-brand-3: var(--el-color-primary-light-5);
@@ -39,8 +33,7 @@ html[doc-theme-style="el-blue"] {
 }
 
 /* element plus 绿色 */
-html[theme-style="el-green"],
-html[doc-theme-style="el-green"] {
+html[theme-style="el-green"] {
   --vp-c-brand-1: var(--el-color-success);
   --vp-c-brand-2: var(--el-color-success-light-3);
   --vp-c-brand-3: var(--el-color-success-light-5);
@@ -48,8 +41,7 @@ html[doc-theme-style="el-green"] {
 }
 
 /* element plus 黄色 */
-html[theme-style="el-yellow"],
-html[doc-theme-style="el-yellow"] {
+html[theme-style="el-yellow"] {
   --vp-c-brand-1: var(--el-color-warning);
   --vp-c-brand-2: var(--el-color-warning-light-3);
   --vp-c-brand-3: var(--el-color-warning-light-5);
@@ -57,8 +49,7 @@ html[doc-theme-style="el-yellow"] {
 }
 
 /* element plus 红色 */
-html[theme-style="el-red"],
-html[doc-theme-style="el-red"] {
+html[theme-style="el-red"] {
   --vp-c-brand-1: var(--el-color-danger);
   --vp-c-brand-2: var(--el-color-danger-light-3);
   --vp-c-brand-3: var(--el-color-danger-light-5);

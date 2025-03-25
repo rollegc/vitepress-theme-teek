@@ -6,7 +6,7 @@ import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import { dayDiff, getNowDate, isFunction, timeDiff } from "../../../helper";
 import HomeCard from "../../HomeCard";
 import docAnalysisSvg from "../../../assets/svg/docAnalysis";
-import { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
+import type { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
 
 defineOptions({ name: "HomeDocAnalysisCard" });
 

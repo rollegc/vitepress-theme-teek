@@ -1,10 +1,8 @@
 @use "../mixins/mixins" as *;
 @use "../mixins/function" as *;
 
-/* html[theme-size="*"] 为全局主题尺寸，html[doc-theme-size="*"] 为文章页主题尺寸，在文章页 frontmatter 配置 themeSize */
-
 html[theme-size="wide"] {
-  @include set-css-var("home-max-width", 1330px);
+  @include set-css-var("home-max-width", 1400px);
   @include set-css-var("home-gap", getCssVar("gap3"));
   @include set-css-var("home-post-simple-img-width", 160px);
   @include set-css-var("home-post-full-img-width", 360px);
@@ -20,12 +18,6 @@ html[theme-size="wide"] {
   @include set-css-var("home-font-size-small", 13px);
   @include set-css-var("home-page-width", 1100px);
   /* 数值越大，侧边栏约靠近屏幕左侧 */
-  --vp-layout-max-width: 97vw;
-  --vp-sidebar-width: 290px;
-  --vp-content-container: 1800px;
-}
-
-html[doc-theme-size="wide"] {
   --vp-layout-max-width: 97vw;
   --vp-sidebar-width: 290px;
   --vp-content-container: 1800px;
@@ -47,11 +39,6 @@ html[theme-size="large"] {
   @include set-css-var("home-font-size-sm", 14px);
   @include set-css-var("home-font-size-small", 13px);
   @include set-css-var("home-page-width", 1100px);
-  --vp-layout-max-width: 90%;
-  --vp-content-container: 1200px;
-}
-
-html[doc-theme-size="large"] {
   --vp-layout-max-width: 90%;
   --vp-content-container: 1200px;
 }
@@ -93,12 +80,6 @@ html[theme-size="small"] {
   @include set-css-var("home-font-size-sm", 13px);
   @include set-css-var("home-font-size-small", 12px);
   @include set-css-var("page-width", 800px);
-  --vp-layout-max-width: 1300px;
-  --vp-sidebar-width: 290px;
-  --vp-content-container: 688px;
-}
-
-html[doc-theme-size="small"] {
   --vp-layout-max-width: 1300px;
   --vp-sidebar-width: 290px;
   --vp-content-container: 688px;

@@ -115,61 +115,49 @@ const themeSizeList = [
 /**
  * 修改文章页的主题风格或尺寸，仅当 frontmatter.themeStyle 或 frontmatter.themeSize 存在时生效
  */
-const changeDocTheme = (type: "style" | "size", attribute: "doc-theme-style" | "doc-theme-size", value: string) => {
-  if (value) changeTheme(type, attribute, value);
+const changeDocTheme = (attribute: "theme-style" | "theme-size", value: string) => {
+  if (value) changeTheme(attribute, value, true);
   else {
-    document.documentElement.removeAttribute(attribute);
-    const themeStorageKey = type === "style" ? themeStyleStorageKey : themeSizeStorageKey;
-    const defaultTheme = type === "style" ? defaultThemeStyle : defaultThemeSize;
-    const themeAttribute = type === "style" ? "theme-style" : "theme-size";
+    const themeStorageKey = attribute === "theme-style" ? themeStyleStorageKey : themeSizeStorageKey;
+    const defaultTheme = attribute === "theme-style" ? defaultThemeStyle : defaultThemeSize;
 
     // 初始化/还原主题风格
-    changeTheme(type, themeAttribute, localStorage.getItem(themeStorageKey) || defaultTheme);
+    changeTheme(attribute, localStorage.getItem(themeStorageKey) || defaultTheme);
   }
 };
 
 /**
  * 修改全局的主题风格或尺寸
  */
-const changeTheme = (
-  type: "style" | "size",
-  attribute: "theme-style" | "doc-theme-style" | "theme-size" | "doc-theme-size",
-  value: string
-) => {
-  const currentTheme = type === "style" ? currentThemeStyle : currentThemeSize;
-  const defaultTheme = type === "style" ? defaultThemeStyle : defaultThemeSize;
-  const themeStorageKey = type === "style" ? themeStyleStorageKey : themeSizeStorageKey;
+const changeTheme = (attribute: "theme-style" | "theme-size", value: string, isDoc = false) => {
+  const currentTheme = attribute === "theme-style" ? currentThemeStyle : currentThemeSize;
+  const defaultTheme = attribute === "theme-style" ? defaultThemeStyle : defaultThemeSize;
+  const themeStorageKey = attribute === "theme-style" ? themeStyleStorageKey : themeSizeStorageKey;
 
   // value 可能是 "undefined" 字符串
-  if ([unref(currentTheme), "undefined"].includes(value)) return;
+  if ([unref(currentTheme), undefined, "undefined"].includes(value)) return;
   currentTheme.value = value;
   const documentElement = document.documentElement;
 
   // 默认配置不需要设置，所以删除
-  if (value === defaultTheme) {
-    documentElement.removeAttribute(attribute);
-    documentElement.removeAttribute("doc-" + attribute);
-  } else documentElement.setAttribute(attribute, value);
+  if (value === defaultTheme) documentElement.removeAttribute(attribute);
+  else documentElement.setAttribute(attribute, value);
 
-  // 切换文章页主题配置，则删除全局配置，反之亦然
-  if (attribute.startsWith("doc-")) return documentElement.removeAttribute(attribute.replace("doc-", ""));
-
-  documentElement.removeAttribute("doc-" + attribute);
   // 只存储全局配置到本地
-  localStorage.setItem(themeStorageKey, value);
+  if (!isDoc) localStorage.setItem(themeStorageKey, value);
 };
 
 // 文章页主题风格设置
 watch(
   () => unref(frontmatter).themeStyle,
-  (themeStyle: string) => changeDocTheme("style", "doc-theme-style", themeStyle),
+  (themeStyle: string) => changeDocTheme("theme-style", themeStyle),
   { immediate: true }
 );
 
 // 文章页主题尺寸设置
 watch(
   () => unref(frontmatter).themeSize,
-  (docThemeSize: string) => changeDocTheme("size", "doc-theme-size", docThemeSize),
+  (docThemeSize: string) => changeDocTheme("theme-size", docThemeSize),
   { immediate: true }
 );
 </script>
@@ -212,7 +200,7 @@ watch(
             :key="item.size"
             title=""
             :class="['dropdown-item', 'sle', { active: item.size === currentThemeSize }]"
-            @click="changeTheme('size', 'theme-size', item.size)"
+            @click="changeTheme('theme-size', item.size)"
           >
             {{ item.name }}
           </li>
@@ -240,7 +228,7 @@ watch(
                   :key="item.label + option.theme"
                   title=""
                   :class="['dropdown-item', 'sle', { active: option.theme === currentThemeStyle }]"
-                  @click="changeTheme('style', 'theme-style', option.theme)"
+                  @click="changeTheme('theme-style', option.theme)"
                 >
                   {{ option.name }}
                 </li>
