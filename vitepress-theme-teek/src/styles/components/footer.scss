@@ -2,6 +2,7 @@
 @use "../mixins/function" as *;
 
 @include b(footer) {
+  width: 100%;
   padding: 0 20px 12px;
   text-align: center;
 

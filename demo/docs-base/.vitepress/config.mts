@@ -27,7 +27,7 @@ const tkConfig = tkThemeConfig({
     appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],
   },
   banner: {
-    bgStyle: "fullImg",
+    bgStyle: "partImg",
     imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
     descStyle: "types",
   },
@@ -151,9 +151,7 @@ const tkConfig = tkThemeConfig({
     },
   },
 
-  markdownPlugins: [
-    (md: any) => md.use(timeline), //时间线插件
-  ],  
+  markdownPlugins: [timeline],
 });
 
 // https://vitepress.dev/reference/site-config

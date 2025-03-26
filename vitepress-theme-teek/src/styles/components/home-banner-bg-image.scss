@@ -3,11 +3,7 @@
 
 @include b(bannerBgImage) {
   &.part {
-    min-height: 450px;
-    z-index: -5;
-    .mask {
-      z-index: -1;
-    }
+    min-height: getCssVar(home-banner-part-min-height);
   }
 
   &.full {

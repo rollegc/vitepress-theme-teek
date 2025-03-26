@@ -113,6 +113,23 @@ const themeSizeList = [
 ];
 
 /**
+ * 修改主题风格或尺寸
+ */
+const changeTheme = (attribute: "theme-style" | "theme-size", value: string, isDoc = false) => {
+  const currentTheme = attribute === "theme-style" ? currentThemeStyle : currentThemeSize;
+  const themeStorageKey = attribute === "theme-style" ? themeStyleStorageKey : themeSizeStorageKey;
+
+  // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
+  if ([document.documentElement.getAttribute(attribute), undefined, "undefined"].includes(value)) return;
+
+  currentTheme.value = value;
+  document.documentElement.setAttribute(attribute, value);
+
+  // 只存储全局配置到本地
+  if (!isDoc) localStorage.setItem(themeStorageKey, value);
+};
+
+/**
  * 修改文章页的主题风格或尺寸，仅当 frontmatter.themeStyle 或 frontmatter.themeSize 存在时生效
  */
 const changeDocTheme = (attribute: "theme-style" | "theme-size", value: string) => {
@@ -124,23 +141,6 @@ const changeDocTheme = (attribute: "theme-style" | "theme-size", value: string) 
     // 初始化/还原主题风格
     changeTheme(attribute, localStorage.getItem(themeStorageKey) || defaultTheme);
   }
-};
-
-/**
- * 修改全局的主题风格或尺寸
- */
-const changeTheme = (attribute: "theme-style" | "theme-size", value: string, isDoc = false) => {
-  const currentTheme = attribute === "theme-style" ? currentThemeStyle : currentThemeSize;
-  const themeStorageKey = attribute === "theme-style" ? themeStyleStorageKey : themeSizeStorageKey;
-
-  // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
-  if ([unref(currentTheme), undefined, "undefined"].includes(value)) return;
-
-  currentTheme.value = value;
-  document.documentElement.setAttribute(attribute, value);
-
-  // 只存储全局配置到本地
-  if (!isDoc) localStorage.setItem(themeStorageKey, value);
 };
 
 // 文章页主题风格设置

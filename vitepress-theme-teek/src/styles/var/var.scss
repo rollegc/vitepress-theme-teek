@@ -49,6 +49,7 @@
   @include set-css-var("gap3", 30px);
   @include set-css-var("code-block-fold-height", 40px);
   @include set-css-var("code-block-lang-transform", uppercase);
+  @include set-css-var("home-banner-part-min-height", 450px);
 }
 
 // 使用自定义自定义全局样式变量

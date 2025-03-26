@@ -43,7 +43,7 @@ export default defineConfig({
     ["meta", { property: "og:site_name", content: "Teek" }],
     ["meta", { property: "og:image", content: "" }],
     ["meta", { property: "og:url", content: "" }],
-    ["meta", { name: "author", content: "Tianke" }],
+    ["meta", { name: "author", content: "Teek" }],
     [
       "meta",
       {
