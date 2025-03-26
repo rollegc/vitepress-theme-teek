@@ -1,6 +1,6 @@
-import { defineComponent, h, nextTick, watch } from "vue";
-import { useData } from "vitepress";
-import Teek from "vitepress-theme-teek";
+import { defineComponent, h, nextTick, provide, watch } from "vue";
+import { useData, useRoute } from "vitepress";
+import Teek, { artalkSymbol, giscusSymbol, walineSymbol } from "vitepress-theme-teek";
 // import "vitepress-theme-teek/index.css";
 import NoticeContent from "./components/NoticeContent.vue";
 import BannerImgArrow from "./components/BannerImgArrow.vue";
@@ -26,6 +26,13 @@ import { useFooterRuntime } from "./helper/useFooterRuntime"; // 首页底部添
 import confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import "vitepress-markdown-timeline/dist/theme/index.css"; // 引入时间线样式
 
+// 评论组件
+import { init } from "@waline/client";
+import "@waline/client/style";
+import Giscus from "@giscus/vue";
+import "artalk/Artalk.css";
+import Artalk from "artalk";
+
 export default {
   extends: Teek,
   enhanceApp({ app }) {
@@ -35,8 +42,23 @@ export default {
   Layout: defineComponent({
     name: "LayoutProvider",
     setup() {
-      const { frontmatter } = useData();
+      const { frontmatter, isDark, page } = useData();
       const { start, stop } = useFooterRuntime();
+      const route = useRoute();
+
+      // 注入评论区实例
+      provide(walineSymbol, (options, el) => init({ serverURL: options.serverURL!, dark: options.dark, el }));
+      provide(giscusSymbol, () => Giscus);
+      provide(artalkSymbol, (options, el) =>
+        Artalk.init({
+          el,
+          darkMode: isDark.value,
+          pageKey: route.path,
+          pageTitle: page.value.title,
+          server: options.server,
+          site: options.site,
+        })
+      );
 
       watch(
         frontmatter,

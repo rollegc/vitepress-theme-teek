@@ -1,11 +1,11 @@
 <script setup lang="ts" name="CommentGiscus">
-import { ref, nextTick, onMounted, computed, unref } from "vue";
+import { ref, nextTick, onMounted, computed, unref, inject } from "vue";
 import { useData } from "vitepress";
-import Giscus from "@giscus/vue";
 import { useUnrefData } from "../../../configProvider";
 import { isFunction } from "../../../helper";
-import { CommentProvider } from "../../../config/types";
+import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
+import { giscusSymbol } from "./giscus";
 
 defineOptions({ name: "CommentGiscus" });
 
@@ -39,6 +39,10 @@ const giscusTheme = computed(() => {
   return giscusThemeConfig || (unref(isDark) ? "dark" : "light");
 });
 
+// 尝试从上下文获取 giscus 组件
+const giscusComponentFn = inject(giscusSymbol);
+const giscusComponent = giscusComponentFn?.(theme.comment?.options);
+
 const isShow = ref(false);
 
 const reloadGiscus = () => {
@@ -49,6 +53,11 @@ const reloadGiscus = () => {
 };
 
 onMounted(() => {
+  if (!useOnline && !giscusComponent) {
+    return console.error(
+      "[Teek Error] Giscus initialization failed. Please configure the 'useOnline' to 'true' or provide the giscus component"
+    );
+  }
   reloadGiscus();
   // 路由切换后更新评论内容
   vpRouter.bindAfterRouteChange(ns.joinNamespace("giscus"), () => {
@@ -79,8 +88,9 @@ onMounted(() => {
       v-bind="options"
       crossorigin="anonymous"
     />
-    <Giscus
-      v-else
+    <component
+      v-else-if="giscusComponent"
+      :is="giscusComponent"
       :repo
       :repo-id
       :category

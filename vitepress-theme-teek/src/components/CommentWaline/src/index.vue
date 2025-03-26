@@ -1,10 +1,9 @@
 <script setup lang="ts" name="CommentWaline">
-import { onMounted } from "vue";
-import { init, type WalineInstance } from "@waline/client";
-import "@waline/client/style";
+import { inject, onMounted } from "vue";
 import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
+import { WalineInstance, walineSymbol } from "./waline";
 
 defineOptions({ name: "CommentWaline" });
 
@@ -23,13 +22,22 @@ const {
 }: CommentProvider["waline"] = { ...theme.comment?.options };
 
 let waline: WalineInstance | null = null;
+const walineId = "waline";
 
-const initWaline = async () => {
-  if (jsLink) {
-    // 异步加载 js 文件
-    const { init } = await import(/* @vite-ignore */ jsLink);
-    waline = init({ dark, ...options, serverURL, el: "#waline" });
-  } else waline = init({ ...options, serverURL, dark, el: "#waline" });
+const initWalineByInject = () => {
+  // 尝试从上下文获取 waline 实例
+  const getWalineInstance = inject(walineSymbol);
+  if (getWalineInstance) waline = getWalineInstance?.(theme.comment?.options, `#${walineId}`);
+
+  return waline;
+};
+
+const initWalineByJs = async () => {
+  if (!jsLink) return;
+
+  // 异步加载 js 文件
+  const { init } = await import(/* @vite-ignore */ jsLink);
+  waline = init({ dark, ...options, serverURL, el: `#${walineId}` });
 };
 
 /**
@@ -41,19 +49,24 @@ const preventJump = () => {
 };
 
 onMounted(async () => {
-  if (!serverURL && !waline) return;
+  // 尝试从上下文初始化 waline 实例，如果初始化失败，则尝试通过在线 JS 文件初始化 waline 实例
+  if (!initWalineByInject() && serverURL && jsLink) {
+    await initWalineByJs();
+    preventJump();
 
-  await initWaline();
-  // 路由切换后更新评论内容
-  vpRouter.bindAfterRouteChange(ns.joinNamespace("waline"), () => waline?.update());
+    // 路由切换后更新评论内容
+    return vpRouter.bindAfterRouteChange(ns.joinNamespace("waline"), () => waline?.update());
+  }
 
-  preventJump();
+  console.error(
+    "[Teek Error] Waline initialization failed. Please configure the 'jsLink' and 'serverURL' or provide the waline instance"
+  );
 });
 </script>
 
 <template>
   <div class="waline-container">
     <link v-if="cssLink" rel="stylesheet" :href="cssLink" :integrity="cssIntegrity" crossorigin="anonymous" />
-    <div id="waline" />
+    <div :id="walineId" />
   </div>
 </template>
