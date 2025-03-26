@@ -10,8 +10,8 @@ tk:
 
 hero:
   name: Teek
-  text: Vitepress 主题框架
-  tagline: 一个轻量、简易的 Vitepress 主题框架
+  text: Vitepress 主题
+  tagline: 一个轻量、简易、灵活配置的 Vitepress 主题
   actions:
     - theme: brand
       text: 开始

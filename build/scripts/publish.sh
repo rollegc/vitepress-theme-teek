@@ -24,7 +24,7 @@ npm run build
 
 cd dist/vitepress-theme-teek
 echo "publish vitepress-theme-teek..."
-# npm publish --tag $publish_tag
+npm publish --tag $publish_tag
 echo "Successfully published vitepress-theme-teek"
 cd -
 

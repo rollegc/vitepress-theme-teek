@@ -106,7 +106,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "v1.0.0",
+        text: "v1.0.0-alpha.0",
         items: [
           { text: "历史版本", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/release" },
           { text: "更新日志", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/dev/CHANGELOG.md" },
