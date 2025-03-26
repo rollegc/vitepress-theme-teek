@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress";
 import tkThemeConfig from "vitepress-theme-teek/config";
+import timeline from "vitepress-markdown-timeline"; // 导入时间线插件
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 
@@ -149,6 +150,10 @@ const tkConfig = tkThemeConfig({
       initItems: false,
     },
   },
+
+  markdownPlugins: [
+    (md: any) => md.use(timeline), //时间线插件
+  ],  
 });
 
 // https://vitepress.dev/reference/site-config

@@ -40,3 +40,6 @@ tk:
 #   - title: 特性 C
 #     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
+<!-- index.md -->
+<!-- 五彩纸屑组件 -->
+<confetti />
