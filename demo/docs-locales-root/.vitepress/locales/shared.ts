@@ -19,12 +19,8 @@ const tkConfig = tkThemeConfig({
     readingTime: true,
   },
   banner: {
-    bgStyle: "fullImg",
-    imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
+    bgStyle: "partImg",
     descStyle: "types",
-  },
-  bodyBgImg: {
-    // imgSrc: ["/img/bg1.jpg", "/img/bg2.png"],
   },
 
   friendLink: {
@@ -127,7 +123,13 @@ export default defineConfig({
   },
 
   head: [
-    ["meta", { name: "author", content: "Tianke" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg" }],
+    ["link", { rel: "icon", type: "image/png", href: "/teek-logo-mini.png" }],
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:locale", content: "zh-CN" }],
+    ["meta", { property: "og:title", content: "Teek | Vitepress Theme" }],
+    ["meta", { property: "og:site_name", content: "Teek" }],
+    ["meta", { name: "author", content: "Teek" }],
     [
       "meta",
       {

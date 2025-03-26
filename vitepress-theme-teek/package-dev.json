@@ -1,0 +1,96 @@
+{
+  "name": "vitepress-theme-teek",
+  "version": "1.0.0",
+  "description": "vitepress-theme-teek",
+  "type": "module",
+  "author": {
+    "name": "teeker",
+    "email": "2456019588@qq.com",
+    "url": "https://tianke99.cn"
+  },
+  "keywords": ["vitepress", "theme", "markdown", "vue", "ui", "blog"],
+  "license": "MIT",
+  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teek/tree/master",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kele-Bingtang/vitepress-theme-teek.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kele-Bingtang/vitepress-theme-teek/issues"
+  },
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.mjs",
+  "types": "dist/es/index.d.ts",
+  "style": "index.css",
+  "exports": {
+    ".": {
+      "types": "./dist/es/index.d.ts",
+      "import": "./dist/es/index.mjs",
+      "require": "./dist/lib/index.js"
+    },
+    "./es": {
+      "types": "./dist/es/index.d.ts",
+      "import": "./dist/es/index.mjs"
+    },
+    "./es/*.mjs": {
+      "types": "./dist/es/*.d.ts",
+      "import": "./dist/es/*.mjs"
+    },
+    "./es/*": {
+      "types": ["./dist/es/*.d.ts", "./es/*/index.d.ts"],
+      "import": "./dist/es/*.mjs"
+    },
+    "./lib": {
+      "types": "./dist/lib/index.d.ts",
+      "require": "./dist/lib/index.js"
+    },
+    "./lib/*.js": {
+      "types": "./dist/lib/*.d.ts",
+      "require": "./dist/lib/*.js"
+    },
+    "./lib/*": {
+      "types": ["./dist/lib/*.d.ts", "./dist/lib/*/index.d.ts"],
+      "require": "./dist/lib/*.js"
+    },
+    "./config": {
+      "types": "./dist/es/config/index.d.ts",
+      "import": "./dist/es/config/index.mjs"
+    },
+    "./vp-plus/*.scss": "./dist/theme-chalk/src/vp-plus/*.scss",
+    "./tk-plus/*.scss": "./dist/theme-chalk/src/tk-plus/*.scss",
+    "./*": "./dist/*"
+  },
+  "scripts": {
+    "stub": "unbuild --stub"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
+    "markdown-it-container": "^4.0.0",
+    "vitepress-plugin-auto-frontmatter": "latest",
+    "vitepress-plugin-catalogue": "latest",
+    "vitepress-plugin-doc-analysis": "latest",
+    "vitepress-plugin-file-content-loader": "latest",
+    "vitepress-plugin-md-h1": "latest",
+    "vitepress-plugin-permalink": "latest",
+    "vitepress-plugin-sidebar-resolve": "latest"
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it-container": "^2.0.10",
+    "element-plus": "^2.9.3",
+    "sass": "^1.83.1",
+    "unbuild": "^3.2.0",
+    "vite": "^6.0.7",
+    "vitepress": "^1.6.3"
+  },
+  "peerDependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "element-plus": "^2.9.3",
+    "vite": "^6.0.7",
+    "vitepress": "^1.6.3"
+  },
+  "browserslist": ["> 1%", "not ie 11", "not op_mini all"]
+}

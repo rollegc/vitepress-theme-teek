@@ -2,7 +2,7 @@ import tasks from "./tasks";
 import { copyFile, readFile, writeFile } from "fs/promises";
 import { copy } from "fs-extra";
 import { resolve } from "path";
-import { tkPackage, tkOutput, projectRoot, buildOutput } from "./helper";
+import { tkPackage, tkOutput, projectRoot, buildOutput, tkRoot } from "./helper";
 import picocolors from "picocolors";
 
 /**
@@ -28,9 +28,9 @@ const copyFiles = () =>
   ]);
 
 /**
- * 更新版本号
+ * 在 package.json 更新版本号
  */
-const updateVersion = async () => {
+const updateVersionInPackage = async () => {
   const tkOutputPkg = resolve(tkOutput, "package.json");
   const tkOutputPkgContent = await readFile(tkOutputPkg, "utf-8");
   const tkPackageContent = await readFile(resolve(projectRoot, "package.json"), "utf-8");
@@ -39,21 +39,33 @@ const updateVersion = async () => {
   tkOutputPkgInfo.version = tkPackageInfo.version;
 
   await writeFile(tkOutputPkg, JSON.stringify(tkOutputPkgInfo, null, 2) + "\n");
-
-  // const versionFile = resolve(tkOutput, "es/version.mjs");
-  // const versionContent = await readFile(versionFile, "utf-8");
-  // const newVersion = versionContent.replace("1.0.0", tkPackageInfo.version);
-
-  // await writeFile(versionFile, JSON.stringify(newVersion, null, 2) + "\n");
 };
 
-Promise.all(tasks).then(async () => {
-  await copyTypesDefinitions();
-  console.log(picocolors.green("Successfully copied definition file"));
+/**
+ * 在 version.ts 文件更新版本号
+ */
+const updateVersionInTs = async () => {
+  const tkPackageContent = await readFile(resolve(projectRoot, "package.json"), "utf-8");
+  const tkPackageInfo = JSON.parse(tkPackageContent);
 
-  await copyFiles();
-  console.log(picocolors.green("Successfully copied package.json and README.md"));
+  const versionFile = resolve(tkRoot, "src/version.ts");
+  const versionContent = await readFile(versionFile, "utf-8");
+  const newVersion = versionContent.replace("1.0.0", tkPackageInfo.version);
 
-  await updateVersion();
+  await writeFile(versionFile, newVersion);
+};
+
+updateVersionInTs().then(() => {
   console.log(picocolors.green("Successfully updated version"));
+
+  Promise.all(tasks).then(async () => {
+    await copyTypesDefinitions();
+    console.log(picocolors.green("Successfully copied definition file"));
+
+    await copyFiles();
+    console.log(picocolors.green("Successfully copied package.json and README.md"));
+
+    await updateVersionInPackage();
+    console.log(picocolors.green("Successfully updated package version"));
+  });
 });

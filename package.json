@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.0",
   "type": "module",
   "private": true,
   "workspaces": [
@@ -12,6 +12,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "pnpm run clean && pnpm run -C build build",
+    "publish": "bash build/scripts/publish.sh",
     "clean": "rimraf dist",
     "docs:dev": "pnpm run -C docs dev",
     "docs:build": "pnpm run -C docs build",

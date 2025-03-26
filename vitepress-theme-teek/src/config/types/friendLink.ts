@@ -1,0 +1,71 @@
+export interface FriendLink {
+  /**
+   * 是否启用友情链接卡片
+   *
+   * @default true
+   */
+  enabled?: boolean;
+  /**
+   * 友情链接数据列表
+   */
+  list?: {
+    /**
+     * 友链名称
+     */
+    name: string;
+    /**
+     * 友链头像
+     */
+    avatar?: string;
+    /**
+     * 友链描述
+     */
+    desc?: string;
+    /**
+     * 友链链接
+     */
+    link?: string;
+    /**
+     * img 标签的 alt
+     *
+     * @default name
+     */
+    alt?: string;
+  }[];
+  /**
+   * 首页卡片标题
+   *
+   * @default '${svg}友情链接'
+   */
+  title?: string | ((localeIndex: string, svg: string) => string);
+  /**
+   * 一页显示的数量
+   *
+   * @default 5
+   */
+  limit?: number;
+  /**
+   * 是否自动滚动
+   *
+   * @default false
+   */
+  autoScroll?: boolean;
+  /**
+   * 滚动间隔时间，单位：毫秒。autoScroll 为 true 时生效
+   *
+   * @default 2500 (2.5秒)
+   */
+  scrollSpeed?: number;
+  /**
+   * 是否自动翻页
+   *
+   * @default false
+   */
+  autoPage?: boolean;
+  /**
+   * 翻页间隔时间，单位：毫秒。autoPage 为 true 时生效
+   *
+   * @default 4000 (4秒)
+   */
+  pageSpeed?: number;
+}

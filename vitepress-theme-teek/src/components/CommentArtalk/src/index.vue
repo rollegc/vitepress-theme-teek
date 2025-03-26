@@ -1,9 +1,10 @@
 <script setup lang="ts" name="CommentArtalk">
-import { onMounted, onUnmounted, ref, unref, watch } from "vue";
+import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
+import { artalkSymbol } from "./artalk";
 
 defineOptions({ name: "CommentArtalk" });
 
@@ -18,14 +19,33 @@ const { server, site }: CommentProvider["artalk"] = { ...theme.comment?.options 
 const artalkRef = ref<HTMLElement | null>(null);
 const artalkJs = ref<HTMLScriptElement | null>(null);
 const artalk = ref();
+const artalkId = "artalk";
 
-const initArtalk = () => {
+const initArtalkByInject = () => {
+  // 尝试从上下文获取 artalk 实例函数
+  const getArtalkInstance = inject(artalkSymbol);
+  const el = unref(artalkRef) || `#${artalkId}`;
+
+  const artalkInstance = getArtalkInstance?.(theme.comment?.options, el);
+
+  if (!artalkInstance) return false;
+
+  artalk.value = artalkInstance;
+  switchDark();
+
+  return true;
+};
+
+const initArtalkByJs = () => {
   const Artalk = (window as any).Artalk;
+  const el = unref(artalkRef) || `#${artalkId}`;
 
-  if (!Artalk || !unref(artalkRef)) return;
+  if (!Artalk || !unref(artalkRef)) {
+    return console.error("[Teek Error] Artalk initialization failed. Unable to load online js file from " + server);
+  }
 
   artalk.value = Artalk.init({
-    el: unref(artalkRef),
+    el,
     darkMode: unref(isDark),
     pageKey: vpRouter.route.path,
     pageTitle: unref(page).title,
@@ -38,7 +58,7 @@ const initArtalk = () => {
 
 const initJs = () => {
   const t = unref(artalkJs);
-  if (t) t.onload = initArtalk;
+  if (t) t.onload = initArtalkByJs;
 };
 
 const reloadArtalk = () => {
@@ -52,11 +72,16 @@ const reloadArtalk = () => {
 };
 
 onMounted(() => {
-  if (!server) return;
+  // 尝试从上下文初始化 artalk 实例，如果初始化失败，则尝试通过在线 JS 文件初始化 artalk 实例
+  if (!initArtalkByInject() && server) {
+    initJs();
+    // 路由切换后更新评论内容
+    return unref(artalk) && vpRouter.bindAfterRouteChange(ns.joinNamespace("artalk"), () => reloadArtalk());
+  }
 
-  initJs();
-  // 路由切换后更新评论内容
-  vpRouter.bindAfterRouteChange(ns.joinNamespace("artalk"), () => reloadArtalk());
+  console.error(
+    "[Teek Error] Artalk initialization failed. Please configure the 'server' and 'site' or provide the artalk instance"
+  );
 });
 
 onUnmounted(() => {
@@ -77,7 +102,7 @@ watch(isDark, () => switchDark());
 <template>
   <div class="artalk-container">
     <link v-if="server" rel="stylesheet" :href="`${server}/dist/Artalk.css`" crossorigin="anonymous" />
-    <div id="artalk" ref="artalkRef" />
+    <div :id="artalkId" ref="artalkRef" />
     <component v-if="server" :is="'script'" :src="`${server}/dist/Artalk.js`" crossorigin="anonymous" ref="artalkJs" />
   </div>
 </template>

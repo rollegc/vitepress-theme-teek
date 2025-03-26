@@ -2,5 +2,5 @@
 @use "../mixins/function" as *;
 
 @include b(bannerBgPure) {
-  min-height: 450px;
+  min-height: getCssVar(home-banner-part-min-height);
 }

@@ -39,11 +39,11 @@ const reloadTwikoo = (to: string) => {
 };
 
 onMounted(() => {
-  if (!envId) return;
+  if (!envId) return console.error("[Teek Error] Twikoo initialization failed. Please configure the 'envId'");
 
   initJs();
   // 路由切换后更新评论内容
-  vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));
+  unref(twikooJs) && vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));
 });
 </script>
 

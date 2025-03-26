@@ -8,8 +8,6 @@ export const globals = {
   "node:fs": "node:fs",
   fs: "fs",
   "element-plus": "ElementPlus",
-  "@giscus/vue": "Giscus",
-  "@waline/client": "Waline",
 };
 
 // full-bundle 打包时，忽略 globals 中的依赖

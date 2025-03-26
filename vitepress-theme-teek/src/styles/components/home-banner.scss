@@ -16,15 +16,23 @@
     margin-top: calc(-1 * var(--vp-nav-height));
 
     @include e(content) {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
       height: 100vh;
 
       &.no-feature {
         padding-bottom: 15vh;
       }
+    }
+  }
+
+  @include e(content) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    min-height: getCssVar(home-banner-part-min-height);
+
+    &.no-feature {
+      padding-bottom: 10vh;
     }
   }
 }
