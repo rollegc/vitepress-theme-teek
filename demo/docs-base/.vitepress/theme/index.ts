@@ -23,8 +23,15 @@ import "./styles/index.scss";
 
 import { useFooterRuntime } from "./helper/useFooterRuntime"; // 首页底部添加运行时间
 
+import confetti from "./components/Confetti.vue" //导入五彩纸屑组件
+import "vitepress-markdown-timeline/dist/theme/index.css"; // 引入时间线样式
+
 export default {
   extends: Teek,
+  enhanceApp({ app }) {
+    // 注册组件
+    app.component('confetti' , confetti)  //五彩纸屑
+  },  
   Layout: defineComponent({
     name: "LayoutProvider",
     setup() {

@@ -10,7 +10,9 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
+    "canvas-confetti": "^1.9.3",
     "vitepress": "^1.6.3",
+    "vitepress-markdown-timeline": "^1.2.2",
     "vitepress-theme-teek": "workspace:*"
   }
 }
