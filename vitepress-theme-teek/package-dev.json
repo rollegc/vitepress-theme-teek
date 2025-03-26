@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "vitepress-theme-teek",
   "version": "1.0.0",
   "description": "vitepress-theme-teek",
@@ -19,47 +18,50 @@
   "bugs": {
     "url": "https://github.com/Kele-Bingtang/vitepress-theme-teek/issues"
   },
-  "main": "lib/index.js",
-  "module": "es/index.mjs",
-  "types": "es/index.d.ts",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.mjs",
+  "types": "dist/es/index.d.ts",
   "style": "index.css",
   "exports": {
     ".": {
-      "types": "./es/index.d.ts",
-      "import": "./es/index.mjs",
-      "require": "./lib/index.js"
+      "types": "./dist/es/index.d.ts",
+      "import": "./dist/es/index.mjs",
+      "require": "./dist/lib/index.js"
     },
     "./es": {
-      "types": "./es/index.d.ts",
-      "import": "./es/index.mjs"
+      "types": "./dist/es/index.d.ts",
+      "import": "./dist/es/index.mjs"
     },
     "./es/*.mjs": {
-      "types": "./es/*.d.ts",
-      "import": "./es/*.mjs"
+      "types": "./dist/es/*.d.ts",
+      "import": "./dist/es/*.mjs"
     },
     "./es/*": {
-      "types": ["./es/*.d.ts", "./es/*/index.d.ts"],
-      "import": "./es/*.mjs"
+      "types": ["./dist/es/*.d.ts", "./es/*/index.d.ts"],
+      "import": "./dist/es/*.mjs"
     },
     "./lib": {
-      "types": "./lib/index.d.ts",
-      "require": "./lib/index.js"
+      "types": "./dist/lib/index.d.ts",
+      "require": "./dist/lib/index.js"
     },
     "./lib/*.js": {
-      "types": "./lib/*.d.ts",
-      "require": "./lib/*.js"
+      "types": "./dist/lib/*.d.ts",
+      "require": "./dist/lib/*.js"
     },
     "./lib/*": {
-      "types": ["./lib/*.d.ts", "./lib/*/index.d.ts"],
-      "require": "./lib/*.js"
+      "types": ["./dist/lib/*.d.ts", "./dist/lib/*/index.d.ts"],
+      "require": "./dist/lib/*.js"
     },
     "./config": {
-      "types": "./es/config/index.d.ts",
-      "import": "./es/config/index.mjs"
+      "types": "./dist/es/config/index.d.ts",
+      "import": "./dist/es/config/index.mjs"
     },
-    "./vp-plus/*.scss": "./theme-chalk/src/vp-plus/*.scss",
-    "./tk-plus/*.scss": "./theme-chalk/src/tk-plus/*.scss",
-    "./*": "./*"
+    "./vp-plus/*.scss": "./dist/theme-chalk/src/vp-plus/*.scss",
+    "./tk-plus/*.scss": "./dist/theme-chalk/src/tk-plus/*.scss",
+    "./*": "./dist/*"
+  },
+  "scripts": {
+    "stub": "unbuild --stub"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -75,11 +77,9 @@
   },
   "devDependencies": {
     "@element-plus/icons-vue": "^2.3.1",
-    "@giscus/vue": "^3.1.1",
     "@types/js-yaml": "^4.0.9",
     "@types/markdown-it": "^14.1.2",
     "@types/markdown-it-container": "^2.0.10",
-    "@waline/client": "^3.5.1",
     "element-plus": "^2.9.3",
     "sass": "^1.83.1",
     "unbuild": "^3.2.0",

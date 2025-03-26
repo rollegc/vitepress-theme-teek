@@ -28,7 +28,7 @@ const copyFiles = () =>
   ]);
 
 /**
- * 更新版本号
+ * 在 package.json 更新版本号
  */
 const updateVersionInPackage = async () => {
   const tkOutputPkg = resolve(tkOutput, "package.json");
@@ -41,6 +41,9 @@ const updateVersionInPackage = async () => {
   await writeFile(tkOutputPkg, JSON.stringify(tkOutputPkgInfo, null, 2) + "\n");
 };
 
+/**
+ * 在 version.ts 文件更新版本号
+ */
 const updateVersionInTs = async () => {
   const tkPackageContent = await readFile(resolve(projectRoot, "package.json"), "utf-8");
   const tkPackageInfo = JSON.parse(tkPackageContent);

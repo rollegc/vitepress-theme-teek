@@ -22,7 +22,7 @@ export const tkOutput = resolve(buildOutput, PKG_NAME);
 /** /dist/types */
 export const tsOutput = resolve(buildOutput, "types");
 
-export const tkPackage = resolve(tkRoot, "package.json");
+export const tkPackage = resolve(tkRoot, "package-release.json");
 export const projectPackage = resolve(projectRoot, "package.json");
 export const docPackage = resolve(docRoot, "package.json");
 
