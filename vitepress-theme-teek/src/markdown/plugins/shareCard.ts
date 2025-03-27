@@ -2,8 +2,8 @@ import type MarkdownIt from "markdown-it";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
 import container from "markdown-it-container";
-import { ShareCard } from "../types";
-import { SiteConfig } from "vitepress";
+import type { ShareCard } from "../types";
+import type { SiteConfig } from "vitepress";
 
 const shareCardName = "shareCard";
 const rootClass = "share-card";

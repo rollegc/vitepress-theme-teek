@@ -2,8 +2,8 @@ import type MarkdownIt from "markdown-it";
 import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
-import { ImgCard } from "../types";
-import { SiteConfig } from "vitepress";
+import type { ImgCard } from "../types";
+import type { SiteConfig } from "vitepress";
 
 const imgCardName = "imgCard";
 const rootClass = "img-card";

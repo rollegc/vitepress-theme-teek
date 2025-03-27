@@ -162,7 +162,7 @@ watch(
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
     <slot name="teek-right-bottom-before" />
 
-    <transition name="fade">
+    <transition :name="ns.joinNamespace('fade')">
       <div
         title="返回顶部"
         :class="[ns.e('button'), 'back-top']"
@@ -174,7 +174,7 @@ watch(
       </div>
     </transition>
 
-    <transition name="fade">
+    <transition :name="ns.joinNamespace('fade')">
       <div v-if="provider && showToComment" title="前往评论" :class="ns.e('button')" @click="scrollToComment">
         <Icon><ChatDotSquare /></Icon>
       </div>
@@ -189,7 +189,7 @@ watch(
       @click="showThemeSizeItem = true"
     >
       <Icon :icon="sizeSvg"></Icon>
-      <transition name="mode">
+      <transition :name="ns.joinNamespace('mode')">
         <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
             v-for="item in themeSizeList"
@@ -213,7 +213,7 @@ watch(
       @click="showThemeStyleItem = true"
     >
       <Icon><MagicStick /></Icon>
-      <transition name="mode">
+      <transition :name="ns.joinNamespace('mode')">
         <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
           <ul v-for="item in themeStyleList" :key="item.label">
             <li :class="`${ns.e('button__mode__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>

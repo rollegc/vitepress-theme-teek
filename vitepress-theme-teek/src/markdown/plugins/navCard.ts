@@ -2,8 +2,8 @@ import type MarkdownIt from "markdown-it";
 import container from "markdown-it-container";
 import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
-import { NavCard } from "../types";
-import { SiteConfig } from "vitepress";
+import type { NavCard } from "../types";
+import type { SiteConfig } from "vitepress";
 
 const navCardName = "navCard";
 const rootClass = "nav-card";
