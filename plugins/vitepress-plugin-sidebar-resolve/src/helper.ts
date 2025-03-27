@@ -16,7 +16,7 @@ export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public
  */
 export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarMulti => {
   const {
-    path = process.cwd(),
+    path,
     ignoreList = [],
     scannerRootMd = true,
     collapsed,
@@ -25,6 +25,8 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     initItemsText = false,
     sideBarResolved,
   } = option;
+  if (!path) return {};
+
   // 确保 prefix 始终都有 / 结尾
   prefix = prefix.replace(/\/$/, "") + "/";
 

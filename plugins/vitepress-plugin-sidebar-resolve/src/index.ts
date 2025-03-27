@@ -41,7 +41,7 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       } = config.vitepress;
 
       const { path, ignoreList, localeRootDir } = option;
-      const baseDir = path ? join(process.cwd(), path) : srcDir;
+      const baseDir = path ? join(srcDir, path) : srcDir;
 
       // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");

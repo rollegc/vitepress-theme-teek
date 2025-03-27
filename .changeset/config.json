@@ -8,7 +8,7 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@vitepress-theme-teek/docs",
+    "@vitepress-theme-teek/docs-base",
     "@vitepress-theme-teek/docs-locales",
     "@vitepress-theme-teek-docs/locales-root",
     "@vitepress-theme-teek/build",

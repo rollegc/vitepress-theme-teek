@@ -12,7 +12,9 @@ export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public
  * @param prefix 指定前缀，在生成 relativePath 的时候会自动加上前缀
  */
 export default (option: DocAnalysisOption = {}, prefix = ""): FilePathInfo[] => {
-  const { path = process.cwd() } = option;
+  const { path } = option;
+  if (!path) return [];
+
   // 结尾必须有 /
   prefix = prefix.endsWith("/") ? prefix : `${prefix}/`;
   // 开头不允许有 /
@@ -30,7 +32,7 @@ export function readFileList(
   fileList: FilePathInfo[] = [],
   prefix = ""
 ): FilePathInfo[] {
-  const { path = process.cwd(), ignoreList = [], ignoreIndexMd } = option;
+  const { path = "", ignoreList = [], ignoreIndexMd } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 
   const secondDirOrFilenames = readdirSync(root);

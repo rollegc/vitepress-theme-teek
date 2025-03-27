@@ -1,5 +1,11 @@
 # vitepress-plugin-sidebar-resolve
 
+## 1.0.7
+
+### Patch Changes
+
+- process.cwd() 替换为 srcDir
+
 ## 1.0.6
 
 ### Patch Changes

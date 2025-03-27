@@ -22,7 +22,7 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
         srcDir,
       } = config.vitepress;
 
-      const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
+      const baseDir = option.path ? join(srcDir, option.path) : srcDir;
       const newOption = { ...option, path: baseDir };
 
       // 国际化多语言 key 数组

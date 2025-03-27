@@ -11,7 +11,9 @@ export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public
 const catalogueInfo: CatalogueInfo[] = [];
 
 export default (option: CatalogueOption = {}) => {
-  const { path = process.cwd(), ignoreList = [] } = option;
+  const { path = "", ignoreList = [] } = option;
+  if (!path) return [];
+
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(path, ignoreList);
 
@@ -50,7 +52,7 @@ const readDirPaths = (sourceDir: string, ignoreList: CatalogueOption["ignoreList
  * @param prefix 目录前缀，每次递归都加前端目录名
  */
 const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
-  const { path: srcDir = process.cwd(), ignoreList = [] } = option;
+  const { path: srcDir = "", ignoreList = [] } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   // 读取目录名（文件和文件夹）
   let dirOrFilenames = readdirSync(root);

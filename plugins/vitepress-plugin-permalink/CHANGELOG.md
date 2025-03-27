@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.14
+
+### Patch Changes
+
+- process.cwd() 替换为 srcDir
+
 ## 1.0.13
 
 ### Patch Changes

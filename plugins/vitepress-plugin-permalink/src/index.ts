@@ -40,7 +40,7 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
         rewrites,
       } = config.vitepress;
 
-      const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
+      const baseDir = option.path ? join(srcDir, option.path) : srcDir;
       const permalinks = createPermalinks({ ...option, path: baseDir }, cleanUrls);
 
       // Key 为 path，Value 为 permalink

@@ -1,5 +1,11 @@
 # vitepress-plugin-doc-analysis
 
+## 1.0.9
+
+### Patch Changes
+
+- process.cwd() 替换为 srcDir
+
 ## 1.0.8
 
 ### Patch Changes

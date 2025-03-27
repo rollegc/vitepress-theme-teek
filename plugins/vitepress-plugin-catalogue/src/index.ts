@@ -21,7 +21,7 @@ export default function VitePluginVitePressCatalogue(option: CatalogueOption = {
         srcDir,
       } = config.vitepress;
 
-      const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
+      const baseDir = option.path ? join(srcDir, option.path) : srcDir;
       const catalogues = createCatalogues({ ...option, path: baseDir });
 
       const finalCatalogues: Catalogue = { arr: catalogues, map: {}, inv: {} };

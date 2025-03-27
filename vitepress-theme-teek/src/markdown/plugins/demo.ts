@@ -15,7 +15,7 @@ const demoPlugin = (md: MarkdownIt) => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const srcDir = siteConfig.srcDir;
   const { path = "examples" } = siteConfig.userConfig.themeConfig.demo || {};
-  const demoPath = join(srcDir, path);
+  const demoPath = join(srcDir, path || "");
 
   const options: ContainerOpts = {
     validate(params) {
