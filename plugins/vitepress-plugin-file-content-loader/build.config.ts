@@ -13,5 +13,5 @@ export default defineBuildConfig({
       minify: true,
     },
   },
-  externals: ["vitepress"],
+  externals: ["vitepress", "vite"],
 });

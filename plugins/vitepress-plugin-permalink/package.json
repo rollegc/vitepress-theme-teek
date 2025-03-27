@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-permalink",
   "type": "module",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "扫描 markdown 文档，生成永久链接",
   "author": {
     "name": "teeker",
@@ -71,7 +71,6 @@
     "vitepress": "^1.6.3"
   },
   "peerDependencies": {
-    "vite": "^6.0.7",
     "vitepress": "^1.6.3"
   }
 }

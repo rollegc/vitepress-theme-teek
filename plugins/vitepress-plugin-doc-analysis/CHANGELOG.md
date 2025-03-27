@@ -1,5 +1,11 @@
 # vitepress-plugin-doc-analysis
 
+## 1.0.8
+
+### Patch Changes
+
+- 在 peerDependency 移出 vite 依赖，优化 Vite 构建时重复执行插件问题
+
 ## 1.0.7
 
 ### Patch Changes

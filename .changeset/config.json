@@ -7,5 +7,12 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["vitepress-theme-teek"]
+  "ignore": [
+    "@vitepress-theme-teek/docs",
+    "@vitepress-theme-teek/docs-locales",
+    "@vitepress-theme-teek-docs/locales-root",
+    "@vitepress-theme-teek/build",
+    "vitepress-theme-teek",
+    "vitepress-theme-teek-docs"
+  ]
 }

@@ -13,4 +13,5 @@ export default defineBuildConfig({
       minify: true,
     },
   },
+  externals: ["vite"],
 });

@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-sidebar-resolve",
   "type": "module",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "扫描 markdown 文档，自动生成侧边栏",
   "author": {
     "name": "teeker",
@@ -50,7 +50,6 @@
     "vitepress": "^1.6.3"
   },
   "peerDependencies": {
-    "vite": "^6.0.7",
     "vitepress": "^1.6.3"
   }
 }

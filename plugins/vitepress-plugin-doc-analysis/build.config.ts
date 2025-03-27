@@ -10,4 +10,5 @@ export default defineBuildConfig({
       exports: "named",
     },
   },
+  externals: ["vite"],
 });

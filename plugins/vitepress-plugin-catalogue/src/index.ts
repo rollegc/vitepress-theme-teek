@@ -7,16 +7,19 @@ import logger from "./log";
 export * from "./types";
 
 export default function VitePluginVitePressCatalogue(option: CatalogueOption = {}): Plugin & { name: string } {
+  let isExecute = false;
+
   return {
     name: "vite-plugin-vitepress-catalogue",
     config(config: any) {
+      // 防止 vitepress build 时重复执行
+      if (isExecute) return;
+      isExecute = true;
+
       const {
         site: { themeConfig },
         srcDir,
       } = config.vitepress;
-
-      // 防止 vitepress build 时重复执行
-      if (themeConfig.catalogues) return;
 
       const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
       const catalogues = createCatalogues({ ...option, path: baseDir });

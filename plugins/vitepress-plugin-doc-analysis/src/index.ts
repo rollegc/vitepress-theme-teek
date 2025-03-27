@@ -8,23 +8,25 @@ import logger from "./log";
 export * from "./types";
 
 export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption = {}): Plugin & { name: string } {
+  let isExecute = false;
+
   return {
     name: "vitepress-plugin-doc-analysis",
     config(config: any) {
+      // 防止 vitepress build 时重复执行
+      if (isExecute) return;
+      isExecute = true;
+
       const {
         site: { themeConfig = {}, locales = {} },
         srcDir,
       } = config.vitepress;
 
       const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
-      const newOption = { ...option, baseDir };
+      const newOption = { ...option, path: baseDir };
 
       // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
-
-      // 防止 vitepress build 时重复执行
-      if (themeConfig.docAnalysisInfo) return;
-      if (localesKeys.length && locales[localesKeys[0]]?.themeConfig.docAnalysisInfo) return;
 
       // 如果不是多语言，则不需要处理多语言的文档分析
       if (!localesKeys.length) return doDocAnalysisThenSet(themeConfig, readFileList(newOption), newOption);

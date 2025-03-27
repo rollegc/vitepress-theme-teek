@@ -9,6 +9,8 @@ export * from "./types";
 export * from "./util";
 
 export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin & { name: string } {
+  let isExecute = false;
+
   return {
     name: "vite-plugin-vitepress-sidebar-resolve",
     configureServer(server: ViteDevServer) {
@@ -29,6 +31,10 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
         });
     },
     config(config: any) {
+      // 防止 vitepress build 时重复执行
+      if (isExecute) return;
+      isExecute = true;
+
       const {
         site: { themeConfig = {}, locales = {} },
         srcDir,
@@ -39,10 +45,6 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
 
       // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
-
-      // 防止 vitepress build 时重复执行
-      if (themeConfig.sidebar) return;
-      if (localesKeys.length && locales[localesKeys[0]]?.themeConfig.sidebar) return;
 
       // 如果不是多语言，直接自动生成结构化侧边栏
       if (!localesKeys.length) return setSideBar(themeConfig, createSidebar({ ...option, path: baseDir }));
