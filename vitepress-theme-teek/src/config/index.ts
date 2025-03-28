@@ -142,7 +142,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     metaChunk: true,
     head,
     vite: {
-      plugins,
+      plugins: plugins as any,
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
     },

@@ -35,7 +35,7 @@ const DemoComponent = defineAsyncComponent(async () => {
     // / 表示从 .vitepress 目录层级开始
     return await import(/* @vite-ignore */ `/${props.path}`);
   } catch (error) {
-    console.error(`[Teek Error] Failed to load component: '${props.relativePath}'`, error);
+    console.error(`[Teek Error] Failed to load component: '${props.source}'`, error);
     return null;
   }
 });
@@ -82,8 +82,7 @@ const copyCode = async () => {
   copy(unref(decodeRawSource));
 
   // TODO：弹出提醒
-  if (copied) console.log("复制成功");
-  else console.error("复制失败");
+  console.log(copied ? "复制成功" : "复制失败");
 };
 </script>
 
