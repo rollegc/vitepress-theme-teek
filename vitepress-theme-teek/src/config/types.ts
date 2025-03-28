@@ -21,6 +21,7 @@ import type {
   TopArticle,
   Wallpaper,
 } from "./types/index";
+import { Demo } from "./types/demo";
 
 export type * from "./types/index";
 
@@ -174,4 +175,5 @@ export interface TkThemeConfig {
    * 自定义 markdown 容器配置
    */
   markdownContainers?: ContainerOption[];
+  demoPlugins?: Demo;
 }

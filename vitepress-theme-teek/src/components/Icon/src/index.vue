@@ -15,7 +15,7 @@ const slot = useSlots();
 const getStyle = () => {
   return {
     ...props.style,
-    "--icon-color": color || "var(--vp-c-text-1)",
+    "--icon-color": color,
     "--icon-size": props.size && (isString(props.size) ? props.size : `${props.size}px`),
     "--icon-color-hover": hoverColor || ns.cssVar("theme-color"),
   };

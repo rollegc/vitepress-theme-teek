@@ -1,9 +1,10 @@
 import type MarkdownIt from "markdown-it";
 import type { Renderer, Token } from "markdown-it";
 import container from "markdown-it-container";
+import { normalizePath } from "vite";
+import type { SiteConfig } from "vitepress";
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
-import type { SiteConfig } from "vitepress";
 
 interface ContainerOpts {
   marker?: string | undefined;
@@ -29,14 +30,21 @@ const demoPlugin = (md: MarkdownIt) => {
         const description = desc && desc.length > 1 ? desc[1] : "";
         const sourceFileToken = tokens[idx + 2];
         let source = "";
-        const sourceFilePath = sourceFileToken.children?.[0].content ?? "";
+        const containerContent = sourceFileToken.children?.[0].content ?? "";
+        // 确保文件路径带 .vue
+        const sourceFile = containerContent ? `${containerContent.replace(/.vue$/, "")}.vue` : "";
+        const sourceRelativeFile = normalizePath(join(path, sourceFile));
 
-        if (sourceFileToken.type === "inline") {
-          source = readFileSync(resolve(demoPath, `${sourceFilePath}.vue`), "utf-8");
+        if (sourceFile && sourceFileToken.type === "inline") {
+          source = readFileSync(resolve(demoPath, sourceFile), "utf-8");
         }
-        if (!source) throw new Error(`Incorrect source file path: ${sourceFilePath}`);
+        if (!source) throw new Error(`Incorrect source file path: ${sourceFile}`);
 
-        return `<DemoCode source="${encodeURIComponent(source)}" path="${sourceFilePath}" relative-path="${demoPath}" description="${encodeURIComponent(md.render(description))}" >`;
+        return `<DemoCode source="${encodeURIComponent(
+          md.render(`\`\`\` vue\n${source}\`\`\``)
+        )}" path="${sourceRelativeFile}" raw-source="${encodeURIComponent(
+          source
+        )}" description="${encodeURIComponent(md.render(description))}">`;
       } else return "</DemoCode>";
     },
   };

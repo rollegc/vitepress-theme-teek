@@ -123,7 +123,7 @@ const topTipConfig = computed(() => {
           <TkArticleAnalyze />
           <TkArticleImagePreview />
           <TkArticlePageStyle />
-          <TkCodeBlockToggle />
+          <TkCodeBlockToggle v-if="themeConfig.codeBlock" />
         </ClientOnly>
 
         <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
