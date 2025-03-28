@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeTopArticleCard">
 import { computed, ref, unref } from "vue";
 import { withBase, useData } from "vitepress";
-import { useUnrefData, usePosts, useBgColor } from "../../../configProvider";
+import { usePosts, useBgColor } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import topArticleSvg from "../../../assets/svg/topArticle";
@@ -15,8 +15,7 @@ const ns = useNamespace("topArticle");
 
 const posts = usePosts();
 
-const { theme, frontmatter } = useUnrefData();
-const { localeIndex } = useData();
+const { theme, frontmatter, localeIndex } = useData();
 
 // 精选文章配置项
 const {
@@ -24,7 +23,7 @@ const {
   title = `${topArticleSvg}精选文章`,
   autoPage = false,
   pageSpeed = 4000,
-}: TopArticle = { ...theme.topArticle, ...frontmatter.tk?.topArticle };
+}: TopArticle = { ...unref(theme).topArticle, ...unref(frontmatter).tk?.topArticle };
 
 const topArticleList = computed(() => {
   const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;

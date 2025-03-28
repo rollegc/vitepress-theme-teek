@@ -4,7 +4,6 @@ import { useRoute, useData } from "vitepress";
 import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
 import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
@@ -15,19 +14,18 @@ defineOptions({ name: "ArticleAnalyze" });
 
 const ns = useNamespace("articleAnalyze");
 
-const { theme } = useUnrefData();
-const { theme: themeRef, frontmatter } = useData();
+const { theme, frontmatter } = useData();
 
 // 文章基本信息
 const post = computed<TkContentData>(() => ({
-  author: { ...theme.author, ...unref(frontmatter).author },
+  author: { ...unref(theme).author, ...unref(frontmatter).author },
   date: unref(frontmatter).date,
   frontmatter: unref(frontmatter),
   url: "",
 }));
 
 // 站点信息数据
-const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
+const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
@@ -41,7 +39,11 @@ const pageViewInfo = computed(() => {
 
 // 文章信息配置项
 const articleConfig = computed<Article>(() => {
-  const { showInfo = true, showIcon = true, teleport = {} } = { ...theme.article, ...unref(frontmatter).article };
+  const {
+    showInfo = true,
+    showIcon = true,
+    teleport = {},
+  } = { ...unref(theme).article, ...unref(frontmatter).article };
   return { showInfo, showIcon, teleport };
 });
 
@@ -79,7 +81,7 @@ const docAnalysisConfig = computed<DocAnalysis>(() => {
     wordCount = true,
     readingTime = true,
     statistics = {},
-  }: DocAnalysis = { ...theme.docAnalysis, ...unref(frontmatter).docAnalysis };
+  }: DocAnalysis = { ...unref(theme).docAnalysis, ...unref(frontmatter).docAnalysis };
 
   return { wordCount, readingTime, statistics };
 });

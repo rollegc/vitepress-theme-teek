@@ -1,7 +1,6 @@
 <script setup lang="ts" name="CommentGiscus">
 import { ref, nextTick, onMounted, computed, unref, inject } from "vue";
 import { useData } from "vitepress";
-import { useUnrefData } from "../../../configProvider";
 import { isFunction } from "../../../helper";
 import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
@@ -12,8 +11,7 @@ defineOptions({ name: "CommentGiscus" });
 const ns = useNamespace("");
 const vpRouter = useVpRouter();
 
-const { isDark } = useData();
-const { theme } = useUnrefData();
+const { theme, isDark } = useData();
 
 const {
   repo,
@@ -32,7 +30,7 @@ const {
   link = "https://giscus.app/client.js",
   integrity,
   ...options
-}: CommentProvider["giscus"] = { ...theme.comment?.options };
+}: CommentProvider["giscus"] = { ...unref(theme).comment?.options };
 
 const giscusTheme = computed(() => {
   if (isFunction(giscusThemeConfig)) return giscusThemeConfig(unref(isDark));
@@ -41,7 +39,7 @@ const giscusTheme = computed(() => {
 
 // 尝试从上下文获取 giscus 组件
 const giscusComponentFn = inject(giscusSymbol);
-const giscusComponent = giscusComponentFn?.(theme.comment?.options);
+const giscusComponent = giscusComponentFn?.(unref(theme).comment?.options);
 
 const isShow = ref(false);
 

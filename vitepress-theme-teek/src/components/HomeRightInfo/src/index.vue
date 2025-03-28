@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePage, useUnrefData } from "../../../configProvider";
+import { usePage } from "../../../configProvider";
 import HomeMyCard from "../../HomeMyCard";
 import HomeCategoryCard from "../../HomeCategoryCard";
 import HomeTagCard from "../../HomeTagCard";
@@ -14,9 +14,8 @@ defineOptions({ name: "HomeRightInfo" });
 
 const ns = useNamespace("homeRightInfo");
 
-const { frontmatter } = useData();
-const { theme } = useUnrefData();
-const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = { ...theme, ...unref(frontmatter) };
+const { theme, frontmatter } = useData();
+const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = { ...unref(theme), ...unref(frontmatter) };
 
 const enabledTopArticleCard = topArticle?.enabled !== false;
 const enabledCategoryCard = category?.enabled !== false;

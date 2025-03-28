@@ -3,7 +3,6 @@ import { computed, ref, unref, onMounted, onUnmounted, watch } from "vue";
 import { MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
-import { useUnrefData } from "../../../configProvider";
 import { scrollTo } from "../../../helper";
 import sizeSvg from "../../../assets/svg/size";
 import rocketSvg from "../../../assets/svg/rocket";
@@ -59,8 +58,7 @@ onUnmounted(() => {
   window.removeEventListener("scroll", watchScroll);
 });
 
-const { frontmatter } = useData();
-const { theme } = useUnrefData();
+const { theme, frontmatter } = useData();
 const {
   useThemeStyle = true,
   themeStyle: defaultThemeStyle = "vp-default",
@@ -68,9 +66,9 @@ const {
   useThemeSize = true,
   themeSize: defaultThemeSize = "default",
   themeSizeAppend = [],
-}: ThemeSetting = theme.themeSetting || {};
+}: ThemeSetting = unref(theme).themeSetting || {};
 
-const { provider }: CommentConfig = theme.comment || {};
+const { provider }: CommentConfig = unref(theme).comment || {};
 const themeStyleStorageKey = ns.b("themeStyle");
 const themeSizeStorageKey = ns.b("themeSize");
 

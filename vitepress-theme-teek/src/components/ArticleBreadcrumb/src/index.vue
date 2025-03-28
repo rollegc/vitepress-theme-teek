@@ -6,22 +6,20 @@ import { useNamespace } from "../../../hooks";
 import Breadcrumb from "./Breadcrumb.vue";
 import BreadcrumbItem from "./BreadcrumbItem.vue";
 import Icon from "../../Icon";
-import { useUnrefData } from "../../../configProvider";
 import { Breadcrumb as BreadcrumbType } from "../../../config/types";
 
 defineOptions({ name: "ArticleBreadcrumb" });
 
 const ns = useNamespace("articleBreadcrumb");
 
-const { theme } = useUnrefData();
-const { localeIndex, frontmatter, page } = useData();
+const { localeIndex, theme, frontmatter, page } = useData();
 
 // 面包屑配置项
 const breadcrumb = computed<BreadcrumbType>(() => ({
   enabled: true,
   showCurrentName: false,
   separator: "/",
-  ...theme.breadcrumb,
+  ...unref(theme).breadcrumb,
   ...unref(frontmatter).breadcrumb,
 }));
 
@@ -42,7 +40,7 @@ const breadcrumbList = computed(() => {
     ) {
       classifyList.push({
         fileName,
-        filePath: theme.catalogues?.inv[item]?.filePath || "",
+        filePath: unref(theme).catalogues?.inv[item]?.filePath || "",
       });
     }
   });

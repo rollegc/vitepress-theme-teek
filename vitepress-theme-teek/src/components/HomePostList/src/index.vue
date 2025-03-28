@@ -5,7 +5,7 @@ import { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
 import Icon from "../../Icon";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
 import emptySvg from "../../../assets/svg/empty";
@@ -15,13 +15,15 @@ defineOptions({ name: "HomePostList" });
 const ns = useNamespace("postList");
 
 const posts = usePosts();
-const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useData();
 
 // 自定义一页数量 & 分页组件的 Props
-const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.page, ...unref(frontmatter).tk?.page };
+const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = {
+  ...unref(theme).page,
+  ...unref(frontmatter).tk?.page,
+};
 
-const { coverImgMode: coverImgModeConst = "default" } = { ...theme.post, ...unref(frontmatter).tk?.post };
+const { coverImgMode: coverImgModeConst = "default" } = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
 const coverImgMode = ref(coverImgModeConst);
 
 // 分页信息

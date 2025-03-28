@@ -1,20 +1,19 @@
 <script setup lang="ts" name="HomeBannerFeature">
-import { withBase } from "vitepress";
-import { ref } from "vue";
+import { useData, withBase } from "vitepress";
+import { ref, unref } from "vue";
 import { useNamespace, useWindowSize } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerFeature" });
 
 const ns = useNamespace("bannerFeature");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
 const { features = [], featureCarousel = 4000 }: Banner = {
-  ...theme.banner,
-  ...frontmatter.tk,
-  ...frontmatter.tk?.banner,
+  ...unref(theme).banner,
+  ...unref(frontmatter).tk,
+  ...unref(frontmatter).tk?.banner,
 };
 
 const active = ref(0);

@@ -1,16 +1,15 @@
 <script setup lang="ts" name="BodyBgImage">
 import { onMounted, unref } from "vue";
+import { withBase, useData } from "vitepress";
 import { useNamespace, useSwitchData } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import { isString } from "../../../helper";
 import { BodyBgImg } from "../../../config/types";
-import { withBase } from "vitepress";
 
 defineOptions({ name: "BodyBgImage" });
 
 const ns = useNamespace("bodyBgImage");
 
-const { theme } = useUnrefData();
+const { theme } = useData();
 
 let {
   imgSrc,
@@ -19,7 +18,7 @@ let {
   imgShuffle = false,
   mask = false,
   maskBg = "rgba(0, 0, 0, 0.2)",
-}: BodyBgImg = theme.bodyBgImg || {};
+}: BodyBgImg = unref(theme).bodyBgImg || {};
 
 // body 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({

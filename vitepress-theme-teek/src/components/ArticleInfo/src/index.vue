@@ -2,7 +2,7 @@
 import { User, Calendar, FolderOpened, CollectionTag, EditPen } from "@element-plus/icons-vue";
 import { useRoute, withBase, useData } from "vitepress";
 import { computed, unref } from "vue";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
@@ -16,8 +16,7 @@ const ns = useNamespace("articleInfo");
 
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
-const { theme } = useUnrefData();
-const { frontmatter, page } = useData();
+const { theme, frontmatter, page } = useData();
 // 文章信息配置项
 const articleConfig = computed<Article>(() => {
   const {
@@ -29,7 +28,7 @@ const articleConfig = computed<Article>(() => {
     showCategory = false,
     showTag = false,
   }: Article = {
-    ...theme.article,
+    ...unref(theme).article,
     ...unref(frontmatter).article,
     ...unref(frontmatter).tk?.article,
   };

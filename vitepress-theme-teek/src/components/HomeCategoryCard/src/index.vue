@@ -2,7 +2,7 @@
 import { computed, unref, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import categorySvg from "../../../assets/svg/category";
 import { isFunction } from "../../../helper";
@@ -15,8 +15,7 @@ const ns = useNamespace("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
-const { theme, site, frontmatter } = useUnrefData();
-const { localeIndex } = useData();
+const { localeIndex, theme, site, frontmatter } = useData();
 
 const pageNum = ref(1);
 // 分类配置项
@@ -27,7 +26,7 @@ const {
   limit = 5,
   autoPage = false,
   pageSpeed = 4000,
-}: Category = { ...theme.category, ...frontmatter.tk?.category };
+}: Category = { ...unref(theme).category, ...unref(frontmatter).tk?.category };
 
 const posts = usePosts();
 
@@ -52,7 +51,7 @@ const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
-  return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
+  return `${localeName}${path}${unref(site).cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});

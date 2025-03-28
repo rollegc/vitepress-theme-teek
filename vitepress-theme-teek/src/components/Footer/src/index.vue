@@ -1,8 +1,7 @@
 <script setup lang="ts" name="Footer">
-import { computed } from "vue";
-import { withBase } from "vitepress";
+import { computed, unref } from "vue";
+import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import themeSvg from "../../../assets/svg/footerTheme";
 import copyrightSvg from "../../../assets/svg/copyright";
 import icpRecordSvg from "../../../assets/svg/icpRecord";
@@ -16,9 +15,12 @@ defineOptions({ name: "Footer" });
 
 const ns = useNamespace("footer");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
-const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = { ...theme, ...frontmatter.tk };
+const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = {
+  ...unref(theme),
+  ...unref(frontmatter).tk,
+};
 
 const footerData = computed(() => {
   const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
