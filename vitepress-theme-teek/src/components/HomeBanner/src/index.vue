@@ -2,19 +2,19 @@
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
 import { upperFirst } from "../../../helper";
-import { useUnrefData } from "../../../configProvider";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
 import HomeBannerContent from "./HomeBannerContent.vue";
 import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 import { Banner, BodyBgImg } from "../../../config/types";
+import { useData } from "vitepress";
 
 defineOptions({ name: "HomeBanner" });
 
 const ns = useNamespace("banner");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
 // Banner 配置项
 const {
@@ -23,9 +23,13 @@ const {
   textColor,
   titleFontSize = "3.2rem",
   descFontSize = "1.4rem",
-}: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
-const { imgSrc, bannerStyle = "full" }: BodyBgImg = theme.bodyBgImg || {};
-const { features = [] }: Banner = { ...theme.banner, ...frontmatter.tk, ...frontmatter.tk?.banner };
+}: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
+const { imgSrc, bannerStyle = "full" }: BodyBgImg = unref(theme).bodyBgImg || {};
+const { features = [] }: Banner = {
+  ...unref(theme).banner,
+  ...unref(frontmatter).tk,
+  ...unref(frontmatter).tk?.banner,
+};
 
 // 纯色背景风格
 const isBannerPureBgStyle = bgStyle === "pure";

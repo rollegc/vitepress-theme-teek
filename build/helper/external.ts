@@ -17,7 +17,6 @@ export const external = Object.keys(globals);
 export const externalModule = [
   ...Object.keys(globals),
   "gray-matter",
-  "@element-plus/icons-vue",
   "markdown-it-container",
   "js-yaml",
   "picocolors",

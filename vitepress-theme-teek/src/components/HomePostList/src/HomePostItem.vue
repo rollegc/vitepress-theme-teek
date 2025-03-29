@@ -1,10 +1,9 @@
 <script setup lang="ts" name="HomePostItem">
-import { computed } from "vue";
-import { withBase } from "vitepress";
+import { computed, unref } from "vue";
+import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
-import { useUnrefData } from "../../../configProvider";
 import ArticleInfo from "../../ArticleInfo";
 import { Article, Post } from "../../../config/types";
 
@@ -17,7 +16,7 @@ const { post = { url: "", frontmatter: {} } } = defineProps<{
   coverImgMode: "default" | "full";
 }>();
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
 const {
   excerptPosition = "bottom",
@@ -26,8 +25,8 @@ const {
   showCapture = false,
   splitSeparator = false,
   imageViewer = {},
-}: Post = { ...theme.post, ...frontmatter.tk?.post };
-const { showInfo = true }: Article = { ...theme.article, ...frontmatter.tk?.article };
+}: Post = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
+const { showInfo = true }: Article = { ...unref(theme).article, ...unref(frontmatter).tk?.article };
 
 const postUrl = post.url && withBase(post.url);
 const excerpt = post.frontmatter.description || post.excerpt || (showCapture && post.capture);

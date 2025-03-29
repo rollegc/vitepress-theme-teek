@@ -12,6 +12,7 @@
 @use "./components/comment-giscus";
 @use "./components/comment-twikoo";
 @use "./components/comment-waline";
+@use "./components/demo-code";
 @use "./components/footer";
 @use "./components/home-banner";
 @use "./components/home-card";
@@ -30,4 +31,5 @@
 @use "./components/notice";
 @use "./components/pagination";
 @use "./components/right-bottom-button";
+@use "./components/transition-collapse";
 @use "./components/vp-container";

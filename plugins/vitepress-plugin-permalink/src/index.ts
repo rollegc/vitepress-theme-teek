@@ -25,20 +25,22 @@ export default function VitePluginVitePressPermalink(
  * 扫描项目目录，生成 permalink
  */
 export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): Plugin & { name: string } {
+  let isExecute = false;
+
   return {
     name: "vite-plugin-vitepress-auto-permalink",
     config(config: any) {
+      // 防止 vitepress build 时重复执行
+      if (isExecute) return;
+      isExecute = true;
+
       const {
         site: { themeConfig, cleanUrls, locales },
         srcDir,
         rewrites,
       } = config.vitepress;
 
-      // 防止 vitepress build 时重复执行
-      if (themeConfig.permalinks) return;
-
-      const baseDir = option.path ? join(process.cwd(), option.path) : srcDir;
-
+      const baseDir = option.path ? join(srcDir, option.path) : srcDir;
       const permalinks = createPermalinks({ ...option, path: baseDir }, cleanUrls);
 
       // Key 为 path，Value 为 permalink

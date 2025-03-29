@@ -15,9 +15,15 @@ export const DEFAULT_IGNORE_DIR = ["**/node_modules/**", "**/dist/**"];
 export default function VitePluginVitePressFileContentLoader<T = FileContentLoaderData, R = FileContentLoaderData[]>(
   option: FileContentLoaderOptions<T, R>
 ): Plugin & { name: string } {
+  let isExecute = false;
+
   return {
     name: "vite-plugin-vitepress-file-content-loader",
     async config(config: any) {
+      // 防止 vitepress build 时重复执行
+      if (isExecute) return;
+      isExecute = true;
+
       let { pattern } = option;
       if (!pattern) return;
 
@@ -37,9 +43,6 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
         cleanUrls,
         markdown,
       } = config.vitepress;
-
-      // 防止 vitepress build 时重复执行
-      if (themeConfig[themeConfigKey]) return;
 
       if (typeof pattern === "string") pattern = [pattern];
       // 基于文档源目录 srcDir 匹配

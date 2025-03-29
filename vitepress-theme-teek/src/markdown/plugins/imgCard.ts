@@ -1,13 +1,10 @@
 import type MarkdownIt from "markdown-it";
-import container from "markdown-it-container";
-import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
-import { ImgCard } from "../types";
-import { SiteConfig } from "vitepress";
+import type { ImgCard } from "../types";
+import type { SiteConfig } from "vitepress";
+import { createCardContainer } from "../helper";
 
-const imgCardName = "imgCard";
 const rootClass = "img-card";
-const defaultCardNum = 2;
 
 /**
  * 生成图片卡片容器
@@ -19,49 +16,19 @@ const imgCardPlugin = (md: MarkdownIt) => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { base = "/" } = siteConfig.userConfig;
 
-  // 注册容器
-  md.use(container, imgCardName, {});
-
-  // 注册成功后，就会监听到 container_xx_open，其中 xx 为注册的容器名
-  md.renderer.rules[`container_${imgCardName}_open`] = (tokens, idx) => {
-    const containerToken = tokens[idx];
-    let html = `<div class="${rootClass}-container">`;
-
-    for (let i = idx; i < tokens.length; i++) {
-      const token = tokens[i];
-
-      // 如果来到 ${imgCardName} 的结束标签，则跳出循环
-      if (token.type === `container_${imgCardName}_close`) break;
-      if (!["yaml", "yml"].includes(token.info)) continue;
-
-      // 解析 yaml 内容
-      const yamlContent = yaml.load(token.content.trim()) as ImgCard.Props | ImgCard.Item[];
-
-      let data: ImgCard.Item[] = [];
-      let config: ImgCard.Config = {};
-      if (Array.isArray(yamlContent)) data = yamlContent;
-      else {
-        data = yamlContent.data || [];
-        config = yamlContent.config || {};
-      }
-
-      // 获取容器名后面的卡片数量
-      const cardNum = containerToken.info.trim().slice(imgCardName.length).trim();
-      config.cardNum = config.cardNum || Number(cardNum || defaultCardNum) || defaultCardNum;
-
-      html += renderImgCard({ config, data }, base);
-
+  createCardContainer<ImgCard.Item, ImgCard.Config>(md, {
+    type: "imgCard",
+    className: `${rootClass}-container`,
+    htmlRender: (props, info) => renderImgCard(props, info, base),
+    afterHtmlRender: (props, _, tokens, idx) => {
       // 删除 yaml 代码块
-      if (config.showCode !== true) {
-        token.type = "";
-        token.tag = "";
-        token.hidden = true;
+      if (props.config.showCode !== true) {
+        tokens[idx].type = "";
+        tokens[idx].tag = "";
+        tokens[idx].hidden = true;
       }
-    }
-
-    // 返回不能有 </div> 结尾
-    return html;
-  };
+    },
+  });
 };
 
 /**
@@ -70,13 +37,20 @@ const imgCardPlugin = (md: MarkdownIt) => {
  * @param imgCard 图片卡片数据
  * @param base 根路径
  */
-const renderImgCard = (imgCard: ImgCard.Props, base: string) => {
+const renderImgCard = (imgCard: { data: ImgCard.Item[]; config?: ImgCard.Config }, info: string, base: string) => {
   const { data = [], config = {} } = imgCard;
   if (!data.length) return "";
 
-  const { cardGap = 20, lineClamp = 2, target = "_blank", objectFit = "cover", imgHeight = "auto" } = config;
-  let cardNum = config.cardNum;
-  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = defaultCardNum;
+  const {
+    cardNum: cn = 2,
+    cardGap = 20,
+    lineClamp = 2,
+    target = "_blank",
+    objectFit = "cover",
+    imgHeight = "auto",
+  } = config;
+  let cardNum = info ? Number(info) : cn;
+  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = 2;
 
   return `
     <div

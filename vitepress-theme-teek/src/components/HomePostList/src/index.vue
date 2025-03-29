@@ -5,23 +5,25 @@ import { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
 import Icon from "../../Icon";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
-import emptySvg from "../../../assets/svg/empty";
+import { emptyIcon } from "../../../assets/icons";
 
 defineOptions({ name: "HomePostList" });
 
 const ns = useNamespace("postList");
 
 const posts = usePosts();
-const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useData();
 
 // 自定义一页数量 & 分页组件的 Props
-const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = { ...theme.page, ...unref(frontmatter).tk?.page };
+const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = {
+  ...unref(theme).page,
+  ...unref(frontmatter).tk?.page,
+};
 
-const { coverImgMode: coverImgModeConst = "default" } = { ...theme.post, ...unref(frontmatter).tk?.post };
+const { coverImgMode: coverImgModeConst = "default" } = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
 const coverImgMode = ref(coverImgModeConst);
 
 // 分页信息
@@ -129,7 +131,7 @@ defineExpose({ updateData });
       </div>
     </template>
     <div v-else :class="[ns.e('empty'), 'flx-column-center']">
-      <Icon :icon="emptySvg" :size="160" color="var(--vp-c-text-3)" />
+      <Icon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" />
       <span :class="ns.e('empty__title')">文章列表为空</span>
     </div>
   </div>

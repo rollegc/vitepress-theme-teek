@@ -6,7 +6,7 @@ export interface PermalinkOption {
    */
   ignoreList?: Array<RegExp | string>;
   /**
-   * 文章所在的目录，基于 package.json 所在目录，开头不需要有 /
+   * 文章所在的目录，基于 .vitepress 目录层级添加，开头不需要有 /
    * @default 'vitepress 的 srcDir 配置项'
    */
   path?: string;

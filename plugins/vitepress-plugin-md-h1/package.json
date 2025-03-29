@@ -1,8 +1,8 @@
 {
   "name": "vitepress-plugin-md-h1",
   "type": "module",
-  "version": "1.0.6",
-  "description": "添加一级标题到 markdown 文档",
+  "version": "1.0.8",
+  "description": "添加一级标题到 Markdown 文档",
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",
@@ -45,9 +45,6 @@
   },
   "devDependencies": {
     "unbuild": "^3.2.0",
-    "vite": "^6.0.7"
-  },
-  "peerDependencies": {
     "vite": "^6.0.7"
   }
 }

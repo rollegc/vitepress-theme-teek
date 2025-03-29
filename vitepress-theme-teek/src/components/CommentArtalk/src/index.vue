@@ -1,7 +1,6 @@
 <script setup lang="ts" name="CommentArtalk">
 import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
-import { useUnrefData } from "../../../configProvider";
 import { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 import { artalkSymbol } from "./artalk";
@@ -11,10 +10,9 @@ defineOptions({ name: "CommentArtalk" });
 const ns = useNamespace("");
 const vpRouter = useVpRouter();
 
-const { isDark, page } = useData();
-const { theme } = useUnrefData();
+const { theme, isDark, page } = useData();
 
-const { server, site }: CommentProvider["artalk"] = { ...theme.comment?.options };
+const { server, site }: CommentProvider["artalk"] = { ...unref(theme).comment?.options };
 
 const artalkRef = ref<HTMLElement | null>(null);
 const artalkJs = ref<HTMLScriptElement | null>(null);
@@ -26,7 +24,7 @@ const initArtalkByInject = () => {
   const getArtalkInstance = inject(artalkSymbol);
   const el = unref(artalkRef) || `#${artalkId}`;
 
-  const artalkInstance = getArtalkInstance?.(theme.comment?.options, el);
+  const artalkInstance = getArtalkInstance?.(unref(theme).comment?.options, el);
 
   if (!artalkInstance) return false;
 

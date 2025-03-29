@@ -2,11 +2,11 @@
 import { unref, watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData, useBgColor } from "../../../configProvider";
+import { usePosts, useBgColor } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
-import tagSvg from "../../../assets/svg/tag";
+import { tagIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
-import { Tag } from "../../../config/types";
+import type { Tag } from "../../../config/types";
 import { postDataUpdateSymbol } from "../../Home/src/home";
 
 defineOptions({ name: "HomeTagCard" });
@@ -15,20 +15,19 @@ const ns = useNamespace("tag");
 
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
-const { theme, site, frontmatter } = useUnrefData();
-const { localeIndex } = useData();
+const { theme, site, frontmatter, localeIndex } = useData();
 
 const pageNum = ref(1);
 // 标签配置项
 const {
   path = "/tags",
-  pageTitle = `${tagSvg}全部标签`,
-  homeTitle = `${tagSvg}热门标签`,
+  pageTitle = `${tagIcon}全部标签`,
+  homeTitle = `${tagIcon}热门标签`,
   limit = 21,
   autoPage = false,
   pageSpeed = 4000,
   bgColor,
-}: Tag = { ...theme.tag, ...frontmatter.tk?.tag };
+}: Tag = { ...unref(theme).tag, ...unref(frontmatter).tk?.tag };
 
 const posts = usePosts();
 const tags = computed(() => unref(posts).groupCards.tags);
@@ -41,8 +40,8 @@ const currentTags = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), tagSvg) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), tagSvg) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), tagIcon) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), tagIcon) : homeTitle;
   return { pt, ht };
 });
 
@@ -58,7 +57,7 @@ const tagsPageLink = computed(() => {
   // 兼容国际化功能，如果没有配置国际化，则返回 '/tags'
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
+  return `${localeName}${path}${unref(site).cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});

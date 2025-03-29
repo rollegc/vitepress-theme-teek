@@ -2,11 +2,11 @@
 import { computed, unref, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
-import categorySvg from "../../../assets/svg/category";
+import { categoryIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
-import { Category } from "../../../config/types";
+import type { Category } from "../../../config/types";
 import { postDataUpdateSymbol } from "../../Home/src/home";
 
 defineOptions({ name: "HomeCategoryCard" });
@@ -15,19 +15,18 @@ const ns = useNamespace("category");
 
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
-const { theme, site, frontmatter } = useUnrefData();
-const { localeIndex } = useData();
+const { localeIndex, theme, site, frontmatter } = useData();
 
 const pageNum = ref(1);
 // 分类配置项
 const {
   path = "/categories",
-  pageTitle = `${categorySvg}全部分类`,
-  homeTitle = `${categorySvg}文章分类`,
+  pageTitle = `${categoryIcon}全部分类`,
+  homeTitle = `${categoryIcon}文章分类`,
   limit = 5,
   autoPage = false,
   pageSpeed = 4000,
-}: Category = { ...theme.category, ...frontmatter.tk?.category };
+}: Category = { ...unref(theme).category, ...unref(frontmatter).tk?.category };
 
 const posts = usePosts();
 
@@ -42,8 +41,8 @@ const currentCategories = computed(() => {
 
 // 标题
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), categorySvg) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), categorySvg) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), categoryIcon) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), categoryIcon) : homeTitle;
   return { pt, ht };
 });
 
@@ -52,7 +51,7 @@ const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
-  return `${localeName}${path}${site.cleanUrls ? "" : ".html"}`;
+  return `${localeName}${path}${unref(site).cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});

@@ -1,33 +1,31 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
 import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
 import { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
+import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
 
 defineOptions({ name: "ArticleAnalyze" });
 
 const ns = useNamespace("articleAnalyze");
 
-const { theme } = useUnrefData();
-const { theme: themeRef, frontmatter } = useData();
+const { theme, frontmatter } = useData();
 
 // 文章基本信息
 const post = computed<TkContentData>(() => ({
-  author: { ...theme.author, ...unref(frontmatter).author },
+  author: { ...unref(theme).author, ...unref(frontmatter).author },
   date: unref(frontmatter).date,
   frontmatter: unref(frontmatter),
   url: "",
 }));
 
 // 站点信息数据
-const docAnalysisInfo = computed(() => unref(themeRef).docAnalysisInfo || {});
+const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
@@ -41,7 +39,11 @@ const pageViewInfo = computed(() => {
 
 // 文章信息配置项
 const articleConfig = computed<Article>(() => {
-  const { showInfo = true, showIcon = true, teleport = {} } = { ...theme.article, ...unref(frontmatter).article };
+  const {
+    showInfo = true,
+    showIcon = true,
+    teleport = {},
+  } = { ...unref(theme).article, ...unref(frontmatter).article };
   return { showInfo, showIcon, teleport };
 });
 
@@ -79,7 +81,7 @@ const docAnalysisConfig = computed<DocAnalysis>(() => {
     wordCount = true,
     readingTime = true,
     statistics = {},
-  }: DocAnalysis = { ...theme.docAnalysis, ...unref(frontmatter).docAnalysis };
+  }: DocAnalysis = { ...unref(theme).docAnalysis, ...unref(frontmatter).docAnalysis };
 
   return { wordCount, readingTime, statistics };
 });
@@ -121,17 +123,17 @@ watch(route, () => {
       <ArticleInfo :post scope="article" />
 
       <div v-if="docAnalysisConfig.wordCount" class="flx-center">
-        <Icon v-if="articleConfig.showIcon"><Reading /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="readingIcon" />
         <a title="文章字数" class="hover-color">{{ pageViewInfo.wordCount }}</a>
       </div>
 
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
-        <Icon v-if="articleConfig.showIcon"><Clock /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="clockIcon" />
         <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
       </div>
 
       <div v-if="usePageView" class="flx-center">
-        <Icon v-if="articleConfig.showIcon"><View /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="viewIcon" />
         <a title="浏览量" class="hover-color">{{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}</a>
       </div>
     </div>

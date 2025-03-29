@@ -18,7 +18,7 @@ export interface IconProps {
   /**
    * 图标颜色
    *
-   * @default 'var(--vp-c-text-1)'
+   * @default inherit
    */
   color?: string;
   /**

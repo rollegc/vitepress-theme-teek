@@ -3,7 +3,7 @@ import { computed, ref, unref, provide } from "vue";
 import { useData } from "vitepress";
 import { postDataUpdateSymbol } from "./home";
 import { useNamespace } from "../../../hooks";
-import { usePage, useUnrefData } from "../../../configProvider";
+import { usePage } from "../../../configProvider";
 import HomeFullscreenWallpaper from "../../HomeFullscreenWallpaper";
 import HomeBanner from "../../HomeBanner";
 import HomeRightInfo from "../../HomeRightInfo";
@@ -14,11 +14,10 @@ defineOptions({ name: "Home" });
 const ns = useNamespace("home");
 
 const { isHomePage } = usePage();
-const { theme } = useUnrefData();
-const { frontmatter } = useData();
+const { theme, frontmatter } = useData();
 
 const themeConfig = computed(() => {
-  const { tkHome = true, banner = {}, wallpaper = {}, bodyBgImg = {} } = { ...theme, ...unref(frontmatter).tk };
+  const { tkHome = true, banner = {}, wallpaper = {}, bodyBgImg = {} } = { ...unref(theme), ...unref(frontmatter).tk };
   return { tkHome, banner, wallpaper, bodyBgImg };
 });
 

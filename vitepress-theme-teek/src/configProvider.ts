@@ -14,9 +14,9 @@ const createConfigProvider = (Layout: Component) => {
   return defineComponent({
     name: "ConfigProvider",
     setup(_, { slots }) {
-      const { theme } = useUnrefData();
+      const { theme } = useData();
       // 往主题注入数据
-      provide(postsSymbol, theme.posts || emptyPost);
+      provide(postsSymbol, unref(theme).posts || emptyPost);
 
       // 开启监听器
       usePermalink().startWatch();
@@ -30,14 +30,6 @@ const createConfigProvider = (Layout: Component) => {
 
 export const configProvider = (Layout: Component) => {
   return createConfigProvider(Layout);
-};
-
-/**
- * 返回非响应式的 useDate() 对象
- */
-export const useUnrefData = () => {
-  const { theme, frontmatter, site, page } = useData();
-  return { theme: unref(theme), frontmatter: unref(frontmatter), site: unref(site), page: unref(page) };
 };
 
 /**

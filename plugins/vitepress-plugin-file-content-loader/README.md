@@ -32,9 +32,9 @@ export default defineConfig({
 });
 ```
 
-> 说明：该插件仅限项目启动时生效，已改动或新添加的 markdown 需要重启项目才能生效。
+> 说明：该插件仅限项目启动时生效，已改动或新添加的 Markdown 需要重启项目才能生效。
 
-插件默认忽略 `[**/node_modules/**", "**/dist/**]` 目录下的文件，且只扫描 markdown 文档。
+插件默认忽略 `[**/node_modules/**", "**/dist/**]` 目录下的文件，且只扫描 Markdown 文档。
 
 ## 🛠️ Options
 

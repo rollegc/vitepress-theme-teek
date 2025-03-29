@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CommentWaline">
-import { inject, onMounted } from "vue";
-import { useUnrefData } from "../../../configProvider";
+import { inject, onMounted, unref } from "vue";
+import { useData } from "vitepress";
 import { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 import { WalineInstance, walineSymbol } from "./waline";
@@ -10,7 +10,7 @@ defineOptions({ name: "CommentWaline" });
 const ns = useNamespace("");
 const vpRouter = useVpRouter();
 
-const { theme } = useUnrefData();
+const { theme } = useData();
 
 const {
   serverURL,
@@ -19,7 +19,7 @@ const {
   dark = "html[class='dark']",
   cssIntegrity,
   ...options
-}: CommentProvider["waline"] = { ...theme.comment?.options };
+}: CommentProvider["waline"] = { ...unref(theme).comment?.options };
 
 let waline: WalineInstance | null = null;
 const walineId = "waline";
@@ -27,7 +27,7 @@ const walineId = "waline";
 const initWalineByInject = () => {
   // 尝试从上下文获取 waline 实例
   const getWalineInstance = inject(walineSymbol);
-  if (getWalineInstance) waline = getWalineInstance?.(theme.comment?.options, `#${walineId}`);
+  if (getWalineInstance) waline = getWalineInstance?.(unref(theme).comment?.options, `#${walineId}`);
 
   return waline;
 };

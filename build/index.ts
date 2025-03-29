@@ -50,7 +50,7 @@ const updateVersionInTs = async () => {
 
   const versionFile = resolve(tkRoot, "src/version.ts");
   const versionContent = await readFile(versionFile, "utf-8");
-  const newVersion = versionContent.replace("1.0.0", tkPackageInfo.version);
+  const newVersion = versionContent.replace(/"([^"]+)"/, `"${tkPackageInfo.version}"`);
 
   await writeFile(versionFile, newVersion);
 };

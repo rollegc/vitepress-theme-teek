@@ -10,7 +10,7 @@
   align-items: center;
   position: relative;
   fill: var(--icon-color, currentColor);
-  color: var(--icon-color);
+  color: var(--icon-color, inherit);
   font-size: var(--icon-size, inherit);
 
   svg {
@@ -19,13 +19,13 @@
   }
 
   &.iconfont {
-    color: var(--icon-color);
+    color: var(--icon-color, inherit);
     font-size: var(--icon-size, 1em);
   }
 
   @include when(hover) {
     &:hover {
-      color: var(--icon-color-hover);
+      color: var(--icon-color-hover, inherit);
     }
   }
 }

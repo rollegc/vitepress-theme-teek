@@ -12,9 +12,15 @@ export * from "./types";
 export default function VitePluginVitePressAutoFrontmatter(
   option: AutoFrontmatterOption = {}
 ): Plugin & { name: string } {
+  let isExecute = false;
+
   return {
     name: "vitepress-plugin-auto-frontmatter",
     async config(config: any) {
+      // 防止 vitepress build 时重复执行
+      if (isExecute) return;
+      isExecute = true;
+
       let { pattern } = option;
       if (!pattern) return;
 
@@ -38,7 +44,7 @@ export default function VitePluginVitePressAutoFrontmatter(
 }
 
 /**
- * 自动生成 frontmatter 并写入到 markdown 文件
+ * 自动生成 frontmatter 并写入到 Markdown 文件
  *
  * @param filePaths 文件路径列表
  * @param option 插件配置项

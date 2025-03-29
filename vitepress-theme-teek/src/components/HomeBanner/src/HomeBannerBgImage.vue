@@ -1,8 +1,7 @@
 <script setup lang="ts" name="HomeBannerBgImage">
-import { withBase } from "vitepress";
+import { withBase, useData } from "vitepress";
 import { onMounted, unref } from "vue";
 import { useNamespace, useSwitchData } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import { isString } from "../../../helper";
 import { Banner } from "../../../config/types";
 
@@ -10,7 +9,7 @@ defineOptions({ name: "HomeBannerBgImage" });
 
 const ns = useNamespace("bannerBgImage");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
 // Banner 配置项
 const {
@@ -20,7 +19,7 @@ const {
   imgShuffle = false,
   mask = true,
   maskBg = "rgba(0, 0, 0, 0.4)",
-}: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+}: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
 
 // 局部图片背景风格
 const isPartImgBgStyle = bgStyle === "partImg";

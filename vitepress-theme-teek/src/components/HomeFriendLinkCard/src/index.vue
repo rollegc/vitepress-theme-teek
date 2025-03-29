@@ -1,11 +1,10 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
 import { computed, ref, unref, onMounted } from "vue";
 import { useData, withBase } from "vitepress";
-import { useUnrefData } from "../../../configProvider";
 import { useNamespace, useScrollData } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { createImageViewer } from "../../ImageViewer";
-import friendLinkSvg from "../../../assets/svg/friendLink";
+import { friendLinkIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
 import { FriendLink } from "../../../config/types";
 
@@ -13,19 +12,18 @@ defineOptions({ name: "HomeFriendLinkCard" });
 
 const ns = useNamespace("friendLink");
 
-const { theme, frontmatter } = useUnrefData();
-const { localeIndex } = useData();
+const { theme, frontmatter, localeIndex } = useData();
 
 // 友情链接配置项
 const {
   list = [],
   limit = 4,
-  title = `${friendLinkSvg}友情链接`,
+  title = `${friendLinkIcon}友情链接`,
   autoScroll = false,
   scrollSpeed = 2500,
   autoPage = false,
   pageSpeed = 4000,
-}: FriendLink = { ...theme.friendLink, ...frontmatter.tk?.friendLink };
+}: FriendLink = { ...unref(theme).friendLink, ...unref(frontmatter).tk?.friendLink };
 
 // 使用上下滚动功能
 const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollSpeed);
@@ -42,7 +40,7 @@ const currentFriendLinkList = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(unref(localeIndex), friendLinkSvg);
+  if (isFunction(title)) return title(unref(localeIndex), friendLinkIcon);
   return title;
 });
 

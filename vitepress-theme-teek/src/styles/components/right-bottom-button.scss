@@ -3,7 +3,6 @@
 @use "../mixins/config" as *;
 @use "../var/theme-size";
 @use "../var/theme-style";
-@use "../common/transition-fade";
 
 $button-size: 2.3rem;
 $progress-thickness: calc($button-size / 10);

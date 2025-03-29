@@ -1,14 +1,14 @@
 # vitepress-plugin-md-h1
 
-这是一个适用于 `vitepress` 的 Vite 插件，在 `vitepress` 启动后自动生成一级标题到 markdown 文档开头处（假如 markdown 文档没有设置过一级标题）。
+这是一个适用于 `vitepress` 的 Vite 插件，在 `vitepress` 启动后自动生成一级标题到 Markdown 文档开头处（假如 Markdown 文档没有设置过一级标题）。
 
-> 说明：只在页面加载 markdown 内容时生成一级标题，并不会真正修改 markdown 文档内容。
+> 说明：只在页面加载 Markdown 内容时生成一级标题，并不会真正修改 Markdown 文档内容。
 
-插件默认不会给 `frontmatter.layout` 为 `home` 的 markdown 注入一级标题。
+插件默认不会给 `frontmatter.layout` 为 `home` 的 Markdown 注入一级标题。
 
 ## ✨ Feature
 
-- 🚀 将 `frontmatter.title` 或「文件名」作为一级标题注入到 markdown 文档开头处
+- 🚀 将 `frontmatter.title` 或「文件名」作为一级标题注入到 Markdown 文档开头处
 
 ## 🕯️ Install
 
@@ -36,7 +36,7 @@ export default defineConfig({
 });
 ```
 
-> 说明：该插件仅限项目启动时生效，已改动或新添加的 markdown 需要重启项目才能生效。
+> 说明：该插件仅限项目启动时生效，已改动或新添加的 Markdown 需要重启项目才能生效。
 
 ## 🛠️ Options
 
@@ -66,7 +66,7 @@ export interface MdH1Option {
 
 ## 📖 Usage
 
-如果不希望某个 markdown 文档注入一级标题，请在该文档 `frontmatter` 配置：
+如果不希望某个 Markdown 文档注入一级标题，请在该文档 `frontmatter` 配置：
 
 ```yaml
 ---
@@ -74,7 +74,7 @@ noTitle: false
 ---
 ```
 
-如果不希望某个目录下的所有 markdown 文档注入一级标题，则使用 `ignoreList` 配置项：
+如果不希望某个目录下的所有 Markdown 文档注入一级标题，则使用 `ignoreList` 配置项：
 
 ```typescript
 import { defineConfig } from "vitepress";

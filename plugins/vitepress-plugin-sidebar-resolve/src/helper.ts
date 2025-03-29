@@ -16,7 +16,7 @@ export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public
  */
 export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarMulti => {
   const {
-    path = process.cwd(),
+    path,
     ignoreList = [],
     scannerRootMd = true,
     collapsed,
@@ -25,6 +25,8 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     initItemsText = false,
     sideBarResolved,
   } = option;
+  if (!path) return {};
+
   // 确保 prefix 始终都有 / 结尾
   prefix = prefix.replace(/\/$/, "") + "/";
 
@@ -167,8 +169,9 @@ const createSideBarItems = (
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
-      const { data: { title: frontmatterTitle } = {}, content: mdContent } = matter(content, {});
+      const { data: { title: frontmatterTitle, sidebar = true } = {}, content: mdContent } = matter(content, {});
 
+      if (!sidebar) return [];
       // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
       const mdTitle = titleFormMd ? getTitleFromMd(mdContent) : "";
       const text = frontmatterTitle || mdTitle || title;

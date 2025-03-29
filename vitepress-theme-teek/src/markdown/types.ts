@@ -2,11 +2,6 @@
  * 分享卡片配置项
  */
 export declare namespace ShareCard {
-  export interface Props {
-    config?: Config;
-    data: Item[];
-  }
-
   export interface Config {
     /**
      * 每行显示的卡片数量
@@ -66,11 +61,6 @@ export declare namespace ShareCard {
  * 图片卡片配置项
  */
 export declare namespace ImgCard {
-  export interface Props {
-    config?: Config;
-    data: Item[];
-  }
-
   export interface Config {
     /**
      * 每行显示的卡片数量
@@ -146,11 +136,6 @@ export declare namespace ImgCard {
  * 导航卡片配置项
  */
 export declare namespace NavCard {
-  export interface Props {
-    config?: Config;
-    data: Item[];
-  }
-
   export interface Config {
     /**
      * 每行显示的卡片数量
@@ -210,4 +195,13 @@ export declare namespace NavCard {
      */
     badgeType?: "info" | "tip" | "warning" | "danger";
   }
+}
+
+export interface ContainerLabel {
+  /**
+   * note 容器的默认标题
+   *
+   * @default 'NOTE'
+   */
+  noteLabel?: string;
 }

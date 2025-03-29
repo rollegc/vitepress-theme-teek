@@ -1,8 +1,8 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref } from "vue";
 import { withBase } from "vitepress";
-import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { useNamespace } from "../../../hooks";
+import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
 import { HomeCardProps } from "./homeCard";
 import Icon from "../../Icon";
 
@@ -28,7 +28,7 @@ const pageNum = defineModel<number>({ default: 1 });
 const pageTotalNum = Math.ceil(total / pageSize);
 const hasNextData = total !== 0 && pageTotalNum !== 1;
 // Vue 动画名
-const transitionName = ref("scroll");
+const transitionName = ref(ns.joinNamespace("scroll"));
 
 /**
  * 分页
@@ -38,7 +38,7 @@ const transitionName = ref("scroll");
 const pagination = (to: number, type: "prev" | "next") => {
   emit("pagination", to, type);
   // 修改为分页动画名
-  transitionName.value = `slide-${type}`;
+  transitionName.value = ns.joinNamespace(`slide-${type}`);
 
   if (page && autoPage) startAutoPage();
   const index = unref(pageNum) % pageTotalNum;
@@ -92,13 +92,13 @@ onMounted(() => {
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(-1, 'prev')">
-              <Icon :size="14"><ArrowLeft /></Icon>
+              <Icon :icon="arrowLeftIcon" :size="14" />
             </span>
           </slot>
 
           <slot name="page-right" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(1, 'next')">
-              <Icon :size="14"><ArrowRight /></Icon>
+              <Icon :icon="arrowRightIcon" :size="14" />
             </span>
           </slot>
         </div>

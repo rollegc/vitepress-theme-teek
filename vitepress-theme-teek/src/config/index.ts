@@ -10,14 +10,21 @@ import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
 import { transformData, transformRaw } from "../post";
-import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin } from "../markdown";
+import {
+  todoPlugin,
+  shareCardPlugin,
+  imgCardPlugin,
+  navCardPlugin,
+  demoPlugin,
+  containerPlugin,
+  createContainersThenUse,
+} from "../markdown";
 import { createCategory, createPermalink } from "./addFrontmatter";
-import { containerPlugins, createContainersThenUse } from "../markdown/plugins/container";
 
 export * from "./types";
 
-export default function tkThemeConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
-  const { vitePlugins, markdownPlugins = [], markdownContainers = [], containerLabel, ...tkThemeConfig } = config;
+export default function defineTeekConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
+  const { vitePlugins, markdown = {}, ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -38,7 +45,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
   // 定义各插件扫描时忽略的目录
   const ignoreDir = {
     autoFrontmatter: ["**/@pages/**"],
-    sidebar: ["@pages", "@fragment"],
+    sidebar: ["@pages", "@fragment", "examples"],
     mdH1: ["@pages"],
     docAnalysis: ["@pages", /目录页/],
     fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**"],
@@ -145,21 +152,18 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
       plugins: plugins as any,
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
-      optimizeDeps: {
-        include: ["element-plus", "@element-plus/icons-vue"],
-      },
     },
     markdown: {
       config: md => {
-        md.use(containerPlugins, containerLabel);
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin));
 
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin, containerLabel));
-
+        const { container = {}, demo, config } = markdown;
+        md.use(demoPlugin, demo).use(containerPlugin, container.label);
         // 创建用户配置的自定义容器
-        createContainersThenUse(md, markdownContainers);
+        createContainersThenUse(md, container.config?.() || []);
 
-        // 用户配置的 markdown 插件
-        markdownPlugins.forEach(plugin => md.use(plugin));
+        // 用户自定义 markdown 插件
+        config?.(md);
       },
     },
     themeConfig: tkThemeConfig,

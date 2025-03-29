@@ -1,18 +1,21 @@
 <script setup lang="ts" name="HomeMyCard">
-import { withBase } from "vitepress";
+import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import Icon from "../../Icon";
 import { Blogger, Social } from "../../../config/types";
+import { unref } from "vue";
 
 defineOptions({ name: "HomeMyCard" });
 
 const ns = useNamespace("homeMyCard");
 
-const { theme, frontmatter } = useUnrefData();
+const { theme, frontmatter } = useData();
 
-const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social[] } = { ...theme, ...frontmatter.tk };
+const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social[] } = {
+  ...unref(theme),
+  ...unref(frontmatter).tk,
+};
 </script>
 
 <template>

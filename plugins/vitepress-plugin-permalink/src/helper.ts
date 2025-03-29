@@ -15,7 +15,8 @@ const permalinks: Record<string, string> = {};
  * @param cleanUrls 是否清除 .html 后缀
  */
 export default (option: PermalinkOption = {}, cleanUrls = false): Record<string, string> => {
-  const { path = process.cwd(), ignoreList = [] } = option;
+  const { path, ignoreList = [] } = option;
+  if (!path) return {};
 
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(path, ignoreList);

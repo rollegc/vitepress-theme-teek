@@ -1,11 +1,11 @@
 <script setup lang="ts" name="ArticleInfo">
-import { User, Calendar, FolderOpened, CollectionTag, EditPen } from "@element-plus/icons-vue";
 import { useRoute, withBase, useData } from "vitepress";
 import { computed, unref } from "vue";
-import { usePosts, useUnrefData } from "../../../configProvider";
+import { usePosts } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
+import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "../../../assets/icons";
 import { Article, ArticleInfoPosition } from "../../../config/types";
 import { PostBaseInfoProps } from "./articleInfo";
 import Icon from "../../Icon";
@@ -16,8 +16,7 @@ const ns = useNamespace("articleInfo");
 
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
-const { theme } = useUnrefData();
-const { frontmatter, page } = useData();
+const { theme, frontmatter, page } = useData();
 // 文章信息配置项
 const articleConfig = computed<Article>(() => {
   const {
@@ -29,7 +28,7 @@ const articleConfig = computed<Article>(() => {
     showCategory = false,
     showTag = false,
   }: Article = {
-    ...theme.article,
+    ...unref(theme).article,
     ...unref(frontmatter).article,
     ...unref(frontmatter).tk?.article,
   };
@@ -68,7 +67,7 @@ const baseInfo = computed(() => {
   return [
     {
       title: "作者",
-      icon: User,
+      icon: userIcon,
       data: post.author?.name,
       href: post.author?.link,
       target: post.author?.link ? "_blank" : "_self",
@@ -76,19 +75,19 @@ const baseInfo = computed(() => {
     },
     {
       title: "创建时间",
-      icon: Calendar,
+      icon: calendarIcon,
       data: createDate,
       show: isShow(showCreateDate),
     },
     {
       title: "更新时间",
-      icon: EditPen,
+      icon: editPenIcon,
       data: updateDate,
       show: unref(updateDate) && scope === "article" && showUpdateDate,
     },
     {
       title: "分类",
-      icon: FolderOpened,
+      icon: folderOpenedIcon,
       dataList: post.frontmatter?.categories || [],
       href: "/categories?category={data}",
       class: "or",
@@ -96,7 +95,7 @@ const baseInfo = computed(() => {
     },
     {
       title: "标签",
-      icon: CollectionTag,
+      icon: collectionTagIcon,
       dataList: post.frontmatter?.tags || [],
       href: "/tags?tag={data}",
       class: "or",
@@ -116,7 +115,7 @@ const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
   <div :class="[ns.b(), scope]">
     <template v-for="item in baseInfo" :key="item.title">
       <span v-if="item.show && (item.data || item.dataList?.length)" :class="[ns.e('item'), { split }]">
-        <Icon v-if="articleConfig.showIcon"><component :is="item.icon" /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="item.icon" />
         <a
           v-if="item.data"
           :title="item.title"

@@ -1,5 +1,23 @@
 # vitepress-plugin-permalink
 
+## 1.0.15
+
+### Patch Changes
+
+- 文档更新
+
+## 1.0.14
+
+### Patch Changes
+
+- process.cwd() 替换为 srcDir
+
+## 1.0.13
+
+### Patch Changes
+
+- 在 peerDependency 移出 vite 依赖，优化 Vite 构建时重复执行插件问题
+
 ## 1.0.12
 
 ### Patch Changes

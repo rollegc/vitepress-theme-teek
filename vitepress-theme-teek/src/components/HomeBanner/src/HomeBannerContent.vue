@@ -1,15 +1,15 @@
 <script setup lang="ts" name="HomeBannerContent">
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, unref } from "vue";
+import { useData } from "vitepress";
 import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
-import { useUnrefData } from "../../../configProvider";
 import { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerContent" });
 
 const ns = useNamespace("bannerContent");
 
-const { site, theme, frontmatter } = useUnrefData();
-const title = frontmatter.tk?.name || site.title || "";
+const { site, theme, frontmatter } = useData();
+const title = unref(frontmatter).tk?.name || unref(site).title || "";
 // Banner 配置项
 const {
   descStyle = "default",
@@ -20,9 +20,9 @@ const {
   typesOutTime = 100,
   typesNextTime = 800,
   typesShuffle = false,
-}: Banner = { ...theme.banner, ...frontmatter.tk?.banner };
+}: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
 const descArray: string[] = [
-  ...new Set([frontmatter.tk?.description || description || []].flat()?.filter((v: string) => !!v)),
+  ...new Set([unref(frontmatter).tk?.description || description || []].flat()?.filter((v: string) => !!v)),
 ];
 
 // 文本描述默认风格

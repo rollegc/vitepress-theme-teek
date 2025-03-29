@@ -17,3 +17,4 @@ export type * from "./tag";
 export type * from "./themeSetting";
 export type * from "./topArticle";
 export type * from "./wallpaper";
+export type * from "./markdown";
