@@ -1,5 +1,4 @@
 import type { PaginationProps } from "element-plus";
-import type { ContainerLabel, ContainerOption } from "../markdown/plugins/container";
 import type {
   Article,
   Author,
@@ -20,8 +19,8 @@ import type {
   ThemeSetting,
   TopArticle,
   Wallpaper,
+  Markdown,
 } from "./types/index";
-import { Demo } from "./types/demo";
 
 export type * from "./types/index";
 
@@ -164,16 +163,7 @@ export interface TkThemeConfig {
    */
   vitePlugins?: Plugins;
   /**
-   * markdown 插件列表，请不要在使用 vitepress.markdown.config 配置 md 插件，因为 config 是一个函数，vitepress 并没有做多个 config 合并，因此使用 vitepress.markdown.config 配置会覆盖主题内置 md 插件
+   * Markdown 插件配置
    */
-  markdownPlugins?: any[];
-  /**
-   * 内置 markdown 容器的 Label 配置
-   */
-  containerLabel?: ContainerLabel;
-  /**
-   * 自定义 markdown 容器配置
-   */
-  markdownContainers?: ContainerOption[];
-  demoPlugins?: Demo;
+  markdown?: Markdown;
 }

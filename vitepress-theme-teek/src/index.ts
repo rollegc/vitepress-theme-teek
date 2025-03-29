@@ -34,6 +34,6 @@ export default {
   enhanceApp({ app, router, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
-    app.component("DemoCode", TkDemoCode);
+    app.component("TkDemoCode", TkDemoCode);
   },
 } as DefaultThemeType & { extends: DefaultThemeType };

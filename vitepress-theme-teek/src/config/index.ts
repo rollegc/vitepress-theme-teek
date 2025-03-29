@@ -17,7 +17,7 @@ import { containerPlugins, createContainersThenUse } from "../markdown/plugins/c
 export * from "./types";
 
 export default function tkThemeConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
-  const { vitePlugins, markdownPlugins = [], markdownContainers = [], containerLabel, ...tkThemeConfig } = config;
+  const { vitePlugins, markdown = {}, ...tkThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -148,17 +148,15 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
     },
     markdown: {
       config: md => {
-        md.use(containerPlugins, containerLabel);
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin));
 
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, demoPlugin].forEach(plugin =>
-          md.use(plugin, containerLabel)
-        );
-
+        const { container = {}, demo, config } = markdown;
+        md.use(demoPlugin, demo).use(containerPlugins, container.label);
         // 创建用户配置的自定义容器
-        createContainersThenUse(md, markdownContainers);
+        createContainersThenUse(md, container.config?.() || []);
 
-        // 用户配置的 markdown 插件
-        markdownPlugins.forEach(plugin => md.use(plugin));
+        // 用户自定义 markdown 插件
+        config?.(md);
       },
     },
     themeConfig: tkThemeConfig,

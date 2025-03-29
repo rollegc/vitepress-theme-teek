@@ -150,8 +150,11 @@ const tkConfig = tkThemeConfig({
       initItems: false,
     },
   },
-
-  markdownPlugins: [timeline],
+  markdown: {
+    config: md => {
+      md.use(timeline);
+    },
+  },
 });
 
 // https://vitepress.dev/reference/site-config

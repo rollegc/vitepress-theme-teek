@@ -1,12 +1,10 @@
 <script setup lang="ts" name="RightBottomButton">
 import { computed, ref, unref, onMounted, onUnmounted, watch } from "vue";
-import { MagicStick, ChatDotSquare } from "@element-plus/icons-vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import { scrollTo } from "../../../helper";
-import sizeSvg from "../../../assets/svg/size";
-import rocketSvg from "../../../assets/svg/rocket";
-import { CommentConfig, ThemeSetting } from "../../../config/types";
+import { sizeIcon, rocketIcon, magicIcon, commentIcon } from "../../../assets/icons";
+import type { CommentConfig, ThemeSetting } from "../../../config/types";
 import { useData } from "vitepress";
 
 defineOptions({ name: "RightBottomButton" });
@@ -168,13 +166,13 @@ watch(
         @click="scrollToTop"
         :style="{ [ns.cssVarName('progress')]: progress }"
       >
-        <Icon :icon="rocketSvg"></Icon>
+        <Icon :icon="rocketIcon"></Icon>
       </div>
     </transition>
 
     <transition :name="ns.joinNamespace('fade')">
       <div v-if="provider && showToComment" title="前往评论" :class="ns.e('button')" @click="scrollToComment">
-        <Icon><ChatDotSquare /></Icon>
+        <Icon :icon="commentIcon" />
       </div>
     </transition>
 
@@ -186,7 +184,7 @@ watch(
       @mouseleave="showThemeSizeItem = false"
       @click="showThemeSizeItem = true"
     >
-      <Icon :icon="sizeSvg"></Icon>
+      <Icon :icon="sizeIcon"></Icon>
       <transition :name="ns.joinNamespace('mode')">
         <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
           <li
@@ -210,7 +208,7 @@ watch(
       @mouseleave="showThemeStyleItem = false"
       @click="showThemeStyleItem = true"
     >
-      <Icon><MagicStick /></Icon>
+      <Icon :icon="magicIcon" />
       <transition :name="ns.joinNamespace('mode')">
         <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
           <ul v-for="item in themeStyleList" :key="item.label">

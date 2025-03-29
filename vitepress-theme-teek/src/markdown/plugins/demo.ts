@@ -40,12 +40,12 @@ const demoPlugin = (md: MarkdownIt) => {
         }
         if (!source) throw new Error(`Incorrect source file path: ${sourceFile}`);
 
-        return `<DemoCode source="${encodeURIComponent(
+        return `<TkDemoCode source="${encodeURIComponent(
           md.render(`\`\`\` vue\n${source}\`\`\``)
         )}" path="${sourceRelativeFile}" raw-source="${encodeURIComponent(
           source
         )}" description="${encodeURIComponent(md.render(description))}">`;
-      } else return "</DemoCode>";
+      } else return "</TkDemoCode>";
     },
   };
 

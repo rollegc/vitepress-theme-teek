@@ -1,8 +1,8 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref } from "vue";
 import { withBase } from "vitepress";
-import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
 import { useNamespace } from "../../../hooks";
+import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
 import { HomeCardProps } from "./homeCard";
 import Icon from "../../Icon";
 
@@ -92,13 +92,13 @@ onMounted(() => {
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(-1, 'prev')">
-              <Icon :size="14"><ArrowLeft /></Icon>
+              <Icon :icon="arrowLeftIcon" :size="14" />
             </span>
           </slot>
 
           <slot name="page-right" v-bind="{ pagination }">
             <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(1, 'next')">
-              <Icon :size="14"><ArrowRight /></Icon>
+              <Icon :icon="arrowRightIcon" :size="14" />
             </span>
           </slot>
         </div>

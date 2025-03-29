@@ -8,7 +8,7 @@ import Icon from "../../Icon";
 import { usePosts } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import { TkContentData } from "../../../post/types";
-import emptySvg from "../../../assets/svg/empty";
+import { emptyIcon } from "../../../assets/icons";
 
 defineOptions({ name: "HomePostList" });
 
@@ -131,7 +131,7 @@ defineExpose({ updateData });
       </div>
     </template>
     <div v-else :class="[ns.e('empty'), 'flx-column-center']">
-      <Icon :icon="emptySvg" :size="160" color="var(--vp-c-text-3)" />
+      <Icon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" />
       <span :class="ns.e('empty__title')">文章列表为空</span>
     </div>
   </div>

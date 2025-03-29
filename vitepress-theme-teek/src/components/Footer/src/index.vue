@@ -2,9 +2,7 @@
 import { computed, unref } from "vue";
 import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import themeSvg from "../../../assets/svg/footerTheme";
-import copyrightSvg from "../../../assets/svg/copyright";
-import icpRecordSvg from "../../../assets/svg/icpRecord";
+import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
 import { version } from "../../../version";
@@ -29,7 +27,7 @@ const footerData = computed(() => {
   if (theme.show !== false) {
     data.push({
       name: `Theme By Teek@${version}`,
-      icon: themeSvg,
+      icon: themeIcon,
       link: "https://.tianke99.cn",
       // 可覆盖上面的配置项
       ...theme,
@@ -41,13 +39,13 @@ const footerData = computed(() => {
   if (show) {
     data.push({
       name: `Copyright ${createYear ? `${createYear}-` : ""}${new Date().getFullYear()} ${suffix}`,
-      icon: copyrightSvg,
+      icon: copyrightIcon,
       ...copyright,
     });
   }
 
   // 3.ICP 备案信息
-  if (icpRecord) data.push({ icon: icpRecordSvg, ...icpRecord });
+  if (icpRecord) data.push({ icon: icpRecordIcon, ...icpRecord });
 
   // 4.网络安全备案信息
   if (securityRecord) {

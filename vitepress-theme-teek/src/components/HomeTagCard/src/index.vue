@@ -4,9 +4,9 @@ import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts, useBgColor } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
-import tagSvg from "../../../assets/svg/tag";
+import { tagIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
-import { Tag } from "../../../config/types";
+import type { Tag } from "../../../config/types";
 import { postDataUpdateSymbol } from "../../Home/src/home";
 
 defineOptions({ name: "HomeTagCard" });
@@ -21,8 +21,8 @@ const pageNum = ref(1);
 // 标签配置项
 const {
   path = "/tags",
-  pageTitle = `${tagSvg}全部标签`,
-  homeTitle = `${tagSvg}热门标签`,
+  pageTitle = `${tagIcon}全部标签`,
+  homeTitle = `${tagIcon}热门标签`,
   limit = 21,
   autoPage = false,
   pageSpeed = 4000,
@@ -40,8 +40,8 @@ const currentTags = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), tagSvg) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), tagSvg) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), tagIcon) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), tagIcon) : homeTitle;
   return { pt, ht };
 });
 

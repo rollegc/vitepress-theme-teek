@@ -1,7 +1,6 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import { Reading, Clock, View } from "@element-plus/icons-vue";
 import { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
@@ -9,6 +8,7 @@ import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
 import { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
+import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
 
 defineOptions({ name: "ArticleAnalyze" });
 
@@ -123,17 +123,17 @@ watch(route, () => {
       <ArticleInfo :post scope="article" />
 
       <div v-if="docAnalysisConfig.wordCount" class="flx-center">
-        <Icon v-if="articleConfig.showIcon"><Reading /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="readingIcon" />
         <a title="文章字数" class="hover-color">{{ pageViewInfo.wordCount }}</a>
       </div>
 
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
-        <Icon v-if="articleConfig.showIcon"><Clock /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="clockIcon" />
         <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
       </div>
 
       <div v-if="usePageView" class="flx-center">
-        <Icon v-if="articleConfig.showIcon"><View /></Icon>
+        <Icon v-if="articleConfig.showIcon" :icon="viewIcon" />
         <a title="浏览量" class="hover-color">{{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}</a>
       </div>
     </div>

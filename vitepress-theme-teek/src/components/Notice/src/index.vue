@@ -3,10 +3,9 @@ import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useWindowSize, useVpRouter } from "../../../hooks";
 import Icon from "../../Icon";
-import noticeSvg from "../../../assets/svg/notice";
-import closeSvg from "../../../assets/svg/close";
+import { noticeIcon as noticeSvg, closeIcon as closeSvg } from "../../../assets/icons";
 import { isString } from "../../../helper";
-import { Notice } from "../../../config/types";
+import type { Notice } from "../../../config/types";
 
 defineOptions({ name: "Notice" });
 

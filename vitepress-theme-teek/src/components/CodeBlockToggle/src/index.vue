@@ -2,7 +2,7 @@
 import { nextTick, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import arrowSvg from "../../../assets/svg/arrow";
+import { arrowDownIcon } from "../../../assets/icons";
 
 defineOptions({ name: "CodeBlockToggle" });
 
@@ -44,7 +44,7 @@ const initCodeBlock = () => {
     const newArrowElement: HTMLElement | null = document.createElement("div");
     newArrowElement.classList.add(arrowClass);
     // 添加箭头图标
-    newArrowElement.innerHTML = arrowSvg;
+    newArrowElement.innerHTML = arrowDownIcon;
     // 给箭头图标添加点击事件
     addClickEvent(newArrowElement, item);
     item.append(newArrowElement);

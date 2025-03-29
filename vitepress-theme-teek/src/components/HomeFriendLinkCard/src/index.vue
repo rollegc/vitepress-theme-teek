@@ -4,7 +4,7 @@ import { useData, withBase } from "vitepress";
 import { useNamespace, useScrollData } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { createImageViewer } from "../../ImageViewer";
-import friendLinkSvg from "../../../assets/svg/friendLink";
+import { friendLinkIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
 import { FriendLink } from "../../../config/types";
 
@@ -18,7 +18,7 @@ const { theme, frontmatter, localeIndex } = useData();
 const {
   list = [],
   limit = 4,
-  title = `${friendLinkSvg}友情链接`,
+  title = `${friendLinkIcon}友情链接`,
   autoScroll = false,
   scrollSpeed = 2500,
   autoPage = false,
@@ -40,7 +40,7 @@ const currentFriendLinkList = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(unref(localeIndex), friendLinkSvg);
+  if (isFunction(title)) return title(unref(localeIndex), friendLinkIcon);
   return title;
 });
 
