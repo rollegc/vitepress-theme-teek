@@ -20,13 +20,7 @@ export type * from "./config/types";
 export * from "./components";
 export * from "./helper";
 export * from "./hooks";
-
-export {
-  createContainerThenUse,
-  createContainerThenGet,
-  createContainersThenUse,
-  createContainersThenGet,
-} from "./markdown/plugins/container";
+export * from "./markdown/helper";
 
 export default {
   extends: DefaultTheme,

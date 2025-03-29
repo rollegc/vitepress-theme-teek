@@ -1,11 +1,9 @@
 import type MarkdownIt from "markdown-it";
-import container from "markdown-it-container";
-import yaml from "js-yaml";
 import { withBase } from "../../helper/util";
 import type { NavCard } from "../types";
 import type { SiteConfig } from "vitepress";
+import { createCardContainer } from "../helper";
 
-const navCardName = "navCard";
 const rootClass = "nav-card";
 const defaultCardNum = 2;
 
@@ -18,49 +16,19 @@ const navCardPlugin = (md: MarkdownIt) => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { base = "/" } = siteConfig.userConfig;
 
-  // 注册容器
-  md.use(container, navCardName, {});
-
-  // 注册成功后，就会监听到 container_xx_open，其中 xx 为注册的容器名
-  md.renderer.rules[`container_${navCardName}_open`] = (tokens, idx) => {
-    const containerToken = tokens[idx];
-    let html = `<div class="${rootClass}-container">`;
-
-    for (let i = idx; i < tokens.length; i++) {
-      const token = tokens[i];
-
-      // 如果来到 ${navCardName} 的结束标签，则跳出循环
-      if (token.type === `container_${navCardName}_close`) break;
-      if (!["yaml", "yml"].includes(token.info)) continue;
-
-      // 解析 yaml 内容
-      const yamlContent = yaml.load(token.content.trim()) as NavCard.Props | NavCard.Item[];
-
-      let data: NavCard.Item[] = [];
-      let config: NavCard.Config = {};
-      if (Array.isArray(yamlContent)) data = yamlContent;
-      else {
-        data = yamlContent.data || [];
-        config = yamlContent.config || {};
-      }
-
-      // 获取容器名后面的卡片数量
-      const cardNum = containerToken.info.trim().slice(navCardName.length).trim();
-      config.cardNum = config.cardNum || Number(cardNum || defaultCardNum) || defaultCardNum;
-
-      html += getNavCardHtml({ config, data }, base);
-
+  createCardContainer<NavCard.Item, NavCard.Config>(md, {
+    type: "navCard",
+    className: `${rootClass}-container`,
+    htmlRender: (props, info) => getNavCardHtml(props, info, base),
+    afterHtmlRender: (props, _, tokens, idx) => {
       // 删除 yaml 代码块
-      if (config.showCode !== true) {
-        token.type = "";
-        token.tag = "";
-        token.hidden = true;
+      if (props.config.showCode !== true) {
+        tokens[idx].type = "";
+        tokens[idx].tag = "";
+        tokens[idx].hidden = true;
       }
-    }
-
-    // 返回不能有 </div> 结尾
-    return html;
-  };
+    },
+  });
 };
 
 /**
@@ -69,12 +37,12 @@ const navCardPlugin = (md: MarkdownIt) => {
  * @param navCard 导航卡片数据
  * @param base 根路径
  */
-const getNavCardHtml = (navCard: NavCard.Props, base: string) => {
+const getNavCardHtml = (navCard: { data: NavCard.Item[]; config?: NavCard.Config }, info: string, base: string) => {
   const { data = [], config = {} } = navCard;
   if (!data.length) return "";
 
-  const { cardGap = 20, lineClamp = 2, target = "_blank" } = config;
-  let cardNum = config.cardNum;
+  const { cardNum: cn = 2, cardGap = 20, lineClamp = 2, target = "_blank" } = config;
+  let cardNum = info ? Number(info) : cn;
   if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = defaultCardNum;
 
   return `

@@ -10,9 +10,16 @@ import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
 import { transformData, transformRaw } from "../post";
-import { todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, demoPlugin } from "../markdown";
+import {
+  todoPlugin,
+  shareCardPlugin,
+  imgCardPlugin,
+  navCardPlugin,
+  demoPlugin,
+  containerPlugin,
+  createContainersThenUse,
+} from "../markdown";
 import { createCategory, createPermalink } from "./addFrontmatter";
-import { containerPlugins, createContainersThenUse } from "../markdown/plugins/container";
 
 export * from "./types";
 
@@ -151,7 +158,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
         [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin));
 
         const { container = {}, demo, config } = markdown;
-        md.use(demoPlugin, demo).use(containerPlugins, container.label);
+        md.use(demoPlugin, demo).use(containerPlugin, container.label);
         // 创建用户配置的自定义容器
         createContainersThenUse(md, container.config?.() || []);
 

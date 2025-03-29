@@ -1,8 +1,8 @@
 import type MarkdownIt from "markdown-it";
 import type { Renderer, Token } from "markdown-it";
+import type { SiteConfig } from "vitepress";
 import container from "markdown-it-container";
 import { normalizePath } from "vite";
-import type { SiteConfig } from "vitepress";
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
 

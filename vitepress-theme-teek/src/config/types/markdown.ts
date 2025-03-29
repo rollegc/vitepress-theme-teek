@@ -1,5 +1,5 @@
 import type MarkdownIt from "markdown-it";
-import type { ContainerLabel, ContainerOption } from "../../markdown/plugins/container";
+import type { ContainerOption, ContainerLabel } from "../../markdown";
 
 export interface Markdown {
   /**

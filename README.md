@@ -53,8 +53,6 @@ pnpm plugin:build
 
 ## TODO
 
-- 添加 demo 容器
-- md 插件代码优化
 - 部署文档站
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
