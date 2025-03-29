@@ -38,7 +38,7 @@ const buildModules = async () => {
           tsconfigPath: webTsConfig,
           outDir: tsOutput,
           staticImport: true,
-          exclude: [resolve(tkRoot, "src/assets")],
+          // exclude: [resolve(tkRoot, "src/assets")],
           resolvers: [cssResolver],
           beforeWriteFile: (filePath: string, content: string) => {
             let tempPath = filePath;

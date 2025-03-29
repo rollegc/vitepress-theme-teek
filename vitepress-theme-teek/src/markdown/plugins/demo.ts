@@ -5,6 +5,7 @@ import container from "markdown-it-container";
 import { normalizePath } from "vite";
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
+import type { Demo } from "../../config";
 
 interface ContainerOpts {
   marker?: string | undefined;
@@ -12,10 +13,10 @@ interface ContainerOpts {
   render?(tokens: Token[], index: number, options: any, env: any, self: Renderer): string;
 }
 
-const demoPlugin = (md: MarkdownIt) => {
+const demoPlugin = (md: MarkdownIt, option: Demo) => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const srcDir = siteConfig.srcDir;
-  const { path = "examples" } = siteConfig.userConfig.themeConfig.demo || {};
+  const { path = "examples" } = option || {};
   const demoPath = join(srcDir, path || "");
 
   const options: ContainerOpts = {
