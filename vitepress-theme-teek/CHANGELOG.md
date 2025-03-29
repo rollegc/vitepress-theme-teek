@@ -5,6 +5,13 @@
 ### Patch Changes
 
 - Updated dependencies
+  - vitepress-plugin-file-content-loader@1.0.9
+
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies
   - vitepress-plugin-sidebar-resolve@1.0.8
 
 ## 1.0.1

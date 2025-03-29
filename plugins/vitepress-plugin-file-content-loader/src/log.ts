@@ -6,7 +6,7 @@ import { version } from "../package.json";
 type ColorsKey = keyof Omit<Colors, "isColorSupported">;
 
 export const logger = createLogger("info", {
-  prefix: `[vitepress-plugin-permalink v${version}]`,
+  prefix: `[vitepress-plugin-file-content-loader v${version}]`,
 });
 
 export const info = (message: string, level: ColorsKey = "green", option: LogOptions = { timestamp: true }) => {

@@ -12,7 +12,6 @@
     "@vitepress-theme-teek/docs-locales",
     "@vitepress-theme-teek-docs/locales-root",
     "@vitepress-theme-teek/build",
-    "vitepress-theme-teek-docs",
-    "vitepress-theme-teek"
+    "vitepress-theme-teek-docs"
   ]
 }

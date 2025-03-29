@@ -1,5 +1,11 @@
 # vitepress-plugin-file-content-loader
 
+## 1.0.9
+
+### Patch Changes
+
+- 日志输出命名优化
+
 ## 1.0.8
 
 ### Patch Changes
