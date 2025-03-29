@@ -45,7 +45,7 @@ export default function tkThemeConfig(config: TkThemeConfig & UserConfig<Default
   // 定义各插件扫描时忽略的目录
   const ignoreDir = {
     autoFrontmatter: ["**/@pages/**"],
-    sidebar: ["@pages", "@fragment"],
+    sidebar: ["@pages", "@fragment", "examples"],
     mdH1: ["@pages"],
     docAnalysis: ["@pages", /目录页/],
     fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**"],

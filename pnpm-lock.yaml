@@ -363,7 +363,7 @@ importers:
         version: 1.0.14(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
       vitepress-plugin-sidebar-resolve:
         specifier: latest
-        version: 1.0.7(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
+        version: 1.0.8(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3))
     devDependencies:
       '@types/js-yaml':
         specifier: ^4.0.9
@@ -4693,8 +4693,8 @@ packages:
     peerDependencies:
       vitepress: ^1.6.3
 
-  vitepress-plugin-sidebar-resolve@1.0.7:
-    resolution: {integrity: sha512-jq/W07qWCs9nFZlbE/SM43/rEPGn8d0cL9jZvRcGdryWkR97nR/aEVfhBIRRyC2ezpN3KM2x2KN0Z6/JUCfJWg==}
+  vitepress-plugin-sidebar-resolve@1.0.8:
+    resolution: {integrity: sha512-ghA75NrSVGTJcH02+PbYraSGOciN3wtkLg1PLyY154DVrRFqOaehXhEoi6Nc8d+PFFlUehXhWdIihNFbbEfthQ==}
     peerDependencies:
       vitepress: ^1.6.3
 
@@ -9271,7 +9271,7 @@ snapshots:
       picocolors: 1.1.1
       vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)
 
-  vitepress-plugin-sidebar-resolve@1.0.7(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
+  vitepress-plugin-sidebar-resolve@1.0.8(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.10.5)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.7.3)):
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1

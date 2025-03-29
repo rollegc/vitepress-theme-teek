@@ -1,8 +1,8 @@
 {
   "name": "vitepress-plugin-doc-analysis",
   "type": "module",
-  "version": "1.0.9",
-  "description": "扫描 markdown 文档，对文档进行分析，计算字数、阅读时间等数据",
+  "version": "1.0.10",
+  "description": "扫描 Markdown 文档，对文档进行分析，计算字数、阅读时间等数据",
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",

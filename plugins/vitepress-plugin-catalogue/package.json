@@ -1,8 +1,8 @@
 {
   "name": "vitepress-plugin-catalogue",
   "type": "module",
-  "version": "1.0.8",
-  "description": "扫描 markdown 文档，获取目录信息",
+  "version": "1.0.9",
+  "description": "扫描 Markdown 文档，获取目录信息",
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",

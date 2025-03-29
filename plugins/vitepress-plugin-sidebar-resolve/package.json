@@ -1,8 +1,8 @@
 {
   "name": "vitepress-plugin-sidebar-resolve",
   "type": "module",
-  "version": "1.0.7",
-  "description": "扫描 markdown 文档，自动生成侧边栏",
+  "version": "1.0.8",
+  "description": "扫描 Markdown 文档，自动生成侧边栏",
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",

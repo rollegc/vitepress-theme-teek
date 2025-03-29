@@ -1,5 +1,11 @@
 # vitepress-plugin-catalogue
 
+## 1.0.9
+
+### Patch Changes
+
+- 文档更新
+
 ## 1.0.8
 
 ### Patch Changes

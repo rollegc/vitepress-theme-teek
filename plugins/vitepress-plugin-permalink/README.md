@@ -1,11 +1,11 @@
 # vitepress-plugin-permalink
 
-这是一个适用于 `vitepress` 的 Vite 插件，在 `vitepress` 启动后读取 markdown 文档 `frontmatter` 的 `permalink`。
+这是一个适用于 `vitepress` 的 Vite 插件，在 `vitepress` 启动后读取 Markdown 文档 `frontmatter` 的 `permalink`。
 
 ## ✨ Feature
 
-- 🚀🚀 支持给 markdown 文档设置唯一的访问 **永久链接**，不再因为 markdown 文档路径移动而导致访问地址发生变化
-- 🚀 读取 markdown 文档 `frontmatter` 的 `permalink`，挂载到 `themeConfig.permalinks`
+- 🚀🚀 支持给 Markdown 文档设置唯一的访问 **永久链接**，不再因为 Markdown 文档路径移动而导致访问地址发生变化
+- 🚀 读取 Markdown 文档 `frontmatter` 的 `permalink`，挂载到 `themeConfig.permalinks`
 - 🚀 提供 `usePermalink` hooks 函数拓展 `router` 方法，支持 `router.push(href)` 跳转到永久链接或实际的文件路径
 - 🚀 支持 locales 国际化，自动给 **永久链接** 添加语言前缀，不同语言的永久链接不会重复
 - 🚀 支持 rewrite 路由重写，最终得到的文档路径是 rewrite 路由重写后的路径
@@ -37,9 +37,9 @@ export default defineConfig({
 });
 ```
 
-> 说明：该插件仅限项目启动时生效，已改动或新添加的 markdown 需要重启项目才能生效。
+> 说明：该插件仅限项目启动时生效，已改动或新添加的 Markdown 需要重启项目才能生效。
 
-插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 markdown 文档。
+插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 Markdown 文档。
 
 ## 🛠️ Options
 

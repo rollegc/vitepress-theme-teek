@@ -169,8 +169,9 @@ const createSideBarItems = (
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
-      const { data: { title: frontmatterTitle } = {}, content: mdContent } = matter(content, {});
+      const { data: { title: frontmatterTitle, sidebar = true } = {}, content: mdContent } = matter(content, {});
 
+      if (!sidebar) return [];
       // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
       const mdTitle = titleFormMd ? getTitleFromMd(mdContent) : "";
       const text = frontmatterTitle || mdTitle || title;

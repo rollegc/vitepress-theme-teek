@@ -1,8 +1,8 @@
 {
   "name": "vitepress-plugin-permalink",
   "type": "module",
-  "version": "1.0.14",
-  "description": "扫描 markdown 文档，生成永久链接",
+  "version": "1.0.15",
+  "description": "扫描 Markdown 文档，生成永久链接",
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",

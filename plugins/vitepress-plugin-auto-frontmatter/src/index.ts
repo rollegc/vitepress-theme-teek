@@ -44,7 +44,7 @@ export default function VitePluginVitePressAutoFrontmatter(
 }
 
 /**
- * 自动生成 frontmatter 并写入到 markdown 文件
+ * 自动生成 frontmatter 并写入到 Markdown 文件
  *
  * @param filePaths 文件路径列表
  * @param option 插件配置项

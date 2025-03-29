@@ -1,6 +1,6 @@
 # vitepress-plugin-catalogue
 
-这是一个适用于 `vitepress` 的 Vite 插件，`vitepress` 启动会扫描 markdown 文档，对 `formatter.catalogue` 为 true 的文档进行分析。
+这是一个适用于 `vitepress` 的 Vite 插件，`vitepress` 启动会扫描 Markdown 文档，对 `formatter.catalogue` 为 true 的文档进行分析。
 
 ## ✨ Feature
 
@@ -32,9 +32,9 @@ export default defineConfig({
 });
 ```
 
-> 说明：该插件仅限项目启动时生效，如果给 markdown 添加 `catalogue` 功能，需要重启项目生效。
+> 说明：该插件仅限项目启动时生效，如果给 Markdown 添加 `catalogue` 功能，需要重启项目生效。
 
-插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 markdown 文档。
+插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 Markdown 文档。
 
 ## 🛠️ Options
 
@@ -127,7 +127,7 @@ path 是基于 [srcDir](https://vitepress.dev/zh/reference/site-config#srcdir) �
 }
 ```
 
-如果某个 markdown 文档不想被纳入目录里，则：
+如果某个 Markdown 文档不想被纳入目录里，则：
 
 ```yaml
 ---

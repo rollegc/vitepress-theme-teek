@@ -5,6 +5,13 @@
 ### Patch Changes
 
 - Updated dependencies
+  - vitepress-plugin-sidebar-resolve@1.0.8
+
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies
   - vitepress-plugin-auto-frontmatter@1.0.6
   - vitepress-plugin-catalogue@1.0.7
   - vitepress-plugin-doc-analysis@1.0.8
