@@ -78,12 +78,12 @@ export const createCardContainer = <D extends Record<string, any>, C extends Rec
       // 获取容器名后面的内容
       const info = containerToken.info.trim().slice(type.length).trim();
 
-      const result = beforeHtmlRender?.({ data, config }, info, tokens, idx);
+      const result = beforeHtmlRender?.({ data, config }, info, tokens, i);
       if (result === false) continue;
 
       // 获取 HTML
-      html += htmlRender({ data, config }, info, tokens, idx);
-      afterHtmlRender?.({ data, config }, info, tokens, idx);
+      html += htmlRender({ data, config }, info, tokens, i);
+      afterHtmlRender?.({ data, config }, info, tokens, i);
     }
     html = transformHtml?.(html) ?? html;
 

@@ -3,7 +3,7 @@ import type { ContainerOption, ContainerLabel } from "../../markdown";
 
 export interface Markdown {
   /**
-   * 注册 markdown 插件回调，请不要在使用 vitepress.markdown.config 配置 md 插件，因为 config 是一个函数，vitepress 并没有做多个 config 合并，因此使用 vitepress.markdown.config 配置会覆盖主题内置 md 插件
+   * 注册更多 markdown 插件函数
    */
   config?: (md: MarkdownIt) => void;
   /**
@@ -38,6 +38,8 @@ export interface Demo {
   playgroundUrl?: string;
   /**
    * Playground 主文件名
+   *
+   * @default 'App.vue'
    */
   playgroundMainFileName?: string;
   /**

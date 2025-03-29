@@ -105,7 +105,7 @@ const copyCode = async () => {
     </div>
 
     <div :class="ns.e('button-group')">
-      <slot name="teek-demo-code-button-before" />
+      <slot name="teek-demo-code-button-left" />
 
       <ElTooltip
         v-if="playgroundUrl"
@@ -132,7 +132,7 @@ const copyCode = async () => {
         <Icon @click="handleToggleSourceVisible()" :icon="codeIcon" />
       </ElTooltip>
 
-      <slot name="teek-demo-code-button-after" />
+      <slot name="teek-demo-code-button-right" />
     </div>
 
     <TransitionCollapse>

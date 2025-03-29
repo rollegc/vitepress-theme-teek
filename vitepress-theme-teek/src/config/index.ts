@@ -23,7 +23,7 @@ import { createCategory, createPermalink } from "./addFrontmatter";
 
 export * from "./types";
 
-export default function tkThemeConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
+export default function defineTeekConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
   const { vitePlugins, markdown = {}, ...tkThemeConfig } = config;
   const {
     sidebar = true,
