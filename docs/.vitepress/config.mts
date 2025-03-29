@@ -28,7 +28,6 @@ const tkConfig = tkThemeConfig({
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: tkConfig,
-  base: "/",
   title: "vitepress-theme-teek",
   description: description,
   cleanUrls: true,

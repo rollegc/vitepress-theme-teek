@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DemoCode">
 import { ref, computed, unref, defineAsyncComponent } from "vue";
-import { useData } from "vitepress";
+import { useData, withBase } from "vitepress";
 import { ElTooltip } from "element-plus";
 import { useNamespace, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
@@ -35,9 +35,9 @@ const decodedDescription = computed(() => decodeURIComponent(props.description))
 const DemoComponent = defineAsyncComponent(async () => {
   try {
     // / 表示从 .vitepress 目录层级开始
-    return await import(/* @vite-ignore */ `/${props.path}`);
+    return await import(/* @vite-ignore */ withBase(`/${props.path}`));
   } catch (error) {
-    console.error(`[Teek Error] Failed to load component: '${props.source}'`, error);
+    console.error(`[Teek Error] Failed to load component: '${props.path}'`, error);
     return null;
   }
 });
