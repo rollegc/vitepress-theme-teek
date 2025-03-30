@@ -1,12 +1,12 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import { FileInfo } from "vitepress-plugin-doc-analysis";
+import type { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
 import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
-import { Article, DocAnalysis } from "../../../config/types";
+import type { Article, DocAnalysis } from "../../../config/types";
 import { TkContentData } from "../../../post/types";
 import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
 
@@ -30,7 +30,7 @@ const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<FileInfo> = {};
-  unref(docAnalysisInfo).eachFileWords.forEach((item: FileInfo) => {
+  unref(docAnalysisInfo).eachFileWords?.forEach((item: FileInfo) => {
     if (item.fileInfo.relativePath === route.data.relativePath) return (pageViewInfo = item);
   });
 
@@ -43,8 +43,9 @@ const articleConfig = computed<Article>(() => {
     showInfo = true,
     showIcon = true,
     teleport = {},
+    titleTip = {},
   } = { ...unref(theme).article, ...unref(frontmatter).article };
-  return { showInfo, showIcon, teleport };
+  return { showInfo, showIcon, teleport, titleTip };
 });
 
 // 是否展示作者、日期、分类、标签等信息
@@ -86,16 +87,13 @@ const docAnalysisConfig = computed<DocAnalysis>(() => {
   return { wordCount, readingTime, statistics };
 });
 
-const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => {
-  const {
-    provider = "",
-    pageView = true,
-    iteration = false,
-    pageIteration = 2000,
-  } = unref(docAnalysisConfig).statistics || {};
-
-  return { provider, pageView, iteration, pageIteration };
-});
+const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => ({
+  provider: "",
+  pageView: true,
+  iteration: false,
+  pageIteration: 2000,
+  ...unref(docAnalysisConfig).statistics,
+}));
 // 是否使用访问量功能
 const usePageView = computed(() => unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
 
@@ -124,17 +122,21 @@ watch(route, () => {
 
       <div v-if="docAnalysisConfig.wordCount" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="readingIcon" />
-        <a title="文章字数" class="hover-color">{{ pageViewInfo.wordCount }}</a>
+        <a :title="articleConfig.titleTip?.wordCount ?? '文章字数'" class="hover-color">{{ pageViewInfo.wordCount }}</a>
       </div>
 
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="clockIcon" />
-        <a title="预计阅读时长" class="hover-color">{{ pageViewInfo.readingTime }}</a>
+        <a :title="articleConfig.titleTip?.readingTime ?? '预计阅读时长'" class="hover-color">
+          {{ pageViewInfo.readingTime }}
+        </a>
       </div>
 
       <div v-if="usePageView" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="viewIcon" />
-        <a title="浏览量" class="hover-color">{{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}</a>
+        <a :title="articleConfig.titleTip?.pageView ?? '浏览量'" class="hover-color">
+          {{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}
+        </a>
       </div>
     </div>
   </div>

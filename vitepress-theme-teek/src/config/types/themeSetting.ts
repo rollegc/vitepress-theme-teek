@@ -47,6 +47,59 @@ export interface ThemeSetting {
     }[];
   }[];
   /**
+   * 主题样式的名称修改
+   */
+  themeStyleLabel?: {
+    /**
+     * @default 'VP 主题'
+     */
+    vpLabel?: string;
+    /**
+     * @default 'VitePress 主题'
+     */
+    vpTip?: string;
+    /**
+     * @default '默认'
+     */
+    default?: string;
+    /**
+     * @default '绿色'
+     */
+    vpGreen?: string;
+    /**
+     * @default '黄色'
+     */
+    vpYellow?: string;
+    /**
+     * @default '红色'
+     */
+    vpRed?: string;
+    /**
+     * @default 'EP 主题'
+     */
+    epLabel?: string;
+    /**
+     * @default 'Element Plus 主题'
+     */
+    epTip?: string;
+    /**
+     * @default '蓝色'
+     */
+    epBlue?: string;
+    /**
+     * @default '绿色'
+     */
+    epGreen?: string;
+    /**
+     * @default '黄色'
+     */
+    epYellow?: string;
+    /**
+     * @default '红色'
+     */
+    epRed?: string;
+  };
+  /**
    * 是否使用主题尺寸切换功能
    *
    * @default true
@@ -71,4 +124,46 @@ export interface ThemeSetting {
      */
     size: string;
   }[];
+  /**
+   * 主题尺寸的名称修改
+   */
+  themeSizeLabel?: {
+    /**
+     * @default 'Wide'
+     */
+    wide?: string;
+    /**
+     * @default 'Large'
+     */
+    large?: string;
+    /**
+     * @default 'Default'
+     */
+    default?: string;
+    /**
+     * @default 'Small'
+     */
+    small?: string;
+  };
+  /**
+   * 鼠标悬停时标题提示文案
+   */
+  titleTip?: {
+    /**
+     * @default '回到顶部'
+     */
+    backTop?: string;
+    /**
+     * @default '前往评论'
+     */
+    toComment?: string;
+    /**
+     * @default '主题尺寸'
+     */
+    themeSize?: string;
+    /**
+     * @default '主题样式'
+     */
+    themeStyle?: string;
+  };
 }

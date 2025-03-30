@@ -21,6 +21,7 @@ const { theme, frontmatter, localeIndex } = useData();
 const {
   limit = 4,
   title = `${topArticleIcon}精选文章`,
+  emptyLabel = "暂无精选文章",
   autoPage = false,
   pageSpeed = 4000,
 }: TopArticle = { ...unref(theme).topArticle, ...unref(frontmatter).tk?.topArticle };
@@ -92,7 +93,7 @@ const getStyle = (num: number, index: number) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">暂无精选内容</div>
+      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
     </template>
   </HomeCard>
 

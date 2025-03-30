@@ -6,19 +6,20 @@ import HomeCard from "../../HomeCard";
 import { createImageViewer } from "../../ImageViewer";
 import { friendLinkIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
-import { FriendLink } from "../../../config/types";
+import type { FriendLink } from "../../../config/types";
 
 defineOptions({ name: "HomeFriendLinkCard" });
 
 const ns = useNamespace("friendLink");
 
-const { theme, frontmatter, localeIndex } = useData();
+const { theme, frontmatter } = useData();
 
 // 友情链接配置项
 const {
   list = [],
   limit = 4,
   title = `${friendLinkIcon}友情链接`,
+  emptyLabel = "暂无友情链接",
   autoScroll = false,
   scrollSpeed = 2500,
   autoPage = false,
@@ -40,7 +41,7 @@ const currentFriendLinkList = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(unref(localeIndex), friendLinkIcon);
+  if (isFunction(title)) return title(friendLinkIcon);
   return title;
 });
 
@@ -114,7 +115,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">暂无友情链接</div>
+      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
     </template>
   </HomeCard>
 

@@ -1,6 +1,23 @@
 import { defineConfig } from "vitepress";
+import { defineTeekConfig } from "vitepress-theme-teek/config";
 
 const description = ["Hd Security Documentation", "Authentication Framework"].toString();
+
+const tkConfig = defineTeekConfig({
+  article: {
+    titleTip: {
+      author: "Author",
+      createTime: "createTime",
+      updateTime: "updateTime",
+    },
+  },
+  themeSetting: {
+    themeStyleLabel: {
+      default: "Default",
+      vpGreen: "VP Green",
+    },
+  },
+});
 
 export default defineConfig({
   lang: "en-US",
@@ -26,6 +43,7 @@ export default defineConfig({
     },
   },
   themeConfig: {
+    ...tkConfig.themeConfig,
     darkModeSwitchLabel: "Theme",
     sidebarMenuLabel: "Menu",
     returnToTopLabel: "To Top",

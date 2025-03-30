@@ -7,7 +7,7 @@ import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 import securityRecordImg from "../../../assets/img/securityRecord.png";
 import { version } from "../../../version";
 import Icon from "../../Icon";
-import { FooterInfo, Social } from "../../../config/types";
+import type { FooterInfo, Social } from "../../../config/types";
 
 defineOptions({ name: "Footer" });
 
@@ -49,7 +49,7 @@ const footerData = computed(() => {
 
   // 4.网络安全备案信息
   if (securityRecord) {
-    data.push({ icon: securityRecordImg, iconType: "img", imgAlt: "公网安备", ...securityRecord });
+    data.push({ icon: securityRecordImg, iconType: "img", imgAlt: "Security Record", ...securityRecord });
   }
 
   return data;

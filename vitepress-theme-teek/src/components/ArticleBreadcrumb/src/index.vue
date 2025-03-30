@@ -6,7 +6,7 @@ import { houseIcon } from "../../../assets/icons";
 import Breadcrumb from "./Breadcrumb.vue";
 import BreadcrumbItem from "./BreadcrumbItem.vue";
 import Icon from "../../Icon";
-import { Breadcrumb as BreadcrumbType } from "../../../config/types";
+import type { Breadcrumb as BreadcrumbType } from "../../../config/types";
 
 defineOptions({ name: "ArticleBreadcrumb" });
 
@@ -19,6 +19,7 @@ const breadcrumb = computed<BreadcrumbType>(() => ({
   enabled: true,
   showCurrentName: false,
   separator: "/",
+  homeLabel: "首页",
   ...unref(theme).breadcrumb,
   ...unref(frontmatter).breadcrumb,
 }));
@@ -52,7 +53,7 @@ const breadcrumbList = computed(() => {
   <div :class="`${ns.b()}`">
     <Breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <BreadcrumbItem>
-        <a :href="withBase('/')" title="首页" class="hover-color">
+        <a :href="withBase('/')" :title="breadcrumb.homeLabel" class="hover-color">
           <Icon :icon="houseIcon" />
         </a>
       </BreadcrumbItem>

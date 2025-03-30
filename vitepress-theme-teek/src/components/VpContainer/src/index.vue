@@ -1,7 +1,7 @@
 <script setup lang="ts" name="VpContainer">
 import { computed } from "vue";
 import { useNamespace } from "../../../hooks";
-import { VpContainerProps } from "./vpContainer";
+import type { VpContainerProps } from "./vpContainer";
 
 const ns = useNamespace("vpContainer");
 

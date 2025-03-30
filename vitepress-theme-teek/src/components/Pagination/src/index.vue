@@ -2,7 +2,7 @@
 import { nextTick, onMounted, unref } from "vue";
 import { ElPagination } from "element-plus";
 import { useNamespace } from "../../../hooks";
-import { PaginationProps, PaginationEmits, Paging } from "./pagination";
+import type { PaginationProps, PaginationEmits, Paging } from "./pagination";
 
 defineOptions({ name: "Pagination" });
 

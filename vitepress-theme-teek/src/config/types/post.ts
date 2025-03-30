@@ -20,6 +20,12 @@ export interface Post {
    */
   moreLabel?: string;
   /**
+   * 文章列表为空时的标签
+   *
+   * @default '文章列表为空'
+   */
+  emptyLabel?: string;
+  /**
    * 文章封面图模式
    *
    * @default 'default'

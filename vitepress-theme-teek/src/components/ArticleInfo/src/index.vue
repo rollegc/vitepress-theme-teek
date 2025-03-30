@@ -6,8 +6,8 @@ import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
 import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "../../../assets/icons";
-import { Article, ArticleInfoPosition } from "../../../config/types";
-import { PostBaseInfoProps } from "./articleInfo";
+import type { Article, ArticleInfoPosition } from "../../../config/types";
+import type { PostBaseInfoProps } from "./articleInfo";
 import Icon from "../../Icon";
 
 defineOptions({ name: "ArticleInfo" });
@@ -18,23 +18,19 @@ const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
 const { theme, frontmatter, page } = useData();
 // 文章信息配置项
-const articleConfig = computed<Article>(() => {
-  const {
-    showIcon = true,
-    dateFormat = "yyyy-MM-dd",
-    showAuthor = true,
-    showCreateDate = true,
-    showUpdateDate = false,
-    showCategory = false,
-    showTag = false,
-  }: Article = {
-    ...unref(theme).article,
-    ...unref(frontmatter).article,
-    ...unref(frontmatter).tk?.article,
-  };
-
-  return { showIcon, dateFormat, showAuthor, showCreateDate, showUpdateDate, showCategory, showTag };
-});
+const articleConfig = computed<Article>(() => ({
+  showIcon: true,
+  dateFormat: "yyyy-MM-dd",
+  showAuthor: true,
+  showCreateDate: true,
+  showUpdateDate: false,
+  showCategory: false,
+  showTag: false,
+  titleTip: {},
+  ...unref(theme).article,
+  ...unref(frontmatter).article,
+  ...unref(frontmatter).tk?.article,
+}));
 
 const posts = usePosts();
 const route = useRoute();
@@ -63,10 +59,11 @@ const updateDate = computed(() => {
 });
 
 const baseInfo = computed(() => {
-  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag } = unref(articleConfig);
+  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag, titleTip } = unref(articleConfig);
+
   return [
     {
-      title: "作者",
+      title: titleTip.author ?? "作者",
       icon: userIcon,
       data: post.author?.name,
       href: post.author?.link,
@@ -74,19 +71,19 @@ const baseInfo = computed(() => {
       show: isShow(showAuthor),
     },
     {
-      title: "创建时间",
+      title: titleTip.createTime ?? "创建时间",
       icon: calendarIcon,
       data: createDate,
       show: isShow(showCreateDate),
     },
     {
-      title: "更新时间",
+      title: titleTip.updateTime ?? "更新时间",
       icon: editPenIcon,
       data: updateDate,
       show: unref(updateDate) && scope === "article" && showUpdateDate,
     },
     {
-      title: "分类",
+      title: titleTip.category ?? "分类",
       icon: folderOpenedIcon,
       dataList: post.frontmatter?.categories || [],
       href: "/categories?category={data}",
@@ -94,7 +91,7 @@ const baseInfo = computed(() => {
       show: scope === "post" || isShow(showCategory),
     },
     {
-      title: "标签",
+      title: titleTip.tag ?? "标签",
       icon: collectionTagIcon,
       dataList: post.frontmatter?.tags || [],
       href: "/tags?tag={data}",

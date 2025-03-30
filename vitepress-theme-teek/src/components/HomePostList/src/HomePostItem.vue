@@ -2,10 +2,10 @@
 import { computed, unref } from "vue";
 import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { TkContentData } from "../../../post/types";
+import type { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
 import ArticleInfo from "../../ArticleInfo";
-import { Article, Post } from "../../../config/types";
+import type { Article, Post } from "../../../config/types";
 
 defineOptions({ name: "HomePostItem" });
 

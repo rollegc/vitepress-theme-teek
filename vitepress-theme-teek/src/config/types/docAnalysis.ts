@@ -10,7 +10,7 @@ export interface DocAnalysis {
    *
    * @default '${svg}站点信息'
    */
-  title?: string | ((localeIndex: string, svg: string) => string);
+  title?: string | ((svg: string) => string);
   /**
    * 项目创建时间
    */

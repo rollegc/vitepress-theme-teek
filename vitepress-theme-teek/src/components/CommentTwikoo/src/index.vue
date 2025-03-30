@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CommentTwikoo">
 import { ref, onMounted, unref } from "vue";
 import { useData } from "vitepress";
-import { CommentProvider } from "../../../config/types";
+import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 
 defineOptions({ name: "CommentTwikoo" });

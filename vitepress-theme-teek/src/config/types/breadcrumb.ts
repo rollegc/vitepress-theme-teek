@@ -17,4 +17,10 @@ export interface Breadcrumb {
    * @default '/'
    */
   separator?: string;
+  /**
+   * 鼠标悬停首页图标的提示文案
+   *
+   * @default '首页'
+   */
+  homeLabel?: string;
 }

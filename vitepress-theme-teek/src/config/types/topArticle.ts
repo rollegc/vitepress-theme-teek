@@ -12,6 +12,12 @@ export interface TopArticle {
    */
   title?: string | ((localeIndex: string, svg: string) => string);
   /**
+   * 精选文章为空时的标签
+   *
+   * @default '暂无精选文章'
+   */
+  emptyLabel?: string;
+  /**
    * 一页显示的数量
    *
    * @default 5

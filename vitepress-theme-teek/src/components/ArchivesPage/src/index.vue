@@ -2,6 +2,7 @@
 import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts } from "../../../configProvider";
+import { computed } from "vue";
 
 defineOptions({ name: "ArchivesPage" });
 
@@ -10,6 +11,17 @@ const ns = useNamespace("archives");
 const { frontmatter } = useData();
 
 const posts = usePosts();
+
+const defaultLabel = computed(() => {
+  return {
+    title: frontmatter.title ?? "归档",
+    totalCount: frontmatter.totalCount ?? "总共 {count} 篇文章",
+    year: frontmatter.year ?? "年",
+    month: frontmatter.month ?? "月",
+    count: frontmatter.count ?? "篇",
+    notFound: frontmatter.notFound ?? "未指定",
+  };
+});
 </script>
 
 <template>
@@ -17,8 +29,10 @@ const posts = usePosts();
     <slot name="teek-archives-top-before" />
 
     <div :class="`${ns.e('header')} flx-justify-between`">
-      <div :class="ns.joinNamespace('page-title-h1')">{{ frontmatter.title }}</div>
-      <div class="count">总共 {{ posts.sortPostsByDate.length }} 篇文章</div>
+      <div :class="ns.joinNamespace('page-title-h1')">{{ defaultLabel.title }}</div>
+      <div class="count">
+        {{ defaultLabel.totalCount.replace("{count}", posts.sortPostsByDate.length) }}
+      </div>
     </div>
 
     <slot name="teek-archives-top-after" />
@@ -26,15 +40,19 @@ const posts = usePosts();
     <div :class="ns.e('timeline')">
       <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">
         <div :class="`${ns.em('timeline', 'year')} flx-justify-between`">
-          <div class="year">{{ String(year).trim() === "NaN" ? "未指定" : String(year).trim() }}年</div>
-          <div class="count">{{ posts.groupPostsByYear[year].length }}篇</div>
+          <div class="year">
+            {{ String(year).trim() === "NaN" ? defaultLabel.notFound : String(year).trim() + defaultLabel.year }}
+          </div>
+          <div class="count">{{ posts.groupPostsByYear[year].length + defaultLabel.count }}</div>
         </div>
 
         <div :class="ns.e('timeline__m')">
           <template v-for="(p, month) in monthPosts" :key="month">
             <div :class="`${ns.em('timeline__m', 'month')} flx-justify-between`">
-              <div class="month">{{ String(month) === "NaN" ? "未指定" : month }}月</div>
-              <div class="count">{{ p.length }}篇</div>
+              <div class="month">
+                {{ String(month) === "NaN" ? defaultLabel.notFound : month + defaultLabel.month }}
+              </div>
+              <div class="count">{{ p.length + defaultLabel.count }}</div>
             </div>
 
             <ul>

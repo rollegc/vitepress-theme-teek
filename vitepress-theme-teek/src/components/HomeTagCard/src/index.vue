@@ -23,6 +23,7 @@ const {
   path = "/tags",
   pageTitle = `${tagIcon}全部标签`,
   homeTitle = `${tagIcon}热门标签`,
+  emptyLabel = "暂无热门标签",
   limit = 21,
   autoPage = false,
   pageSpeed = 4000,
@@ -40,8 +41,8 @@ const currentTags = computed(() => {
 });
 
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), tagIcon) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), tagIcon) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(tagIcon) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(tagIcon) : homeTitle;
   return { pt, ht };
 });
 
@@ -138,7 +139,7 @@ watch(
         <a v-if="!tagsPage && limit < tags.length" :href="withBase(tagsPageLink)" class="more">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">暂无热门标签</div>
+      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
     </template>
   </HomeCard>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ImageViewer">
 import { ElImageViewer, ImageViewerProps as ElImageViewerProps } from "element-plus";
-import { Writable } from "element-plus/es/utils";
+import type { Writable } from "element-plus/es/utils";
 
 export type ImageViewerProps = Writable<Partial<ElImageViewerProps>> & { modelValue?: boolean };
 

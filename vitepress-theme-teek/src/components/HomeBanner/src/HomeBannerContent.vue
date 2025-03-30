@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
-import { Banner } from "../../../config/types";
+import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerContent" });
 

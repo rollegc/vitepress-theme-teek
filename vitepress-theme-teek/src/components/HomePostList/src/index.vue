@@ -7,8 +7,9 @@ import Pagination from "../../Pagination";
 import Icon from "../../Icon";
 import { usePosts } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
-import { TkContentData } from "../../../post/types";
+import type { TkContentData } from "../../../post/types";
 import { emptyIcon } from "../../../assets/icons";
+import type { Post } from "../../../config/types";
 
 defineOptions({ name: "HomePostList" });
 
@@ -16,6 +17,8 @@ const ns = useNamespace("postList");
 
 const posts = usePosts();
 const { theme, frontmatter } = useData();
+
+const { emptyLabel = "文章列表为空" }: Post = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
 
 // 自定义一页数量 & 分页组件的 Props
 const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = {
@@ -132,7 +135,7 @@ defineExpose({ updateData });
     </template>
     <div v-else :class="[ns.e('empty'), 'flx-column-center']">
       <Icon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" />
-      <span :class="ns.e('empty__title')">文章列表为空</span>
+      <span :class="ns.e('empty__title')">{{ emptyLabel }}</span>
     </div>
   </div>
 </template>

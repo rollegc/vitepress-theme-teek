@@ -14,9 +14,8 @@ const createConfigProvider = (Layout: Component) => {
   return defineComponent({
     name: "ConfigProvider",
     setup(_, { slots }) {
-      const { theme } = useData();
       // 往主题注入数据
-      provide(postsSymbol, unref(theme).posts || emptyPost);
+      provide(postsSymbol, useAllPosts());
 
       // 开启监听器
       usePermalink().startWatch();

@@ -3,10 +3,6 @@ import { isString } from "../helper";
 
 export interface DataSwitchOption {
   /**
-   * 数据数组
-   */
-  dataArray: string[];
-  /**
    * 切换间隔时间，单位：毫秒
    */
   timeout?: number;

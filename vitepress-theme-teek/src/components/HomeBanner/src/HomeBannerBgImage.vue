@@ -3,7 +3,7 @@ import { withBase, useData } from "vitepress";
 import { onMounted, unref } from "vue";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
-import { Banner } from "../../../config/types";
+import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerBgImage" });
 

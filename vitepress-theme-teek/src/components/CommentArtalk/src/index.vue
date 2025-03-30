@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CommentArtalk">
 import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
-import { CommentProvider } from "../../../config/types";
+import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 import { artalkSymbol } from "./artalk";
 
@@ -21,7 +21,7 @@ const artalkId = "artalk";
 
 const initArtalkByInject = () => {
   // 尝试从上下文获取 artalk 实例函数
-  const getArtalkInstance = inject(artalkSymbol);
+  const getArtalkInstance = inject(artalkSymbol, () => null);
   const el = unref(artalkRef) || `#${artalkId}`;
 
   const artalkInstance = getArtalkInstance?.(unref(theme).comment?.options, el);

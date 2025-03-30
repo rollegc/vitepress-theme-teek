@@ -113,7 +113,6 @@ const tkConfig = defineTeekConfig({
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: tkConfig,
-  base: "/",
   title: "Hd Security",
   cleanUrls: false,
   lastUpdated: true,

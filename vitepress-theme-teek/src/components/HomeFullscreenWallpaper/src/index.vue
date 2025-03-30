@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, ref, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { Wallpaper } from "../../../config/types";
+import type { Wallpaper } from "../../../config/types";
 
 defineOptions({ name: "HomeFullscreenWallpaper" });
 

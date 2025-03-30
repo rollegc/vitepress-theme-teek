@@ -37,7 +37,13 @@ export interface FriendLink {
    *
    * @default '${svg}友情链接'
    */
-  title?: string | ((localeIndex: string, svg: string) => string);
+  title?: string | ((svg: string) => string);
+  /**
+   * 友情链接为空时的标签
+   *
+   * @default '暂无友情链接'
+   */
+  emptyLabel?: string;
   /**
    * 一页显示的数量
    *

@@ -23,6 +23,7 @@ const {
   path = "/categories",
   pageTitle = `${categoryIcon}全部分类`,
   homeTitle = `${categoryIcon}文章分类`,
+  emptyLabel = "暂无文章分类",
   limit = 5,
   autoPage = false,
   pageSpeed = 4000,
@@ -41,8 +42,8 @@ const currentCategories = computed(() => {
 
 // 标题
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(unref(localeIndex), categoryIcon) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(unref(localeIndex), categoryIcon) : homeTitle;
+  let pt = isFunction(pageTitle) ? pageTitle(categoryIcon) : pageTitle;
+  let ht = isFunction(homeTitle) ? homeTitle(categoryIcon) : homeTitle;
   return { pt, ht };
 });
 
@@ -142,7 +143,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
         <a v-if="!categoriesPage && limit < categories.length" :href="withBase(categoriesPageLink)">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">暂无文章分类</div>
+      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
     </template>
   </HomeCard>
 

@@ -3,7 +3,7 @@ import { onMounted, unref } from "vue";
 import { withBase, useData } from "vitepress";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
-import { BodyBgImg } from "../../../config/types";
+import type { BodyBgImg } from "../../../config/types";
 
 defineOptions({ name: "BodyBgImage" });
 
