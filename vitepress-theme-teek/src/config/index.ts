@@ -150,6 +150,7 @@ export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme
     head,
     vite: {
       plugins: plugins as any,
+      ssr: { noExternal: ["vitepress-theme-teek"] },
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
     },

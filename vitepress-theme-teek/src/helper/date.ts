@@ -8,7 +8,7 @@ export const getNowDate = () => {
 /**
  * 格式化时间
  */
-export const formatDate = (date: Date | string, format = "yyyy-MM-dd hh:mm:ss") => {
+export const formatDate = (date: Date | string | number, format = "yyyy-MM-dd hh:mm:ss") => {
   if (!date) return ""; // 如果日期为空，返回空字符串
   const d = new Date(date);
 
@@ -33,7 +33,7 @@ export const formatDate = (date: Date | string, format = "yyyy-MM-dd hh:mm:ss") 
 /**
  * 计算相差时间差，返回多少年（月/天/小时/分钟/秒）前
  */
-export const formatDiffDate = (startDate: Date | string, endDate?: Date | string) => {
+export const formatDiffDate = (startDate: Date | string | number, endDate?: Date | string | number) => {
   const start = +new Date(startDate);
   const end = endDate ? +new Date(endDate) : +new Date();
   const diff = Math.abs(end - start);
@@ -59,7 +59,7 @@ export const formatDiffDate = (startDate: Date | string, endDate?: Date | string
 /**
  * 获取两个日期相差多少天
  */
-export const formatDiffDateToDay = (startDate: string, endDate?: string) => {
+export const formatDiffDateToDay = (startDate: Date | string | number, endDate?: Date | string | number) => {
   const start = +new Date(startDate);
   const end = endDate ? +new Date(endDate) : +new Date();
 

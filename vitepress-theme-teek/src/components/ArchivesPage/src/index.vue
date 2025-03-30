@@ -2,7 +2,7 @@
 import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { usePosts } from "../../../configProvider";
-import { computed } from "vue";
+import { computed, unref } from "vue";
 
 defineOptions({ name: "ArchivesPage" });
 
@@ -14,12 +14,12 @@ const posts = usePosts();
 
 const defaultLabel = computed(() => {
   return {
-    title: frontmatter.title ?? "归档",
-    totalCount: frontmatter.totalCount ?? "总共 {count} 篇文章",
-    year: frontmatter.year ?? "年",
-    month: frontmatter.month ?? "月",
-    count: frontmatter.count ?? "篇",
-    notFound: frontmatter.notFound ?? "未指定",
+    title: unref(frontmatter).title ?? "归档",
+    totalCount: unref(frontmatter).totalCount ?? "总共 {count} 篇文章",
+    year: unref(frontmatter).year ?? "年",
+    month: unref(frontmatter).month ?? "月",
+    count: unref(frontmatter).count ?? "篇",
+    notFound: unref(frontmatter).notFound ?? "未指定",
   };
 });
 </script>

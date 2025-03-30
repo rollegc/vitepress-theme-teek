@@ -1,4 +1,5 @@
 import DefaultTheme from "vitepress/theme";
+import { defineClientComponent } from "vitepress";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
 import { TkCataloguePage, TkArchivesPage, TkDemoCode } from "./components";
@@ -11,7 +12,6 @@ import "element-plus/theme-chalk/el-pagination.css";
 import "element-plus/theme-chalk/el-input.css";
 import "element-plus/theme-chalk/el-popper.css";
 
-export type { TkThemeConfig } from "./config/types";
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 
 export type DefaultThemeType = typeof DefaultTheme;
@@ -29,6 +29,9 @@ export default {
   enhanceApp({ app, router, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
-    app.component("TkDemoCode", TkDemoCode);
+
+    // TkDemoCode 组件用到 DOM API，因此需要防止 SSR 构建报错
+    const ClientTkDemoCode = defineClientComponent(async () => TkDemoCode);
+    app.component("TkDemoCode", ClientTkDemoCode);
   },
 } as DefaultThemeType & { extends: DefaultThemeType };

@@ -59,11 +59,11 @@ const updateDate = computed(() => {
 });
 
 const baseInfo = computed(() => {
-  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag, titleTip } = unref(articleConfig);
+  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag, titleTip = {} } = unref(articleConfig);
 
   return [
     {
-      title: titleTip.author ?? "作者",
+      title: unref(titleTip).author ?? "作者",
       icon: userIcon,
       data: post.author?.name,
       href: post.author?.link,
@@ -71,19 +71,19 @@ const baseInfo = computed(() => {
       show: isShow(showAuthor),
     },
     {
-      title: titleTip.createTime ?? "创建时间",
+      title: unref(titleTip).createTime ?? "创建时间",
       icon: calendarIcon,
       data: createDate,
       show: isShow(showCreateDate),
     },
     {
-      title: titleTip.updateTime ?? "更新时间",
+      title: unref(titleTip).updateTime ?? "更新时间",
       icon: editPenIcon,
       data: updateDate,
       show: unref(updateDate) && scope === "article" && showUpdateDate,
     },
     {
-      title: titleTip.category ?? "分类",
+      title: unref(titleTip).category ?? "分类",
       icon: folderOpenedIcon,
       dataList: post.frontmatter?.categories || [],
       href: "/categories?category={data}",
@@ -91,7 +91,7 @@ const baseInfo = computed(() => {
       show: scope === "post" || isShow(showCategory),
     },
     {
-      title: titleTip.tag ?? "标签",
+      title: unref(titleTip).tag ?? "标签",
       icon: collectionTagIcon,
       dataList: post.frontmatter?.tags || [],
       href: "/tags?tag={data}",

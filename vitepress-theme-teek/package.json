@@ -31,7 +31,7 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./es/*": "./dist/*",
+    "./es/*": "./dist/*.mjs",
     "./config": {
       "types": "./dist/config/index.d.ts",
       "import": "./dist/config/index.mjs"
