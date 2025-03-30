@@ -1,5 +1,8 @@
 import { ref } from "vue";
 
+/**
+ * 复制文本到剪贴板
+ */
 const useClipboard = () => {
   const copied = ref(false);
   const text = ref("");

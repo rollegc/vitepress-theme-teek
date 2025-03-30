@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBannerBgPure">
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { Banner } from "../../../config/types";
+import type { Banner } from "../../../config/types";
 import { unref } from "vue";
 
 defineOptions({ name: "HomeBannerBgPure" });

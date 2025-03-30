@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
-import tkThemeConfig from "vitepress-theme-teek/config";
+import { defineTeekConfig } from "vitepress-theme-teek/config";
 
-const tkConfig = tkThemeConfig({
+const tkConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
@@ -113,7 +113,6 @@ const tkConfig = tkThemeConfig({
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: tkConfig,
-  base: "/",
   title: "Hd Security",
   cleanUrls: false,
   lastUpdated: true,

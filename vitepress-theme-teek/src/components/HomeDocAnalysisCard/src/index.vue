@@ -3,7 +3,7 @@ import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { usePosts } from "../../../configProvider";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
-import { dayDiff, getNowDate, isFunction, timeDiff } from "../../../helper";
+import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "../../../helper";
 import HomeCard from "../../HomeCard";
 import { docAnalysisIcon } from "../../../assets/icons";
 import type { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
@@ -12,7 +12,7 @@ defineOptions({ name: "HomeDocAnalysisCard" });
 
 const ns = useNamespace("docAnalysis");
 
-const { theme, frontmatter, localeIndex } = useData();
+const { theme, frontmatter } = useData();
 // 站点信息配置项
 const {
   createTime,
@@ -25,11 +25,11 @@ const {
 const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 
 const finalTitle = computed(() => {
-  if (isFunction(title)) return title(unref(localeIndex), docAnalysisIcon);
+  if (isFunction(title)) return title(docAnalysisIcon);
   return title;
 });
 
-const createToNowDay = dayDiff(createTime || getNowDate());
+const createToNowDay = formatDiffDateToDay(createTime || getNowDate());
 
 const posts = usePosts();
 
@@ -93,8 +93,8 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
   {
     key: "totalPosts",
     label: "文章数目",
-    originValue: unref(docAnalysisInfo).fileList.length,
-    value: `${unref(docAnalysisInfo).fileList.length} 篇`,
+    originValue: unref(docAnalysisInfo).fileList?.length || 0,
+    value: `${unref(docAnalysisInfo).fileList?.length || 0} 篇`,
   },
   {
     key: "weekAddNum",
@@ -124,7 +124,7 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
     key: "lastActiveTime",
     label: "最后活动时间",
     originValue: unref(docAnalysisInfo).lastCommitTime,
-    value: timeDiff(unref(docAnalysisInfo).lastCommitTime),
+    value: formatDiffDate(unref(docAnalysisInfo).lastCommitTime),
   },
   {
     key: "viewCount",

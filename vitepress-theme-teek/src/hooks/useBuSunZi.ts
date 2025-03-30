@@ -38,6 +38,13 @@ export interface UseBuSunZi {
   isGet?: Ref<boolean | null>;
 }
 
+/**
+ * 使用不蒜子统计网站访问量
+ *
+ * @param initRequest 是否初始化请求，即自动执行一次 request，类型 boolean
+ * @param iteration 如果请求不蒜子接口失败，是否重试，重试 5 次后依然失败，则不再重试，类型 boolean
+ * @param iterationTime 每次重试的时间，单位毫秒，类型 number
+ */
 export const useBuSunZi = (initRequest = false, iteration = false, iterationTime = 2000) => {
   const sitePv = ref(9999);
   const siteUv = ref(9999);

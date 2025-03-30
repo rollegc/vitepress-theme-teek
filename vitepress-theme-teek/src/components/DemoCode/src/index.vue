@@ -6,7 +6,6 @@ import { useNamespace, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
 import TransitionCollapse from "../../TransitionCollapse";
 import type { DemoCodeProps } from "./demoCode";
-import type { Demo } from "../../../config/types";
 import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "../../../assets/icons";
 
 defineOptions({ name: "DemoCode" });
@@ -15,7 +14,7 @@ const props = defineProps<DemoCodeProps>();
 
 const ns = useNamespace("demoCode");
 const { copy, copied, isSupported } = useClipboard();
-const { theme, frontmatter, isDark } = useData();
+const { frontmatter, isDark } = useData();
 
 const {
   playgroundUrl = "",
@@ -26,7 +25,7 @@ const {
   copyButtonTip = "复制代码",
   collapseSourceButtonTip = "查看源代码",
   expandSourceButtonTip = "隐藏源代码",
-}: Demo = { ...unref(theme).demo, ...unref(frontmatter).demo };
+} = { ...props.demo, ...unref(frontmatter).demo };
 
 const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));

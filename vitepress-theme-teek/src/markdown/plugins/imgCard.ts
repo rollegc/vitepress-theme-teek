@@ -37,7 +37,7 @@ const imgCardPlugin = (md: MarkdownIt) => {
  * @param imgCard 图片卡片数据
  * @param base 根路径
  */
-const renderImgCard = (imgCard: { data: ImgCard.Item[]; config?: ImgCard.Config }, info: string, base: string) => {
+const renderImgCard = (imgCard: { data: ImgCard.Item[]; config: ImgCard.Config }, info: string, base: string) => {
   const { data = [], config = {} } = imgCard;
   if (!data.length) return "";
 

@@ -45,7 +45,7 @@ const demoPlugin = (md: MarkdownIt, option: Demo) => {
           md.render(`\`\`\` vue\n${source}\`\`\``)
         )}" path="${sourceRelativeFile}" raw-source="${encodeURIComponent(
           source
-        )}" description="${encodeURIComponent(md.render(description))}">`;
+        )}" description="${encodeURIComponent(md.render(description))}" demo=${option}>`;
       } else return "</TkDemoCode>";
     },
   };

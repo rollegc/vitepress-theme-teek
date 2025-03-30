@@ -38,7 +38,7 @@ const giscusTheme = computed(() => {
 });
 
 // 尝试从上下文获取 giscus 组件
-const giscusComponentFn = inject(giscusSymbol);
+const giscusComponentFn = inject(giscusSymbol, () => null);
 const giscusComponent = giscusComponentFn?.(unref(theme).comment?.options);
 
 const isShow = ref(false);

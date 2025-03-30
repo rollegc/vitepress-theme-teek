@@ -16,13 +16,19 @@ export interface Tag {
    *
    * @default '${svg}全部标签'
    */
-  pageTitle?: string | ((localeIndex: string, svg: string) => string);
+  pageTitle?: string | ((svg: string) => string);
   /**
    * 首页卡片标题
    *
    * @default '${svg}热门标签'
    */
-  homeTitle?: string | ((localeIndex: string, svg: string) => string);
+  homeTitle?: string | ((svg: string) => string);
+  /**
+   * 标签为空时的标签
+   *
+   * @default '暂无热门标签'
+   */
+  emptyLabel?: string;
   /**
    * 一页显示的数量
    *

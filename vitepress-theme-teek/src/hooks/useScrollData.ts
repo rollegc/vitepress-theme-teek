@@ -1,5 +1,12 @@
 import { ref } from "vue";
 
+/**
+ * 定时对数据进行截取，实现滚动
+ *
+ * @param list 数据
+ * @param limit 显示数量
+ * @param intervalTime 自动滚动间隔时间
+ */
 export const useScrollData = (list: any[], limit: number, intervalTime = 3000) => {
   // 当前滚动数据
   const visibleData = ref(list.slice(0, limit));

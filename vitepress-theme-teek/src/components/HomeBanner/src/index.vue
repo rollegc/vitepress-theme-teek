@@ -7,7 +7,7 @@ import HomeBannerBgImage from "./HomeBannerBgImage.vue";
 import HomeBannerContent from "./HomeBannerContent.vue";
 import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
-import { Banner, BodyBgImg } from "../../../config/types";
+import type { Banner, BodyBgImg } from "../../../config/types";
 import { useData } from "vitepress";
 
 defineOptions({ name: "HomeBanner" });

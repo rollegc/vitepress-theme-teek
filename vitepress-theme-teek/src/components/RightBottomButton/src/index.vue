@@ -2,7 +2,6 @@
 import { computed, ref, unref, onMounted, onUnmounted, watch } from "vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
-import { scrollTo } from "../../../helper";
 import { sizeIcon, rocketIcon, magicIcon, commentIcon } from "../../../assets/icons";
 import type { CommentConfig, ThemeSetting } from "../../../config/types";
 import { useData } from "vitepress";
@@ -25,8 +24,7 @@ const showToComment = computed(() => {
 });
 
 const scrollToTop = useDebounce(() => {
-  scrollTo("html", 0, 1500);
-  scrollTop.value = 0;
+  document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
 }, 500);
 
 const scrollToComment = useDebounce(() => {
@@ -61,9 +59,12 @@ const {
   useThemeStyle = true,
   themeStyle: defaultThemeStyle = "vp-default",
   themeStyleAppend = [],
+  themeStyleLabel = {},
   useThemeSize = true,
   themeSize: defaultThemeSize = "default",
   themeSizeAppend = [],
+  themeSizeLabel = {},
+  titleTip = {},
 }: ThemeSetting = unref(theme).themeSetting || {};
 
 const { provider }: CommentConfig = unref(theme).comment || {};
@@ -75,23 +76,23 @@ const showThemeStyleItem = ref(false);
 const currentThemeStyle = ref(defaultThemeStyle);
 const themeStyleList = [
   {
-    label: "VP 主题",
-    tip: "VitePress 主题",
+    label: themeStyleLabel.vpLabel ?? "VP 主题",
+    tip: themeStyleLabel.vpTip ?? "VitePress 主题",
     options: [
-      { name: "默认", style: "vp-default" },
-      { name: "绿色", style: "vp-green" },
-      { name: "黄色", style: "vp-yellow" },
-      { name: "红色", style: "vp-red" },
+      { name: themeStyleLabel.default ?? "默认", style: "vp-default" },
+      { name: themeStyleLabel.vpGreen ?? "绿色", style: "vp-green" },
+      { name: themeStyleLabel.vpYellow ?? "黄色", style: "vp-yellow" },
+      { name: themeStyleLabel.vpRed ?? "红色", style: "vp-red" },
     ],
   },
   {
-    label: "EP 主题",
-    tip: "Element Plus 主题",
+    label: themeStyleLabel.epLabel ?? "EP 主题",
+    tip: themeStyleLabel.epTip ?? "Element Plus 主题",
     options: [
-      { name: "蓝色", style: "el-blue" },
-      { name: "绿色", style: "el-green" },
-      { name: "黄色", style: "el-yellow" },
-      { name: "红色", style: "el-red" },
+      { name: themeStyleLabel.epBlue ?? "蓝色", style: "el-blue" },
+      { name: themeStyleLabel.epGreen ?? "绿色", style: "el-green" },
+      { name: themeStyleLabel.epYellow ?? "黄色", style: "el-yellow" },
+      { name: themeStyleLabel.epRed ?? "红色", style: "el-red" },
     ],
   },
   ...themeStyleAppend,
@@ -101,10 +102,10 @@ const themeStyleList = [
 const showThemeSizeItem = ref(false);
 const currentThemeSize = ref(defaultThemeSize);
 const themeSizeList = [
-  { name: "Wide", size: "wide" },
-  { name: "Large", size: "large" },
-  { name: "Default", size: "default" },
-  { name: "Small", size: "small" },
+  { name: themeSizeLabel.wide ?? "Wide", size: "wide" },
+  { name: themeSizeLabel.large ?? "Large", size: "large" },
+  { name: themeSizeLabel.default ?? "Default", size: "default" },
+  { name: themeSizeLabel.small ?? "Small", size: "small" },
   ...themeSizeAppend,
 ];
 
@@ -160,7 +161,7 @@ watch(
 
     <transition :name="ns.joinNamespace('fade')">
       <div
-        title="返回顶部"
+        :title="titleTip.backTop ?? '返回顶部'"
         :class="[ns.e('button'), 'back-top']"
         v-show="showToTop"
         @click="scrollToTop"
@@ -171,14 +172,19 @@ watch(
     </transition>
 
     <transition :name="ns.joinNamespace('fade')">
-      <div v-if="provider && showToComment" title="前往评论" :class="ns.e('button')" @click="scrollToComment">
+      <div
+        v-if="provider && showToComment"
+        :title="titleTip.toComment ?? '前往评论'"
+        :class="ns.e('button')"
+        @click="scrollToComment"
+      >
         <Icon :icon="commentIcon" />
       </div>
     </transition>
 
     <div
       v-if="useThemeSize"
-      title="主题尺寸切换"
+      :title="titleTip.themeSize ?? '主题尺寸切换'"
       :class="`${ns.e('button')} size-change`"
       @mouseenter="showThemeSizeItem = true"
       @mouseleave="showThemeSizeItem = false"
@@ -202,7 +208,7 @@ watch(
 
     <div
       v-if="useThemeStyle"
-      title="主题风格切换"
+      :title="titleTip.themeSize ?? '主题风格切换'"
       :class="ns.e('button')"
       @mouseenter="showThemeStyleItem = true"
       @mouseleave="showThemeStyleItem = false"

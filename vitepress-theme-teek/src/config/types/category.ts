@@ -16,13 +16,19 @@ export interface Category {
    *
    * @default '${svg}全部分类'
    */
-  pageTitle?: string | ((localeIndex: string, svg: string) => string);
+  pageTitle?: string | ((svg: string) => string);
   /**
    * 首页卡片标题
    *
    * @default '${svg}文章分类'
    */
-  homeTitle?: string | ((localeIndex: string, svg: string) => string);
+  homeTitle?: string | ((svg: string) => string);
+  /**
+   * 分类为空时的标签
+   *
+   * @default '暂无文章分类'
+   */
+  emptyLabel?: string;
   /**
    * 一页显示的数量
    *

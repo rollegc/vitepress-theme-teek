@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
-import { Banner } from "../../../config/types";
+import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerContent" });
 
@@ -35,7 +35,7 @@ const isSwitchDescStyle = descStyle === "switch";
 // 文字打印输入输出效果
 const {
   text: typesText,
-  shouldAnimate,
+  isFinished,
   startTypes,
   stopTypes,
 } = useTextTypes(descArray, { typesInTime, typesOutTime, typesNextTime, shuffle: typesShuffle });
@@ -45,8 +45,7 @@ const {
   data: text,
   startAutoSwitch: switchText,
   stopAutoSwitch,
-} = useSwitchData({
-  dataArray: descArray,
+} = useSwitchData(descArray, {
   timeout: switchTime,
   shuffle: switchShuffle,
   onUpdate: (data, newValue) => {
@@ -82,7 +81,7 @@ onUnmounted(() => {
       </template>
       <template v-else-if="isTypesDescStyle && descArray.length">
         <span>{{ typesText }}</span>
-        <span :class="['typed', { 'is-animation': shouldAnimate }]">|</span>
+        <span :class="['typed', { 'is-animation': isFinished }]">|</span>
       </template>
     </p>
   </div>

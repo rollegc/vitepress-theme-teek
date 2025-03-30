@@ -3,7 +3,7 @@ import { withBase, useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import Icon from "../../Icon";
-import { Blogger, Social } from "../../../config/types";
+import type { Blogger, Social } from "../../../config/types";
 import { unref } from "vue";
 
 defineOptions({ name: "HomeMyCard" });

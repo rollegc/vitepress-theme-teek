@@ -1,5 +1,6 @@
 /**
  * 防抖函数
+ * 
  * @param func 回调函数
  * @param delay 延迟时间
  * @param immediate 是否立即执行，如果为 true，则立即执行回调函数，否则在延迟时间后执行

@@ -23,7 +23,7 @@ import { createCategory, createPermalink } from "./addFrontmatter";
 
 export * from "./types";
 
-export default function defineTeekConfig(config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig {
+export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
   const { vitePlugins, markdown = {}, ...tkThemeConfig } = config;
   const {
     sidebar = true,
@@ -150,6 +150,7 @@ export default function defineTeekConfig(config: TkThemeConfig & UserConfig<Defa
     head,
     vite: {
       plugins: plugins as any,
+      ssr: { noExternal: ["vitepress-theme-teek"] },
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
     },
@@ -168,4 +169,4 @@ export default function defineTeekConfig(config: TkThemeConfig & UserConfig<Defa
     },
     themeConfig: tkThemeConfig,
   };
-}
+};

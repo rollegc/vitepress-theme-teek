@@ -1,7 +1,7 @@
 import { defineConfig } from "vitepress";
-import tkThemeConfig from "vitepress-theme-teek/config";
+import { defineTeekConfig } from "vitepress-theme-teek/config";
 
-const tkConfig = tkThemeConfig({
+const tkConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
@@ -111,14 +111,9 @@ const tkConfig = tkThemeConfig({
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   extends: tkConfig,
-  base: "/b/",
   title: "Hd Security",
   cleanUrls: false,
   lastUpdated: true,
-
-  rewrites: {
-    "zh/:rest*": ":rest*",
-  },
 
   head: [
     ["link", { rel: "icon", type: "image/svg+xml", href: "/teek-logo-mini.svg" }],
@@ -137,6 +132,10 @@ export default defineConfig({
     ["link", { rel: "icon", href: "/favicon.ico", type: "image/png" }],
     ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
   ],
+
+  markdown: {
+    lineNumbers: true,
+  },
 
   // https://vitepress.dev/reference/default-theme-config
   themeConfig: {

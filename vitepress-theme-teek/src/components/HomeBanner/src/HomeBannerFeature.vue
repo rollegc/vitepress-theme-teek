@@ -2,7 +2,7 @@
 import { useData, withBase } from "vitepress";
 import { ref, unref } from "vue";
 import { useNamespace, useWindowSize } from "../../../hooks";
-import { Banner } from "../../../config/types";
+import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerFeature" });
 
