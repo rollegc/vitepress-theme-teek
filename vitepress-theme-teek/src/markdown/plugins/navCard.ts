@@ -37,7 +37,7 @@ const navCardPlugin = (md: MarkdownIt) => {
  * @param navCard 导航卡片数据
  * @param base 根路径
  */
-const getNavCardHtml = (navCard: { data: NavCard.Item[]; config?: NavCard.Config }, info: string, base: string) => {
+const getNavCardHtml = (navCard: { data: NavCard.Item[]; config: NavCard.Config }, info: string, base: string) => {
   const { data = [], config = {} } = navCard;
   if (!data.length) return "";
 

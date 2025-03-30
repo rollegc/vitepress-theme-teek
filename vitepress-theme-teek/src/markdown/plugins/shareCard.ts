@@ -37,7 +37,7 @@ const shareCardPlugin = (md: MarkdownIt) => {
  * @param base 根路径
  */
 const renderShareCard = (
-  shareCard: { data: ShareCard.Item[]; config?: ShareCard.Config },
+  shareCard: { data: ShareCard.Item[]; config: ShareCard.Config },
   info: string,
   base: string
 ) => {

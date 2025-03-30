@@ -1,9 +1,10 @@
 import { defineConfig } from "vitepress";
-import tkThemeConfig from "vitepress-theme-teek/config";
+import { defineTeekConfig } from "vitepress-theme-teek/config";
+import { version } from "vitepress-theme-teek/es/version";
 
 const description = ["vitepress-theme-teek 使用文档", "vitepress 主题框架"].toString();
 
-const tkConfig = tkThemeConfig({
+const tkConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   footerInfo: {
     copyright: {
@@ -101,11 +102,11 @@ export default defineConfig({
         items: [
           { text: "Helper", link: "/ecosystem/helper" },
           { text: "Hooks", link: "/ecosystem/hooks" },
-          { text: "MD Plugin Utils", link: "/ecosystem/md-plugin-utils" },
+          { text: "Markdown 插件工具", link: "/ecosystem/md-plugin-utils" },
         ],
       },
       {
-        text: "v1.0.0-alpha.0",
+        text: version,
         items: [
           { text: "历史版本", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/release" },
           { text: "更新日志", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/dev/CHANGELOG.md" },

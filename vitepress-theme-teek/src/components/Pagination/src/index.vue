@@ -2,7 +2,6 @@
 import { nextTick, onMounted, unref } from "vue";
 import { ElPagination } from "element-plus";
 import { useNamespace } from "../../../hooks";
-import { scrollTo } from "../../../helper";
 import { PaginationProps, PaginationEmits, Paging } from "./pagination";
 
 defineOptions({ name: "Pagination" });
@@ -44,7 +43,7 @@ const afterChange = () => {
       const rootStyles = getComputedStyle(document.documentElement);
       const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
       // 滚动返回时，减去导航栏的高度
-      scrollTo("html", window.innerHeight - Number(navHeight), 700);
+      document.querySelector("html")?.scrollTo({ top: window.innerHeight - Number(navHeight), behavior: "smooth" });
     });
   }
 };

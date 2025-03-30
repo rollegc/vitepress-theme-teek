@@ -1,11 +1,14 @@
 /**
- * From Vitepress。Markdown 插件需要用到，因为 Vitepress 的 withBase 方法无法在 Markdown 插件使用
+ * 为路径 path 添加站点根路径 base 前缀，等价于 vitepress 的 withBase。Markdown 插件需要用到
  */
-export const withBase = (base: string, path?: string) => {
+export const withBase = (base: string, path: string | undefined) => {
   if (!path) return;
   return /^(?:[a-z]+:|\/\/)/i.test(path) || !path.startsWith("/") ? path : `${base}${path}`.replace(/\/+/g, "/");
 };
 
+/**
+ * 将字符串的第一个字符大写
+ */
 export const upperFirst = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };

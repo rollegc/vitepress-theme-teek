@@ -1,17 +1,35 @@
 import { ref, unref } from "vue";
 
 export interface TypesOption {
-  typesInTime?: number; // 打字间隔时间，单位：毫秒
-  typesOutTime?: number; // 删字间隔时间，单位：毫秒
-  typesNextTime?: number; // 换行间隔时间，单位：毫秒
-  shuffle?: boolean; // 是否随机切换文本
+  /**
+   * 打字间隔时间，单位：毫秒
+   */
+  typesInTime?: number;
+  /**
+   * 删字间隔时间，单位：毫秒
+   */
+  typesOutTime?: number;
+  /**
+   * 换行间隔时间，单位：毫秒
+   */
+  typesNextTime?: number;
+  /**
+   * 是否随机切换文本
+   */
+  shuffle?: boolean;
 }
 
+/**
+ * 打字功能
+ *
+ * @param typesArray 文字数组
+ * @param option 配置项
+ */
 export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
   const { typesInTime = 200, typesOutTime = 100, typesNextTime = 800, shuffle = false } = option || {};
 
   const text = ref("");
-  const shouldAnimate = ref(false);
+  const isFinished = ref(false);
 
   let originText = "";
   let typesInIntervalIdId: NodeJS.Timeout;
@@ -25,8 +43,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
    * 打字
    */
   const typesIn = () => {
-    // 打字时，关闭动画效果
-    shouldAnimate.value = false;
+    isFinished.value = false;
     originText = unref(typesArray)[length];
 
     // 防止 originText 为空的情况
@@ -36,8 +53,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
 
     if (index > originText.length) {
       if (typesInIntervalIdId) clearInterval(typesInIntervalIdId);
-      // 打字结束，开启动画效果
-      shouldAnimate.value = true;
+      isFinished.value = true;
       setTimeout(() => {
         typesOutIntervalId = setInterval(() => {
           typesOut();
@@ -50,13 +66,11 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
    */
   const typesOut = () => {
     if (index >= 0) {
-      // 删字时，关闭动画效果
-      shouldAnimate.value = false;
+      isFinished.value = false;
       text.value = originText.substring(0, index--);
     } else {
       if (typesOutIntervalId) clearInterval(typesOutIntervalId);
-      // 删字结束，开启动画效果
-      shouldAnimate.value = true;
+      isFinished.value = true;
 
       setTimeout(() => {
         if (shuffle) {
@@ -83,7 +97,7 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
    * 开始打字
    */
   const startTypes = () => {
-    shouldAnimate.value = false;
+    isFinished.value = false;
     typesInIntervalIdId = setInterval(() => {
       typesIn();
     }, typesInTime);
@@ -95,8 +109,8 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
   const stopTypes = () => {
     if (typesInIntervalIdId) clearInterval(typesInIntervalIdId);
     if (typesOutIntervalId) clearInterval(typesOutIntervalId);
-    shouldAnimate.value = false;
+    isFinished.value = false;
   };
 
-  return { text, shouldAnimate, startTypes, stopTypes };
+  return { text, isFinished, startTypes, stopTypes };
 };

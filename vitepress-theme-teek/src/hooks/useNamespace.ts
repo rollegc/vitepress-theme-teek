@@ -24,12 +24,12 @@ export const useNamespace = (block: string, namespaceOverrides?: string) => {
     return createBem(finalNamespace, block, blockSuffix, element);
   };
 
-  const em = (element: string, modifier: string) => {
-    return createBem(finalNamespace, block, "", element, modifier);
-  };
-
   const bm = (blockSuffix: string, modifier: string) => {
     return createBem(finalNamespace, block, blockSuffix, "", modifier);
+  };
+
+  const em = (element: string, modifier: string) => {
+    return createBem(finalNamespace, block, "", element, modifier);
   };
 
   const bem = (blockSuffix: string, element: string, modifier: string) => {
@@ -76,8 +76,8 @@ export const useNamespace = (block: string, namespaceOverrides?: string) => {
     e,
     m,
     be,
-    em,
     bm,
+    em,
     bem,
     is,
     createBem,

@@ -1,10 +1,10 @@
 import { defineConfig } from "vitepress";
-import tkThemeConfig from "vitepress-theme-teek/config";
+import { defineTeekConfig } from "vitepress-theme-teek/config";
 import timeline from "vitepress-markdown-timeline"; // 导入时间线插件
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 
-const tkConfig = tkThemeConfig({
+const tkConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
@@ -21,7 +21,7 @@ const tkConfig = tkThemeConfig({
     wordCount: true,
     readingTime: true,
     overrideInfo: [
-      { key: "lastActiveTime", value: (_, currentValue) => `${currentValue}前` },
+      { key: "lastActiveTime", value: (_, currentValue) => (currentValue + "").replace("前", "") },
       { key: "totalPosts", label: "文章总数目" },
     ],
     appendInfo: [{ key: "index", label: "序号", value: "天客 99" }],

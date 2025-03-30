@@ -27,18 +27,20 @@ const isPartImgBgStyle = bgStyle === "partImg";
 const isFullImgBgStyle = bgStyle === "fullImg";
 
 // banner 背景图片定时轮播
-const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData({
-  dataArray: [imgSrc || []].flat().map(item => item && withBase(item)),
-  timeout: imgInterval,
-  shuffle: imgShuffle,
-  onAfterUpdate: newValue => {
-    // 预加载下一张图片
-    if (newValue) {
-      const img = new Image();
-      img.src = newValue;
-    }
-  },
-});
+const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData(
+  [imgSrc || []].flat().map(item => item && withBase(item)),
+  {
+    timeout: imgInterval,
+    shuffle: imgShuffle,
+    onAfterUpdate: newValue => {
+      // 预加载下一张图片
+      if (newValue) {
+        const img = new Image();
+        img.src = newValue;
+      }
+    },
+  }
+);
 
 onMounted(() => {
   switchImg();

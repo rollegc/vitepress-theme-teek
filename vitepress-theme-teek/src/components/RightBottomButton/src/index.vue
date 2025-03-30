@@ -2,7 +2,6 @@
 import { computed, ref, unref, onMounted, onUnmounted, watch } from "vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
-import { scrollTo } from "../../../helper";
 import { sizeIcon, rocketIcon, magicIcon, commentIcon } from "../../../assets/icons";
 import type { CommentConfig, ThemeSetting } from "../../../config/types";
 import { useData } from "vitepress";
@@ -25,8 +24,7 @@ const showToComment = computed(() => {
 });
 
 const scrollToTop = useDebounce(() => {
-  scrollTo("html", 0, 1500);
-  scrollTop.value = 0;
+  document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
 }, 500);
 
 const scrollToComment = useDebounce(() => {

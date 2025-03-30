@@ -2,22 +2,42 @@ import { Ref, ref, unref } from "vue";
 import { isString } from "../helper";
 
 export interface DataSwitchOption {
-  dataArray: string[]; // 数据数组
-  timeout?: number; // 切换间隔时间，单位：毫秒
-  shuffle?: boolean; // 是否随机切换数据
-  onBeforeUpdate?: (newValue: string) => void; // 切换数据之前执行的回调函数
-  onUpdate?: (data: Ref<string>, newValue: string) => void; // 自定义切换逻辑
-  onAfterUpdate?: (newValue: string) => void; // 切换数据之后执行的回调函数
+  /**
+   * 数据数组
+   */
+  dataArray: string[];
+  /**
+   * 切换间隔时间，单位：毫秒
+   */
+  timeout?: number;
+  /**
+   * 是否随机切换数据
+   */
+  shuffle?: boolean;
+  /**
+   * 切换数据之前执行的回调函数
+   */
+  onBeforeUpdate?: (newValue: string) => void;
+  /**
+   * 自定义切换逻辑
+   */
+  onUpdate?: (data: Ref<string>, newValue: string) => void;
+  /**
+   * 切换数据之后执行的回调函数
+   */
+  onAfterUpdate?: (newValue: string) => void;
 }
 
-export const useSwitchData = ({
-  dataArray,
-  timeout = 4000,
-  shuffle = false,
-  onBeforeUpdate,
-  onUpdate,
-  onAfterUpdate,
-}: DataSwitchOption) => {
+/**
+ * 从数据列表里按顺序/随机获取一笔数据
+ *
+ * @param dataArray 数据列表
+ * @param options 选项
+ */
+export const useSwitchData = (
+  dataArray: string[],
+  { timeout = 4000, shuffle = false, onBeforeUpdate, onUpdate, onAfterUpdate }: DataSwitchOption
+) => {
   const data = ref(dataArray[0]);
   const index = ref(-1);
   let timer: NodeJS.Timeout;

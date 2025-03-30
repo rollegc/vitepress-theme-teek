@@ -21,6 +21,7 @@ export * from "./components";
 export * from "./helper";
 export * from "./hooks";
 export * from "./markdown/helper";
+export * from "./version";
 
 export default {
   extends: DefaultTheme,
