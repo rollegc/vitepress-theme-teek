@@ -2,9 +2,8 @@ import type MarkdownIt from "markdown-it";
 import type { Renderer, Token } from "markdown-it";
 import type { SiteConfig } from "vitepress";
 import container from "markdown-it-container";
-import { normalizePath } from "vite";
 import { readFileSync } from "fs";
-import { join, resolve } from "path";
+import { join, resolve, normalize } from "path";
 import type { Demo } from "../../config";
 
 interface ContainerOpts {
@@ -13,10 +12,11 @@ interface ContainerOpts {
   render?(tokens: Token[], index: number, options: any, env: any, self: Renderer): string;
 }
 
-const demoPlugin = (md: MarkdownIt, option: Demo) => {
+const demoPlugin = (md: MarkdownIt, option: Demo = {}) => {
+  console.log(option);
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const srcDir = siteConfig.srcDir;
-  const { path = "examples" } = option || {};
+  const { path = "examples" } = option;
   const demoPath = join(srcDir, path || "");
 
   const options: ContainerOpts = {
@@ -34,7 +34,7 @@ const demoPlugin = (md: MarkdownIt, option: Demo) => {
         const containerContent = sourceFileToken.children?.[0].content ?? "";
         // 确保文件路径带 .vue
         const sourceFile = containerContent ? `${containerContent.replace(/.vue$/, "")}.vue` : "";
-        const sourceRelativeFile = normalizePath(join(path, sourceFile));
+        const sourceRelativeFile = normalize(join(path, sourceFile));
 
         if (sourceFile && sourceFileToken.type === "inline") {
           source = readFileSync(resolve(demoPath, sourceFile), "utf-8");
@@ -45,7 +45,7 @@ const demoPlugin = (md: MarkdownIt, option: Demo) => {
           md.render(`\`\`\` vue\n${source}\`\`\``)
         )}" path="${sourceRelativeFile}" raw-source="${encodeURIComponent(
           source
-        )}" description="${encodeURIComponent(md.render(description))}" demo=${option}>`;
+        )}" description="${encodeURIComponent(md.render(description))}" demo="${encodeURIComponent(JSON.stringify(option))}">`;
       } else return "</TkDemoCode>";
     },
   };

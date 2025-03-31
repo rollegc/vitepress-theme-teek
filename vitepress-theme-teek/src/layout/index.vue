@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { computed, unref } from "vue";
 import { useNamespace } from "../hooks";
 import { usePage } from "../configProvider";
-import { TkThemeConfig } from "../config/types";
+import { TeekConfig } from "../config/types";
 import {
   TkHome,
   TkArchivesPage,
@@ -34,7 +34,7 @@ const ns = useNamespace("layout");
 const { isHomePage, isArchivesPage, isCataloguePage } = usePage();
 const { theme, frontmatter, localeIndex, page } = useData();
 
-const { tkTheme = true, bodyBgImg = {}, notice = {} }: TkThemeConfig = unref(theme);
+const { tkTheme = true, bodyBgImg = {}, notice = {} }: TeekConfig = unref(theme);
 // 支持 theme 或 frontmatter 配置
 const themeConfig = computed(() => {
   const {
@@ -42,7 +42,7 @@ const themeConfig = computed(() => {
     codeBlock = true,
     comment = { provider: "" },
     article = {},
-  }: TkThemeConfig = { ...unref(theme), ...unref(frontmatter), ...unref(frontmatter).tk };
+  }: TeekConfig = { ...unref(theme), ...unref(frontmatter), ...unref(frontmatter).tk };
 
   return { tkHome, codeBlock, comment, topTip: article.topTip };
 });

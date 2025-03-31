@@ -1,6 +1,6 @@
 # vitepress-theme-teek
 
-基础功能已完成开发，剩余加强功能请看下面的 TODO。
+在线主题文档：[Teek](https://teek.tianke99.cn/)。
 
 ## 使用
 
@@ -47,13 +47,8 @@ pnpm demo:localesRoot dev
 pnpm plugin:build
 ```
 
-## 配置
-
-主题提供了大量的配置，可以在 `src/config/types.ts` 文件阅读配置项。
-
 ## TODO
 
 - 首页配置支持 computer
-- 部署文档站
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

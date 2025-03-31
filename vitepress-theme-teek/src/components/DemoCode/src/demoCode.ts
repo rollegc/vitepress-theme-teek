@@ -1,5 +1,3 @@
-import { Demo } from "../../../config/types";
-
 export interface DemoCodeProps {
   /**
    * 经过 md 转为 HTML 的源码
@@ -20,5 +18,5 @@ export interface DemoCodeProps {
   /**
    * 配置项
    */
-  demo?: Demo;
+  demo: string;
 }

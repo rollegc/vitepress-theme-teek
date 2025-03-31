@@ -208,7 +208,7 @@ watch(
 
     <div
       v-if="useThemeStyle"
-      :title="titleTip.themeSize ?? '主题风格切换'"
+      :title="titleTip.themeStyle ?? '主题风格切换'"
       :class="ns.e('button')"
       @mouseenter="showThemeStyleItem = true"
       @mouseleave="showThemeStyleItem = false"

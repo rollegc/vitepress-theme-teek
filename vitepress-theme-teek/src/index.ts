@@ -11,6 +11,7 @@ import "element-plus/theme-chalk/el-image-viewer.css";
 import "element-plus/theme-chalk/el-pagination.css";
 import "element-plus/theme-chalk/el-input.css";
 import "element-plus/theme-chalk/el-popper.css";
+import "element-plus/theme-chalk/el-message.css";
 
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 

@@ -1,11 +1,11 @@
 import type { FileContentLoaderData } from "vitepress-plugin-file-content-loader";
-import { TkThemeConfig } from "../config/types";
+import type { TeekConfig } from "../config/types";
 
 export type TkContentData = FileContentLoaderData & {
   /**
    * 文章作者信息
    */
-  author?: TkThemeConfig["author"];
+  author?: TeekConfig["author"];
   /**
    * 文章标题
    */

@@ -24,6 +24,11 @@ const tkConfig = defineTeekConfig({
       initItems: false,
     },
   },
+  markdown: {
+    demo: {
+      githubUrl: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/master/docs",
+    },
+  },
 });
 
 // https://vitepress.dev/reference/site-config

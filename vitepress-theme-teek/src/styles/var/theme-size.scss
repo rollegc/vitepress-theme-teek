@@ -17,10 +17,6 @@ html[theme-size="wide"] {
   @include set-css-var("home-font-size-sm", 14px);
   @include set-css-var("home-font-size-small", 13px);
   @include set-css-var("home-page-width", 1100px);
-  /* 数值越大，侧边栏约靠近屏幕左侧 */
-  --vp-layout-max-width: 97vw;
-  --vp-sidebar-width: 290px;
-  --vp-content-container: 1800px;
 }
 
 html[theme-size="large"] {
@@ -39,8 +35,6 @@ html[theme-size="large"] {
   @include set-css-var("home-font-size-sm", 14px);
   @include set-css-var("home-font-size-small", 13px);
   @include set-css-var("home-page-width", 1100px);
-  --vp-layout-max-width: 90%;
-  --vp-content-container: 1200px;
 }
 
 :root,
@@ -100,5 +94,18 @@ html[theme-size="small"] {
   html[theme-size="default"],
   html[theme-size="small"] {
     @include set-css-var("home-card-width", 100%);
+  }
+}
+
+@media (min-width: 960px) {
+  /* 数值越大，侧边栏约靠近屏幕左侧 */
+  html[theme-size="wide"] {
+    --vp-layout-max-width: 97vw;
+    --vp-sidebar-width: 290px;
+    --vp-content-container: 1800px;
+  }
+  html[theme-size="large"] {
+    --vp-layout-max-width: 90%;
+    --vp-content-container: 1200px;
   }
 }
