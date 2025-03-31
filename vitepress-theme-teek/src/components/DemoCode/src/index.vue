@@ -1,7 +1,7 @@
 <script setup lang="ts" name="DemoCode">
 import { ref, computed, unref, defineAsyncComponent } from "vue";
 import { useData, withBase } from "vitepress";
-import { ElTooltip } from "element-plus";
+import { ElTooltip, ElMessage } from "element-plus";
 import { useNamespace, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
 import TransitionCollapse from "../../TransitionCollapse";
@@ -25,7 +25,7 @@ const {
   copyButtonTip = "复制代码",
   collapseSourceButtonTip = "查看源代码",
   expandSourceButtonTip = "隐藏源代码",
-} = { ...props.demo, ...unref(frontmatter).demo };
+} = { ...JSON.parse(decodeURIComponent(props.demo)), ...unref(frontmatter).demo };
 
 const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));
@@ -78,7 +78,7 @@ const getPlaygroundEncoded = (source: string) => {
  * 去 Github 编辑
  */
 const handleEditGithub = () => {
-  const url = `${githubUrl}/${props.path}.vue`;
+  const url = `${githubUrl}/${props.path}`;
   window.open(url, "_blank");
 };
 
@@ -88,10 +88,9 @@ const handleEditGithub = () => {
 const copyCode = async () => {
   if (!isSupported) console.error("浏览器不支持复制");
 
-  copy(unref(decodeRawSource));
+  await copy(unref(decodeRawSource));
 
-  // TODO：弹出提醒
-  console.log(copied ? "复制成功" : "复制失败");
+  unref(copied) ? ElMessage.success("复制成功") : ElMessage.error("复制失败");
 };
 </script>
 

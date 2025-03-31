@@ -3,7 +3,7 @@ import { ref } from "vue";
 /**
  * 复制文本到剪贴板
  */
-const useClipboard = () => {
+export const useClipboard = () => {
   const copied = ref(false);
   const text = ref("");
   const isSupported = ref(false);
@@ -11,14 +11,13 @@ const useClipboard = () => {
   if (!navigator.clipboard && !document.execCommand) isSupported.value = false;
   else isSupported.value = true;
 
-  const copy = (str: string, size = -1) => {
+  const copy = async (str: string, size = -1) => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(str).then(() => {
+      return await navigator.clipboard.writeText(str).then(() => {
         text.value = str;
         copied.value = true;
         resetCopied();
       });
-      return;
     }
     const input = document.createElement("input");
     input.setAttribute("readonly", "readonly");
@@ -43,5 +42,3 @@ const useClipboard = () => {
 
   return { copy, text, copied, isSupported };
 };
-
-export { useClipboard };

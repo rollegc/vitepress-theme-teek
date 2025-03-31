@@ -1,6 +1,5 @@
 import type { DefaultTheme, HeadConfig, UserConfig } from "vitepress";
-import type { PluginOption } from "vite";
-import type { TkThemeConfig } from "./types";
+import type { TeekConfig } from "./types";
 import type { Post, TkContentData } from "../post/types";
 import Sidebar from "vitepress-plugin-sidebar-resolve";
 import Permalink from "vitepress-plugin-permalink";
@@ -23,8 +22,8 @@ import { createCategory, createPermalink } from "./addFrontmatter";
 
 export * from "./types";
 
-export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
-  const { vitePlugins, markdown = {}, ...tkThemeConfig } = config;
+export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
+  const { vitePlugins, markdown = {}, ...teekThemeConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -40,7 +39,7 @@ export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme
     autoFrontmatterOption = {},
   } = vitePlugins || {};
 
-  const plugins: PluginOption[] = [];
+  const plugins: any[] = [];
 
   // 定义各插件扫描时忽略的目录
   const ignoreDir = {
@@ -138,7 +137,7 @@ export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme
 
   const head: HeadConfig[] = [];
 
-  if (tkThemeConfig.docAnalysis?.statistics?.provider === "busuanzi") {
+  if (teekThemeConfig.docAnalysis?.statistics?.provider === "busuanzi") {
     // 不蒜子 API 统计需要
     head.push(["meta", { name: "referrer", content: "no-referrer-when-downgrade" }]);
   }
@@ -149,7 +148,7 @@ export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme
     metaChunk: true,
     head,
     vite: {
-      plugins: plugins as any,
+      plugins: plugins,
       ssr: { noExternal: ["vitepress-theme-teek"] },
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
@@ -167,6 +166,6 @@ export const defineTeekConfig = (config: TkThemeConfig & UserConfig<DefaultTheme
         config?.(md);
       },
     },
-    themeConfig: tkThemeConfig,
+    themeConfig: teekThemeConfig,
   };
 };

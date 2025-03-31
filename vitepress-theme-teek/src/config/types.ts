@@ -24,7 +24,7 @@ import type {
 
 export type * from "./types/index";
 
-export interface TkThemeConfig {
+export interface TeekConfig {
   /**
    * 是否启用主题，如果为 false，则不会主题的 99% 功能，只保留永久链接、锚点滚动、深色、浅色模式过渡动画这三个功能，支持在首页 index.md 的 frontmatter 配置 tk.tkTheme
    *
