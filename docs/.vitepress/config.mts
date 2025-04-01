@@ -7,6 +7,9 @@ const description = ["vitepress-theme-teek 使用文档", "vitepress 主题框�
 const tkConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   footerInfo: {
+    theme: {
+      name: `Theme By Teek@${version}`,
+    },
     copyright: {
       createYear: 2025,
       suffix: "Teek",

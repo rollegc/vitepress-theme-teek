@@ -5,7 +5,6 @@ import { useNamespace } from "../../../hooks";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
-import { version } from "../../../version";
 import Icon from "../../Icon";
 import type { FooterInfo, Social } from "../../../config/types";
 
@@ -26,7 +25,7 @@ const footerData = computed(() => {
   // 1.主题版权
   if (theme.show !== false) {
     data.push({
-      name: `Theme By Teek@${version}`,
+      name: "Theme By Teek",
       icon: themeIcon,
       link: "https://teek.tianke99.cn",
       // 可覆盖上面的配置项

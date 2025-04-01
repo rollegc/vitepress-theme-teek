@@ -74,9 +74,6 @@ html[theme-size="small"] {
   @include set-css-var("home-font-size-sm", 13px);
   @include set-css-var("home-font-size-small", 12px);
   @include set-css-var("page-width", 800px);
-  --vp-layout-max-width: 1300px;
-  --vp-sidebar-width: 290px;
-  --vp-content-container: 688px;
 }
 
 @media (min-width: 768px) {
@@ -102,10 +99,15 @@ html[theme-size="small"] {
   html[theme-size="wide"] {
     --vp-layout-max-width: 97vw;
     --vp-sidebar-width: 290px;
-    --vp-content-container: 1800px;
+    --vp-content-container: 100vw;
   }
   html[theme-size="large"] {
     --vp-layout-max-width: 90%;
-    --vp-content-container: 1200px;
+    --vp-content-container: 63vw;
+  }
+  html[theme-size="small"] {
+    --vp-layout-max-width: 1300px;
+    --vp-sidebar-width: 290px;
+    --vp-content-container: 688px;
   }
 }
