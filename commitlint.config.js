@@ -74,7 +74,7 @@ export default defineConfig({
     breaklineNumber: 100,
     breaklineChar: "|",
     skipQuestions: [],
-    issuePrefixes: [{ value: 'closed', name: 'closed:   ISSUES has been processed' }],
+    issuePrefixes: [{ value: "closed", name: "closed:   ISSUES has been processed" }],
     customIssuePrefixAlign: "top",
     emptyIssuePrefixAlias: "skip",
     customIssuePrefixAlias: "custom",
