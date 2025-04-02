@@ -1,6 +1,6 @@
 # vitepress-theme-teek
 
-在线主题文档：[Teek](https://teek.tianke99.cn/)。
+在线主题文档：[Teek](http://vp.teek.top/)。
 
 ## 使用
 

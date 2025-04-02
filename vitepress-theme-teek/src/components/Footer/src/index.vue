@@ -25,7 +25,7 @@ const footerData = computed(() => {
     data.push({
       name: "Theme By Teek",
       icon: themeIcon,
-      link: "https://teek.tianke99.cn",
+      link: "http://vp.teek.top/",
       // 可覆盖上面的配置项
       ...theme,
     });
