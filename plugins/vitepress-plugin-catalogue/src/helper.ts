@@ -55,7 +55,7 @@ const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
   const { path: srcDir = "", ignoreList = [] } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   // 读取目录名（文件和文件夹）
-  let dirOrFilenames = readdirSync(root);
+  const dirOrFilenames = readdirSync(root);
 
   dirOrFilenames.forEach(dirOrFilename => {
     if (isSome(ignoreListAll, dirOrFilename)) return [];
@@ -100,14 +100,14 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
 
   const { ignoreIndexMd = false, titleFormMd = false } = option;
 
-  let catalogueItemList: CatalogueItem[] = [];
+  const catalogueItemList: CatalogueItem[] = [];
   // 存放没有序号的目录页
-  let catalogueItemListNoIndex: CatalogueItem[] = [];
-  let dirOrFilenames = readdirSync(root);
+  const catalogueItemListNoIndex: CatalogueItem[] = [];
+  const dirOrFilenames = readdirSync(root);
 
   dirOrFilenames.forEach(dirOrFilename => {
     const filePath = resolve(root, dirOrFilename);
-    let { index: indexStr, title, name } = resolveFileName(dirOrFilename, filePath);
+    const { index: indexStr, title, name } = resolveFileName(dirOrFilename, filePath);
     const index = parseInt(indexStr as string, 10);
 
     if (statSync(filePath).isDirectory()) {

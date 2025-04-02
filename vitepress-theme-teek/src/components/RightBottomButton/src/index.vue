@@ -32,8 +32,8 @@ const scrollTop = ref(0);
 const showToTop = computed(() => unref(scrollTop) > 100);
 
 const showToComment = computed(() => {
-  let docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
-  let docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
+  const docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
+  const docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
   let height = 0;
   if (docContentHeight) height = docContentHeight - docFooterHeight - window.innerHeight / 2;
 

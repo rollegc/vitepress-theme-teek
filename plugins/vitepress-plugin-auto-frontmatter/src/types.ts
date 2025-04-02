@@ -16,7 +16,7 @@ export interface AutoFrontmatterOption {
   /**
    * 转换处理好的 frontmatter，该函数需要返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter
    */
-  transform?: (frontmatter: Record<string, any>, fileInfo: FileInfo) => Record<string, any> | void;
+  transform?: (frontmatter: Record<string, any>, fileInfo: FileInfo) => Record<string, any> | undefined;
   /**
    * tinyglobby 的配置项
    * 插件默认已经忽略 node_modules 和 dist 目录的所有文件

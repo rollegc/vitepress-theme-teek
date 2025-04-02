@@ -1,7 +1,6 @@
 <script setup lang="ts" name="HomePostList">
 import { computed, reactive, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
 import Icon from "../../Icon";

@@ -11,7 +11,7 @@ const ns = useNamespace("bodyBgImage");
 
 const { theme } = useData();
 
-let {
+const {
   imgSrc,
   imgOpacity = 1,
   imgInterval = 15000,

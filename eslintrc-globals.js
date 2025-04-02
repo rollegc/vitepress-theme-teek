@@ -62,4 +62,7 @@ export default {
   watchEffect: "readonly",
   watchPostEffect: "readonly",
   watchSyncEffect: "readonly",
+  NodeJS: "readonly",
+  PartialKey: "readonly",
+  RequiredKeyPartialOther: "readonly",
 };

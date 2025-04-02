@@ -44,8 +44,8 @@ const currentCategories = computed(() => {
 // 标题
 const finalTitle = computed(() => {
   const { pageTitle, homeTitle } = unref(categoryConfig);
-  let pt = isFunction(pageTitle) ? pageTitle(categoryIcon) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(categoryIcon) : homeTitle;
+  const pt = isFunction(pageTitle) ? pageTitle(categoryIcon) : pageTitle;
+  const ht = isFunction(homeTitle) ? homeTitle(categoryIcon) : homeTitle;
   return { pt, ht };
 });
 
@@ -142,7 +142,9 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           <span>{{ item.length }}</span>
         </a>
 
-        <a v-if="!categoriesPage && categoryConfig.limit < categories.length" :href="withBase(categoriesPageLink)">更多 ...</a>
+        <a v-if="!categoriesPage && categoryConfig.limit < categories.length" :href="withBase(categoriesPageLink)">
+          更多 ...
+        </a>
       </TransitionGroup>
 
       <div v-else :class="ns.m('empty')">{{ categoryConfig.emptyLabel }}</div>

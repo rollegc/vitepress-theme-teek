@@ -54,7 +54,7 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
         // 如果设置了 rewrites，则取 rewrites 后的文件路径
         const rewriteFilePath = rewrites.map[`${key}.md`]?.replace(/\.md/, "") || key;
         // 如果设置了多语言，则 permalink 添加语言前缀
-        let newValue = getLocalePermalink(localesKeys, key, value);
+        const newValue = getLocalePermalink(localesKeys, key, value);
 
         if (permalinkToPath[newValue]) {
           logger.warn(`永久链接 '${newValue}' 已存在，其对应的 '${permalinkToPath[newValue]}' 将会被 '${key}' 覆盖`);

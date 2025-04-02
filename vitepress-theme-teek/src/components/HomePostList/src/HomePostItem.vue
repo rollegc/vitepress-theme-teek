@@ -11,10 +11,7 @@ defineOptions({ name: "HomePostItem" });
 
 const ns = useNamespace("postItem");
 
-const { post = { url: "", frontmatter: {} } } = defineProps<{
-  post: TkContentData;
-  coverImgMode: "default" | "full";
-}>();
+const { post, coverImgMode } = defineProps<{ post: TkContentData; coverImgMode: "default" | "full" }>();
 
 const { theme, frontmatter } = useData();
 

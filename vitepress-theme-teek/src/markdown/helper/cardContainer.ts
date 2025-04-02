@@ -15,7 +15,12 @@ export interface CardContainerOption<D extends Record<string, any>, C extends Re
   /**
    * 渲染 HTML 前端的回调，返回 false 则不渲染容器，返回 true 则继续渲染容器
    */
-  beforeHtmlRender?: (props: { data: D[]; config: C }, info: string, tokens: Token[], idx: number) => boolean | void;
+  beforeHtmlRender?: (
+    props: { data: D[]; config: C },
+    info: string,
+    tokens: Token[],
+    idx: number
+  ) => boolean | undefined;
   /**
    * 渲染 HTML 的回调
    */

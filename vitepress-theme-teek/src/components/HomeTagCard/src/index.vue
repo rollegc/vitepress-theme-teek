@@ -45,8 +45,8 @@ const currentTags = computed(() => {
 
 const finalTitle = computed(() => {
   const { pageTitle, homeTitle } = unref(tagConfig);
-  let pt = isFunction(pageTitle) ? pageTitle(tagIcon) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(tagIcon) : homeTitle;
+  const pt = isFunction(pageTitle) ? pageTitle(tagIcon) : pageTitle;
+  const ht = isFunction(homeTitle) ? homeTitle(tagIcon) : homeTitle;
   return { pt, ht };
 });
 

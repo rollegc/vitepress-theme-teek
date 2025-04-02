@@ -27,7 +27,7 @@ export * from "./version";
 export default {
   extends: DefaultTheme,
   Layout: configProvider(Layout),
-  enhanceApp({ app, router, siteData }) {
+  enhanceApp({ app }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
 

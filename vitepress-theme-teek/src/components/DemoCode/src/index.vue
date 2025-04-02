@@ -57,7 +57,7 @@ const handleToggleSourceVisible = (bol?: boolean) => {
 const handleEditPlayground = () => {
   const encoded = getPlaygroundEncoded(props.source);
   const darkParam = unref(isDark) ? "?theme=dark" : "";
-  let link = playgroundUrl.includes("?")
+  const link = playgroundUrl.includes("?")
     ? `${playgroundUrl}${darkParam.replace("?", "&")}`
     : `${playgroundUrl}${darkParam}`;
 

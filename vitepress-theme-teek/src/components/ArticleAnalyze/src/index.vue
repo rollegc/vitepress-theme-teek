@@ -64,7 +64,7 @@ const teleportInfo = () => {
   if (!selector || !baseInfoRefConst) return;
 
   const docDomContainer = window.document.querySelector("#VPContent");
-  let targetDom = docDomContainer?.querySelector(selector);
+  const targetDom = docDomContainer?.querySelector(selector);
 
   // 传送前先尝试删除传送位置的自己，避免传送重新渲染
   targetDom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach((v: Element) => v.remove());

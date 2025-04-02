@@ -82,7 +82,7 @@ export interface Article {
    * @param localeIndex 当前国际化语言
    * @param page 文章信息，即 useData().page 的信息
    */
-  topTip?: (frontmatter: PageData["frontmatter"], localeIndex: string, page: PageData) => VpContainerProps | void;
+  topTip?: (frontmatter: PageData["frontmatter"], localeIndex: string, page: PageData) => VpContainerProps | undefined;
   /**
    * 文章页的图片查看器配置，完全是 ElImageViewer 的 props
    */

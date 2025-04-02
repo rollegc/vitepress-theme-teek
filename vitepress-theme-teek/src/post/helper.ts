@@ -19,9 +19,7 @@ export const emptyPost: Post = {
  * @param posts 所有文章数据
  */
 export const filterPosts = (posts: TkContentData[]): TkContentData[] => {
-  return posts.filter(
-    ({ frontmatter: { catalogue, article, layout } }) => article !== false && layout !== "home"
-  );
+  return posts.filter(({ frontmatter: { article, layout } }) => article !== false && layout !== "home");
 };
 
 /**
@@ -94,9 +92,9 @@ export const getGroupCards = (groupPosts: Post["groupPosts"]): Post["groupCards"
   const categoriesArr: GroupCardItem[] = [];
   const tagsArr: GroupCardItem[] = [];
 
-  for (let key in groupPosts.categories) categoriesArr.push({ name: key, length: groupPosts.categories[key].length });
+  for (const key in groupPosts.categories) categoriesArr.push({ name: key, length: groupPosts.categories[key].length });
 
-  for (let key in groupPosts.tags) tagsArr.push({ name: key, length: groupPosts.tags[key].length });
+  for (const key in groupPosts.tags) tagsArr.push({ name: key, length: groupPosts.tags[key].length });
 
   return {
     categories: categoriesArr,
@@ -110,7 +108,7 @@ export const getGroupCards = (groupPosts: Post["groupPosts"]): Post["groupCards"
  */
 export const getPostsTime = (post: TkContentData): number => {
   const dateStr = post.date;
-  let date = dateStr ? new Date(dateStr) : new Date();
+  const date = dateStr ? new Date(dateStr) : new Date();
   if ((date as unknown as string) === "Invalid Date" && dateStr) {
     return new Date(dateStr.replace(/-/g, "/")).getTime();
   }

@@ -86,11 +86,11 @@ export default function usePermalink() {
     let filePath = "";
 
     // 使用场景；当文档内通过 []() 来引入一个 permalink 且 permalink 为 /xx 时，该方法自动拼接多语言 如 /en/xx 来获取文件地址
-    if (li != "root" && !maybeIsPermalink.startsWith(`${li}/`)) filePath = permalinks.inv[`/${li}${maybeIsPermalink}`];
+    if (li !== "root" && !maybeIsPermalink.startsWith(`${li}/`)) filePath = permalinks.inv[`/${li}${maybeIsPermalink}`];
     else filePath = permalinks.inv[maybeIsPermalink];
 
     // 如果获取的文件路径和访问的路由地址一致，则返回空，代表不需要重复跳转
-    if (filePath == decodePath) return "";
+    if (filePath === decodePath) return "";
     return filePath;
   };
 

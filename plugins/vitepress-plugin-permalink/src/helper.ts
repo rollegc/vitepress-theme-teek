@@ -73,7 +73,7 @@ const scannerMdFile = (
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 
   // 读取目录名（文件和文件夹）
-  let secondDirOrFilenames = readdirSync(root);
+  const secondDirOrFilenames = readdirSync(root);
 
   secondDirOrFilenames.forEach(dirOrFilename => {
     if (isSome(ignoreListAll, dirOrFilename)) return;

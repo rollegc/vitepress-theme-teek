@@ -77,7 +77,7 @@ onUnmounted(() => {
         <span>{{ descArray[0] }}</span>
       </template>
       <template v-else-if="isSwitchDescStyle">
-        <span v-show="!!text" @click="switchText" class="switch">{{ text || " " }}</span>
+        <span v-show="!!text" @click="switchText" class="switch">{{ text }}</span>
       </template>
       <template v-else-if="isTypesDescStyle && descArray.length">
         <span>{{ typesText }}</span>

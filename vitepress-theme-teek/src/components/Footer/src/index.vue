@@ -8,7 +8,7 @@ import securityRecordImg from "../../../assets/img/securityRecord.png";
 import Icon from "../../Icon";
 import type { FooterInfo, Social } from "../../../config/types";
 
-defineOptions({ name: "Footer" });
+defineOptions({ name: "TkFooter" });
 
 const ns = useNamespace("footer");
 
@@ -78,7 +78,7 @@ const footerData = computed(() => {
     </div>
 
     <template v-if="footerInfo">
-      <p v-for="m in [footerInfo.topMessage || []].flat()" v-html="m" />
+      <p v-for="(message, index) in [footerInfo.topMessage || []].flat()" :key="index" v-html="message" />
 
       <div :class="`${ns.e('list')} flx-wrap-justify-center`">
         <div v-for="item in footerData" :key="item.name" :class="`${ns.e('list__item')} flx-align-center`">
@@ -101,7 +101,7 @@ const footerData = computed(() => {
         <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml"></span>
       </div>
 
-      <p v-for="m in [footerInfo.bottomMessage || []].flat()" v-html="m" />
+      <p v-for="(message, index) in [footerInfo.bottomMessage || []].flat()" :key="index" v-html="message" />
     </template>
   </div>
 </template>

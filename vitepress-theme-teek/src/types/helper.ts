@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * 将对象的某个属性变为可选，如：
 
@@ -42,7 +43,10 @@ declare type ReadOnlyKey<T, U extends keyof T> = Pick<T, Exclude<keyof T, U>> & 
 /**
  * 对象类型
  */
-declare type Recordable<T extends string | number | symbol = string, K = any> = Record<T extends null | undefined ? string : T, K>;
+declare type Recordable<T extends string | number | symbol = string, K = any> = Record<
+  T extends null | undefined ? string : T,
+  K
+>;
 
 /**
  * 可空类型

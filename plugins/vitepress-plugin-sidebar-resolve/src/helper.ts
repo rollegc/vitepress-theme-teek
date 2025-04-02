@@ -30,7 +30,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
   // 确保 prefix 始终都有 / 结尾
   prefix = prefix.replace(/\/$/, "") + "/";
 
-  let sidebar: DefaultTheme.SidebarMulti = {};
+  const sidebar: DefaultTheme.SidebarMulti = {};
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(path, ignoreList);
 
@@ -118,7 +118,7 @@ const createSideBarItems = (
   // 结构化文章侧边栏数据，以文件夹的序号为数字下标
   let sidebarItems: DefaultTheme.SidebarItem[] = [];
   // 存储没有序号的文件，最终生成 sidebarItems 的时候，将这些文件放到最后面
-  let sidebarItemsNoIndex: DefaultTheme.SidebarItem[] = [];
+  const sidebarItemsNoIndex: DefaultTheme.SidebarItem[] = [];
   // 读取目录名（文件和文件夹）
   let dirOrFilenames = readdirSync(root);
 
@@ -129,7 +129,7 @@ const createSideBarItems = (
 
     const filePath = resolve(root, dirOrFilename);
     // 解析文件名
-    let { index: indexStr, title, type, name } = resolveFileName(dirOrFilename, filePath);
+    const { index: indexStr, title, type, name } = resolveFileName(dirOrFilename, filePath);
     // 十进制转换
     const index = parseInt(indexStr as string, 10);
 

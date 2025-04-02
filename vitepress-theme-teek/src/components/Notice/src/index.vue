@@ -35,7 +35,7 @@ const showNoticeIcon = computed(() => !unref(showPopover) && !unref(destroyNotic
 const showPopover = ref(initOpen);
 
 // 公告样式
-const style = computed(() => {
+const styleObj = computed(() => {
   if (!noticeStyle) return "";
   return noticeStyle.trim().startsWith(`.${ns.b()}`) ? noticeStyle : `.${ns.b()} { ${noticeStyle} }`;
 });
@@ -143,7 +143,7 @@ const storagePopoverState = (state: string) => {
 
 <template>
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
-    <component v-if="style" is="style">{{ style }}</component>
+    <component v-if="styleObj" :is="style">{{ styleObj }}</component>
 
     <!-- 公告图标 -->
     <div
