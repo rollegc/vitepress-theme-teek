@@ -11,7 +11,7 @@ const ns = useNamespace("bannerContent");
 const { site, theme, frontmatter } = useData();
 const title = unref(frontmatter).tk?.name || unref(site).title || "";
 // Banner 配置项
-const bannerConfig = computed<Banner>(() => ({
+const bannerConfig = computed<Required<Banner>>(() => ({
   descStyle: "default",
   description: [],
   switchTime: 4000,
@@ -42,7 +42,7 @@ const {
   isFinished,
   startTypes,
   stopTypes,
-} = useTextTypes(descArray, {
+} = useTextTypes(unref(descArray), {
   typesInTime: unref(bannerConfig).typesInTime,
   typesOutTime: unref(bannerConfig).typesOutTime,
   typesNextTime: unref(bannerConfig).typesNextTime,
@@ -54,7 +54,7 @@ const {
   data: text,
   startAutoSwitch: switchText,
   stopAutoSwitch,
-} = useSwitchData(descArray, {
+} = useSwitchData(unref(descArray), {
   timeout: unref(bannerConfig).switchTime,
   shuffle: unref(bannerConfig).switchShuffle,
   onUpdate: (data, newValue) => {

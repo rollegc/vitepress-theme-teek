@@ -15,7 +15,7 @@ const ns = useNamespace("friendLink");
 const { theme, frontmatter } = useData();
 
 // 友情链接配置项
-const friendLinkConfig = computed<FriendLink>(() => ({
+const friendLinkConfig = computed<Required<FriendLink>>(() => ({
   list: [],
   limit: 4,
   title: `${friendLinkIcon}友情链接`,
@@ -99,8 +99,12 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         tag="ul"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
-        @mouseenter="friendLinkConfig.autoScroll ? stopAutoScroll() : autoPage ? closeAutoPage() : () => {}"
-        @mouseleave="friendLinkConfig.autoScroll ? startAutoScroll() : autoPage ? startAutoPage() : () => {}"
+        @mouseenter="
+          friendLinkConfig.autoScroll ? stopAutoScroll() : friendLinkConfig.autoPage ? closeAutoPage() : () => {}
+        "
+        @mouseleave="
+          friendLinkConfig.autoScroll ? startAutoScroll() : friendLinkConfig.autoPage ? startAutoPage() : () => {}
+        "
       >
         <li
           :ref="friendLinkConfig.autoScroll ? '' : 'itemRefs'"

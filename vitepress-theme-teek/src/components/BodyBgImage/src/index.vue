@@ -68,6 +68,6 @@ const getStyle = () => {
 
 <template>
   <div :class="ns.b()" :style="getStyle()">
-    <div v-if="mask" class="mask" />
+    <div v-if="bodyBgImgConfig.mask" class="mask" />
   </div>
 </template>

@@ -16,7 +16,7 @@ const ns = useNamespace("banner");
 const { theme, frontmatter } = useData();
 
 // Banner 配置项
-const bannerConfig = computed<Banner>(() => {
+const bannerConfig = computed<Required<Banner>>(() => {
   const features = unref(frontmatter).tk?.features || [];
   return {
     bgStyle: "pure",
@@ -30,7 +30,7 @@ const bannerConfig = computed<Banner>(() => {
   };
 });
 // bodyBgImg 配置项
-const bodyBgImgConfig = computed<BodyBgImg>(() => ({
+const bodyBgImgConfig = computed<Required<BodyBgImg>>(() => ({
   imgSrc: "",
   bannerStyle: "full",
   ...unref(theme).bodyBgImg,
@@ -131,7 +131,8 @@ const styleComponentMap: Record<string, any> = {
 
 const styleComponent = computed(() => {
   const { isBodyImgBgStyle } = unref(currentBgStyle);
-  const { bannerStyle, bgStyle } = unref(bannerConfig);
+  const { bgStyle } = unref(bannerConfig);
+  const { bannerStyle } = unref(bodyBgImgConfig);
   const currentStyle = isBodyImgBgStyle ? `body${upperFirst(bannerStyle)}` : `banner${upperFirst(bgStyle)}`;
 
   return styleComponentMap[currentStyle];

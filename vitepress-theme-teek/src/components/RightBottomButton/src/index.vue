@@ -11,7 +11,7 @@ defineOptions({ name: "RightBottomButton" });
 const ns = useNamespace("rightBottomButton");
 
 const { theme, frontmatter } = useData();
-const themeSettingConfig = computed<ThemeSetting>(() => ({
+const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
   useThemeStyle: true,
   themeStyle: "vp-default",
   themeStyleAppend: [],
@@ -82,7 +82,7 @@ const themeSizeStorageKey = ns.b("themeSize");
 
 // 主题切换
 const showThemeStyleItem = ref(false);
-const currentThemeStyle = computed(() => unref(themeSettingConfig).themeStyle);
+const currentThemeStyle = ref(unref(themeSettingConfig).themeStyle);
 const themeStyleList = computed(() => {
   const { themeStyleLabel, themeStyleAppend } = unref(themeSettingConfig);
   return [
@@ -110,9 +110,14 @@ const themeStyleList = computed(() => {
   ];
 });
 
+watch(
+  () => unref(themeSettingConfig).themeStyle,
+  (themeStyle: string) => (currentThemeStyle.value = themeStyle)
+);
+
 // 主题尺寸
 const showThemeSizeItem = ref(false);
-const currentThemeSize = computed(() => unref(themeSettingConfig).themeSize);
+const currentThemeSize = ref(unref(themeSettingConfig).themeSize);
 const themeSizeList = computed(() => {
   const { themeSizeLabel, themeSizeAppend } = unref(themeSettingConfig);
   return [
@@ -123,6 +128,11 @@ const themeSizeList = computed(() => {
     ...themeSizeAppend,
   ];
 });
+
+watch(
+  () => unref(themeSettingConfig).themeSize,
+  (themeSize: string) => (currentThemeSize.value = themeSize)
+);
 
 /**
  * 修改主题风格或尺寸

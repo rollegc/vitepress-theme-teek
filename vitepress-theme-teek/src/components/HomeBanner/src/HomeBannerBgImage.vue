@@ -12,7 +12,7 @@ const ns = useNamespace("bannerBgImage");
 const { theme, frontmatter } = useData();
 
 // Banner 配置项
-const bannerConfig = computed<Banner>(() => ({
+const bannerConfig = computed<Required<Banner>>(() => ({
   bgStyle: undefined,
   imgSrc: undefined,
   imgInterval: 15000,

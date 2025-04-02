@@ -1,13 +1,12 @@
 <script setup lang="ts" name="DemoCode">
 import { ref, computed, unref, defineAsyncComponent } from "vue";
-import { useData, withBase } from "vitepress";
+import { useData } from "vitepress";
 import { ElTooltip, ElMessage } from "element-plus";
 import { useNamespace, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
 import TransitionCollapse from "../../TransitionCollapse";
 import type { DemoCodeProps } from "./demoCode";
 import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "../../../assets/icons";
-import { cs } from "element-plus/es/locale";
 
 defineOptions({ name: "DemoCode" });
 

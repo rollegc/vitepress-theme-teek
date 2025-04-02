@@ -14,8 +14,8 @@ const ns = useNamespace("docAnalysis");
 
 const { theme, frontmatter } = useData();
 // 站点信息配置项
-const docAnalysisConfig = computed<DocAnalysis>(() => ({
-  createTime: "",
+const docAnalysisConfig = computed<Required<DocAnalysis>>(() => ({
+  createTime: undefined,
   title: `${docAnalysisIcon}站点信息`,
   statistics: {},
   overrideInfo: [],
@@ -76,7 +76,7 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
   ...unref(docAnalysisConfig).statistics,
 }));
 // 是否使用访问量功能
-const useSiteView = computed(() => unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
+const useSiteView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
 const statisticsInfo: UseBuSunZi = {
   sitePv: ref(0),
   siteUv: ref(0),

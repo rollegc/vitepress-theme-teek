@@ -13,7 +13,7 @@ const ns = useNamespace("notice");
 const vpRouter = useVpRouter();
 const { theme, localeIndex } = useData();
 
-const noticeConfig = computed<Notice>(() => ({
+const noticeConfig = computed<Required<Notice>>(() => ({
   noticeStyle: undefined,
   iconStyle: {},
   popoverStyle: {},
@@ -37,9 +37,7 @@ const showPopover = ref(unref(noticeConfig).initOpen);
 
 watch(
   () => unref(noticeConfig).initOpen,
-  (newValue: boolean) => {
-    showPopover.value = newValue;
-  }
+  (newValue: boolean) => (showPopover.value = newValue)
 );
 
 // 公告样式
@@ -157,7 +155,7 @@ const storagePopoverState = (state: string) => {
 
 <template>
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
-    <component v-if="styleObj" :is="style">{{ styleObj }}</component>
+    <component v-if="styleObj" :is="'style'">{{ styleObj }}</component>
 
     <!-- 公告图标 -->
     <div

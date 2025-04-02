@@ -10,7 +10,7 @@ const ns = useNamespace("bannerFeature");
 
 const { theme, frontmatter } = useData();
 
-const bannerConfig = computed<Banner>(() => ({
+const bannerConfig = computed<Required<Banner>>(() => ({
   features: [],
   featureCarousel: 4000,
   ...unref(theme).banner,

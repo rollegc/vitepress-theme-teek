@@ -18,7 +18,7 @@ const posts = usePosts();
 const { theme, frontmatter, localeIndex } = useData();
 
 // 精选文章配置项
-const topArticleConfig = computed<TopArticle>(() => ({
+const topArticleConfig = computed<Required<TopArticle>>(() => ({
   limit: 4,
   title: `${topArticleIcon}精选文章`,
   emptyLabel: "暂无精选文章",

@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomePostList">
 import { computed, reactive, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
+import type { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
 import Icon from "../../Icon";
@@ -17,7 +18,7 @@ const ns = useNamespace("postList");
 const posts = usePosts();
 const { theme, frontmatter } = useData();
 
-const postConfig = computed<Post>(() => ({
+const postConfig = computed<Required<Post>>(() => ({
   coverImgMode: "default",
   emptyLabel: "文章列表为空",
   ...unref(theme).post,
@@ -35,7 +36,7 @@ const pageInfo = ref({
 });
 
 // 自定义一页数量 & 分页组件的 Props
-const pageConfig = computed<Post>(() => {
+const pageConfig = computed<Partial<PaginationProps>>(() => {
   return { ...unref(theme).page, ...unref(frontmatter).tk?.page };
 });
 

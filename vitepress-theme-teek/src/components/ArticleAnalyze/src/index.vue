@@ -95,7 +95,7 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
   ...unref(docAnalysisConfig).statistics,
 }));
 // 是否使用访问量功能
-const usePageView = computed(() => unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
+const usePageView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
 
 const statisticsInfo: UseBuSunZi = { pagePv: ref(0), isGet: ref(false) };
 // 通过不蒜子获取访问量

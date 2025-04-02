@@ -19,7 +19,7 @@ const { theme, site, frontmatter, localeIndex } = useData();
 
 const pageNum = ref(1);
 // 标签配置项
-const tagConfig = computed<Tag>(() => ({
+const tagConfig = computed<Required<Tag>>(() => ({
   path: "/tags",
   pageTitle: `${tagIcon}全部标签`,
   homeTitle: `${tagIcon}热门标签`,

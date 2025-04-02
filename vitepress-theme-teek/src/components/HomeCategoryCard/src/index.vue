@@ -17,7 +17,7 @@ const ns = useNamespace("category");
 const { localeIndex, theme, site, frontmatter } = useData();
 
 // 分类配置项
-const categoryConfig = computed<Category>(() => ({
+const categoryConfig = computed<Required<Category>>(() => ({
   path: "/categories",
   pageTitle: `${categoryIcon}全部分类`,
   homeTitle: `${categoryIcon}文章分类`,
