@@ -15,23 +15,31 @@ const ns = useNamespace("friendLink");
 const { theme, frontmatter } = useData();
 
 // 友情链接配置项
-const {
-  list = [],
-  limit = 4,
-  title = `${friendLinkIcon}友情链接`,
-  emptyLabel = "暂无友情链接",
-  autoScroll = false,
-  scrollSpeed = 2500,
-  autoPage = false,
-  pageSpeed = 4000,
-}: FriendLink = { ...unref(theme).friendLink, ...unref(frontmatter).tk?.friendLink };
+const friendLinkConfig = computed<Required<FriendLink>>(() => ({
+  list: [],
+  limit: 4,
+  title: `${friendLinkIcon}友情链接`,
+  emptyLabel: "暂无友情链接",
+  autoScroll: false,
+  scrollSpeed: 2500,
+  autoPage: false,
+  pageSpeed: 4000,
+  ...unref(theme).friendLink,
+  ...unref(frontmatter).tk?.friendLink,
+}));
 
 // 使用上下滚动功能
-const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(list, 5, scrollSpeed);
+const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(
+  unref(friendLinkConfig).list,
+  5,
+  unref(friendLinkConfig).scrollSpeed
+);
 
 const pageNum = ref(1);
 // 友情链接渲染数据
 const currentFriendLinkList = computed(() => {
+  const { list, limit, autoScroll } = unref(friendLinkConfig);
+
   // 如果使用上下滚动功能，则显示滚动数据
   if (autoScroll) return unref(visibleData);
 
@@ -41,19 +49,20 @@ const currentFriendLinkList = computed(() => {
 });
 
 const finalTitle = computed(() => {
+  const { title } = unref(friendLinkConfig);
   if (isFunction(title)) return title(friendLinkIcon);
   return title;
 });
 
 onMounted(() => {
-  if (autoScroll) startAutoScroll();
+  if (unref(friendLinkConfig).autoScroll) startAutoScroll();
 });
 
 // 每一个 li 的 ref 元素，用于获取元素高度来计算实际的 top 位置
 const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getLiStyle = (index: number) => {
-  if (autoScroll) return {};
+  if (unref(friendLinkConfig).autoScroll) return {};
   const clientRect = unref(itemRefs)?.[index]?.getBoundingClientRect();
 
   // 分页动画需要指定 top，否则默认移动到 0px 位置
@@ -74,27 +83,31 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
   <slot name="teek-home-friend-link-before" />
 
   <HomeCard
-    :page="!autoScroll"
+    :page="!friendLinkConfig.autoScroll"
     v-model="pageNum"
-    :pageSize="limit"
-    :total="list.length"
+    :pageSize="friendLinkConfig.limit"
+    :total="friendLinkConfig.list.length"
     :title="finalTitle"
-    :autoPage
-    :pageSpeed
+    :autoPage="friendLinkConfig.autoPage"
+    :pageSpeed="friendLinkConfig.pageSpeed"
     :class="ns.b()"
   >
     <template #default="{ transitionName, startAutoPage, closeAutoPage }">
       <TransitionGroup
-        v-if="list?.length"
+        v-if="friendLinkConfig.list.length"
         :name="transitionName"
         tag="ul"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
-        @mouseenter="autoScroll ? stopAutoScroll() : autoPage ? closeAutoPage() : () => {}"
-        @mouseleave="autoScroll ? startAutoScroll() : autoPage ? startAutoPage() : () => {}"
+        @mouseenter="
+          friendLinkConfig.autoScroll ? stopAutoScroll() : friendLinkConfig.autoPage ? closeAutoPage() : () => {}
+        "
+        @mouseleave="
+          friendLinkConfig.autoScroll ? startAutoScroll() : friendLinkConfig.autoPage ? startAutoPage() : () => {}
+        "
       >
         <li
-          :ref="autoScroll ? '' : 'itemRefs'"
+          :ref="friendLinkConfig.autoScroll ? '' : 'itemRefs'"
           v-for="(item, index) in currentFriendLinkList"
           :key="item.name"
           :class="ns.e('list__item')"
@@ -115,7 +128,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')">{{ friendLinkConfig.emptyLabel }}</div>
     </template>
   </HomeCard>
 

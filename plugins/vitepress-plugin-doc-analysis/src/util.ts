@@ -12,7 +12,7 @@ export function getTotalFileWords(filePathList: string[]) {
     const fileContent = readFileSync(item, "utf8");
     const { content } = matter(fileContent, {});
     // 使用 content 而不是 fileContent 是因为 fileContent 有 frontmatter，影响字数
-    let len = getCounter(content);
+    const len = getCounter(content);
     wordCount += len[0] + len[1];
   });
 
@@ -28,9 +28,9 @@ export function getEachFileWords(fileList: FilePathInfo[], cn: number = 300, en:
     const fileContent = readFileSync(item.filePath, "utf8");
     const { data, content } = matter(fileContent, {});
     // 使用 content 而不是 fileContent 是因为 fileContent 有 frontmatter，影响字数
-    let len = getCounter(content);
+    const len = getCounter(content);
     // 计算预计的阅读时间
-    let readingTime = getReadTime(len, cn, en);
+    const readingTime = getReadTime(len, cn, en);
     let wordCount = 0;
     wordCount = len[0] + len[1];
 
@@ -44,18 +44,18 @@ export function getEachFileWords(fileList: FilePathInfo[], cn: number = 300, en:
  * 计算预计的阅读时间
  */
 export function getReadTime(len: number[], cn: number = 300, en: number = 160) {
-  let readingTime = len[0] / cn + len[1] / en;
+  const readingTime = len[0] / cn + len[1] / en;
   if (readingTime > 60 && readingTime < 60 * 24) {
     // 大于一个小时，小于一天
-    let hour = Math.trunc(readingTime / 60);
-    let minute = Math.trunc(readingTime - hour * 60);
+    const hour = Math.trunc(readingTime / 60);
+    const minute = Math.trunc(readingTime - hour * 60);
 
     if (minute === 0) return hour + "h";
     return hour + "h" + minute + "m";
   } else if (readingTime > 60 * 24) {
     // 大于一天
-    let day = Math.trunc(readingTime / (60 * 24));
-    let hour = Math.trunc((readingTime - day * 24 * 60) / 60);
+    const day = Math.trunc(readingTime / (60 * 24));
+    const hour = Math.trunc((readingTime - day * 24 * 60) / 60);
 
     if (hour === 0) return day + "d";
     return day + "d" + hour + "h";
@@ -100,7 +100,7 @@ export function getLastUpdateTime(fileList: string[]) {
 function getTimeNum(dateStr: string) {
   let date: any = new Date(dateStr);
 
-  if (date == "Invalid Date" && dateStr) date = new Date(dateStr.replace(/-/g, "/"));
+  if (date === "Invalid Date" && dateStr) date = new Date(dateStr.replace(/-/g, "/"));
 
   return date.getTime();
 }

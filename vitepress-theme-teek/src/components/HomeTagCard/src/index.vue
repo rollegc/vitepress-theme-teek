@@ -19,36 +19,40 @@ const { theme, site, frontmatter, localeIndex } = useData();
 
 const pageNum = ref(1);
 // 标签配置项
-const {
-  path = "/tags",
-  pageTitle = `${tagIcon}全部标签`,
-  homeTitle = `${tagIcon}热门标签`,
-  emptyLabel = "暂无热门标签",
-  limit = 21,
-  autoPage = false,
-  pageSpeed = 4000,
-  bgColor,
-}: Tag = { ...unref(theme).tag, ...unref(frontmatter).tk?.tag };
+const tagConfig = computed<Required<Tag>>(() => ({
+  path: "/tags",
+  pageTitle: `${tagIcon}全部标签`,
+  homeTitle: `${tagIcon}热门标签`,
+  emptyLabel: "暂无热门标签",
+  limit: 21,
+  autoPage: false,
+  pageSpeed: 4000,
+  bgColor: "",
+  ...unref(theme).tag,
+  ...unref(frontmatter).tk?.tag,
+}));
 
 const posts = usePosts();
 const tags = computed(() => unref(posts).groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
 const currentTags = computed(() => {
+  const { limit } = unref(tagConfig);
   const t = unref(tags);
   const p = unref(pageNum);
   return tagsPage ? t : t.slice((p - 1) * limit, p * limit);
 });
 
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(tagIcon) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(tagIcon) : homeTitle;
+  const { pageTitle, homeTitle } = unref(tagConfig);
+  const pt = isFunction(pageTitle) ? pageTitle(tagIcon) : pageTitle;
+  const ht = isFunction(homeTitle) ? homeTitle(tagIcon) : homeTitle;
   return { pt, ht };
 });
 
-const tagBgColor = bgColor || useBgColor();
-
 const getTagStyle = (index: number) => {
+  const tagBgColor = unref(tagConfig).bgColor || useBgColor();
+
   // 标签背景色
   const color = tagBgColor[index % tagBgColor.length];
   return { backgroundColor: color, "--home-tag-color": color };
@@ -58,7 +62,7 @@ const tagsPageLink = computed(() => {
   // 兼容国际化功能，如果没有配置国际化，则返回 '/tags'
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  return `${localeName}${path}${unref(site).cleanUrls ? "" : ".html"}`;
+  return `${localeName}${unref(tagConfig).path}${unref(site).cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});
@@ -116,12 +120,12 @@ watch(
   <HomeCard
     :page="!tagsPage"
     v-model="pageNum"
-    :pageSize="limit"
+    :pageSize="tagConfig.limit"
     :total="tags.length"
     :title="finalTitle[tagsPage ? 'pt' : 'ht']"
     :titleClick="handleSwitchTag"
-    :autoPage
-    :pageSpeed
+    :autoPage="tagConfig.autoPage"
+    :pageSpeed="tagConfig.pageSpeed"
     :class="ns.b()"
   >
     <template #default="{ transitionName }">
@@ -136,10 +140,10 @@ watch(
           {{ item.name }}
         </a>
 
-        <a v-if="!tagsPage && limit < tags.length" :href="withBase(tagsPageLink)" class="more">更多 ...</a>
+        <a v-if="!tagsPage && tagConfig.limit < tags.length" :href="withBase(tagsPageLink)" class="more">更多 ...</a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')">{{ tagConfig.emptyLabel }}</div>
     </template>
   </HomeCard>
 

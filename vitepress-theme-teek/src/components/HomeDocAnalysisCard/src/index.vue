@@ -14,22 +14,25 @@ const ns = useNamespace("docAnalysis");
 
 const { theme, frontmatter } = useData();
 // 站点信息配置项
-const {
-  createTime,
-  title = `${docAnalysisIcon}站点信息`,
-  statistics = {},
-  overrideInfo = [],
-  appendInfo = [],
-}: DocAnalysis = { ...unref(theme).docAnalysis, ...unref(frontmatter).tk?.docAnalysis };
+const docAnalysisConfig = computed<Required<DocAnalysis>>(() => ({
+  createTime: undefined,
+  title: `${docAnalysisIcon}站点信息`,
+  statistics: {},
+  overrideInfo: [],
+  appendInfo: [],
+  ...unref(theme).docAnalysis,
+  ...unref(frontmatter).tk?.docAnalysis,
+}));
 
 const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 
 const finalTitle = computed(() => {
+  const { title } = unref(docAnalysisConfig);
   if (isFunction(title)) return title(docAnalysisIcon);
   return title;
 });
 
-const createToNowDay = formatDiffDateToDay(createTime || getNowDate());
+const createToNowDay = computed(() => formatDiffDateToDay(unref(docAnalysisConfig).createTime || getNowDate()));
 
 const posts = usePosts();
 
@@ -65,96 +68,110 @@ const formatWordCount = (wordCount: number) => {
   return Math.round(wordCount / 10000) / 10 + "w";
 };
 
-const route = useRoute();
-
+const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => ({
+  provider: "",
+  siteView: true,
+  iteration: false,
+  pageIteration: 2000,
+  ...unref(docAnalysisConfig).statistics,
+}));
+// 是否使用访问量功能
+const useSiteView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
 const statisticsInfo: UseBuSunZi = {
   sitePv: ref(0),
   siteUv: ref(0),
   isGet: ref(false),
 };
-const { provider = "", siteView = true, iteration, siteIteration = 2000 }: DocAnalysis["statistics"] = statistics;
-const useSiteView = provider === "busuanzi" && siteView;
 
-if (useSiteView) {
-  // 通过不蒜子获取访问量和访客数
-  const { sitePv, siteUv, isGet, request } = useBuSunZi(true, iteration, siteIteration);
-  statisticsInfo.sitePv = sitePv;
-  statisticsInfo.siteUv = siteUv;
-  statisticsInfo.isGet = isGet;
+// 通过不蒜子获取访问量和访客数
+const { sitePv, siteUv, isGet, request } = useBuSunZi(
+  unref(useSiteView),
+  unref(statisticsConfig).iteration,
+  unref(statisticsConfig).pageIteration
+);
+statisticsInfo.sitePv = sitePv;
+statisticsInfo.siteUv = siteUv;
+statisticsInfo.isGet = isGet;
 
-  watch(route, () => {
-    request();
-  });
-}
+const route = useRoute();
+watch(route, () => {
+  if (unref(useSiteView)) request();
+});
 
 type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number };
 
-const docAnalysisList = computed<DocAnalysisResolve[]>(() => [
-  {
-    key: "totalPosts",
-    label: "文章数目",
-    originValue: unref(docAnalysisInfo).fileList?.length || 0,
-    value: `${unref(docAnalysisInfo).fileList?.length || 0} 篇`,
-  },
-  {
-    key: "weekAddNum",
-    label: "近一周新增",
-    originValue: unref(postAddNum)?.weekAddNum,
-    value: `${unref(postAddNum)?.weekAddNum} 篇`,
-  },
-  {
-    key: "monthAddNum",
-    label: "近一月新增",
-    originValue: unref(postAddNum)?.monthAddNum,
-    value: `${unref(postAddNum)?.monthAddNum} 篇`,
-  },
-  {
-    key: "runtime",
-    label: "已运行时间",
-    originValue: createTime,
-    value: `${createToNowDay === 0 ? "不到一天" : `${createToNowDay} 天`}`,
-  },
-  {
-    key: "totalWordCount",
-    label: "本站总字数",
-    originValue: unref(docAnalysisInfo).totalFileWords,
-    value: `${formatWordCount(unref(docAnalysisInfo).totalFileWords)} 字`,
-  },
-  {
-    key: "lastActiveTime",
-    label: "最后活动时间",
-    originValue: unref(docAnalysisInfo).lastCommitTime,
-    value: formatDiffDate(unref(docAnalysisInfo).lastCommitTime),
-  },
-  {
-    key: "viewCount",
-    label: "本站被访问了",
-    originValue: unref(statisticsInfo.sitePv),
-    value: unref(statisticsInfo.isGet) ? `${unref(statisticsInfo.sitePv)} 次` : "Get...",
-    show: useSiteView,
-  },
-  {
-    key: "visitCount",
-    label: "本站曾来访过",
-    originValue: unref(statisticsInfo.siteUv),
-    value: unref(statisticsInfo.isGet) ? `${unref(statisticsInfo.siteUv)} 人` : "Get...",
-    show: useSiteView,
-  },
-  ...(appendInfo as any[]),
-]);
+const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
+  const { createTime, appendInfo, overrideInfo } = unref(docAnalysisConfig);
+  const { fileList = [], totalFileWords, lastCommitTime } = unref(docAnalysisInfo);
+  const { siteUv, sitePv, isGet } = statisticsInfo;
 
-if (overrideInfo.length) {
-  watch(docAnalysisList, (newValue: DocAnalysisResolve[]) => {
-    newValue.forEach((item: DocAnalysisResolve) => {
-      const override = overrideInfo.find(overrideItem => overrideItem.key === item.key);
+  const list: DocAnalysisResolve[] = [
+    {
+      key: "totalPosts",
+      label: "文章数目",
+      originValue: fileList.length,
+      value: `${fileList.length} 篇`,
+    },
+    {
+      key: "weekAddNum",
+      label: "近一周新增",
+      originValue: unref(postAddNum)?.weekAddNum,
+      value: `${unref(postAddNum)?.weekAddNum} 篇`,
+    },
+    {
+      key: "monthAddNum",
+      label: "近一月新增",
+      originValue: unref(postAddNum)?.monthAddNum,
+      value: `${unref(postAddNum)?.monthAddNum} 篇`,
+    },
+    {
+      key: "runtime",
+      label: "已运行时间",
+      originValue: createTime,
+      value: `${unref(createToNowDay) === 0 ? "不到一天" : `${unref(createToNowDay)} 天`}`,
+    },
+    {
+      key: "totalWordCount",
+      label: "本站总字数",
+      originValue: totalFileWords,
+      value: `${formatWordCount(totalFileWords)} 字`,
+    },
+    {
+      key: "lastActiveTime",
+      label: "最后活动时间",
+      originValue: lastCommitTime,
+      value: formatDiffDate(lastCommitTime),
+    },
+    {
+      key: "viewCount",
+      label: "本站被访问了",
+      originValue: unref(sitePv),
+      value: unref(isGet) ? `${unref(sitePv)} 次` : "Get...",
+      show: useSiteView,
+    },
+    {
+      key: "visitCount",
+      label: "本站曾来访过",
+      originValue: unref(siteUv),
+      value: unref(isGet) ? `${unref(siteUv)} 人` : "Get...",
+      show: useSiteView,
+    },
+    ...(appendInfo as any[]),
+  ];
+
+  if (overrideInfo.length) {
+    list.forEach(item => {
+      const override = overrideInfo.find((overrideItem: any) => overrideItem.key === item.key);
       if (override) {
         item.label = override.label || item.label;
         item.value = override.value ? override.value(item.originValue || "", item.value) : item.value;
         item.show = override.show !== false;
       }
     });
-  });
-}
+  }
+
+  return list;
+});
 </script>
 
 <template>

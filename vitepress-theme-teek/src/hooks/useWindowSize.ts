@@ -7,7 +7,7 @@ import { inBrowser } from "vitepress";
  *
  * @param sizeChangeCallback 钩子函数，当窗口发生改变时调用
  */
-export const useWindowSize = (sizeChangeCallback?: (width: number, height: number) => void | undefined) => {
+export const useWindowSize = (sizeChangeCallback?: (width: number, height: number) => undefined) => {
   const width = ref(Number.POSITIVE_INFINITY);
   const height = ref(Number.POSITIVE_INFINITY);
 

@@ -3,20 +3,37 @@ import { computed, ref, unref, onMounted, onUnmounted, watch } from "vue";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import { sizeIcon, rocketIcon, magicIcon, commentIcon } from "../../../assets/icons";
-import type { CommentConfig, ThemeSetting } from "../../../config/types";
+import type { ThemeSetting } from "../../../config/types";
 import { useData } from "vitepress";
 
 defineOptions({ name: "RightBottomButton" });
 
 const ns = useNamespace("rightBottomButton");
 
+const { theme, frontmatter } = useData();
+const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+  useThemeStyle: true,
+  themeStyle: "vp-default",
+  themeStyleAppend: [],
+  themeStyleLabel: {},
+  useThemeSize: true,
+  themeSize: "default",
+  themeSizeAppend: [],
+  themeSizeLabel: {},
+  backTopDone: undefined,
+  toCommentDone: undefined,
+  titleTip: {},
+  ...unref(theme).themeSetting,
+}));
+const titleTip = computed(() => unref(themeSettingConfig).titleTip || {});
+
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
 const showToTop = computed(() => unref(scrollTop) > 100);
 
 const showToComment = computed(() => {
-  let docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
-  let docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
+  const docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
+  const docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
   let height = 0;
   if (docContentHeight) height = docContentHeight - docFooterHeight - window.innerHeight / 2;
 
@@ -25,10 +42,16 @@ const showToComment = computed(() => {
 
 const scrollToTop = useDebounce(() => {
   document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
+  setTimeout(() => {
+    unref(themeSettingConfig).backTopDone?.();
+  }, 600);
 }, 500);
 
 const scrollToComment = useDebounce(() => {
   document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
+  setTimeout(() => {
+    unref(themeSettingConfig).toCommentDone?.();
+  }, 600);
 }, 500);
 
 const watchScroll = () => {
@@ -54,60 +77,62 @@ onUnmounted(() => {
   window.removeEventListener("scroll", watchScroll);
 });
 
-const { theme, frontmatter } = useData();
-const {
-  useThemeStyle = true,
-  themeStyle: defaultThemeStyle = "vp-default",
-  themeStyleAppend = [],
-  themeStyleLabel = {},
-  useThemeSize = true,
-  themeSize: defaultThemeSize = "default",
-  themeSizeAppend = [],
-  themeSizeLabel = {},
-  titleTip = {},
-}: ThemeSetting = unref(theme).themeSetting || {};
-
-const { provider }: CommentConfig = unref(theme).comment || {};
 const themeStyleStorageKey = ns.b("themeStyle");
 const themeSizeStorageKey = ns.b("themeSize");
 
 // 主题切换
 const showThemeStyleItem = ref(false);
-const currentThemeStyle = ref(defaultThemeStyle);
-const themeStyleList = [
-  {
-    label: themeStyleLabel.vpLabel ?? "VP 主题",
-    tip: themeStyleLabel.vpTip ?? "VitePress 主题",
-    options: [
-      { name: themeStyleLabel.default ?? "默认", style: "vp-default" },
-      { name: themeStyleLabel.vpGreen ?? "绿色", style: "vp-green" },
-      { name: themeStyleLabel.vpYellow ?? "黄色", style: "vp-yellow" },
-      { name: themeStyleLabel.vpRed ?? "红色", style: "vp-red" },
-    ],
-  },
-  {
-    label: themeStyleLabel.epLabel ?? "EP 主题",
-    tip: themeStyleLabel.epTip ?? "Element Plus 主题",
-    options: [
-      { name: themeStyleLabel.epBlue ?? "蓝色", style: "el-blue" },
-      { name: themeStyleLabel.epGreen ?? "绿色", style: "el-green" },
-      { name: themeStyleLabel.epYellow ?? "黄色", style: "el-yellow" },
-      { name: themeStyleLabel.epRed ?? "红色", style: "el-red" },
-    ],
-  },
-  ...themeStyleAppend,
-];
+const currentThemeStyle = ref(unref(themeSettingConfig).themeStyle);
+const themeStyleList = computed(() => {
+  const { themeStyleLabel, themeStyleAppend } = unref(themeSettingConfig);
+  return [
+    {
+      label: themeStyleLabel.vpLabel ?? "VP 主题",
+      tip: themeStyleLabel.vpTip ?? "VitePress 主题",
+      options: [
+        { name: themeStyleLabel.default ?? "默认", style: "vp-default" },
+        { name: themeStyleLabel.vpGreen ?? "绿色", style: "vp-green" },
+        { name: themeStyleLabel.vpYellow ?? "黄色", style: "vp-yellow" },
+        { name: themeStyleLabel.vpRed ?? "红色", style: "vp-red" },
+      ],
+    },
+    {
+      label: themeStyleLabel.epLabel ?? "EP 主题",
+      tip: themeStyleLabel.epTip ?? "Element Plus 主题",
+      options: [
+        { name: themeStyleLabel.epBlue ?? "蓝色", style: "el-blue" },
+        { name: themeStyleLabel.epGreen ?? "绿色", style: "el-green" },
+        { name: themeStyleLabel.epYellow ?? "黄色", style: "el-yellow" },
+        { name: themeStyleLabel.epRed ?? "红色", style: "el-red" },
+      ],
+    },
+    ...themeStyleAppend,
+  ];
+});
+
+watch(
+  () => unref(themeSettingConfig).themeStyle,
+  (themeStyle: string) => (currentThemeStyle.value = themeStyle)
+);
 
 // 主题尺寸
 const showThemeSizeItem = ref(false);
-const currentThemeSize = ref(defaultThemeSize);
-const themeSizeList = [
-  { name: themeSizeLabel.wide ?? "Wide", size: "wide" },
-  { name: themeSizeLabel.large ?? "Large", size: "large" },
-  { name: themeSizeLabel.default ?? "Default", size: "default" },
-  { name: themeSizeLabel.small ?? "Small", size: "small" },
-  ...themeSizeAppend,
-];
+const currentThemeSize = ref(unref(themeSettingConfig).themeSize);
+const themeSizeList = computed(() => {
+  const { themeSizeLabel, themeSizeAppend } = unref(themeSettingConfig);
+  return [
+    { name: themeSizeLabel.wide ?? "Wide", size: "wide" },
+    { name: themeSizeLabel.large ?? "Large", size: "large" },
+    { name: themeSizeLabel.default ?? "Default", size: "default" },
+    { name: themeSizeLabel.small ?? "Small", size: "small" },
+    ...themeSizeAppend,
+  ];
+});
+
+watch(
+  () => unref(themeSettingConfig).themeSize,
+  (themeSize: string) => (currentThemeSize.value = themeSize)
+);
 
 /**
  * 修改主题风格或尺寸
@@ -130,10 +155,11 @@ const changeTheme = (attribute: "theme-style" | "theme-size", value: string, isD
  * 修改文章页的主题风格或尺寸，仅当 frontmatter.themeStyle 或 frontmatter.themeSize 存在时生效
  */
 const changeDocTheme = (attribute: "theme-style" | "theme-size", value: string) => {
+  const { themeStyle, themeSize } = unref(themeSettingConfig);
   if (value) changeTheme(attribute, value, true);
   else {
     const themeStorageKey = attribute === "theme-style" ? themeStyleStorageKey : themeSizeStorageKey;
-    const defaultTheme = attribute === "theme-style" ? defaultThemeStyle : defaultThemeSize;
+    const defaultTheme = attribute === "theme-style" ? themeStyle : themeSize;
 
     // 初始化/还原主题风格
     changeTheme(attribute, localStorage.getItem(themeStorageKey) || defaultTheme);
@@ -173,7 +199,7 @@ watch(
 
     <transition :name="ns.joinNamespace('fade')">
       <div
-        v-if="provider && showToComment"
+        v-if="theme.comment?.provider && showToComment"
         :title="titleTip.toComment ?? '前往评论'"
         :class="ns.e('button')"
         @click="scrollToComment"
@@ -183,7 +209,7 @@ watch(
     </transition>
 
     <div
-      v-if="useThemeSize"
+      v-if="themeSettingConfig.useThemeSize"
       :title="titleTip.themeSize ?? '主题尺寸切换'"
       :class="`${ns.e('button')} size-change`"
       @mouseenter="showThemeSizeItem = true"
@@ -207,7 +233,7 @@ watch(
     </div>
 
     <div
-      v-if="useThemeStyle"
+      v-if="themeSettingConfig.useThemeStyle"
       :title="titleTip.themeStyle ?? '主题风格切换'"
       :class="ns.e('button')"
       @mouseenter="showThemeStyleItem = true"

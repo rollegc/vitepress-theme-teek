@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DemoCode">
 import { ref, computed, unref, defineAsyncComponent } from "vue";
-import { useData, withBase } from "vitepress";
+import { useData } from "vitepress";
 import { ElTooltip, ElMessage } from "element-plus";
 import { useNamespace, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
@@ -31,13 +31,15 @@ const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));
 const decodedDescription = computed(() => decodeURIComponent(props.description));
 
+// 预加载 Demo 组件，防止 Vitepress 打包时不包含 Demo 组件
+const moduleFiles = (import.meta as any).glob("/examples/**/*.vue", { eager: true });
+
 const DemoComponent = defineAsyncComponent(async () => {
   try {
-    // / 表示从 .vitepress 目录层级开始
-    return await import(/* @vite-ignore */ withBase(`/${props.path}`));
+    const key = Object.keys(moduleFiles).find(i => i.endsWith(`/${props.path}`)) as string;
+    return moduleFiles[key];
   } catch (error) {
-    console.error(`[Teek Error] Failed to load component: '${props.path}'`, error);
-    return null;
+    console.error(`[Teek Error] Failed to load component: '/${props.path}'`, error);
   }
 });
 
@@ -57,7 +59,7 @@ const handleToggleSourceVisible = (bol?: boolean) => {
 const handleEditPlayground = () => {
   const encoded = getPlaygroundEncoded(props.source);
   const darkParam = unref(isDark) ? "?theme=dark" : "";
-  let link = playgroundUrl.includes("?")
+  const link = playgroundUrl.includes("?")
     ? `${playgroundUrl}${darkParam.replace("?", "&")}`
     : `${playgroundUrl}${darkParam}`;
 

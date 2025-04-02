@@ -64,7 +64,7 @@ const teleportInfo = () => {
   if (!selector || !baseInfoRefConst) return;
 
   const docDomContainer = window.document.querySelector("#VPContent");
-  let targetDom = docDomContainer?.querySelector(selector);
+  const targetDom = docDomContainer?.querySelector(selector);
 
   // 传送前先尝试删除传送位置的自己，避免传送重新渲染
   targetDom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach((v: Element) => v.remove());
@@ -95,12 +95,12 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
   ...unref(docAnalysisConfig).statistics,
 }));
 // 是否使用访问量功能
-const usePageView = computed(() => unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
+const usePageView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
 
 const statisticsInfo: UseBuSunZi = { pagePv: ref(0), isGet: ref(false) };
 // 通过不蒜子获取访问量
 const { pagePv, isGet, request } = useBuSunZi(
-  true,
+  unref(usePageView),
   unref(statisticsConfig).iteration,
   unref(statisticsConfig).pageIteration
 );

@@ -1,4 +1,4 @@
-import { type Plugin, type ViteDevServer } from "vite";
+import type { Plugin, ViteDevServer } from "vite";
 import type { SidebarOption } from "./types";
 import createSidebar from "./helper";
 import { join } from "node:path";

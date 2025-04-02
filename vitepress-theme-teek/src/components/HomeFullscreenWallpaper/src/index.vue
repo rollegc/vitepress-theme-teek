@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeFullscreenWallpaper">
-import { onMounted, onUnmounted, ref, unref } from "vue";
+import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import type { Wallpaper } from "../../../config/types";
@@ -12,11 +12,13 @@ const ns = useNamespace("homeFullscreenWallpaper");
 const isFullscreen = ref(false);
 
 const { theme, frontmatter } = useData();
-const {
-  hideBanner = false,
-  hideWaves = false,
-  hideMask = false,
-}: Wallpaper = { ...unref(theme).wallpaper, ...unref(frontmatter).tk?.wallpaper };
+const wallpaperConfig = computed<Wallpaper>(() => ({
+  hideBanner: false,
+  hideWaves: false,
+  hideMask: false,
+  ...unref(theme).wallpaper,
+  ...unref(frontmatter).tk?.wallpaper,
+}));
 
 /**
  * 监听键盘事件
@@ -64,6 +66,7 @@ const handleFullscreenChange = () => {
 
   isFullscreen.value = !!document.fullscreenElement;
 
+  const { hideBanner, hideWaves, hideMask } = unref(wallpaperConfig);
   const options = [
     { el: htmlDom, executeClass: ns.b() },
     { el: bannerCenterDom, executeClass: "no-feature" },

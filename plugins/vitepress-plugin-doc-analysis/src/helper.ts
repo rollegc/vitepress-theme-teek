@@ -64,7 +64,7 @@ export function readFileList(
       const absoluteFilePath = resolve(filePath);
       // 计算相对路径
       const relativePath = relative(workingDir, absoluteFilePath).replace(/\\/g, "/");
-      let type = extname(dirOrFilename);
+      const type = extname(dirOrFilename);
 
       if (type === ".md") fileList.push({ filePath, relativePath: prefix + relativePath });
     }

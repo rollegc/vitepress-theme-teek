@@ -16,7 +16,7 @@ export type CommentConfig<T extends keyof CommentProvider = "" | "twikoo" | "wal
   };
 
 export type CommentProvider = {
-  "": {};
+  "": object;
   /**
    * twikoo 评论区配置项
    */

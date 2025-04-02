@@ -19,7 +19,7 @@ watch(
   route,
   () => {
     const { codeBlock = true } = unref(frontmatter);
-    if (codeBlock == false) return document.documentElement.removeAttribute(documentAttribute);
+    if (codeBlock === false) return document.documentElement.removeAttribute(documentAttribute);
 
     document.documentElement.setAttribute(documentAttribute, ns.namespace);
     nextTick(() => initCodeBlock());

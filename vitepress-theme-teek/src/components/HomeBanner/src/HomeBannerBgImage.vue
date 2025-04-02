@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeBannerBgImage">
 import { withBase, useData } from "vitepress";
-import { onMounted, unref } from "vue";
+import { computed, onMounted, unref } from "vue";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
 import type { Banner } from "../../../config/types";
@@ -12,26 +12,28 @@ const ns = useNamespace("bannerBgImage");
 const { theme, frontmatter } = useData();
 
 // Banner 配置项
-const {
-  bgStyle,
-  imgSrc,
-  imgInterval = 15000,
-  imgShuffle = false,
-  mask = true,
-  maskBg = "rgba(0, 0, 0, 0.4)",
-}: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
+const bannerConfig = computed<Required<Banner>>(() => ({
+  bgStyle: undefined,
+  imgSrc: undefined,
+  imgInterval: 15000,
+  imgShuffle: false,
+  mask: true,
+  maskBg: "rgba(0, 0, 0, 0.4)",
+  ...unref(theme).banner,
+  ...unref(frontmatter).tk?.banner,
+}));
 
 // 局部图片背景风格
-const isPartImgBgStyle = bgStyle === "partImg";
+const isPartImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "partImg");
 // 全屏图片背景风格
-const isFullImgBgStyle = bgStyle === "fullImg";
+const isFullImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "fullImg");
 
 // banner 背景图片定时轮播
 const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData(
-  [imgSrc || []].flat().map(item => item && withBase(item)),
+  [unref(bannerConfig).imgSrc || []].flat().map(item => item && withBase(item)),
   {
-    timeout: imgInterval,
-    shuffle: imgShuffle,
+    timeout: unref(bannerConfig).imgInterval,
+    shuffle: unref(bannerConfig).imgShuffle,
     onAfterUpdate: newValue => {
       // 预加载下一张图片
       if (newValue) {
@@ -47,6 +49,7 @@ onMounted(() => {
 });
 
 const getStyle = () => {
+  const { imgSrc, maskBg, imgInterval } = unref(bannerConfig);
   const imgBgVar = ns.cssVarName("banner-img-bg");
   const maskBgColorVar = ns.cssVarName("banner-mask-bg-color");
   const imgSwitchIntervalVar = ns.cssVarName("banner-img-switch-interval-s");
@@ -64,7 +67,7 @@ const getStyle = () => {
 
 <template>
   <div :class="[ns.b(), { part: isPartImgBgStyle, full: isFullImgBgStyle }]" :style="getStyle()">
-    <div v-if="mask && imgSrc" class="mask" />
+    <div v-if="bannerConfig.mask && bannerConfig.imgSrc" class="mask" />
     <slot v-if="isPartImgBgStyle" />
   </div>
   <slot v-if="isFullImgBgStyle" />

@@ -11,30 +11,31 @@ import { postDataUpdateSymbol } from "../../Home/src/home";
 
 defineOptions({ name: "HomeCategoryCard" });
 
-const ns = useNamespace("category");
-
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
+const ns = useNamespace("category");
 const { localeIndex, theme, site, frontmatter } = useData();
 
-const pageNum = ref(1);
 // 分类配置项
-const {
-  path = "/categories",
-  pageTitle = `${categoryIcon}全部分类`,
-  homeTitle = `${categoryIcon}文章分类`,
-  emptyLabel = "暂无文章分类",
-  limit = 5,
-  autoPage = false,
-  pageSpeed = 4000,
-}: Category = { ...unref(theme).category, ...unref(frontmatter).tk?.category };
+const categoryConfig = computed<Required<Category>>(() => ({
+  path: "/categories",
+  pageTitle: `${categoryIcon}全部分类`,
+  homeTitle: `${categoryIcon}文章分类`,
+  emptyLabel: "暂无文章分类",
+  limit: 5,
+  autoPage: false,
+  pageSpeed: 4000,
+  ...unref(theme).category,
+  ...unref(frontmatter).tk?.category,
+}));
 
 const posts = usePosts();
-
+const pageNum = ref(1);
 const categories = computed(() => unref(posts).groupCards.categories);
 
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
 const currentCategories = computed(() => {
+  const { limit } = unref(categoryConfig);
   const c = unref(categories);
   const p = unref(pageNum);
   return categoriesPage ? c : c.slice((p - 1) * limit, p * limit);
@@ -42,8 +43,9 @@ const currentCategories = computed(() => {
 
 // 标题
 const finalTitle = computed(() => {
-  let pt = isFunction(pageTitle) ? pageTitle(categoryIcon) : pageTitle;
-  let ht = isFunction(homeTitle) ? homeTitle(categoryIcon) : homeTitle;
+  const { pageTitle, homeTitle } = unref(categoryConfig);
+  const pt = isFunction(pageTitle) ? pageTitle(categoryIcon) : pageTitle;
+  const ht = isFunction(homeTitle) ? homeTitle(categoryIcon) : homeTitle;
   return { pt, ht };
 });
 
@@ -52,7 +54,7 @@ const categoriesPageLink = computed(() => {
   const localeIndexConst = unref(localeIndex);
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
-  return `${localeName}${path}${unref(site).cleanUrls ? "" : ".html"}`;
+  return `${localeName}${unref(categoryConfig).path}${unref(site).cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});
@@ -112,12 +114,12 @@ const itemRefs = ref<HTMLLIElement[]>([]);
   <HomeCard
     :page="!categoriesPage"
     v-model="pageNum"
-    :pageSize="limit"
+    :pageSize="categoryConfig.limit"
     :total="categories.length"
     :title="finalTitle[categoriesPage ? 'pt' : 'ht']"
     :titleClick="handleSwitchCategory"
-    :autoPage
-    :pageSpeed
+    :autoPage="categoryConfig.autoPage"
+    :pageSpeed="categoryConfig.pageSpeed"
     :class="ns.b()"
   >
     <template #default="{ transitionName }">
@@ -140,10 +142,12 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           <span>{{ item.length }}</span>
         </a>
 
-        <a v-if="!categoriesPage && limit < categories.length" :href="withBase(categoriesPageLink)">更多 ...</a>
+        <a v-if="!categoriesPage && categoryConfig.limit < categories.length" :href="withBase(categoriesPageLink)">
+          更多 ...
+        </a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')">{{ categoryConfig.emptyLabel }}</div>
     </template>
   </HomeCard>
 

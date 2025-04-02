@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeBannerFeature">
 import { useData, withBase } from "vitepress";
-import { ref, unref } from "vue";
+import { computed, ref, unref } from "vue";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import type { Banner } from "../../../config/types";
 
@@ -10,17 +10,20 @@ const ns = useNamespace("bannerFeature");
 
 const { theme, frontmatter } = useData();
 
-const { features = [], featureCarousel = 4000 }: Banner = {
+const bannerConfig = computed<Required<Banner>>(() => ({
+  features: [],
+  featureCarousel: 4000,
   ...unref(theme).banner,
   ...unref(frontmatter).tk,
   ...unref(frontmatter).tk?.banner,
-};
+}));
 
 const active = ref(0);
 const isMobile = ref(false);
 let intervalId: NodeJS.Timeout;
 
 useWindowSize(width => {
+  const { features, featureCarousel } = unref(bannerConfig);
   if (width <= 719) {
     isMobile.value = true;
     if (intervalId) clearTimeout(intervalId);
@@ -37,14 +40,14 @@ useWindowSize(width => {
 
 <template>
   <TransitionGroup
-    v-if="features.length"
+    v-if="bannerConfig.features.length"
     name="slide-next"
     tag="div"
     :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-wrap-between']"
   >
     <div
       :class="ns.e('feature__item')"
-      v-for="(feature, index) in features"
+      v-for="(feature, index) in bannerConfig.features"
       :key="index"
       v-show="!isMobile || active === index"
     >

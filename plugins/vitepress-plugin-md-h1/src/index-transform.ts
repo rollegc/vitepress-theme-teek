@@ -54,7 +54,7 @@ export default function VitePluginVitePressMdH1(option: MdH1Option = {}): Plugin
           .replace(
             multipleBlockTag,
             `${multipleBlockTag}
-              _cache[0] || (_cache[0] = _createStaticVNode("<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\">​</a></h1>", 1)),
+              _cache[0] || (_cache[0] = _createStaticVNode("<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\" /></h1>", 1)),
             `
           );
       }
@@ -72,7 +72,7 @@ export default function VitePluginVitePressMdH1(option: MdH1Option = {}): Plugin
                   class: "header-anchor",
                   href: "#${titleId}",
                   "aria-label": "Permalink to \\"${finalTitle}\\""
-                }, "​")
+                }, "")
               ], -1 /* HOISTED */),
             `
         );
@@ -85,7 +85,7 @@ export default function VitePluginVitePressMdH1(option: MdH1Option = {}): Plugin
       if (code.includes(createStaticVNodeTag)) {
         return code.replace(
           createStaticVNodeTag,
-          `${createStaticVNodeTag}<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\">​</a></h1>`
+          `${createStaticVNodeTag}<h1 id=\\"${titleId}\\" tabindex=\\"-1\\">${finalTitle} <a class=\\"header-anchor\\" href=\\"#${titleId}\\" aria-label=\\"Permalink to &quot;${finalTitle}&quot;\\" /></h1>`
         );
       }
 

@@ -28,7 +28,7 @@ const buildStyle = async () => {
   // 生成 /dist 文件夹
   try {
     await access(distRoot);
-  } catch (error) {
+  } catch {
     await mkdir(distRoot);
   }
 

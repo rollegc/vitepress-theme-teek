@@ -1,4 +1,5 @@
 <script setup lang="ts" name="HomeBanner">
+import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
 import { upperFirst } from "../../../helper";
@@ -8,46 +9,64 @@ import HomeBannerContent from "./HomeBannerContent.vue";
 import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 import type { Banner, BodyBgImg } from "../../../config/types";
-import { useData } from "vitepress";
 
 defineOptions({ name: "HomeBanner" });
 
 const ns = useNamespace("banner");
-
 const { theme, frontmatter } = useData();
 
 // Banner 配置项
-const {
-  bgStyle = "pure",
-  imgWaves = true,
-  textColor,
-  titleFontSize = "3.2rem",
-  descFontSize = "1.4rem",
-}: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
-const { imgSrc, bannerStyle = "full" }: BodyBgImg = unref(theme).bodyBgImg || {};
-const { features = [] }: Banner = {
-  ...unref(theme).banner,
-  ...unref(frontmatter).tk,
-  ...unref(frontmatter).tk?.banner,
-};
+const bannerConfig = computed<Required<Banner>>(() => {
+  const features = unref(frontmatter).tk?.features || [];
+  return {
+    bgStyle: "pure",
+    imgWaves: true,
+    textColor: "#ffffff",
+    titleFontSize: "3.2rem",
+    descFontSize: "1.4rem",
+    features,
+    ...unref(theme).banner,
+    ...unref(frontmatter).tk?.banner,
+  };
+});
+// bodyBgImg 配置项
+const bodyBgImgConfig = computed<Required<BodyBgImg>>(() => ({
+  imgSrc: "",
+  bannerStyle: "full",
+  ...unref(theme).bodyBgImg,
+}));
 
-// 纯色背景风格
-const isBannerPureBgStyle = bgStyle === "pure";
-// 局部图片背景风格
-const isBannerPartImgBgStyle = bgStyle === "partImg";
-// 全屏图片背景风格
-const isBannerFullImgBgStyle = bgStyle === "fullImg";
-// 是否使用 bodyBgImg 配置
-const isBodyImgBgStyle = !!imgSrc;
-const isBodyPartImgBgStyle = isBodyImgBgStyle && bannerStyle === "part";
-const isBodyFullImgBgStyle = isBodyImgBgStyle && bannerStyle === "full";
+const currentBgStyle = computed(() => {
+  const { bgStyle } = unref(bannerConfig);
+  const { imgSrc, bannerStyle } = unref(bodyBgImgConfig);
+  // 纯色背景风格
+  const isBannerPureBgStyle = bgStyle === "pure";
+  // 局部图片背景风格
+  const isBannerPartImgBgStyle = bgStyle === "partImg";
+  // 全屏图片背景风格
+  const isBannerFullImgBgStyle = bgStyle === "fullImg";
+  // 是否使用 bodyBgImg 配置
+  const isBodyImgBgStyle = !!imgSrc;
+  const isBodyPartImgBgStyle = isBodyImgBgStyle && bannerStyle === "part";
+  const isBodyFullImgBgStyle = isBodyImgBgStyle && bannerStyle === "full";
+
+  return {
+    isBannerPureBgStyle,
+    isBannerPartImgBgStyle,
+    isBannerFullImgBgStyle,
+    isBodyImgBgStyle,
+    isBodyPartImgBgStyle,
+    isBodyFullImgBgStyle,
+  };
+});
 
 const getStyle = () => {
   const titleTextVar = ns.cssVarName("banner-title-text");
   const descTextVar = ns.cssVarName("banner-desc-text");
   const textColorVar = ns.cssVarName("banner-text-color");
+  const { titleFontSize, descFontSize, textColor } = unref(bannerConfig);
 
-  return { [titleTextVar]: titleFontSize, [descTextVar]: descFontSize, [textColorVar]: textColor || "#ffffff" };
+  return { [titleTextVar]: titleFontSize, [descTextVar]: descFontSize, [textColorVar]: textColor };
 };
 
 const bannerRef = ref<HTMLElement | null>(null);
@@ -62,14 +81,14 @@ const toggleClass = () => {
 
   if (!vPNavDom || !windowH) return;
 
-  const offset = isBodyImgBgStyle ? 0 : 100;
+  const offset = unref(currentBgStyle).isBodyImgBgStyle ? 0 : 100;
   if (unref(bannerRef) && document.documentElement.scrollTop + offset < windowH) {
     vPNavDom.classList.add("full-img-nav-bar");
   } else vPNavDom.classList.remove("full-img-nav-bar");
 };
 
 onMounted(() => {
-  if (isBannerFullImgBgStyle || isBodyFullImgBgStyle) {
+  if (unref(currentBgStyle).isBannerFullImgBgStyle || unref(currentBgStyle).isBodyFullImgBgStyle) {
     // 全屏图片模式，监听滚轮，修改导航栏样式（透明化）
     toggleClass();
     window.addEventListener("scroll", toggleClass);
@@ -77,10 +96,20 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  if (isBannerFullImgBgStyle || isBodyImgBgStyle) window.removeEventListener("scroll", toggleClass);
+  if (unref(currentBgStyle).isBannerFullImgBgStyle || unref(currentBgStyle).isBodyImgBgStyle) {
+    window.removeEventListener("scroll", toggleClass);
+  }
 });
 
-const getClass = () => {
+const className = computed(() => {
+  const {
+    isBannerPureBgStyle,
+    isBannerPartImgBgStyle,
+    isBannerFullImgBgStyle,
+    isBodyPartImgBgStyle,
+    isBodyFullImgBgStyle,
+  } = unref(currentBgStyle);
+
   // body 优先级高
   if (isBodyPartImgBgStyle) return ns.is("part-img");
   if (isBodyFullImgBgStyle) return ns.is("full-img");
@@ -89,7 +118,7 @@ const getClass = () => {
   if (isBannerFullImgBgStyle) return ns.is("full-img");
 
   return "";
-};
+});
 
 // full 模式（全屏图片模式）需要将内容和 Feature 居中，所以需要添加 class: center
 const styleComponentMap: Record<string, any> = {
@@ -101,6 +130,9 @@ const styleComponentMap: Record<string, any> = {
 };
 
 const styleComponent = computed(() => {
+  const { isBodyImgBgStyle } = unref(currentBgStyle);
+  const { bgStyle } = unref(bannerConfig);
+  const { bannerStyle } = unref(bodyBgImgConfig);
   const currentStyle = isBodyImgBgStyle ? `body${upperFirst(bannerStyle)}` : `banner${upperFirst(bgStyle)}`;
 
   return styleComponentMap[currentStyle];
@@ -110,9 +142,9 @@ const styleComponent = computed(() => {
 <template>
   <slot name="teek-home-banner-before" />
 
-  <div ref="bannerRef" :class="[ns.b(), getClass()]" :style="getStyle()">
+  <div ref="bannerRef" :class="[ns.b(), className]" :style="getStyle()">
     <component :is="styleComponent.el" v-bind="styleComponent.props">
-      <div :class="[ns.e('content'), { 'no-feature': !features.length }]">
+      <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />
         <HomeBannerContent />
         <slot name="teek-home-banner-content-after" />
@@ -122,39 +154,10 @@ const styleComponent = computed(() => {
       </div>
     </component>
 
-    <HomeBannerWaves v-if="imgWaves && isBannerFullImgBgStyle && !isBodyImgBgStyle" />
+    <HomeBannerWaves
+      v-if="bannerConfig.imgWaves && currentBgStyle.isBannerFullImgBgStyle && !currentBgStyle.isBodyImgBgStyle"
+    />
   </div>
 
   <slot name="teek-home-banner-after" />
 </template>
-
-<!-- 上面的 `<component :is="styleComponent.el" v-bind="styleComponent.props"> xxx </component>` 等于下面的代码 -->
-<!-- <template>
-  <div v-if="isBodyImgBgStyle" :class="`body-${bannerStyle}`">
-    <div :class="[styleComponent.centerClass, { 'no-feature': !features.length }]">
-      <HomeBannerContent />
-
-      <slot name="teek-home-banner-feature-before" />
-      <HomeBannerFeature />
-      <slot name="teek-home-banner-feature-after" />
-    </div>
-  </div>
-
-  <HomeBannerBgPure v-else-if="isBannerPureBgStyle">
-    <HomeBannerContent />
-
-    <slot name="teek-home-banner-feature-before" />
-    <HomeBannerFeature />
-    <slot name="teek-home-banner-feature-after" />
-  </HomeBannerBgPure>
-
-  <HomeBannerBgImage v-else-if="isBannerPartImgBgStyle || isBannerFullImgBgStyle">
-    <div :class="{ [centerClass]: isBannerFullImgBgStyle, 'no-feature': !features.length }">
-      <HomeBannerContent />
-
-      <slot name="teek-home-banner-feature-before" />
-      <HomeBannerFeature />
-      <slot name="teek-home-banner-feature-after" />
-    </div>
-  </HomeBannerBgImage>
-</template> -->

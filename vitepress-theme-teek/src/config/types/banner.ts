@@ -56,7 +56,7 @@ export interface Banner {
   /**
    * Banner 字体颜色
    *
-   * @default 'bgStyle 为 pure 时为 #000000，其他为 #ffffff'
+   * @default '#ffffff'
    */
   textColor?: string;
   /**

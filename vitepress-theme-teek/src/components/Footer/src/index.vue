@@ -5,30 +5,27 @@ import { useNamespace } from "../../../hooks";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
-import { version } from "../../../version";
 import Icon from "../../Icon";
 import type { FooterInfo, Social } from "../../../config/types";
 
-defineOptions({ name: "Footer" });
+defineOptions({ name: "TkFooter" });
 
 const ns = useNamespace("footer");
 
 const { theme, frontmatter } = useData();
 
-const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = {
-  ...unref(theme),
-  ...unref(frontmatter).tk,
-};
+const footerInfo = computed<FooterInfo>(() => ({ ...unref(theme).footerInfo, ...unref(frontmatter).tk?.footerInfo }));
+const social = computed<Social[]>(() => [...(unref(theme).social || []), ...(unref(frontmatter).tk?.social || [])]);
 
 const footerData = computed(() => {
-  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
+  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = unref(footerInfo) || {};
   const data: Social[] = [];
   // 1.主题版权
   if (theme.show !== false) {
     data.push({
-      name: `Theme By Teek@${version}`,
+      name: "Theme By Teek",
       icon: themeIcon,
-      link: "https://teek.tianke99.cn",
+      link: "https://github.com/Kele-Bingtang/vitepress-theme-teek",
       // 可覆盖上面的配置项
       ...theme,
     });
@@ -81,7 +78,7 @@ const footerData = computed(() => {
     </div>
 
     <template v-if="footerInfo">
-      <p v-for="m in [footerInfo.topMessage || []].flat()" v-html="m" />
+      <p v-for="(message, index) in [footerInfo.topMessage || []].flat()" :key="index" v-html="message" />
 
       <div :class="`${ns.e('list')} flx-wrap-justify-center`">
         <div v-for="item in footerData" :key="item.name" :class="`${ns.e('list__item')} flx-align-center`">
@@ -104,7 +101,7 @@ const footerData = computed(() => {
         <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml"></span>
       </div>
 
-      <p v-for="m in [footerInfo.bottomMessage || []].flat()" v-html="m" />
+      <p v-for="(message, index) in [footerInfo.bottomMessage || []].flat()" :key="index" v-html="message" />
     </template>
   </div>
 </template>

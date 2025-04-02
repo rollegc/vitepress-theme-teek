@@ -1,6 +1,6 @@
 <script setup lang="ts" name="TransitionCollapse">
 import { useNamespace } from "../../../hooks";
-import type { RendererElement } from "@vue/runtime-core";
+import type { RendererElement } from "vue";
 
 defineOptions({ name: "TransitionCollapse" });
 

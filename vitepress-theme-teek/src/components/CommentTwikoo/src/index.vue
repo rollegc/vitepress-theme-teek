@@ -22,9 +22,7 @@ const {
 
 const initTwikoo = () => {
   if (!envId) return;
-  try {
-    (window as any).twikoo.init({ ...options, envId, el: "#twikoo" });
-  } catch (e) {}
+  (window as any).twikoo.init({ ...options, envId, el: "#twikoo" });
 };
 
 const twikooJs = ref<HTMLScriptElement | null>(null);
