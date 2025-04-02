@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.5](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0...v1.0.0-alpha.5) (2025-04-02)
+
+### Features
+
+- theme 的配置支持响应式 ([140b1d0](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/140b1d0ab1f9ceabf8c90806fef4b00be898e02b))
+- 🚀 1.0.0-alpha.5 版本发布 ([5305b9d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5305b9d7f40324d836637bf05db8ad109b72a16c))
+- 🚀 新增 CHANGELOG.md ([265ba83](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/265ba831121bede21007ef26c239fdf63a57d7c2))
+- 🚀 新增 eslint 格式化 ([5a8bce0](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5a8bce086049a666a6ecef953eaf10c19607be3c))
+- 🚀 theme 支持 computer ([30b758c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/30b758cb1011db8c70347c2802e218b72a064153))
+
+### Bug Fixes
+
+- 🐞 修复 Demo 容器引用的组件没有打包被打包，修复浏览器无法回退上一页问题，主题版权链接更改为 GitHub 地址 ([2e62d67](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2e62d67a173167cff1340b44e00795761e21f6bd))
+
+### Docs
+
+- 📚 文档内容纠正 ([95b6298](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/95b6298a1478fdf95a1c21d31f2c6867c675b04b))
+
+### Styling
+
+- 🎨 更新 teek 域名 ([4f2c9c2](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/4f2c9c299675f89a6e1fb62f5229202757029bea))
+
 ## 1.0.0-alpha.4 (2025-03-31)
 
 ### Features
