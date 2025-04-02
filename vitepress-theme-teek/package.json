@@ -48,11 +48,11 @@
     "markdown-it-container": "^4.0.0",
     "vitepress-plugin-auto-frontmatter": "^1.0.7",
     "vitepress-plugin-catalogue": "^1.0.9",
-    "vitepress-plugin-doc-analysis": "1.0.10",
-    "vitepress-plugin-file-content-loader": "1.0.9",
-    "vitepress-plugin-md-h1": "1.0.8",
-    "vitepress-plugin-permalink": "1.0.15",
-    "vitepress-plugin-sidebar-resolve": "1.0.8"
+    "vitepress-plugin-doc-analysis": "^1.0.10",
+    "vitepress-plugin-file-content-loader": "^1.0.9",
+    "vitepress-plugin-md-h1": "^1.0.8",
+    "vitepress-plugin-permalink": "^1.0.15",
+    "vitepress-plugin-sidebar-resolve": "^1.0.8"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
