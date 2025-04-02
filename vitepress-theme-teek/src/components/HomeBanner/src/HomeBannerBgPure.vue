@@ -10,12 +10,9 @@ const ns = useNamespace("bannerBgPure");
 
 const { theme, frontmatter } = useData();
 
-const { pureBgColor = "#28282d" }: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
-
 const getStyle = () => {
-  return {
-    backgroundColor: pureBgColor,
-  };
+  const { pureBgColor = "#28282d" }: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
+  return { backgroundColor: pureBgColor };
 };
 </script>
 

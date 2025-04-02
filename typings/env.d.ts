@@ -3,8 +3,7 @@ declare module "*.data.ts" {
 }
 
 declare module "*.vue" {
-  import type { ComponentOptions } from "vue";
-
-  const comp: ComponentOptions;
-  export default comp;
+  import type { DefineComponent } from "vue";
+  const component: DefineComponent<object, object, any>;
+  export default component;
 }

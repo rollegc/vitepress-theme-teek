@@ -60,14 +60,14 @@ const currentBgStyle = computed(() => {
   };
 });
 
-const styleVar = computed(() => {
+const getStyle = () => {
   const titleTextVar = ns.cssVarName("banner-title-text");
   const descTextVar = ns.cssVarName("banner-desc-text");
   const textColorVar = ns.cssVarName("banner-text-color");
   const { titleFontSize, descFontSize, textColor } = unref(bannerConfig);
 
   return { [titleTextVar]: titleFontSize, [descTextVar]: descFontSize, [textColorVar]: textColor };
-});
+};
 
 const bannerRef = ref<HTMLElement | null>(null);
 
@@ -141,7 +141,7 @@ const styleComponent = computed(() => {
 <template>
   <slot name="teek-home-banner-before" />
 
-  <div ref="bannerRef" :class="[ns.b(), className]" :style="styleVar">
+  <div ref="bannerRef" :class="[ns.b(), className]" :style="getStyle()">
     <component :is="styleComponent.el" v-bind="styleComponent.props">
       <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />

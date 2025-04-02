@@ -3,7 +3,7 @@ import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useWindowSize, useVpRouter } from "../../../hooks";
 import Icon from "../../Icon";
-import { noticeIcon as noticeSvg, closeIcon as closeSvg } from "../../../assets/icons";
+import { noticeIcon, closeIcon } from "../../../assets/icons";
 import { isString } from "../../../helper";
 import type { Notice } from "../../../config/types";
 
@@ -13,41 +13,51 @@ const ns = useNamespace("notice");
 const vpRouter = useVpRouter();
 const { theme, localeIndex } = useData();
 
-const {
-  noticeStyle,
-  iconStyle = {},
-  popoverStyle = {},
-  title = "公告",
-  initOpen = true,
-  duration = 0,
-  mobileMinify = false,
-  reopen = true,
-  useStorage = true,
-  twinkle = false,
-  position = "top",
-  noticeIcon = noticeSvg,
-  closeIcon = closeSvg,
-  onAfterRouteChange,
-}: Notice = unref(theme).notice || {};
+const noticeConfig = computed<Notice>(() => ({
+  noticeStyle: undefined,
+  iconStyle: {},
+  popoverStyle: {},
+  title: "公告",
+  initOpen: true,
+  duration: 0,
+  mobileMinify: false,
+  reopen: true,
+  useStorage: true,
+  twinkle: false,
+  position: "top",
+  noticeIcon,
+  closeIcon,
+  onAfterRouteChange: undefined,
+  ...unref(theme).notice,
+}));
 
 const destroyNoticeIcon = ref(false);
 const showNoticeIcon = computed(() => !unref(showPopover) && !unref(destroyNoticeIcon));
-const showPopover = ref(initOpen);
+const showPopover = ref(unref(noticeConfig).initOpen);
+
+watch(
+  () => unref(noticeConfig).initOpen,
+  (newValue: boolean) => {
+    showPopover.value = newValue;
+  }
+);
 
 // 公告样式
 const styleObj = computed(() => {
+  const { noticeStyle } = unref(noticeConfig);
   if (!noticeStyle) return "";
   return noticeStyle.trim().startsWith(`.${ns.b()}`) ? noticeStyle : `.${ns.b()} { ${noticeStyle} }`;
 });
 
 // 公告标题
 const noticeTitle = computed(() => {
+  const { title } = unref(noticeConfig);
   if (isString(title)) return title;
   return title(unref(localeIndex));
 });
 
 // 是否在移动端隐藏公告功能
-if (mobileMinify) {
+if (unref(noticeConfig).mobileMinify) {
   useWindowSize(width => {
     if (width <= 768) destroyNoticeIcon.value = false;
     else if (destroyNoticeIcon.value !== true) destroyNoticeIcon.value = true;
@@ -60,6 +70,7 @@ let timer: NodeJS.Timeout | null = null;
  * 弹框定时自动关闭
  */
 const closePopoverWhenTimeout = () => {
+  const { duration } = unref(noticeConfig);
   if (unref(showPopover) && duration > 0) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(handleClosePopover, duration);
@@ -69,7 +80,7 @@ const closePopoverWhenTimeout = () => {
 onMounted(() => {
   // 调用自定义的切换后回调
   vpRouter.bindAfterRouteChange(ns.joinNamespace("notice"), () =>
-    onAfterRouteChange?.(vpRouter.route, unref(showNoticeIcon), unref(showPopover))
+    unref(noticeConfig).onAfterRouteChange?.(vpRouter.route, unref(showNoticeIcon), unref(showPopover))
   );
   closePopoverWhenTimeout();
 });
@@ -79,7 +90,7 @@ onMounted(() => {
  * @param action 对滚动条的行为
  */
 const openOrDisableScroll = (action: "open" | "disable") => {
-  if (position !== "center") return;
+  if (unref(noticeConfig).position !== "center") return;
 
   const actions: Record<"open" | "disable", "add" | "remove"> = {
     open: "remove",
@@ -91,11 +102,14 @@ const openOrDisableScroll = (action: "open" | "disable") => {
 // 记录公告弹框状态的缓存 Key
 const storageKey = computed(() => `${ns.b()}-${unref(localeIndex)}`);
 
-if (useStorage) {
+if (unref(noticeConfig).useStorage) {
   // 多语言切换后，读取新语言的缓存，更新公告弹框状态
   watch(
     localeIndex,
     () => {
+      // 二次校验，因为 noticeConfig 是 computed，因此后面可能会变化
+      if (!unref(noticeConfig).useStorage) return;
+
       const oldValue = localStorage.getItem(unref(storageKey));
       if (oldValue) {
         const isShowPopover = oldValue === "true";
@@ -126,7 +140,7 @@ const handleClosePopover = () => {
   showPopover.value = false;
   storagePopoverState("false");
 
-  if (!reopen) destroyNoticeIcon.value = true;
+  if (!unref(noticeConfig).reopen) destroyNoticeIcon.value = true;
 
   if (timer) clearTimeout(timer);
   openOrDisableScroll("open");
@@ -137,7 +151,7 @@ const handleClosePopover = () => {
  * @param state 状态
  */
 const storagePopoverState = (state: string) => {
-  if (useStorage) localStorage.setItem(unref(storageKey), state);
+  if (unref(noticeConfig).useStorage) localStorage.setItem(unref(storageKey), state);
 };
 </script>
 
@@ -149,23 +163,27 @@ const storagePopoverState = (state: string) => {
     <div
       v-if="!destroyNoticeIcon"
       v-show="showNoticeIcon"
-      :class="[ns.e('icon'), { twinkle: twinkle }, 'flx']"
-      :style="iconStyle"
+      :class="[ns.e('icon'), { twinkle: noticeConfig.twinkle }, 'flx']"
+      :style="noticeConfig.iconStyle"
       @click="handleOpenPopover"
     >
-      <Icon :icon="noticeIcon" color="#ffffff" size="14px"></Icon>
+      <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="14px"></Icon>
     </div>
 
     <!-- 公告弹窗 -->
-    <div v-show="showPopover" :class="[ns.e('popover'), ns.is(position)]" :style="popoverStyle">
+    <div
+      v-show="showPopover"
+      :class="[ns.e('popover'), ns.is(noticeConfig.position)]"
+      :style="noticeConfig.popoverStyle"
+    >
       <slot name="header">
         <div :class="[ns.e('popover__header'), 'flx-justify-between']">
           <div class="flx-align-center">
-            <Icon :icon="noticeIcon" color="#ffffff" size="20px"></Icon>
+            <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="20px"></Icon>
             <span class="title sle">{{ noticeTitle }}</span>
           </div>
           <Icon
-            :icon="closeIcon"
+            :icon="noticeConfig.closeIcon"
             color="#ffffff"
             size="20px"
             :class="ns.joinNamespace('pointer')"
@@ -180,6 +198,6 @@ const storagePopoverState = (state: string) => {
     </div>
 
     <!-- 遮罩层，与公告弹窗一起出现 -->
-    <div v-show="showPopover && position === 'center'" :class="ns.e('mask')"></div>
+    <div v-show="showPopover && noticeConfig.position === 'center'" :class="ns.e('mask')"></div>
   </div>
 </template>

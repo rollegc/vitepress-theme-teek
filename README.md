@@ -49,6 +49,5 @@ pnpm plugin:build
 
 ## TODO
 
-- 首页配置支持 computer
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
