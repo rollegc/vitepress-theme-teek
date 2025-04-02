@@ -117,8 +117,6 @@ export default function usePermalink() {
 
       if (filePath) {
         const targetUrl = base + filePath + search + hash;
-        // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
-        history.replaceState(history.state || null, "", targetUrl);
         router.go(targetUrl);
 
         // 阻止本次路由跳转

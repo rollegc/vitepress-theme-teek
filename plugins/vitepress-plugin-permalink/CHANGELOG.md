@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.16
+
+### Patch Changes
+
+- 修复跳转 permalink 后无法回退问题
+
 ## 1.0.15
 
 ### Patch Changes

@@ -7,6 +7,7 @@ import Icon from "../../Icon";
 import TransitionCollapse from "../../TransitionCollapse";
 import type { DemoCodeProps } from "./demoCode";
 import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "../../../assets/icons";
+import { cs } from "element-plus/es/locale";
 
 defineOptions({ name: "DemoCode" });
 
@@ -31,13 +32,15 @@ const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));
 const decodedDescription = computed(() => decodeURIComponent(props.description));
 
+// 预加载 Demo 组件，防止 Vitepress 打包时不包含 Demo 组件
+const moduleFiles = (import.meta as any).glob("/examples/**/*.vue", { eager: true });
+
 const DemoComponent = defineAsyncComponent(async () => {
   try {
-    // / 表示从 .vitepress 目录层级开始
-    return await import(/* @vite-ignore */ withBase(`/${props.path}`));
+    const key = Object.keys(moduleFiles).find(i => i.endsWith(`/${props.path}`)) as string;
+    return moduleFiles[key];
   } catch (error) {
-    console.error(`[Teek Error] Failed to load component: '${props.path}'`, error);
-    return null;
+    console.error(`[Teek Error] Failed to load component: '/${props.path}'`, error);
   }
 });
 

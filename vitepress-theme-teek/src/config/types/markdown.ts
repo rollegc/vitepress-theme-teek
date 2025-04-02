@@ -27,12 +27,6 @@ export interface Markdown {
 
 export interface Demo {
   /**
-   * Demo 组件路径，基于 .vitepress 目录层级添加
-   *
-   * @default 'examples'
-   */
-  path?: string;
-  /**
    * Playground 链接
    */
   playgroundUrl?: string;
