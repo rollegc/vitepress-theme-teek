@@ -100,7 +100,7 @@ const usePageView = computed(() => unref(statisticsConfig).provider && unref(sta
 const statisticsInfo: UseBuSunZi = { pagePv: ref(0), isGet: ref(false) };
 // 通过不蒜子获取访问量
 const { pagePv, isGet, request } = useBuSunZi(
-  true,
+  unref(usePageView),
   unref(statisticsConfig).iteration,
   unref(statisticsConfig).pageIteration
 );

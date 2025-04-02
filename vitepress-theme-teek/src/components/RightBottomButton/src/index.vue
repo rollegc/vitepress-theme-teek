@@ -10,6 +10,23 @@ defineOptions({ name: "RightBottomButton" });
 
 const ns = useNamespace("rightBottomButton");
 
+const { theme, frontmatter } = useData();
+const {
+  useThemeStyle = true,
+  themeStyle: defaultThemeStyle = "vp-default",
+  themeStyleAppend = [],
+  themeStyleLabel = {},
+  useThemeSize = true,
+  themeSize: defaultThemeSize = "default",
+  themeSizeAppend = [],
+  themeSizeLabel = {},
+  backTopDone,
+  toCommentDone,
+  titleTip = {},
+}: ThemeSetting = unref(theme).themeSetting || {};
+
+const { provider }: CommentConfig = unref(theme).comment || {};
+
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
 const showToTop = computed(() => unref(scrollTop) > 100);
@@ -25,10 +42,16 @@ const showToComment = computed(() => {
 
 const scrollToTop = useDebounce(() => {
   document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
+  setTimeout(() => {
+    backTopDone?.();
+  }, 600);
 }, 500);
 
 const scrollToComment = useDebounce(() => {
   document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
+  setTimeout(() => {
+    toCommentDone?.();
+  }, 600);
 }, 500);
 
 const watchScroll = () => {
@@ -54,20 +77,6 @@ onUnmounted(() => {
   window.removeEventListener("scroll", watchScroll);
 });
 
-const { theme, frontmatter } = useData();
-const {
-  useThemeStyle = true,
-  themeStyle: defaultThemeStyle = "vp-default",
-  themeStyleAppend = [],
-  themeStyleLabel = {},
-  useThemeSize = true,
-  themeSize: defaultThemeSize = "default",
-  themeSizeAppend = [],
-  themeSizeLabel = {},
-  titleTip = {},
-}: ThemeSetting = unref(theme).themeSetting || {};
-
-const { provider }: CommentConfig = unref(theme).comment || {};
 const themeStyleStorageKey = ns.b("themeStyle");
 const themeSizeStorageKey = ns.b("themeSize");
 

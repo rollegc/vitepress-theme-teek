@@ -89,7 +89,6 @@ export default defineConfig([
       ...pluginVue.configs["recommended"].rules,
 
       // vue (https://eslint.vuejs.org/rules)
-      "vue/script-setup-uses-vars": "error", // 防止<script setup>使用的变量<template>被标记为未使用，此规则仅在启用该no-unused-vars规则时有效。
       "vue/v-slot-style": "error", // 强制执行 v-slot 指令样式
       "vue/no-mutating-props": "off", // 不允许组件 prop 的改变
       "vue/custom-event-name-casing": "off", // 为自定义事件名称强制使用特定大小写

@@ -4,7 +4,7 @@ import { useNamespace } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import Icon from "../../Icon";
 import type { Blogger, Social } from "../../../config/types";
-import { unref } from "vue";
+import { computed, unref } from "vue";
 
 defineOptions({ name: "HomeMyCard" });
 
@@ -12,10 +12,8 @@ const ns = useNamespace("homeMyCard");
 
 const { theme, frontmatter } = useData();
 
-const { blogger = {}, social = [] }: { blogger: Partial<Blogger>; social: Social[] } = {
-  ...unref(theme),
-  ...unref(frontmatter).tk,
-};
+const blogger = computed<Blogger>(() => ({ ...unref(theme).blogger, ...unref(frontmatter).tk?.blogger }));
+const social = computed<Social[]>(() => [...(unref(theme).social || []), ...(unref(frontmatter).tk?.social || [])]);
 </script>
 
 <template>

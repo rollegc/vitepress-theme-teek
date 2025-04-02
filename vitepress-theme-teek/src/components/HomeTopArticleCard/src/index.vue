@@ -18,13 +18,15 @@ const posts = usePosts();
 const { theme, frontmatter, localeIndex } = useData();
 
 // 精选文章配置项
-const {
-  limit = 4,
-  title = `${topArticleIcon}精选文章`,
-  emptyLabel = "暂无精选文章",
-  autoPage = false,
-  pageSpeed = 4000,
-}: TopArticle = { ...unref(theme).topArticle, ...unref(frontmatter).tk?.topArticle };
+const topArticleConfig = computed<TopArticle>(() => ({
+  limit: 4,
+  title: `${topArticleIcon}精选文章`,
+  emptyLabel: "暂无精选文章",
+  autoPage: false,
+  pageSpeed: 4000,
+  ...unref(theme).topArticle,
+  ...unref(frontmatter).tk?.topArticle,
+}));
 
 const topArticleList = computed(() => {
   const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;
@@ -35,11 +37,13 @@ const pageNum = ref(1);
 
 // 当前页的文章列表
 const currentTopArticleList = computed(() => {
+  const { limit } = unref(topArticleConfig);
   const p = unref(pageNum);
   return unref(topArticleList).slice((p - 1) * limit, p * limit);
 });
 
 const finalTitle = computed(() => {
+  const { title } = unref(topArticleConfig);
   if (isFunction(title)) return title(unref(localeIndex), topArticleIcon);
   return title;
 });
@@ -61,11 +65,11 @@ const getStyle = (num: number, index: number) => {
   <HomeCard
     page
     v-model="pageNum"
-    :pageSize="limit"
+    :pageSize="topArticleConfig.limit"
     :total="topArticleList.length"
     :title="finalTitle"
-    :autoPage
-    :pageSpeed
+    :autoPage="topArticleConfig.autoPage"
+    :pageSpeed="topArticleConfig.pageSpeed"
     :class="ns.b()"
   >
     <template #default="{ transitionName }">
@@ -93,7 +97,7 @@ const getStyle = (num: number, index: number) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')">{{ topArticleConfig.emptyLabel }}</div>
     </template>
   </HomeCard>
 

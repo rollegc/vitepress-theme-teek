@@ -46,9 +46,9 @@ export interface UseBuSunZi {
  * @param iterationTime 每次重试的时间，单位毫秒，类型 number
  */
 export const useBuSunZi = (initRequest = false, iteration = false, iterationTime = 2000) => {
-  const sitePv = ref(9999);
-  const siteUv = ref(9999);
-  const pagePv = ref(9999);
+  const sitePv = ref(0);
+  const siteUv = ref(0);
+  const pagePv = ref(0);
   const isGet = ref<boolean | null>(null);
 
   const request = () => {
@@ -58,9 +58,9 @@ export const useBuSunZi = (initRequest = false, iteration = false, iterationTime
 
     // 调用不蒜子接口
     callBsz().then(data => {
-      sitePv.value = data.site_pv || unref(sitePv);
-      siteUv.value = data.site_uv || unref(siteUv);
-      pagePv.value = data.page_pv || unref(pagePv);
+      sitePv.value = data.site_pv || 9999;
+      siteUv.value = data.site_uv || 9999;
+      pagePv.value = data.page_pv || 9999;
       isGet.value = true;
     });
   };
@@ -69,11 +69,10 @@ export const useBuSunZi = (initRequest = false, iteration = false, iterationTime
   if (initRequest) request();
 
   if (iteration) {
-    let intervalId: NodeJS.Timeout;
     let i = 0;
 
     // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
-    intervalId = setInterval(() => {
+    const intervalId = setInterval(() => {
       if (!unref(isGet)) {
         i += iterationTime;
         if (i > iterationTime * 5) clearInterval(intervalId);

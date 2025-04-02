@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostList">
-import { reactive, ref, unref, watch } from "vue";
+import { computed, reactive, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { PaginationProps } from "element-plus";
 import HomePostItem from "./HomePostItem.vue";
@@ -18,23 +18,26 @@ const ns = useNamespace("postList");
 const posts = usePosts();
 const { theme, frontmatter } = useData();
 
-const { emptyLabel = "文章列表为空" }: Post = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
+const postConfig = computed<Post>(() => ({
+  coverImgMode: "default",
+  emptyLabel: "文章列表为空",
+  ...unref(theme).post,
+  ...unref(frontmatter).tk?.post,
+}));
 
-// 自定义一页数量 & 分页组件的 Props
-const { pageSize = 10, ...pageProps }: Partial<PaginationProps> = {
-  ...unref(theme).page,
-  ...unref(frontmatter).tk?.page,
-};
-
-const { coverImgMode: coverImgModeConst = "default" } = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
-const coverImgMode = ref(coverImgModeConst);
+const coverImgMode = ref(unref(postConfig).coverImgMode);
 
 // 分页信息
 const pageInfo = ref({
   pageNum: 1,
   pageSizes: [10, 20, 50, 100, 200],
-  pageSize: pageSize,
+  pageSize: computed(() => unref(frontmatter).tk?.page?.pageSize || unref(theme).page?.pageSize || 10),
   total: 0,
+});
+
+// 自定义一页数量 & 分页组件的 Props
+const pageConfig = computed<Post>(() => {
+  return { ...unref(theme).page, ...unref(frontmatter).tk?.page };
 });
 
 const route = useRoute();
@@ -66,7 +69,7 @@ const updateData = () => {
   // 总数处理
   if (total !== post?.length) unref(pageInfo).total = post?.length || 0;
 
-  currentPosts.value = post?.slice((pageNum - 1) * pageSize, pageNum * pageSize);
+  currentPosts.value = post?.slice((pageNum - 1) * unref(pageSize), pageNum * unref(pageSize));
 };
 
 watch(
@@ -77,8 +80,8 @@ watch(
   { immediate: true }
 );
 
-const pagePropsRef = reactive({ ...pageProps });
-const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = pageProps;
+const pagePropsRef = reactive({ ...unref(pageConfig) });
+const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = unref(pageConfig);
 const targetSize = "small";
 const targetLayout = "prev, pager, next";
 
@@ -96,7 +99,7 @@ useWindowSize(width => {
 
   if (width <= 960) {
     if (coverImgMode.value !== "default") coverImgMode.value = "default";
-  } else if (coverImgMode.value !== coverImgModeConst) coverImgMode.value = coverImgModeConst;
+  } else if (coverImgMode.value !== unref(postConfig).coverImgMode) coverImgMode.value = unref(postConfig).coverImgMode;
 });
 
 /**
@@ -135,7 +138,7 @@ defineExpose({ updateData });
     </template>
     <div v-else :class="[ns.e('empty'), 'flx-column-center']">
       <Icon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" />
-      <span :class="ns.e('empty__title')">{{ emptyLabel }}</span>
+      <span :class="ns.e('empty__title')">{{ postConfig.emptyLabel }}</span>
     </div>
   </div>
 </template>

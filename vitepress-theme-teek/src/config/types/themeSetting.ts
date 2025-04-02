@@ -146,6 +146,14 @@ export interface ThemeSetting {
     small?: string;
   };
   /**
+   * 回到顶部后的回调
+   */
+  backTopDone?: () => void;
+  /**
+   * 滚动到评论后的回调
+   */
+  toCommentDone?: () => void;
+  /**
    * 鼠标悬停时标题提示文案
    */
   titleTip?: {

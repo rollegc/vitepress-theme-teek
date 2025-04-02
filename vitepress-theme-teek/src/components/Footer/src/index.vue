@@ -14,13 +14,11 @@ const ns = useNamespace("footer");
 
 const { theme, frontmatter } = useData();
 
-const { footerInfo, social = [] }: { footerInfo: FooterInfo; social: Social[] } = {
-  ...unref(theme),
-  ...unref(frontmatter).tk,
-};
+const footerInfo = computed<FooterInfo>(() => ({ ...unref(theme).footerInfo, ...unref(frontmatter).tk?.footerInfo }));
+const social = computed<Social[]>(() => [...(unref(theme).social || []), ...(unref(frontmatter).tk?.social || [])]);
 
 const footerData = computed(() => {
-  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = footerInfo || {};
+  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = unref(footerInfo) || {};
   const data: Social[] = [];
   // 1.主题版权
   if (theme.show !== false) {
