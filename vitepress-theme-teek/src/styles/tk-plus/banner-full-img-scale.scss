@@ -7,7 +7,7 @@
     overflow: hidden;
   }
 
-  @include b(bannerBgImage) {
+  @include b(banner-bg-image) {
     &.full {
       animation: enlarge getCssVar("banner-img-switch-interval-s") linear infinite;
 

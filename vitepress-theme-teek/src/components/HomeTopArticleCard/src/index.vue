@@ -44,7 +44,7 @@ const currentTopArticleList = computed(() => {
 
 const finalTitle = computed(() => {
   const { title } = unref(topArticleConfig);
-  if (isFunction(title)) return title(unref(localeIndex), topArticleIcon);
+  if (isFunction(title)) return title(topArticleIcon);
   return title;
 });
 

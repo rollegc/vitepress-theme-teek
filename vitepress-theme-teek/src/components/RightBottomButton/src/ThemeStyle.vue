@@ -52,17 +52,14 @@ const themeStyleList = computed(() => {
   ];
 });
 
-watch(
-  () => unref(themeSettingConfig).themeStyle,
-  (themeStyle: string) => (currentThemeStyle.value = themeStyle)
-);
-
 const themeStyleStorageKey = ns.joinNamespace(`${name}-themeStyle`);
 const localStorage = useStorage("localStorage");
+const attribute = "theme-size";
+
 /**
  * 修改主题风格
  */
-const changeTheme = (attribute: "theme-style", value: string, isDoc = false) => {
+const changeTheme = (value: string, isDoc = false) => {
   // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
   if ([document.documentElement.getAttribute(attribute), undefined, "undefined"].includes(value)) return;
 
@@ -76,19 +73,24 @@ const changeTheme = (attribute: "theme-style", value: string, isDoc = false) => 
 /**
  * 修改文章页的主题风格，仅当 frontmatter.themeStyle 存在时生效
  */
-const changeDocTheme = (attribute: "theme-style", value: string) => {
+const changeDocTheme = (value: string) => {
   const { themeStyle } = unref(themeSettingConfig);
-  if (value) changeTheme(attribute, value, true);
+  if (value) changeTheme(value, true);
   else {
     // 初始化/还原主题风格
-    changeTheme(attribute, localStorage.getStorage(themeStyleStorageKey) || themeStyle);
+    changeTheme(localStorage.getStorage(themeStyleStorageKey) || themeStyle);
   }
 };
+
+watch(
+  () => unref(themeSettingConfig).themeStyle,
+  (newValue: string) => changeTheme(newValue)
+);
 
 // 文章页主题风格设置
 watch(
   () => unref(frontmatter).themeStyle,
-  (themeStyle: string) => changeDocTheme("theme-style", themeStyle),
+  (docThemeStyle: string) => changeDocTheme(docThemeStyle),
   { immediate: true }
 );
 </script>
@@ -113,7 +115,7 @@ watch(
                 :key="item.label + option.style"
                 title=""
                 :class="['dropdown-item', 'sle', { active: option.style === currentThemeStyle }]"
-                @click="changeTheme('theme-style', option.style)"
+                @click="changeTheme(option.style)"
               >
                 {{ option.name }}
               </li>

@@ -35,17 +35,14 @@ const themeSizeList = computed(() => {
   ];
 });
 
-watch(
-  () => unref(themeSettingConfig).themeSize,
-  (themeSize: string) => (currentThemeSize.value = themeSize)
-);
-
 const themeSizeStorageKey = ns.joinNamespace(`${name}-themeSize`);
 const localStorage = useStorage("localStorage");
+const attribute = "theme-size";
+
 /**
  * 修改主题尺寸
  */
-const changeTheme = (attribute: "theme-size", value: string, isDoc = false) => {
+const changeTheme = (value: string, isDoc = false) => {
   // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
   if ([document.documentElement.getAttribute(attribute), undefined, "undefined"].includes(value)) return;
 
@@ -59,19 +56,24 @@ const changeTheme = (attribute: "theme-size", value: string, isDoc = false) => {
 /**
  * 修改文章页的主题尺寸，仅当 frontmatter.themeSize 存在时生效
  */
-const changeDocTheme = (attribute: "theme-size", value: string) => {
+const changeDocTheme = (value: string) => {
   const { themeSize } = unref(themeSettingConfig);
-  if (value) changeTheme(attribute, value, true);
+  if (value) changeTheme(value, true);
   else {
     // 初始化/还原主题尺寸
-    changeTheme(attribute, localStorage.getStorage(themeSizeStorageKey) || themeSize);
+    changeTheme(localStorage.getStorage(themeSizeStorageKey) || themeSize);
   }
 };
+
+watch(
+  () => unref(themeSettingConfig).themeSize,
+  (newValue: string) => changeTheme(newValue)
+);
 
 // 文章页主题尺寸设置
 watch(
   () => unref(frontmatter).themeSize,
-  (docThemeSize: string) => changeDocTheme("theme-size", docThemeSize),
+  (docThemeSize: string) => changeDocTheme(docThemeSize),
   { immediate: true }
 );
 </script>
@@ -92,7 +94,7 @@ watch(
           :key="item.size"
           title=""
           :class="['dropdown-item', 'sle', { active: item.size === currentThemeSize }]"
-          @click="changeTheme('theme-size', item.size)"
+          @click="changeTheme(item.size)"
         >
           {{ item.name }}
         </li>

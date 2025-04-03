@@ -9,7 +9,7 @@ defineOptions({ name: "HomeBannerContent" });
 const ns = useNamespace("banner-content");
 
 const { site, theme, frontmatter } = useData();
-const title = unref(frontmatter).tk?.name || unref(site).title || "";
+const title = computed(() => unref(frontmatter).tk?.name || unref(site).title || "");
 // Banner 配置项
 const bannerConfig = computed<Required<Banner>>(() => ({
   descStyle: "default",

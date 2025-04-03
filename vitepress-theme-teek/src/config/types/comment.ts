@@ -116,7 +116,7 @@ export type CommentProvider = {
      */
     useOnline?: boolean;
     /**
-     * giscus.js 在线链接，useOnline 为 false 时生效
+     * giscus.js 在线链接，useOnline 为 true 时生效
      *
      * @default 'https://giscus.app/client.js'
      */

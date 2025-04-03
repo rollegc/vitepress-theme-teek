@@ -10,7 +10,7 @@ export interface TopArticle {
    *
    * @default '${svg}精选文章'
    */
-  title?: string | ((localeIndex: string, svg: string) => string);
+  title?: string | ((svg: string) => string);
   /**
    * 精选文章为空时的标签
    *

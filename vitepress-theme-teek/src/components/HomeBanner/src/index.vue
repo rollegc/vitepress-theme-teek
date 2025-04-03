@@ -96,6 +96,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  document.querySelector(".VPNavBar")?.classList.remove("full-img-nav-bar");
   if (unref(currentBgStyle).isBannerFullImgBgStyle || unref(currentBgStyle).isBodyImgBgStyle) {
     window.removeEventListener("scroll", toggleClass);
   }
