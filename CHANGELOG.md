@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.6](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2025-04-03)
+
+### Features
+
+- 🚀 文档新增博客风格切换，修复部分功能 ([b9614f3](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b9614f3418cf927b4548daf3f96d2683ff98c148))
+- 🚀 新增 useStorage hooks 函数来替换默认的存储方式 ([21806a0](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/21806a0a0b09d421a5f7ec8c1be57e7132983ead))
+- 🚀 右下角按钮组组件抽离 ([1a0cfb0](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/1a0cfb0443603e812561038989aa55ea7af3aa11))
+- 🚀 组件命名空间类命名由小驼峰改为短横线命名 ([9a3d2c0](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/9a3d2c0b908cf9e2cf501527b889892a7d830291))
+
+### Bug Fixes
+
+- 🐞 标题 404 修复，文档内链在国际化下 404 修复，配置项调整 ([840747e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/840747eb17ad8ee07879ab45a294a09154926e58))
+- 🐞 文档导航栏历史版本 link 错误修复 ([25ae58a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/25ae58a0bf059932155222af3ae7f42504601286))
+- 🐞 lock 文件更新，修复文档打包失败 ([07feb5c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/07feb5c00681e75e0c50b987e191d18422648404))
+
 ## [1.0.0-alpha.5](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0...v1.0.0-alpha.5) (2025-04-02)
 
 ### Features
