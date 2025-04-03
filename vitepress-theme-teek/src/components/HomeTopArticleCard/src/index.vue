@@ -11,7 +11,7 @@ import type { TopArticle } from "../../../config/types";
 
 defineOptions({ name: "HomeTopArticleCard" });
 
-const ns = useNamespace("topArticle");
+const ns = useNamespace("top-article");
 
 const posts = usePosts();
 

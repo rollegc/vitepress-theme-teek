@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(bannerBgImage) {
+@include b(banner-bg-image) {
   &.part {
     min-height: getCssVar(home-banner-part-min-height);
   }

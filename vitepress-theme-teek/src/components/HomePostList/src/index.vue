@@ -13,7 +13,7 @@ import type { Post } from "../../../config/types";
 
 defineOptions({ name: "HomePostList" });
 
-const ns = useNamespace("postList");
+const ns = useNamespace("post-list");
 
 const posts = usePosts();
 const { theme, frontmatter } = useData();

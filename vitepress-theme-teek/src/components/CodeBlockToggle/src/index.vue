@@ -6,7 +6,7 @@ import { arrowDownIcon } from "../../../assets/icons";
 
 defineOptions({ name: "CodeBlockToggle" });
 
-const ns = useNamespace("codeBlock");
+const ns = useNamespace("");
 const { frontmatter } = useData();
 
 const documentAttribute = "code-block";

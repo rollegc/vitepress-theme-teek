@@ -7,7 +7,7 @@ import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerBgImage" });
 
-const ns = useNamespace("bannerBgImage");
+const ns = useNamespace("banner-bg-image");
 
 const { theme, frontmatter } = useData();
 

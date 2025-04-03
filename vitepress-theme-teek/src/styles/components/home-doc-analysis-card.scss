@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(docAnalysis) {
+@include b(doc-analysis) {
   @include e(item) {
     display: flex;
     justify-content: space-between;

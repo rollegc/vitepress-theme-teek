@@ -12,7 +12,7 @@ import Icon from "../../Icon";
 
 defineOptions({ name: "ArticleInfo" });
 
-const ns = useNamespace("articleInfo");
+const ns = useNamespace("article-info");
 
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 

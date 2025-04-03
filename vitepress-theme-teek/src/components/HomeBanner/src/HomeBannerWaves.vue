@@ -3,7 +3,7 @@ import { useNamespace } from "../../../hooks";
 
 defineOptions({ name: "HomeBannerWaves" });
 
-const ns = useNamespace("waves");
+const ns = useNamespace("banner-waves");
 </script>
 
 <template>

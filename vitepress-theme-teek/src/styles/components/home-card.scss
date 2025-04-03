@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(homeCard) {
+@include b(home-card) {
   padding: getCssVar("home-card-padding");
   width: getCssVar("home-card-width");
   overflow: hidden;

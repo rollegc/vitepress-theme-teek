@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(bannerContent) {
+@include b(banner-content) {
   padding-top: 3rem;
   color: getCssVar("banner-text-color");
   text-align: center;

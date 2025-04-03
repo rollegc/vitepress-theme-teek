@@ -12,7 +12,7 @@ import HomeDocAnalysisCard from "../../HomeDocAnalysisCard";
 
 defineOptions({ name: "HomeRightInfo" });
 
-const ns = useNamespace("homeRightInfo");
+const ns = useNamespace("home-right-info");
 
 const { theme, frontmatter } = useData();
 const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = { ...unref(theme), ...unref(frontmatter) };

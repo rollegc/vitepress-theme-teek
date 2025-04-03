@@ -4,7 +4,7 @@
 
 @use "./home-post-item";
 
-@include b(postList) {
+@include b(post-list) {
   @include e(pagination) {
     .el-pagination {
       .el-pager {

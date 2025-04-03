@@ -6,7 +6,7 @@ import { unref } from "vue";
 
 defineOptions({ name: "HomeBannerBgPure" });
 
-const ns = useNamespace("bannerBgPure");
+const ns = useNamespace("banner-bg-pure");
 
 const { theme, frontmatter } = useData();
 

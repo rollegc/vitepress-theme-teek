@@ -5,8 +5,8 @@ import { useNamespace } from "../../../hooks";
 
 defineOptions({ name: "CatalogueItem" });
 
-const nsSub = useNamespace("subCatalogue");
-const nsItem = useNamespace("catalogueItem");
+const nsSub = useNamespace("sub-catalogue");
+const nsItem = useNamespace("catalogue-item");
 
 defineProps<{ item: CatalogueItem; index: number | string }>();
 </script>

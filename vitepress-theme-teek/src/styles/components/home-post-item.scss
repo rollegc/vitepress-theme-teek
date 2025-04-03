@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(postItem) {
+@include b(post-item) {
   margin-bottom: 14px;
   position: relative;
   width: 100%;

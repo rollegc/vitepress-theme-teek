@@ -3,7 +3,7 @@ import { computed, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace } from "../../../hooks";
 
-const ns = useNamespace("bodyBgImage");
+const ns = useNamespace("body-bg-image");
 
 const { theme, frontmatter } = useData();
 

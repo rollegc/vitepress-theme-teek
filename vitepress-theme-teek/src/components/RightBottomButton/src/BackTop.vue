@@ -5,11 +5,11 @@ import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import { rocketIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
-import { namespaceSymbol } from "./rightBottomButton";
+import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 
 defineOptions({ name: "BackTop" });
 
-const ns = inject(namespaceSymbol, useNamespace("rightBottomButton"));
+const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
 const { theme } = useData();
 const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({

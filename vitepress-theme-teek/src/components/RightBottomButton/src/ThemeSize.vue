@@ -5,11 +5,11 @@ import { useNamespace } from "../../../hooks";
 import Icon from "../../Icon";
 import { sizeIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
-import { namespaceSymbol } from "./rightBottomButton";
+import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 
 defineOptions({ name: "ThemeSize" });
 
-const ns = inject(namespaceSymbol, useNamespace("rightBottomButton"));
+const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
 const { theme, frontmatter } = useData();
 const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({

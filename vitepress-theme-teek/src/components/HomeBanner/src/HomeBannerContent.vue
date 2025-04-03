@@ -6,7 +6,7 @@ import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerContent" });
 
-const ns = useNamespace("bannerContent");
+const ns = useNamespace("banner-content");
 
 const { site, theme, frontmatter } = useData();
 const title = unref(frontmatter).tk?.name || unref(site).title || "";

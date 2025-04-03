@@ -4,7 +4,7 @@
 @use "./breadcrumb";
 @use "./breadcrumb-item";
 
-@include b(articleBreadcrumb) {
+@include b(article-breadcrumb) {
   .el-breadcrumb__separator {
     font-weight: 400;
     margin: 0 4px;

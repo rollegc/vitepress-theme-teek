@@ -6,13 +6,13 @@ import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";
 import ThemeSize from "./ThemeSize.vue";
 import ThemeStyle from "./ThemeStyle.vue";
-import { namespaceSymbol } from "./rightBottomButton";
+import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 import type { ThemeSetting } from "../../../config/types";
 
 defineOptions({ name: "RightBottomButton" });
 
-const ns = useNamespace("rightBottomButton");
-provide(namespaceSymbol, ns);
+const ns = useNamespace("right-bottom-button");
+provide(rightBottomButtonNsSymbol, ns);
 
 const { theme } = useData();
 const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
