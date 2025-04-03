@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Breadcrumb">
 import { onMounted, provide, ref, unref } from "vue";
 import { useNamespace } from "../../../hooks";
-import { breadcrumbKey, type BreadcrumbProps } from "./breadcrumb";
+import { breadcrumbKey, breadcrumbNsSymbol, type BreadcrumbProps } from "./breadcrumb";
 
 defineOptions({ name: "Breadcrumb" });
 
@@ -12,6 +12,7 @@ const { separator = "/" } = defineProps<BreadcrumbProps>();
 const breadcrumb = ref<HTMLDivElement>();
 
 provide(breadcrumbKey, { separator });
+provide(breadcrumbNsSymbol, ns);
 
 onMounted(() => {
   const items = unref(breadcrumb)?.querySelectorAll(`.${ns.e("item")}`);

@@ -1,4 +1,5 @@
-import { InjectionKey } from "vue";
+import type { InjectionKey } from "vue";
+import type { UseNamespaceReturn } from "../../../hooks";
 
 export interface BreadcrumbProps {
   /**
@@ -10,3 +11,4 @@ export interface BreadcrumbProps {
 }
 
 export const breadcrumbKey: InjectionKey<BreadcrumbProps> = Symbol("breadcrumbKey");
+export const breadcrumbNsSymbol: InjectionKey<UseNamespaceReturn> = Symbol("breadcrumbNs");

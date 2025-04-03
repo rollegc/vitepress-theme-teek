@@ -12,7 +12,7 @@ defineOptions({ name: "DemoCode" });
 
 const props = defineProps<DemoCodeProps>();
 
-const ns = useNamespace("demoCode");
+const ns = useNamespace("demo-code");
 const { copy, copied, isSupported } = useClipboard();
 const { frontmatter, isDark } = useData();
 

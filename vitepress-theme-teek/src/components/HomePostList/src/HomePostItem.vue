@@ -9,7 +9,7 @@ import type { Article, Post } from "../../../config/types";
 
 defineOptions({ name: "HomePostItem" });
 
-const ns = useNamespace("postItem");
+const ns = useNamespace("post-item");
 
 const { post, coverImgMode } = defineProps<{ post: TkContentData; coverImgMode: "default" | "full" }>();
 

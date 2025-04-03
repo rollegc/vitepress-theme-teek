@@ -6,7 +6,7 @@ import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerFeature" });
 
-const ns = useNamespace("bannerFeature");
+const ns = useNamespace("banner-feature");
 
 const { theme, frontmatter } = useData();
 

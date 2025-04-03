@@ -8,7 +8,7 @@ import Icon from "../../Icon";
 
 defineOptions({ name: "HomeCard" });
 
-const ns = useNamespace("homeCard");
+const ns = useNamespace("home-card");
 const pointClass = ns.joinNamespace("pointer");
 
 const {

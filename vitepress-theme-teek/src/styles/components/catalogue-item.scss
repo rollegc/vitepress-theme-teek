@@ -2,7 +2,7 @@
 @use "../mixins/function" as *;
 
 /* 非叶子目录样式 */
-@include b(subCatalogue) {
+@include b(sub-catalogue) {
   width: 100%;
   margin-top: 1rem;
   margin-bottom: 1.8rem;
@@ -35,14 +35,14 @@
     margin-left: 1rem;
 
     /* 递归非叶子目录样式 */
-    @include b(subCatalogue) {
+    @include b(sub-catalogue) {
       margin-bottom: 0;
     }
   }
 }
 
 /* 叶子目录样式 */
-@include b(catalogueItem) {
+@include b(catalogue-item) {
   width: 48%;
   margin-bottom: 0.5rem;
   a {

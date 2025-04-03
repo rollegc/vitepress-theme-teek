@@ -2,14 +2,14 @@
 @use "../mixins/function" as *;
 @use "../mixins/config" as *;
 
-@include b(demoCode-description) {
+@include b(demo-code-description) {
   margin-top: 16px;
   margin-bottom: 16px;
   font-size: 14px;
   line-height: 20px;
 }
 
-@include b(demoCode) {
+@include b(demo-code) {
   border: 1px solid var(--vp-c-divider);
   border-radius: 4px 4px 0 0;
 

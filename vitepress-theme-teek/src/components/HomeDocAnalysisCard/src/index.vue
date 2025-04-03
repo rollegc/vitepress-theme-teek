@@ -10,7 +10,7 @@ import type { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
 
 defineOptions({ name: "HomeDocAnalysisCard" });
 
-const ns = useNamespace("docAnalysis");
+const ns = useNamespace("doc-analysis");
 
 const { theme, frontmatter } = useData();
 // 站点信息配置项

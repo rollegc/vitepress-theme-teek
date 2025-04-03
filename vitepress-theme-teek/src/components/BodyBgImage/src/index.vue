@@ -7,7 +7,7 @@ import type { BodyBgImg } from "../../../config/types";
 
 defineOptions({ name: "BodyBgImage" });
 
-const ns = useNamespace("bodyBgImage");
+const ns = useNamespace("body-bg-image");
 
 const { theme } = useData();
 

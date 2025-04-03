@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(topArticle) {
+@include b(top-article) {
   @include e(list) {
     position: relative;
     gap: getCssVar("home-top-article-gap");

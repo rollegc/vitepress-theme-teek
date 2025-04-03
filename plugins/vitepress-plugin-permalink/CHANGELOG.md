@@ -1,5 +1,12 @@
 # vitepress-plugin-permalink
 
+## 1.0.17
+
+### Patch Changes
+
+- 修复国际化下刷新 404 问题
+- 浏览器刷新后标题显示 404 修复
+
 ## 1.0.16
 
 ### Patch Changes

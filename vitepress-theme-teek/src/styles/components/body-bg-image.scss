@@ -2,7 +2,7 @@
 @use "../mixins/function" as *;
 @use "../mixins/config" as *;
 
-@include b(bodyBgImage) {
+@include b(body-bg-image) {
   position: fixed;
   left: 0;
   top: 0;

@@ -1,6 +1,7 @@
 import { computed, defineComponent, h, InjectionKey, provide, Ref, unref, type Component } from "vue";
 import { useData } from "vitepress";
-import usePermalink from "vitepress-plugin-permalink/usePermalink";
+import usePermalink from "./usePermalink";
+// import usePermalink from "vitepress-plugin-permalink/usePermalink";
 import { useAnchorScroll, useViewTransition } from "./hooks";
 import { emptyPost } from "./post/helper";
 import type { Post } from "./post/types";
@@ -80,7 +81,7 @@ export const usePosts = (): Ref<Post> => {
 export const useBgColor = () => {
   const { theme, frontmatter } = useData();
   return (
-    unref(frontmatter).frontmatter ||
+    unref(frontmatter).tk?.bgColor ||
     unref(theme).bgColor || [
       "#e74c3c",
       "#409EFF",

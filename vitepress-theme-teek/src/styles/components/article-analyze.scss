@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(articleAnalyze) {
+@include b(article-analyze) {
   flex-wrap: wrap;
   font-size: 14px;
   margin-bottom: 24px;

@@ -10,7 +10,7 @@ import type { FriendLink } from "../../../config/types";
 
 defineOptions({ name: "HomeFriendLinkCard" });
 
-const ns = useNamespace("friendLink");
+const ns = useNamespace("friend-link");
 
 const { theme, frontmatter } = useData();
 

@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(homeMyCard) {
+@include b(my) {
   @include e(avatar) {
     width: 100%;
 

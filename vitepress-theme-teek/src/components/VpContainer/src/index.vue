@@ -3,7 +3,9 @@ import { computed } from "vue";
 import { useNamespace } from "../../../hooks";
 import type { VpContainerProps } from "./vpContainer";
 
-const ns = useNamespace("vpContainer");
+defineOptions({ name: "VpContainer" });
+
+const ns = useNamespace("vp-container");
 
 const { type = "tip", title, text = "", textHtml = "" } = defineProps<VpContainerProps>();
 

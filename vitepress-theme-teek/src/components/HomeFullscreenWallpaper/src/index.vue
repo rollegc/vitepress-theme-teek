@@ -6,7 +6,7 @@ import type { Wallpaper } from "../../../config/types";
 
 defineOptions({ name: "HomeFullscreenWallpaper" });
 
-const ns = useNamespace("homeFullscreenWallpaper");
+const ns = useNamespace("fullscreen-wallpaper");
 
 // 定义一个 ref 来跟踪是否处于全屏状态
 const isFullscreen = ref(false);

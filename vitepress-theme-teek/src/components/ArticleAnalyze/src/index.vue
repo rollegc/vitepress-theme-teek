@@ -12,7 +12,7 @@ import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
 
 defineOptions({ name: "ArticleAnalyze" });
 
-const ns = useNamespace("articleAnalyze");
+const ns = useNamespace("article-analyze");
 
 const { theme, frontmatter } = useData();
 

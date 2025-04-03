@@ -10,7 +10,7 @@ import type { Breadcrumb as BreadcrumbType } from "../../../config/types";
 
 defineOptions({ name: "ArticleBreadcrumb" });
 
-const ns = useNamespace("articleBreadcrumb");
+const ns = useNamespace("article-breadcrumb");
 
 const { localeIndex, theme, frontmatter, page } = useData();
 

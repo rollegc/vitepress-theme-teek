@@ -1,6 +1,6 @@
 @use "../mixins/bem" as *;
 
-@include b(vpContainer) {
+@include b(vp-container) {
   .custom-block.no-title {
     padding: 10px 16px;
   }

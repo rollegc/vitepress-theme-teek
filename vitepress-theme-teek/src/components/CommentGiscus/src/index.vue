@@ -26,7 +26,7 @@ const {
   lang = "zh-CN",
   theme: giscusThemeConfig,
   loading = "eager",
-  useOnline = false,
+  useOnline = true,
   link = "https://giscus.app/client.js",
   integrity,
   ...options
@@ -67,7 +67,23 @@ onMounted(() => {
 <template>
   <div v-if="isShow" class="giscus-container">
     <component
-      v-if="useOnline"
+      v-if="giscusComponent"
+      :is="giscusComponent"
+      :repo
+      :repo-id
+      :category
+      :category-id
+      :mapping
+      :reactions-enabled
+      :emit-metadata
+      :input-position
+      :lang
+      :theme="giscusTheme"
+      :loading
+      v-bind="options"
+    />
+    <component
+      v-else-if="useOnline"
       :is="'script'"
       defer
       :src="link"
@@ -85,22 +101,6 @@ onMounted(() => {
       :data-lang="lang"
       v-bind="options"
       crossorigin="anonymous"
-    />
-    <component
-      v-else-if="giscusComponent"
-      :is="giscusComponent"
-      :repo
-      :repo-id
-      :category
-      :category-id
-      :mapping
-      :reactions-enabled
-      :emit-metadata
-      :input-position
-      :lang
-      :theme="giscusTheme"
-      :loading
-      v-bind="options"
     />
   </div>
 </template>

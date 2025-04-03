@@ -8,7 +8,7 @@ import { computed, unref } from "vue";
 
 defineOptions({ name: "HomeMyCard" });
 
-const ns = useNamespace("homeMyCard");
+const ns = useNamespace("my");
 
 const { theme, frontmatter } = useData();
 

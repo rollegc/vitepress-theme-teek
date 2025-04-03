@@ -11,7 +11,7 @@ import type { TopArticle } from "../../../config/types";
 
 defineOptions({ name: "HomeTopArticleCard" });
 
-const ns = useNamespace("topArticle");
+const ns = useNamespace("top-article");
 
 const posts = usePosts();
 
@@ -44,7 +44,7 @@ const currentTopArticleList = computed(() => {
 
 const finalTitle = computed(() => {
   const { title } = unref(topArticleConfig);
-  if (isFunction(title)) return title(unref(localeIndex), topArticleIcon);
+  if (isFunction(title)) return title(topArticleIcon);
   return title;
 });
 

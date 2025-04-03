@@ -51,7 +51,7 @@
     "vitepress-plugin-doc-analysis": "^1.0.10",
     "vitepress-plugin-file-content-loader": "^1.0.9",
     "vitepress-plugin-md-h1": "^1.0.8",
-    "vitepress-plugin-permalink": "^1.0.16",
+    "vitepress-plugin-permalink": "^1.0.17",
     "vitepress-plugin-sidebar-resolve": "^1.0.8"
   },
   "devDependencies": {

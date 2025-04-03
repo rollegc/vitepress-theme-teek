@@ -1,13 +1,13 @@
 <script setup lang="ts" name="HomeBannerBgImage">
 import { withBase, useData } from "vitepress";
-import { computed, onMounted, unref } from "vue";
+import { computed, onMounted, onUnmounted, unref } from "vue";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
 import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerBgImage" });
 
-const ns = useNamespace("bannerBgImage");
+const ns = useNamespace("banner-bg-image");
 
 const { theme, frontmatter } = useData();
 
@@ -29,7 +29,11 @@ const isPartImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "partImg
 const isFullImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "fullImg");
 
 // banner 背景图片定时轮播
-const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData(
+const {
+  data: imageSrc,
+  startAutoSwitch,
+  stopAutoSwitch,
+} = useSwitchData(
   [unref(bannerConfig).imgSrc || []].flat().map(item => item && withBase(item)),
   {
     timeout: unref(bannerConfig).imgInterval,
@@ -45,7 +49,11 @@ const { data: imageSrc, startAutoSwitch: switchImg } = useSwitchData(
 );
 
 onMounted(() => {
-  switchImg();
+  startAutoSwitch();
+});
+
+onUnmounted(() => {
+  stopAutoSwitch();
 });
 
 const getStyle = () => {
