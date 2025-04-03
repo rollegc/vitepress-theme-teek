@@ -15,7 +15,7 @@ const ns = useNamespace("top-article");
 
 const posts = usePosts();
 
-const { theme, frontmatter, localeIndex } = useData();
+const { theme, frontmatter } = useData();
 
 // 精选文章配置项
 const topArticleConfig = computed<Required<TopArticle>>(() => ({

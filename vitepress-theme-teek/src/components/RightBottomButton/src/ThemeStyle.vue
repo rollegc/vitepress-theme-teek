@@ -6,7 +6,6 @@ import Icon from "../../Icon";
 import { magicIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
-import { name } from "../../../../package.json";
 
 defineOptions({ name: "ThemeStyle" });
 
@@ -52,7 +51,7 @@ const themeStyleList = computed(() => {
   ];
 });
 
-const themeStyleStorageKey = ns.joinNamespace(`${name}-themeStyle`);
+const themeStyleStorageKey = ns.joinNamespace("themeStyle");
 const localStorage = useStorage("localStorage");
 const attribute = "theme-size";
 
