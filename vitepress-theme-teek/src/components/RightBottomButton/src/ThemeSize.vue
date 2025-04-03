@@ -1,11 +1,12 @@
 <script setup lang="ts" name="ThemeSize">
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { sizeIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
+import { name } from "../../../../package.json";
 
 defineOptions({ name: "ThemeSize" });
 
@@ -20,6 +21,7 @@ const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
   ...unref(theme).themeSetting,
 }));
 
+// 主题尺寸
 const showThemeSizeItem = ref(false);
 const currentThemeSize = ref(unref(themeSettingConfig).themeSize);
 const themeSizeList = computed(() => {
@@ -38,7 +40,8 @@ watch(
   (themeSize: string) => (currentThemeSize.value = themeSize)
 );
 
-const themeSizeStorageKey = ns.b("themeSize");
+const themeSizeStorageKey = ns.joinNamespace(`${name}-themeSize`);
+const localStorage = useStorage("localStorage");
 /**
  * 修改主题尺寸
  */
@@ -50,7 +53,7 @@ const changeTheme = (attribute: "theme-size", value: string, isDoc = false) => {
   document.documentElement.setAttribute(attribute, value);
 
   // 只存储全局配置到本地
-  if (!isDoc) localStorage.setItem(themeSizeStorageKey, value);
+  if (!isDoc) localStorage.setStorage(themeSizeStorageKey, value);
 };
 
 /**
@@ -61,7 +64,7 @@ const changeDocTheme = (attribute: "theme-size", value: string) => {
   if (value) changeTheme(attribute, value, true);
   else {
     // 初始化/还原主题尺寸
-    changeTheme(attribute, localStorage.getItem(themeSizeStorageKey) || themeSize);
+    changeTheme(attribute, localStorage.getStorage(themeSizeStorageKey) || themeSize);
   }
 };
 

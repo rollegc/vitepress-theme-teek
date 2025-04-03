@@ -1,11 +1,12 @@
 <script setup lang="ts" name="ThemeStyle">
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { magicIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
+import { name } from "../../../../package.json";
 
 defineOptions({ name: "ThemeStyle" });
 
@@ -21,7 +22,6 @@ const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
 }));
 
 // 主题样式
-const themeStyleStorageKey = ns.b("themeStyle");
 const showThemeStyleItem = ref(false);
 const currentThemeStyle = ref(unref(themeSettingConfig).themeStyle);
 
@@ -57,6 +57,8 @@ watch(
   (themeStyle: string) => (currentThemeStyle.value = themeStyle)
 );
 
+const themeStyleStorageKey = ns.joinNamespace(`${name}-themeStyle`);
+const localStorage = useStorage("localStorage");
 /**
  * 修改主题风格
  */
@@ -68,7 +70,7 @@ const changeTheme = (attribute: "theme-style", value: string, isDoc = false) => 
   document.documentElement.setAttribute(attribute, value);
 
   // 只存储全局配置到本地
-  if (!isDoc) localStorage.setItem(themeStyleStorageKey, value);
+  if (!isDoc) localStorage.setStorage(themeStyleStorageKey, value);
 };
 
 /**
@@ -79,7 +81,7 @@ const changeDocTheme = (attribute: "theme-style", value: string) => {
   if (value) changeTheme(attribute, value, true);
   else {
     // 初始化/还原主题风格
-    changeTheme(attribute, localStorage.getItem(themeStyleStorageKey) || themeStyle);
+    changeTheme(attribute, localStorage.getStorage(themeStyleStorageKey) || themeStyle);
   }
 };
 
@@ -101,9 +103,9 @@ watch(
   >
     <Icon :icon="magicIcon" />
     <transition :name="ns.joinNamespace('mode')">
-      <div :class="`${ns.e('button__mode')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
+      <div :class="`${ns.e('button__style')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
         <ul v-for="item in themeStyleList" :key="item.label">
-          <li :class="`${ns.e('button__mode__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>
+          <li :class="`${ns.e('button__style__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>
           <li>
             <ul>
               <li
