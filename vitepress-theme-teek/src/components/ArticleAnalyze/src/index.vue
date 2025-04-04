@@ -2,23 +2,25 @@
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import type { FileInfo } from "vitepress-plugin-doc-analysis";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
 import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
 import type { Article, DocAnalysis } from "../../../config/types";
-import { TkContentData } from "../../../post/types";
+import type { TkContentData } from "../../../post/types";
 import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
 
 defineOptions({ name: "ArticleAnalyze" });
 
 const ns = useNamespace("article-analyze");
 
+const { getTeekConfig, getTeekConfigRef } = useTeekConfig();
 const { theme, frontmatter } = useData();
 
 // 文章基本信息
 const post = computed<TkContentData>(() => ({
-  author: { ...unref(theme).author, ...unref(frontmatter).author },
+  author: getTeekConfig("author", {}),
   date: unref(frontmatter).date,
   frontmatter: unref(frontmatter),
   url: "",
@@ -38,14 +40,11 @@ const pageViewInfo = computed(() => {
 });
 
 // 文章信息配置项
-const articleConfig = computed<Article>(() => {
-  const {
-    showInfo = true,
-    showIcon = true,
-    teleport = {},
-    titleTip = {},
-  } = { ...unref(theme).article, ...unref(frontmatter).article };
-  return { showInfo, showIcon, teleport, titleTip };
+const articleConfig = getTeekConfigRef<Article>("article", {
+  showInfo: true,
+  showIcon: true,
+  teleport: {},
+  titleTip: {},
 });
 
 // 是否展示作者、日期、分类、标签等信息
@@ -77,14 +76,10 @@ onMounted(() => {
   nextTick(() => teleportInfo());
 });
 
-const docAnalysisConfig = computed<DocAnalysis>(() => {
-  const {
-    wordCount = true,
-    readingTime = true,
-    statistics = {},
-  }: DocAnalysis = { ...unref(theme).docAnalysis, ...unref(frontmatter).docAnalysis };
-
-  return { wordCount, readingTime, statistics };
+const docAnalysisConfig = getTeekConfigRef<DocAnalysis>("docAnalysis", {
+  wordCount: true,
+  readingTime: true,
+  statistics: {},
 });
 
 const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => ({

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeRightInfo">
 import { computed, unref } from "vue";
-import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import { usePage } from "../../../configProvider";
 import HomeMyCard from "../../HomeMyCard";
@@ -13,19 +13,12 @@ import HomeDocAnalysisCard from "../../HomeDocAnalysisCard";
 defineOptions({ name: "HomeRightInfo" });
 
 const ns = useNamespace("home-right-info");
-
-const { theme, frontmatter } = useData();
-const { topArticle, category, tag, docAnalysis, friendLink, homeCardSort } = { ...unref(theme), ...unref(frontmatter) };
-
-const enabledTopArticleCard = topArticle?.enabled !== false;
-const enabledCategoryCard = category?.enabled !== false;
-const enabledTagCard = tag?.enabled !== false;
-const enabledDocAnalysisCard = docAnalysis?.enabled !== false;
-const enabledFriendLinkCard = friendLink?.enabled !== false;
+const { getTeekConfig } = useTeekConfig();
+const teekConfig = computed(() => getTeekConfig(null, {}));
 
 // 获取用户配置 + 默认的卡片排序
 const finalHomeCardSort = computed(() => {
-  const configCardSort = homeCardSort || [];
+  const configCardSort = unref(teekConfig).homeCardSort || [];
   return ["my", ...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
@@ -33,6 +26,7 @@ const { isHomePage, isCategoriesPage, isTagsPage } = usePage();
 
 // 定义组件映射
 const componentMap = computed(() => {
+  const { topArticle, category, tag, docAnalysis, friendLink } = unref(teekConfig);
   const homePage = unref(isHomePage);
   const categoriesPage = unref(isCategoriesPage);
   const tagsPage = unref(isTagsPage);
@@ -45,29 +39,29 @@ const componentMap = computed(() => {
     },
     topArticle: {
       el: HomeTopArticleCard,
-      show: homePage && enabledTopArticleCard,
+      show: homePage && topArticle?.enabled !== false,
       slot: ["-home-top-article-before", "-home-top-article-after"],
     },
     category: {
       el: HomeCategoryCard,
       props: { categoriesPage: categoriesPage },
-      show: (homePage || categoriesPage) && enabledCategoryCard,
+      show: (homePage || categoriesPage) && category?.enabled !== false,
       slot: ["-home-category-before", "-home-category-after"],
     },
     tag: {
       el: HomeTagCard,
       props: { tagsPage: tagsPage },
-      show: (homePage || tagsPage) && enabledTagCard,
+      show: (homePage || tagsPage) && tag?.enabled !== false,
       slot: ["-home-tag-before", "-home-tag-after"],
     },
     docAnalysis: {
       el: HomeDocAnalysisCard,
-      show: homePage && enabledDocAnalysisCard,
+      show: homePage && docAnalysis?.enabled !== false,
       slot: ["-home-doc-analysis-before", "-home-doc-analysis-after"],
     },
     friendLink: {
       el: HomeFriendLinkCard,
-      show: homePage && enabledFriendLinkCard,
+      show: homePage && friendLink?.enabled !== false,
       slot: ["-home-friend-link-before", "-home-friend-link-after"],
     },
   };

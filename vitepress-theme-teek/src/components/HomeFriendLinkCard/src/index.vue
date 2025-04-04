@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
-import { computed, ref, unref, onMounted } from "vue";
-import { useData, withBase } from "vitepress";
+import { computed, ref, unref, onMounted, onUnmounted } from "vue";
+import { withBase } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useScrollData } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { createImageViewer } from "../../ImageViewer";
@@ -11,11 +12,10 @@ import type { FriendLink } from "../../../config/types";
 defineOptions({ name: "HomeFriendLinkCard" });
 
 const ns = useNamespace("friend-link");
-
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
 // 友情链接配置项
-const friendLinkConfig = computed<Required<FriendLink>>(() => ({
+const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
   list: [],
   limit: 4,
   title: `${friendLinkIcon}友情链接`,
@@ -24,9 +24,7 @@ const friendLinkConfig = computed<Required<FriendLink>>(() => ({
   scrollSpeed: 2500,
   autoPage: false,
   pageSpeed: 4000,
-  ...unref(theme).friendLink,
-  ...unref(frontmatter).tk?.friendLink,
-}));
+});
 
 // 使用上下滚动功能
 const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(
@@ -56,6 +54,10 @@ const finalTitle = computed(() => {
 
 onMounted(() => {
   if (unref(friendLinkConfig).autoScroll) startAutoScroll();
+});
+
+onUnmounted(() => {
+  if (unref(friendLinkConfig).autoScroll) stopAutoScroll();
 });
 
 // 每一个 li 的 ref 元素，用于获取元素高度来计算实际的 top 位置

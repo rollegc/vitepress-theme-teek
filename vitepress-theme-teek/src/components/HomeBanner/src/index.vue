@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomeBanner">
 import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import { upperFirst } from "../../../helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
@@ -13,28 +14,23 @@ import type { Banner, BodyBgImg } from "../../../config/types";
 defineOptions({ name: "HomeBanner" });
 
 const ns = useNamespace("banner");
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+const { frontmatter } = useData();
 
 // Banner 配置项
-const bannerConfig = computed<Required<Banner>>(() => {
-  const features = unref(frontmatter).tk?.features || [];
-  return {
-    bgStyle: "pure",
-    imgWaves: true,
-    textColor: "#ffffff",
-    titleFontSize: "3.2rem",
-    descFontSize: "1.4rem",
-    features,
-    ...unref(theme).banner,
-    ...unref(frontmatter).tk?.banner,
-  };
+const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
+  bgStyle: "pure",
+  imgWaves: true,
+  textColor: "#ffffff",
+  titleFontSize: "3.2rem",
+  descFontSize: "1.4rem",
+  features: unref(frontmatter).tk?.features || [],
 });
 // bodyBgImg 配置项
-const bodyBgImgConfig = computed<Required<BodyBgImg>>(() => ({
+const bodyBgImgConfig = getTeekConfigRef<Required<BodyBgImg>>("bodyBgImg", {
   imgSrc: "",
   bannerStyle: "full",
-  ...unref(theme).bodyBgImg,
-}));
+});
 
 const currentBgStyle = computed(() => {
   const { bgStyle } = unref(bannerConfig);

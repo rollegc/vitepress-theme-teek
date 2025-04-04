@@ -79,6 +79,14 @@ export const isNumber = (val: unknown): val is number => {
 };
 
 /**
+ * 是否为字符串数字
+ */
+export const isStringNumber = (val: string): boolean => {
+  if (!isString(val)) return false;
+  return !Number.isNaN(Number(val));
+};
+
+/**
  *  是否为 AsyncFunction
  */
 export const isAsyncFunction = <T = any>(val: unknown): val is Promise<T> => {

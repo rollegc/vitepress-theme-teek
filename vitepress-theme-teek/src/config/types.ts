@@ -26,17 +26,23 @@ export type * from "./types/index";
 
 export interface TeekConfig {
   /**
-   * 是否启用主题，如果为 false，则不会主题的 99% 功能，只保留永久链接、锚点滚动、深色、浅色模式过渡动画这三个功能，支持在首页 index.md 的 frontmatter 配置 tk.tkTheme
+   * 是否启用主题，如果为 false，则不会主题的 99% 功能，只保留永久链接、锚点滚动、深色、浅色模式过渡动画这三个功能
    *
    * @default true
    */
-  tkTheme?: boolean;
+  teekTheme?: boolean;
   /**
-   * 是否启用主题的首页风格，如果为 false，则首页还原到 vitepress 的默认首页，其他功能不变，支持在首页 index.md 的 frontmatter 配置 tk.tkHome
+   * 是否启用主题的首页风格，如果 teekHome 为 false 且 vpHome 为 true，则首页还原到 vitepress 的默认首页，其他功能不变
    *
    * @default true
    */
-  tkHome?: boolean;
+  teekHome?: boolean;
+  /**
+   * 是否启用 VitePress 首页风格，支持 teekHome 和 vpHome 同时存在
+   *
+   * @default true
+   */
+  vpHome?: boolean;
   /**
    * 是否启用锚点滚动功能，即阅读文章时，自动将 h1 ~ h6 标题添加到地址栏 # 后面
    *
@@ -56,7 +62,7 @@ export interface TeekConfig {
    */
   codeBlock?: boolean;
   /**
-   * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序，支持在首页 index.md 的 frontmatter 配置 tk.homeCardSort
+   * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序
    *
    * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
    */
@@ -70,8 +76,6 @@ export interface TeekConfig {
   /**
    * 文章页的样式风格，default 为 Vitepress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
    *
-   * 支持在文章页的 frontmatter 配置 pageStyle，因此可以针对不同的文章页开启不同的样式风格
-   *
    * @default 'default'
    */
   pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
@@ -84,47 +88,47 @@ export interface TeekConfig {
    */
   themeSetting?: ThemeSetting;
   /**
-   * 文章默认的作者信息，支持在文章页的 frontmatter 配置 author.[key]
+   * 文章默认的作者信息
    */
   author?: Author;
   /**
-   * 首页 Banner 配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.banner.[key]
+   * 首页 Banner 配置
    */
   banner?: Banner;
   /**
-   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 banner.bgStyle = 'fullImg' 或 bodyBgImg.imgSrc 存在才生效，支持在首页 index.md 的 frontmatter 配置，格式为 tk.wallpaper.[key]。
+   * 壁纸模式，在首页最顶部进入全屏后开启，仅当 banner.bgStyle = 'fullImg' 或 bodyBgImg.imgSrc 存在才生效
    */
   wallpaper?: Wallpaper;
   /**
-   * 文章列表配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.post.[key]
+   * 文章列表配置
    */
   post?: Post;
   /**
-   * 首页 Post 文章列表的分页配置，完全是 ElPagination 的 props，支持在首页文档 index.md 的 frontmatter 配置，格式为 tk.page.[key]
+   * 首页 Post 文章列表的分页配置，完全是 ElPagination 的 props
    */
   page?: Partial<PaginationProps>;
   /**
-   * 博主信息，显示在首页左边第一个卡片，支持在首页 `index.md` 的 `frontmatter` 配置，格式为 `tk.blogger.[key]`
+   * 博主信息，显示在首页左边第一个卡片
    */
   blogger?: Blogger;
   /**
-   * 精选文章卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.topArticle.[key]
+   * 精选文章卡片配置
    */
   topArticle?: TopArticle;
   /**
-   * 分类卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.category.[key]
+   * 分类卡片配置
    */
   category?: Category;
   /**
-   * 标签卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.tag.[key]
+   * 标签卡片配置
    */
   tag?: Tag;
   /**
-   * 友情链接卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.friendLink.[key]
+   * 友情链接卡片配置
    */
   friendLink?: FriendLink;
   /**
-   * 站点信息卡片配置，支持在首页 index.md 的 frontmatter 配置，格式为 tk.docAnalysis.[key]
+   * 站点信息卡片配置
    */
   docAnalysis?: DocAnalysis;
   /**
@@ -136,11 +140,11 @@ export interface TeekConfig {
    */
   footerInfo?: FooterInfo;
   /**
-   * 文章信息配置，支持在 frontmatter 配置，如果在首页（index.md），格式为 tk.article.[key]，如果在文章页（非 index.md），格式为 article.[key]
+   * 文章信息配置
    */
   article?: Article;
   /**
-   * 面包屑配置，支持在文章页的 frontmatter 配置 breadcrumb.[key]
+   * 面包屑配置
    */
   breadcrumb?: Breadcrumb;
   /**

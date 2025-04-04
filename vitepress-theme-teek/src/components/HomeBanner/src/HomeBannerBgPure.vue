@@ -1,17 +1,15 @@
 <script setup lang="ts" name="HomeBannerBgPure">
-import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import type { Banner } from "../../../config/types";
-import { unref } from "vue";
 
 defineOptions({ name: "HomeBannerBgPure" });
 
 const ns = useNamespace("banner-bg-pure");
-
-const { theme, frontmatter } = useData();
+const { getTeekConfig } = useTeekConfig();
 
 const getStyle = () => {
-  const { pureBgColor = "#28282d" }: Banner = { ...unref(theme).banner, ...unref(frontmatter).tk?.banner };
+  const { pureBgColor = "#28282d" } = getTeekConfig<Banner>("banner", {});
   return { backgroundColor: pureBgColor };
 };
 </script>

@@ -1,6 +1,7 @@
 <script setup lang="ts" name="BodyBgImage">
-import { computed, onMounted, onUnmounted, unref } from "vue";
-import { withBase, useData } from "vitepress";
+import { onMounted, onUnmounted, unref } from "vue";
+import { withBase } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
 import type { BodyBgImg } from "../../../config/types";
@@ -9,22 +10,21 @@ defineOptions({ name: "BodyBgImage" });
 
 const ns = useNamespace("body-bg-image");
 
-const { theme } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
-const bodyBgImgConfig = computed<BodyBgImg>(() => ({
+const bodyBgImgConfig = getTeekConfigRef<BodyBgImg>("bodyBgImg", {
   imgSrc: undefined,
   imgOpacity: 1,
   imgInterval: 15000,
   imgShuffle: false,
   mask: false,
   maskBg: "rgba(0, 0, 0, 0.2)",
-  ...unref(theme).bodyBgImg,
-}));
+});
 
 // body 背景图片定时轮播
 const {
   data: imageSrc,
-  startAutoSwitch: switchImg,
+  startAutoSwitch,
   stopAutoSwitch,
 } = useSwitchData(
   [unref(bodyBgImgConfig).imgSrc || []].flat().map(item => item && withBase(item)),
@@ -42,7 +42,7 @@ const {
 );
 
 onMounted(() => {
-  switchImg();
+  startAutoSwitch();
 });
 
 onUnmounted(() => {

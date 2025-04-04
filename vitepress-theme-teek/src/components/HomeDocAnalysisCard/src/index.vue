@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeDocAnalysisCard">
 import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
-import { usePosts } from "../../../configProvider";
+import { useTeekConfig, usePosts } from "../../../configProvider";
 import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "../../../helper";
 import HomeCard from "../../HomeCard";
@@ -11,18 +11,17 @@ import type { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
 defineOptions({ name: "HomeDocAnalysisCard" });
 
 const ns = useNamespace("doc-analysis");
+const { getTeekConfigRef } = useTeekConfig();
+const { theme } = useData();
 
-const { theme, frontmatter } = useData();
 // 站点信息配置项
-const docAnalysisConfig = computed<Required<DocAnalysis>>(() => ({
+const docAnalysisConfig = getTeekConfigRef<Required<DocAnalysis>>("docAnalysis", {
   createTime: undefined,
   title: `${docAnalysisIcon}站点信息`,
   statistics: {},
   overrideInfo: [],
   appendInfo: [],
-  ...unref(theme).docAnalysis,
-  ...unref(frontmatter).tk?.docAnalysis,
-}));
+});
 
 const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 

@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomeBannerFeature">
 import { useData, withBase } from "vitepress";
-import { computed, ref, unref } from "vue";
+import { ref, unref } from "vue";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import type { Banner } from "../../../config/types";
 
@@ -8,15 +9,13 @@ defineOptions({ name: "HomeBannerFeature" });
 
 const ns = useNamespace("banner-feature");
 
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+const { frontmatter } = useData();
 
-const bannerConfig = computed<Required<Banner>>(() => ({
-  features: [],
+const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
+  features: unref(frontmatter).tk?.features || [],
   featureCarousel: 4000,
-  ...unref(theme).banner,
-  ...unref(frontmatter).tk,
-  ...unref(frontmatter).tk?.banner,
-}));
+});
 
 const active = ref(0);
 const isMobile = ref(false);

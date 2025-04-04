@@ -1,25 +1,26 @@
 <script setup lang="ts" name="ThemeSize">
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { sizeIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
-import { name } from "../../../../package.json";
 
 defineOptions({ name: "ThemeSize" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
-const { theme, frontmatter } = useData();
-const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+const { frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+
+const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   themeSize: "default",
   themeSizeAppend: [],
   themeSizeLabel: {},
   titleTip: {},
-  ...unref(theme).themeSetting,
-}));
+});
 
 // 主题尺寸
 const showThemeSizeItem = ref(false);
@@ -35,7 +36,7 @@ const themeSizeList = computed(() => {
   ];
 });
 
-const themeSizeStorageKey = ns.joinNamespace(`${name}-themeSize`);
+const themeSizeStorageKey = ns.joinNamespace("themeSize");
 const localStorage = useStorage("localStorage");
 const attribute = "theme-size";
 

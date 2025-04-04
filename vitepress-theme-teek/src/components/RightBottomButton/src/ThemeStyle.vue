@@ -1,25 +1,26 @@
 <script setup lang="ts" name="ThemeStyle">
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { magicIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
-import { name } from "../../../../package.json";
 
 defineOptions({ name: "ThemeStyle" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
-const { theme, frontmatter } = useData();
-const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+const { frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+
+const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   themeStyle: "vp-default",
   themeStyleAppend: [],
   themeStyleLabel: {},
   titleTip: {},
-  ...unref(theme).themeSetting,
-}));
+});
 
 // 主题样式
 const showThemeStyleItem = ref(false);
@@ -52,9 +53,9 @@ const themeStyleList = computed(() => {
   ];
 });
 
-const themeStyleStorageKey = ns.joinNamespace(`${name}-themeStyle`);
+const themeStyleStorageKey = ns.joinNamespace("themeStyle");
 const localStorage = useStorage("localStorage");
-const attribute = "theme-size";
+const attribute = "theme-style";
 
 /**
  * 修改主题风格

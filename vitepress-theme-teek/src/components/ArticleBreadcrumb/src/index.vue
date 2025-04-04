@@ -1,6 +1,7 @@
 <script setup lang="ts" name="ArticleBreadcrumb">
 import { computed, unref } from "vue";
 import { useData, withBase } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import { houseIcon } from "../../../assets/icons";
 import Breadcrumb from "./Breadcrumb.vue";
@@ -12,17 +13,16 @@ defineOptions({ name: "ArticleBreadcrumb" });
 
 const ns = useNamespace("article-breadcrumb");
 
-const { localeIndex, theme, frontmatter, page } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+const { localeIndex, theme, page } = useData();
 
 // 面包屑配置项
-const breadcrumb = computed<BreadcrumbType>(() => ({
+const breadcrumb = getTeekConfigRef<BreadcrumbType>("breadcrumb", {
   enabled: true,
   showCurrentName: false,
   separator: "/",
   homeLabel: "首页",
-  ...unref(theme).breadcrumb,
-  ...unref(frontmatter).breadcrumb,
-}));
+});
 
 const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);
 

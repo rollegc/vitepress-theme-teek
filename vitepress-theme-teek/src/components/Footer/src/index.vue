@@ -1,6 +1,7 @@
 <script setup lang="ts" name="Footer">
 import { computed, unref } from "vue";
-import { withBase, useData } from "vitepress";
+import { withBase } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 // @ts-ignore
@@ -12,10 +13,10 @@ defineOptions({ name: "TkFooter" });
 
 const ns = useNamespace("footer");
 
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
-const footerInfo = computed<FooterInfo>(() => ({ ...unref(theme).footerInfo, ...unref(frontmatter).tk?.footerInfo }));
-const social = computed<Social[]>(() => [...(unref(theme).social || []), ...(unref(frontmatter).tk?.social || [])]);
+const footerInfo = getTeekConfigRef<FooterInfo>("footerInfo", {});
+const social = getTeekConfigRef<Social[]>("social", []);
 
 const footerData = computed(() => {
   const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = unref(footerInfo) || {};

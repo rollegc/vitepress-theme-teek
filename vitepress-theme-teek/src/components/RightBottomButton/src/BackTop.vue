@@ -1,6 +1,6 @@
 <script setup lang="ts" name="BackTop">
 import { computed, unref, onMounted, onUnmounted, ref, inject } from "vue";
-import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import { rocketIcon } from "../../../assets/icons";
@@ -11,12 +11,11 @@ defineOptions({ name: "BackTop" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
-const { theme } = useData();
-const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+const { getTeekConfigRef } = useTeekConfig();
+const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   backTopDone: undefined,
   titleTip: {},
-  ...unref(theme).themeSetting,
-}));
+});
 
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);

@@ -1,9 +1,8 @@
 <script setup lang="ts" name="Home">
-import { computed, ref, unref, provide } from "vue";
-import { useData } from "vitepress";
+import { ref, unref, provide } from "vue";
 import { postDataUpdateSymbol } from "./home";
 import { useNamespace } from "../../../hooks";
-import { usePage } from "../../../configProvider";
+import { useTeekConfig, usePage } from "../../../configProvider";
 import HomeFullscreenWallpaper from "../../HomeFullscreenWallpaper";
 import HomeBanner from "../../HomeBanner";
 import HomeRightInfo from "../../HomeRightInfo";
@@ -14,12 +13,9 @@ defineOptions({ name: "Home" });
 const ns = useNamespace("home");
 
 const { isHomePage } = usePage();
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
-const themeConfig = computed(() => {
-  const { tkHome = true, banner = {}, wallpaper = {}, bodyBgImg = {} } = { ...unref(theme), ...unref(frontmatter).tk };
-  return { tkHome, banner, wallpaper, bodyBgImg };
-});
+const teekConfig = getTeekConfigRef(null, { teekHome: true, banner: {}, wallpaper: {}, bodyBgImg: {} });
 
 const homePostListInstance = ref<TkHomePostListInstance | null>(null);
 
@@ -28,7 +24,7 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
 
 <template>
   <div :class="ns.b()">
-    <HomeBanner v-if="isHomePage && (themeConfig.banner.enabled ?? true)">
+    <HomeBanner v-if="isHomePage && (teekConfig.banner.enabled ?? true)">
       <template v-for="(_, name) in $slots" :key="name" #[name]>
         <slot :name="name" />
       </template>
@@ -51,7 +47,7 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
     </div>
 
     <HomeFullscreenWallpaper
-      v-if="themeConfig.wallpaper.enabled && (themeConfig.banner.bgStyle === 'fullImg' || themeConfig.bodyBgImg.imgSrc)"
+      v-if="teekConfig.wallpaper.enabled && (teekConfig.banner.bgStyle === 'fullImg' || teekConfig.bodyBgImg.imgSrc)"
     />
   </div>
 </template>

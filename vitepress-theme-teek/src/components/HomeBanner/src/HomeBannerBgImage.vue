@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomeBannerBgImage">
-import { withBase, useData } from "vitepress";
+import { withBase } from "vitepress";
 import { computed, onMounted, onUnmounted, unref } from "vue";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
 import type { Banner } from "../../../config/types";
@@ -8,20 +9,17 @@ import type { Banner } from "../../../config/types";
 defineOptions({ name: "HomeBannerBgImage" });
 
 const ns = useNamespace("banner-bg-image");
-
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
 // Banner 配置项
-const bannerConfig = computed<Required<Banner>>(() => ({
+const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
   bgStyle: undefined,
   imgSrc: undefined,
   imgInterval: 15000,
   imgShuffle: false,
   mask: true,
   maskBg: "rgba(0, 0, 0, 0.4)",
-  ...unref(theme).banner,
-  ...unref(frontmatter).tk?.banner,
-}));
+});
 
 // 局部图片背景风格
 const isPartImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "partImg");

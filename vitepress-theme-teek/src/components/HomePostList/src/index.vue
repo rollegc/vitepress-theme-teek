@@ -2,10 +2,10 @@
 import { computed, reactive, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import type { PaginationProps } from "element-plus";
+import { useTeekConfig, usePosts } from "../../../configProvider";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination from "../../Pagination";
 import Icon from "../../Icon";
-import { usePosts } from "../../../configProvider";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import type { TkContentData } from "../../../post/types";
 import { emptyIcon } from "../../../assets/icons";
@@ -15,15 +15,16 @@ defineOptions({ name: "HomePostList" });
 
 const ns = useNamespace("post-list");
 
+const { getTeekConfigRef } = useTeekConfig();
 const posts = usePosts();
-const { theme, frontmatter } = useData();
+const { frontmatter } = useData();
 
-const postConfig = computed<Required<Post>>(() => ({
+const postConfig = getTeekConfigRef<Required<Post>>("post", {
   coverImgMode: "default",
   emptyLabel: "文章列表为空",
-  ...unref(theme).post,
-  ...unref(frontmatter).tk?.post,
-}));
+});
+// 自定义一页数量 & 分页组件的 Props
+const pageConfig = getTeekConfigRef<Partial<PaginationProps>>("page", {});
 
 const coverImgMode = ref(unref(postConfig).coverImgMode);
 
@@ -31,13 +32,8 @@ const coverImgMode = ref(unref(postConfig).coverImgMode);
 const pageInfo = ref({
   pageNum: 1,
   pageSizes: [10, 20, 50, 100, 200],
-  pageSize: computed(() => unref(frontmatter).tk?.page?.pageSize || unref(theme).page?.pageSize || 10),
+  pageSize: computed(() => unref(pageConfig).pageSize || 10),
   total: 0,
-});
-
-// 自定义一页数量 & 分页组件的 Props
-const pageConfig = computed<Partial<PaginationProps>>(() => {
-  return { ...unref(theme).page, ...unref(frontmatter).tk?.page };
 });
 
 const route = useRoute();
@@ -80,7 +76,7 @@ watch(
   { immediate: true }
 );
 
-const pagePropsRef = reactive({ ...unref(pageConfig) });
+const pagePropsRef = reactive({ ...unref(pageConfig), pageSize: undefined });
 const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = unref(pageConfig);
 const targetSize = "small";
 const targetLayout = "prev, pager, next";

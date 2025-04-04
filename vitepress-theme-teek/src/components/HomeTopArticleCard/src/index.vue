@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeTopArticleCard">
 import { computed, ref, unref } from "vue";
-import { withBase, useData } from "vitepress";
-import { usePosts, useBgColor } from "../../../configProvider";
+import { withBase } from "vitepress";
+import { useTeekConfig, usePosts, useBgColor } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { topArticleIcon } from "../../../assets/icons";
@@ -12,21 +12,17 @@ import type { TopArticle } from "../../../config/types";
 defineOptions({ name: "HomeTopArticleCard" });
 
 const ns = useNamespace("top-article");
-
+const { getTeekConfigRef } = useTeekConfig();
 const posts = usePosts();
 
-const { theme, frontmatter, localeIndex } = useData();
-
 // 精选文章配置项
-const topArticleConfig = computed<Required<TopArticle>>(() => ({
+const topArticleConfig = getTeekConfigRef<Required<TopArticle>>("topArticle", {
   limit: 4,
   title: `${topArticleIcon}精选文章`,
   emptyLabel: "暂无精选文章",
   autoPage: false,
   pageSpeed: 4000,
-  ...unref(theme).topArticle,
-  ...unref(frontmatter).tk?.topArticle,
-}));
+});
 
 const topArticleList = computed(() => {
   const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;
@@ -53,7 +49,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getStyle = (num: number, index: number) => {
   return {
-    [ns.cssVarName("num-bg-color")]: bgColor[num % bgColor.length],
+    [ns.cssVarName("num-bg-color")]: unref(bgColor)[num % unref(bgColor).length],
     top: `calc(${index} * (calc(${ns.cssVar("home-top-article-gap")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };

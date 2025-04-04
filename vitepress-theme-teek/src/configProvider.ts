@@ -1,12 +1,14 @@
-import { computed, defineComponent, h, InjectionKey, provide, Ref, unref, type Component } from "vue";
+import { computed, defineComponent, h, inject, InjectionKey, provide, Ref, unref, type Component } from "vue";
 import { useData } from "vitepress";
-import usePermalink from "./usePermalink";
-// import usePermalink from "vitepress-plugin-permalink/usePermalink";
+import usePermalink from "vitepress-plugin-permalink/usePermalink";
 import { useAnchorScroll, useViewTransition } from "./hooks";
 import { emptyPost } from "./post/helper";
 import type { Post } from "./post/types";
+import type { TeekConfig } from "./config/types";
+import { isFunction, isObject } from "./helper";
 
 export const postsSymbol: InjectionKey<Post> = Symbol("posts");
+export const teekConfigSymbol: InjectionKey<TeekConfig | Ref<TeekConfig>> = Symbol("teekConfig");
 
 /**
  * 创建 Layout 组件
@@ -79,19 +81,64 @@ export const usePosts = (): Ref<Post> => {
  * 获取默认背景色
  */
 export const useBgColor = () => {
+  const { getTeekConfigRef } = useTeekConfig();
+
+  return getTeekConfigRef("bgColor", [
+    "#e74c3c",
+    "#409EFF",
+    "#DAA96E",
+    "#0C819F",
+    "#27ae60",
+    "#ff5c93",
+    "#fd726d",
+    "#f39c12",
+    "#9b59b6",
+  ]);
+};
+
+/**
+ * 获取 Teek 的主题配置数据
+ * 支持（优先级） provide > frontmatter.tk.[key] > frontmatter.[key] > theme.[key] 4 种方式进行主题配置
+ */
+export const useTeekConfig = () => {
   const { theme, frontmatter } = useData();
-  return (
-    unref(frontmatter).tk?.bgColor ||
-    unref(theme).bgColor || [
-      "#e74c3c",
-      "#409EFF",
-      "#DAA96E",
-      "#0C819F",
-      "#27ae60",
-      "#ff5c93",
-      "#fd726d",
-      "#f39c12",
-      "#9b59b6",
-    ]
-  );
+  const teekConfigProvide = inject(teekConfigSymbol, {});
+
+  /**
+   * 获取 Teek 的主题配置数据
+   *
+   * @param key 配置项 key
+   * @param defaultValue 如果读取 key 不存在时，则返回默认值
+   */
+  const getTeekConfig = <T = any>(key?: keyof TeekConfig | null, defaultValue?: any): T => {
+    let dv = defaultValue;
+    if (isFunction(defaultValue)) dv = defaultValue();
+
+    // 返回所有 TeekConfig 数据
+    if (!key) {
+      return { ...dv, ...unref(theme), ...unref(frontmatter), ...unref(frontmatter).tk, ...unref(teekConfigProvide) };
+    }
+
+    // 返回指定 key 的 TeekConfig 数据
+    const valueFromTheme = unref(theme)[key];
+    const valueFromFrontmatter = unref(frontmatter).tk?.[key] ?? unref(frontmatter)[key];
+    const valueFromInject = unref(teekConfigProvide)[key];
+
+    // 对象格式，根据优先级合并里面的内容
+    if (isObject(valueFromTheme) || isObject(valueFromFrontmatter) || isObject(valueFromInject)) {
+      return { ...dv, ...valueFromTheme, ...valueFromFrontmatter, ...(valueFromInject as object) };
+    }
+
+    // 非对象格式，则根据优先级返回
+    return dv || valueFromInject || valueFromFrontmatter || valueFromTheme;
+  };
+
+  /**
+   * 获取 Teek 的主题配置数据（响应式）
+   */
+  const getTeekConfigRef = <T = any>(key?: keyof TeekConfig | null, defaultValue?: any) => {
+    return computed<T>(() => getTeekConfig(key, defaultValue));
+  };
+
+  return { getTeekConfig, getTeekConfigRef };
 };

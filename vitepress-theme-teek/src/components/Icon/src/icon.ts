@@ -30,7 +30,7 @@ export interface IconProps {
   /**
    * 图标悬停时的颜色，仅当 hover 为 true 时有效
    *
-   * @default 'var(--vp-c-brand-1)'
+   * @default 'var(--tk-theme-color)'
    */
   hoverColor?: string;
   /**

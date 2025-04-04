@@ -1,6 +1,7 @@
 <script setup lang="ts" name="HomePostItem">
 import { computed, unref } from "vue";
-import { withBase, useData } from "vitepress";
+import { withBase } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import type { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
@@ -10,30 +11,33 @@ import type { Article, Post } from "../../../config/types";
 defineOptions({ name: "HomePostItem" });
 
 const ns = useNamespace("post-item");
-
 const { post, coverImgMode } = defineProps<{ post: TkContentData; coverImgMode: "default" | "full" }>();
 
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
-const {
-  excerptPosition = "bottom",
-  showMore = true,
-  moreLabel = "阅读全文 >",
-  showCapture = false,
-  splitSeparator = false,
-  imageViewer = {},
-}: Post = { ...unref(theme).post, ...unref(frontmatter).tk?.post };
-const { showInfo = true }: Article = { ...unref(theme).article, ...unref(frontmatter).tk?.article };
+const postConfig = getTeekConfigRef<Post>("post", {
+  excerptPosition: "bottom",
+  showMore: true,
+  moreLabel: "阅读全文 >",
+  showCapture: false,
+  splitSeparator: false,
+  imageViewer: {},
+});
+const articleConfig = getTeekConfigRef<Article>("article", {
+  showInfo: true,
+});
 
 const postUrl = post.url && withBase(post.url);
-const excerpt = post.frontmatter.description || post.excerpt || (showCapture && post.capture);
+const excerpt = computed(
+  () => post.frontmatter.description || post.excerpt || (unref(postConfig).showCapture && post.capture)
+);
 
 /**
  * 点击图片进行预览
  */
 const handleViewImg = (imgUrl: string | string[]) => {
   const urlList = [imgUrl || []].flat() as string[];
-  createImageViewer({ ...imageViewer, urlList });
+  createImageViewer({ ...unref(postConfig).imageViewer, urlList });
 };
 
 const coverImgMap = computed(() => {
@@ -58,7 +62,7 @@ const coverImgMap = computed(() => {
 
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {
-  const arr = [showInfo].flat();
+  const arr = [unref(articleConfig).showInfo].flat();
   if (arr.includes(true) || arr.includes("post")) return true;
   return false;
 });
@@ -76,20 +80,20 @@ const isShowInfo = computed(() => {
         </a>
 
         <!-- 摘要 top -->
-        <div v-if="excerpt && excerptPosition === 'top'" :class="`${ns.e('info__left__excerpt')} top`">
+        <div v-if="excerpt && postConfig.excerptPosition === 'top'" :class="`${ns.e('info__left__excerpt')} top`">
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="showMore" class="more" :href="postUrl">{{ moreLabel }}</a>
+          <a v-if="postConfig.showMore" class="more" :href="postUrl">{{ postConfig.moreLabel }}</a>
         </div>
 
         <!-- 文章信息 -->
         <div :class="ns.e('info__left__footer')">
-          <ArticleInfo v-if="isShowInfo" :post scope="post" :split="splitSeparator" />
+          <ArticleInfo v-if="isShowInfo" :post scope="post" :split="postConfig.splitSeparator" />
         </div>
 
         <!-- 摘要 bottom -->
-        <div v-if="excerpt && excerptPosition === 'bottom'" :class="`${ns.e('info__left__excerpt')} bottom`">
+        <div v-if="excerpt && postConfig.excerptPosition === 'bottom'" :class="`${ns.e('info__left__excerpt')} bottom`">
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="showMore" class="more" :href="postUrl">{{ moreLabel }}</a>
+          <a v-if="postConfig.showMore" class="more" :href="postUrl">{{ postConfig.moreLabel }}</a>
         </div>
       </div>
 
