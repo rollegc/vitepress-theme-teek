@@ -1,7 +1,7 @@
 <script setup lang="ts" name="TeekLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed, nextTick, unref, watch } from "vue";
+import { computed, unref } from "vue";
 import { useNamespace } from "../hooks";
 import { useTeekConfig, usePage } from "../configProvider";
 import type { TeekConfig } from "../config/types";
@@ -66,19 +66,6 @@ const commentConfig = computed(() => {
 const topTipConfig = computed(() => {
   return unref(teekConfig).article.topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
 });
-
-watch(
-  () => unref(teekConfig).vpHome,
-  (newValue: boolean) => {
-    if (!newValue) {
-      nextTick(() => {
-        document.querySelector(".VPHomeHero")?.remove();
-        document.querySelector(".VPHomeFeatures")?.remove();
-      });
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <template>
@@ -100,7 +87,7 @@ watch(
       </TkNotice>
     </ClientOnly>
 
-    <Layout :class="ns.b()">
+    <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">
       <template #home-hero-before>
         <slot name="home-hero-before" />
         <slot name="teek-home-before" />

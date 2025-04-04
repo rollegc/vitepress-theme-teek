@@ -2,10 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.8](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2025-04-04)
+
+### Features
+
+- 🚀 vpHome 配置项功能由删除改为隐藏 ([6508baf](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/6508bafbb72bef315994bb2fe947a0e129e64ff4))
+
 ## [1.0.0-alpha.7](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2025-04-04)
 
 ### Features
 
+- 🚀 1.0.0-alpha.7 版本发布 ([20a4d88](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/20a4d88f0874b9f7a201b42d1cbe7b16809e0784))
 - 🚀 重构 teekConfig 获取方式，支持 provide 注入配置项来实现页面动态切换配置功能，修复部分遗留问题 ([e5a4824](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e5a4824dc599058e506bcc7086105fcdc632cdb2))
 
 ### Bug Fixes
