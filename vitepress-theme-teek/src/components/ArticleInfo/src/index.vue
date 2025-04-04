@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticleInfo">
 import { useRoute, withBase, useData } from "vitepress";
 import { computed, unref } from "vue";
-import { usePosts } from "../../../configProvider";
+import { useTeekConfig, usePosts } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
 import { useNamespace } from "../../../hooks";
@@ -16,9 +16,11 @@ const ns = useNamespace("article-info");
 
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
-const { theme, frontmatter, page } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+const { page } = useData();
+
 // 文章信息配置项
-const articleConfig = computed<Article>(() => ({
+const articleConfig = getTeekConfigRef<Article>("article", {
   showIcon: true,
   dateFormat: "yyyy-MM-dd",
   showAuthor: true,
@@ -27,10 +29,7 @@ const articleConfig = computed<Article>(() => ({
   showCategory: false,
   showTag: false,
   titleTip: {},
-  ...unref(theme).article,
-  ...unref(frontmatter).article,
-  ...unref(frontmatter).tk?.article,
-}));
+});
 
 const posts = usePosts();
 const route = useRoute();

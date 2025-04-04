@@ -1,8 +1,8 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import { computed, unref, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
+import { useTeekConfig, usePosts } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
-import { usePosts } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import { categoryIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
@@ -14,10 +14,11 @@ defineOptions({ name: "HomeCategoryCard" });
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
 const ns = useNamespace("category");
-const { localeIndex, theme, site, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+const { localeIndex, site } = useData();
 
 // 分类配置项
-const categoryConfig = computed<Required<Category>>(() => ({
+const categoryConfig = getTeekConfigRef<Required<Category>>("category", {
   path: "/categories",
   pageTitle: `${categoryIcon}全部分类`,
   homeTitle: `${categoryIcon}文章分类`,
@@ -25,9 +26,7 @@ const categoryConfig = computed<Required<Category>>(() => ({
   limit: 5,
   autoPage: false,
   pageSpeed: 4000,
-  ...unref(theme).category,
-  ...unref(frontmatter).tk?.category,
-}));
+});
 
 const posts = usePosts();
 const pageNum = ref(1);

@@ -1,6 +1,7 @@
 <script setup lang="ts" name="Notice">
 import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useWindowSize, useVpRouter } from "../../../hooks";
 import Icon from "../../Icon";
 import { noticeIcon, closeIcon } from "../../../assets/icons";
@@ -10,10 +11,11 @@ import type { Notice } from "../../../config/types";
 defineOptions({ name: "Notice" });
 
 const ns = useNamespace("notice");
+const { getTeekConfigRef } = useTeekConfig();
 const vpRouter = useVpRouter();
-const { theme, localeIndex } = useData();
+const { localeIndex } = useData();
 
-const noticeConfig = computed<Required<Notice>>(() => ({
+const noticeConfig = getTeekConfigRef<Required<Notice>>("notice", {
   noticeStyle: undefined,
   iconStyle: {},
   popoverStyle: {},
@@ -28,8 +30,7 @@ const noticeConfig = computed<Required<Notice>>(() => ({
   noticeIcon,
   closeIcon,
   onAfterRouteChange: undefined,
-  ...unref(theme).notice,
-}));
+});
 
 const destroyNoticeIcon = ref(false);
 const showNoticeIcon = computed(() => !unref(showPopover) && !unref(destroyNoticeIcon));

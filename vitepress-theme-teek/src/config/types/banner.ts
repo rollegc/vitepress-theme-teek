@@ -6,6 +6,12 @@ export interface Banner {
    */
   enabled?: boolean;
   /**
+   * Banner 标题
+   *
+   * @default 'vitepress 的 title 属性'
+   */
+  name?: string;
+  /**
    * Banner 背景风格：pure 为纯色背景，partImg 为局部图片背景，fullImg 为全屏图片背景
    *
    * @default 'default'

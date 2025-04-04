@@ -3,7 +3,7 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 
 const description = ["Hd Security Documentation", "Authentication Framework"].toString();
 
-const tkConfig = defineTeekConfig({
+const teekConfig = defineTeekConfig({
   article: {
     titleTip: {
       author: "Author",
@@ -43,7 +43,7 @@ export default defineConfig({
     },
   },
   themeConfig: {
-    ...tkConfig.themeConfig,
+    ...teekConfig.themeConfig,
     darkModeSwitchLabel: "Theme",
     sidebarMenuLabel: "Menu",
     returnToTopLabel: "To Top",

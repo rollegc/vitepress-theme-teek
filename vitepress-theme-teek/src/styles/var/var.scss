@@ -26,7 +26,6 @@
 }
 
 :root.dark {
-  @include set-css-var("theme-color", var(--vp-c-brand-1));
   @include set-css-var("lower-color-1", #9facba);
   @include set-css-var("lower-color-2", #bdc3cc);
   @include set-css-var("lower-color-3", #21252b);
@@ -60,4 +59,20 @@
   @include set-css-var("home-friend-link-gap", getCssVar("gap2"));
   @include set-css-var("home-article-analyze-gap", getCssVar("gap1"));
   @include set-css-var("footer-gap", getCssVar("gap2"));
+}
+
+// 头像样式变量
+:root {
+  @include set-css-var("avatar-bg-color", #c0c4cc);
+  @include set-css-var("avatar-text-color", #ffffff);
+  @include set-css-var("avatar-text-size", 14px);
+  @include set-css-var("avatar-icon-size", 18px);
+  @include set-css-var("avatar-border-radius", 4px);
+  @include set-css-var("avatar-size-small", 24px);
+  @include set-css-var("avatar-size", 40px);
+  @include set-css-var("avatar-size-large", 56px);
+}
+
+:root.dark {
+  @include set-css-var("avatar-bg-color", #6c6e72);
 }

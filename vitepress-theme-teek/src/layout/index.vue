@@ -1,10 +1,10 @@
 <script setup lang="ts" name="TeekLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed, unref } from "vue";
+import { computed, nextTick, unref, watch } from "vue";
 import { useNamespace } from "../hooks";
-import { usePage } from "../configProvider";
-import { TeekConfig } from "../config/types";
+import { useTeekConfig, usePage } from "../configProvider";
+import type { TeekConfig } from "../config/types";
 import {
   TkHome,
   TkArchivesPage,
@@ -30,25 +30,24 @@ defineOptions({ name: "TeekLayout" });
 const { Layout } = DefaultTheme;
 
 const ns = useNamespace("layout");
-
+const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage } = usePage();
-const { theme, frontmatter, localeIndex, page } = useData();
+const { frontmatter, localeIndex, page } = useData();
 
-const { tkTheme = true, bodyBgImg = {}, notice = {} }: TeekConfig = unref(theme);
 // 支持 theme 或 frontmatter 配置
-const themeConfig = computed(() => {
-  const {
-    tkHome = true,
-    codeBlock = true,
-    comment = { provider: "" },
-    article = {},
-  }: TeekConfig = { ...unref(theme), ...unref(frontmatter), ...unref(frontmatter).tk };
-
-  return { tkHome, codeBlock, comment, topTip: article.topTip };
+const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
+  teekTheme: true,
+  teekHome: true,
+  vpHome: true,
+  codeBlock: true,
+  bodyBgImg: {},
+  notice: {},
+  comment: { provider: "" },
+  article: {},
 });
 
 const commentConfig = computed(() => {
-  const comment = unref(themeConfig).comment;
+  const comment = unref(teekConfig).comment;
   if (isBoolean(comment)) return { enabled: comment };
 
   return {
@@ -65,12 +64,25 @@ const commentConfig = computed(() => {
 });
 
 const topTipConfig = computed(() => {
-  return unref(themeConfig).topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
+  return unref(teekConfig).article.topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
 });
+
+watch(
+  () => unref(teekConfig).vpHome,
+  (newValue: boolean) => {
+    if (!newValue) {
+      nextTick(() => {
+        document.querySelector(".VPHomeHero")?.remove();
+        document.querySelector(".VPHomeFeatures")?.remove();
+      });
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
-  <template v-if="tkTheme">
+  <template v-if="teekConfig.teekTheme">
     <ClientOnly>
       <TkRightBottomButton>
         <!-- 通用插槽 -->
@@ -79,9 +91,9 @@ const topTipConfig = computed(() => {
         </template>
       </TkRightBottomButton>
 
-      <TkBodyBgImage v-if="bodyBgImg?.imgSrc" />
+      <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
 
-      <TkNotice v-if="notice?.enabled">
+      <TkNotice v-if="teekConfig.notice?.enabled">
         <template v-for="(_, name) in $slots" :key="name" #[name]>
           <slot :name="name" />
         </template>
@@ -95,7 +107,7 @@ const topTipConfig = computed(() => {
 
         <ClientOnly>
           <!-- 自定义首页 -->
-          <TkHome v-if="themeConfig.tkHome">
+          <TkHome v-if="teekConfig.teekHome">
             <template v-for="(_, name) in $slots" :key="name" #[name]>
               <slot :name="name" />
             </template>
@@ -122,7 +134,7 @@ const topTipConfig = computed(() => {
           <TkArticleAnalyze />
           <TkArticleImagePreview />
           <TkArticlePageStyle />
-          <TkCodeBlockToggle v-if="themeConfig.codeBlock" />
+          <TkCodeBlockToggle v-if="teekConfig.codeBlock" />
         </ClientOnly>
 
         <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
@@ -150,7 +162,6 @@ const topTipConfig = computed(() => {
         <slot name="teek-comment-after" />
       </template>
 
-      <!-- content -->
       <template #page-top>
         <slot name="page-top" />
         <slot name="teek-page-top-before" />

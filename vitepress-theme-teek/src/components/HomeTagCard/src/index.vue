@@ -2,7 +2,7 @@
 import { unref, watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
-import { usePosts, useBgColor } from "../../../configProvider";
+import { useTeekConfig, usePosts, useBgColor } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import { tagIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
@@ -12,14 +12,14 @@ import { postDataUpdateSymbol } from "../../Home/src/home";
 defineOptions({ name: "HomeTagCard" });
 
 const ns = useNamespace("tag");
-
+const { getTeekConfigRef } = useTeekConfig();
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
-const { theme, site, frontmatter, localeIndex } = useData();
+const { site, localeIndex } = useData();
 
 const pageNum = ref(1);
 // 标签配置项
-const tagConfig = computed<Required<Tag>>(() => ({
+const tagConfig = getTeekConfigRef<Required<Tag>>("tag", {
   path: "/tags",
   pageTitle: `${tagIcon}全部标签`,
   homeTitle: `${tagIcon}热门标签`,
@@ -28,11 +28,10 @@ const tagConfig = computed<Required<Tag>>(() => ({
   autoPage: false,
   pageSpeed: 4000,
   bgColor: "",
-  ...unref(theme).tag,
-  ...unref(frontmatter).tk?.tag,
-}));
+});
 
 const posts = usePosts();
+const boColor = useBgColor();
 const tags = computed(() => unref(posts).groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
@@ -51,7 +50,7 @@ const finalTitle = computed(() => {
 });
 
 const getTagStyle = (index: number) => {
-  const tagBgColor = unref(tagConfig).bgColor || useBgColor();
+  const tagBgColor = unref(tagConfig).bgColor || unref(boColor);
 
   // 标签背景色
   const color = tagBgColor[index % tagBgColor.length];

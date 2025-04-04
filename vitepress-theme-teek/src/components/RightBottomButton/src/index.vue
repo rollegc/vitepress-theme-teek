@@ -1,6 +1,7 @@
 <script setup lang="ts" name="RightBottomButton">
-import { computed, provide, unref } from "vue";
+import { provide } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";
@@ -14,12 +15,12 @@ defineOptions({ name: "RightBottomButton" });
 const ns = useNamespace("right-bottom-button");
 provide(rightBottomButtonNsSymbol, ns);
 
+const { getTeekConfigRef } = useTeekConfig();
 const { theme } = useData();
-const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   useThemeStyle: true,
   useThemeSize: true,
-  ...unref(theme).themeSetting,
-}));
+});
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Icon">
 import { useSlots } from "vue";
 import { useNamespace } from "../../../hooks";
-import { isString } from "../../../helper";
+import { addUnit } from "../../../helper";
 import { IconProps } from "./icon";
 
 defineOptions({ name: "Icon" });
@@ -16,7 +16,7 @@ const getStyle = () => {
   return {
     ...props.style,
     "--icon-color": color,
-    "--icon-size": props.size && (isString(props.size) ? props.size : `${props.size}px`),
+    "--icon-size": props.size && addUnit(props.size),
     "--icon-color-hover": hoverColor || ns.cssVar("theme-color"),
   };
 };

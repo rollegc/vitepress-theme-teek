@@ -1,6 +1,7 @@
 <script setup lang="ts" name="ThemeSize">
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { sizeIcon } from "../../../assets/icons";
@@ -11,14 +12,15 @@ defineOptions({ name: "ThemeSize" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
-const { theme, frontmatter } = useData();
-const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+const { frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+
+const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   themeSize: "default",
   themeSizeAppend: [],
   themeSizeLabel: {},
   titleTip: {},
-  ...unref(theme).themeSetting,
-}));
+});
 
 // 主题尺寸
 const showThemeSizeItem = ref(false);

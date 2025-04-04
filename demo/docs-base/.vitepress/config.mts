@@ -4,12 +4,12 @@ import timeline from "vitepress-markdown-timeline"; // 导入时间线插件
 
 const description = ["Hd Security 使用文档", "认证框架"].toString();
 
-const tkConfig = defineTeekConfig({
+const teekConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
-    avatarStyle: "full",
+    shape: "square",
     name: "天客",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
   },
@@ -159,7 +159,7 @@ const tkConfig = defineTeekConfig({
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  extends: tkConfig,
+  extends: teekConfig,
   base: "/",
   title: "Hd Security",
   description: description,

@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArticlePageStyle">
-import { computed, unref, watch } from "vue";
-import { useData } from "vitepress";
+import { unref, watch } from "vue";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 
 const ns = useNamespace("body-bg-image");
 
-const { theme, frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
 
-const pageStyle = computed(() => unref(frontmatter).pageStyle || unref(theme).pageStyle || "default");
+const pageStyle = getTeekConfigRef("pageStyle", "default");
 
 watch(
   pageStyle,

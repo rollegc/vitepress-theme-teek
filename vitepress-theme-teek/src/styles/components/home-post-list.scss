@@ -36,7 +36,7 @@
   }
 
   /* 封面图为 full 风格样式 */
-  .full-cover:nth-child(2n) .#{$namespace}-postItem__info {
+  .full-cover:nth-child(2n) .#{$namespace}-post-item__info {
     flex-direction: row-reverse;
     .cover-img .full {
       clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);

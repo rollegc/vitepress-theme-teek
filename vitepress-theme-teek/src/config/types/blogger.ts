@@ -1,3 +1,5 @@
+import type { TkAvatarProps } from "../../components/Avatar";
+
 export interface Blogger {
   /**
    * 博主昵称
@@ -12,9 +14,9 @@ export interface Blogger {
    */
   slogan?: string;
   /**
-   * 头像风格：radius 为圆形头像，可支持鼠标悬停旋转，full 为方形头像
+   * 头像风格：square 为方形头像，circle 为圆形头像，circle-rotate 可支持鼠标悬停旋转
    *
-   * @default 'full'
+   * @default 'square'
    */
-  avatarStyle?: "radius" | "full";
+  shape?: TkAvatarProps["shape"] | "circle-rotate";
 }

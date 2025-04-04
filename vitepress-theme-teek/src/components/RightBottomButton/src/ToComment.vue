@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ToComment">
 import { computed, unref, ref, inject } from "vue";
-import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import { commentIcon } from "../../../assets/icons";
@@ -11,12 +11,12 @@ defineOptions({ name: "ToComment" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
 
-const { theme } = useData();
-const themeSettingConfig = computed<Required<ThemeSetting>>(() => ({
+const { getTeekConfigRef } = useTeekConfig();
+
+const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   toCommentDone: undefined,
   titleTip: {},
-  ...unref(theme).themeSetting,
-}));
+});
 
 // 前往评论区
 const scrollTop = ref(0);

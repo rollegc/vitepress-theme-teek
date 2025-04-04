@@ -1,17 +1,19 @@
 <script setup lang="ts" name="HomeBannerContent">
 import { computed, onMounted, onUnmounted, unref } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
 import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerContent" });
 
 const ns = useNamespace("banner-content");
+const { getTeekConfigRef } = useTeekConfig();
 
-const { site, theme, frontmatter } = useData();
-const title = computed(() => unref(frontmatter).tk?.name || unref(site).title || "");
+const { site, frontmatter } = useData();
 // Banner 配置项
-const bannerConfig = computed<Required<Banner>>(() => ({
+const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
+  name: unref(frontmatter).tk?.name || unref(site).title || "",
   descStyle: "default",
   description: [],
   switchTime: 4000,
@@ -20,9 +22,8 @@ const bannerConfig = computed<Required<Banner>>(() => ({
   typesOutTime: 100,
   typesNextTime: 800,
   typesShuffle: false,
-  ...unref(theme).banner,
-  ...unref(frontmatter).tk?.banner,
-}));
+});
+
 const descArray = computed<string[]>(() => [
   ...new Set(
     [unref(frontmatter).tk?.description || unref(bannerConfig).description || []].flat()?.filter((v: string) => !!v)
@@ -52,7 +53,7 @@ const {
 // 文字淡入淡出效果
 const {
   data: text,
-  startAutoSwitch: switchText,
+  startAutoSwitch,
   stopAutoSwitch,
 } = useSwitchData(unref(descArray), {
   timeout: unref(bannerConfig).switchTime,
@@ -68,7 +69,7 @@ const {
 
 onMounted(() => {
   if (unref(isTypesDescStyle)) startTypes();
-  if (unref(isSwitchDescStyle)) switchText();
+  if (unref(isSwitchDescStyle)) startAutoSwitch();
 });
 onUnmounted(() => {
   if (unref(isTypesDescStyle)) stopTypes();
@@ -78,14 +79,14 @@ onUnmounted(() => {
 
 <template>
   <div :class="ns.b()">
-    <h1 :class="ns.e('content__title')">{{ title }}</h1>
+    <h1 :class="ns.e('content__title')">{{ bannerConfig.name }}</h1>
 
     <p :class="ns.e('content__desc')">
       <template v-if="isDefaultDescStyle">
         <span>{{ descArray[0] }}</span>
       </template>
       <template v-else-if="isSwitchDescStyle">
-        <span v-show="!!text" @click="switchText" class="switch">{{ text }}</span>
+        <span v-show="!!text" @click="startAutoSwitch" class="switch">{{ text }}</span>
       </template>
       <template v-else-if="isTypesDescStyle && descArray.length">
         <span>{{ typesText }}</span>

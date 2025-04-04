@@ -1,12 +1,12 @@
 import { defineConfig } from "vitepress";
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 
-const tkConfig = defineTeekConfig({
+const teekConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     // 博主信息，显示在首页侧边栏
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
-    avatarStyle: "full",
+    shape: "square",
     name: "天客",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
   },
@@ -110,7 +110,7 @@ const tkConfig = defineTeekConfig({
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  extends: tkConfig,
+  extends: teekConfig,
   title: "Hd Security",
   cleanUrls: false,
   lastUpdated: true,

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeCard">
-import { unref, onMounted, ref } from "vue";
+import { unref, onMounted, ref, onUnmounted } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace } from "../../../hooks";
 import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
@@ -73,6 +73,10 @@ const closeAutoPage = () => {
 
 onMounted(() => {
   if (page && autoPage) startAutoPage();
+});
+
+onUnmounted(() => {
+  if (page && autoPage) closeAutoPage();
 });
 </script>
 

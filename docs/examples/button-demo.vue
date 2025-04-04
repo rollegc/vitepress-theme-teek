@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Demo1"></script>
 
 <template>
-  <button class="tk-button">primary1234</button>
+  <button class="tk-button">primary</button>
 </template>
 
 <style lang="scss" scoped>

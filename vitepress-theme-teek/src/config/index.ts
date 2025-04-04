@@ -114,7 +114,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
   }
 
   // 主题强内置插件
-  if (config.tkTheme !== false) {
+  if (config.teekTheme !== false) {
     // 目录页插件
     plugins.push(Catalogue(catalogueOption));
 

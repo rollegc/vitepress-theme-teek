@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArticleImagePreview">
 import { onMounted, onUnmounted, computed, unref } from "vue";
-import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import { createImageViewer } from "../../ImageViewer";
 
-const { theme, frontmatter } = useData();
+const { getTeekConfig } = useTeekConfig();
 
 // 文章图片配置
 const imageViewer = computed(() => {
-  const { imageViewer = {} } = { ...unref(theme).article, ...unref(frontmatter).article };
+  const { imageViewer = {} } = getTeekConfig("article");
   return imageViewer;
 });
 
