@@ -50,6 +50,5 @@ pnpm plugin:build
 ## TODO
 
 - 添加赞赏功能
-- 刷新 404 优化
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`
