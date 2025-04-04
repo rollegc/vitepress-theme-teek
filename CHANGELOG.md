@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.7](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2025-04-04)
+
+### Features
+
+- 🚀 重构 teekConfig 获取方式，支持 provide 注入配置项来实现页面动态切换配置功能，修复部分遗留问题 ([e5a4824](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e5a4824dc599058e506bcc7086105fcdc632cdb2))
+
+### Bug Fixes
+
+- 🐞 主题相关的缓存去掉项目名前缀 ([2cba3a4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2cba3a4c995624784fefeccc33ccb7473bb4c55e))
+
 ## [1.0.0-alpha.6](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2025-04-03)
 
 ### Features
