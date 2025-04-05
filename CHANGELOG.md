@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.9](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2025-04-05)
+
+### Features
+
+- 🚀 版本号更新 ([2ed7aa8](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2ed7aa80dcbb5117ab0c3403e31212751318c08e))
+- 🚀 博客头像的背景色默认透明 ([8545f1e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/8545f1e18be8dcd9e8fca2b334a3460c6ce0ec12))
+- 🚀 新增 Video 容器 ([d5819d6](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/d5819d629ac30cb847406cb4d0a9903a52937841))
+- 🚀 新增底部信息组组件，重命名 Footer 为 FooterInfo，添加部分文档说明，优化部分代码 ([1266a4f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/1266a4fe5eaaf3d2a15d2b2a2ecedd5bf2721468))
+- 🚀 新增页面分享组件 ([107fe0d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/107fe0da55e7d833edc2b5fecd71789620198ccf))
+- 🚀 新增赞赏功能，修复评论区不跟随 provide 配置项问题，修复 social 失效问题 ([c3dadf7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c3dadf7186262a0e46f1b5fbe53917e7af64a97d))
+- 🚀 新增站点分析功能：Baidu、Google、umami ([d918d99](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/d918d992f8dfe6ad11fc938cd1a9ee9173d1a9da))
+
+### Bug Fixes
+
+- 🐞 修复 docs 打包失败问题 ([d535270](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/d535270d9a8f00fbdb2c8a3c5dbb07db279808e9))
+
 ## [1.0.0-alpha.8](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2025-04-04)
 
 ### Features
