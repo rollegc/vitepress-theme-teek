@@ -1,5 +1,5 @@
 import DefaultTheme from "vitepress/theme";
-import { defineClientComponent } from "vitepress";
+import { defineClientComponent, inBrowser } from "vitepress";
 import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
 import { TkCataloguePage, TkArchivesPage, TkDemoCode } from "./components";
@@ -50,7 +50,7 @@ export default {
     const siteAnalysis: Record<string, (options: any) => void> = {
       baidu: (options: BaiduAnalyticsOptions) => {
         baiduAnalytics(options);
-        trackPageview(options, window.location.href);
+        if (inBrowser) trackPageview(options, window.location.href);
       },
       google: (options: GoogleAnalyticsOptions) => googleAnalytics(options),
       umami: (options: UmamiAnalytics) => umamiAnalytics(options),
