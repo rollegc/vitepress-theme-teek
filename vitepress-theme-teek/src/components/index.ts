@@ -5,6 +5,7 @@ export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
 export * from "./ArticleBreadcrumb";
 export * from "./ArticlePageStyle";
+export * from "./ArticleShare";
 export * from "./Avatar";
 export * from "./BodyBgImage";
 export * from "./CataloguePage";

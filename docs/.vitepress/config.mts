@@ -19,6 +19,7 @@ const teekConfig = defineTeekConfig({
       link: "http://beian.miit.gov.cn/",
     },
   },
+  articleShare: { enabled: true },
   vitePlugins: {
     sidebarOption: {
       initItems: false,

@@ -3,7 +3,7 @@ import { ref } from "vue";
 /**
  * 复制文本到剪贴板
  */
-export const useClipboard = () => {
+export const useClipboard = (timeout = 1500) => {
   const copied = ref(false);
   const text = ref("");
   const isSupported = ref(false);
@@ -37,7 +37,7 @@ export const useClipboard = () => {
   const resetCopied = () => {
     setTimeout(() => {
       copied.value = false;
-    }, 1500);
+    }, timeout);
   };
 
   return { copy, text, copied, isSupported };

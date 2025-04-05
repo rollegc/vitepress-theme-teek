@@ -15,6 +15,7 @@ import type {
   Notice,
   Plugins,
   Post,
+  ArticleShare,
   SiteAnalytics,
   Social,
   Tag,
@@ -145,6 +146,7 @@ export interface TeekConfig {
    * 文章信息配置
    */
   article?: Article;
+  articleShare?: ArticleShare;
   /**
    * 赞赏功能配置
    */

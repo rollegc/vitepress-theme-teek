@@ -32,3 +32,5 @@ export { default as copyIcon } from "./copy";
 export { default as codeIcon } from "./code";
 export { default as caretTopIcon } from "./caretTop";
 export { default as weChatPayIcon } from "./weChatPay";
+export { default as shareIcon } from "./share";
+export { default as thumbsIcon } from "./thumbs";

@@ -1,5 +1,6 @@
 export type * from "./appreciation";
 export type * from "./article";
+export type * from "./articleShare";
 export type * from "./author";
 export type * from "./banner";
 export type * from "./blogger";
