@@ -23,7 +23,7 @@ import { createCategory, createPermalink } from "./addFrontmatter";
 export * from "./types";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
-  const { vitePlugins, markdown = {}, ...teekThemeConfig } = config;
+  const { vitePlugins, markdown = {}, ...teekConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -137,7 +137,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
 
   const head: HeadConfig[] = [];
 
-  if (teekThemeConfig.docAnalysis?.statistics?.provider === "busuanzi") {
+  if (teekConfig.docAnalysis?.statistics?.provider === "busuanzi") {
     // 不蒜子 API 统计需要
     head.push(["meta", { name: "referrer", content: "no-referrer-when-downgrade" }]);
   }
@@ -166,6 +166,6 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
         config?.(md);
       },
     },
-    themeConfig: teekThemeConfig,
+    themeConfig: teekConfig,
   };
 };

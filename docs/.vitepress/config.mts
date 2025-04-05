@@ -29,6 +29,12 @@ const teekConfig = defineTeekConfig({
       githubUrl: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/master/docs",
     },
   },
+  siteAnalytics: {
+    provider: "baidu",
+    options: {
+      id: "d5ee872d9aa1ef8021f4a3921b2e9c2a",
+    },
+  },
 });
 
 // https://vitepress.dev/reference/site-config

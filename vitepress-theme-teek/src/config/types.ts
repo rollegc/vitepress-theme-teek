@@ -15,6 +15,7 @@ import type {
   Notice,
   Plugins,
   Post,
+  SiteAnalytics,
   Social,
   Tag,
   ThemeSetting,
@@ -175,4 +176,8 @@ export interface TeekConfig {
    * Markdown 插件配置
    */
   markdown?: Markdown;
+  /**
+   * 站点分析配置
+   */
+  siteAnalytics?: SiteAnalytics<""> | SiteAnalytics<"baidu"> | SiteAnalytics<"google"> | SiteAnalytics<"umami">;
 }
