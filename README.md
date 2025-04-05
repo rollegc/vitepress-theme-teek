@@ -49,6 +49,6 @@ pnpm plugin:build
 
 ## TODO
 
-- 添加百度统计功能
+- Vitepress 的 `Badge` 标签 转为 `::: badge`
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

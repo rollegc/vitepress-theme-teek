@@ -2,7 +2,7 @@
 @use "../mixins/function" as *;
 
 @include b(article-share) {
-  padding: 14px;
+  padding: 14px 14px 14px 0;
 
   @include e(button) {
     font-weight: 500;

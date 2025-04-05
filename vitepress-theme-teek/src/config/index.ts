@@ -15,6 +15,7 @@ import {
   imgCardPlugin,
   navCardPlugin,
   demoPlugin,
+  videoPlugin,
   containerPlugin,
   createContainersThenUse,
 } from "../markdown";
@@ -155,7 +156,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
     },
     markdown: {
       config: md => {
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin));
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, videoPlugin].forEach(plugin => md.use(plugin));
 
         const { container = {}, demo, config } = markdown;
         md.use(demoPlugin, demo).use(containerPlugin, container.label);
