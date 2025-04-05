@@ -5,11 +5,11 @@ import { teekDocConfig, teekBlogConfig } from "../config/teekConfig";
 
 const ns = useNamespace("layout-provider");
 
-const teekConfig = ref(teekDocConfig);
-
-provide(teekConfigSymbol, teekConfig);
-
+// 默认文档风
 const current = ref("D");
+
+const teekConfig = ref(current.value === "D" ? teekDocConfig : teekBlogConfig);
+provide(teekConfigSymbol, teekConfig);
 
 const handleSwitch = () => {
   current.value = current.value === "D" ? "B" : "D";

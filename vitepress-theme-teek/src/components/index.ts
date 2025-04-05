@@ -1,5 +1,6 @@
 export * from "./ArchivesPage";
 export * from "./ArticleAnalyze";
+export * from "./ArticleAppreciation";
 export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
 export * from "./ArticleBreadcrumb";

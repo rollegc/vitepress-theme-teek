@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CommentWaline">
-import { inject, onMounted, unref } from "vue";
-import { useData } from "vitepress";
+import { inject, onMounted } from "vue";
+import { useTeekConfig } from "../../../configProvider";
 import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 import { type WalineInstance, walineSymbol } from "./waline";
@@ -10,16 +10,10 @@ defineOptions({ name: "CommentWaline" });
 const ns = useNamespace("");
 const vpRouter = useVpRouter();
 
-const { theme } = useData();
+const { getTeekConfig } = useTeekConfig();
+const walineOptions = getTeekConfig<CommentProvider["waline"]>("comment", {}).options;
 
-const {
-  serverURL,
-  jsLink,
-  cssLink,
-  dark = "html[class='dark']",
-  cssIntegrity,
-  ...options
-}: CommentProvider["waline"] = { ...unref(theme).comment?.options };
+const { serverURL, jsLink, cssLink, dark = "html[class='dark']", cssIntegrity, ...options } = walineOptions;
 
 let waline: WalineInstance | null = null;
 const walineId = "waline";
@@ -27,7 +21,7 @@ const walineId = "waline";
 const initWalineByInject = () => {
   // 尝试从上下文获取 waline 实例
   const getWalineInstance = inject(walineSymbol, () => null);
-  if (getWalineInstance) waline = getWalineInstance?.(unref(theme).comment?.options, `#${walineId}`);
+  if (getWalineInstance) waline = getWalineInstance?.(walineOptions, `#${walineId}`);
 
   return waline;
 };

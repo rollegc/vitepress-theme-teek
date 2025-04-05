@@ -4,6 +4,7 @@
 @include b(my) {
   @include e(avatar) {
     width: 100%;
+    margin-bottom: 10px;
 
     &.circle-rotate img {
       &:hover {

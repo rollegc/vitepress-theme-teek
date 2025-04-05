@@ -1,6 +1,7 @@
 <script setup lang="ts" name="CommentArtalk">
 import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 import { artalkSymbol } from "./artalk";
@@ -10,9 +11,12 @@ defineOptions({ name: "CommentArtalk" });
 const ns = useNamespace("");
 const vpRouter = useVpRouter();
 
-const { theme, isDark, page } = useData();
+const { getTeekConfig } = useTeekConfig();
+const { isDark, page } = useData();
 
-const { server, site }: CommentProvider["artalk"] = { ...unref(theme).comment?.options };
+const artalkOptions = getTeekConfig<CommentProvider["artalk"]>("comment", {}).options;
+
+const { server, site, ...options } = artalkOptions;
 
 const artalkRef = ref<HTMLElement | null>(null);
 const artalkJs = ref<HTMLScriptElement | null>(null);
@@ -24,7 +28,7 @@ const initArtalkByInject = () => {
   const getArtalkInstance = inject(artalkSymbol, () => null);
   const el = unref(artalkRef) || `#${artalkId}`;
 
-  const artalkInstance = getArtalkInstance?.(unref(theme).comment?.options, el);
+  const artalkInstance = getArtalkInstance?.(artalkOptions, el);
 
   if (!artalkInstance) return false;
 
@@ -43,8 +47,9 @@ const initArtalkByJs = () => {
   }
 
   artalk.value = Artalk.init({
-    el,
     darkMode: unref(isDark),
+    ...options,
+    el,
     pageKey: vpRouter.route.path,
     pageTitle: unref(page).title,
     server: server,

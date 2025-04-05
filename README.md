@@ -49,6 +49,6 @@ pnpm plugin:build
 
 ## TODO
 
-- 添加赞赏功能
+- 添加百度统计功能
 - 支持无障碍
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

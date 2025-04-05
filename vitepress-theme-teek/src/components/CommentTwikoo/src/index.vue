@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CommentTwikoo">
 import { ref, onMounted, unref } from "vue";
-import { useData } from "vitepress";
+import { useTeekConfig } from "../../../configProvider";
 import type { CommentProvider } from "../../../config/types";
 import { useNamespace, useVpRouter } from "../../../hooks";
 
@@ -9,7 +9,8 @@ defineOptions({ name: "CommentTwikoo" });
 const ns = useNamespace("");
 const vpRouter = useVpRouter();
 
-const { theme } = useData();
+const { getTeekConfig } = useTeekConfig();
+const twikooOptions = getTeekConfig<CommentProvider["twikoo"]>("comment", {}).options;
 
 const {
   envId,
@@ -18,7 +19,7 @@ const {
   katex,
   timeout = 700,
   ...options
-}: CommentProvider["twikoo"] = { ...unref(theme).comment?.options };
+} = twikooOptions;
 
 const initTwikoo = () => {
   if (!envId) return;

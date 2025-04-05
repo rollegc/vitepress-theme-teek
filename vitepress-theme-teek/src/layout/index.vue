@@ -8,6 +8,8 @@ import type { TeekConfig } from "../config/types";
 import {
   TkHome,
   TkArchivesPage,
+  TkAsideBottomAppreciation,
+  TkDocAfterAppreciation,
   TkCataloguePage,
   TkArticleAnalyze,
   TkArticleImagePreview,
@@ -44,6 +46,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   notice: {},
   comment: { provider: "" },
   article: {},
+  appreciation: {},
 });
 
 const commentConfig = computed(() => {
@@ -131,6 +134,7 @@ const topTipConfig = computed(() => {
 
       <template #doc-after>
         <slot name="doc-after" />
+        <TkDocAfterAppreciation v-if="teekConfig.appreciation.position === 'doc-after'" />
         <slot name="teek-comment-before" />
 
         <!-- 评论区 -->
@@ -147,6 +151,12 @@ const topTipConfig = computed(() => {
         </template>
 
         <slot name="teek-comment-after" />
+      </template>
+
+      <template #aside-bottom>
+        <slot name="aside-bottom" />
+        <TkAsideBottomAppreciation v-if="teekConfig.appreciation.position === 'aside-bottom'" />
+        <slot name="teek-aside-bottom-appreciation-after" />
       </template>
 
       <template #page-top>

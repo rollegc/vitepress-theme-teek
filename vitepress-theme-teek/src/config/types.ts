@@ -1,5 +1,6 @@
 import type { PaginationProps } from "element-plus";
 import type {
+  Appreciation,
   Article,
   Author,
   Banner,
@@ -143,6 +144,10 @@ export interface TeekConfig {
    * 文章信息配置
    */
   article?: Article;
+  /**
+   * 赞赏功能配置
+   */
+  appreciation?: Appreciation<""> | Appreciation<"doc-after"> | Appreciation<"aside-bottom">;
   /**
    * 面包屑配置
    */

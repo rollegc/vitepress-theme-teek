@@ -64,6 +64,7 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "keywords", description }],
+    ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
   ],
   markdown: {
     // 开启行号
