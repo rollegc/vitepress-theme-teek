@@ -1,19 +1,18 @@
-export type CommentConfig<T extends keyof CommentProvider = "" | "twikoo" | "waline" | "giscus" | "artalk" | "render"> =
-  {
-    /**
-     * 评论区提供者
-     * twikoo 官网：https://twikoo.js.org/
-     * waline 官网：https://waline.js.org/
-     * giscus 官网：https://giscus.app/zh-CN
-     * artalk 官网：https://artalk.js.org/
-     * render 需要自定义评论区组件，并通过 comment 插槽传入
-     */
-    provider: T;
-    /**
-     * 评论区配置项，根据 provider 不同而不同，具体看对应官网的使用介绍
-     */
-    options?: CommentProvider[T];
-  };
+export type CommentConfig<T extends keyof CommentProvider = ""> = {
+  /**
+   * 评论区提供者
+   * twikoo 官网：https://twikoo.js.org/
+   * waline 官网：https://waline.js.org/
+   * giscus 官网：https://giscus.app/zh-CN
+   * artalk 官网：https://artalk.js.org/
+   * render 需要自定义评论区组件，并通过 comment 插槽传入
+   */
+  provider: T;
+  /**
+   * 评论区配置项，根据 provider 不同而不同，具体看对应官网的使用介绍
+   */
+  options?: CommentProvider[T];
+};
 
 export type CommentProvider = {
   "": object;

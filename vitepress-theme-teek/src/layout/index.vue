@@ -8,11 +8,15 @@ import type { TeekConfig } from "../config/types";
 import {
   TkHome,
   TkArchivesPage,
+  TkAsideBottomAppreciation,
+  TkDocAfterAppreciation,
   TkCataloguePage,
   TkArticleAnalyze,
   TkArticleImagePreview,
+  TkArticleShare,
   TkBodyBgImage,
-  TkFooter,
+  TkFooterGroup,
+  TkFooterInfo,
   TkRightBottomButton,
   TkCommentTwikoo,
   TkCommentArtalk,
@@ -44,6 +48,8 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   notice: {},
   comment: { provider: "" },
   article: {},
+  articleShare: {},
+  appreciation: {},
 });
 
 const commentConfig = computed(() => {
@@ -105,11 +111,12 @@ const topTipConfig = computed(() => {
       </template>
 
       <template #layout-bottom>
-        <slot name="teek-footer-before" />
+        <TkFooterGroup />
+        <slot name="teek-footer-info-before" />
 
-        <TkFooter v-if="isHomePage" />
+        <TkFooterInfo v-if="isHomePage" />
 
-        <slot name="teek-footer-after" />
+        <slot name="teek-footer-info-after" />
         <slot name="layout-bottom" />
       </template>
 
@@ -131,6 +138,11 @@ const topTipConfig = computed(() => {
 
       <template #doc-after>
         <slot name="doc-after" />
+
+        <slot name="teek-doc-after-appreciation-before" />
+        <TkDocAfterAppreciation v-if="teekConfig.appreciation.position === 'doc-after'" />
+        <slot name="teek-doc-after-appreciation-after" />
+
         <slot name="teek-comment-before" />
 
         <!-- 评论区 -->
@@ -149,6 +161,14 @@ const topTipConfig = computed(() => {
         <slot name="teek-comment-after" />
       </template>
 
+      <template #aside-bottom>
+        <slot name="aside-bottom" />
+
+        <slot name="teek-aside-bottom-appreciation-before" />
+        <TkAsideBottomAppreciation v-if="teekConfig.appreciation.position === 'aside-bottom'" />
+        <slot name="teek-aside-bottom-appreciation-after" />
+      </template>
+
       <template #page-top>
         <slot name="page-top" />
         <slot name="teek-page-top-before" />
@@ -165,6 +185,16 @@ const topTipConfig = computed(() => {
         </TkCataloguePage>
 
         <slot name="teek-page-top-after" />
+      </template>
+
+      <template #aside-outline-before>
+        <slot name="teek-article-share-before" />
+        <ClientOnly>
+          <TkArticleShare v-if="teekConfig.articleShare.enabled" />
+        </ClientOnly>
+        <slot name="teek-article-share-after" />
+
+        <slot name="aside-outline-before" />
       </template>
 
       <!-- 其他 VP 插槽 -->

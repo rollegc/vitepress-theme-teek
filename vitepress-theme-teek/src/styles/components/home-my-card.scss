@@ -4,6 +4,7 @@
 @include b(my) {
   @include e(avatar) {
     width: 100%;
+    margin-bottom: 10px;
 
     &.circle-rotate img {
       &:hover {
@@ -20,7 +21,6 @@
 
     @media (max-width: 768px) {
       &.square > span {
-        background-color: transparent;
         img {
           width: 240px;
         }

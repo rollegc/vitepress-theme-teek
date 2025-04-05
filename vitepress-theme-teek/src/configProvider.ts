@@ -130,7 +130,7 @@ export const useTeekConfig = () => {
     }
 
     // 非对象格式，则根据优先级返回
-    return dv || valueFromInject || valueFromFrontmatter || valueFromTheme;
+    return valueFromInject || valueFromFrontmatter || valueFromTheme || dv;
   };
 
   /**

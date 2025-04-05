@@ -1,4 +1,4 @@
-<script setup lang="ts" name="Footer">
+<script setup lang="ts" name="FooterInfo">
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
@@ -9,9 +9,9 @@ import securityRecordImg from "../../../assets/img/securityRecord.png";
 import Icon from "../../Icon";
 import type { FooterInfo, Social } from "../../../config/types";
 
-defineOptions({ name: "TkFooter" });
+defineOptions({ name: "FooterInfo" });
 
-const ns = useNamespace("footer");
+const ns = useNamespace("footer-info");
 
 const { getTeekConfigRef } = useTeekConfig();
 

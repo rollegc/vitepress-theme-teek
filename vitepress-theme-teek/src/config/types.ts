@@ -1,5 +1,6 @@
 import type { PaginationProps } from "element-plus";
 import type {
+  Appreciation,
   Article,
   Author,
   Banner,
@@ -10,10 +11,13 @@ import type {
   CommentConfig,
   DocAnalysis,
   FooterInfo,
+  FooterGroup,
   FriendLink,
   Notice,
   Plugins,
   Post,
+  ArticleShare,
+  SiteAnalytics,
   Social,
   Tag,
   ThemeSetting,
@@ -136,6 +140,10 @@ export interface TeekConfig {
    */
   social?: Social[];
   /**
+   * 页脚信息组配置
+   */
+  footerGroup?: FooterGroup[];
+  /**
    * 页脚配置
    */
   footerInfo?: FooterInfo;
@@ -143,6 +151,14 @@ export interface TeekConfig {
    * 文章信息配置
    */
   article?: Article;
+  /**
+   * 文章分享配置
+   */
+  articleShare?: ArticleShare;
+  /**
+   * 赞赏功能配置
+   */
+  appreciation?: Appreciation<""> | Appreciation<"doc-after"> | Appreciation<"aside-bottom">;
   /**
    * 面包屑配置
    */
@@ -170,4 +186,8 @@ export interface TeekConfig {
    * Markdown 插件配置
    */
   markdown?: Markdown;
+  /**
+   * 站点分析配置
+   */
+  siteAnalytics?: SiteAnalytics<""> | SiteAnalytics<"baidu"> | SiteAnalytics<"google"> | SiteAnalytics<"umami">;
 }

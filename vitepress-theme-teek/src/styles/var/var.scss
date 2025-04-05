@@ -59,6 +59,7 @@
   @include set-css-var("home-friend-link-gap", getCssVar("gap2"));
   @include set-css-var("home-article-analyze-gap", getCssVar("gap1"));
   @include set-css-var("footer-gap", getCssVar("gap2"));
+  @include set-css-var("appreciation-gap", getCssVar("gap1"));
 }
 
 // 头像样式变量

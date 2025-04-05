@@ -1,3 +1,4 @@
+export { default as aliPayIcon } from "./aliPay";
 export { default as arrowDownIcon } from "./arrowDown";
 export { default as categoryIcon } from "./category";
 export { default as closeIcon } from "./close";
@@ -30,3 +31,7 @@ export { default as githubIcon } from "./github";
 export { default as copyIcon } from "./copy";
 export { default as codeIcon } from "./code";
 export { default as caretTopIcon } from "./caretTop";
+export { default as weChatPayIcon } from "./weChatPay";
+export { default as shareIcon } from "./share";
+export { default as thumbsIcon } from "./thumbs";
+export { default as externalLinkIcon } from "./externalLink";

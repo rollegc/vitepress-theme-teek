@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-@include b(footer) {
+@include b(footer-info) {
   width: 100%;
   padding: 0 20px 12px;
   text-align: center;

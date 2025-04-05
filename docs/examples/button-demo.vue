@@ -27,9 +27,8 @@
   user-select: none;
   vertical-align: middle;
   -webkit-appearance: none;
-  background-color: var(--tk-theme-color);
-  border: 1px solid #dcdfe6;
-  border-color: var(--tk-theme-color);
+  background-color: #395ae3;
+  border: 1px solid #395ae3;
 
   &:hover {
     background-color: #5171d7;

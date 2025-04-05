@@ -15,6 +15,7 @@ import {
   imgCardPlugin,
   navCardPlugin,
   demoPlugin,
+  videoPlugin,
   containerPlugin,
   createContainersThenUse,
 } from "../markdown";
@@ -23,7 +24,7 @@ import { createCategory, createPermalink } from "./addFrontmatter";
 export * from "./types";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
-  const { vitePlugins, markdown = {}, ...teekThemeConfig } = config;
+  const { vitePlugins, markdown = {}, ...teekConfig } = config;
   const {
     sidebar = true,
     sidebarOption = {},
@@ -137,7 +138,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
 
   const head: HeadConfig[] = [];
 
-  if (teekThemeConfig.docAnalysis?.statistics?.provider === "busuanzi") {
+  if (teekConfig.docAnalysis?.statistics?.provider === "busuanzi") {
     // 不蒜子 API 统计需要
     head.push(["meta", { name: "referrer", content: "no-referrer-when-downgrade" }]);
   }
@@ -155,7 +156,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
     },
     markdown: {
       config: md => {
-        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin].forEach(plugin => md.use(plugin));
+        [todoPlugin, shareCardPlugin, imgCardPlugin, navCardPlugin, videoPlugin].forEach(plugin => md.use(plugin));
 
         const { container = {}, demo, config } = markdown;
         md.use(demoPlugin, demo).use(containerPlugin, container.label);
@@ -166,6 +167,6 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
         config?.(md);
       },
     },
-    themeConfig: teekThemeConfig,
+    themeConfig: teekConfig,
   };
 };

@@ -19,6 +19,7 @@ const teekConfig = defineTeekConfig({
       link: "http://beian.miit.gov.cn/",
     },
   },
+  articleShare: { enabled: true },
   vitePlugins: {
     sidebarOption: {
       initItems: false,
@@ -27,6 +28,12 @@ const teekConfig = defineTeekConfig({
   markdown: {
     demo: {
       githubUrl: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/master/docs",
+    },
+  },
+  siteAnalytics: {
+    provider: "baidu",
+    options: {
+      id: "d5ee872d9aa1ef8021f4a3921b2e9c2a",
     },
   },
 });
@@ -64,6 +71,7 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "keywords", description }],
+    ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
   ],
   markdown: {
     // 开启行号
