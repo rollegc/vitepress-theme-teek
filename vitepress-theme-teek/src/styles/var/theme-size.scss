@@ -17,6 +17,7 @@ html[theme-size="wide"] {
   @include set-css-var("home-font-size-sm", 14px);
   @include set-css-var("home-font-size-small", 13px);
   @include set-css-var("home-page-width", 1100px);
+  @include set-css-var("home-footer-group-width", 100%);
 }
 
 html[theme-size="large"] {
@@ -35,6 +36,7 @@ html[theme-size="large"] {
   @include set-css-var("home-font-size-sm", 14px);
   @include set-css-var("home-font-size-small", 13px);
   @include set-css-var("home-page-width", 1100px);
+  @include set-css-var("home-footer-group-width", 90%);
 }
 
 :root,
@@ -55,6 +57,7 @@ html[theme-size="default"] {
   @include set-css-var("home-font-size-sm", 13px);
   @include set-css-var("home-font-size-small", 12px);
   @include set-css-var("page-width", 900px);
+  @include set-css-var("home-footer-group-width", 80%);
 }
 
 html[theme-size="small"] {
@@ -74,6 +77,7 @@ html[theme-size="small"] {
   @include set-css-var("home-font-size-sm", 13px);
   @include set-css-var("home-font-size-small", 12px);
   @include set-css-var("page-width", 800px);
+  @include set-css-var("home-footer-group-width", 70%);
 }
 
 @media (min-width: 768px) {

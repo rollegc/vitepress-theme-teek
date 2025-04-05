@@ -2,7 +2,7 @@ export type Appreciation<T extends keyof AppreciationPosition = ""> = {
   /**
    * 赞赏位置
    */
-  position?: T;
+  position: T;
   /**
    * 赞赏配置
    */

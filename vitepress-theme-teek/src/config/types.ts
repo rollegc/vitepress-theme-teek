@@ -11,6 +11,7 @@ import type {
   CommentConfig,
   DocAnalysis,
   FooterInfo,
+  FooterGroup,
   FriendLink,
   Notice,
   Plugins,
@@ -139,6 +140,10 @@ export interface TeekConfig {
    */
   social?: Social[];
   /**
+   * 页脚信息组配置
+   */
+  footerGroup?: FooterGroup[];
+  /**
    * 页脚配置
    */
   footerInfo?: FooterInfo;
@@ -146,6 +151,9 @@ export interface TeekConfig {
    * 文章信息配置
    */
   article?: Article;
+  /**
+   * 文章分享配置
+   */
   articleShare?: ArticleShare;
   /**
    * 赞赏功能配置

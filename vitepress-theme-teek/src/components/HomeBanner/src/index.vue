@@ -146,6 +146,7 @@ const styleComponent = computed(() => {
         <HomeBannerContent />
         <slot name="teek-home-banner-content-after" />
 
+        <slot name="teek-home-banner-feature-before" />
         <HomeBannerFeature />
         <slot name="teek-home-banner-feature-after" />
       </div>

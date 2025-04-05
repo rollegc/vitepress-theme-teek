@@ -15,7 +15,8 @@ import {
   TkArticleImagePreview,
   TkArticleShare,
   TkBodyBgImage,
-  TkFooter,
+  TkFooterGroup,
+  TkFooterInfo,
   TkRightBottomButton,
   TkCommentTwikoo,
   TkCommentArtalk,
@@ -110,11 +111,12 @@ const topTipConfig = computed(() => {
       </template>
 
       <template #layout-bottom>
-        <slot name="teek-footer-before" />
+        <TkFooterGroup />
+        <slot name="teek-footer-info-before" />
 
-        <TkFooter v-if="isHomePage" />
+        <TkFooterInfo v-if="isHomePage" />
 
-        <slot name="teek-footer-after" />
+        <slot name="teek-footer-info-after" />
         <slot name="layout-bottom" />
       </template>
 

@@ -9,6 +9,7 @@ export type * from "./breadcrumb";
 export type * from "./category";
 export type * from "./comment";
 export type * from "./docAnalysis";
+export type * from "./footerGroup";
 export type * from "./footerInfo";
 export type * from "./friendLink";
 export type * from "./notice";

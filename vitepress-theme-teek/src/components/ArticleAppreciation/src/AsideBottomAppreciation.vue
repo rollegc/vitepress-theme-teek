@@ -10,18 +10,14 @@ const ns = useNamespace("article-appreciation");
 
 const { getTeekConfigRef } = useTeekConfig();
 
-const appreciateConfig = getTeekConfigRef<Appreciation>("appreciation", { position: "" });
+const appreciateConfig = getTeekConfigRef<Required<Appreciation<"aside-bottom">>>("appreciation", { position: "" });
 
-const appreciateOptions = computed(() => {
-  const { position, options = {} } = unref(appreciateConfig);
-  if (position === "aside-bottom") return options;
-  return {};
-});
+const asideBottomOptions = computed(() => unref(appreciateConfig).options || {});
 </script>
 
 <template>
   <div :class="[ns.b(), ns.m('aside-bottom')]">
-    <span v-html="appreciateOptions.title"></span>
-    <div :class="ns.e('content')" v-html="appreciateOptions.content" />
+    <span v-html="asideBottomOptions.title"></span>
+    <div :class="ns.e('content')" v-html="asideBottomOptions.content" />
   </div>
 </template>

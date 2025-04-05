@@ -4,7 +4,7 @@ export type SiteAnalytics<T extends keyof SiteAnalyticsProvider = ""> = {
   /**
    * 赞赏位置
    */
-  provider?: T;
+  provider: T;
   /**
    * 赞赏配置
    */

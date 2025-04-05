@@ -34,3 +34,4 @@ export { default as caretTopIcon } from "./caretTop";
 export { default as weChatPayIcon } from "./weChatPay";
 export { default as shareIcon } from "./share";
 export { default as thumbsIcon } from "./thumbs";
+export { default as externalLinkIcon } from "./externalLink";

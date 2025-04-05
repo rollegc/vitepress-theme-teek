@@ -12,13 +12,9 @@ const ns = useNamespace("article-appreciation");
 
 const { getTeekConfigRef } = useTeekConfig();
 
-const appreciateConfig = getTeekConfigRef<Appreciation>("appreciation", { position: "" });
+const appreciateConfig = getTeekConfigRef<Required<Appreciation<"doc-after">>>("appreciation", { position: "" });
 
-const docAfterOptions = computed(() => {
-  const { position, options = { expand: false } } = unref(appreciateConfig);
-  if (position === "doc-after") return options;
-  return { expand: false };
-});
+const docAfterOptions = computed(() => unref(appreciateConfig).options || { expand: false });
 
 const showContent = ref(unref(docAfterOptions).expand);
 
@@ -36,7 +32,7 @@ const toggleShowContent = () => {
 
 watch(
   () => unref(docAfterOptions).expand,
-  (newValue: boolean) => {
+  (newValue: boolean | undefined) => {
     showContent.value = newValue;
   }
 );

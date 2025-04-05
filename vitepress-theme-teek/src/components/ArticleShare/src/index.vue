@@ -37,15 +37,15 @@ const { copy, copied } = useClipboard(2000);
       aria-live="polite"
       @click="copy(shareLink)"
     >
-      <p v-if="!copied" class="flx-center">
+      <div v-if="!copied" class="flx-center">
         <Icon :icon="shareIcon" style="margin-right: 4px" />
         {{ articleShareConfig.text }}
-      </p>
+      </div>
 
-      <p v-else class="flx-center">
+      <div v-else class="flx-center">
         <Icon :icon="thumbsIcon" style="margin-right: 4px" />
         {{ articleShareConfig.copiedText }}
-      </p>
+      </div>
     </button>
   </div>
 </template>
