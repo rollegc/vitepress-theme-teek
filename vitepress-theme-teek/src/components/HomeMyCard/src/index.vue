@@ -31,6 +31,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
         :src="withBase(blogger.avatar)"
         :size="blogger.shape === 'square' ? '100%' : 100"
         :shape
+        bg-color="transparent"
         alt="头像"
         title="我好看吗"
       />
