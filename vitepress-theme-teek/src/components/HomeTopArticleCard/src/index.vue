@@ -6,7 +6,7 @@ import { useNamespace } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { topArticleIcon } from "../../../assets/icons";
 import { TkContentData } from "../../../post/types";
-import { isFunction } from "../../../helper";
+import { formatDate, isFunction } from "../../../helper";
 import type { TopArticle } from "../../../config/types";
 
 defineOptions({ name: "HomeTopArticleCard" });
@@ -22,6 +22,7 @@ const topArticleConfig = getTeekConfigRef<Required<TopArticle>>("topArticle", {
   emptyLabel: "暂无精选文章",
   autoPage: false,
   pageSpeed: 4000,
+  dateFormat: "yyyy-MM-dd hh:mm:ss",
 });
 
 const topArticleList = computed(() => {
@@ -37,6 +38,13 @@ const currentTopArticleList = computed(() => {
   const p = unref(pageNum);
   return unref(topArticleList).slice((p - 1) * limit, p * limit);
 });
+
+const formatPostDate = (date: string) => {
+  const dateFormatConst = unref(topArticleConfig).dateFormat;
+
+  if (isFunction(dateFormatConst)) return dateFormatConst(date || "");
+  return formatDate(date, dateFormatConst);
+};
 
 const finalTitle = computed(() => {
   const { title } = unref(topArticleConfig);
@@ -88,7 +96,7 @@ const getStyle = (num: number, index: number) => {
             <a :href="item.url && withBase(item.url)" class="hover-color flx-align-center">
               <span class="title sle">{{ item.title }}</span>
             </a>
-            <div class="date">{{ item.date }}</div>
+            <div class="date">{{ formatPostDate(item.date) }}</div>
           </div>
         </li>
       </TransitionGroup>
