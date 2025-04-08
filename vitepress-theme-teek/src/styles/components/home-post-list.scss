@@ -42,4 +42,8 @@
       clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
     }
   }
+
+  @include b(pagination) {
+    padding: 15px 2px 0;
+  }
 }

@@ -1,65 +1,167 @@
 <script setup lang="ts" name="Pagination">
-import { nextTick, onMounted, unref } from "vue";
-import { ElPagination } from "element-plus";
+import { computed, h, provide, watch, useSlots } from "vue";
+import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
 import { useNamespace } from "../../../hooks";
-import type { PaginationProps, PaginationEmits, Paging } from "./pagination";
+import { paginationKey, type PaginationProps, type PaginationEmits, type LayoutKey } from "./pagination";
+
+import Prev from "./components/prev.vue";
+import Next from "./components/next.vue";
+import Jumper from "./components/jumper.vue";
+import Total from "./components/total.vue";
+import Pager from "./components/pager.vue";
 
 defineOptions({ name: "Pagination" });
 
+const props = withDefaults(defineProps<PaginationProps>(), {
+  pagerCount: 7,
+  layout: ["prev, pager, next, jumper, ->, total"].join(", "),
+  pageSizes: () => [10, 20, 30, 40, 50, 100],
+  prevIcon: () => arrowLeftIcon,
+  nextIcon: () => arrowRightIcon,
+  teleported: true,
+});
+const emit = defineEmits<PaginationEmits>();
+
 const ns = useNamespace("pagination");
 
-const { background = true, autoScroll = true, hidden = false, reset = true } = defineProps<PaginationProps>();
+const slots = useSlots();
 
-const emits = defineEmits<PaginationEmits>();
+const currentPageModel = defineModel<number>("currentPage", { type: Number, default: 1 });
+const pageSizeModel = defineModel<number>("pageSize", { type: Number, default: 10 });
 
-const pageObj = defineModel<Paging>({ required: true });
+const isAbsent = (v: unknown): v is undefined => typeof v !== "number";
 
-const pageSetting = { pageNum: 1, pageSizes: [10, 20, 50, 100, 200], pageSize: 20 };
-
-onMounted(() => {
-  const { pageNum, pageSize, pageSizes } = unref(pageObj);
-  if (!pageNum) unref(pageObj).pageNum = pageSetting.pageNum;
-  if (!pageSizes) unref(pageObj).pageSizes = pageSetting.pageSizes;
-  if (!pageSize) unref(pageObj).pageSize = pageSetting.pageSize;
+// 总页数
+const pageCountBridge = computed<number>(() => {
+  let pageCount = 0;
+  if (!isAbsent(props.pageCount)) pageCount = props.pageCount;
+  else if (!isAbsent(props.total)) pageCount = Math.max(1, Math.ceil(props.total / pageSizeModel.value));
+  return pageCount;
 });
 
-const handleSizeChange = (value: number) => {
-  if (reset) return handleCurrentChange(1);
-  unref(pageObj).pageSize = value;
-  afterChange();
+watch(pageCountBridge, val => {
+  if (currentPageModel.value > val) currentPageModel.value = val;
+});
+
+watch(
+  [currentPageModel, pageSizeModel],
+  value => {
+    emit("change", ...value);
+  },
+  { flush: "post" }
+);
+
+const handleSizeChange = (val: number) => {
+  pageSizeModel.value = val;
+  emit("size-change", pageSizeModel.value);
+
+  const newPageCount = pageCountBridge.value;
+  if (currentPageModel.value > newPageCount) currentPageModel.value = newPageCount;
 };
 
-const handleCurrentChange = (value: number) => {
-  unref(pageObj).pageNum = value;
-  afterChange();
+const prev = () => {
+  if (props.disabled) return;
+
+  handleCurrentChange(currentPageModel.value - 1);
+  emit("prev-click", currentPageModel.value);
 };
 
-const afterChange = () => {
-  pageObj.value = unref(pageObj);
-  emits("pagination", unref(pageObj));
+const next = () => {
+  if (props.disabled) return;
 
-  if (autoScroll) {
-    nextTick(() => {
-      const rootStyles = getComputedStyle(document.documentElement);
-      const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
-      // 滚动返回时，减去导航栏的高度
-      document.querySelector("html")?.scrollTo({ top: window.innerHeight - Number(navHeight), behavior: "smooth" });
-    });
+  handleCurrentChange(currentPageModel.value + 1);
+  emit("next-click", currentPageModel.value);
+};
+
+const handleCurrentChange = (val: number) => {
+  currentPageModel.value = val;
+  const newPageCount = pageCountBridge.value;
+
+  if (currentPageModel.value < 1) currentPageModel.value = 1;
+  else if (currentPageModel.value > newPageCount) currentPageModel.value = newPageCount;
+  emit("current-change", currentPageModel.value);
+};
+
+const addClass = (element: any, cls: string) => {
+  if (element) {
+    if (!element.props) element.props = {};
+    element.props.class = [element.props.class, cls].join(" ");
   }
 };
+
+provide(paginationKey, {
+  pageCount: pageCountBridge,
+  disabled: computed(() => props.disabled),
+  currentPage: currentPageModel,
+  changeEvent: handleCurrentChange,
+  handleSizeChange,
+});
+
+const components = computed(() => {
+  if (!props.layout) return [];
+  if (props.hideOnSinglePage && pageCountBridge.value <= 1) return [];
+  const components = props.layout.split(",").map((item: string) => item.trim()) as LayoutKey[];
+  const rootChildren: Array<VNode | VNode[] | null> = [];
+  const rightWrapperChildren: Array<VNode | VNode[] | null> = [];
+  const rightWrapperRoot = h("div", { class: ns.e("right-wrapper") }, rightWrapperChildren);
+
+  let haveRightWrapper = false;
+
+  components.forEach(c => {
+    if (c === "->") {
+      haveRightWrapper = true;
+      return;
+    }
+    if (!haveRightWrapper) rootChildren.push(componentMap.value[c]);
+    else rightWrapperChildren.push(componentMap.value[c]);
+  });
+
+  addClass(rootChildren[0], ns.is("first"));
+  addClass(rootChildren[rootChildren.length - 1], ns.is("last"));
+
+  if (rightWrapperChildren.length > 0) {
+    addClass(rightWrapperChildren[0], ns.is("first"));
+    addClass(rightWrapperChildren[rightWrapperChildren.length - 1], ns.is("last"));
+
+    rootChildren.push(rightWrapperRoot);
+  }
+
+  return rootChildren;
+});
+
+const componentMap = computed(() => ({
+  prev: h(Prev, {
+    disabled: props.disabled,
+    currentPage: currentPageModel.value,
+    prevText: props.prevText,
+    prevIcon: props.prevIcon,
+    onClick: prev,
+  }),
+  jumper: h(Jumper, {
+    size: props.size,
+  }),
+  pager: h(Pager, {
+    currentPage: currentPageModel.value,
+    pageCount: pageCountBridge.value,
+    pagerCount: props.pagerCount,
+    onChange: handleCurrentChange,
+    disabled: props.disabled,
+  }),
+  next: h(Next, {
+    disabled: props.disabled,
+    currentPage: currentPageModel.value,
+    pageCount: pageCountBridge.value,
+    nextText: props.nextText,
+    nextIcon: props.nextIcon,
+    onClick: next,
+  }),
+  slot: slots?.default?.() ?? null,
+  total: h(Total, { total: isAbsent(props.total) ? 0 : props.total }),
+}));
 </script>
 
 <template>
-  <div :class="[ns.b(), { hidden: hidden }]">
-    <el-pagination
-      :background="background"
-      v-model:current-page="pageObj.pageNum"
-      v-model:page-size="pageObj.pageSize"
-      :page-sizes="pageObj.pageSizes"
-      :total="pageObj.total || 0"
-      v-bind="$attrs"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+  <div :class="[ns.b(), ns.is('background', background), ns.m(size)]">
+    <component v-for="component in components" :key="component" :is="component" />
   </div>
 </template>

@@ -1,60 +1,52 @@
-export interface Paging {
-  /**
-   * 当前页
-   *
-   * @default 1
-   */
-  pageNum?: number;
-  /**
-   * 页数数组
-   *
-   * @default [10, 20, 50, 100, 200]
-   */
-  pageSizes?: number[];
-  /**
-   * 一页显示多少条数据
-   *
-   * @default 20
-   */
-  pageSize?: number;
-  /**
-   * 总数
-   *
-   * @default 0
-   */
-  total?: number;
+import type { ComputedRef, InjectionKey, WritableComputedRef } from "vue";
+
+export interface PaginationContext {
+  currentPage?: WritableComputedRef<number>;
+  pageCount?: ComputedRef<number>;
+  disabled?: ComputedRef<boolean>;
+  changeEvent?: (val: number) => void;
+  handleSizeChange?: (val: number) => void;
 }
+
+export const paginationKey: InjectionKey<PaginationContext> = Symbol("paginationKey");
+
+export type LayoutKey = "prev" | "pager" | "next" | "jumper" | "->" | "total" | "slot";
 
 export interface PaginationProps {
   /**
-   * 是否开启背景色
+   * 当前页数
    *
-   * @default true
+   * @default 1
    */
+  pageSize?: number;
+  /**
+   * 总页数
+   */
+  total?: number;
+  pageCount?: number;
+  pagerCount?: number;
+  currentPage?: number;
+  layout?: string;
+  pageSizes?: number[];
+  popperClass?: string;
+  prevText?: string;
+  prevIcon?: string;
+  nextText?: string;
+  nextIcon?: string;
+  teleported?: boolean;
+  size?: "" | "default" | "small" | "large";
   background?: boolean;
-  /**
-   * 切换页数，是否自动滚动到最上面
-   *
-   * @default true
-   */
-  autoScroll?: boolean;
-  /**
-   * 是否不显示分页
-   *
-   * @default false
-   */
-  hidden?: boolean;
-  /**
-   * 切换 pageSize，pageNum 重置为 1
-   *
-   * @default true
-   */
-  reset?: boolean;
+  disabled?: boolean;
+  hideOnSinglePage?: boolean;
+  appendSizeTo?: string;
 }
 
-export type PaginationEmits = {
-  /**
-   * 分页时候触发的事件
-   */
-  pagination: [value: Paging];
-};
+export interface PaginationEmits {
+  "update:current-page": [value: number];
+  "update:page-size": [value: number];
+  "size-change": [value: number];
+  change: [currentPage: number, pageSize: number];
+  "current-change": [value: number];
+  "prev-click": [value: number];
+  "next-click": [value: number];
+}

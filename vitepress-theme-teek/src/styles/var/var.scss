@@ -17,6 +17,11 @@
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.2));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
   @include set-css-var("item-bg-color-hover", #f8f8f8);
+  @include set-css-var("fill-color-blank", #ffffff);
+  @include set-css-var("fill-color-dark", #ebedf0);
+  @include set-css-var("fill-color-light", #f5f7fa);
+  @include set-css-var("text-color-placeholder", #a8abb2);
+  @include set-css-var("button-bg-color", #f0f2f5);
   // 网状背景图
   @include set-css-var(
     "bg-img-default",
@@ -39,6 +44,11 @@
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.7));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
   @include set-css-var("item-bg-color-hover", #27272b);
+  @include set-css-var("fill-color-blank", transparent);
+  @include set-css-var("fill-color-dark", #39393a);
+  @include set-css-var("fill-color-light", #262727);
+  @include set-css-var("text-color-placeholder", #8d9095);
+  @include set-css-var("button-bg-color", #303030);
 }
 
 // 全局样式变量

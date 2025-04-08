@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostList">
-import { computed, reactive, ref, unref, watch } from "vue";
+import { computed, reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
 import type { PaginationProps } from "element-plus";
 import { useTeekConfig, usePosts } from "../../../configProvider";
@@ -110,6 +110,14 @@ const handlePagination = () => {
   window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
   // 更新数据
   updateData();
+
+  // 滚动
+  nextTick(() => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
+    // 滚动返回时，减去导航栏的高度
+    document.querySelector("html")?.scrollTo({ top: window.innerHeight - Number(navHeight), behavior: "smooth" });
+  });
 };
 
 defineExpose({ updateData });
@@ -126,9 +134,12 @@ defineExpose({ updateData });
       <div :class="`${ns.e('pagination')} flx-justify-center`">
         <Pagination
           v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
-          v-model="pageInfo"
+          v-model:page-size="pageInfo.pageSize"
+          v-model:current-page="pageInfo.pageNum"
+          :total="pageInfo.total"
+          background
+          @current-change="handlePagination"
           v-bind="pagePropsRef"
-          @pagination="handlePagination"
         />
       </div>
     </template>
