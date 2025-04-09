@@ -33,13 +33,19 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.29.1
         version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      '@vue/compiler-core':
+        specifier: ^3.5.13
+        version: 3.5.13
+      '@vue/compiler-dom':
+        specifier: ^3.5.13
+        version: 3.5.13
       '@vue/reactivity':
         specifier: ^3.5.13
         version: 3.5.13
       '@vue/runtime-core':
         specifier: ^3.5.13
         version: 3.5.13
-      '@vue/shared':
+      '@vue/runtime-dom':
         specifier: ^3.5.13
         version: 3.5.13
       commitizen:
