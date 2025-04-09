@@ -197,6 +197,7 @@ export const isImgPath = (path: string): boolean => {
 
 /**
  * 是否为空值项（包含数组、对象判断）
+ *
  * @param checkFull 是否检查数组、对象是否为空。默认 true
  */
 export const isEmpty = (val: any, checkFull = true): boolean => {
@@ -220,6 +221,7 @@ export const isEmpty = (val: any, checkFull = true): boolean => {
 
 /**
  * 确定目标元素是否可聚焦
+ *
  * @param element HTML 元素
  */
 export const isFocusable = (element: HTMLElement): boolean => {
