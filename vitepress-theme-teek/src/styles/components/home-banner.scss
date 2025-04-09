@@ -1,12 +1,22 @@
 @use "../mixins/bem" as *;
 @use "../mixins/config" as *;
 @use "../mixins/function" as *;
+@use "../mixins/mixins" as *;
 
 @use "./home-banner-content";
 @use "./home-banner-feature";
 @use "./home-banner-bg-image";
 @use "./home-banner-bg-pure";
 @use "./home-banner-waves";
+
+:root {
+  // 网状背景图
+  @include set-css-var(
+    "bg-img-default",
+    rgb(40, 40, 45)
+      url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABOSURBVFhH7c6xCQAgDAVRR9A6E4hLu4uLiWJ7tSnuQcIvr2TRYsw3/zOGGEOMIcYQY4gxxBhiDDGGGEOMIcYQY4gxxBhiDLkx52W4Gn1tuslCtHJvL54AAAAASUVORK5CYII=)
+  );
+}
 
 @include b(banner) {
   position: relative;

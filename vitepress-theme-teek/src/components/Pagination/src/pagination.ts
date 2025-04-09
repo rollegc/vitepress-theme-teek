@@ -1,60 +1,86 @@
-export interface Paging {
-  /**
-   * 当前页
-   *
-   * @default 1
-   */
-  pageNum?: number;
-  /**
-   * 页数数组
-   *
-   * @default [10, 20, 50, 100, 200]
-   */
-  pageSizes?: number[];
-  /**
-   * 一页显示多少条数据
-   *
-   * @default 20
-   */
-  pageSize?: number;
-  /**
-   * 总数
-   *
-   * @default 0
-   */
-  total?: number;
+import type { ComputedRef, InjectionKey, ModelRef } from "vue";
+
+export interface PaginationContext {
+  currentPage?: ModelRef<number>;
+  pageCount?: ComputedRef<number>;
+  disabled?: ComputedRef<boolean>;
+  changeEvent?: (val: number) => void;
+  handleSizeChange?: (val: number) => void;
 }
+
+export const paginationKey: InjectionKey<PaginationContext> = Symbol("paginationKey");
+
+export type LayoutKey = "prev" | "pager" | "next" | "jumper" | "->" | "total" | "slot";
+
+export type Size = "" | "default" | "small" | "large";
 
 export interface PaginationProps {
   /**
-   * 是否开启背景色
-   *
-   * @default true
+   * 总条目数
    */
-  background?: boolean;
+  total?: number;
   /**
-   * 切换页数，是否自动滚动到最上面
-   *
-   * @default true
+   * 总页数，与 total 二选一
    */
-  autoScroll?: boolean;
+  pageCount?: number;
   /**
-   * 是否不显示分页
+   * 设置最大页码按钮数。 页码按钮的数量，当总页数超过该值时会折叠
+   *
+   * @default 7
+   */
+  pagerCount?: number;
+  /**
+   * 组件布局，子组件名用逗号分隔
+   *
+   * @default 'prev, pager, next, jumper, ->, total'
+   */
+  layout?: string;
+  /**
+   * 替代图标显示的上一页文字
+   */
+  prevText?: string;
+  /**
+   * 上一页的图标， 比 prev-text 优先级更高
+   */
+  prevIcon?: string;
+  /**
+   * 替代图标显示的下一页文字
+   */
+  nextText?: string;
+  /**
+   * 下一页的图标， 比 next-text 优先级更高
+   */
+  nextIcon?: string;
+  /**
+   * 分页大小
+   *
+   * @default 'default'
+   */
+  size?: Size;
+  /**
+   * 是否为分页按钮添加背景色
    *
    * @default false
    */
-  hidden?: boolean;
+  background?: boolean;
   /**
-   * 切换 pageSize，pageNum 重置为 1
+   * 是否禁用
    *
-   * @default true
+   * @default false
    */
-  reset?: boolean;
+  disabled?: boolean;
+  /**
+   * 只有一页时是否隐藏
+   *
+   * @default false
+   */
+  hideOnSinglePage?: boolean;
 }
 
-export type PaginationEmits = {
-  /**
-   * 分页时候触发的事件
-   */
-  pagination: [value: Paging];
-};
+export interface PaginationEmits {
+  "size-change": [value: number];
+  change: [currentPage: number, pageSize: number];
+  "current-change": [value: number];
+  "prev-click": [value: number];
+  "next-click": [value: number];
+}

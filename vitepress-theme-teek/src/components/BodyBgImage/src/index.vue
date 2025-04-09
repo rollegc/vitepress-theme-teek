@@ -21,25 +21,26 @@ const bodyBgImgConfig = getTeekConfigRef<BodyBgImg>("bodyBgImg", {
   maskBg: "rgba(0, 0, 0, 0.2)",
 });
 
+const dataArray = [unref(bodyBgImgConfig).imgSrc || []].flat().map(item => item && withBase(item));
 // body 背景图片定时轮播
 const {
   data: imageSrc,
   startAutoSwitch,
   stopAutoSwitch,
-} = useSwitchData(
-  [unref(bodyBgImgConfig).imgSrc || []].flat().map(item => item && withBase(item)),
-  {
-    timeout: unref(bodyBgImgConfig).imgInterval,
-    shuffle: unref(bodyBgImgConfig).imgShuffle,
-    onAfterUpdate: newValue => {
-      // 预加载下一张图片
-      if (newValue) {
-        const img = new Image();
-        img.src = newValue;
-      }
-    },
-  }
-);
+  index,
+} = useSwitchData(dataArray, {
+  timeout: unref(bodyBgImgConfig).imgInterval,
+  shuffle: unref(bodyBgImgConfig).imgShuffle,
+  onAfterUpdate: () => {
+    // 预加载下一张图片
+    const nextIndex = (unref(index) + 1) % dataArray.length;
+    const newValue = dataArray[nextIndex];
+    if (newValue) {
+      const img = new Image();
+      img.src = newValue;
+    }
+  },
+});
 
 onMounted(() => {
   startAutoSwitch();

@@ -26,25 +26,26 @@ const isPartImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "partImg
 // 全屏图片背景风格
 const isFullImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "fullImg");
 
+const dataArray = [unref(bannerConfig).imgSrc || []].flat().map(item => item && withBase(item));
 // banner 背景图片定时轮播
 const {
   data: imageSrc,
   startAutoSwitch,
   stopAutoSwitch,
-} = useSwitchData(
-  [unref(bannerConfig).imgSrc || []].flat().map(item => item && withBase(item)),
-  {
-    timeout: unref(bannerConfig).imgInterval,
-    shuffle: unref(bannerConfig).imgShuffle,
-    onAfterUpdate: newValue => {
-      // 预加载下一张图片
-      if (newValue) {
-        const img = new Image();
-        img.src = newValue;
-      }
-    },
-  }
-);
+  index,
+} = useSwitchData(dataArray, {
+  timeout: unref(bannerConfig).imgInterval,
+  shuffle: unref(bannerConfig).imgShuffle,
+  onAfterUpdate: () => {
+    // 预加载下一张图片
+    const nextIndex = (unref(index) + 1) % dataArray.length;
+    const newValue = dataArray[nextIndex];
+    if (newValue) {
+      const img = new Image();
+      img.src = newValue;
+    }
+  },
+});
 
 onMounted(() => {
   startAutoSwitch();

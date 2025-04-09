@@ -1,4 +1,4 @@
-import type { ImageViewerProps } from "element-plus";
+import type { ImageViewerProps } from "../../components/ImageViewer/src/imageViewer";
 
 export interface Post {
   /**
@@ -44,7 +44,7 @@ export interface Post {
    */
   splitSeparator?: boolean;
   /**
-   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   * 首页的图片查看器配置
    */
   imageViewer?: Partial<ImageViewerProps>;
 }

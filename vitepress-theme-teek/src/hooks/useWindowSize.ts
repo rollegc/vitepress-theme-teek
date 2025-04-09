@@ -1,6 +1,7 @@
-import { onMounted, onUnmounted, ref } from "vue";
-import { useDebounce } from "./useDebounce";
+import { ref } from "vue";
 import { inBrowser } from "vitepress";
+import { useDebounce } from "./useDebounce";
+import { useEventListener } from "./useEventListener";
 
 /**
  * 实时获取窗口大小
@@ -19,13 +20,7 @@ export const useWindowSize = (sizeChangeCallback?: (width: number, height: numbe
     }
   }, 100);
 
-  onMounted(() => {
-    if (inBrowser) window.addEventListener("resize", updateSize, { passive: true });
-  });
-
-  onUnmounted(() => {
-    if (inBrowser) window.removeEventListener("resize", updateSize);
-  });
+  useEventListener(window, "resize", updateSize, { passive: true }, () => inBrowser);
 
   updateSize();
   return { width, height, updateSize };

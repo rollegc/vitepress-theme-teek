@@ -1,8 +1,9 @@
 <script setup lang="ts" name="BackTop">
-import { computed, unref, onMounted, onUnmounted, ref, inject } from "vue";
+import { computed, unref, onMounted, ref, inject } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useDebounce } from "../../../hooks";
+import { useNamespace, useDebounce, useEventListener } from "../../../hooks";
 import Icon from "../../Icon";
+import Message from "../../Message";
 import { rocketIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
@@ -25,7 +26,7 @@ const progress = ref(0);
 const scrollToTop = useDebounce(() => {
   document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
   setTimeout(() => {
-    unref(themeSettingConfig).backTopDone?.();
+    unref(themeSettingConfig).backTopDone?.(Message);
   }, 600);
 }, 500);
 
@@ -43,12 +44,9 @@ const updateScrollProgress = () => {
 
 onMounted(() => {
   updateScrollProgress();
-  window.addEventListener("scroll", watchScroll);
 });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", watchScroll);
-});
+useEventListener(window, "scroll", watchScroll);
 </script>
 
 <template>

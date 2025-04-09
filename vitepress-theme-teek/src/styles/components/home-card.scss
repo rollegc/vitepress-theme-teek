@@ -30,10 +30,6 @@
       padding: 0 3px;
       user-select: none;
 
-      .el-icon {
-        font-size: getCssVar("home-font-size-middle");
-      }
-
       &:hover {
         color: getCssVar("theme-color");
       }

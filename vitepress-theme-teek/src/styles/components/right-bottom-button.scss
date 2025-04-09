@@ -89,7 +89,7 @@ $progress-thickness: calc($button-size / 10);
       @include e(button__style__title) {
         padding: 0 10px;
         font-size: 12px;
-        color: var(--el-color-info);
+        color: getCssVar(el-color-info);
         cursor: default;
       }
     }

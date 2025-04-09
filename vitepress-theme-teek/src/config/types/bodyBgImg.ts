@@ -17,6 +17,8 @@ export interface BodyBgImg {
   imgInterval?: number;
   /**
    * body 背景图是否随机切换，为 false 时按顺序切换
+   *
+   * @default false
    */
   imgShuffle?: boolean;
   /**

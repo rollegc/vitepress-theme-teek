@@ -7,7 +7,7 @@
  */
 export const useDebounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number,
+  delay = 0,
   immediate = true
 ): ((...args: Parameters<T>) => void) => {
   let timer: ReturnType<typeof setTimeout>;

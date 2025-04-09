@@ -70,6 +70,13 @@
   }
 }
 
+/* Badge 添加 success 样式 */
+.VPBadge.success {
+  border-color: getCssVar("el-color-success-light-8");
+  color: getCssVar("el-color-success");
+  background-color: getCssVar("el-color-success-light-9");
+}
+
 a.hover-color:hover {
   color: getCssVar("theme-color");
   cursor: pointer;

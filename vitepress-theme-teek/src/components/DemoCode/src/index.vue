@@ -1,7 +1,7 @@
 <script setup lang="ts" name="DemoCode">
 import { ref, computed, unref, defineAsyncComponent } from "vue";
 import { useData } from "vitepress";
-import { ElTooltip, ElMessage } from "element-plus";
+import Message from "../../Message";
 import { useNamespace, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
 import TransitionCollapse from "../../TransitionCollapse";
@@ -92,7 +92,15 @@ const copyCode = async () => {
 
   await copy(unref(decodeRawSource));
 
-  unref(copied) ? ElMessage.success("复制成功") : ElMessage.error("复制失败");
+  unref(copied)
+    ? Message.success({
+        message: "复制成功",
+        plain: true,
+      })
+    : Message.error({
+        message: "复制失败",
+        plain: true,
+      });
 };
 </script>
 
@@ -107,30 +115,14 @@ const copyCode = async () => {
     <div :class="ns.e('button-group')">
       <slot name="teek-demo-code-button-left" />
 
-      <ElTooltip
-        v-if="playgroundUrl"
-        :content="playgroundButtonTip"
-        :show-arrow="false"
-        :trigger="['hover', 'focus']"
-        :trigger-keys="[]"
-      >
-        <Icon @click="handleEditPlayground" :icon="playgroundIcon"></Icon>
-      </ElTooltip>
-      <ElTooltip
-        v-if="githubUrl"
-        :content="githubButtonTip"
-        :show-arrow="false"
-        :trigger="['hover', 'focus']"
-        :trigger-keys="[]"
-      >
-        <Icon @click="handleEditGithub" :icon="githubIcon" />
-      </ElTooltip>
-      <ElTooltip :content="copyButtonTip" :show-arrow="false" :trigger="['hover', 'focus']" :trigger-keys="[]">
-        <Icon :icon="copyIcon" @click="copyCode" />
-      </ElTooltip>
-      <ElTooltip :content="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip">
-        <Icon @click="handleToggleSourceVisible()" :icon="codeIcon" />
-      </ElTooltip>
+      <Icon v-if="playgroundUrl" :title="playgroundButtonTip" @click="handleEditPlayground" :icon="playgroundIcon" />
+      <Icon v-if="githubUrl" :title="githubButtonTip" @click="handleEditGithub" :icon="githubIcon" />
+      <Icon :title="copyButtonTip" :icon="copyIcon" @click="copyCode" />
+      <Icon
+        :title="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
+        @click="handleToggleSourceVisible()"
+        :icon="codeIcon"
+      />
 
       <slot name="teek-demo-code-button-right" />
     </div>

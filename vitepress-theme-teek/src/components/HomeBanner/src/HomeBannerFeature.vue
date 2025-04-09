@@ -40,7 +40,7 @@ useWindowSize(width => {
 <template>
   <TransitionGroup
     v-if="bannerConfig.features.length"
-    name="slide-next"
+    :name="ns.joinNamespace('slide-next')"
     tag="div"
     :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-wrap-between']"
   >

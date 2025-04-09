@@ -142,7 +142,8 @@ export const isWindow = (val: any): val is Window => {
  * 是否为元素节点
  */
 export const isElement = (val: unknown): val is Element => {
-  return isObject(val) && !!val.tagName;
+  if (typeof Element === "undefined") return false;
+  return val instanceof Element;
 };
 
 /**
@@ -215,4 +216,35 @@ export const isEmpty = (val: any, checkFull = true): boolean => {
 
   // 如果以上都不是，则不为空
   return false;
+};
+
+/**
+ * 确定目标元素是否可聚焦
+ * @param element HTML 元素
+ */
+export const isFocusable = (element: HTMLElement): boolean => {
+  if (element.tabIndex > 0 || (element.tabIndex === 0 && element.getAttribute("tabIndex") !== null)) {
+    return true;
+  }
+  if (element.tabIndex < 0 || element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true") {
+    return false;
+  }
+
+  switch (element.nodeName) {
+    case "A": {
+      // casting current element to Specific HTMLElement in order to be more type precise
+      return !!(element as HTMLAnchorElement).href && (element as HTMLAnchorElement).rel !== "ignore";
+    }
+    case "INPUT": {
+      return !((element as HTMLInputElement).type === "hidden" || (element as HTMLInputElement).type === "file");
+    }
+    case "BUTTON":
+    case "SELECT":
+    case "TEXTAREA": {
+      return true;
+    }
+    default: {
+      return false;
+    }
+  }
 };

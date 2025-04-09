@@ -7,7 +7,6 @@ export const globals = {
   "node:path": "node:path",
   "node:fs": "node:fs",
   fs: "fs",
-  "element-plus": "ElementPlus",
 };
 
 // full-bundle 打包时，忽略 globals 中的依赖

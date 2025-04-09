@@ -57,7 +57,7 @@ $E: null;
   }
 }
 
-/*Modifier 修饰符 */
+/* Modifier 修饰符 */
 @mixin m($modifier) {
   $selector: &;
   $currentSelector: "";

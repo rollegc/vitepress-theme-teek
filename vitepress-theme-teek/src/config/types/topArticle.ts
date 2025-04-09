@@ -35,4 +35,10 @@ export interface TopArticle {
    * @default 4000 (4秒)
    */
   pageSpeed?: number;
+  /**
+   * 精选文章的日期格式
+   *
+   * @default 'yyyy-MM-dd hh:mm:ss'
+   */
+  dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: number | string) => string);
 }

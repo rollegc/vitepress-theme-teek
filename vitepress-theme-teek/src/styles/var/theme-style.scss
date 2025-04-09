@@ -1,3 +1,5 @@
+@use "../mixins/function" as *;
+
 /* 所有变量：https://github.com/vuejs/vitepress/blob/main/src/client/theme-style-default/styles/vars.css */
 
 /* VitePress 绿色 */
@@ -26,32 +28,32 @@ html[theme-style="vp-red"] {
 
 /* element plus 蓝色 */
 html[theme-style="el-blue"] {
-  --vp-c-brand-1: var(--el-color-primary);
-  --vp-c-brand-2: var(--el-color-primary-light-3);
-  --vp-c-brand-3: var(--el-color-primary-light-5);
-  --vp-c-brand-soft: var(--el-color-primary-light-9);
+  --vp-c-brand-1: #{getCssVar("el-color-primary")};
+  --vp-c-brand-2: #{getCssVar("el-color-primary-light-3")};
+  --vp-c-brand-3: #{getCssVar("el-color-primary-light-5")};
+  --vp-c-brand-soft: #{getCssVar("el-color-primary-light-9")};
 }
 
 /* element plus 绿色 */
 html[theme-style="el-green"] {
-  --vp-c-brand-1: var(--el-color-success);
-  --vp-c-brand-2: var(--el-color-success-light-3);
-  --vp-c-brand-3: var(--el-color-success-light-5);
-  --vp-c-brand-soft: var(--el-color-success-light-9);
+  --vp-c-brand-1: #{getCssVar("el-color-success")};
+  --vp-c-brand-2: #{getCssVar("el-color-success-light-3")};
+  --vp-c-brand-3: #{getCssVar("el-color-success-light-5")};
+  --vp-c-brand-soft: #{getCssVar("el-color-success-light-9")};
 }
 
 /* element plus 黄色 */
 html[theme-style="el-yellow"] {
-  --vp-c-brand-1: var(--el-color-warning);
-  --vp-c-brand-2: var(--el-color-warning-light-3);
-  --vp-c-brand-3: var(--el-color-warning-light-5);
-  --vp-c-brand-soft: var(--el-color-warning-light-9);
+  --vp-c-brand-1: #{getCssVar("el-color-warning")};
+  --vp-c-brand-2: #{getCssVar("el-color-warning-light-3")};
+  --vp-c-brand-3: #{getCssVar("el-color-warning-light-5")};
+  --vp-c-brand-soft: #{getCssVar("el-color-warning-light-9")};
 }
 
 /* element plus 红色 */
 html[theme-style="el-red"] {
-  --vp-c-brand-1: var(--el-color-danger);
-  --vp-c-brand-2: var(--el-color-danger-light-3);
-  --vp-c-brand-3: var(--el-color-danger-light-5);
-  --vp-c-brand-soft: var(--el-color-danger-light-9);
+  --vp-c-brand-1: #{getCssVar("el-color-danger")};
+  --vp-c-brand-2: #{getCssVar("el-color-danger-light-3")};
+  --vp-c-brand-3: #{getCssVar("el-color-danger-light-5")};
+  --vp-c-brand-soft: #{getCssVar("el-color-danger-light-9")};
 }
