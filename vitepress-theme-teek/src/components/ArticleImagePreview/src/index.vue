@@ -1,7 +1,8 @@
 <script setup lang="ts" name="ArticleImagePreview">
-import { onMounted, onUnmounted, computed, unref } from "vue";
+import { computed, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
 import { createImageViewer } from "../../ImageViewer";
+import { useEventListener } from "../../../hooks";
 
 const { getTeekConfig } = useTeekConfig();
 
@@ -14,6 +15,7 @@ const imageViewer = computed(() => {
 const selector = ".content-container .main";
 
 const previewImage = (e: Event) => {
+  console.log(1);
   const target = e.target as HTMLElement;
   const currentTarget = e.currentTarget as HTMLElement;
 
@@ -35,15 +37,7 @@ const previewImage = (e: Event) => {
   }
 };
 
-onMounted(() => {
-  const docDomContainer = document.querySelector(selector);
-  docDomContainer?.addEventListener("click", previewImage);
-});
-
-onUnmounted(() => {
-  const docDomContainer = document.querySelector(selector);
-  docDomContainer?.removeEventListener("click", previewImage);
-});
+useEventListener(() => document.querySelector(selector), "click", previewImage);
 </script>
 
 <template></template>

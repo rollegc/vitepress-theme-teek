@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useNamespace } from "../../../../hooks";
-import { ElInput } from "element-plus";
 import { usePagination } from "../usePagination";
 import { PaginationJumperProps } from "./jumper";
 
@@ -11,35 +10,28 @@ defineProps<PaginationJumperProps>();
 
 const ns = useNamespace("pagination");
 const { pageCount, disabled, currentPage, changeEvent } = usePagination();
-const userInput = ref<number | string>();
-const innerValue = computed(() => userInput.value ?? currentPage?.value);
+const userInput = ref<number | string>(currentPage?.value);
 
-const handleInput = (val: number | string) => {
-  userInput.value = val ? +val : "";
-};
-
-const handleChange = (val: number | string) => {
-  val = Math.trunc(+val);
+const handleChange = () => {
+  let value = event.target.value;
+  if (value < 1) value = 1;
+  if (value > pageCount.value) value = pageCount.value;
+  const val = Math.trunc(+value);
   changeEvent?.(val);
-  userInput.value = undefined;
+  userInput.value = val;
 };
 </script>
 
 <template>
   <span :class="ns.e('jump')" :disabled="disabled">
     <span :class="[ns.e('goto')]">前往</span>
-    <el-input
-      :size="size"
-      :class="[ns.e('editor'), ns.is('in-pagination')]"
-      :min="1"
-      :max="pageCount"
-      :disabled="disabled"
-      :model-value="innerValue"
-      :validate-event="false"
-      aria-label="页"
+    <input
       type="number"
-      @update:model-value="handleInput"
+      v-model="userInput"
+      :disabled="disabled"
       @change="handleChange"
+      aria-label="页"
+      :class="[ns.e('input'), ns.em('input', size)]"
     />
     <span :class="[ns.e('classifier')]">页</span>
   </span>

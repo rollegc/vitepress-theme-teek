@@ -2,9 +2,7 @@ import type Total from "./total.vue";
 
 export interface PaginationTotalProps {
   /**
-   * 总数
-   *
-   * @default 1000
+   * 总条目数
    */
   total: number;
 }

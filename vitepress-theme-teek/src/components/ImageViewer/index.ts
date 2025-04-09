@@ -1,11 +1,12 @@
-import ImageViewer, { type ImageViewerProps } from "./src/index.vue";
+import ImageViewer from "./src/index.vue";
 import { createVNode, render, type VNode } from "vue";
+import type { ImageViewerProps } from "./src/imageViewer";
 
 export { ImageViewer as TkImageViewer };
 
 let instance: VNode | null = null;
 
-export const createImageViewer = (options: ImageViewerProps) => {
+export const createImageViewer = (options: Partial<ImageViewerProps> & { modelValue?: boolean }) => {
   if (typeof window === "undefined") return;
 
   const { modelValue = true } = options;
@@ -19,4 +20,5 @@ export const createImageViewer = (options: ImageViewerProps) => {
   render(instance, container);
 };
 
+export * from "./src/imageViewer";
 export * from "./src/instance";

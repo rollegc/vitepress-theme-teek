@@ -1,7 +1,7 @@
 <script setup lang="ts" name="BackTop">
-import { computed, unref, onMounted, onUnmounted, ref, inject } from "vue";
+import { computed, unref, onMounted, ref, inject } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useDebounce } from "../../../hooks";
+import { useNamespace, useDebounce, useEventListener } from "../../../hooks";
 import Icon from "../../Icon";
 import { rocketIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
@@ -43,12 +43,9 @@ const updateScrollProgress = () => {
 
 onMounted(() => {
   updateScrollProgress();
-  window.addEventListener("scroll", watchScroll);
 });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", watchScroll);
-});
+useEventListener(window, "scroll", watchScroll);
 </script>
 
 <template>

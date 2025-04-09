@@ -12,7 +12,7 @@ export interface PaginationPagerProps {
    */
   pageCount: number;
   /**
-   * 一页显示多少条数据
+   * 设置最大页码按钮数。 页码按钮的数量，当总页数超过该值时会折叠
    *
    * @default 7
    */

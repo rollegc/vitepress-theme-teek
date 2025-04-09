@@ -89,10 +89,6 @@
     -moz-appearance: textfield;
   }
 
-  .#{$namespace}-select {
-    width: 128px;
-  }
-
   button {
     @include pagination-button;
   }
@@ -145,18 +141,37 @@
       margin-right: 8px;
     }
 
-    @include e(editor) {
+    @include e(input) {
       text-align: center;
       box-sizing: border-box;
+      width: 56px;
+      display: inline-flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 1px 11px;
+      background-image: none;
+      border-radius: 4px;
+      cursor: text;
+      transition: box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transform: translateZ(0);
+      box-shadow: 0 0 0 1px var(--vp-c-divider) inset;
 
-      &.#{$namespace}-input {
-        width: 56px;
+      &:hover {
+        box-shadow: 0 0 0 1px var(--vp-c-border) inset;
+      }
+      &:focus {
+        box-shadow: 0 0 0 1px var(--vp-c-brand-2) inset;
       }
 
-      .#{$namespace}-input__inner::-webkit-inner-spin-button,
-      .#{$namespace}-input__inner::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+      @include m(small) {
+        padding: 1px 7px;
+        height: 22px;
+        font-size: 12px;
+      }
+
+      @include m(large) {
+        height: 38px;
       }
     }
 

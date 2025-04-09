@@ -6,6 +6,7 @@ export * from "./useSwitchData";
 export * from "./useScrollData";
 export * from "./useBuSunZi";
 export * from "./useDebounce";
+export * from "./useEventListener";
 export * from "./useWindowSize";
 export * from "./useVpRouter";
 export * from "./useClipboard";

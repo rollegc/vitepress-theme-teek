@@ -3,6 +3,8 @@ import type Prev from "./prev.vue";
 export interface PaginationPrevProps {
   /**
    * 是否禁用
+   *
+   * @default false
    */
   disabled?: boolean;
   /**

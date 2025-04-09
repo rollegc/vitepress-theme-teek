@@ -1,4 +1,4 @@
-import type { PaginationProps } from "element-plus";
+import type { PaginationProps } from "../components/Pagination/src/pagination";
 import type {
   Appreciation,
   Article,

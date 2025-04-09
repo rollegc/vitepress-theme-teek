@@ -1,4 +1,4 @@
-import type { ImageViewerProps } from "element-plus";
+import type { ImageViewerProps } from "../../components/ImageViewer/src/imageViewer";
 
 export interface Post {
   /**

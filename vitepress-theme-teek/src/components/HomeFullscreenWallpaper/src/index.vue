@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeFullscreenWallpaper">
-import { onMounted, onUnmounted, ref, unref } from "vue";
+import { ref, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useEventListener } from "../../../hooks";
 import type { Wallpaper } from "../../../config/types";
 
 defineOptions({ name: "HomeFullscreenWallpaper" });
@@ -109,17 +109,9 @@ const handleContextMenu = (event: MouseEvent) => {
   if (unref(isFullscreen)) event.preventDefault();
 };
 
-onMounted(() => {
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("fullscreenchange", handleFullscreenChange);
-  document.addEventListener("contextmenu", handleContextMenu);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("keydown", handleKeyDown);
-  document.removeEventListener("fullscreenchange", handleFullscreenChange);
-  document.removeEventListener("contextmenu", handleContextMenu);
-});
+useEventListener(document, "keydown", handleKeyDown);
+useEventListener(document, "fullscreenchange", handleFullscreenChange);
+useEventListener(document, "contextmenu", handleContextMenu);
 </script>
 
 <template>

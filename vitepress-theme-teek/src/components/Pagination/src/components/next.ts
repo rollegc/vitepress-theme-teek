@@ -3,6 +3,8 @@ import type Next from "./next.vue";
 export interface PaginationNextProps {
   /**
    * 是否禁用
+   *
+   * @default false
    */
   disabled?: boolean;
   /**
@@ -13,8 +15,6 @@ export interface PaginationNextProps {
   currentPage?: number;
   /**
    * 总页数
-   *
-   * @default 50
    */
   pageCount?: number;
   /**

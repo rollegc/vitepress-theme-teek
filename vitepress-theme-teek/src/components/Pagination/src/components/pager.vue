@@ -53,8 +53,8 @@ const pagers = computed(() => {
   return array;
 });
 
-const prevMoreKls = computed(() => ["more", "btn-quickprev", nsIcon.b(), nsPager.is("disabled", props.disabled)]);
-const nextMoreKls = computed(() => ["more", "btn-quicknext", nsIcon.b(), nsPager.is("disabled", props.disabled)]);
+const prevMoreKls = computed(() => ["more", "btn-quick-prev", nsIcon.b(), nsPager.is("disabled", props.disabled)]);
+const nextMoreKls = computed(() => ["more", "btn-quick-next", nsIcon.b(), nsPager.is("disabled", props.disabled)]);
 
 const tabindex = computed(() => (props.disabled ? -1 : 0));
 
@@ -99,8 +99,8 @@ const onPagerClick = (event: UIEvent) => {
   const pagerCountOffset = props.pagerCount - 2;
 
   if (target.className.includes("more")) {
-    if (target.className.includes("quickprev")) newPage = currentPage - pagerCountOffset;
-    else if (target.className.includes("quicknext")) newPage = currentPage + pagerCountOffset;
+    if (target.className.includes("quick-prev")) newPage = currentPage - pagerCountOffset;
+    else if (target.className.includes("quick-next")) newPage = currentPage + pagerCountOffset;
   }
 
   if (!Number.isNaN(+newPage)) {

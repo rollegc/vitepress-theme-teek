@@ -15,6 +15,7 @@ export * from "./CommentGiscus";
 export * from "./CommentTwikoo";
 export * from "./CommentWaline";
 export * from "./DemoCode";
+export * from "./FocusTrap";
 export * from "./FooterGroup";
 export * from "./FooterInfo";
 export * from "./Home";

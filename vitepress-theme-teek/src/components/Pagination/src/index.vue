@@ -15,10 +15,12 @@ defineOptions({ name: "Pagination" });
 const props = withDefaults(defineProps<PaginationProps>(), {
   pagerCount: 7,
   layout: ["prev, pager, next, jumper, ->, total"].join(", "),
-  pageSizes: () => [10, 20, 30, 40, 50, 100],
   prevIcon: () => arrowLeftIcon,
   nextIcon: () => arrowRightIcon,
-  teleported: true,
+  size: "default",
+  background: false,
+  disabled: false,
+  hideOnSinglePage: false,
 });
 const emit = defineEmits<PaginationEmits>();
 

@@ -1,5 +1,5 @@
 import type { PageData } from "vitepress";
-import type { ImageViewerProps } from "element-plus";
+import type { ImageViewerProps } from "../../components/ImageViewer/src/imageViewer";
 import type { VpContainerProps } from "../../components/VpContainer/src/vpContainer";
 
 export type ArticleInfoPosition = "post" | "article";
