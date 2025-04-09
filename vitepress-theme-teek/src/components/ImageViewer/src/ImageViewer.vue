@@ -1,7 +1,6 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="ImageViewer">
 import { computed, effectScope, nextTick, onMounted, ref, shallowRef, watch } from "vue";
-import { useNamespace, useDebounce, useEventListener } from "../../../hooks";
-import { useZIndex } from "./useZIndex";
+import { useNamespace, useDebounce, useEventListener, useZIndex } from "../../../hooks";
 import FocusTrap from "../../FocusTrap";
 import Icon from "../../Icon";
 import {
@@ -16,7 +15,6 @@ import {
   zoomOutIcon,
 } from "../../../assets/icons";
 import type { ImageViewerEmits, ImageViewerProps, ImageViewerAction, ImageViewerMode } from "./imageViewer";
-import type { CSSProperties } from "vue";
 
 defineOptions({ name: "ImageViewer" });
 
@@ -32,7 +30,7 @@ const modes: Record<"CONTAIN" | "ORIGINAL", ImageViewerMode> = {
 };
 
 const props = withDefaults(defineProps<ImageViewerProps>(), {
-  urlList: [],
+  urlList: () => [],
   initialIndex: 0,
   infinite: true,
   hideOnClickModal: false,
@@ -88,7 +86,7 @@ const imgStyle = computed(() => {
   translateX = translateX * cosRadian + translateY * sinRadian;
   translateY = translateY * cosRadian - (offsetX / scale) * sinRadian;
 
-  const style: CSSProperties = {
+  const style: Record<string, string> = {
     transform: `scale(${scale}) rotate(${deg}deg) translate(${translateX}px, ${translateY}px)`,
     transition: enableTransition ? "transform .3s" : "",
   };
@@ -209,7 +207,7 @@ const toggleMode = () => {
   const currentMode = mode.value.name;
   const index = modeValues.findIndex(i => i.name === currentMode);
   const nextIndex = (index + 1) % modeNames.length;
-  mode.value = modes[modeNames[nextIndex]];
+  mode.value = modes[modeNames[nextIndex] as keyof typeof modes];
   reset();
 };
 

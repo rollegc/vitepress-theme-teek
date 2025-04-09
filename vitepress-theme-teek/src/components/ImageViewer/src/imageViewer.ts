@@ -1,5 +1,3 @@
-import type { Component } from "vue";
-
 export type ImageViewerAction = "zoomIn" | "zoomOut" | "clockwise" | "anticlockwise";
 
 export interface ImageViewerProps {
@@ -81,5 +79,5 @@ export interface ImageViewerEmits {
 
 export interface ImageViewerMode {
   name: string;
-  icon: Component;
+  icon: string;
 }

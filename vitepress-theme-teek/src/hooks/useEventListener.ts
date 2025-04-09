@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
 import { onMounted, onUnmounted } from "vue";
 
+type ElType = EventTarget | Element | null | (() => EventTarget | Element | null);
+
 export const useEventListener = (
-  el: EventTarget | (() => EventTarget),
+  el: ElType,
   event: string,
-  handler: EventListenerOrEventListenerObject,
+  handler: (event: any) => void,
   options?: AddEventListenerOptions,
   condition?: () => boolean
 ) => {
@@ -12,14 +14,14 @@ export const useEventListener = (
     if (condition && !condition()) return;
 
     el = typeof el === "function" ? el() : el;
-    el.addEventListener(event, handler, options);
+    el?.addEventListener(event, handler, options);
   };
 
   const remove = () => {
     if (condition && !condition()) return;
 
     el = typeof el === "function" ? el() : el;
-    el.removeEventListener(event, handler, options);
+    el?.removeEventListener(event, handler, options);
   };
 
   onMounted(() => {

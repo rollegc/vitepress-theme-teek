@@ -44,3 +44,7 @@ export { default as refreshRightIcon } from "./refreshRight";
 export { default as scaleToOriginalIcon } from "./scaleToOriginal";
 export { default as zoomInIcon } from "./zoomIn";
 export { default as zoomOutIcon } from "./zoomOut";
+export { default as circleCloseFilledIcon } from "./circleCloseFilled";
+export { default as infoFilledIcon } from "./infoFilled";
+export { default as successFilledIcon } from "./successFilled";
+export { default as warningFilledIcon } from "./warningFilled";

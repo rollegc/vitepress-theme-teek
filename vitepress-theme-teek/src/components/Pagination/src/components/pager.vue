@@ -19,7 +19,7 @@ const quickPrevFocus = ref(false);
 const quickNextFocus = ref(false);
 
 const pagers = computed(() => {
-  const pagerCount = props.pagerCount;
+  const pagerCount = props.pagerCount || 7;
   const halfPagerCount = (pagerCount - 1) / 2;
   const currentPage = Number(props.currentPage);
   const pageCount = Number(props.pageCount);
@@ -62,7 +62,7 @@ watchEffect(() => {
   const halfPagerCount = (props.pagerCount - 1) / 2;
   showPrevMore.value = false;
   showNextMore.value = false;
-  if (props.pageCount! > props.pagerCount) {
+  if (props.pageCount > props.pagerCount) {
     if (props.currentPage > props.pagerCount - halfPagerCount) showPrevMore.value = true;
     if (props.currentPage < props.pageCount! - halfPagerCount) showNextMore.value = true;
   }

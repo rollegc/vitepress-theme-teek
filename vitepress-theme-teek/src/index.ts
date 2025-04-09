@@ -14,12 +14,6 @@ import {
 } from "./helper";
 import "./styles/index.scss";
 
-import "element-plus/theme-chalk/base.css";
-import "element-plus/theme-chalk/dark/css-vars.css";
-import "element-plus/theme-chalk/el-input.css";
-import "element-plus/theme-chalk/el-popper.css";
-import "element-plus/theme-chalk/el-message.css";
-
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 
 export type DefaultThemeType = typeof DefaultTheme;

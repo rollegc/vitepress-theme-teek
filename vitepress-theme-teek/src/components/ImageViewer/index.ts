@@ -20,5 +20,5 @@ export const createImageViewer = (options: Partial<ImageViewerProps> & { modelVa
   render(instance, container);
 };
 
-export * from "./src/imageViewer";
+export type { ImageViewerProps as TkImageViewerProps, ImageViewerEmits as TkImageViewerEmits } from "./src/imageViewer";
 export * from "./src/instance";

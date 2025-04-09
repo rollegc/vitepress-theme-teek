@@ -44,7 +44,7 @@ export interface Post {
    */
   splitSeparator?: boolean;
   /**
-   * 首页的图片查看器配置，完全是 ElImageViewer 的 props
+   * 首页的图片查看器配置
    */
   imageViewer?: Partial<ImageViewerProps>;
 }

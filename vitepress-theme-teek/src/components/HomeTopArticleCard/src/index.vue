@@ -39,11 +39,11 @@ const currentTopArticleList = computed(() => {
   return unref(topArticleList).slice((p - 1) * limit, p * limit);
 });
 
-const formatPostDate = (date: string) => {
+const formatPostDate = (date?: string) => {
   const dateFormatConst = unref(topArticleConfig).dateFormat;
 
   if (isFunction(dateFormatConst)) return dateFormatConst(date || "");
-  return formatDate(date, dateFormatConst);
+  return formatDate(date || new Date(), dateFormatConst);
 };
 
 const finalTitle = computed(() => {

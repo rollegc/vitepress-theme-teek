@@ -12,7 +12,7 @@ export interface PaginationPrevProps {
    *
    * @default 1
    */
-  currentPage?: number;
+  currentPage: number;
   /**
    * 上一页按钮文本
    */

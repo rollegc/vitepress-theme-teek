@@ -11,3 +11,4 @@ export * from "./useWindowSize";
 export * from "./useVpRouter";
 export * from "./useClipboard";
 export * from "./useStorage";
+export * from "./useZIndex";

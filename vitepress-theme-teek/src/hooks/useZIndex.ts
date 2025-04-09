@@ -1,6 +1,6 @@
 import { computed, getCurrentInstance, inject, ref, unref } from "vue";
 import { inBrowser } from "vitepress";
-import { isNumber } from "../../../helper";
+import { isNumber } from "../helper";
 import type { InjectionKey, Ref } from "vue";
 
 export interface zIndexInjectionContext {

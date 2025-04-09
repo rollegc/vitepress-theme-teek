@@ -1,4 +1,4 @@
-import { Size } from "../pagination";
+import type { Size } from "../pagination";
 import type Jumper from "./jumper.vue";
 
 export interface PaginationJumperProps {

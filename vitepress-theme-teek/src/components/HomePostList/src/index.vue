@@ -1,9 +1,9 @@
 <script setup lang="ts" name="HomePostList">
-import { computed, reactive, ref, unref, watch, nextTick } from "vue";
+import { reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
 import { useTeekConfig, usePosts } from "../../../configProvider";
 import HomePostItem from "./HomePostItem.vue";
-import Pagination, { type PaginationProps } from "../../Pagination";
+import Pagination, { type TkPaginationProps } from "../../Pagination";
 import Icon from "../../Icon";
 import { useNamespace, useWindowSize } from "../../../hooks";
 import type { TkContentData } from "../../../post/types";
@@ -23,17 +23,21 @@ const postConfig = getTeekConfigRef<Required<Post>>("post", {
   emptyLabel: "文章列表为空",
 });
 // 自定义一页数量 & 分页组件的 Props
-const pageConfig = getTeekConfigRef<Partial<PaginationProps>>("page", {});
+const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});
 
 const coverImgMode = ref(unref(postConfig).coverImgMode);
 
 // 分页信息
-const pageInfo = ref({
-  pageNum: 1,
-  pageSizes: [10, 20, 50, 100, 200],
-  pageSize: computed(() => unref(pageConfig).pageSize || 10),
-  total: 0,
-});
+const pageNum = ref(1);
+const pageSize = ref(unref(pageConfig).pageSize || 10);
+const total = ref(0);
+
+watch(
+  () => unref(pageConfig).pageSize,
+  newValue => {
+    pageSize.value = newValue || 10;
+  }
+);
 
 const route = useRoute();
 const currentPosts = ref<TkContentData[]>([]);
@@ -43,7 +47,7 @@ const updateData = () => {
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
   const p = Number(searchParams.get(pageNumKey)) || 1;
-  if (p !== unref(pageInfo).pageNum) unref(pageInfo).pageNum = p;
+  if (p !== unref(pageNum)) pageNum.value = p;
 
   const postConst = unref(posts);
   const frontmatterConst = unref(frontmatter);
@@ -60,11 +64,10 @@ const updateData = () => {
     post = t ? postConst.groupPosts.tags[t] : post.filter((item: TkContentData) => item.frontmatter.tags);
   }
 
-  const { pageNum, pageSize, total } = unref(pageInfo);
   // 总数处理
-  if (total !== post?.length) unref(pageInfo).total = post?.length || 0;
+  if (total.value !== post?.length) total.value = post?.length || 0;
 
-  currentPosts.value = post?.slice((pageNum - 1) * unref(pageSize), pageNum * unref(pageSize));
+  currentPosts.value = post?.slice((unref(pageNum) - 1) * unref(pageSize), unref(pageNum) * unref(pageSize));
 };
 
 watch(
@@ -75,7 +78,7 @@ watch(
   { immediate: true }
 );
 
-const pagePropsRef = reactive({ ...unref(pageConfig), pageSize: undefined });
+const pagePropsRef = reactive<TkPaginationProps>({ ...unref(pageConfig) });
 const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = unref(pageConfig);
 const targetSize = "small";
 const targetLayout = "prev, pager, next";
@@ -104,7 +107,7 @@ const handlePagination = () => {
   const { searchParams } = new URL(window.location.href!);
   // 先删除旧的再追加新的
   searchParams.delete(pageNumKey);
-  searchParams.append(pageNumKey, String(unref(pageInfo).pageNum));
+  searchParams.append(pageNumKey, String(unref(pageNum)));
   // 替换 URL，但不刷新
   window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
   // 更新数据
@@ -132,13 +135,13 @@ defineExpose({ updateData });
       </ul>
       <div :class="`${ns.e('pagination')} flx-justify-center`">
         <Pagination
-          v-if="posts.sortPostsByDateAndSticky.length >= pageInfo.pageSize"
-          v-model:page-size="pageInfo.pageSize"
-          v-model:current-page="pageInfo.pageNum"
-          :total="pageInfo.total"
+          v-if="posts.sortPostsByDateAndSticky.length >= pageSize"
+          v-model:page-size="pageSize"
+          v-model:current-page="pageNum"
+          :total="total"
           background
           @current-change="handlePagination"
-          v-bind="pagePropsRef"
+          v-bind="{ ...pagePropsRef }"
         />
       </div>
     </template>

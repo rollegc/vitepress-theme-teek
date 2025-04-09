@@ -13,7 +13,7 @@
   @include set-css-var("pagination-button-height", 32px);
   @include set-css-var("pagination-button-disabled-color", getCssVar("text-color-placeholder"));
   @include set-css-var("pagination-button-disabled-bg-color", getCssVar("fill-color-blank"));
-  @include set-css-var("pagination-button-bg-color", getCssVar("button-bg-color"));
+  @include set-css-var("pagination-button-bg-color", getCssVar("fill-color"));
   @include set-css-var("pagination-hover-color", getCssVar("theme-color"));
   @include set-css-var("pagination-font-size-small", 12px);
   @include set-css-var("pagination-button-width-small", 24px);
@@ -86,7 +86,7 @@
 
   .#{$namespace}-input__inner {
     text-align: center;
-    -moz-appearance: textfield;
+    appearance: textfield;
   }
 
   button {

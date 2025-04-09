@@ -6,16 +6,16 @@ import { PaginationJumperProps } from "./jumper";
 
 defineOptions({ name: "PaginationJumper" });
 
-defineProps<PaginationJumperProps>();
+const { size = "default" } = defineProps<PaginationJumperProps>();
 
 const ns = useNamespace("pagination");
 const { pageCount, disabled, currentPage, changeEvent } = usePagination();
-const userInput = ref<number | string>(currentPage?.value);
+const userInput = ref<number | string>(currentPage?.value || 1);
 
-const handleChange = () => {
-  let value = event.target.value;
+const handleChange = (event: Event) => {
+  let value = (event.target as any)?.value || userInput.value;
   if (value < 1) value = 1;
-  if (value > pageCount.value) value = pageCount.value;
+  if (pageCount?.value && value > pageCount.value) value = pageCount.value;
   const val = Math.trunc(+value);
   changeEvent?.(val);
   userInput.value = val;

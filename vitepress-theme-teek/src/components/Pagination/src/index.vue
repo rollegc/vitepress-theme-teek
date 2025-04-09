@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Pagination">
-import { computed, h, provide, watch, useSlots } from "vue";
+import { computed, h, provide, watch, useSlots, VNode } from "vue";
 import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
 import { useNamespace } from "../../../hooks";
 import { paginationKey, type PaginationProps, type PaginationEmits, type LayoutKey } from "./pagination";
@@ -26,7 +26,7 @@ const emit = defineEmits<PaginationEmits>();
 
 const ns = useNamespace("pagination");
 
-const slots = useSlots();
+const slots = useSlots() as any;
 
 const currentPageModel = defineModel<number>("currentPage", { type: Number, default: 1 });
 const pageSizeModel = defineModel<number>("pageSize", { type: Number, default: 10 });

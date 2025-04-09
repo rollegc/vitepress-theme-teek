@@ -84,7 +84,7 @@ export interface Article {
    */
   topTip?: (frontmatter: PageData["frontmatter"], localeIndex: string, page: PageData) => VpContainerProps | undefined;
   /**
-   * 文章页的图片查看器配置，完全是 ElImageViewer 的 props
+   * 文章页的图片查看器配置
    */
   imageViewer?: Partial<ImageViewerProps>;
   /**

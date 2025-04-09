@@ -1,7 +1,7 @@
-import type { ComputedRef, InjectionKey, WritableComputedRef } from "vue";
+import type { ComputedRef, InjectionKey, ModelRef } from "vue";
 
 export interface PaginationContext {
-  currentPage?: WritableComputedRef<number>;
+  currentPage?: ModelRef<number>;
   pageCount?: ComputedRef<number>;
   disabled?: ComputedRef<boolean>;
   changeEvent?: (val: number) => void;
@@ -78,8 +78,6 @@ export interface PaginationProps {
 }
 
 export interface PaginationEmits {
-  "update:current-page": [value: number];
-  "update:page-size": [value: number];
   "size-change": [value: number];
   change: [currentPage: number, pageSize: number];
   "current-change": [value: number];

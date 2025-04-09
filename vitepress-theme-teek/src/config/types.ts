@@ -108,7 +108,7 @@ export interface TeekConfig {
    */
   post?: Post;
   /**
-   * 首页 Post 文章列表的分页配置，完全是 ElPagination 的 props
+   * 首页 Post 文章列表的分页配置
    */
   page?: Partial<PaginationProps>;
   /**

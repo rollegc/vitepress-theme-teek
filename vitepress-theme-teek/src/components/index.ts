@@ -32,6 +32,7 @@ export * from "./HomeTagCard";
 export * from "./HomeTopArticleCard";
 export * from "./Icon";
 export * from "./ImageViewer";
+export * from "./Message";
 export * from "./Notice";
 export * from "./Pagination";
 export * from "./RightBottomButton";

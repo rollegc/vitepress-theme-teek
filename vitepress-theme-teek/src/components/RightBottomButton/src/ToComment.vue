@@ -3,6 +3,7 @@ import { computed, unref, ref, inject } from "vue";
 import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
+import Message from "../../Message";
 import { commentIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
@@ -33,7 +34,7 @@ const showToComment = computed(() => {
 const scrollToComment = useDebounce(() => {
   document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
   setTimeout(() => {
-    unref(themeSettingConfig).toCommentDone?.();
+    unref(themeSettingConfig).toCommentDone?.(Message);
   }, 600);
 }, 500);
 </script>

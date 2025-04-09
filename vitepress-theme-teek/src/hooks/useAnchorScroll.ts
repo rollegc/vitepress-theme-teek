@@ -42,7 +42,7 @@ export const useAnchorScroll = () => {
     calculateCurrentAnchor();
   };
 
-  useEventListener(window, "scroll", onScroll);
+  useEventListener(() => window, "scroll", onScroll);
 
   /**
    * 文档更新锚点的时候更新 url 中的 hash

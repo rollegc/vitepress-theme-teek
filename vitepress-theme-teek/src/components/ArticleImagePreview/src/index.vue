@@ -15,7 +15,6 @@ const imageViewer = computed(() => {
 const selector = ".content-container .main";
 
 const previewImage = (e: Event) => {
-  console.log(1);
   const target = e.target as HTMLElement;
   const currentTarget = e.currentTarget as HTMLElement;
 

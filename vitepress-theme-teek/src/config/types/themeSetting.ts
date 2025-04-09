@@ -1,3 +1,5 @@
+import type { Message } from "../../components/Message/src/message";
+
 export interface ThemeSetting {
   /**
    * 是否启用主题风格，如果为 false，则不会显示切换按钮
@@ -148,11 +150,11 @@ export interface ThemeSetting {
   /**
    * 回到顶部后的回调
    */
-  backTopDone?: () => void;
+  backTopDone?: (TkMessage: Message) => void;
   /**
    * 滚动到评论后的回调
    */
-  toCommentDone?: () => void;
+  toCommentDone?: (TkMessage: Message) => void;
   /**
    * 鼠标悬停时标题提示文案
    */
