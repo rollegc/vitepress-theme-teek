@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.9...v1.0.2) (2025-04-09)
+
+### Features
+
+- 🚀 升级依赖版本 ([d1ff891](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/d1ff891929f75a3d95b0e63ea245031199519dee))
+- 🚀 新增部分文档 ([c5b5acb](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c5b5acb473199d5f0165f7637d191e7078a12fbe))
+- 🚀 移出 EP 依赖，重构部分使用 EP 的组件 ([5b350f7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5b350f72bfad84e3033528e8a5301a179f71c016))
+- 🚀 重构 ImageViewer，修复部分代码 ([b7adbeb](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b7adbeb54dd242798d8d1c9ad886c51b53fb10ae))
+- 🚀 重构分页组件 ([2cea2b5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2cea2b54a3a4e7cb147d847c07e597079786c93a))
+
+### Bug Fixes
+
+- 🐞 修复 feature 动画失效问题，精选文章添加 dateFormat 配置，添加 articleShare 文档说明 ([a83d7e2](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a83d7e2a966f7a12b569e810c79d2ca582c6b45c))
+- 🐞 修复预加载功能失效问题 ([e6759e0](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e6759e0b3fb542963268676d620a7837596b536d))
+
 ## [1.0.0-alpha.9](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2025-04-05)
 
 ### Features
