@@ -86,7 +86,7 @@ export interface Article {
   /**
    * 文章页的图片查看器配置
    */
-  imageViewer?: Partial<ImageViewerProps>;
+  imageViewer?: Omit<ImageViewerProps, "urlList" | "initialIndex" | "infinite">;
   /**
    * 鼠标悬停时标题提示文案
    */

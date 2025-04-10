@@ -17,6 +17,11 @@ export const teekBlogConfig: TeekConfig = {
   wallpaper: {
     enabled: true,
   },
+  post: {
+    imageViewer: {
+      hideOnClickModal: true,
+    },
+  },
   banner: {
     name: "🎉 Teek Blog",
     bgStyle: "fullImg",
