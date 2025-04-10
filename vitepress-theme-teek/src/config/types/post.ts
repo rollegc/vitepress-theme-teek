@@ -46,5 +46,5 @@ export interface Post {
   /**
    * 首页的图片查看器配置
    */
-  imageViewer?: Partial<ImageViewerProps>;
+  imageViewer?: Omit<ImageViewerProps, "urlList">;
 }

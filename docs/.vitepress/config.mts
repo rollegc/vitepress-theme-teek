@@ -71,6 +71,7 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "keywords", description }],
+    ["meta", { name: "baidu-site-verification", content: "codeva-GdK2q9MO1i" }], // 百度推送
     ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
   ],
   markdown: {
@@ -87,6 +88,19 @@ export default defineConfig({
       dangerLabel: "危险",
       infoLabel: "信息",
       detailsLabel: "详细信息",
+    },
+  },
+  sitemap: {
+    hostname: "https://vp.teek.top",
+    transformItems: items => {
+      const permalinkItemBak: typeof items = [];
+      // 使用永久链接生成 sitemap
+      const permalinks = (globalThis as any).VITEPRESS_CONFIG.site.themeConfig.permalinks;
+      items.forEach(item => {
+        const permalink = permalinks?.map[item.url];
+        if (permalink) permalinkItemBak.push({ url: permalink, lastmod: item.lastmod });
+      });
+      return [...items, ...permalinkItemBak];
     },
   },
   themeConfig: {
@@ -110,6 +124,7 @@ export default defineConfig({
       { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
       { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
       { text: "常见问题", link: "/theme/qa", activeMatch: "/20.常见问题/" },
+      { text: "案例", link: "/case" },
       {
         text: "生态",
         items: [

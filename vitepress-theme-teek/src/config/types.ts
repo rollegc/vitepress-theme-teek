@@ -110,7 +110,7 @@ export interface TeekConfig {
   /**
    * 首页 Post 文章列表的分页配置
    */
-  page?: Partial<PaginationProps>;
+  page?: Partial<PaginationProps> & { pageSize?: number };
   /**
    * 博主信息，显示在首页左边第一个卡片
    */

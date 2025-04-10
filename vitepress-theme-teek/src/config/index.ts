@@ -44,11 +44,11 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
 
   // 定义各插件扫描时忽略的目录
   const ignoreDir = {
-    autoFrontmatter: ["**/@pages/**"],
-    sidebar: ["@pages", "@fragment", "examples"],
-    mdH1: ["@pages"],
-    docAnalysis: ["@pages", /目录页/],
-    fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**"],
+    autoFrontmatter: ["**/@pages/**", "**/.scripts/**"],
+    sidebar: ["@pages", "@fragment", "examples", ".scripts"],
+    mdH1: ["@pages", ".scripts"],
+    docAnalysis: ["@pages", /目录页/, ".scripts"],
+    fileContentLoader: ["**/components/**", "**/.vitepress/**", "**/public/**", "**/*目录页*/**", "**/.scripts/**"],
   };
 
   // 自动生成 frontmatter 插件，必须放在第一位
