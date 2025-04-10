@@ -2,7 +2,7 @@ import { defineConfig } from "vitepress";
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { version } from "vitepress-theme-teek/es/version";
 
-const description = ["vitepress-theme-teek 使用文档", "vitepress 主题框架"].toString();
+const description = ["vitepress-theme-teek 使用文档", "vitepress 主题"].toString();
 
 const teekConfig = defineTeekConfig({
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
@@ -51,7 +51,7 @@ export default defineConfig({
     ["link", { rel: "icon", type: "image/png", href: "/teek-logo-mini.png" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:locale", content: "zh-CN" }],
-    ["meta", { property: "og:title", content: "Teek | Vitepress Theme" }],
+    ["meta", { property: "og:title", content: "Teek | VitePress Theme" }],
     ["meta", { property: "og:site_name", content: "Teek" }],
     ["meta", { property: "og:image", content: "" }],
     ["meta", { property: "og:url", content: "" }],

@@ -126,7 +126,7 @@ export default defineConfig({
     ["link", { rel: "icon", type: "image/png", href: "/teek-logo-mini.png" }],
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:locale", content: "zh-CN" }],
-    ["meta", { property: "og:title", content: "Teek | Vitepress Theme" }],
+    ["meta", { property: "og:title", content: "Teek | VitePress Theme" }],
     ["meta", { property: "og:site_name", content: "Teek" }],
     ["meta", { name: "author", content: "Teek" }],
     [

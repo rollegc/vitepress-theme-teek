@@ -76,7 +76,7 @@ export interface Article {
     className?: string;
   };
   /**
-   * 文章页顶部使用 Vitepress 容器添加提示
+   * 文章页顶部使用 VitePress 容器添加提示
    *
    * @param frontmatter 文档 frontmatter
    * @param localeIndex 当前国际化语言

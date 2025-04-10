@@ -153,11 +153,11 @@ permalink: /guide-api
 
 使用了 `usePermalink` 函数来提供 `permalink` 功能，但是在第一次进入页面或刷新、回退、前进时，会有 404 页面短暂出现，因此需要引用 `NotFoundDelay.vue` 组件来延迟 404 页面的加载时间。
 
-`NotFoundDelay.vue` 组件已经集成了 Vitepress，您可以无需手动引入 `NotFoundDelay.vue` 组件。
+`NotFoundDelay.vue` 组件已经集成了 VitePress，您可以无需手动引入 `NotFoundDelay.vue` 组件。
 
 您需要了解的是搭配 `NotFoundDelay.vue` 组件的一个核心配置项：`notFoundDelayLoad`。
 
-`vitepress-plugin-permalink` 插件在 `onBeforeMounted` 里根据自定义 URL 寻找对应的文档进行加载，但是 Vitepress 初始化页面在 ``onBeforeMounted` 之前执行，因此需要延迟时间来等待 `vitepress-plugin-permalink` 插件执行完成，于是需要使用 `notFoundDelayLoad` 配置项来决定 404 页面延迟加载时间，单位为毫秒，默认为 400 毫秒。
+`vitepress-plugin-permalink` 插件在 `onBeforeMounted` 里根据自定义 URL 寻找对应的文档进行加载，但是 VitePress 初始化页面在 ``onBeforeMounted` 之前执行，因此需要延迟时间来等待 `vitepress-plugin-permalink` 插件执行完成，于是需要使用 `notFoundDelayLoad` 配置项来决定 404 页面延迟加载时间，单位为毫秒，默认为 400 毫秒。
 
 如果发现第一次进入页面或刷新、回退、前进时有 404 页面短暂出现，则将 `notFoundDelayLoad` 配置项的时间调大。
 

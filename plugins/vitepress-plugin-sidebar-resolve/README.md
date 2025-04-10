@@ -68,7 +68,7 @@ sidebar: false
 | collapsed       | 是否折叠侧边栏，函数的 2 个参数为当前文件的相对路径（基于根目录）和侧边栏的 `text`                                                                                         | `boolean   | ((relativePath: string, text: string | undefined) => boolean)` | `true` |
 | fileIndexPrefix | 文件名前缀必须以「数字.」开头                                                                                                                                              | `boolean`  | `false`                              |
 | titleFormMd     | 是否从 md 文件获取第一个一级标题作为侧边栏 text                                                                                                                            | `boolean`  | `false`                              |
-| localeRootDir   | 当 Vitepress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh，否则侧边栏无法知道文件都放到了 zh | string     | 文档根目录                           |
+| localeRootDir   | 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh，否则侧边栏无法知道文件都放到了 zh | string     | 文档根目录                           |
 
 > 额外说明
 
@@ -143,7 +143,7 @@ export interface SidebarOption {
    */
   titleFormMd?: boolean;
   /**
-   * 当 Vitepress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
+   * 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 localeRootDir 设为 zh，否则侧边栏无法知道文件都放到了 zh
    * 如果 root 语言（默认语言）的所有文件放在文档根目录下，则不需要设置 localeRootDir
    *
    * @default 文档根目录

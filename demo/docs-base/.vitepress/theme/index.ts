@@ -15,7 +15,7 @@ import "vitepress-theme-teek/vp-plus/container.scss"; // Markdown 容器样式
 // import "vitepress-theme-teek/vp-plus/container-left.scss"; // Markdown 容器左框样式
 // import "vitepress-theme-teek/vp-plus/container-flow.scss"; // Markdown 容器流体样式
 // import "vitepress-theme-teek/vp-plus/blockquote.scss"; // 引用样式
-// import "vitepress-theme-teek/vp-plus/index-rainbow.scss"; // Vitepress 首页彩虹渐变样式
+// import "vitepress-theme-teek/vp-plus/index-rainbow.scss"; // VitePress 首页彩虹渐变样式
 import "vitepress-theme-teek/tk-plus/banner-desc-gradient.scss"; // Banner 描述渐变样式
 import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全屏图片放大样式
 
