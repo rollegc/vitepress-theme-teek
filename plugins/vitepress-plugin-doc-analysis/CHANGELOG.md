@@ -22,7 +22,7 @@
 
 ### Patch Changes
 
-- 修复项目为非 Git 仓库时，启动 Vitepress 报错
+- 修复项目为非 Git 仓库时，启动 VitePress 报错
 
 ## 1.0.6
 

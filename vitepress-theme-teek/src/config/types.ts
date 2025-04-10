@@ -78,7 +78,7 @@ export interface TeekConfig {
    */
   bgColor?: string[];
   /**
-   * 文章页的样式风格，default 为 Vitepress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
+   * 文章页的样式风格，default 为 VitePress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
    *
    * @default 'default'
    */

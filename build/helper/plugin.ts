@@ -13,7 +13,7 @@ import type { Plugin } from "rollup";
 // rollup 插件。rollup 本身只支持原生 JavaScript 文件打包，如果项目包含 vue、json 等非原生 JavaScript 文件，则利用插件来支持打包
 export const plugins = [
   vitepressThemeTeekClearConsole(),
-  VitepressThemeTeekStyleAlias(),
+  VitePressThemeTeekStyleAlias(),
   vuePlugin({ isProduction: true }),
   json(),
   // 解析和处理 Node.js 风格的模块导入语句（如 `import something from 'my-package'`），因为 Rollup 本身默认仅支持 ES 模块导入（即通过相对或绝对路径导入本地文件）
@@ -41,7 +41,7 @@ export const plugins = [
 /**
  * 将组件目录下的 style/*.ts 里的 ../../../styles 替换为实际的 vitepress-theme-teek 组件样式路径
  */
-export function VitepressThemeTeekStyleAlias(): Plugin {
+export function VitePressThemeTeekStyleAlias(): Plugin {
   const themeChalk = "theme-chalk";
   const sourceThemeChalk = `@${PKG_NAME}/${themeChalk}`;
   const bundleThemeChalk = `${PKG_NAME}/${themeChalk}`;
@@ -61,7 +61,7 @@ export function VitepressThemeTeekStyleAlias(): Plugin {
 /**
  * 将组件目录下的 style/*.ts 里的 @element-plus 替换为实际的 element-plus 组件样式路径
  */
-export function VitepressThemeTeekElementPlusAlias(format: "esm" | "cjs"): Plugin {
+export function VitePressThemeTeekElementPlusAlias(format: "esm" | "cjs"): Plugin {
   const sourceName = `@element-plus`;
   const module = format === "esm" ? "es" : "lib";
   const ext = format === "esm" ? ".mjs" : ".js";

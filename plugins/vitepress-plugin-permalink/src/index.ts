@@ -178,7 +178,7 @@ const virtualModuleId = "virtual:not-found-option";
 const resolvedVirtualModuleId = `\0${virtualModuleId}`;
 
 /**
- * 将 NotFoundDelay 组件传入 Vitepress 的 not-found 插槽
+ * 将 NotFoundDelay 组件传入 VitePress 的 not-found 插槽
  */
 export function VitePluginVitePressNotFoundDelayLoad(option: NotFoundOption = {}): Plugin & { name: string } {
   return {

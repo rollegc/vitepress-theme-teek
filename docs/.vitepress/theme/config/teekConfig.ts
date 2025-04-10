@@ -74,7 +74,7 @@ export const teekBlogConfig: TeekConfig = {
       {
         avatar: "https://theme.sugarat.top/logo.png",
         name: "粥里有勺糖",
-        desc: "简约风的 Vitepress 博客主题",
+        desc: "简约风的 VitePress 博客主题",
         link: "https://theme.sugarat.top/",
       },
       {
