@@ -60,7 +60,7 @@ export const teekBlogConfig: TeekConfig = {
         link: "https://onedayxyy.cn/",
       },
       {
-        avatar: "https://hyde.seasir.top/img/hyde-logo.ico",
+        avatar: "https://teek.seasir.top/avatar/avatar.webp",
         name: "Hyde Blog",
         desc: "人心中的成见是一座大山",
         link: "https://hyde.seasir.top/",

@@ -17,7 +17,7 @@
     "docs:dev": "pnpm run -C docs dev",
     "docs:build": "pnpm run -C docs build",
     "docs:preview": "pnpm run -C docs preview",
-    "demo:test": "pnpm run -C demo/docs-test",
+    "docs:baiduPush": "pnpm run -C docs baiduPush",
     "demo:base": "pnpm run -C demo/docs-base",
     "demo:locales": "pnpm run -C demo/docs-locales",
     "demo:localesRoot": "pnpm run -C demo/docs-locales-root",

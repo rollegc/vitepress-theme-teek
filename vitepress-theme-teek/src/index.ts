@@ -13,6 +13,7 @@ import {
   type UmamiAnalytics,
 } from "./helper";
 import "./styles/index.scss";
+import type { TeekConfig } from "./config/types";
 
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 
@@ -38,7 +39,7 @@ export default {
     app.component("TkDemoCode", ClientTkDemoCode);
 
     // 站点分析
-    const { provider, options } = siteData.value.themeConfig.siteAnalytics || {};
+    const siteAnalytics = (siteData.value.themeConfig.siteAnalytics as TeekConfig["siteAnalytics"]) || [];
     const siteAnalysis: Record<string, (options: any) => void> = {
       baidu: (options: BaiduAnalyticsOptions) => {
         baiduAnalytics(options);
@@ -48,6 +49,8 @@ export default {
       umami: (options: UmamiAnalytics) => umamiAnalytics(options),
     };
 
-    siteAnalysis[provider]?.(options);
+    siteAnalytics.forEach(item => {
+      siteAnalysis[item.provider]?.(item.options);
+    });
   },
 } as DefaultThemeType & { extends: DefaultThemeType };
