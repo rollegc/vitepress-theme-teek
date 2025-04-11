@@ -115,13 +115,29 @@ const copyCode = async () => {
     <div :class="ns.e('button-group')">
       <slot name="teek-demo-code-button-left" />
 
-      <Icon v-if="playgroundUrl" :title="playgroundButtonTip" @click="handleEditPlayground" :icon="playgroundIcon" />
-      <Icon v-if="githubUrl" :title="githubButtonTip" @click="handleEditGithub" :icon="githubIcon" />
-      <Icon :title="copyButtonTip" :icon="copyIcon" @click="copyCode" />
+      <Icon
+        v-if="playgroundUrl"
+        :title="playgroundButtonTip"
+        @click="handleEditPlayground"
+        :icon="playgroundIcon"
+        role="link"
+        :aria-label="playgroundButtonTip"
+      />
+      <Icon
+        v-if="githubUrl"
+        :title="githubButtonTip"
+        @click="handleEditGithub"
+        :icon="githubIcon"
+        role="link"
+        :aria-label="githubUrl"
+      />
+      <Icon :title="copyButtonTip" :icon="copyIcon" @click="copyCode" role="button" :aria-label="copyButtonTip" />
       <Icon
         :title="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
         @click="handleToggleSourceVisible()"
         :icon="codeIcon"
+        role="button"
+        :aria-label="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
       />
 
       <slot name="teek-demo-code-button-right" />
@@ -132,7 +148,12 @@ const copyCode = async () => {
     </TransitionCollapse>
 
     <Transition :name="ns.joinNamespace('fade-linear')">
-      <div v-show="sourceVisible" :class="ns.e('float-control')" @click="handleToggleSourceVisible(false)">
+      <div
+        v-show="sourceVisible"
+        :class="ns.e('float-control')"
+        @click="handleToggleSourceVisible(false)"
+        role="button"
+      >
         <Icon :icon="caretTopIcon" />
         <span>{{ expandSourceButtonTip }}</span>
       </div>

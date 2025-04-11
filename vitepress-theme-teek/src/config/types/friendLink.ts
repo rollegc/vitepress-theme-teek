@@ -1,3 +1,5 @@
+import type { ImageViewerProps } from "../../components/ImageViewer/src/imageViewer";
+
 export interface FriendLink {
   /**
    * 是否启用友情链接卡片
@@ -74,4 +76,8 @@ export interface FriendLink {
    * @default 4000 (4秒)
    */
   pageSpeed?: number;
+  /**
+   * 友情链接头像查看器配置
+   */
+  imageViewer?: Omit<ImageViewerProps, "urlList">;
 }

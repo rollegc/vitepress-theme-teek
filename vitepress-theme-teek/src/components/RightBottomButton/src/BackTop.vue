@@ -57,8 +57,13 @@ useEventListener(window, "scroll", watchScroll);
       :class="[ns.e('button'), 'back-top']"
       @click="scrollToTop"
       :style="{ [ns.cssVarName('progress')]: progress }"
+      role="button"
+      :aria-label="themeSettingConfig.titleTip.backTop ?? '返回顶部'"
+      :aria-valuenow="progress"
+      aria-valuemin="0"
+      aria-valuemax="100"
     >
-      <Icon :icon="rocketIcon"></Icon>
+      <Icon :icon="rocketIcon" aria-hidden="true" />
     </div>
   </transition>
 </template>

@@ -73,8 +73,12 @@ const getStyle = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), { part: isPartImgBgStyle, full: isFullImgBgStyle }]" :style="getStyle()">
-    <div v-if="bannerConfig.mask && bannerConfig.imgSrc" class="mask" />
+  <div
+    :class="[ns.b(), { part: isPartImgBgStyle, full: isFullImgBgStyle }]"
+    :style="getStyle()"
+    aria-label="首页横幅背景图"
+  >
+    <div v-if="bannerConfig.mask && bannerConfig.imgSrc" class="mask" aria-label="首页横幅遮罩层" />
     <slot v-if="isPartImgBgStyle" />
   </div>
   <slot v-if="isFullImgBgStyle" />

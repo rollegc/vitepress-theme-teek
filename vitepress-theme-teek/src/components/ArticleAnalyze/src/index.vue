@@ -109,27 +109,41 @@ watch(route, () => {
 </script>
 
 <template>
-  <div :class="`${ns.b()} flx-justify-between`">
+  <div :class="`${ns.b()} flx-justify-between`" aria-label="文章分析">
     <ArticleBreadcrumb />
 
     <div v-if="isShowInfo" ref="baseInfoRef" :class="`${ns.e('wrapper')} flx-align-center`">
       <ArticleInfo :post scope="article" />
 
       <div v-if="docAnalysisConfig.wordCount" class="flx-center">
-        <Icon v-if="articleConfig.showIcon" :icon="readingIcon" />
-        <a :title="articleConfig.titleTip?.wordCount ?? '文章字数'" class="hover-color">{{ pageViewInfo.wordCount }}</a>
+        <Icon v-if="articleConfig.showIcon" :icon="readingIcon" aria-hidden="true" />
+        <a
+          :title="articleConfig.titleTip?.wordCount ?? '文章字数'"
+          class="hover-color"
+          :aria-label="articleConfig.titleTip?.wordCount ?? '文章字数'"
+        >
+          {{ pageViewInfo.wordCount }}
+        </a>
       </div>
 
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="clockIcon" />
-        <a :title="articleConfig.titleTip?.readingTime ?? '预计阅读时长'" class="hover-color">
+        <a
+          :title="articleConfig.titleTip?.readingTime ?? '预计阅读时长'"
+          class="hover-color"
+          :aria-label="articleConfig.titleTip?.readingTime ?? '预计阅读时长'"
+        >
           {{ pageViewInfo.readingTime }}
         </a>
       </div>
 
       <div v-if="usePageView" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="viewIcon" />
-        <a :title="articleConfig.titleTip?.pageView ?? '浏览量'" class="hover-color">
+        <a
+          :title="articleConfig.titleTip?.pageView ?? '浏览量'"
+          class="hover-color"
+          :aria-label="articleConfig.titleTip?.pageView ?? '浏览量'"
+        >
           {{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}
         </a>
       </div>

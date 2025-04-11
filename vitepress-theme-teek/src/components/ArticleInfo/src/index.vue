@@ -72,13 +72,13 @@ const baseInfo = computed(() => {
     {
       title: unref(titleTip).createTime ?? "创建时间",
       icon: calendarIcon,
-      data: createDate,
+      data: unref(createDate),
       show: isShow(showCreateDate),
     },
     {
       title: unref(titleTip).updateTime ?? "更新时间",
       icon: editPenIcon,
-      data: updateDate,
+      data: unref(updateDate),
       show: unref(updateDate) && scope === "article" && showUpdateDate,
     },
     {
@@ -108,16 +108,22 @@ const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), scope]">
+  <div :class="[ns.b(), scope]" role="group" aria-label="文章信息">
     <template v-for="item in baseInfo" :key="item.title">
-      <span v-if="item.show && (item.data || item.dataList?.length)" :class="[ns.e('item'), { split }]">
-        <Icon v-if="articleConfig.showIcon" :icon="item.icon" />
+      <span
+        v-if="item.show && (item.data || item.dataList?.length)"
+        :class="[ns.e('item'), { split }]"
+        role="group"
+        :aria-label="item.title"
+      >
+        <Icon v-if="articleConfig.showIcon" :icon="item.icon" aria-hidden="true" />
         <a
           v-if="item.data"
           :title="item.title"
           :href="item.href && withBase(item.href)"
           :target="item.target"
           :class="[item.class, 'hover-color']"
+          :aria-label="item.data"
         >
           {{ item.data }}
         </a>
@@ -128,6 +134,7 @@ const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
           :title="item.title"
           :href="item.href && withBase(item.href.replace('{data}', encodeURIComponent(data)))"
           :class="[item.class, 'hover-color']"
+          :aria-label="data"
         >
           {{ data }}
         </a>

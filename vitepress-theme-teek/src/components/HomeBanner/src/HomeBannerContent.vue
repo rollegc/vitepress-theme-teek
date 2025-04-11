@@ -78,18 +78,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :class="ns.b()">
+  <div :class="ns.b()" aria-label="首页横幅内容">
     <h1 :class="ns.e('content__title')">{{ bannerConfig.name }}</h1>
 
-    <p :class="ns.e('content__desc')">
+    <p :class="ns.e('content__desc')" aria-label="首页横幅描述">
       <template v-if="isDefaultDescStyle">
         <span>{{ descArray[0] }}</span>
       </template>
       <template v-else-if="isSwitchDescStyle">
-        <span v-show="!!text" @click="startAutoSwitch" class="switch">{{ text }}</span>
+        <span v-show="!!text" @click="startAutoSwitch" class="switch" aria-label="动态切换">{{ text }}</span>
       </template>
       <template v-else-if="isTypesDescStyle && descArray.length">
-        <span>{{ typesText }}</span>
+        <span aria-label="打字效果">{{ typesText }}</span>
         <span :class="['typed', { 'is-animation': isFinished }]">|</span>
       </template>
     </p>

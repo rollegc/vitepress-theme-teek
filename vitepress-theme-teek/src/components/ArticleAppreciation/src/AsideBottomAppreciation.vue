@@ -16,7 +16,7 @@ const asideBottomOptions = computed(() => unref(appreciateConfig).options || {})
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.m('aside-bottom')]">
+  <div :class="[ns.b(), ns.m('aside-bottom')]" aria-label="文章赞赏">
     <span v-html="asideBottomOptions.title"></span>
     <div :class="ns.e('content')" v-html="asideBottomOptions.content" />
   </div>

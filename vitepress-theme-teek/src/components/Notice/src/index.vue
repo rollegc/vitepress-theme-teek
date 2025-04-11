@@ -155,7 +155,7 @@ const storagePopoverState = (state: string) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
+  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]" aria-label="公告栏">
     <component v-if="styleObj" :is="'style'">{{ styleObj }}</component>
 
     <!-- 公告图标 -->
@@ -165,8 +165,10 @@ const storagePopoverState = (state: string) => {
       :class="[ns.e('icon'), { twinkle: noticeConfig.twinkle }, 'flx']"
       :style="noticeConfig.iconStyle"
       @click="handleOpenPopover"
+      role="button"
+      aria-label="打开公告弹窗"
     >
-      <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="14px"></Icon>
+      <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="14px" aria-hidden="true"></Icon>
     </div>
 
     <!-- 公告弹窗 -->
@@ -174,12 +176,15 @@ const storagePopoverState = (state: string) => {
       v-show="showPopover"
       :class="[ns.e('popover'), ns.is(noticeConfig.position)]"
       :style="noticeConfig.popoverStyle"
+      role="dialog"
+      :aria-modal="true"
+      aria-labelledby="notice-title"
     >
       <slot name="header">
-        <div :class="[ns.e('popover__header'), 'flx-justify-between']">
+        <div :class="[ns.e('popover__header'), 'flx-justify-between']" aria-label="公告头部区域">
           <div class="flx-align-center">
-            <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="20px"></Icon>
-            <span class="title sle">{{ noticeTitle }}</span>
+            <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="20px" aria-hidden="true" />
+            <span id="notice-title" class="title sle">{{ noticeTitle }}</span>
           </div>
           <Icon
             :icon="noticeConfig.closeIcon"
@@ -187,16 +192,18 @@ const storagePopoverState = (state: string) => {
             size="20px"
             :class="ns.joinNamespace('pointer')"
             @click="handleClosePopover"
+            role="button"
+            aria-label="关闭公告弹窗"
           ></Icon>
         </div>
       </slot>
 
-      <div :class="ns.e('popover__content')">
+      <div :class="ns.e('popover__content')" aria-label="公告内容">
         <slot name="teek-notice-content" />
       </div>
     </div>
 
     <!-- 遮罩层，与公告弹窗一起出现 -->
-    <div v-show="showPopover && noticeConfig.position === 'center'" :class="ns.e('mask')"></div>
+    <div v-show="showPopover && noticeConfig.position === 'center'" :class="ns.e('mask')" role="presentation" />
   </div>
 </template>

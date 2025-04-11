@@ -50,11 +50,11 @@ const breadcrumbList = computed(() => {
 </script>
 
 <template>
-  <div :class="`${ns.b()}`">
+  <div :class="`${ns.b()}`" role="navigation" aria-label="文章面包屑导航">
     <Breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <BreadcrumbItem>
-        <a :href="withBase('/')" :title="breadcrumb.homeLabel" class="hover-color">
-          <Icon :icon="houseIcon" />
+        <a :href="withBase('/')" :title="breadcrumb.homeLabel" class="hover-color" aria-label="返回首页">
+          <Icon :icon="houseIcon" aria-hidden="true" />
         </a>
       </BreadcrumbItem>
       <BreadcrumbItem v-for="(item, index) in breadcrumbList" :key="index">
@@ -63,6 +63,7 @@ const breadcrumbList = computed(() => {
           :href="item.filePath && withBase(`/${item.filePath}`)"
           :title="item.fileName"
           :class="[item.filePath ? 'hover-color' : '']"
+          :aria-label="item.fileName"
         >
           {{ item.fileName }}
         </component>

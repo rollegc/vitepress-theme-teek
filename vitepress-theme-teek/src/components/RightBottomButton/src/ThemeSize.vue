@@ -86,8 +86,10 @@ watch(
     @mouseenter="showThemeSizeItem = true"
     @mouseleave="showThemeSizeItem = false"
     @click="showThemeSizeItem = true"
+    role="button"
+    :aria-label="themeSettingConfig.titleTip.themeSize ?? '主题尺寸切换'"
   >
-    <Icon :icon="sizeIcon"></Icon>
+    <Icon :icon="sizeIcon" aria-hidden="true" />
     <transition :name="ns.joinNamespace('mode')">
       <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
         <li
@@ -96,6 +98,8 @@ watch(
           title=""
           :class="['dropdown-item', 'sle', { active: item.size === currentThemeSize }]"
           @click="changeTheme(item.size)"
+          role="button"
+          :aria-label="item.name"
         >
           {{ item.name }}
         </li>

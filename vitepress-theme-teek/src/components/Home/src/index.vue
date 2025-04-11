@@ -23,7 +23,7 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
 </script>
 
 <template>
-  <div :class="ns.b()">
+  <div :class="ns.b()" role="main" aria-label="首页内容">
     <HomeBanner v-if="isHomePage && (teekConfig.banner.enabled ?? true)">
       <template v-for="(_, name) in $slots" :key="name" #[name]>
         <slot :name="name" />
@@ -31,13 +31,13 @@ provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
     </HomeBanner>
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
-      <div :class="ns.e('content__post')">
+      <div :class="ns.e('content__post')" aria-label="文章列表">
         <slot name="teek-home-post-before" />
         <HomePostList ref="homePostListInstance" />
         <slot name="teek-home-post-after" />
       </div>
 
-      <div :class="ns.e('content__info')">
+      <div :class="ns.e('content__info')" aria-label="侧边卡片栏">
         <HomeRightInfo>
           <template v-for="(_, name) in $slots" :key="name" #[name]>
             <slot :name="name" />

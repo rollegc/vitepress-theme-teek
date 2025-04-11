@@ -75,6 +75,7 @@ const getStyle = (num: number, index: number) => {
     :autoPage="topArticleConfig.autoPage"
     :pageSpeed="topArticleConfig.pageSpeed"
     :class="ns.b()"
+    aria-label="首页精选文章卡片"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -83,6 +84,7 @@ const getStyle = (num: number, index: number) => {
         tag="ul"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
+        aria-label="精选文章列表"
       >
         <li
           ref="itemRefs"
@@ -90,6 +92,7 @@ const getStyle = (num: number, index: number) => {
           :key="item.num"
           :class="ns.e('list__item')"
           :style="getStyle(item.num - 1, index)"
+          :aria-label="item.title"
         >
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
           <div :class="ns.e('list__item__info')">
@@ -101,7 +104,9 @@ const getStyle = (num: number, index: number) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ topArticleConfig.emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')" :aria-label="topArticleConfig.emptyLabel">
+        {{ topArticleConfig.emptyLabel }}
+      </div>
     </template>
   </HomeCard>
 

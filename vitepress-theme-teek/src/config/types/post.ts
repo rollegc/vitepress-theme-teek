@@ -44,7 +44,7 @@ export interface Post {
    */
   splitSeparator?: boolean;
   /**
-   * 首页的图片查看器配置
+   * 封面图查看器配置
    */
   imageViewer?: Omit<ImageViewerProps, "urlList">;
 }

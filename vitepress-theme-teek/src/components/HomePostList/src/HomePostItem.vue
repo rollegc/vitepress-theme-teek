@@ -70,40 +70,57 @@ const isShowInfo = computed(() => {
 
 <template>
   <div :class="ns.b()">
-    <i v-if="!!post.frontmatter.sticky" class="pin" :title="`置顶：${post.frontmatter.sticky}`" />
+    <i v-if="!!post.frontmatter.sticky" class="pin" :title="`置顶：${post.frontmatter.sticky}`" aria-label="置顶标志" />
 
     <div :class="[ns.e('info'), 'flx']">
       <div :class="ns.e('info__left')">
         <!-- 标题 -->
-        <a class="title hover-color" :href="postUrl">
+        <a class="title hover-color" :href="postUrl" :aria-label="post.title">
           {{ post.title }}
         </a>
 
         <!-- 摘要 top -->
-        <div v-if="excerpt && postConfig.excerptPosition === 'top'" :class="`${ns.e('info__left__excerpt')} top`">
+        <div
+          v-if="excerpt && postConfig.excerptPosition === 'top'"
+          :class="`${ns.e('info__left__excerpt')} top`"
+          aria-label="文章摘要"
+        >
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="postConfig.showMore" class="more" :href="postUrl">{{ postConfig.moreLabel }}</a>
+          <a v-if="postConfig.showMore" class="more" :href="postUrl" :aria-label="postConfig.moreLabel">
+            {{ postConfig.moreLabel }}
+          </a>
         </div>
 
         <!-- 文章信息 -->
-        <div :class="ns.e('info__left__footer')">
+        <div :class="ns.e('info__left__footer')" aria-label="文章信息">
           <ArticleInfo v-if="isShowInfo" :post scope="post" :split="postConfig.splitSeparator" />
         </div>
 
         <!-- 摘要 bottom -->
-        <div v-if="excerpt && postConfig.excerptPosition === 'bottom'" :class="`${ns.e('info__left__excerpt')} bottom`">
+        <div
+          v-if="excerpt && postConfig.excerptPosition === 'bottom'"
+          :class="`${ns.e('info__left__excerpt')} bottom`"
+          aria-label="文章摘要"
+        >
           <div class="excerpt" v-html="excerpt" />
-          <a v-if="postConfig.showMore" class="more" :href="postUrl">{{ postConfig.moreLabel }}</a>
+          <a v-if="postConfig.showMore" class="more" :href="postUrl" :aria-label="postConfig.moreLabel">
+            {{ postConfig.moreLabel }}
+          </a>
         </div>
       </div>
 
       <!-- 右侧封面图 -->
       <div :class="`${ns.e('info__right')} flx-align-center`">
-        <div v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length" class="cover-img">
+        <div
+          v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length"
+          class="cover-img"
+          aria-label="文章封面图"
+        >
           <component
             :is="coverImgMap[coverImgMode].is"
             v-bind="coverImgMap[coverImgMode].props"
             :class="coverImgMode"
+            aria-hidden="true"
           />
         </div>
       </div>

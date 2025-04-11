@@ -120,6 +120,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :autoPage="categoryConfig.autoPage"
     :pageSpeed="categoryConfig.pageSpeed"
     :class="ns.b()"
+    aria-label="首页热门分类卡片"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -128,6 +129,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
         tag="div"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
+        aria-label="分类列表"
       >
         <a
           ref="itemRefs"
@@ -136,17 +138,24 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           @click="handleSwitchCategory(item.name)"
           :class="[{ active: item.name === selectedCategory }, 'hover-color']"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
+          :aria-label="item.name"
         >
           <span>{{ item.name }}</span>
           <span>{{ item.length }}</span>
         </a>
 
-        <a v-if="!categoriesPage && categoryConfig.limit < categories.length" :href="withBase(categoriesPageLink)">
+        <a
+          v-if="!categoriesPage && categoryConfig.limit < categories.length"
+          :href="withBase(categoriesPageLink)"
+          aria-label="查看更多分类"
+        >
           更多 ...
         </a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ categoryConfig.emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')" :aria-label="categoryConfig.emptyLabel">
+        {{ categoryConfig.emptyLabel }}
+      </div>
     </template>
   </HomeCard>
 

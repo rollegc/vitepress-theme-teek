@@ -176,7 +176,7 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
 <template>
   <slot name="teek-home-doc-analysis-before" />
 
-  <HomeCard :title="finalTitle" :class="ns.b()">
+  <HomeCard :title="finalTitle" :class="ns.b()" aria-label="首页站点分析卡片">
     <template v-for="item in docAnalysisList" :key="item.key">
       <div v-if="item.show !== false" :class="ns.e('item')">
         <span v-html="item.label" />

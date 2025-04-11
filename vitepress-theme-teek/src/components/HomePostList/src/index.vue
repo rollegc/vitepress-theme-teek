@@ -128,12 +128,12 @@ defineExpose({ updateData });
 <template>
   <div :class="ns.b()">
     <template v-if="currentPosts">
-      <ul>
+      <ul aria-label="文章列表">
         <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
           <HomePostItem :post :coverImgMode />
         </li>
       </ul>
-      <div :class="`${ns.e('pagination')} flx-justify-center`">
+      <div :class="`${ns.e('pagination')} flx-justify-center`" aria-label="分页导航">
         <Pagination
           v-if="posts.sortPostsByDateAndSticky.length >= pageSize"
           v-model:page-size="pageSize"
@@ -145,8 +145,8 @@ defineExpose({ updateData });
         />
       </div>
     </template>
-    <div v-else :class="[ns.e('empty'), 'flx-column-center']">
-      <Icon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" />
+    <div v-else :class="[ns.e('empty'), 'flx-column-center']" :aria-label="postConfig.emptyLabel">
+      <Icon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" aria-hidden="true" />
       <span :class="ns.e('empty__title')">{{ postConfig.emptyLabel }}</span>
     </div>
   </div>

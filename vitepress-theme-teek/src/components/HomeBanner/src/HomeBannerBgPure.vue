@@ -15,7 +15,7 @@ const getStyle = () => {
 </script>
 
 <template>
-  <div :class="ns.b()" :style="getStyle()">
+  <div :class="ns.b()" :style="getStyle()" aria-label="首页横幅背景色">
     <slot />
   </div>
 </template>

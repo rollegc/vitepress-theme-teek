@@ -103,12 +103,16 @@ watch(
     @mouseenter="showThemeStyleItem = true"
     @mouseleave="showThemeStyleItem = false"
     @click="showThemeStyleItem = true"
+    role="button"
+    :aria-label="themeSettingConfig.titleTip.themeStyle ?? '主题风格切换'"
   >
-    <Icon :icon="magicIcon" />
+    <Icon :icon="magicIcon" aria-hidden="true" />
     <transition :name="ns.joinNamespace('mode')">
       <div :class="`${ns.e('button__style')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
         <ul v-for="item in themeStyleList" :key="item.label">
-          <li :class="`${ns.e('button__style__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>
+          <li :class="`${ns.e('button__style__title')} sle`" :title="item.tip || ''" :aria-label="item.label">
+            {{ item.label }}
+          </li>
           <li>
             <ul>
               <li
@@ -117,6 +121,8 @@ watch(
                 title=""
                 :class="['dropdown-item', 'sle', { active: option.style === currentThemeStyle }]"
                 @click="changeTheme(option.style)"
+                role="button"
+                :aria-label="option.name"
               >
                 {{ option.name }}
               </li>

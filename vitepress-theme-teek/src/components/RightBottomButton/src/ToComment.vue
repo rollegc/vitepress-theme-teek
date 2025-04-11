@@ -46,8 +46,10 @@ const scrollToComment = useDebounce(() => {
       :title="themeSettingConfig.titleTip.toComment ?? '前往评论'"
       :class="ns.e('button')"
       @click="scrollToComment"
+      role="button"
+      :aria-label="themeSettingConfig.titleTip.toComment ?? '前往评论'"
     >
-      <Icon :icon="commentIcon" />
+      <Icon :icon="commentIcon" aria-hidden="true" />
     </div>
   </transition>
 </template>

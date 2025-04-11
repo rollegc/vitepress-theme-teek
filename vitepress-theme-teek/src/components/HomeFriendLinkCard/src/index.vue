@@ -24,6 +24,7 @@ const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
   scrollSpeed: 2500,
   autoPage: false,
   pageSpeed: 4000,
+  imageViewer: {},
 });
 
 // 使用上下滚动功能
@@ -77,7 +78,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
   // @click.stop 不起作用，因此手动阻止冒泡到 a 标签
   e.preventDefault();
 
-  createImageViewer({ urlList: [imgSrc] });
+  createImageViewer({ ...unref(friendLinkConfig).imageViewer, urlList: [imgSrc] });
 };
 </script>
 
@@ -93,6 +94,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
     :autoPage="friendLinkConfig.autoPage"
     :pageSpeed="friendLinkConfig.pageSpeed"
     :class="ns.b()"
+    aria-label="首页友情链接卡片"
   >
     <template #default="{ transitionName, startAutoPage, closeAutoPage }">
       <TransitionGroup
@@ -107,6 +109,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         @mouseleave="
           friendLinkConfig.autoScroll ? startAutoScroll() : friendLinkConfig.autoPage ? startAutoPage() : () => {}
         "
+        aria-label="友情链接列表"
       >
         <li
           :ref="friendLinkConfig.autoScroll ? '' : 'itemRefs'"
@@ -115,12 +118,18 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
           :class="ns.e('list__item')"
           :style="getLiStyle(index)"
         >
-          <a :href="item.link && withBase(item.link)" target="_blank" class="hover-color flx-align-center">
+          <a
+            :href="item.link && withBase(item.link)"
+            target="_blank"
+            class="hover-color flx-align-center"
+            :aria-label="item.name"
+          >
             <img
               :src="item.avatar && withBase(item.avatar)"
               class="friend-avatar"
               :alt="item.name || item.alt"
               @click="handleViewImg(item.avatar, $event)"
+              aria-hidden="true"
             />
             <div :class="ns.e('list__item__info')">
               <div class="friend-name sle">{{ item.name }}</div>
@@ -130,7 +139,9 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ friendLinkConfig.emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')" :aria-label="friendLinkConfig.emptyLabel">
+        {{ friendLinkConfig.emptyLabel }}
+      </div>
     </template>
   </HomeCard>
 

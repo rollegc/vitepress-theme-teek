@@ -25,11 +25,11 @@ const defaultLabel = computed(() => {
 </script>
 
 <template>
-  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`">
+  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="defaultLabel.title">
     <slot name="teek-archives-top-before" />
 
     <div :class="`${ns.e('header')} flx-justify-between`">
-      <div :class="ns.joinNamespace('page-title-h1')">{{ defaultLabel.title }}</div>
+      <h1 :class="ns.joinNamespace('page-title-h1')">{{ defaultLabel.title }}</h1>
       <div class="count">
         {{ defaultLabel.totalCount.replace("{count}", posts.sortPostsByDate.length) }}
       </div>
@@ -57,7 +57,7 @@ const defaultLabel = computed(() => {
 
             <ul>
               <li v-for="item in p" :key="item.url">
-                <a :href="item.url && withBase(item.url)">
+                <a :href="item.url && withBase(item.url)" :aria-label="`${item.title}`">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>
                 </a>

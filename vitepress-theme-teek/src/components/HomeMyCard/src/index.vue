@@ -24,7 +24,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
 <template>
   <slot name="teek-home-my-before" />
 
-  <HomeCard :class="ns.b()">
+  <HomeCard :class="ns.b()" aria-label="我的信息卡片">
     <div :class="`${ns.e('avatar')} ${blogger.shape} flx-center`">
       <Avatar
         v-if="blogger.avatar"
@@ -34,6 +34,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
         bg-color="transparent"
         alt="头像"
         title="我好看吗"
+        aria-hidden="true"
       />
       <Avatar
         v-else-if="blogger.name"
@@ -41,24 +42,33 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
         :text="blogger.name"
         :text-size="50"
         :bg-color="ns.cssVar('theme-color')"
+        aria-hidden="true"
       />
     </div>
 
-    <div v-if="social.length" :class="`${ns.e('icons')} flx-justify-around`">
+    <div v-if="social.length" :class="`${ns.e('icons')} flx-justify-around`" aria-label="社交链接">
       <a
         v-for="(item, index) in social"
         :key="index"
         :href="item.link && withBase(item.link)"
         :title="item.name"
         target="_blank"
+        :aria-label="item.name"
       >
         <template v-if="item.icon">
-          <Icon :iconType="item.iconType" :icon="item.icon" size="20px" hover :imgAlt="item.imgAlt" />
+          <Icon
+            :iconType="item.iconType"
+            :icon="item.icon"
+            size="20px"
+            hover
+            :imgAlt="item.imgAlt"
+            aria-hidden="true"
+          />
         </template>
       </a>
     </div>
 
-    <div :class="ns.e('blogger')">
+    <div :class="ns.e('blogger')" aria-label="博主信息">
       <span class="name">{{ blogger.name }}</span>
       <span class="slogan">{{ blogger.slogan }}</span>
     </div>

@@ -154,6 +154,7 @@ const styleComponent = computed(() => {
 
     <HomeBannerWaves
       v-if="bannerConfig.imgWaves && currentBgStyle.isBannerFullImgBgStyle && !currentBgStyle.isBodyImgBgStyle"
+      aria-label="首页横幅波浪"
     />
   </div>
 

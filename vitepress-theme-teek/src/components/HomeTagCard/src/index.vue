@@ -126,23 +126,39 @@ watch(
     :autoPage="tagConfig.autoPage"
     :pageSpeed="tagConfig.pageSpeed"
     :class="ns.b()"
+    aria-label="首页热门标签卡片"
   >
     <template #default="{ transitionName }">
-      <TransitionGroup v-if="tags.length" :name="transitionName" tag="div" mode="out-in" :class="ns.e('list')">
+      <TransitionGroup
+        v-if="tags.length"
+        :name="transitionName"
+        tag="div"
+        mode="out-in"
+        :class="ns.e('list')"
+        aria-label="标签列表"
+      >
         <a
           v-for="(item, index) in currentTags"
           :key="item.name"
           :style="getTagStyle(index)"
           @click="handleSwitchTag(item.name)"
           :class="[{ active: item.name === selectedTag }, ns.joinNamespace('pointer')]"
+          :aria-label="item.name"
         >
           {{ item.name }}
         </a>
 
-        <a v-if="!tagsPage && tagConfig.limit < tags.length" :href="withBase(tagsPageLink)" class="more">更多 ...</a>
+        <a
+          v-if="!tagsPage && tagConfig.limit < tags.length"
+          :href="withBase(tagsPageLink)"
+          class="more"
+          aria-label="查看更多标签"
+        >
+          更多 ...
+        </a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ tagConfig.emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')" :aria-label="tagConfig.emptyLabel">{{ tagConfig.emptyLabel }}</div>
     </template>
   </HomeCard>
 
