@@ -2,13 +2,11 @@ export interface IconProps {
   /**
    * 图标
    */
-  icon?: string;
+  icon: string;
   /**
    * 图标类型
-   *
-   * @default 'svg'
    */
-  iconType?: "svg" | "iconfont" | "img" | "component";
+  iconType?: "svg" | "unicode" | "iconfont" | "symbol" | "img" | "component" | "iconifyOffline" | "iconifyOnline";
   /**
    * 图标大小
    *

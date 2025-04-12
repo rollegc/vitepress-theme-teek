@@ -1,14 +1,18 @@
 <script setup lang="ts" name="Icon">
-import { useSlots } from "vue";
+import { useSlots, computed } from "vue";
 import { useNamespace } from "../../../hooks";
-import { addUnit } from "../../../helper";
-import { IconProps } from "./icon";
+import { addUnit, isString } from "../../../helper";
+import type { IconProps } from "./icon";
+import SvgIcon from "./components/SvgIcon.vue";
+import FontIcon from "./components/FontIcon.vue";
+import IconifyOffline from "./components/IconifyOffline.vue";
+import IconifyOnline from "./components/IconifyOnline.vue";
 
 defineOptions({ name: "Icon" });
 
 const ns = useNamespace("icon");
 
-const { color, hover = false, hoverColor, iconType = "svg", ...props } = defineProps<IconProps>();
+const { icon, iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps>();
 
 const slot = useSlots();
 
@@ -20,26 +24,53 @@ const getStyle = () => {
     "--icon-color-hover": hoverColor || ns.cssVar("theme-color"),
   };
 };
+
+/**
+ * 当 props.icon 为字符串时，支持传入修饰符来代替 props.iconType
+ *
+ * 1、icon 为 if- 或 IF- 开头，则默认为 iconfont
+ * 2、icon 为 uni- 或 UNI- 开头，则默认为 unicode
+ * 3、icon 为 sym- 或 SYM- 开头，则默认为 symbol
+ * 4、icon 为 img- 或 IMG- 开头，则默认为 img
+ */
+const finalIcon = computed(() => {
+  if (isString(icon)) return icon.replace(/^(if-|uni-|sym-|img-)/, "");
+  return icon;
+});
+
+const getFontIconType = () => {
+  if (["unicode", "iconfont", "symbol"].includes(iconType)) return iconType;
+  if (icon.toLowerCase().startsWith("if-")) return "iconfont";
+  if (icon.toLowerCase().startsWith("uni-")) return "unicode";
+  if (icon.toLowerCase().startsWith("sym-")) return "symbol";
+};
+
+const isSvgIcon = () => isString(icon) && (iconType === "svg" || icon.startsWith("<svg"));
+const isFontIcon = () => isString(icon) && getFontIconType();
+const isComponent = () => !isString(icon) && (iconType === "component" || icon.name || icon.setup);
+const isIconifyOffline = () => !isString(icon) && (iconType === "iconifyOffline" || icon.body);
+const isIconifyOnline = () => isString(icon) && (iconType === "iconifyOnline" || icon.includes(":"));
+const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().startsWith("img-"));
 </script>
 
 <template>
-  <i v-if="slot.default" :class="ns.b()" :style="getStyle()">
-    <slot />
-  </i>
-  <i v-else-if="iconType === 'svg'" v-html="icon" :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()" />
-  <i
-    v-else-if="iconType === 'iconfont'"
-    :class="[ns.b(), ns.is('hover', hover), 'iconfont', icon]"
-    :style="getStyle()"
-  />
-  <img
-    v-else-if="iconType === 'img'"
-    :src="icon"
-    :alt="imgAlt"
-    :class="[ns.b(), ns.is('hover', hover)]"
-    :style="getStyle()"
-  />
-  <i v-else-if="iconType === 'component'" :class="ns.b()" :style="getStyle()">
-    <component :is="icon" :size :class="[ns.b(), ns.is('hover', hover)]" />
+  <i :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()">
+    <template v-if="slot.default">
+      <slot />
+    </template>
+
+    <template v-else-if="isComponent()">
+      <component :is="finalIcon" :size />
+    </template>
+
+    <SvgIcon v-else-if="isSvgIcon()" :icon="finalIcon" />
+
+    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()" />
+
+    <IconifyOffline v-else-if="isIconifyOffline()" :icon="finalIcon" />
+
+    <IconifyOnline v-else-if="isIconifyOnline()" :icon="finalIcon" />
+
+    <img v-else-if="isImg" :src="finalIcon" :alt="imgAlt" />
   </i>
 </template>

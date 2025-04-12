@@ -38,7 +38,7 @@ features:
 
 在使用过程中有任何问题和想法，请给我提 [Issue](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues)。 你也可以在 Issue 查看别人提的问题和给出解决方案。
 
-或者加入我们的交流群（添加我的微信并备注「进群」）：
+或者加入我们的交流群（添加我的微信并备注 <mark>进群</mark>）：
 
 <img src="https://gcore.jsdelivr.net/gh/Kele-Bingtang/static/index/20250412000919.png" alt="添加我微信备注「进群」" style="width: 180px;" />
 

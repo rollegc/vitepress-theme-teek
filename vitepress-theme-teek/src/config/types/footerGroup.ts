@@ -6,7 +6,7 @@ export interface FooterGroup {
   /**
    * 分组前图标
    */
-  icon?: string;
+  icon?: string | Object | Comment;
   /**
    * 分组下的链接数组
    */
@@ -25,5 +25,5 @@ export interface FooterGroupLink {
   /**
    * 链接前图标
    */
-  icon?: string;
+  icon?: string | Object | Comment;
 }

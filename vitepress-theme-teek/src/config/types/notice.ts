@@ -76,29 +76,12 @@ export interface Notice {
    * 公告图标地址
    *
    * @remark 与 noticeIconType 配合使用
-   *
-   * 1、noticeIconType 为 svg 时，需要填写 svg 代码
-   * 2、noticeIconType 为 iconfont 时，需要填写 class 名
-   * 3、noticeIconType 为 img 时，需要填写图片链接
-   * 4、noticeIconType 为 el 时，需要传入 ElIcon 的组件
    */
-  noticeIcon?: string;
-  /**
-   * 图标类型
-   *
-   * @default 'svg'
-   */
-  noticeIconType?: "svg" | "iconfont" | "img" | "el";
+  noticeIcon?: string | Object | Comment;
   /**
    * 公告弹框关闭图标地址，与 noticeIcon 配置一致
    */
-  closeIcon?: string;
-  /**
-   * 图标类型，与 noticeIconType 配置一致
-   *
-   * @default 'svg'
-   */
-  closeIconType?: "svg" | "iconfont" | "img" | "el";
+  closeIcon?: string | Object | Comment;
   /**
    * 路由切换后的自定义回调
    *

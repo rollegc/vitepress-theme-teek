@@ -7,10 +7,8 @@ export interface ArticleShare {
   enabled?: boolean;
   /**
    * 分析按钮图标
-   *
-   * @default 'shareIcon'
    */
-  icon?: string;
+  icon?: string | Object | Comment;
   /**
    * 分享按钮文本
    *
@@ -19,8 +17,6 @@ export interface ArticleShare {
   text?: string;
   /**
    * 复制成功图标
-   *
-   * @default 'thumbsIcon'
    */
   copiedIcon?: string;
   /**

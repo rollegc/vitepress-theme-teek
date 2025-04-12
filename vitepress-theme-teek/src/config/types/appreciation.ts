@@ -19,7 +19,7 @@ export type AppreciationPosition = {
     /**
      * 赞赏图标，内置 weChatPay 和 alipay
      */
-    icon?: string | "weChatPay" | "alipay";
+    icon?: string | Object | Comment | "weChatPay" | "alipay";
     /**
      * 展开标题，支持 HTML
      */

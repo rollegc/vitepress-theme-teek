@@ -18,14 +18,14 @@ export const useLocale = (localeOverride?: Ref<Language | undefined>) => {
   const lang = computed(() => unref(finalLocale).lang);
   const localeRef = isRef(finalLocale) ? finalLocale : ref(finalLocale);
 
-  const translate = (path: string, option: TranslatorOption, locale: Language) => {
+  const translate = (path: string, option: TranslatorOption | undefined, locale: Language) => {
     return (get(locale, path, path) as string).replace(/\{(\w+)\}/g, (_, key) => `${option?.[key] ?? `{${key}}`}`);
   };
 
   return {
     lang,
     locale: localeRef,
-    t: (path: string, option: TranslatorOption) => {
+    t: (path: string, option?: TranslatorOption) => {
       return translate(path, option, unref(finalLocale));
     },
     translate,

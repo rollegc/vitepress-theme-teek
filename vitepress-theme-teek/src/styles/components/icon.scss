@@ -18,14 +18,17 @@
     height: var(--icon-size, 1em);
   }
 
-  &.iconfont {
+  .iconfont {
     color: var(--icon-color, inherit);
     font-size: var(--icon-size, 1em);
   }
 
   @include when(hover) {
     &:hover {
-      color: var(--icon-color-hover, inherit);
+      svg,
+      i {
+        color: var(--icon-color-hover, inherit);
+      }
     }
   }
 }
