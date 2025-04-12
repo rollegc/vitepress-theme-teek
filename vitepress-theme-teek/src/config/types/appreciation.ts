@@ -1,3 +1,5 @@
+import type { IconProps } from "../../components/Icon/src/icon";
+
 export type Appreciation<T extends keyof AppreciationPosition = ""> = {
   /**
    * 赞赏位置
@@ -19,7 +21,7 @@ export type AppreciationPosition = {
     /**
      * 赞赏图标，内置 weChatPay 和 alipay
      */
-    icon?: string | Object | Comment | "weChatPay" | "alipay";
+    icon?: IconProps["icon"] | "weChatPay" | "alipay";
     /**
      * 展开标题，支持 HTML
      */

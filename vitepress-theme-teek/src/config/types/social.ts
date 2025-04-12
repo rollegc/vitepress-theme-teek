@@ -10,7 +10,7 @@ export interface Social {
    *
    * @remark 与 iconType 配合使用
    */
-  icon?: string | Object | Comment;
+  icon?: IconProps["icon"];
   /**
    * 图标类型
    *

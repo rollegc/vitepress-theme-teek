@@ -24,6 +24,6 @@ const internalDisabled = computed(() => props.disabled || props.currentPage <= 1
     @click="$emit('click', $event)"
   >
     <span v-if="prevText">{{ prevText }}</span>
-    <Icon v-else :icon="prevIcon" />
+    <Icon v-else-if="prevIcon" :icon="prevIcon" />
   </button>
 </template>

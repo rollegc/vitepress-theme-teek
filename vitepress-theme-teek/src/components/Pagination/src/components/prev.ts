@@ -1,4 +1,5 @@
 import type Prev from "./prev.vue";
+import type { IconProps } from "../../../Icon/src/icon";
 
 export interface PaginationPrevProps {
   /**
@@ -20,7 +21,7 @@ export interface PaginationPrevProps {
   /**
    * 上一页按钮图标
    */
-  prevIcon?: string;
+  prevIcon?: IconProps["icon"];
 }
 
 export interface PaginationPrevEmits {

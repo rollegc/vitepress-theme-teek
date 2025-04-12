@@ -27,6 +27,6 @@ const internalDisabled = computed(
     @click="$emit('click', $event)"
   >
     <span v-if="nextText">{{ nextText }}</span>
-    <Icon v-else :icon="nextIcon" />
+    <Icon v-else-if="nextIcon" :icon="nextIcon" />
   </button>
 </template>

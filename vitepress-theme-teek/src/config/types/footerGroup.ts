@@ -1,3 +1,5 @@
+import type { IconProps } from "../../components/Icon/src/icon";
+
 export interface FooterGroup {
   /**
    * 分组标题
@@ -6,7 +8,7 @@ export interface FooterGroup {
   /**
    * 分组前图标
    */
-  icon?: string | Object | Comment;
+  icon?: IconProps["icon"];
   /**
    * 分组下的链接数组
    */
@@ -25,5 +27,5 @@ export interface FooterGroupLink {
   /**
    * 链接前图标
    */
-  icon?: string | Object | Comment;
+  icon?: IconProps["icon"];
 }

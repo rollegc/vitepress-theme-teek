@@ -1,5 +1,6 @@
 import type { AppContext, VNode } from "vue";
 import { inBrowser } from "vitepress";
+import type { IconProps } from "../../Icon/src/icon";
 
 export const messageTypes = ["success", "info", "warning", "error"] as const;
 
@@ -41,7 +42,7 @@ export interface MessageProps {
   center?: boolean;
   dangerouslyUseHTMLString?: boolean;
   duration?: number;
-  icon?: string;
+  icon?: IconProps["icon"];
   id?: string;
   message?: string | VNode | (() => VNode);
   onClose?: () => void;

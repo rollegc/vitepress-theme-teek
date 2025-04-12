@@ -12,7 +12,7 @@ defineOptions({ name: "Icon" });
 
 const ns = useNamespace("icon");
 
-const { icon, iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps>();
+const { icon, iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps & { icon: any }>();
 
 const slot = useSlots();
 
@@ -33,16 +33,23 @@ const getStyle = () => {
  * 3、icon 为 sym- 或 SYM- 开头，则默认为 symbol
  * 4、icon 为 img- 或 IMG- 开头，则默认为 img
  */
-const finalIcon = computed(() => {
+const finalIcon = computed<any>(() => {
   if (isString(icon)) return icon.replace(/^(if-|uni-|sym-|img-)/, "");
   return icon;
 });
 
 const getFontIconType = () => {
-  if (["unicode", "iconfont", "symbol"].includes(iconType)) return iconType;
+  if (!isString(icon)) return "iconfont";
+
+  if (iconType && ["unicode", "iconfont", "symbol"].includes(iconType)) {
+    return iconType as unknown as "unicode" | "iconfont" | "symbol";
+  }
+
   if (icon.toLowerCase().startsWith("if-")) return "iconfont";
   if (icon.toLowerCase().startsWith("uni-")) return "unicode";
   if (icon.toLowerCase().startsWith("sym-")) return "symbol";
+
+  return "iconfont";
 };
 
 const isSvgIcon = () => isString(icon) && (iconType === "svg" || icon.startsWith("<svg"));
@@ -71,6 +78,6 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
 
     <IconifyOnline v-else-if="isIconifyOnline()" :icon="finalIcon" />
 
-    <img v-else-if="isImg" :src="finalIcon" :alt="imgAlt" />
+    <img v-else-if="isImg()" :src="finalIcon" :alt="imgAlt" />
   </i>
 </template>

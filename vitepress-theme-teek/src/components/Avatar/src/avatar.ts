@@ -1,3 +1,5 @@
+import type { IconProps } from "../../Icon/src/icon";
+
 export interface AvatarProps {
   /**
    * 头像大小
@@ -12,7 +14,7 @@ export interface AvatarProps {
   /**
    * 头像图标
    */
-  icon?: string;
+  icon?: IconProps["icon"];
   /**
    * 图标头像大小
    */

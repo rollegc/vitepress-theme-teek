@@ -1,4 +1,5 @@
 import type { Route } from "vitepress";
+import type { IconProps } from "../../components/Icon/src/icon";
 
 export interface Notice {
   /**
@@ -77,11 +78,11 @@ export interface Notice {
    *
    * @remark 与 noticeIconType 配合使用
    */
-  noticeIcon?: string | Object | Comment;
+  noticeIcon?: IconProps["icon"];
   /**
    * 公告弹框关闭图标地址，与 noticeIcon 配置一致
    */
-  closeIcon?: string | Object | Comment;
+  closeIcon?: IconProps["icon"];
   /**
    * 路由切换后的自定义回调
    *

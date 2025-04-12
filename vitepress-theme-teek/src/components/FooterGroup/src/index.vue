@@ -29,7 +29,7 @@ const footerGroupConfig = getTeekConfigRef<FooterGroup[]>("footerGroup", []);
           :key="(link.name || '') + idx"
           :class="[ns.e('link'), 'flx-align-center']"
         >
-          <Icon v-if="group.icon" :icon="link.icon" style="margin-right: 4px" aria-hidden="true" />
+          <Icon v-if="link.icon" :icon="link.icon" style="margin-right: 4px" aria-hidden="true" />
           <a
             :name="link.name"
             :href="link.link"

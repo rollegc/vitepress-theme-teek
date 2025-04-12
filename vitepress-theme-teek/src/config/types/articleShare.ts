@@ -1,3 +1,5 @@
+import type { IconProps } from "../../components/Icon/src/icon";
+
 export interface ArticleShare {
   /**
    * 是否开启文章链接分享功能
@@ -8,7 +10,7 @@ export interface ArticleShare {
   /**
    * 分析按钮图标
    */
-  icon?: string | Object | Comment;
+  icon?: IconProps["icon"];
   /**
    * 分享按钮文本
    *
@@ -18,7 +20,7 @@ export interface ArticleShare {
   /**
    * 复制成功图标
    */
-  copiedIcon?: string;
+  copiedIcon?: IconProps["icon"];
   /**
    * 复制成功文本
    *

@@ -1,8 +1,10 @@
+import type { IconifyIcon } from "@iconify/vue/dist/offline";
+
 export interface IconProps {
   /**
    * 图标
    */
-  icon: string;
+  icon: string | Object | Comment | IconifyIcon;
   /**
    * 图标类型
    */
