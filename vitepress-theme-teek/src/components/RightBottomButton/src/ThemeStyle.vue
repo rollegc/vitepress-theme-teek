@@ -2,7 +2,7 @@
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useStorage } from "../../../hooks";
+import { useNamespace, useLocale, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { magicIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
@@ -11,6 +11,7 @@ import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 defineOptions({ name: "ThemeStyle" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
+const { t } = useLocale();
 
 const { frontmatter } = useData();
 const { getTeekConfigRef } = useTeekConfig();
@@ -30,23 +31,23 @@ const themeStyleList = computed(() => {
   const { themeStyleLabel, themeStyleAppend } = unref(themeSettingConfig);
   return [
     {
-      label: themeStyleLabel.vpLabel ?? "VP 主题",
-      tip: themeStyleLabel.vpTip ?? "VitePress 主题",
+      label: themeStyleLabel.vpLabel ?? t("tk.rightBottomButton.vpLabel"),
+      tip: themeStyleLabel.vpTip ?? t("tk.rightBottomButton.vpTip"),
       options: [
-        { name: themeStyleLabel.default ?? "默认", style: "vp-default" },
-        { name: themeStyleLabel.vpGreen ?? "绿色", style: "vp-green" },
-        { name: themeStyleLabel.vpYellow ?? "黄色", style: "vp-yellow" },
-        { name: themeStyleLabel.vpRed ?? "红色", style: "vp-red" },
+        { name: themeStyleLabel.default ?? t("tk.rightBottomButton.default"), style: "vp-default" },
+        { name: themeStyleLabel.vpGreen ?? t("tk.rightBottomButton.vpGreen"), style: "vp-green" },
+        { name: themeStyleLabel.vpYellow ?? t("tk.rightBottomButton.vpYellow"), style: "vp-yellow" },
+        { name: themeStyleLabel.vpRed ?? t("tk.rightBottomButton.vpRed"), style: "vp-red" },
       ],
     },
     {
-      label: themeStyleLabel.epLabel ?? "EP 主题",
-      tip: themeStyleLabel.epTip ?? "Element Plus 主题",
+      label: themeStyleLabel.epLabel ?? t("tk.rightBottomButton.epLabel"),
+      tip: themeStyleLabel.epTip ?? t("tk.rightBottomButton.epTip"),
       options: [
-        { name: themeStyleLabel.epBlue ?? "蓝色", style: "el-blue" },
-        { name: themeStyleLabel.epGreen ?? "绿色", style: "el-green" },
-        { name: themeStyleLabel.epYellow ?? "黄色", style: "el-yellow" },
-        { name: themeStyleLabel.epRed ?? "红色", style: "el-red" },
+        { name: themeStyleLabel.epBlue ?? t("tk.rightBottomButton.epBlue"), style: "el-blue" },
+        { name: themeStyleLabel.epGreen ?? t("tk.rightBottomButton.epGreen"), style: "el-green" },
+        { name: themeStyleLabel.epYellow ?? t("tk.rightBottomButton.epYellow"), style: "el-yellow" },
+        { name: themeStyleLabel.epRed ?? t("tk.rightBottomButton.epRed"), style: "el-red" },
       ],
     },
     ...themeStyleAppend,
@@ -98,17 +99,21 @@ watch(
 
 <template>
   <div
-    :title="themeSettingConfig.titleTip.themeStyle ?? '主题风格切换'"
+    :title="themeSettingConfig.titleTip.themeStyle ?? t('tk.rightBottomButton.themeStyleTitle')"
     :class="ns.e('button')"
     @mouseenter="showThemeStyleItem = true"
     @mouseleave="showThemeStyleItem = false"
     @click="showThemeStyleItem = true"
+    role="button"
+    :aria-label="themeSettingConfig.titleTip.themeStyle ?? t('tk.rightBottomButton.themeStyleTitle')"
   >
-    <Icon :icon="magicIcon" />
+    <Icon :icon="magicIcon" aria-hidden="true" />
     <transition :name="ns.joinNamespace('mode')">
       <div :class="`${ns.e('button__style')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
         <ul v-for="item in themeStyleList" :key="item.label">
-          <li :class="`${ns.e('button__style__title')} sle`" :title="item.tip || ''">{{ item.label }}</li>
+          <li :class="`${ns.e('button__style__title')} sle`" :title="item.tip || ''" :aria-label="item.label">
+            {{ item.label }}
+          </li>
           <li>
             <ul>
               <li
@@ -117,6 +122,8 @@ watch(
                 title=""
                 :class="['dropdown-item', 'sle', { active: option.style === currentThemeStyle }]"
                 @click="changeTheme(option.style)"
+                role="button"
+                :aria-label="option.name"
               >
                 {{ option.name }}
               </li>

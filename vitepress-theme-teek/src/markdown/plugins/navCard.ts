@@ -5,7 +5,6 @@ import type { SiteConfig } from "vitepress";
 import { createCardContainer } from "../helper";
 
 const rootClass = "nav-card";
-const defaultCardNum = 2;
 
 /**
  * 生成导航卡片容器
@@ -18,7 +17,7 @@ const navCardPlugin = (md: MarkdownIt) => {
 
   createCardContainer<NavCard.Item, NavCard.Config>(md, {
     type: "navCard",
-    className: `${rootClass}-container`,
+    className: `container ${rootClass}-container`,
     htmlRender: (props, info) => getNavCardHtml(props, info, base),
     afterHtmlRender: (props, _, tokens, idx) => {
       // 删除 yaml 代码块
@@ -41,13 +40,15 @@ const getNavCardHtml = (navCard: { data: NavCard.Item[]; config: NavCard.Config 
   const { data = [], config = {} } = navCard;
   if (!data.length) return "";
 
-  const { cardNum: cn = 2, cardGap = 20, lineClamp = 2, target = "_blank" } = config;
-  let cardNum = info ? Number(info) : cn;
-  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = defaultCardNum;
+  const { cardNum: defaultNum = 2, cardGap = 20, lineClamp = 2, target = "_blank" } = config;
+  let cardNum = info && typeof info !== "string" ? Number(info) : defaultNum;
+
+  if (cardNum > 4 || cardNum < 1) cardNum = defaultNum;
+  const index = info === "auto" ? "auto" : cardNum;
 
   return `
     <div
-      class="${rootClass} index-${cardNum}"
+      class="${rootClass} index-${index}"
       style="--row-gap: ${cardGap}px; --column-gap: ${cardGap}px; --column-min-width: calc(100% / ${cardNum} - ${cardGap * (cardNum - 1)}px);"
     >
       ${data

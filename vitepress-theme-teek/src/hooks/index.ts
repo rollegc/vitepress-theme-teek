@@ -7,6 +7,7 @@ export * from "./useScrollData";
 export * from "./useBuSunZi";
 export * from "./useDebounce";
 export * from "./useEventListener";
+export * from "./useLocale";
 export * from "./useWindowSize";
 export * from "./useVpRouter";
 export * from "./useClipboard";

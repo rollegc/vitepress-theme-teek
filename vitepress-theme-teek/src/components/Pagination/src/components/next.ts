@@ -1,4 +1,5 @@
 import type Next from "./next.vue";
+import type { IconProps } from "../../../Icon/src/icon";
 
 export interface PaginationNextProps {
   /**
@@ -24,7 +25,7 @@ export interface PaginationNextProps {
   /**
    * 下一页按钮图标
    */
-  nextIcon?: string;
+  nextIcon?: IconProps["icon"];
 }
 
 export type PaginationNextInstance = InstanceType<typeof Next>;

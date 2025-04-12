@@ -22,7 +22,7 @@ export interface Post {
   /**
    * 文章列表为空时的标签
    *
-   * @default '文章列表为空'
+   * @default '暂无文章'
    */
   emptyLabel?: string;
   /**
@@ -44,7 +44,7 @@ export interface Post {
    */
   splitSeparator?: boolean;
   /**
-   * 首页的图片查看器配置
+   * 封面图查看器配置
    */
   imageViewer?: Omit<ImageViewerProps, "urlList">;
 }

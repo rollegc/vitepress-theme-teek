@@ -8,9 +8,9 @@ export interface TopArticle {
   /**
    * 首页卡片标题
    *
-   * @default '${svg}精选文章'
+   * @default '${icon}精选文章'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((icon: string) => string);
   /**
    * 精选文章为空时的标签
    *

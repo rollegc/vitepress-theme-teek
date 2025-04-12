@@ -12,15 +12,14 @@ const imageViewer = computed(() => {
   return imageViewer;
 });
 
-const selector = ".content-container .main";
-
 const previewImage = (e: Event) => {
   const target = e.target as HTMLElement;
   const currentTarget = e.currentTarget as HTMLElement;
 
   if (target.tagName.toLowerCase() === "img") {
-    const imgDoms = currentTarget.querySelectorAll<HTMLImageElement>(selector);
+    const imgDoms = currentTarget.querySelectorAll<HTMLImageElement>(".content-container .main img");
     const imgs = Array.from(imgDoms);
+    console.log(imgDoms);
 
     const urlList = imgs.map(el => el.src);
     let initialIndex = imgs.findIndex(el => el === target);
@@ -32,11 +31,11 @@ const previewImage = (e: Event) => {
       initialIndex = urlList.length - 1;
     }
 
-    createImageViewer({ ...unref(imageViewer), urlList, initialIndex, infinite: false });
+    createImageViewer({ infinite: false, ...unref(imageViewer), urlList, initialIndex });
   }
 };
 
-useEventListener(() => document.querySelector(selector), "click", previewImage);
+useEventListener(() => document.querySelector("#VPContent"), "click", previewImage);
 </script>
 
 <template></template>

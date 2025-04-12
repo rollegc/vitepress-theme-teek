@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeCard">
 import { unref, onMounted, ref, onUnmounted } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
 import { HomeCardProps } from "./homeCard";
 import Icon from "../../Icon";
@@ -10,6 +10,7 @@ defineOptions({ name: "HomeCard" });
 
 const ns = useNamespace("home-card");
 const pointClass = ns.joinNamespace("pointer");
+const { t } = useLocale();
 
 const {
   title = "",
@@ -81,13 +82,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :class="`${ns.b()} card`">
+  <div :class="`${ns.b()} card`" :aria-label="t('tk.homeCard.label')">
     <div v-if="title" :class="`${ns.e('header')} flx-justify-between`">
       <slot name="title">
-        <a v-if="titleLink" :href="withBase(titleLink)">
+        <a v-if="titleLink" :href="withBase(titleLink)" :aria-label="title">
           <span class="title flx-align-center" v-html="title"></span>
         </a>
-        <a v-else-if="titleClick" @click="() => titleClick()" :class="pointClass">
+        <a v-else-if="titleClick" @click="() => titleClick()" :class="pointClass" :aria-label="title">
           <span class="title flx-align-center" v-html="title"></span>
         </a>
         <span v-else class="title flx-align-center" v-html="title"></span>
@@ -95,14 +96,26 @@ onUnmounted(() => {
       <slot name="page" v-bind="{ pagination }">
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">
-            <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(-1, 'prev')">
-              <Icon :icon="arrowLeftIcon" :size="14" />
+            <span
+              :class="['page-button', hasNextData ? pointClass : 'disabled']"
+              @click="pagination(-1, 'prev')"
+              role="button"
+              :aria-label="t('tk.homeCard.prev')"
+              :aria-disabled="!hasNextData"
+            >
+              <Icon :icon="arrowLeftIcon" :size="14" aria-hidden="true" />
             </span>
           </slot>
 
           <slot name="page-right" v-bind="{ pagination }">
-            <span :class="['page-button', hasNextData ? pointClass : 'disabled']" @click="pagination(1, 'next')">
-              <Icon :icon="arrowRightIcon" :size="14" />
+            <span
+              :class="['page-button', hasNextData ? pointClass : 'disabled']"
+              @click="pagination(1, 'next')"
+              role="button"
+              :aria-label="t('tk.homeCard.next')"
+              :aria-disabled="!hasNextData"
+            >
+              <Icon :icon="arrowRightIcon" :size="14" aria-hidden="true" />
             </span>
           </slot>
         </div>

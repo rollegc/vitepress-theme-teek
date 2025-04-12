@@ -2,13 +2,14 @@
 import { withBase } from "vitepress";
 import { computed, onMounted, onUnmounted, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useSwitchData } from "../../../hooks";
+import { useNamespace, useLocale, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";
 import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerBgImage" });
 
 const ns = useNamespace("banner-bg-image");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 
 // Banner 配置项
@@ -73,8 +74,12 @@ const getStyle = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), { part: isPartImgBgStyle, full: isFullImgBgStyle }]" :style="getStyle()">
-    <div v-if="bannerConfig.mask && bannerConfig.imgSrc" class="mask" />
+  <div
+    :class="[ns.b(), { part: isPartImgBgStyle, full: isFullImgBgStyle }]"
+    :style="getStyle()"
+    :aria-label="t('tk.homeBanner.bgImgLabel')"
+  >
+    <div v-if="bannerConfig.mask && bannerConfig.imgSrc" class="mask" :aria-label="t('tk.homeBanner.maskLabel')" />
     <slot v-if="isPartImgBgStyle" />
   </div>
   <slot v-if="isFullImgBgStyle" />

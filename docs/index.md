@@ -29,7 +29,20 @@ features:
   - icon: 🎇
     title: 文档风 & 博客风
     details: 支持通过配置随意切换两种模式，支持个人博客、文档站、知识库等场景。
+  - icon: 📝
+    title: 专注内容
+    details: 只需 Markdown 即可轻松创建美观的文档站点，配合多维索引快速定位每个知识点。
 ---
+
+## 💡 反馈交流
+
+在使用过程中有任何问题和想法，请给我提 [Issue](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues)。 你也可以在 Issue 查看别人提的问题和给出解决方案。
+
+或者加入我们的交流群（添加我的微信并备注 <mark>进群</mark>）：
+
+<img src="https://gcore.jsdelivr.net/gh/Kele-Bingtang/static/index/20250412000919.png" alt="添加我微信备注「进群」" style="width: 180px;" />
+
+如果图片链接失效，可以微信右上角 -> 添加朋友，然后搜索 `teekers` 来添加我的微信。
 
 <style>
 /* :root {
@@ -66,15 +79,15 @@ import { useData } from 'vitepress'
  * 获取当前页面的数据，包括前言和其它信息。
  * @returns {Object} 包含前言（frontmatter）等数据。
  */
-const { frontmatter } = useData()
+ const { frontmatter } = useData()
 
 /**
  * 在组件挂载后，移动指定的 DOM 元素。
  * 将 `#hero-text` 元素移动到 `.VPHero .text` 元素内部。
  */
-onMounted(() => {
-  const p = document.querySelector('.VPHero .text') as HTMLElement | null
-  const s = document.querySelector('#hero-text') as HTMLElement | null
+  onMounted(() => {
+    const p = document.querySelector('.VPHero .text') as HTMLElement | null
+    const s = document.querySelector('#hero-text') as HTMLElement | null
 
   if (!p || !s) return
 

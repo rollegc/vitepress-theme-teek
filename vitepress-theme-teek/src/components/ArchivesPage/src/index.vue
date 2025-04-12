@@ -1,12 +1,13 @@
 <script setup lang="ts" name="ArchivesPage">
 import { withBase, useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { usePosts } from "../../../configProvider";
 import { computed, unref } from "vue";
 
 defineOptions({ name: "ArchivesPage" });
 
 const ns = useNamespace("archives");
+const { t } = useLocale();
 
 const { frontmatter } = useData();
 
@@ -14,22 +15,22 @@ const posts = usePosts();
 
 const defaultLabel = computed(() => {
   return {
-    title: unref(frontmatter).title ?? "归档",
-    totalCount: unref(frontmatter).totalCount ?? "总共 {count} 篇文章",
-    year: unref(frontmatter).year ?? "年",
-    month: unref(frontmatter).month ?? "月",
-    count: unref(frontmatter).count ?? "篇",
-    notFound: unref(frontmatter).notFound ?? "未指定",
+    title: unref(frontmatter).title ?? t("tk.archives.title"),
+    totalCount: unref(frontmatter).totalCount ?? t("tk.archives.totalCount"),
+    year: unref(frontmatter).year ?? t("tk.archives.year"),
+    month: unref(frontmatter).month ?? t("tk.archives.month"),
+    count: unref(frontmatter).count ?? t("tk.archives.count"),
+    notFound: unref(frontmatter).notFound ?? t("tk.archives.notFound"),
   };
 });
 </script>
 
 <template>
-  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`">
+  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="t('tk.archives.label')">
     <slot name="teek-archives-top-before" />
 
     <div :class="`${ns.e('header')} flx-justify-between`">
-      <div :class="ns.joinNamespace('page-title-h1')">{{ defaultLabel.title }}</div>
+      <h1 :class="ns.joinNamespace('page-title-h1')">{{ defaultLabel.title }}</h1>
       <div class="count">
         {{ defaultLabel.totalCount.replace("{count}", posts.sortPostsByDate.length) }}
       </div>
@@ -57,7 +58,7 @@ const defaultLabel = computed(() => {
 
             <ul>
               <li v-for="item in p" :key="item.url">
-                <a :href="item.url && withBase(item.url)">
+                <a :href="item.url && withBase(item.url)" :aria-label="`${item.title}`">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>
                 </a>

@@ -2,7 +2,7 @@
 import { computed, ref, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig, usePosts, useBgColor } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { topArticleIcon } from "../../../assets/icons";
 import { TkContentData } from "../../../post/types";
@@ -12,14 +12,15 @@ import type { TopArticle } from "../../../config/types";
 defineOptions({ name: "HomeTopArticleCard" });
 
 const ns = useNamespace("top-article");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const posts = usePosts();
 
 // 精选文章配置项
 const topArticleConfig = getTeekConfigRef<Required<TopArticle>>("topArticle", {
   limit: 4,
-  title: `${topArticleIcon}精选文章`,
-  emptyLabel: "暂无精选文章",
+  title: t("tk.topArticleCard.title", { icon: topArticleIcon }),
+  emptyLabel: t("tk.topArticleCard.emptyLabel"),
   autoPage: false,
   pageSpeed: 4000,
   dateFormat: "yyyy-MM-dd hh:mm:ss",
@@ -75,6 +76,7 @@ const getStyle = (num: number, index: number) => {
     :autoPage="topArticleConfig.autoPage"
     :pageSpeed="topArticleConfig.pageSpeed"
     :class="ns.b()"
+    :aria-label="t('tk.topArticleCard.label')"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -83,6 +85,7 @@ const getStyle = (num: number, index: number) => {
         tag="ul"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
+        :aria-label="t('tk.topArticleCard.listLabel')"
       >
         <li
           ref="itemRefs"
@@ -90,6 +93,7 @@ const getStyle = (num: number, index: number) => {
           :key="item.num"
           :class="ns.e('list__item')"
           :style="getStyle(item.num - 1, index)"
+          :aria-label="item.title"
         >
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
           <div :class="ns.e('list__item__info')">
@@ -101,7 +105,9 @@ const getStyle = (num: number, index: number) => {
         </li>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ topArticleConfig.emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')" :aria-label="topArticleConfig.emptyLabel">
+        {{ topArticleConfig.emptyLabel }}
+      </div>
     </template>
   </HomeCard>
 

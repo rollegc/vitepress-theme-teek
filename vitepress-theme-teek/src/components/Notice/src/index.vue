@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useWindowSize, useVpRouter } from "../../../hooks";
+import { useNamespace, useLocale, useWindowSize, useVpRouter } from "../../../hooks";
 import Icon from "../../Icon";
 import { noticeIcon, closeIcon } from "../../../assets/icons";
 import { isString } from "../../../helper";
@@ -11,6 +11,7 @@ import type { Notice } from "../../../config/types";
 defineOptions({ name: "Notice" });
 
 const ns = useNamespace("notice");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const vpRouter = useVpRouter();
 const { localeIndex } = useData();
@@ -19,7 +20,7 @@ const noticeConfig = getTeekConfigRef<Required<Notice>>("notice", {
   noticeStyle: undefined,
   iconStyle: {},
   popoverStyle: {},
-  title: "公告",
+  title: t("tk.notice.title"),
   initOpen: true,
   duration: 0,
   mobileMinify: false,
@@ -155,7 +156,7 @@ const storagePopoverState = (state: string) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
+  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]" :aria-label="t('tk.notice.label')">
     <component v-if="styleObj" :is="'style'">{{ styleObj }}</component>
 
     <!-- 公告图标 -->
@@ -165,8 +166,10 @@ const storagePopoverState = (state: string) => {
       :class="[ns.e('icon'), { twinkle: noticeConfig.twinkle }, 'flx']"
       :style="noticeConfig.iconStyle"
       @click="handleOpenPopover"
+      role="button"
+      :aria-label="t('tk.notice.openLabel')"
     >
-      <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="14px"></Icon>
+      <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="14px" aria-hidden="true"></Icon>
     </div>
 
     <!-- 公告弹窗 -->
@@ -174,12 +177,15 @@ const storagePopoverState = (state: string) => {
       v-show="showPopover"
       :class="[ns.e('popover'), ns.is(noticeConfig.position)]"
       :style="noticeConfig.popoverStyle"
+      role="dialog"
+      :aria-modal="true"
+      aria-labelledby="notice-title"
     >
       <slot name="header">
-        <div :class="[ns.e('popover__header'), 'flx-justify-between']">
+        <div :class="[ns.e('popover__header'), 'flx-justify-between']" :aria-label="t('tk.notice.headLabel')">
           <div class="flx-align-center">
-            <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="20px"></Icon>
-            <span class="title sle">{{ noticeTitle }}</span>
+            <Icon :icon="noticeConfig.noticeIcon" color="#ffffff" size="20px" aria-hidden="true" />
+            <span id="notice-title" class="title sle">{{ noticeTitle }}</span>
           </div>
           <Icon
             :icon="noticeConfig.closeIcon"
@@ -187,16 +193,18 @@ const storagePopoverState = (state: string) => {
             size="20px"
             :class="ns.joinNamespace('pointer')"
             @click="handleClosePopover"
+            role="button"
+            :aria-label="t('tk.notice.closeLabel')"
           ></Icon>
         </div>
       </slot>
 
-      <div :class="ns.e('popover__content')">
+      <div :class="ns.e('popover__content')" :aria-label="t('tk.notice.contentLabel')">
         <slot name="teek-notice-content" />
       </div>
     </div>
 
     <!-- 遮罩层，与公告弹窗一起出现 -->
-    <div v-show="showPopover && noticeConfig.position === 'center'" :class="ns.e('mask')"></div>
+    <div v-show="showPopover && noticeConfig.position === 'center'" :class="ns.e('mask')" role="presentation" />
   </div>
 </template>

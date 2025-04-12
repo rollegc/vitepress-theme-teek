@@ -14,7 +14,7 @@ const twikooOptions = getTeekConfig<CommentProvider["twikoo"]>("comment", {}).op
 
 const {
   envId,
-  link = "https://cdn.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js",
+  link = "https://gcore.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js",
   version = "1.6.41",
   katex,
   timeout = 700,

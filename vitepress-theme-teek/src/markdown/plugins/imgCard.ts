@@ -18,7 +18,7 @@ const imgCardPlugin = (md: MarkdownIt) => {
 
   createCardContainer<ImgCard.Item, ImgCard.Config>(md, {
     type: "imgCard",
-    className: `${rootClass}-container`,
+    className: `container ${rootClass}-container`,
     htmlRender: (props, info) => renderImgCard(props, info, base),
     afterHtmlRender: (props, _, tokens, idx) => {
       // 删除 yaml 代码块
@@ -42,19 +42,21 @@ const renderImgCard = (imgCard: { data: ImgCard.Item[]; config: ImgCard.Config }
   if (!data.length) return "";
 
   const {
-    cardNum: cn = 2,
+    cardNum: defaultNum = 2,
     cardGap = 20,
     lineClamp = 2,
     target = "_blank",
     objectFit = "cover",
     imgHeight = "auto",
   } = config;
-  let cardNum = info ? Number(info) : cn;
-  if (!cardNum || cardNum > 4 || cardNum < 1) cardNum = 2;
+  let cardNum = info && typeof info !== "string" ? Number(info) : defaultNum;
+
+  if (cardNum > 4 || cardNum < 1) cardNum = defaultNum;
+  const index = info === "auto" ? "auto" : cardNum;
 
   return `
     <div
-      class="${rootClass} index-${cardNum}"
+      class="${rootClass} index-${index}"
       style="--row-gap: ${cardGap}px; --column-gap: ${cardGap}px; --column-min-width: calc(100% / ${cardNum} - ${cardGap * (cardNum - 1)}px);"
     >
       ${data

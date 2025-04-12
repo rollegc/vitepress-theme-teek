@@ -7,9 +7,13 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "baiduPush": "tsx .scripts/baiduPush.ts https://vp.teek.top && bash .scripts/baiduPush.sh"
   },
   "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "tinyglobby": "^0.2.10",
+    "tsx": "^4.19.3",
     "vitepress": "^1.6.3",
     "vitepress-theme-teek": "workspace:*"
   }

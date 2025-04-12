@@ -4,7 +4,7 @@ import { computed, unref } from "vue";
 import { useTeekConfig, usePosts } from "../../../configProvider";
 import { formatDate, isFunction } from "../../../helper";
 import { TkContentData } from "../../../post/types";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "../../../assets/icons";
 import type { Article, ArticleInfoPosition } from "../../../config/types";
 import type { PostBaseInfoProps } from "./articleInfo";
@@ -13,6 +13,7 @@ import Icon from "../../Icon";
 defineOptions({ name: "ArticleInfo" });
 
 const ns = useNamespace("article-info");
+const { t } = useLocale();
 
 const { post, scope, split = false } = defineProps<PostBaseInfoProps>();
 
@@ -62,7 +63,7 @@ const baseInfo = computed(() => {
 
   return [
     {
-      title: unref(titleTip).author ?? "作者",
+      title: unref(titleTip).author ?? t("tk.articleInfo.author"),
       icon: userIcon,
       data: post.author?.name,
       href: post.author?.link,
@@ -70,19 +71,19 @@ const baseInfo = computed(() => {
       show: isShow(showAuthor),
     },
     {
-      title: unref(titleTip).createTime ?? "创建时间",
+      title: unref(titleTip).createTime ?? t("tk.articleInfo.createTime"),
       icon: calendarIcon,
-      data: createDate,
+      data: unref(createDate),
       show: isShow(showCreateDate),
     },
     {
-      title: unref(titleTip).updateTime ?? "更新时间",
+      title: unref(titleTip).updateTime ?? t("tk.articleInfo.updateTime"),
       icon: editPenIcon,
-      data: updateDate,
+      data: unref(updateDate),
       show: unref(updateDate) && scope === "article" && showUpdateDate,
     },
     {
-      title: unref(titleTip).category ?? "分类",
+      title: unref(titleTip).category ?? t("tk.articleInfo.category"),
       icon: folderOpenedIcon,
       dataList: post.frontmatter?.categories || [],
       href: "/categories?category={data}",
@@ -90,7 +91,7 @@ const baseInfo = computed(() => {
       show: scope === "post" || isShow(showCategory),
     },
     {
-      title: unref(titleTip).tag ?? "标签",
+      title: unref(titleTip).tag ?? t("tk.articleInfo.tag"),
       icon: collectionTagIcon,
       dataList: post.frontmatter?.tags || [],
       href: "/tags?tag={data}",
@@ -108,16 +109,22 @@ const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), scope]">
+  <div :class="[ns.b(), scope]" role="group" :aria-label="t('tk.articleInfo.label')">
     <template v-for="item in baseInfo" :key="item.title">
-      <span v-if="item.show && (item.data || item.dataList?.length)" :class="[ns.e('item'), { split }]">
-        <Icon v-if="articleConfig.showIcon" :icon="item.icon" />
+      <span
+        v-if="item.show && (item.data || item.dataList?.length)"
+        :class="[ns.e('item'), { split }]"
+        role="group"
+        :aria-label="item.title"
+      >
+        <Icon v-if="articleConfig.showIcon" :icon="item.icon" aria-hidden="true" />
         <a
           v-if="item.data"
           :title="item.title"
           :href="item.href && withBase(item.href)"
           :target="item.target"
           :class="[item.class, 'hover-color']"
+          :aria-label="item.data"
         >
           {{ item.data }}
         </a>
@@ -128,6 +135,7 @@ const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
           :title="item.title"
           :href="item.href && withBase(item.href.replace('{data}', encodeURIComponent(data)))"
           :class="[item.class, 'hover-color']"
+          :aria-label="data"
         >
           {{ data }}
         </a>

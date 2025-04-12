@@ -1,11 +1,12 @@
 <script setup lang="ts" name="Breadcrumb">
 import { onMounted, provide, ref, unref } from "vue";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { breadcrumbKey, breadcrumbNsSymbol, type BreadcrumbProps } from "./breadcrumb";
 
 defineOptions({ name: "Breadcrumb" });
 
 const ns = useNamespace("breadcrumb");
+const { t } = useLocale();
 
 const { separator = "/" } = defineProps<BreadcrumbProps>();
 
@@ -24,7 +25,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="breadcrumb" :class="ns.b()" aria-label="Breadcrumb" role="navigation">
+  <div ref="breadcrumb" :class="ns.b()" role="navigation" :aria-label="t('tk.breadcrumb.label')">
     <slot />
   </div>
 </template>

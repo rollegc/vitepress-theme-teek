@@ -1,7 +1,7 @@
 <script setup lang="ts" name="BackTop">
 import { computed, unref, onMounted, ref, inject } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useDebounce, useEventListener } from "../../../hooks";
+import { useNamespace, useLocale, useDebounce, useEventListener } from "../../../hooks";
 import Icon from "../../Icon";
 import Message from "../../Message";
 import { rocketIcon } from "../../../assets/icons";
@@ -11,6 +11,7 @@ import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 defineOptions({ name: "BackTop" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
@@ -53,12 +54,17 @@ useEventListener(window, "scroll", watchScroll);
   <transition :name="ns.joinNamespace('fade')">
     <div
       v-show="showToTop"
-      :title="themeSettingConfig.titleTip.backTop ?? '返回顶部'"
+      :title="themeSettingConfig.titleTip.backTop ?? t('tk.rightBottomButton.backTopTitle')"
       :class="[ns.e('button'), 'back-top']"
       @click="scrollToTop"
       :style="{ [ns.cssVarName('progress')]: progress }"
+      role="button"
+      :aria-label="themeSettingConfig.titleTip.backTop ?? t('tk.rightBottomButton.backTopTitle')"
+      :aria-valuenow="progress"
+      aria-valuemin="0"
+      aria-valuemax="100"
     >
-      <Icon :icon="rocketIcon"></Icon>
+      <Icon :icon="rocketIcon" aria-hidden="true" />
     </div>
   </transition>
 </template>

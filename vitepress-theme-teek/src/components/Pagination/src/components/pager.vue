@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed, ref, watchEffect } from "vue";
 import { dArrowRightIcon, dArrowLeftIcon, moreFilledIcon } from "../../../../assets/icons";
-import { useNamespace } from "../../../../hooks";
-import { PaginationPagerProps } from "./pager";
+import { useNamespace, useLocale } from "../../../../hooks";
+import type { PaginationPagerProps } from "./pager";
 
 defineOptions({ name: "PaginationPager" });
 
@@ -10,6 +10,7 @@ const props = defineProps<PaginationPagerProps>();
 const emit = defineEmits(["change"]);
 const nsPager = useNamespace("pager");
 const nsIcon = useNamespace("icon");
+const { t } = useLocale();
 
 const showPrevMore = ref(false);
 const showNextMore = ref(false);
@@ -118,7 +119,7 @@ const onPagerClick = (event: UIEvent) => {
       :class="[nsPager.is('active', currentPage === 1), nsPager.is('disabled', disabled)]"
       class="number"
       :aria-current="currentPage === 1"
-      aria-label="第 1 页"
+      :aria-label="t('tk.pagination.currentPage', { pager: 1 })"
       :tabindex="tabindex"
     >
       1
@@ -128,7 +129,7 @@ const onPagerClick = (event: UIEvent) => {
       v-if="showPrevMore"
       :class="prevMoreKls"
       :tabindex="tabindex"
-      :aria-label="`向前 ${pagerCount - 2} 页`"
+      :aria-label="t('tk.pagination.prevPages', { pager: pagerCount - 2 })"
       @mouseenter="onMouseEnter(true)"
       @mouseleave="quickPrevHover = false"
       @focus="onFocus(true)"
@@ -144,7 +145,7 @@ const onPagerClick = (event: UIEvent) => {
       :class="[nsPager.is('active', currentPage === pager), nsPager.is('disabled', disabled)]"
       class="number"
       :aria-current="currentPage === pager"
-      :aria-label="`第 ${pager} 页`"
+      :aria-label="t('el.pagination.currentPage', { pager })"
       :tabindex="tabindex"
     >
       {{ pager }}
@@ -154,7 +155,7 @@ const onPagerClick = (event: UIEvent) => {
       v-if="showNextMore"
       :class="nextMoreKls"
       :tabindex="tabindex"
-      :aria-label="`向后 ${pagerCount - 2} 页`"
+      :aria-label="t('tk.pagination.nextPages', { pager: pagerCount - 2 })"
       @mouseenter="onMouseEnter()"
       @mouseleave="quickNextHover = false"
       @focus="onFocus()"
@@ -169,7 +170,7 @@ const onPagerClick = (event: UIEvent) => {
       :class="[nsPager.is('active', currentPage === pageCount), nsPager.is('disabled', disabled)]"
       class="number"
       :aria-current="currentPage === pageCount"
-      :aria-label="`第 ${pageCount} 页`"
+      :aria-label="t('tk.pagination.currentPage', { pager: pageCount })"
       :tabindex="tabindex"
     >
       {{ pageCount }}

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ToComment">
 import { computed, unref, ref, inject } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useDebounce } from "../../../hooks";
+import { useNamespace, useLocale, useDebounce } from "../../../hooks";
 import Icon from "../../Icon";
 import Message from "../../Message";
 import { commentIcon } from "../../../assets/icons";
@@ -11,6 +11,7 @@ import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 defineOptions({ name: "ToComment" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 
@@ -43,11 +44,13 @@ const scrollToComment = useDebounce(() => {
   <transition :name="ns.joinNamespace('fade')">
     <div
       v-show="showToComment"
-      :title="themeSettingConfig.titleTip.toComment ?? '前往评论'"
+      :title="themeSettingConfig.titleTip.toComment ?? t('tk.rightBottomButton.toComment')"
       :class="ns.e('button')"
       @click="scrollToComment"
+      role="button"
+      :aria-label="themeSettingConfig.titleTip.toComment ?? t('tk.rightBottomButton.toComment')"
     >
-      <Icon :icon="commentIcon" />
+      <Icon :icon="commentIcon" aria-hidden="true" />
     </div>
   </transition>
 </template>

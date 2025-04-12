@@ -13,21 +13,23 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
 
   return {
     name: "vite-plugin-vitepress-sidebar-resolve",
-    configureServer(server: ViteDevServer) {
-      server.watcher.add("*.md");
+    configureServer({ watcher, restart }: ViteDevServer) {
+      if (!option.restart) return;
+
+      watcher.add("*.md");
       // 监听文件系统事件
-      server.watcher
+      watcher
         .on("add", async path => {
           // 过滤非 .md 文件
           if (!path.endsWith(".md")) return;
           // 重启服务器来更新侧边栏
-          await server.restart();
+          await restart();
         })
         .on("unlink", async path => {
           // 过滤非 .md 文件
           if (!path.endsWith(".md")) return;
           // 重启服务器来更新侧边栏
-          await server.restart();
+          await restart();
         });
     },
     config(config: any) {

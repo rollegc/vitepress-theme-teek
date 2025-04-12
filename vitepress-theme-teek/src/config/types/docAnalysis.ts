@@ -8,9 +8,9 @@ export interface DocAnalysis {
   /**
    * 首页卡片标题
    *
-   * @default '${svg}站点信息'
+   * @default '${icon}站点信息'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((icon: string) => string);
   /**
    * 项目创建时间
    */

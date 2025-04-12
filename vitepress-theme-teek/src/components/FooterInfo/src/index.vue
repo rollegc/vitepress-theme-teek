@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
@@ -12,6 +12,7 @@ import type { FooterInfo, Social } from "../../../config/types";
 defineOptions({ name: "FooterInfo" });
 
 const ns = useNamespace("footer-info");
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 
@@ -55,14 +56,25 @@ const footerData = computed(() => {
 </script>
 
 <template>
-  <div v-if="footerInfo || social.length" :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]">
-    <div v-if="social.length" :class="`${ns.e('icons')} flx-center`">
+  <div
+    v-if="footerInfo || social.length"
+    :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]"
+    role="contentinfo"
+    :aria-label="t('tk.footerInfo.label')"
+  >
+    <div
+      v-if="social.length"
+      :class="`${ns.e('icons')} flx-center`"
+      role="group"
+      :aria-label="t('tk.footerInfo.socialLabel')"
+    >
       <a
         v-for="(item, index) in social"
         :key="index"
         :href="item.link && withBase(item.link)"
         :title="item.name"
         target="_blank"
+        :aria-label="item.name"
       >
         <template v-if="item.icon">
           <Icon
@@ -72,6 +84,7 @@ const footerData = computed(() => {
             color="var(--vp-c-text-2)"
             hover
             :imgAlt="item.imgAlt"
+            aria-hidden="true"
           />
         </template>
         <span v-else-if="item.name">{{ item.name }}</span>
@@ -81,8 +94,13 @@ const footerData = computed(() => {
     <template v-if="footerInfo">
       <p v-for="(message, index) in [footerInfo.topMessage || []].flat()" :key="index" v-html="message" />
 
-      <div :class="`${ns.e('list')} flx-wrap-justify-center`">
-        <div v-for="item in footerData" :key="item.name" :class="`${ns.e('list__item')} flx-align-center`">
+      <div :class="`${ns.e('list')} flx-wrap-justify-center`" role="list" :aria-label="t('tk.footerInfo.infoLabel')">
+        <div
+          v-for="item in footerData"
+          :key="item.name"
+          :class="`${ns.e('list__item')} flx-align-center`"
+          role="listitem"
+        >
           <template v-if="item.icon">
             <Icon
               :iconType="item.iconType"
@@ -90,16 +108,17 @@ const footerData = computed(() => {
               size="16px"
               color="var(--vp-c-text-2)"
               :imgAlt="item.imgAlt"
+              aria-hidden="true"
             />
           </template>
 
-          <a v-if="item.link" :href="withBase(item.link)" target="_blank">
+          <a v-if="item.link" :href="withBase(item.link)" target="_blank" :aria-label="item.name">
             {{ item.name }}
           </a>
           <span v-else>{{ item.name }}</span>
         </div>
 
-        <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml"></span>
+        <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml" />
       </div>
 
       <p v-for="(message, index) in [footerInfo.bottomMessage || []].flat()" :key="index" v-html="message" />

@@ -1,3 +1,5 @@
+import type { ImageViewerProps } from "../../components/ImageViewer/src/imageViewer";
+
 export interface FriendLink {
   /**
    * 是否启用友情链接卡片
@@ -35,9 +37,9 @@ export interface FriendLink {
   /**
    * 首页卡片标题
    *
-   * @default '${svg}友情链接'
+   * @default '${icon}友情链接'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((icon: string) => string);
   /**
    * 友情链接为空时的标签
    *
@@ -74,4 +76,8 @@ export interface FriendLink {
    * @default 4000 (4秒)
    */
   pageSpeed?: number;
+  /**
+   * 友情链接头像查看器配置
+   */
+  imageViewer?: Omit<ImageViewerProps, "urlList">;
 }

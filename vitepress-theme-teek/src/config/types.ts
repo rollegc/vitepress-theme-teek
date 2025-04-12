@@ -189,5 +189,5 @@ export interface TeekConfig {
   /**
    * 站点分析配置
    */
-  siteAnalytics?: SiteAnalytics<""> | SiteAnalytics<"baidu"> | SiteAnalytics<"google"> | SiteAnalytics<"umami">;
+  siteAnalytics?: (SiteAnalytics<""> | SiteAnalytics<"baidu"> | SiteAnalytics<"google"> | SiteAnalytics<"umami">)[];
 }

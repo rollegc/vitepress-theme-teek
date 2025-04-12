@@ -14,10 +14,6 @@ const teekConfig = defineTeekConfig({
       createYear: 2025,
       suffix: "Teek",
     },
-    icpRecord: {
-      name: "桂ICP备2021009994号",
-      link: "http://beian.miit.gov.cn/",
-    },
   },
   articleShare: { enabled: true },
   vitePlugins: {
@@ -30,12 +26,20 @@ const teekConfig = defineTeekConfig({
       githubUrl: "https://github.com/Kele-Bingtang/vitepress-theme-teek/blob/master/docs",
     },
   },
-  siteAnalytics: {
-    provider: "baidu",
-    options: {
-      id: "d5ee872d9aa1ef8021f4a3921b2e9c2a",
+  siteAnalytics: [
+    {
+      provider: "baidu",
+      options: {
+        id: "d5ee872d9aa1ef8021f4a3921b2e9c2a",
+      },
     },
-  },
+    {
+      provider: "google",
+      options: {
+        id: "G-K5GNDW3L7K",
+      },
+    },
+  ],
 });
 
 // https://vitepress.dev/reference/site-config
@@ -71,8 +75,15 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "keywords", description }],
-    ["meta", { name: "baidu-site-verification", content: "codeva-GdK2q9MO1i" }], // 百度推送
+    ["meta", { name: "baidu-site-verification", content: "codeva-GdK2q9MO1i" }], // 百度收录
+    ["meta", { name: "msvalidate.01", content: "48CABE70F538B8D117567176ABF325AF" }], // Bing 收录验证
     ["link", { rel: "stylesheet", href: "//at.alicdn.com/t/font_2989306_w303erbip9.css" }], // 阿里在线矢量库
+    ["script", { charset: "UTF-8", id: "LA_COLLECT", src: "//sdk.51.la/js-sdk-pro.min.js" }], // 51.la
+    [
+      "script",
+      {},
+      `typeof LA !== 'undefined' && LA.init({ id: "3LqfP8Icg0GeEvtn", ck: "3LqfP8Icg0GeEvtn", hashMode: true })`,
+    ], // 51.la
   ],
   markdown: {
     // 开启行号

@@ -2,7 +2,7 @@
 import { computed, unref, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
 import { useTeekConfig, usePosts } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { categoryIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
@@ -14,15 +14,17 @@ defineOptions({ name: "HomeCategoryCard" });
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
 const ns = useNamespace("category");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const { localeIndex, site } = useData();
 
 // 分类配置项
 const categoryConfig = getTeekConfigRef<Required<Category>>("category", {
   path: "/categories",
-  pageTitle: `${categoryIcon}全部分类`,
-  homeTitle: `${categoryIcon}文章分类`,
-  emptyLabel: "暂无文章分类",
+  pageTitle: t("tk.categoryCard.pageTitle", { icon: categoryIcon }),
+  homeTitle: t("tk.categoryCard.homeTitle", { icon: categoryIcon }),
+  emptyLabel: t("tk.categoryCard.emptyLabel"),
+  moreLabel: t("tk.categoryCard.moreLabel"),
   limit: 5,
   autoPage: false,
   pageSpeed: 4000,
@@ -120,6 +122,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :autoPage="categoryConfig.autoPage"
     :pageSpeed="categoryConfig.pageSpeed"
     :class="ns.b()"
+    :aria-label="t('tk.categoryCard.label')"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -128,6 +131,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
         tag="div"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
+        :aria-label="t('tk.categoryCard.listLabel')"
       >
         <a
           ref="itemRefs"
@@ -136,17 +140,24 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           @click="handleSwitchCategory(item.name)"
           :class="[{ active: item.name === selectedCategory }, 'hover-color']"
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
+          :aria-label="item.name"
         >
           <span>{{ item.name }}</span>
           <span>{{ item.length }}</span>
         </a>
 
-        <a v-if="!categoriesPage && categoryConfig.limit < categories.length" :href="withBase(categoriesPageLink)">
-          更多 ...
+        <a
+          v-if="!categoriesPage && categoryConfig.limit < categories.length"
+          :href="withBase(categoriesPageLink)"
+          :aria-label="categoryConfig.moreLabel"
+        >
+          {{ categoryConfig.moreLabel }}
         </a>
       </TransitionGroup>
 
-      <div v-else :class="ns.m('empty')">{{ categoryConfig.emptyLabel }}</div>
+      <div v-else :class="ns.m('empty')" :aria-label="categoryConfig.emptyLabel">
+        {{ categoryConfig.emptyLabel }}
+      </div>
     </template>
   </HomeCard>
 
