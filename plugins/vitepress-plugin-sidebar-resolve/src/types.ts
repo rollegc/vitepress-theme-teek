@@ -100,4 +100,10 @@ export interface SidebarOption {
    * @remark 可以过滤掉不需要解析为 sideBarItem 的文件
    */
   beforeCreateSideBarItems?: (data: string[]) => string[];
+  /**
+   * Markdown 文件创建或者删除时，是否重启 VitePress 服务
+   *
+   * @default false
+   */
+  restart?: boolean;
 }

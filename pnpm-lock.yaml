@@ -358,6 +358,9 @@ importers:
 
   vitepress-theme-teek:
     dependencies:
+      '@iconify/vue':
+        specifier: ^4.3.0
+        version: 4.3.0(vue@3.5.13(typescript@5.8.3))
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -389,9 +392,6 @@ importers:
         specifier: ^1.0.8
         version: 1.0.8(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
     devDependencies:
-      '@iconify/vue':
-        specifier: ^4.3.0
-        version: 4.3.0(vue@3.5.13(typescript@5.8.3))
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9

@@ -57,18 +57,20 @@ sidebar: false
 
 ### Parameters
 
-| name            | description                                                                                                                                                                | type       | default                              |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------ | ----------------------- | ------ |
-| ignoreList      | 忽略的文件/文件夹列表，支持正则表达式                                                                                                                                      | `string[]` | `[]`                                 |
-| path            | 指定扫描的根目录                                                                                                                                                           | `string`   | `vitepress` 的 `srcDir` 配置项       |
-| ignoreIndexMd   | 是否忽略每个目录下的 `index.md` 文件                                                                                                                                       | `boolean`  | `false`                              |
-| scannerRootMd   | 是否扫描根目录下的 md 文件作为 sideBar，如果为 true，则扫描根目录下的 md 文件作为 sideBar，且忽略根目录下的 index.md                                                       | `boolean`  | `true`                               |
-| initItems       | 是否初始化第一层 items                                                                                                                                                     | `boolean`  | `true`                               |
-| initItemsText   | 是否初始化第一层 items 的 text 为当前目录名。当 `initItems` 为 true 时生效                                                                                                 | `boolean`  | `false`                              |
-| collapsed       | 是否折叠侧边栏，函数的 2 个参数为当前文件的相对路径（基于根目录）和侧边栏的 `text`                                                                                         | `boolean   | ((relativePath: string, text: string | undefined) => boolean)` | `true` |
-| fileIndexPrefix | 文件名前缀必须以「数字.」开头                                                                                                                                              | `boolean`  | `false`                              |
-| titleFormMd     | 是否从 md 文件获取第一个一级标题作为侧边栏 text                                                                                                                            | `boolean`  | `false`                              |
-| localeRootDir   | 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh，否则侧边栏无法知道文件都放到了 zh | string     | 文档根目录                           |
+<!-- prettier-ignore -->
+| name            | description                                                  | type                                                         | default                        |
+| --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------ |
+| ignoreList      | 忽略的文件/文件夹列表，支持正则表达式                        | `string[]`                                                   | `[]`                           |
+| path            | 指定扫描的根目录                                             | `string`                                                     | `vitepress` 的 `srcDir` 配置项 |
+| ignoreIndexMd   | 是否忽略每个目录下的 `index.md` 文件                         | `boolean`                                                    | `false`                        |
+| scannerRootMd   | 是否扫描根目录下的 md 文件作为 sideBar，如果为 true，则扫描根目录下的 md 文件作为 sideBar，且忽略根目录下的 index.md | `boolean`                                                    | `true`                         |
+| initItems       | 是否初始化第一层 items                                       | `boolean`                                                    | `true`                         |
+| initItemsText   | 是否初始化第一层 items 的 text 为当前目录名。当 `initItems` 为 true 时生效 | `boolean`                                                    | `false`                        |
+| collapsed       | 是否折叠侧边栏，函数的 2 个参数为当前文件的相对路径（基于根目录）和侧边栏的 `text` | `boolean | ((relativePath: string, text: string | undefined) => boolean)` | `true`                         |
+| fileIndexPrefix | 文件名前缀必须以「数字.」开头                                | `boolean`                                                    | `false`                        |
+| titleFormMd     | 是否从 md 文件获取第一个一级标题作为侧边栏 text              | `boolean`                                                    | `false`                        |
+| localeRootDir   | 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh | `string`                                                     | 文档根目录                     |
+| restart         | Markdown 文件创建或者删除时，是否重启 VitePress 服务         | `boolean`                                                    | `false`                        |
 
 > 额外说明
 
@@ -172,6 +174,12 @@ export interface SidebarOption {
    * @remark 可以过滤掉不需要解析为 sideBarItem 的文件
    */
   beforeCreateSideBarItems?: (data: string[]) => string[];
+  /**
+   * Markdown 文件创建或者删除时，是否重启 VitePress 服务
+   *
+   * @default false
+   */
+  restart?: boolean;
 }
 ```
 
