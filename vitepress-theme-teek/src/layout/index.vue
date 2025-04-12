@@ -1,8 +1,8 @@
 <script setup lang="ts" name="TeekLayout">
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed, unref } from "vue";
-import { useNamespace } from "../hooks";
+import { computed, unref, provide } from "vue";
+import { useNamespace, localeContextKey } from "../hooks";
 import { useTeekConfig, usePage } from "../configProvider";
 import type { TeekConfig } from "../config/types";
 import {
@@ -28,8 +28,16 @@ import {
   TkVpContainer,
 } from "../components";
 import { isBoolean } from "../helper";
+import type { Language } from "../locale";
 
 defineOptions({ name: "TeekLayout" });
+
+const props = defineProps<{ locale?: Language }>();
+
+provide(
+  localeContextKey,
+  computed(() => props.locale)
+);
 
 const { Layout } = DefaultTheme;
 

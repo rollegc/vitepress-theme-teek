@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { useData, withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { houseIcon } from "../../../assets/icons";
 import Breadcrumb from "./Breadcrumb.vue";
 import BreadcrumbItem from "./BreadcrumbItem.vue";
@@ -12,6 +12,7 @@ import type { Breadcrumb as BreadcrumbType } from "../../../config/types";
 defineOptions({ name: "ArticleBreadcrumb" });
 
 const ns = useNamespace("article-breadcrumb");
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 const { localeIndex, theme, page } = useData();
@@ -21,7 +22,7 @@ const breadcrumb = getTeekConfigRef<BreadcrumbType>("breadcrumb", {
   enabled: true,
   showCurrentName: false,
   separator: "/",
-  homeLabel: "首页",
+  homeLabel: t("tk.articleBreadcrumb.home"),
 });
 
 const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);
@@ -50,10 +51,10 @@ const breadcrumbList = computed(() => {
 </script>
 
 <template>
-  <div :class="`${ns.b()}`" role="navigation" aria-label="文章面包屑导航">
+  <div :class="`${ns.b()}`" role="navigation" :aria-label="t('tk.articleBreadcrumb.label')">
     <Breadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <BreadcrumbItem>
-        <a :href="withBase('/')" :title="breadcrumb.homeLabel" class="hover-color" aria-label="返回首页">
+        <a :href="withBase('/')" :title="breadcrumb.homeLabel" class="hover-color" :aria-label="breadcrumb.homeLabel">
           <Icon :icon="houseIcon" aria-hidden="true" />
         </a>
       </BreadcrumbItem>

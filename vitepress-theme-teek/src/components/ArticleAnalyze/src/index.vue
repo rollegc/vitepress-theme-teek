@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import type { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
+import { useNamespace, useLocale, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
 import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
@@ -14,6 +14,7 @@ import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
 defineOptions({ name: "ArticleAnalyze" });
 
 const ns = useNamespace("article-analyze");
+const { t } = useLocale();
 
 const { getTeekConfig, getTeekConfigRef } = useTeekConfig();
 const { theme, frontmatter } = useData();
@@ -109,7 +110,7 @@ watch(route, () => {
 </script>
 
 <template>
-  <div :class="`${ns.b()} flx-justify-between`" aria-label="文章分析">
+  <div :class="`${ns.b()} flx-justify-between`" :aria-label="t('tk.articleAnalyze.label')">
     <ArticleBreadcrumb />
 
     <div v-if="isShowInfo" ref="baseInfoRef" :class="`${ns.e('wrapper')} flx-align-center`">
@@ -118,9 +119,9 @@ watch(route, () => {
       <div v-if="docAnalysisConfig.wordCount" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="readingIcon" aria-hidden="true" />
         <a
-          :title="articleConfig.titleTip?.wordCount ?? '文章字数'"
+          :title="articleConfig.titleTip?.wordCount ?? t('tk.articleAnalyze.wordCount')"
           class="hover-color"
-          :aria-label="articleConfig.titleTip?.wordCount ?? '文章字数'"
+          :aria-label="articleConfig.titleTip?.wordCount ?? t('tk.articleAnalyze.wordCount')"
         >
           {{ pageViewInfo.wordCount }}
         </a>
@@ -129,9 +130,9 @@ watch(route, () => {
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="clockIcon" />
         <a
-          :title="articleConfig.titleTip?.readingTime ?? '预计阅读时长'"
+          :title="articleConfig.titleTip?.readingTime ?? t('tk.articleAnalyze.readingTime')"
           class="hover-color"
-          :aria-label="articleConfig.titleTip?.readingTime ?? '预计阅读时长'"
+          :aria-label="articleConfig.titleTip?.readingTime ?? t('tk.articleAnalyze.readingTime')"
         >
           {{ pageViewInfo.readingTime }}
         </a>
@@ -140,9 +141,9 @@ watch(route, () => {
       <div v-if="usePageView" class="flx-center">
         <Icon v-if="articleConfig.showIcon" :icon="viewIcon" />
         <a
-          :title="articleConfig.titleTip?.pageView ?? '浏览量'"
+          :title="articleConfig.titleTip?.pageView ?? t('tk.articleAnalyze.pageView')"
           class="hover-color"
-          :aria-label="articleConfig.titleTip?.pageView ?? '浏览量'"
+          :aria-label="articleConfig.titleTip?.pageView ?? t('tk.articleAnalyze.pageView')"
         >
           {{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}
         </a>

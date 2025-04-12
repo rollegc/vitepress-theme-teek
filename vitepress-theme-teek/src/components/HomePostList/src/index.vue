@@ -5,7 +5,7 @@ import { useTeekConfig, usePosts } from "../../../configProvider";
 import HomePostItem from "./HomePostItem.vue";
 import Pagination, { type TkPaginationProps } from "../../Pagination";
 import Icon from "../../Icon";
-import { useNamespace, useWindowSize } from "../../../hooks";
+import { useNamespace, useLocale, useWindowSize } from "../../../hooks";
 import type { TkContentData } from "../../../post/types";
 import { emptyIcon } from "../../../assets/icons";
 import type { Post } from "../../../config/types";
@@ -13,6 +13,7 @@ import type { Post } from "../../../config/types";
 defineOptions({ name: "HomePostList" });
 
 const ns = useNamespace("post-list");
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 const posts = usePosts();
@@ -20,7 +21,7 @@ const { frontmatter } = useData();
 
 const postConfig = getTeekConfigRef<Required<Post>>("post", {
   coverImgMode: "default",
-  emptyLabel: "文章列表为空",
+  emptyLabel: t("tk.homePost.emptyLabel"),
 });
 // 自定义一页数量 & 分页组件的 Props
 const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});
@@ -128,12 +129,12 @@ defineExpose({ updateData });
 <template>
   <div :class="ns.b()">
     <template v-if="currentPosts">
-      <ul aria-label="文章列表">
+      <ul :aria-label="t('tk.homePost.label')">
         <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
           <HomePostItem :post :coverImgMode />
         </li>
       </ul>
-      <div :class="`${ns.e('pagination')} flx-justify-center`" aria-label="分页导航">
+      <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <Pagination
           v-if="posts.sortPostsByDateAndSticky.length >= pageSize"
           v-model:page-size="pageSize"

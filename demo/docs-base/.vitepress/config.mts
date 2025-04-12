@@ -123,7 +123,7 @@ const teekConfig = defineTeekConfig({
     options: {
       // twikoo 配置，官网：https://twikoo.js.org/
       // envId: "https://twikoo.youngkbt.cn/",
-      // link: "https://cdn.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js",
+      // link: "https://gcore.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js",
 
       // waline 配置，官网：https://waline.js.org/
       // serverURL: "https://tk.waline.youngkbt.cn/",

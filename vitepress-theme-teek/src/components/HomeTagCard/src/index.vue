@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeTagCard">
 import { unref, watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { useTeekConfig, usePosts, useBgColor } from "../../../configProvider";
 import HomeCard from "../../HomeCard";
 import { tagIcon } from "../../../assets/icons";
@@ -12,6 +12,7 @@ import { postDataUpdateSymbol } from "../../Home/src/home";
 defineOptions({ name: "HomeTagCard" });
 
 const ns = useNamespace("tag");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
@@ -21,9 +22,10 @@ const pageNum = ref(1);
 // 标签配置项
 const tagConfig = getTeekConfigRef<Required<Tag>>("tag", {
   path: "/tags",
-  pageTitle: `${tagIcon}全部标签`,
-  homeTitle: `${tagIcon}热门标签`,
-  emptyLabel: "暂无热门标签",
+  pageTitle: t("tk.tagCard.pageTitle", { icon: tagIcon }),
+  homeTitle: t("tk.tagCard.homeTitle", { icon: tagIcon }),
+  emptyLabel: t("tk.tagCard.emptyLabel"),
+  moreLabel: t("tk.tagCard.moreLabel"),
   limit: 21,
   autoPage: false,
   pageSpeed: 4000,
@@ -126,7 +128,7 @@ watch(
     :autoPage="tagConfig.autoPage"
     :pageSpeed="tagConfig.pageSpeed"
     :class="ns.b()"
-    aria-label="首页热门标签卡片"
+    :aria-label="t('tk.tagCard.label')"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -135,7 +137,7 @@ watch(
         tag="div"
         mode="out-in"
         :class="ns.e('list')"
-        aria-label="标签列表"
+        :aria-label="t('tk.tagCard.listLabel')"
       >
         <a
           v-for="(item, index) in currentTags"
@@ -152,9 +154,9 @@ watch(
           v-if="!tagsPage && tagConfig.limit < tags.length"
           :href="withBase(tagsPageLink)"
           class="more"
-          aria-label="查看更多标签"
+          :aria-label="tagConfig.moreLabel"
         >
-          更多 ...
+          {{ tagConfig.moreLabel }}
         </a>
       </TransitionGroup>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup name="Message">
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { VPBadge } from "vitepress/theme";
-import { messageDefaults } from "./message";
+import { messagePropsDefaults, type MessageEmits, type MessageProps, type MessageType } from "./message";
 import { useEventListener, useNamespace, useZIndex } from "../../../hooks";
 import Icon from "../../Icon";
 import {
@@ -11,12 +11,11 @@ import {
   successFilledIcon,
   warningFilledIcon,
 } from "../../../assets/icons";
-import type { MessageEmits, MessageProps, MessageType } from "./message";
 import { getLastOffset, getOffsetOrSpace } from "./instance";
 
 defineOptions({ name: "Message" });
 
-const props = withDefaults(defineProps<MessageProps>(), messageDefaults as any) as Required<MessageProps>;
+const props = withDefaults(defineProps<MessageProps>(), messagePropsDefaults as any) as Required<MessageProps>;
 const emit = defineEmits<MessageEmits>();
 
 const iconsMap = {

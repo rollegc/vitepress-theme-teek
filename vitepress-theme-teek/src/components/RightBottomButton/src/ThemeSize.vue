@@ -2,7 +2,7 @@
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useStorage } from "../../../hooks";
+import { useNamespace, useLocale, useStorage } from "../../../hooks";
 import Icon from "../../Icon";
 import { sizeIcon } from "../../../assets/icons";
 import type { ThemeSetting } from "../../../config/types";
@@ -11,6 +11,7 @@ import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 defineOptions({ name: "ThemeSize" });
 
 const ns = inject(rightBottomButtonNsSymbol, useNamespace("right-bottom-button"));
+const { t } = useLocale();
 
 const { frontmatter } = useData();
 const { getTeekConfigRef } = useTeekConfig();
@@ -81,13 +82,13 @@ watch(
 
 <template>
   <div
-    :title="themeSettingConfig.titleTip.themeSize ?? '主题尺寸切换'"
+    :title="themeSettingConfig.titleTip.themeSize ?? t('tk.rightBottomButton.themeSizeTitle')"
     :class="`${ns.e('button')} size-change`"
     @mouseenter="showThemeSizeItem = true"
     @mouseleave="showThemeSizeItem = false"
     @click="showThemeSizeItem = true"
     role="button"
-    :aria-label="themeSettingConfig.titleTip.themeSize ?? '主题尺寸切换'"
+    :aria-label="themeSettingConfig.titleTip.themeSize ?? t('tk.rightBottomButton.themeSizeTitle')"
   >
     <Icon :icon="sizeIcon" aria-hidden="true" />
     <transition :name="ns.joinNamespace('mode')">

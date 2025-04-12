@@ -27,7 +27,7 @@ export type CommentProvider = {
     envId: string;
     /**
      * twikoo.js 在线链接
-     * @default 'https://cdn.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js'
+     * @default 'https://gcore.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js'
      */
     link?: string;
     /**

@@ -1,11 +1,12 @@
 <script setup lang="ts" name="HomeBannerBgPure">
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerBgPure" });
 
 const ns = useNamespace("banner-bg-pure");
+const { t } = useLocale();
 const { getTeekConfig } = useTeekConfig();
 
 const getStyle = () => {
@@ -15,7 +16,7 @@ const getStyle = () => {
 </script>
 
 <template>
-  <div :class="ns.b()" :style="getStyle()" aria-label="首页横幅背景色">
+  <div :class="ns.b()" :style="getStyle()" :aria-label="t('tk.homeBanner.bgPureLabel')">
     <slot />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup name="ImageViewer">
 import { computed, effectScope, nextTick, onMounted, ref, shallowRef, watch } from "vue";
-import { useNamespace, useDebounce, useEventListener, useZIndex } from "../../../hooks";
+import { useNamespace, useLocale, useDebounce, useEventListener, useZIndex } from "../../../hooks";
 import FocusTrap from "../../FocusTrap";
 import Icon from "../../Icon";
 import {
@@ -46,6 +46,7 @@ const emit = defineEmits<ImageViewerEmits>();
 let prevOverflow = "";
 
 const ns = useNamespace("image-viewer");
+const { t } = useLocale();
 const { nextZIndex } = useZIndex();
 const wrapper = ref<HTMLDivElement>();
 const imgRefs = ref<HTMLImageElement[]>([]);
@@ -158,7 +159,7 @@ const handleImgLoad = () => {
 
 const handleImgError = (e: Event) => {
   loading.value = false;
-  (e.target as HTMLImageElement).alt = "加载失败";
+  (e.target as HTMLImageElement).alt = t("tk.image.error");
 };
 
 const handleMouseDown = (e: MouseEvent) => {

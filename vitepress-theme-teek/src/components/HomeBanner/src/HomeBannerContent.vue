@@ -2,12 +2,14 @@
 import { computed, onMounted, onUnmounted, unref } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useTextTypes, useSwitchData } from "../../../hooks";
+import { useNamespace, useLocale, useTextTypes, useSwitchData } from "../../../hooks";
 import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerContent" });
 
 const ns = useNamespace("banner-content");
+const { t } = useLocale();
+
 const { getTeekConfigRef } = useTeekConfig();
 
 const { site, frontmatter } = useData();
@@ -78,18 +80,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :class="ns.b()" aria-label="首页横幅内容">
-    <h1 :class="ns.e('content__title')">{{ bannerConfig.name }}</h1>
+  <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
+    <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>
 
-    <p :class="ns.e('content__desc')" aria-label="首页横幅描述">
+    <p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
       <template v-if="isDefaultDescStyle">
         <span>{{ descArray[0] }}</span>
       </template>
       <template v-else-if="isSwitchDescStyle">
-        <span v-show="!!text" @click="startAutoSwitch" class="switch" aria-label="动态切换">{{ text }}</span>
+        <span v-show="!!text" @click="startAutoSwitch" class="switch" :aria-label="t('tk.homeBanner.descSwitchLabel')">
+          {{ text }}
+        </span>
       </template>
       <template v-else-if="isTypesDescStyle && descArray.length">
-        <span aria-label="打字效果">{{ typesText }}</span>
+        <span :aria-label="t('tk.homeBanner.descTypedLabel')">{{ typesText }}</span>
         <span :class="['typed', { 'is-animation': isFinished }]">|</span>
       </template>
     </p>

@@ -19,7 +19,7 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
 
     <template v-else>
       <div :id="item.title" :class="nsSub.e('title')" role="group" :aria-labelledby="`${item.title}-label`">
-        <a :href="`#${item.title}`" class="anchor" :aria-label="`锚点: ${item.title}`">#</a>
+        <a :href="`#${item.title}`" class="anchor" :aria-label="item.title">#</a>
         <span :id="`${item.title}-label`">{{ `${index}. ${item.title}` }}</span>
       </div>
 

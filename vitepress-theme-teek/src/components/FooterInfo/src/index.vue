@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
 // @ts-ignore
 import securityRecordImg from "../../../assets/img/securityRecord.png";
@@ -12,6 +12,7 @@ import type { FooterInfo, Social } from "../../../config/types";
 defineOptions({ name: "FooterInfo" });
 
 const ns = useNamespace("footer-info");
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 
@@ -59,16 +60,21 @@ const footerData = computed(() => {
     v-if="footerInfo || social.length"
     :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]"
     role="contentinfo"
-    aria-label="页脚信息"
+    :aria-label="t('tk.footerInfo.label')"
   >
-    <div v-if="social.length" :class="`${ns.e('icons')} flx-center`" role="group" aria-label="社交媒体链接">
+    <div
+      v-if="social.length"
+      :class="`${ns.e('icons')} flx-center`"
+      role="group"
+      :aria-label="t('tk.footerInfo.socialLabel')"
+    >
       <a
         v-for="(item, index) in social"
         :key="index"
         :href="item.link && withBase(item.link)"
         :title="item.name"
         target="_blank"
-        :aria-label="`访问 ${item.name}`"
+        :aria-label="item.name"
       >
         <template v-if="item.icon">
           <Icon
@@ -88,7 +94,7 @@ const footerData = computed(() => {
     <template v-if="footerInfo">
       <p v-for="(message, index) in [footerInfo.topMessage || []].flat()" :key="index" v-html="message" />
 
-      <div :class="`${ns.e('list')} flx-wrap-justify-center`" role="list" aria-label="页脚内容">
+      <div :class="`${ns.e('list')} flx-wrap-justify-center`" role="list" :aria-label="t('tk.footerInfo.infoLabel')">
         <div
           v-for="item in footerData"
           :key="item.name"
@@ -112,7 +118,7 @@ const footerData = computed(() => {
           <span v-else>{{ item.name }}</span>
         </div>
 
-        <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml"></span>
+        <span v-if="footerInfo.customHtml" v-html="footerInfo.customHtml" />
       </div>
 
       <p v-for="(message, index) in [footerInfo.bottomMessage || []].flat()" :key="index" v-html="message" />

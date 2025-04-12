@@ -2,7 +2,7 @@
 import { computed, ref, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig, usePosts, useBgColor } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { topArticleIcon } from "../../../assets/icons";
 import { TkContentData } from "../../../post/types";
@@ -12,14 +12,15 @@ import type { TopArticle } from "../../../config/types";
 defineOptions({ name: "HomeTopArticleCard" });
 
 const ns = useNamespace("top-article");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const posts = usePosts();
 
 // 精选文章配置项
 const topArticleConfig = getTeekConfigRef<Required<TopArticle>>("topArticle", {
   limit: 4,
-  title: `${topArticleIcon}精选文章`,
-  emptyLabel: "暂无精选文章",
+  title: t("tk.topArticleCard.title", { icon: topArticleIcon }),
+  emptyLabel: t("tk.topArticleCard.emptyLabel"),
   autoPage: false,
   pageSpeed: 4000,
   dateFormat: "yyyy-MM-dd hh:mm:ss",
@@ -75,7 +76,7 @@ const getStyle = (num: number, index: number) => {
     :autoPage="topArticleConfig.autoPage"
     :pageSpeed="topArticleConfig.pageSpeed"
     :class="ns.b()"
-    aria-label="首页精选文章卡片"
+    :aria-label="t('tk.topArticleCard.label')"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -84,7 +85,7 @@ const getStyle = (num: number, index: number) => {
         tag="ul"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
-        aria-label="精选文章列表"
+        :aria-label="t('tk.topArticleCard.listLabel')"
       >
         <li
           ref="itemRefs"

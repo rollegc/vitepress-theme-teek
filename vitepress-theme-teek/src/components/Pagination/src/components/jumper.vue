@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useNamespace } from "../../../../hooks";
+import { useNamespace, useLocale } from "../../../../hooks";
 import { usePagination } from "../usePagination";
-import { PaginationJumperProps } from "./jumper";
+import type { PaginationJumperProps } from "./jumper";
 
 defineOptions({ name: "PaginationJumper" });
 
 const { size = "default" } = defineProps<PaginationJumperProps>();
 
 const ns = useNamespace("pagination");
+const { t } = useLocale();
 const { pageCount, disabled, currentPage, changeEvent } = usePagination();
 const userInput = ref<number | string>(currentPage?.value || 1);
 
@@ -24,15 +25,15 @@ const handleChange = (event: Event) => {
 
 <template>
   <span :class="ns.e('jump')" :disabled="disabled">
-    <span :class="[ns.e('goto')]">前往</span>
+    <span :class="[ns.e('goto')]">{{ t("tk.pagination.goto") }}</span>
     <input
       type="number"
       v-model="userInput"
       :disabled="disabled"
       @change="handleChange"
-      aria-label="页"
+      :aria-label="t('tk.pagination.page')"
       :class="[ns.e('input'), ns.em('input', size)]"
     />
-    <span :class="[ns.e('classifier')]">页</span>
+    <span :class="[ns.e('classifier')]">{{ t("tk.pagination.pageClassifier") }}</span>
   </span>
 </template>

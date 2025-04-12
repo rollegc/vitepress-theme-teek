@@ -2,7 +2,7 @@
 import { withBase } from "vitepress";
 import { computed, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import Icon from "../../Icon";
 import Avatar from "../../Avatar";
@@ -12,6 +12,7 @@ import type { AvatarProps } from "../../Avatar/src/avatar";
 defineOptions({ name: "HomeMyCard" });
 
 const ns = useNamespace("my");
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 
@@ -24,7 +25,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
 <template>
   <slot name="teek-home-my-before" />
 
-  <HomeCard :class="ns.b()" aria-label="我的信息卡片">
+  <HomeCard :class="ns.b()" :aria-label="t('tk.myCard.label')">
     <div :class="`${ns.e('avatar')} ${blogger.shape} flx-center`">
       <Avatar
         v-if="blogger.avatar"
@@ -32,8 +33,8 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
         :size="blogger.shape === 'square' ? '100%' : 100"
         :shape
         bg-color="transparent"
-        alt="头像"
-        title="我好看吗"
+        :alt="t('tk.myCard.avatarAlt')"
+        :title="t('tk.myCard.avatarTitle')"
         aria-hidden="true"
       />
       <Avatar
@@ -46,7 +47,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
       />
     </div>
 
-    <div v-if="social.length" :class="`${ns.e('icons')} flx-justify-around`" aria-label="社交链接">
+    <div v-if="social.length" :class="`${ns.e('icons')} flx-justify-around`" :aria-label="t('tk.myCard.socialLabel')">
       <a
         v-for="(item, index) in social"
         :key="index"
@@ -68,7 +69,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as Avat
       </a>
     </div>
 
-    <div :class="ns.e('blogger')" aria-label="博主信息">
+    <div :class="ns.e('blogger')" :aria-label="t('tk.myCard.bloggerLabel')">
       <span class="name">{{ blogger.name }}</span>
       <span class="slogan">{{ blogger.slogan }}</span>
     </div>

@@ -2,7 +2,7 @@
 import { ref, computed, unref, defineAsyncComponent } from "vue";
 import { useData } from "vitepress";
 import Message from "../../Message";
-import { useNamespace, useClipboard } from "../../../hooks";
+import { useNamespace, useLocale, useClipboard } from "../../../hooks";
 import Icon from "../../Icon";
 import TransitionCollapse from "../../TransitionCollapse";
 import type { DemoCodeProps } from "./demoCode";
@@ -13,6 +13,7 @@ defineOptions({ name: "DemoCode" });
 const props = defineProps<DemoCodeProps>();
 
 const ns = useNamespace("demo-code");
+const { t } = useLocale();
 const { copy, copied, isSupported } = useClipboard();
 const { frontmatter, isDark } = useData();
 
@@ -20,11 +21,11 @@ const {
   playgroundUrl = "",
   playgroundMainFileName = "App.vue",
   githubUrl = "",
-  playgroundButtonTip = "在 Playground 中编辑",
-  githubButtonTip = "在 Github 中编辑",
-  copyButtonTip = "复制代码",
-  collapseSourceButtonTip = "查看源代码",
-  expandSourceButtonTip = "隐藏源代码",
+  playgroundButtonTip = t("tk.demoCode.playground"),
+  githubButtonTip = t("tk.demoCode.github"),
+  copyButtonTip = t("tk.demoCode.copy"),
+  collapseSourceButtonTip = t("tk.demoCode.collapseSource"),
+  expandSourceButtonTip = t("tk.demoCode.expandSource"),
 } = { ...JSON.parse(decodeURIComponent(props.demo)), ...unref(frontmatter).demo };
 
 const decodeSource = computed(() => decodeURIComponent(props.source));
@@ -88,17 +89,17 @@ const handleEditGithub = () => {
  * 复制源代码
  */
 const copyCode = async () => {
-  if (!isSupported) console.error("浏览器不支持复制");
+  if (!isSupported) console.error(t("tk.demoCode.notSupport"));
 
   await copy(unref(decodeRawSource));
 
   unref(copied)
     ? Message.success({
-        message: "复制成功",
+        message: t("tk.demoCode.copySuccess"),
         plain: true,
       })
     : Message.error({
-        message: "复制失败",
+        message: t("tk.demoCode.copyFail"),
         plain: true,
       });
 };

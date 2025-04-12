@@ -2,7 +2,7 @@
 import { computed, unref, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
 import { useTeekConfig, usePosts } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { categoryIcon } from "../../../assets/icons";
 import { isFunction } from "../../../helper";
@@ -14,15 +14,17 @@ defineOptions({ name: "HomeCategoryCard" });
 const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 
 const ns = useNamespace("category");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const { localeIndex, site } = useData();
 
 // 分类配置项
 const categoryConfig = getTeekConfigRef<Required<Category>>("category", {
   path: "/categories",
-  pageTitle: `${categoryIcon}全部分类`,
-  homeTitle: `${categoryIcon}文章分类`,
-  emptyLabel: "暂无文章分类",
+  pageTitle: t("tk.categoryCard.pageTitle", { icon: categoryIcon }),
+  homeTitle: t("tk.categoryCard.homeTitle", { icon: categoryIcon }),
+  emptyLabel: t("tk.categoryCard.emptyLabel"),
+  moreLabel: t("tk.categoryCard.moreLabel"),
   limit: 5,
   autoPage: false,
   pageSpeed: 4000,
@@ -120,7 +122,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :autoPage="categoryConfig.autoPage"
     :pageSpeed="categoryConfig.pageSpeed"
     :class="ns.b()"
-    aria-label="首页热门分类卡片"
+    :aria-label="t('tk.categoryCard.label')"
   >
     <template #default="{ transitionName }">
       <TransitionGroup
@@ -129,7 +131,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
         tag="div"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
-        aria-label="分类列表"
+        :aria-label="t('tk.categoryCard.listLabel')"
       >
         <a
           ref="itemRefs"
@@ -147,9 +149,9 @@ const itemRefs = ref<HTMLLIElement[]>([]);
         <a
           v-if="!categoriesPage && categoryConfig.limit < categories.length"
           :href="withBase(categoriesPageLink)"
-          aria-label="查看更多分类"
+          :aria-label="categoryConfig.moreLabel"
         >
-          更多 ...
+          {{ categoryConfig.moreLabel }}
         </a>
       </TransitionGroup>
 

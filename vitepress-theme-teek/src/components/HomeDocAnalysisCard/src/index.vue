@@ -2,7 +2,7 @@
 import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { useTeekConfig, usePosts } from "../../../configProvider";
-import { useNamespace, useBuSunZi, type UseBuSunZi } from "../../../hooks";
+import { useNamespace, useLocale, useBuSunZi, type UseBuSunZi } from "../../../hooks";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "../../../helper";
 import HomeCard from "../../HomeCard";
 import { docAnalysisIcon } from "../../../assets/icons";
@@ -11,13 +11,14 @@ import type { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
 defineOptions({ name: "HomeDocAnalysisCard" });
 
 const ns = useNamespace("doc-analysis");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const { theme } = useData();
 
 // 站点信息配置项
 const docAnalysisConfig = getTeekConfigRef<Required<DocAnalysis>>("docAnalysis", {
   createTime: undefined,
-  title: `${docAnalysisIcon}站点信息`,
+  title: t("tk.docAnalysisCard.title", { icon: docAnalysisIcon }),
   statistics: {},
   overrideInfo: [],
   appendInfo: [],
@@ -107,52 +108,52 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
   const list: DocAnalysisResolve[] = [
     {
       key: "totalPosts",
-      label: "文章数目",
+      label: t("tk.docAnalysisCard.totalPosts"),
       originValue: fileList.length,
-      value: `${fileList.length} 篇`,
+      value: `${fileList.length} ${t("tk.docAnalysisCard.fileUnit")}`,
     },
     {
       key: "weekAddNum",
-      label: "近一周新增",
+      label: t("tk.docAnalysisCard.weekAddNum"),
       originValue: unref(postAddNum)?.weekAddNum,
-      value: `${unref(postAddNum)?.weekAddNum} 篇`,
+      value: `${unref(postAddNum)?.weekAddNum} ${t("tk.docAnalysisCard.fileUnit")}`,
     },
     {
       key: "monthAddNum",
-      label: "近一月新增",
+      label: t("tk.docAnalysisCard.monthAddNum"),
       originValue: unref(postAddNum)?.monthAddNum,
-      value: `${unref(postAddNum)?.monthAddNum} 篇`,
+      value: `${unref(postAddNum)?.monthAddNum} ${t("tk.docAnalysisCard.fileUnit")}`,
     },
     {
       key: "runtime",
-      label: "已运行时间",
+      label: t("tk.docAnalysisCard.runtime"),
       originValue: createTime,
-      value: `${unref(createToNowDay) === 0 ? "不到一天" : `${unref(createToNowDay)} 天`}`,
+      value: `${unref(createToNowDay) === 0 ? t("tk.docAnalysisCard.runtimeLess") : `${unref(createToNowDay)} ${t("tk.docAnalysisCard.runtimeUnit")}`}`,
     },
     {
       key: "totalWordCount",
-      label: "本站总字数",
+      label: t("tk.docAnalysisCard.totalWordCount"),
       originValue: totalFileWords,
-      value: `${formatWordCount(totalFileWords)} 字`,
+      value: `${formatWordCount(totalFileWords)} ${t("tk.docAnalysisCard.wordCountUnit")}`,
     },
     {
       key: "lastActiveTime",
-      label: "最后活动时间",
+      label: t("tk.docAnalysisCard.lastActiveTime"),
       originValue: lastCommitTime,
       value: formatDiffDate(lastCommitTime),
     },
     {
       key: "viewCount",
-      label: "本站被访问了",
+      label: t("tk.docAnalysisCard.viewCount"),
       originValue: unref(sitePv),
-      value: unref(isGet) ? `${unref(sitePv)} 次` : "Get...",
+      value: unref(isGet) ? `${unref(sitePv)} ${t("tk.docAnalysisCard.viewCountUnit")}` : "Get...",
       show: useSiteView,
     },
     {
       key: "visitCount",
-      label: "本站曾来访过",
+      label: t("tk.docAnalysisCard.visitCount"),
       originValue: unref(siteUv),
-      value: unref(isGet) ? `${unref(siteUv)} 人` : "Get...",
+      value: unref(isGet) ? `${unref(siteUv)} ${t("tk.docAnalysisCard.visitCountUnit")}` : "Get...",
       show: useSiteView,
     },
     ...(appendInfo as any[]),
@@ -176,7 +177,7 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
 <template>
   <slot name="teek-home-doc-analysis-before" />
 
-  <HomeCard :title="finalTitle" :class="ns.b()" aria-label="首页站点分析卡片">
+  <HomeCard :title="finalTitle" :class="ns.b()" :aria-label="t('tk.docAnalysisCard.label')">
     <template v-for="item in docAnalysisList" :key="item.key">
       <div v-if="item.show !== false" :class="ns.e('item')">
         <span v-html="item.label" />

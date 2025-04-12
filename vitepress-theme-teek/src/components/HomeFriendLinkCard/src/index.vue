@@ -2,7 +2,7 @@
 import { computed, ref, unref, onMounted, onUnmounted } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useScrollData } from "../../../hooks";
+import { useNamespace, useLocale, useScrollData } from "../../../hooks";
 import HomeCard from "../../HomeCard";
 import { createImageViewer } from "../../ImageViewer";
 import { friendLinkIcon } from "../../../assets/icons";
@@ -12,14 +12,15 @@ import type { FriendLink } from "../../../config/types";
 defineOptions({ name: "HomeFriendLinkCard" });
 
 const ns = useNamespace("friend-link");
+const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 
 // 友情链接配置项
 const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
   list: [],
   limit: 4,
-  title: `${friendLinkIcon}友情链接`,
-  emptyLabel: "暂无友情链接",
+  title: t("tk.friendLinkCard.title", { icon: friendLinkIcon }),
+  emptyLabel: t("tk.friendLinkCard.emptyLabel"),
   autoScroll: false,
   scrollSpeed: 2500,
   autoPage: false,
@@ -94,7 +95,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
     :autoPage="friendLinkConfig.autoPage"
     :pageSpeed="friendLinkConfig.pageSpeed"
     :class="ns.b()"
-    aria-label="首页友情链接卡片"
+    :aria-label="t('tk.friendLinkCard.label')"
   >
     <template #default="{ transitionName, startAutoPage, closeAutoPage }">
       <TransitionGroup
@@ -109,7 +110,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         @mouseleave="
           friendLinkConfig.autoScroll ? startAutoScroll() : friendLinkConfig.autoPage ? startAutoPage() : () => {}
         "
-        aria-label="友情链接列表"
+        :aria-label="t('tk.friendLinkCard.listLabel')"
       >
         <li
           :ref="friendLinkConfig.autoScroll ? '' : 'itemRefs'"

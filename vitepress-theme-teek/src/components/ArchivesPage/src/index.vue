@@ -1,12 +1,13 @@
 <script setup lang="ts" name="ArchivesPage">
 import { withBase, useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { usePosts } from "../../../configProvider";
 import { computed, unref } from "vue";
 
 defineOptions({ name: "ArchivesPage" });
 
 const ns = useNamespace("archives");
+const { t } = useLocale();
 
 const { frontmatter } = useData();
 
@@ -14,18 +15,18 @@ const posts = usePosts();
 
 const defaultLabel = computed(() => {
   return {
-    title: unref(frontmatter).title ?? "归档",
-    totalCount: unref(frontmatter).totalCount ?? "总共 {count} 篇文章",
-    year: unref(frontmatter).year ?? "年",
-    month: unref(frontmatter).month ?? "月",
-    count: unref(frontmatter).count ?? "篇",
-    notFound: unref(frontmatter).notFound ?? "未指定",
+    title: unref(frontmatter).title ?? t("tk.archives.title"),
+    totalCount: unref(frontmatter).totalCount ?? t("tk.archives.totalCount"),
+    year: unref(frontmatter).year ?? t("tk.archives.year"),
+    month: unref(frontmatter).month ?? t("tk.archives.month"),
+    count: unref(frontmatter).count ?? t("tk.archives.count"),
+    notFound: unref(frontmatter).notFound ?? t("tk.archives.notFound"),
   };
 });
 </script>
 
 <template>
-  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="defaultLabel.title">
+  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="t('tk.archives.label')">
     <slot name="teek-archives-top-before" />
 
     <div :class="`${ns.e('header')} flx-justify-between`">

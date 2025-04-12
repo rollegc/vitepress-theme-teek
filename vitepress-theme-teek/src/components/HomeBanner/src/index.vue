@@ -2,7 +2,7 @@
 import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import { upperFirst } from "../../../helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
@@ -14,6 +14,8 @@ import type { Banner, BodyBgImg } from "../../../config/types";
 defineOptions({ name: "HomeBanner" });
 
 const ns = useNamespace("banner");
+const { t } = useLocale();
+
 const { getTeekConfigRef } = useTeekConfig();
 const { frontmatter } = useData();
 
@@ -139,7 +141,7 @@ const styleComponent = computed(() => {
 <template>
   <slot name="teek-home-banner-before" />
 
-  <div ref="bannerRef" :class="[ns.b(), className]" :style="getStyle()">
+  <div ref="bannerRef" :class="[ns.b(), className]" :style="getStyle()" :aria-label="t('tk.homeBanner.label')">
     <component :is="styleComponent.el" v-bind="styleComponent.props">
       <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />
@@ -154,7 +156,7 @@ const styleComponent = computed(() => {
 
     <HomeBannerWaves
       v-if="bannerConfig.imgWaves && currentBgStyle.isBannerFullImgBgStyle && !currentBgStyle.isBodyImgBgStyle"
-      aria-label="首页横幅波浪"
+      :aria-label="t('tk.homeBanner.wavesLabel')"
     />
   </div>
 

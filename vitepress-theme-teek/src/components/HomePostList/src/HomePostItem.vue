@@ -2,7 +2,7 @@
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import type { TkContentData } from "../../../post/types";
 import { createImageViewer } from "../../ImageViewer";
 import ArticleInfo from "../../ArticleInfo";
@@ -11,6 +11,7 @@ import type { Article, Post } from "../../../config/types";
 defineOptions({ name: "HomePostItem" });
 
 const ns = useNamespace("post-item");
+const { t } = useLocale();
 const { post, coverImgMode } = defineProps<{ post: TkContentData; coverImgMode: "default" | "full" }>();
 
 const { getTeekConfigRef } = useTeekConfig();
@@ -18,7 +19,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const postConfig = getTeekConfigRef<Post>("post", {
   excerptPosition: "bottom",
   showMore: true,
-  moreLabel: "阅读全文 >",
+  moreLabel: t("tk.homePost.moreLabel"),
   showCapture: false,
   splitSeparator: false,
   imageViewer: {},
@@ -70,7 +71,12 @@ const isShowInfo = computed(() => {
 
 <template>
   <div :class="ns.b()">
-    <i v-if="!!post.frontmatter.sticky" class="pin" :title="`置顶：${post.frontmatter.sticky}`" aria-label="置顶标志" />
+    <i
+      v-if="!!post.frontmatter.sticky"
+      class="pin"
+      :title="t('tk.homePost.pin', { sticky: post.frontmatter.sticky })"
+      :aria-label="t('tk.homePost.pinLabel')"
+    />
 
     <div :class="[ns.e('info'), 'flx']">
       <div :class="ns.e('info__left')">
@@ -83,7 +89,7 @@ const isShowInfo = computed(() => {
         <div
           v-if="excerpt && postConfig.excerptPosition === 'top'"
           :class="`${ns.e('info__left__excerpt')} top`"
-          aria-label="文章摘要"
+          :aria-label="t('tk.homePost.excerptLabel')"
         >
           <div class="excerpt" v-html="excerpt" />
           <a v-if="postConfig.showMore" class="more" :href="postUrl" :aria-label="postConfig.moreLabel">
@@ -92,7 +98,7 @@ const isShowInfo = computed(() => {
         </div>
 
         <!-- 文章信息 -->
-        <div :class="ns.e('info__left__footer')" aria-label="文章信息">
+        <div :class="ns.e('info__left__footer')" :aria-label="t('tk.homePost.infoLabel')">
           <ArticleInfo v-if="isShowInfo" :post scope="post" :split="postConfig.splitSeparator" />
         </div>
 
@@ -100,7 +106,7 @@ const isShowInfo = computed(() => {
         <div
           v-if="excerpt && postConfig.excerptPosition === 'bottom'"
           :class="`${ns.e('info__left__excerpt')} bottom`"
-          aria-label="文章摘要"
+          :aria-label="t('tk.homePost.excerptLabel')"
         >
           <div class="excerpt" v-html="excerpt" />
           <a v-if="postConfig.showMore" class="more" :href="postUrl" :aria-label="postConfig.moreLabel">
@@ -114,7 +120,7 @@ const isShowInfo = computed(() => {
         <div
           v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length"
           class="cover-img"
-          aria-label="文章封面图"
+          :aria-label="t('tk.homePost.coverImgLabel')"
         >
           <component
             :is="coverImgMap[coverImgMode].is"

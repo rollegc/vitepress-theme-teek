@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticleShare">
 import { computed } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useClipboard, useNamespace } from "../../../hooks";
+import { useClipboard, useNamespace, useLocale } from "../../../hooks";
 import Icon from "../../Icon";
 import { shareIcon, thumbsIcon } from "../../../assets/icons";
 import type { ArticleShare } from "../../../config";
@@ -9,12 +9,14 @@ import type { ArticleShare } from "../../../config";
 defineOptions({ name: "ArticleShare" });
 
 const ns = useNamespace("article-share");
+const { t } = useLocale();
+
 const { getTeekConfigRef } = useTeekConfig();
 const articleShareConfig = getTeekConfigRef<ArticleShare>("articleShare", {
   icon: shareIcon,
-  text: "分享此页面",
+  text: t("tk.articleShare.text"),
   copiedIcon: thumbsIcon,
-  copiedText: "链接已复制",
+  copiedText: t("tk.articleShare.copiedText"),
   query: false,
   hash: false,
 });

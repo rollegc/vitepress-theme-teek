@@ -37,9 +37,9 @@ export interface FriendLink {
   /**
    * 首页卡片标题
    *
-   * @default '${svg}友情链接'
+   * @default '${icon}友情链接'
    */
-  title?: string | ((svg: string) => string);
+  title?: string | ((icon: string) => string);
   /**
    * 友情链接为空时的标签
    *

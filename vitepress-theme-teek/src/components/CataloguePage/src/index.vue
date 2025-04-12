@@ -1,12 +1,13 @@
 <script setup lang="ts" name="CataloguePage">
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
+import { useNamespace, useLocale } from "../../../hooks";
 import CatalogueItem from "./CatalogueItem.vue";
 
 defineOptions({ name: "CataloguePage" });
 
 const ns = useNamespace("catalogue");
+const { t } = useLocale();
 
 const { theme, frontmatter } = useData();
 
@@ -15,7 +16,7 @@ const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter
 </script>
 
 <template>
-  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" aria-label="目录页面">
+  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="t('tk.catalogue.label')">
     <slot name="teek-catalogue-top-before" />
 
     <div :class="ns.e('header')" role="group" aria-labelledby="catalogue-header-title">
@@ -26,7 +27,7 @@ const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter
     <slot name="teek-catalogue-top-after" />
 
     <div :class="ns.e('wrapper')" aria-labelledby="catalogue-list-title">
-      <div id="catalogue-list-title" class="title">{{ frontmatter.pageTitle || "目录" }}</div>
+      <div id="catalogue-list-title" class="title">{{ frontmatter.pageTitle || t("tk.catalogue.title") }}</div>
       <ul class="flx-wrap-between">
         <template v-for="(item, index) in catalogues" :key="index">
           <CatalogueItem :item :index="index + 1" />
@@ -34,7 +35,7 @@ const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter
       </ul>
     </div>
 
-    <div class="vp-doc" aria-label="文档内容">
+    <div class="vp-doc" :aria-label="t('tk.catalogue.docLabel')">
       <Content />
     </div>
   </div>

@@ -13,7 +13,7 @@ export interface MessageConfigContext {
   showClose?: boolean;
 }
 
-export const messageDefaults = {
+export const messagePropsDefaults = {
   customClass: "",
   center: false,
   dangerouslyUseHTMLString: false,
@@ -29,6 +29,10 @@ export const messageDefaults = {
   zIndex: 0,
   grouping: false,
   repeatNum: 1,
+};
+
+export const messageDefaults = {
+  ...messagePropsDefaults,
   appendTo: inBrowser ? document.body : (undefined as never),
 };
 

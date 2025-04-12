@@ -2,12 +2,13 @@
 import { useData, withBase } from "vitepress";
 import { ref, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useWindowSize } from "../../../hooks";
+import { useNamespace, useLocale, useWindowSize } from "../../../hooks";
 import type { Banner } from "../../../config/types";
 
 defineOptions({ name: "HomeBannerFeature" });
 
 const ns = useNamespace("banner-feature");
+const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
 const { frontmatter } = useData();
@@ -43,7 +44,7 @@ useWindowSize(width => {
     :name="ns.joinNamespace('slide-next')"
     tag="div"
     :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-wrap-between']"
-    aria-label="首页横幅功能特性"
+    :aria-label="t('tk.homeBanner.featureLabel')"
   >
     <div
       :class="ns.e('feature__item')"

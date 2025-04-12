@@ -21,3 +21,15 @@ export const addUnit = (value?: string | number, defaultUnit = "px") => {
   else if (isString(value)) return value;
   return "";
 };
+
+/**
+ * 获取对象值
+ */
+export const get = (object: Record<string, any>, path: string, defaultValue?: any) => {
+  let obj = { ...object };
+  if (!path.includes(".")) return obj[path] || defaultValue;
+  else {
+    path.split(".").forEach(item => (obj = obj[item] ?? ""));
+    return obj || defaultValue;
+  }
+};
