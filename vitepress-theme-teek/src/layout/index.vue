@@ -10,6 +10,7 @@ import {
   TkArchivesPage,
   TkAsideBottomAppreciation,
   TkDocAfterAppreciation,
+  TkArticleHeadingHighlight,
   TkCataloguePage,
   TkArticleAnalyze,
   TkArticleImagePreview,
@@ -99,6 +100,8 @@ const topTipConfig = computed(() => {
           <slot :name="name" />
         </template>
       </TkNotice>
+
+      <TkArticleHeadingHighlight />
     </ClientOnly>
 
     <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">

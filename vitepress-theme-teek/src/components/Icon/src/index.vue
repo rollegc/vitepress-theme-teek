@@ -38,9 +38,7 @@ const finalIcon = computed<any>(() => {
   return icon;
 });
 
-const getFontIconType = () => {
-  if (!isString(icon)) return "iconfont";
-
+const getFontIconType = (): icon is string => {
   if (iconType && ["unicode", "iconfont", "symbol"].includes(iconType)) {
     return iconType as unknown as "unicode" | "iconfont" | "symbol";
   }
@@ -48,8 +46,6 @@ const getFontIconType = () => {
   if (icon.toLowerCase().startsWith("if-")) return "iconfont";
   if (icon.toLowerCase().startsWith("uni-")) return "unicode";
   if (icon.toLowerCase().startsWith("sym-")) return "symbol";
-
-  return "iconfont";
 };
 
 const isSvgIcon = () => isString(icon) && (iconType === "svg" || icon.startsWith("<svg"));

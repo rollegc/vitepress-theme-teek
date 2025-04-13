@@ -4,6 +4,7 @@ export * from "./ArticleAppreciation";
 export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
 export * from "./ArticleBreadcrumb";
+export * from "./ArticleHeadingHighlight";
 export * from "./ArticlePageStyle";
 export * from "./ArticleShare";
 export * from "./Avatar";
