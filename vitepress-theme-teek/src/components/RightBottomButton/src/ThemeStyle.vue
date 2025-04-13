@@ -23,9 +23,10 @@ const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSettin
   titleTip: {},
 });
 
+const themeStyleStorageKey = ns.joinNamespace("themeStyle");
 // 主题样式
 const showThemeStyleItem = ref(false);
-const currentThemeStyle = ref(unref(themeSettingConfig).themeStyle);
+const currentThemeStyle = useStorage(themeStyleStorageKey, unref(themeSettingConfig).themeStyle);
 
 const themeStyleList = computed(() => {
   const { themeStyleLabel, themeStyleAppend } = unref(themeSettingConfig);
@@ -54,34 +55,16 @@ const themeStyleList = computed(() => {
   ];
 });
 
-const themeStyleStorageKey = ns.joinNamespace("themeStyle");
-const localStorage = useStorage("localStorage");
 const attribute = "theme-style";
 
 /**
  * 修改主题风格
  */
-const changeTheme = (value: string, isDoc = false) => {
-  // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
-  if ([document.documentElement.getAttribute(attribute), undefined, "undefined"].includes(value)) return;
+const changeTheme = (value: string) => {
+  if ([document.documentElement.getAttribute(attribute)].includes(value)) return;
 
   currentThemeStyle.value = value;
   document.documentElement.setAttribute(attribute, value);
-
-  // 只存储全局配置到本地
-  if (!isDoc) localStorage.setStorage(themeStyleStorageKey, value);
-};
-
-/**
- * 修改文章页的主题风格，仅当 frontmatter.themeStyle 存在时生效
- */
-const changeDocTheme = (value: string) => {
-  const { themeStyle } = unref(themeSettingConfig);
-  if (value) changeTheme(value, true);
-  else {
-    // 初始化/还原主题风格
-    changeTheme(localStorage.getStorage(themeStyleStorageKey) || themeStyle);
-  }
 };
 
 watch(
@@ -89,10 +72,14 @@ watch(
   (newValue: string) => changeTheme(newValue)
 );
 
-// 文章页主题风格设置
+/**
+ * 修改文章页的主题风格，仅当 frontmatter.themeStyle 存在时生效
+ */
 watch(
   () => unref(frontmatter).themeStyle,
-  (docThemeStyle: string) => changeDocTheme(docThemeStyle),
+  (docThemeStyle: string) => {
+    if (docThemeStyle) changeTheme(docThemeStyle);
+  },
   { immediate: true }
 );
 </script>

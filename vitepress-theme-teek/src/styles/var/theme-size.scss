@@ -98,20 +98,20 @@ html[theme-size="small"] {
   }
 }
 
-@media (min-width: 960px) {
-  /* 数值越大，侧边栏约靠近屏幕左侧 */
-  html[theme-size="wide"] {
-    --vp-layout-max-width: 97vw;
-    --vp-sidebar-width: 290px;
-    --vp-content-container: 100vw;
-  }
-  html[theme-size="large"] {
-    --vp-layout-max-width: 90%;
-    --vp-content-container: 63vw;
-  }
-  html[theme-size="small"] {
-    --vp-layout-max-width: 1300px;
-    --vp-sidebar-width: 290px;
-    --vp-content-container: 688px;
-  }
-}
+// @media (min-width: 960px) {
+//   /* 数值越大，侧边栏约靠近屏幕左侧 */
+//   html[theme-size="wide"] {
+//     --vp-layout-max-width: 97vw;
+//     --vp-sidebar-width: 290px;
+//     --vp-content-container: 100vw;
+//   }
+//   html[theme-size="large"] {
+//     --vp-layout-max-width: 90%;
+//     --vp-content-container: 63vw;
+//   }
+//   html[theme-size="small"] {
+//     --vp-layout-max-width: 1300px;
+//     --vp-sidebar-width: 290px;
+//     --vp-content-container: 688px;
+//   }
+// }

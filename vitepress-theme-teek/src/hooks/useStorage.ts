@@ -1,53 +1,52 @@
-// 获取传入的值的类型
-const getValueType = (value: any) => {
-  const type = Object.prototype.toString.call(value);
-  return type.slice(8, -1);
-};
+import { onMounted, ref, watchEffect } from "vue";
 
-/**
- * 创建一个用于管理存储的函数，根据传入的存储类型（sessionStorage 或 localStorage）返回相应的操作函数
- *
- * @param type 存储类型，默认为 sessionStorage
- */
-export const useStorage = (type: "sessionStorage" | "localStorage" = "sessionStorage") => {
-  const getStorage = (key: string) => {
-    const value = window[type].getItem(key);
-    if (value) {
-      const { value: val } = JSON.parse(value);
-      return val;
-    } else return value;
-  };
+type StorageType = "localStorage" | "sessionStorage";
 
-  const setStorage = (key: string, value: any) => {
-    const valueType = getValueType(value);
-    window[type].setItem(key, JSON.stringify({ _type: valueType, value }));
-  };
+export const useStorage = <T = any>(key: string, initialValue: T, storageType: StorageType = "localStorage") => {
+  const storage = storageType === "localStorage" ? localStorage : sessionStorage;
 
-  const removeStorage = (key: string) => {
-    window[type].removeItem(key);
-  };
+  const storedValue = storage.getItem(key);
+  let parsedValue: T;
 
-  const removeStorages = (key: string[]) => {
-    key.forEach(key => window[type].removeItem(key));
-  };
+  if (storedValue === null || storedValue === undefined || storedValue === "") parsedValue = initialValue;
+  else {
+    try {
+      parsedValue = JSON.parse(storedValue);
+    } catch (error) {
+      console.error(`[Teek Error] Failed to parse stored value for key "${key}":`, error);
+      parsedValue = initialValue;
+    }
+  }
 
-  const clear = (excludes?: string[]) => {
-    // 获取排除项
-    const keys = Object.keys(window[type]);
-    const defaultExcludes = [""];
-    const excludesArr = excludes ? [...excludes, ...defaultExcludes] : defaultExcludes;
-    const excludesKeys = excludesArr ? keys.filter(key => !excludesArr.includes(key)) : keys;
-    // 排除项不清除
-    excludesKeys.forEach(key => {
-      window[type].removeItem(key);
-    });
-  };
+  const value = ref<T>(parsedValue);
 
-  return {
-    setStorage,
-    getStorage,
-    removeStorage,
-    removeStorages,
-    clear,
-  };
+  watchEffect(() => {
+    storage.setItem(key, JSON.stringify(value.value));
+  });
+
+  onMounted(() => {
+    window.addEventListener(
+      "storage",
+      event => {
+        console.log(1);
+        if (event?.storageArea !== storage) return;
+        if (event?.key == null) return;
+        if (event?.key !== key) return;
+
+        const newValue = event.newValue;
+        if (newValue === null || newValue === undefined || newValue === "") value.value = initialValue;
+        else {
+          try {
+            value.value = JSON.parse(newValue);
+          } catch (error) {
+            console.error(`[Teek Error] Failed to parse new stored value for key "${key}":`, error);
+            value.value = initialValue;
+          }
+        }
+      },
+      { passive: true }
+    );
+  });
+
+  return value;
 };

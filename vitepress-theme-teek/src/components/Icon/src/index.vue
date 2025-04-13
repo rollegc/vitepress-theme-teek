@@ -38,7 +38,7 @@ const finalIcon = computed<any>(() => {
   return icon;
 });
 
-const getFontIconType = (): icon is string => {
+const getFontIconType = () => {
   if (iconType && ["unicode", "iconfont", "symbol"].includes(iconType)) {
     return iconType as unknown as "unicode" | "iconfont" | "symbol";
   }

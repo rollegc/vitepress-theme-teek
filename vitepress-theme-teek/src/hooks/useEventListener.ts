@@ -16,7 +16,7 @@ export const useEventListener = (
   el: ElType,
   event: string,
   handler: (event: any) => void,
-  options?: AddEventListenerOptions,
+  options?: AddEventListenerOptions | boolean,
   condition?: () => boolean
 ) => {
   const add = () => {

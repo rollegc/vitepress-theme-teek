@@ -27,6 +27,7 @@ import {
   TkArticlePageStyle,
   TkNotice,
   TkVpContainer,
+  TkReadingEnhance,
 } from "../components";
 import { isBoolean } from "../helper";
 import type { Language } from "../locale";
@@ -121,6 +122,13 @@ const topTipConfig = computed(() => {
         <slot name="teek-home-after" />
       </template>
 
+      <template #nav-bar-content-after>
+        <slot name="nav-bar-content-after" />
+        <ClientOnly>
+          <TkReadingEnhance />
+        </ClientOnly>
+      </template>
+
       <template #layout-bottom>
         <TkFooterGroup />
         <slot name="teek-footer-info-before" />
@@ -209,9 +217,9 @@ const topTipConfig = computed(() => {
       </template>
 
       <!-- 其他 VP 插槽 -->
-      <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
+      <!-- <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
         <slot :name="name" v-bind="slotData"></slot>
-      </template>
+      </template> -->
     </Layout>
   </template>
 

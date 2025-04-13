@@ -1,0 +1,136 @@
+@use "../mixins/bem" as *;
+@use "../mixins/function" as *;
+@use "../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("reading-enhance-menu-bg-color", #ebedf2);
+  @include set-css-var("reading-enhance-menu-text-color", var(--vp-c-text-1));
+}
+
+:root.dark {
+  @include set-css-var("reading-enhance-menu-bg-color", #2c2f35);
+}
+
+@include b(reading-enhance) {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+
+  &::before {
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 1px;
+    height: 24px;
+    background-color: var(--vp-c-divider);
+    content: "";
+  }
+
+  > :first-child {
+    margin-left: 8px;
+  }
+
+  .VPFlyout button {
+    padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  @include e(content) {
+    min-width: 260px;
+    padding: 8px;
+
+    & > * {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  @include e(title) {
+    display: inline-flex;
+    align-items: center;
+    flex: 1 1 0%;
+    font-size: 14px;
+    font-weight: 500;
+    color: getCssVar("reading-enhance-menu-text-color");
+    vertical-align: middle;
+    padding-right: 16px;
+    user-select: none;
+
+    @include when(disabled) {
+      opacity: 0.5;
+    }
+  }
+
+  @include e(helper) {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.5;
+    color: getCssVar("reading-enhance-menu-text-color");
+    cursor: help;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @include e(helper__popup) {
+    color: getCssVar("reading-enhance-menu-text-color");
+    padding: 16px;
+    background-color: var(--vp-c-bg-elv);
+    border-style: solid 1px var(--vp-c-divider);
+    border-radius: 12px;
+    position: fixed;
+    z-index: 100;
+    box-shadow: var(--vp-shadow-3);
+  }
+
+  @include e(helper__body) {
+    max-width: 400px;
+
+    @include m(title) {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    @include m(text) {
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 8px;
+    }
+  }
+
+  @include e(helper__body__content) {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: getCssVar("reading-enhance-menu-bg-color");
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @include e(highlight) {
+    outline-width: 2px;
+    outline-color: transparent;
+    outline-offset: 4px;
+    outline-style: dashed;
+    transition: outline 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 6px;
+
+    @include when(active) {
+      outline-color: var(--vp-c-brand-1);
+    }
+  }
+
+  @include e(slide) {
+    color: getCssVar("reading-enhance-menu-text-color");
+    background-color: getCssVar("reading-enhance-menu-bg-color");
+  }
+}
