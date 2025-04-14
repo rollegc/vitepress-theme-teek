@@ -139,6 +139,7 @@ export default defineConfig({
       {
         text: "生态",
         items: [
+          { text: "Components", link: "/ecosystem/components" },
           { text: "Helper", link: "/ecosystem/helper" },
           { text: "Hooks", link: "/ecosystem/hooks" },
           { text: "Markdown 插件工具", link: "/ecosystem/md-plugin-utils" },
@@ -154,9 +155,9 @@ export default defineConfig({
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek" }],
 
-    search: {
-      provider: "local",
-    },
+    // search: {
+    //   provider: "local",
+    // },
     editLink: {
       text: "在 GitHub 上编辑此页",
       pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",

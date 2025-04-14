@@ -23,9 +23,11 @@ const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSettin
   titleTip: {},
 });
 
+const themeSizeStorageKey = ns.joinNamespace("themeSize");
+
 // 主题尺寸
 const showThemeSizeItem = ref(false);
-const currentThemeSize = ref(unref(themeSettingConfig).themeSize);
+const currentThemeSize = useStorage(themeSizeStorageKey, unref(themeSettingConfig).themeSize);
 const themeSizeList = computed(() => {
   const { themeSizeLabel, themeSizeAppend } = unref(themeSettingConfig);
   return [
@@ -37,34 +39,16 @@ const themeSizeList = computed(() => {
   ];
 });
 
-const themeSizeStorageKey = ns.joinNamespace("themeSize");
-const localStorage = useStorage("localStorage");
 const attribute = "theme-size";
 
 /**
  * 修改主题尺寸
  */
-const changeTheme = (value: string, isDoc = false) => {
-  // 当 value 是从 localstorage 取，可能是 "undefined" 字符串
-  if ([document.documentElement.getAttribute(attribute), undefined, "undefined"].includes(value)) return;
+const changeTheme = (value: string) => {
+  if ([document.documentElement.getAttribute(attribute)].includes(value)) return;
 
   currentThemeSize.value = value;
   document.documentElement.setAttribute(attribute, value);
-
-  // 只存储全局配置到本地
-  if (!isDoc) localStorage.setStorage(themeSizeStorageKey, value);
-};
-
-/**
- * 修改文章页的主题尺寸，仅当 frontmatter.themeSize 存在时生效
- */
-const changeDocTheme = (value: string) => {
-  const { themeSize } = unref(themeSettingConfig);
-  if (value) changeTheme(value, true);
-  else {
-    // 初始化/还原主题尺寸
-    changeTheme(localStorage.getStorage(themeSizeStorageKey) || themeSize);
-  }
 };
 
 watch(
@@ -72,10 +56,14 @@ watch(
   (newValue: string) => changeTheme(newValue)
 );
 
-// 文章页主题尺寸设置
+/**
+ * 修改文章页的主题尺寸，仅当 frontmatter.themeSize 存在时生效
+ */
 watch(
   () => unref(frontmatter).themeSize,
-  (docThemeSize: string) => changeDocTheme(docThemeSize),
+  (docThemeSize: string) => {
+    if (docThemeSize) changeTheme(docThemeSize);
+  },
   { immediate: true }
 );
 </script>
@@ -91,7 +79,7 @@ watch(
     :aria-label="themeSettingConfig.titleTip.themeSize ?? t('tk.rightBottomButton.themeSizeTitle')"
   >
     <Icon :icon="sizeIcon" aria-hidden="true" />
-    <transition :name="ns.joinNamespace('mode')">
+    <transition :name="ns.joinNamespace('fade-scale')">
       <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
         <li
           v-for="item in themeSizeList"

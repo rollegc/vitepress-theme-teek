@@ -50,6 +50,7 @@
 /* 全屏图片风格或 body 图片风格时，修改顶部导航栏样式 */
 .VPNavBar.home.full-img-nav-bar {
   background-color: transparent !important;
+  color: #ffffff;
 
   .VPNavBarTitle .title,
   .VPNavBarMenuLink,
@@ -71,7 +72,8 @@
     background-color: transparent;
 
     .vp-icon,
-    .DocSearch-Button-Placeholder {
+    .DocSearch-Button-Placeholder,
+    .tk-icon {
       color: #ffffff;
     }
 

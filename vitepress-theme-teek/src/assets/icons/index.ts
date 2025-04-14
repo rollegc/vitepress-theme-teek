@@ -48,3 +48,13 @@ export { default as circleCloseFilledIcon } from "./circleCloseFilled";
 export { default as infoFilledIcon } from "./infoFilled";
 export { default as successFilledIcon } from "./successFilled";
 export { default as warningFilledIcon } from "./warningFilled";
+
+export { default as autoWidthIcon } from "./reading-enhance/autoWidth";
+export { default as clickIcon } from "./reading-enhance/click";
+export { default as fullScreenOneIcon } from "./reading-enhance/fullScreenOne";
+export { default as fullscreenTwoIcon } from "./reading-enhance/fullscreenTwo";
+export { default as layoutIcon } from "./reading-enhance/layout";
+export { default as overallReductionIcon } from "./reading-enhance/overallReduction";
+export { default as alignLeftIcon } from "./reading-enhance/alignLeft";
+export { default as alignTextLeftIcon } from "./reading-enhance/alignTextLeft";
+export { default as scaleIcon } from "./reading-enhance/scale";

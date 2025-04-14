@@ -1,27 +1,88 @@
-import { ref } from "vue";
-import { inBrowser } from "vitepress";
+import { shallowRef } from "vue";
 import { useDebounce } from "./useDebounce";
 import { useEventListener } from "./useEventListener";
+import { isClient } from "../helper";
+import { useMounted } from "./useMounted";
+
+export interface UseWindowSizeOptions {
+  /**
+   * 初始宽度
+   *
+   * @default Number.POSITIVE_INFINITY
+   */
+  initialWidth?: number;
+  /**
+   * 初始高度
+   *
+   * @default Number.POSITIVE_INFINITY
+   */
+  initialHeight?: number;
+  /**
+   * 滚动条是否应包含在宽度和高度中
+   * 仅当 type 为 inner 时有效`
+   *
+   * @default true
+   */
+  includeScrollbar?: boolean;
+
+  /**
+   * 获取窗口大小类型：innerXxx、outerXxx、visualViewportXxx
+   *
+   * @default 'inner'
+   */
+  type?: "inner" | "outer" | "visual";
+}
 
 /**
  * 实时获取窗口大小
  *
  * @param sizeChangeCallback 钩子函数，当窗口发生改变时调用
  */
-export const useWindowSize = (sizeChangeCallback?: (width: number, height: number) => undefined) => {
-  const width = ref(Number.POSITIVE_INFINITY);
-  const height = ref(Number.POSITIVE_INFINITY);
+export const useWindowSize = (
+  options: UseWindowSizeOptions,
+  sizeChangeCallback?: (width: number, height: number) => undefined
+) => {
+  const {
+    initialWidth = Number.POSITIVE_INFINITY,
+    initialHeight = Number.POSITIVE_INFINITY,
+    includeScrollbar = true,
+    type = "inner",
+  } = options;
 
-  const updateSize = useDebounce(() => {
-    if (inBrowser) {
-      width.value = window.innerWidth;
-      height.value = window.innerHeight;
+  const width = shallowRef(initialWidth);
+  const height = shallowRef(initialHeight);
+
+  const update = useDebounce(() => {
+    if (isClient) {
+      if (type === "outer") {
+        width.value = window.outerWidth;
+        height.value = window.outerHeight;
+      } else if (type === "visual" && window.visualViewport) {
+        const { width: visualViewportWidth, height: visualViewportHeight, scale } = window.visualViewport;
+        width.value = Math.round(visualViewportWidth * scale);
+        height.value = Math.round(visualViewportHeight * scale);
+      } else if (includeScrollbar) {
+        width.value = window.innerWidth;
+        height.value = window.innerHeight;
+      } else {
+        width.value = window.document.documentElement.clientWidth;
+        height.value = window.document.documentElement.clientHeight;
+      }
+
       sizeChangeCallback?.(width.value, height.value);
     }
   }, 100);
 
-  useEventListener(window, "resize", updateSize, { passive: true }, () => inBrowser);
+  update();
+  useMounted(update);
 
-  updateSize();
-  return { width, height, updateSize };
+  useEventListener(window, "resize", update, { passive: true });
+
+  if (window && type === "visual" && window.visualViewport) {
+    useEventListener(window.visualViewport, "resize", update, { passive: true });
+  }
+
+  return { width, height, update };
 };
+
+export type UseWindowSizeReturn = ReturnType<typeof useWindowSize>;

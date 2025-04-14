@@ -48,4 +48,14 @@
   @include m(icon) {
     font-size: getCssVar("avatar-icon-size");
   }
+
+  @include m(small) {
+    width: getCssVar("avatar-size-small");
+    height: getCssVar("avatar-size-small");
+  }
+
+  @include m(large) {
+    width: getCssVar("avatar-size-large");
+    height: getCssVar("avatar-size-large");
+  }
 }

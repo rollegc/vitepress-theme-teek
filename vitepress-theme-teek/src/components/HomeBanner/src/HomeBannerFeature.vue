@@ -22,7 +22,7 @@ const active = ref(0);
 const isMobile = ref(false);
 let intervalId: NodeJS.Timeout;
 
-useWindowSize(width => {
+useWindowSize({}, width => {
   const { features, featureCarousel } = unref(bannerConfig);
   if (width <= 719) {
     isMobile.value = true;

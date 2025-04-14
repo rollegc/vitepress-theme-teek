@@ -39,8 +39,6 @@ const finalIcon = computed<any>(() => {
 });
 
 const getFontIconType = () => {
-  if (!isString(icon)) return "iconfont";
-
   if (iconType && ["unicode", "iconfont", "symbol"].includes(iconType)) {
     return iconType as unknown as "unicode" | "iconfont" | "symbol";
   }
@@ -48,8 +46,6 @@ const getFontIconType = () => {
   if (icon.toLowerCase().startsWith("if-")) return "iconfont";
   if (icon.toLowerCase().startsWith("uni-")) return "unicode";
   if (icon.toLowerCase().startsWith("sym-")) return "symbol";
-
-  return "iconfont";
 };
 
 const isSvgIcon = () => isString(icon) && (iconType === "svg" || icon.startsWith("<svg"));
@@ -72,7 +68,7 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
 
     <SvgIcon v-else-if="isSvgIcon()" :icon="finalIcon" />
 
-    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()" />
+    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()!" />
 
     <IconifyOffline v-else-if="isIconifyOffline()" :icon="finalIcon" />
 

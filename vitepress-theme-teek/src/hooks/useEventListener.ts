@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
-import { onMounted, onUnmounted } from "vue";
-
-type ElType = EventTarget | Element | null | (() => EventTarget | Element | null);
+import { computed, getCurrentScope, onScopeDispose, toValue, watch } from "vue";
+import type { MaybeRefOrGetter } from "vue";
 
 /**
- * onMounted 监听事件，onUnmounted 取消监听事件
+ * mounted 监听事件，unmounted 移出监听事件
+ *
  * @param el 监听元素
  * @param event 监听事件
  * @param handler 事件处理函数
@@ -13,34 +13,54 @@ type ElType = EventTarget | Element | null | (() => EventTarget | Element | null
  * @returns 移除事件的函数
  */
 export const useEventListener = (
-  el: ElType,
+  target: MaybeRefOrGetter<EventTarget | null | undefined>,
   event: string,
   handler: (event: any) => void,
-  options?: AddEventListenerOptions,
-  condition?: () => boolean
+  options?: AddEventListenerOptions | boolean
 ) => {
-  const add = () => {
-    if (condition && !condition()) return;
+  const cleanups: Function[] = [];
 
-    el = typeof el === "function" ? el() : el;
-    el?.addEventListener(event, handler, options);
+  const cleanup = () => {
+    cleanups.forEach(fn => fn());
+    cleanups.length = 0;
   };
 
-  const remove = () => {
-    if (condition && !condition()) return;
+  const register = (
+    el: EventTarget,
+    event: string,
+    listener: any,
+    options: boolean | AddEventListenerOptions | undefined
+  ) => {
+    el.addEventListener(event, listener, options);
 
-    el = typeof el === "function" ? el() : el;
-    el?.removeEventListener(event, handler, options);
+    // 存到 cleanups
+    return () => el.removeEventListener(event, listener, options);
   };
 
-  onMounted(() => {
-    add();
+  const el = computed(() => {
+    const plain = toValue(target);
+    return (plain as any)?.$el ?? plain;
   });
 
-  onUnmounted(() => {
-    remove();
-  });
+  const stopWatch = watch(
+    el,
+    val => {
+      cleanup();
+      if (!val) return;
+
+      cleanups.push(register(val, event, handler, options));
+    },
+    { flush: "post", immediate: true } // flush: "post" 确保在组件挂载后执行
+  );
+
+  const stop = () => {
+    stopWatch();
+    cleanup();
+  };
+
+  // 组件销毁时执行 cleanup
+  if (getCurrentScope()) onScopeDispose(cleanup);
 
   // 返回移除事件的函数
-  return remove;
+  return stop;
 };

@@ -8,18 +8,18 @@ const { getTeekConfig } = useTeekConfig();
 
 // 文章图片配置
 const imageViewer = computed(() => {
-  const { imageViewer = {} } = getTeekConfig("article");
+  const { imageViewer = {} } = getTeekConfig("article", {});
   return imageViewer;
 });
 
 const previewImage = (e: Event) => {
+  console.log(1);
   const target = e.target as HTMLElement;
   const currentTarget = e.currentTarget as HTMLElement;
 
   if (target.tagName.toLowerCase() === "img") {
     const imgDoms = currentTarget.querySelectorAll<HTMLImageElement>(".content-container .main img");
     const imgs = Array.from(imgDoms);
-    console.log(imgDoms);
 
     const urlList = imgs.map(el => el.src);
     let initialIndex = imgs.findIndex(el => el === target);
@@ -35,7 +35,7 @@ const previewImage = (e: Event) => {
   }
 };
 
-useEventListener(() => document.querySelector("#VPContent"), "click", previewImage);
+useEventListener(document.querySelector("#VPContent"), "click", previewImage);
 </script>
 
 <template></template>

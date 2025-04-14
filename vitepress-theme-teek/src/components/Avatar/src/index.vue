@@ -3,7 +3,7 @@ import { computed, ref, watch, type CSSProperties } from "vue";
 import Icon from "../../Icon";
 import { useNamespace } from "../../../hooks";
 import type { AvatarProps, AvatarEmit } from "./avatar";
-import { addUnit, isNumber, isString } from "../../../helper";
+import { addUnit, isString } from "../../../helper";
 
 defineOptions({ name: "Avatar" });
 
@@ -37,10 +37,6 @@ const avatarClass = computed(() => {
 });
 
 const avatarStyle = computed(() => {
-  if (!size) return;
-  // 排除不合理的字符串
-  if (isString(size) && !isNumber(size.replace("%", ""))) return;
-
   return {
     [ns.cssVarName("avatar-size")]: addUnit(size),
     [ns.cssVarName("avatar-bg-color")]: bgColor,
