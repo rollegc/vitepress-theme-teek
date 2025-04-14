@@ -11,8 +11,14 @@ const ns = inject(readingEnhanceNsSymbol, useNamespace("reading-enhance"));
 
 <template>
   <div :class="[ns.e('title'), ns.is('disabled', !!disabled)]">
-    <Icon v-if="icon" :icon="icon" :size="16" style="margin-right: 4px" />
-    <span v-if="title">{{ title }}</span>
+    <slot name="icon">
+      <Icon v-if="icon" :icon="icon" :size="16" style="margin-right: 4px" />
+    </slot>
+
+    <slot name="title">
+      <span v-if="title">{{ title }}</span>
+    </slot>
+
     <slot />
   </div>
 </template>

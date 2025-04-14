@@ -1,12 +1,15 @@
 @use "../mixins/config" as *;
 
-.#{$namespace}-mode-enter-active,
-.#{$namespace}-mode-leave-active {
-  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+/* 淡入淡出（放大） */
+.#{$namespace}-fade-scale-enter-active,
+.#{$namespace}-fade-scale-leave-active {
+  transition:
+    opacity 0.3s cubic-bezier(0.55, 0, 0.1, 1),
+    transform 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
-.#{$namespace}-mode-enter-from,
-.#{$namespace}-mode-leave-to {
+.#{$namespace}-fade-scale-enter-from,
+.#{$namespace}-fade-scale-leave-to {
   opacity: 0;
   transform: scale(0.8);
 }
@@ -14,7 +17,7 @@
 /* 淡入淡出 */
 .#{$namespace}-fade-enter-active,
 .#{$namespace}-fade-leave-active {
-  transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: opacity 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 .#{$namespace}-fade-enter-from,
 .#{$namespace}-fade-leave-active {

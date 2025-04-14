@@ -3,7 +3,7 @@ import { computed, ref, watch, type CSSProperties } from "vue";
 import Icon from "../../Icon";
 import { useNamespace } from "../../../hooks";
 import type { AvatarProps, AvatarEmit } from "./avatar";
-import { addUnit, isNumber, isString } from "../../../helper";
+import { addUnit, isString } from "../../../helper";
 
 defineOptions({ name: "Avatar" });
 

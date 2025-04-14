@@ -127,16 +127,16 @@ export const isArray = (arg: any) => {
 /**
  * 是否客户端
  */
-export const isClient = () => {
-  return typeof window !== "undefined";
-};
+export const isClient = typeof window !== "undefined" && typeof document !== "undefined";
 
 /**
- * 是否为浏览器
+ * 是否为服务器
  */
-export const isWindow = (val: any): val is Window => {
-  return typeof window !== "undefined" && is(val, "Window");
-};
+export const isServer = !isClient;
+/**
+ * 是否在浏览器中
+ */
+export const inBrowser = isClient;
 
 /**
  * 是否为元素节点
@@ -145,15 +145,6 @@ export const isElement = (val: unknown): val is Element => {
   if (typeof Element === "undefined") return false;
   return val instanceof Element;
 };
-
-/**
- * 是否为服务器
- */
-export const isServer = typeof window === "undefined";
-/**
- * 是否在浏览器中
- */
-export const inBrowser = typeof document !== "undefined";
 
 // 是否为图片节点
 export const isImageDom = (o: Element) => {

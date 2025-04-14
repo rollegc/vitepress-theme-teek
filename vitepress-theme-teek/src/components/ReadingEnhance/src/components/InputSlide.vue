@@ -71,13 +71,26 @@ watch(hovering, () => {
   }, 50);
 });
 
-watch(inputValue, () => {
-  if (!inputSliderRef.value) return;
-
-  if (!inputSliderTooltipRef.value) return;
-
-  calTooltipPosition(inputSliderRef.value, inputSliderTooltipRef.value);
+watch(inputValue, val => {
+  if (val < min) val = min;
+  if (val > max) val = max;
 });
+
+watch(
+  () => min,
+  val => {
+    if (inputValue.value >= val) return;
+    inputValue.value = val;
+  }
+);
+
+watch(
+  () => max,
+  val => {
+    if (inputValue.value <= val) return;
+    inputValue.value = val;
+  }
+);
 </script>
 
 <template>

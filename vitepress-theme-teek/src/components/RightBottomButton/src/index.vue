@@ -5,7 +5,7 @@ import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";
-import ThemeSize from "./ThemeSize.vue";
+// import ThemeSize from "./ThemeSize.vue";
 import ThemeStyle from "./ThemeStyle.vue";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 import type { ThemeSetting } from "../../../config/types";
@@ -29,7 +29,7 @@ const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSettin
 
     <BackTop />
     <ToComment v-if="theme.comment?.provider" />
-    <ThemeSize v-if="themeSettingConfig.useThemeSize" />
+    <!-- <ThemeSize v-if="themeSettingConfig.useThemeSize" /> -->
     <ThemeStyle v-if="themeSettingConfig.useThemeStyle" />
 
     <slot name="teek-right-bottom-after" />

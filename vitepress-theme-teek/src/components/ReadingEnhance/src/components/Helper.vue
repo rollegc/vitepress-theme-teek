@@ -26,8 +26,8 @@ watch(visible, async () => {
     const rect = refElement.getBoundingClientRect();
     const popupWidth = unref(popupElementRef)?.offsetWidth || 0;
     helpPopupStyle.value = {
-      top: `${rect.top + window.scrollY}px`,
-      left: `${rect.left + window.scrollX - popupWidth - offset}px`,
+      top: `${rect.top}px`,
+      left: `${rect.left - popupWidth - offset}px`,
     };
   }
 });
@@ -37,7 +37,7 @@ watch(visible, async () => {
   <span ref="helpElementRef" :class="ns.e('helper')" @mouseenter="visible = true" @mouseleave="visible = false">
     <Icon icon="ep:question-filled" :size="16" />
     <Teleport to="body">
-      <Transition name="fade">
+      <Transition :name="ns.joinNamespace('fade-scale')">
         <div v-show="visible" ref="popupElementRef" :style="helpPopupStyle" :class="ns.e('helper__popup')">
           <slot />
         </div>

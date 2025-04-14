@@ -11,7 +11,7 @@ const boxStyles = ref<Record<string, string | number>>({ display: "none" });
 const vpDocElement = ref<HTMLDivElement>();
 const highlightedElement = ref<HTMLElement>();
 
-const spotlightStyle = useStorage(spotlightStyleStorageKey, SpotlightStyle.Aside);
+const spotlightStyle = useStorage<SpotlightStyle>(spotlightStyleStorageKey, SpotlightStyle.Aside);
 
 const mousePosition = ref<{ x: number; y: number }>({ x: 0, y: 0 });
 

@@ -79,7 +79,7 @@ watch(
     :aria-label="themeSettingConfig.titleTip.themeSize ?? t('tk.rightBottomButton.themeSizeTitle')"
   >
     <Icon :icon="sizeIcon" aria-hidden="true" />
-    <transition :name="ns.joinNamespace('mode')">
+    <transition :name="ns.joinNamespace('fade-scale')">
       <ul :class="`${ns.e('button__size')} dropdown`" v-show="showThemeSizeItem" @click.stop @touchstart.stop>
         <li
           v-for="item in themeSizeList"

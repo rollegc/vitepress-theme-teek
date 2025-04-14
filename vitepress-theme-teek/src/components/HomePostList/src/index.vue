@@ -87,7 +87,7 @@ const targetLayout = "prev, pager, next";
 /**
  * 响应式监听屏幕宽度，小于指定值后分页组件尺寸改为 small，布局改为 prev, pager, next，封面模式改为 default
  */
-useWindowSize(width => {
+useWindowSize({}, width => {
   if (width <= 768) {
     if (pagePropsRef.size !== targetSize) pagePropsRef.size = targetSize;
   } else if (pagePropsRef.size !== size) pagePropsRef.size = size;

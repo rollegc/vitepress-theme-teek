@@ -58,7 +58,7 @@ const noticeTitle = computed(() => {
 
 // 是否在移动端隐藏公告功能
 if (unref(noticeConfig).mobileMinify) {
-  useWindowSize(width => {
+  useWindowSize({}, width => {
     if (width <= 768) destroyNoticeIcon.value = false;
     else if (destroyNoticeIcon.value !== true) destroyNoticeIcon.value = true;
   });

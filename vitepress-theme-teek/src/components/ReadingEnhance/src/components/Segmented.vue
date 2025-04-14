@@ -5,7 +5,7 @@ import SegmentedHorizontalItem from "./SegmentedItem.vue";
 const ns = useNamespace("segmented");
 
 interface Item {
-  name: string;
+  name?: string;
   icon?: string;
   text?: string;
   title: string;

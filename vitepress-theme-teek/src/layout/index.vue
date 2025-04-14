@@ -87,6 +87,8 @@ const topTipConfig = computed(() => {
 <template>
   <template v-if="teekConfig.teekTheme">
     <ClientOnly>
+      <TkArticleHeadingHighlight />
+
       <TkRightBottomButton>
         <!-- 通用插槽 -->
         <template v-for="(_, name) in $slots" :key="name" #[name]>
@@ -101,8 +103,6 @@ const topTipConfig = computed(() => {
           <slot :name="name" />
         </template>
       </TkNotice>
-
-      <TkArticleHeadingHighlight />
     </ClientOnly>
 
     <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">

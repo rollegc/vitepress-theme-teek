@@ -37,7 +37,6 @@
   padding: 0.25rem;
   font-size: 0.875rem;
   color: #d1d5db;
-  gap: 10px;
 
   @include e(label) {
     height: getCssVar("slider-height");

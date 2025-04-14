@@ -68,7 +68,7 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
 
     <SvgIcon v-else-if="isSvgIcon()" :icon="finalIcon" />
 
-    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()" />
+    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()!" />
 
     <IconifyOffline v-else-if="isIconifyOffline()" :icon="finalIcon" />
 

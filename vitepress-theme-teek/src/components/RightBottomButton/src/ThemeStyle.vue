@@ -95,7 +95,7 @@ watch(
     :aria-label="themeSettingConfig.titleTip.themeStyle ?? t('tk.rightBottomButton.themeStyleTitle')"
   >
     <Icon :icon="magicIcon" aria-hidden="true" />
-    <transition :name="ns.joinNamespace('mode')">
+    <transition :name="ns.joinNamespace('fade-scale')">
       <div :class="`${ns.e('button__style')} dropdown`" v-show="showThemeStyleItem" @click.stop @touchstart.stop>
         <ul v-for="item in themeStyleList" :key="item.label">
           <li :class="`${ns.e('button__style__title')} sle`" :title="item.tip || ''" :aria-label="item.label">

@@ -1,6 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 @use "../mixins/mixins" as *;
+@use "../mixins/config" as *;
 
 :root {
   @include set-css-var("reading-enhance-menu-bg-color", #ebedf2);
@@ -15,6 +16,8 @@
   display: flex;
   align-items: center;
   margin-right: 8px;
+  height: 100%;
+  cursor: pointer;
 
   &::before {
     margin-right: 8px;
@@ -39,7 +42,13 @@
 
   @include e(content) {
     min-width: 260px;
-    padding: 8px;
+    position: fixed;
+    z-index: 100;
+    background-color: #ffffff;
+    box-shadow: var(--vp-shadow-3);
+    border: 1px solid var(--vp-c-divider);
+    padding: 20px;
+    border-radius: 12px;
 
     & > * {
       margin-bottom: 10px;
@@ -96,7 +105,7 @@
       margin-bottom: 4px;
     }
 
-    @include m(text) {
+    @include m(desc) {
       font-size: 14px;
       line-height: 20px;
       margin-bottom: 8px;
@@ -130,7 +139,23 @@
   }
 
   @include e(slide) {
+    width: 100%;
     color: getCssVar("reading-enhance-menu-text-color");
     background-color: getCssVar("reading-enhance-menu-bg-color");
+  }
+
+  /* 滑动消失出现效果 */
+  .#{$namespace}-reading-enhance-slide-move,
+  .#{$namespace}-reading-enhance-slide-enter-active,
+  .#{$namespace}-reading-enhance-slide-leave-active {
+    transition: all 0.2s ease-in-out;
+  }
+  .#{$namespace}-reading-enhance-slide-enter-from {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+  .#{$namespace}-reading-enhance-slide-leave-to {
+    transform: translateY(-15px);
+    opacity: 0;
   }
 }
