@@ -9,6 +9,8 @@ export * from "./useDebounce";
 export * from "./useElementHover";
 export * from "./useEventListener";
 export * from "./useLocale";
+export * from "./useMediaQuery";
+export * from "./useMounted";
 export * from "./useWindowSize";
 export * from "./useVpRouter";
 export * from "./useClipboard";

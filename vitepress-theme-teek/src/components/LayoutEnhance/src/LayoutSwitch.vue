@@ -1,9 +1,11 @@
 <script setup lang="ts" name="LayoutSwitch">
-import { computed, onMounted, ref, watch } from "vue";
-import { useStorage } from "../../../hooks";
-import { LayoutMode, layoutModeStorageKey } from "./readingEnhance";
+import { computed, onMounted, watch } from "vue";
+import { useStorage, useMediaQuery } from "../../../hooks";
+import { LayoutMode } from "./layoutEnhance";
+import { layoutModeStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
+import { useTeekConfig } from "../../../configProvider";
 import {
   fullscreenIcon,
   fullScreenOneIcon,
@@ -14,9 +16,15 @@ import {
 
 defineOptions({ name: "LayoutSwitch" });
 
-const disabled = ref(false);
+const { getTeekConfigRef } = useTeekConfig();
+const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+
 const attribute = "layout-mode";
-const layoutMode = useStorage(layoutModeStorageKey, LayoutMode.Original);
+const layoutMode = useStorage(
+  layoutModeStorageKey,
+  layoutEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
+);
+const disabled = useMediaQuery("(max-width: 768px)");
 
 const update = (val: string) => {
   const el = document.documentElement;
@@ -32,7 +40,9 @@ watch(layoutMode, val => {
 onMounted(() => {
   update(layoutMode.value);
 
-  document.documentElement.setAttribute(`${attribute}-animated`, "true");
+  if (!layoutEnhanceConfig.value.layoutSwitch?.disableAnimation) {
+    document.documentElement.setAttribute(`${attribute}-animated`, "true");
+  }
 });
 
 const content = computed(() => [
@@ -91,6 +101,7 @@ const tips = computed(() =>
     desc="调整 VitePress 的布局样式，以适配不同的阅读习惯和屏幕环境。"
     :tips
     :disabled
+    :helper="!layoutEnhanceConfig.layoutSwitch?.disableHelp"
   >
     <Segmented v-model="layoutMode" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Helper">
 import { nextTick, ref, watch } from "vue";
 import { useElementHover } from "../../../../hooks";
-import { ns } from "../readingEnhance";
+import { ns } from "../namespace";
 import Icon from "../../../Icon";
 import { questionFilledIcon } from "../../../../assets/icons";
 

@@ -1,15 +1,27 @@
 <script setup lang="ts" name="SpotlightStyle">
-import { computed, ref } from "vue";
-import { useStorage } from "../../../hooks";
+import { computed } from "vue";
+import { useStorage, useMediaQuery } from "../../../hooks";
 import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "../../../assets/icons";
-import { spotlightStyleStorageKey, SpotlightStyle } from "./readingEnhance";
+import { SpotlightStyle } from "./layoutEnhance";
+import { spotlightStyleStorageKey, spotlightToggleStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
+import { useTeekConfig } from "../../../configProvider";
 
 defineOptions({ name: "SpotlightStyle" });
 
-const disabled = ref(false);
-const spotlightStyle = useStorage(spotlightStyleStorageKey, SpotlightStyle.Aside);
+const { getTeekConfigRef } = useTeekConfig();
+const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+
+const spotlightStyle = useStorage(
+  spotlightStyleStorageKey,
+  layoutEnhanceConfig.value.spotlight?.defaultStyle || SpotlightStyle.Aside
+);
+const spotlightToggledOn = useStorage(
+  spotlightToggleStorageKey,
+  layoutEnhanceConfig.value.spotlight?.defaultToggle || false
+);
+const disabled = useMediaQuery("(pointer: coarse)");
 
 const content = computed(() => [
   {
@@ -47,7 +59,15 @@ const tips = computed(() =>
 </script>
 
 <template>
-  <BaseTemplate :icon="clickIcon" title="聚光灯样式" desc="调整聚光灯的样式。" :tips :disabled>
+  <BaseTemplate
+    v-if="spotlightToggledOn"
+    :icon="clickIcon"
+    title="聚光灯样式"
+    desc="调整聚光灯的样式。"
+    :tips
+    :disabled
+    :helper="!layoutEnhanceConfig.spotlight?.disableHelp"
+  >
     <Segmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>
 </template>

@@ -20,10 +20,10 @@ const handleClickArrow = () => {
 const isMobile = ref(false);
 
 // 移动端不显示箭头，则打开下面注释，并引入 useWindowSize：import { useWindowSize } from "vitepress-theme-teek";
-// useWindowSize({}, width => {
+// useWindowSize(width => {
 //   // if (width <= 719) isMobile.value = true;
 //   // else isMobile.value = false;
-// });
+// }, {});
 </script>
 
 <template>

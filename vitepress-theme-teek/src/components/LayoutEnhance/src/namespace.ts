@@ -1,19 +1,4 @@
-import type { InjectionKey } from "vue";
-import { useNamespace, type UseNamespaceReturn } from "../../../hooks";
-
-export const readingEnhanceNsSymbol: InjectionKey<UseNamespaceReturn> = Symbol("readingEnhanceNs");
-
-export enum LayoutMode {
-  FullWidth = "fullWidth",
-  SidebarWidthAdjustableOnly = "sidebarWidthAdjustableOnly",
-  BothWidthAdjustable = "bothWidthAdjustable",
-  Original = "original",
-}
-
-export enum SpotlightStyle {
-  Under = "under",
-  Aside = "aside",
-}
+import { useNamespace } from "../../../hooks";
 
 export const ns = useNamespace("reading-enhance");
 
@@ -24,5 +9,7 @@ export const docMaxWidthVar = ns.cssVarName("doc-max-width");
 export const layoutModeStorageKey = ns.joinNamespace("layoutMode");
 export const pageMaxWidthSlideStorageKey = ns.joinNamespace("pageMaxWidthSlide");
 export const docMaxWidthSlideStorageKey = ns.joinNamespace("docMaxWidthSlide");
+export const layoutColorSlideStorageKey = ns.joinNamespace("layoutColor");
 export const spotlightStorageKey = ns.joinNamespace("spotlight");
 export const spotlightStyleStorageKey = ns.joinNamespace("spotlightStyle");
+export const spotlightToggleStorageKey = ns.joinNamespace("spotlightStyle");

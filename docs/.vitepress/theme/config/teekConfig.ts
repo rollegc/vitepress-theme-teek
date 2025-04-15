@@ -5,6 +5,11 @@ export const teekDocConfig: TeekConfig = {
   themeSetting: {
     themeSize: "large",
   },
+  layoutEnhance: {
+    layoutSwitch: {
+      defaultMode: "bothWidthAdjustable",
+    },
+  },
 };
 
 // 博客配置

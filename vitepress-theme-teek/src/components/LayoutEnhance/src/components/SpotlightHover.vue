@@ -1,7 +1,8 @@
 <script setup lang="ts" name="SpotlightHover">
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vitepress";
-import { SpotlightStyle, spotlightStyleStorageKey } from "../readingEnhance";
+import { SpotlightStyle } from "../layoutEnhance";
+import { spotlightStyleStorageKey } from "../namespace";
 import { useEventListener, useStorage } from "../../../../hooks";
 
 defineOptions({ name: "SpotlightHover" });

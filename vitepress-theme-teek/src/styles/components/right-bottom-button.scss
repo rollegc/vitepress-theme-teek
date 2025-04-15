@@ -25,12 +25,13 @@ $progress-thickness: calc($button-size / 10);
     box-shadow: getCssVar("shadow-1");
     text-align: center;
     cursor: pointer;
-
+    transition: all 0.3s ease;
     background: getCssVar("bg-color-1");
 
     &:hover {
-      background: getCssVar("theme-color");
+      background-color: getCssVar("theme-color");
       box-shadow: getCssVar("shadow-2");
+
       .#{$namespace}-icon {
         color: #ffffff;
       }

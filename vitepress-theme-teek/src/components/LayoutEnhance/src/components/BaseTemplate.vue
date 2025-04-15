@@ -1,6 +1,6 @@
 <script setup lang="ts" name="BaseTemplate">
 import { ref, useTemplateRef } from "vue";
-import { ns } from "../readingEnhance";
+import { ns } from "../namespace";
 import Icon, { type TkIconProps } from "../../../Icon";
 import Title from "./Title.vue";
 import Helper from "./Helper.vue";
@@ -30,6 +30,10 @@ interface TemplateProps {
    */
   disabled?: boolean;
   /**
+   * 是否显示帮助
+   */
+  helper?: boolean;
+  /**
    * 是否边框高亮
    */
   borderHighlight?: boolean;
@@ -46,7 +50,7 @@ const titleElementRef = useTemplateRef<HTMLDivElement>("titleElementRef");
     <div ref="titleElementRef" class="flx-align-center">
       <Title :title :icon="icon" :disabled="disabled" />
 
-      <Helper v-model="helperVisible" :virtual-ref="titleElementRef!">
+      <Helper v-if="helper" v-model="helperVisible" :virtual-ref="titleElementRef!">
         <div :class="ns.e('helper__body')">
           <h4 :class="ns.em('helper', 'title')">
             <slot name="helper-title">{{ title }}</slot>

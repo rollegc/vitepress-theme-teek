@@ -55,7 +55,7 @@ const themeStyleList = computed(() => {
   ];
 });
 
-const attribute = "theme-style";
+const attribute = "layout-color";
 
 /**
  * 修改主题风格

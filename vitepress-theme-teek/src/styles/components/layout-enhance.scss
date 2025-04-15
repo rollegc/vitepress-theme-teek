@@ -61,6 +61,22 @@
     }
   }
 
+  @include e(layout-color) {
+    .#{$namespace}-segmented {
+      border-radius: 0;
+
+      &-item.is-active {
+        color: var(--vp-c-brand-1);
+        background-color: var(--vp-c-brand-soft);
+
+        &:hover {
+          color: var(--vp-c-brand-3);
+          background-color: var(--vp-c-brand-soft);
+        }
+      }
+    }
+  }
+
   @include e(title) {
     display: inline-flex;
     align-items: center;

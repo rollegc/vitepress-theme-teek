@@ -44,8 +44,8 @@ $namespace: tk-layout-provider;
   display: flex;
 
   &::before {
+    margin-left: 16px;
     margin-right: 8px;
-    margin-left: 8px;
     width: 1px;
     height: 24px;
     background-color: var(--vp-c-divider);

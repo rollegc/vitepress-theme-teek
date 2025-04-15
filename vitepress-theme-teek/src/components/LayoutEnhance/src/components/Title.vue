@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Title">
-import { ns } from "../readingEnhance";
+import { ns } from "../namespace";
 import Icon, { type TkIconProps } from "../../../Icon";
 
 defineProps<{ title?: string; disabled?: boolean; icon?: TkIconProps["icon"] }>();
