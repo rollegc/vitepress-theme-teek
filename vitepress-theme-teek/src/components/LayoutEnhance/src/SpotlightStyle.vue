@@ -1,16 +1,27 @@
 <script setup lang="ts" name="SpotlightStyle">
-import { computed, inject, ref } from "vue";
-import { useNamespace, useStorage } from "../../../hooks";
+import { computed } from "vue";
+import { useStorage, useMediaQuery } from "../../../hooks";
 import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "../../../assets/icons";
-import { readingEnhanceNsSymbol, spotlightStyleStorageKey, SpotlightStyle } from "./readingEnhance";
+import { SpotlightStyle } from "./layoutEnhance";
+import { spotlightStyleStorageKey, spotlightToggleStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
+import { useTeekConfig } from "../../../configProvider";
 
-const ns = inject(readingEnhanceNsSymbol, useNamespace("reading-enhance"));
+defineOptions({ name: "SpotlightStyle" });
 
-const disabled = ref(false);
+const { getTeekConfigRef } = useTeekConfig();
+const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
 
-const spotlightStyle = useStorage(spotlightStyleStorageKey, SpotlightStyle.Aside);
+const spotlightStyle = useStorage(
+  spotlightStyleStorageKey,
+  layoutEnhanceConfig.value.spotlight?.defaultStyle || SpotlightStyle.Aside
+);
+const spotlightToggledOn = useStorage(
+  spotlightToggleStorageKey,
+  layoutEnhanceConfig.value.spotlight?.defaultToggle || false
+);
+const disabled = useMediaQuery("(pointer: coarse)");
 
 const content = computed(() => [
   {
@@ -38,7 +49,7 @@ const segmentedOptions = computed(() =>
   }))
 );
 
-const messageList = computed(() =>
+const tips = computed(() =>
   content.value.map(item => ({
     title: item.title,
     icon: item.icon,
@@ -49,12 +60,13 @@ const messageList = computed(() =>
 
 <template>
   <BaseTemplate
-    :class="ns.e('spotlight-style')"
-    title="聚光灯样式"
+    v-if="spotlightToggledOn"
     :icon="clickIcon"
+    title="聚光灯样式"
     desc="调整聚光灯的样式。"
-    :message-list
+    :tips
     :disabled
+    :helper="!layoutEnhanceConfig.spotlight?.disableHelp"
   >
     <Segmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>

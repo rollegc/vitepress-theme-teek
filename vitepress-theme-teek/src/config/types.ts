@@ -13,6 +13,7 @@ import type {
   FooterInfo,
   FooterGroup,
   FriendLink,
+  LayoutEnhance,
   Notice,
   Plugins,
   Post,
@@ -89,8 +90,14 @@ export interface TeekConfig {
   bodyBgImg?: BodyBgImg;
   /**
    * 右下角的主题设置配置
+   *
+   * @deprecated Use `layoutEnhance` instead
    */
   themeSetting?: ThemeSetting;
+  /**
+   * 布局增强配置
+   */
+  layoutEnhance?: LayoutEnhance;
   /**
    * 文章默认的作者信息
    */

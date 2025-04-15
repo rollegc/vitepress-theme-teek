@@ -1,6 +1,11 @@
 <script setup lang="ts" name="LayoutSwitch">
-import { computed, inject, onMounted, ref, watch } from "vue";
-import { useNamespace, useStorage } from "../../../hooks";
+import { computed, onMounted, watch } from "vue";
+import { useStorage, useMediaQuery } from "../../../hooks";
+import { LayoutMode } from "./layoutEnhance";
+import { layoutModeStorageKey } from "./namespace";
+import BaseTemplate from "./components/BaseTemplate.vue";
+import Segmented from "./components/Segmented.vue";
+import { useTeekConfig } from "../../../configProvider";
 import {
   fullscreenIcon,
   fullScreenOneIcon,
@@ -8,31 +13,36 @@ import {
   layoutIcon,
   overallReductionIcon,
 } from "../../../assets/icons";
-import { readingEnhanceNsSymbol, LayoutMode, layoutModeStorageKey } from "./readingEnhance";
-import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
 
-const ns = inject(readingEnhanceNsSymbol, useNamespace("reading-enhance"));
+defineOptions({ name: "LayoutSwitch" });
 
-const disabled = ref(false);
+const { getTeekConfigRef } = useTeekConfig();
+const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
 
 const attribute = "layout-mode";
-const layoutMode = useStorage(layoutModeStorageKey, LayoutMode.Original);
+const layoutMode = useStorage(
+  layoutModeStorageKey,
+  layoutEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
+);
+const disabled = useMediaQuery("(max-width: 768px)");
 
-const updateLayoutMode = (value: string) => {
-  if ([document.documentElement.getAttribute(attribute)].includes(value)) return;
+const update = (val: string) => {
+  const el = document.documentElement;
 
-  document.documentElement.setAttribute(attribute, value);
+  if (el.getAttribute(attribute) === val) return;
+  el.setAttribute(attribute, val);
 };
 
 watch(layoutMode, val => {
-  updateLayoutMode(val);
+  update(val);
 });
 
 onMounted(() => {
-  updateLayoutMode(layoutMode.value);
+  update(layoutMode.value);
 
-  document.documentElement.setAttribute(`${attribute}-animated`, "true");
+  if (!layoutEnhanceConfig.value.layoutSwitch?.disableAnimation) {
+    document.documentElement.setAttribute(`${attribute}-animated`, "true");
+  }
 });
 
 const content = computed(() => [
@@ -75,7 +85,7 @@ const segmentedOptions = computed(() =>
   }))
 );
 
-const messageList = computed(() =>
+const tips = computed(() =>
   content.value.map(item => ({
     title: item.title,
     icon: item.icon,
@@ -86,12 +96,12 @@ const messageList = computed(() =>
 
 <template>
   <BaseTemplate
-    :class="ns.e('layout-switch')"
-    title="布局切换"
     :icon="layoutIcon"
+    title="布局切换"
     desc="调整 VitePress 的布局样式，以适配不同的阅读习惯和屏幕环境。"
-    :message-list
+    :tips
     :disabled
+    :helper="!layoutEnhanceConfig.layoutSwitch?.disableHelp"
   >
     <Segmented v-model="layoutMode" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>

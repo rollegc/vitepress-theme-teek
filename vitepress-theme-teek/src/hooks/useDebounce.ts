@@ -5,20 +5,16 @@
  * @param delay 延迟时间
  * @param immediate 是否立即执行，如果为 true，则立即执行回调函数，否则在延迟时间后执行
  */
-export const useDebounce = <T extends (...args: any[]) => any>(
-  func: T,
-  delay = 0,
-  immediate = true
-): ((...args: Parameters<T>) => void) => {
-  let timer: NodeJS.Timeout | null = null;
+export const useDebounce = <T extends (...args: any[]) => any>(func: T, delay = 0, immediate = false) => {
+  let timer: ReturnType<typeof setTimeout> | null;
 
-  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+  return (...args: Parameters<T>) => {
     const callNow = immediate && !timer;
-    if (callNow) func.apply(this, args);
+    if (callNow) func(...args);
 
     const later = () => {
       timer = null;
-      if (!immediate) func.apply(this, args);
+      if (!immediate) func(...args);
     };
 
     if (timer) clearTimeout(timer);

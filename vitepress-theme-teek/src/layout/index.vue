@@ -27,7 +27,7 @@ import {
   TkArticlePageStyle,
   TkNotice,
   TkVpContainer,
-  TkReadingEnhance,
+  TkLayoutEnhance,
 } from "../components";
 import { isBoolean } from "../helper";
 import type { Language } from "../locale";
@@ -82,6 +82,18 @@ const commentConfig = computed(() => {
 const topTipConfig = computed(() => {
   return unref(teekConfig).article.topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
 });
+
+// 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
+const usedSlot = [
+  "home-hero-before",
+  "nav-bar-content-after",
+  "layout-bottom",
+  "doc-before",
+  "doc-after",
+  "aside-bottom",
+  "page-top",
+  "aside-outline-before",
+];
 </script>
 
 <template>
@@ -125,7 +137,7 @@ const topTipConfig = computed(() => {
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
         <ClientOnly>
-          <TkReadingEnhance />
+          <TkLayoutEnhance />
         </ClientOnly>
       </template>
 
@@ -217,9 +229,13 @@ const topTipConfig = computed(() => {
       </template>
 
       <!-- 其他 VP 插槽 -->
-      <!-- <template v-for="(_, name) in $slots" :key="name" #[name]="slotData">
+      <template
+        v-for="(_, name) in Object.keys($slots).filter(name => !usedSlot.includes(name))"
+        :key="name"
+        #[name]="slotData"
+      >
         <slot :name="name" v-bind="slotData"></slot>
-      </template> -->
+      </template>
     </Layout>
   </template>
 

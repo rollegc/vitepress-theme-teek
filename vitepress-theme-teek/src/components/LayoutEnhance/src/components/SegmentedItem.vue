@@ -2,18 +2,22 @@
 import Icon from "../../../Icon";
 import { useNamespace } from "../../../../hooks";
 
+defineOptions({ name: "SegmentedItem" });
+
+export type ModelType = string | number | object | boolean;
+
 defineProps<{
-  name?: any;
-  value?: any;
+  name?: string;
   icon?: string;
   text?: string;
   title: string;
+  value?: ModelType;
   disabled?: boolean;
 }>();
 
 const ns = useNamespace("segmented-item");
 
-const model = defineModel<any>();
+const model = defineModel<ModelType>();
 </script>
 
 <template>

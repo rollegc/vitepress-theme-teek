@@ -1,6 +1,8 @@
 <script setup lang="ts" name="InputSlide">
-import { onMounted, ref, watch } from "vue";
-import { useNamespace } from "../../../../hooks";
+import { onMounted, ref, useTemplateRef, watch } from "vue";
+import { useElementHover, useEventListener, useNamespace } from "../../../../hooks";
+
+defineOptions({ name: "InputSlide" });
 
 const ns = useNamespace("input-slide");
 
@@ -16,28 +18,32 @@ interface InputSlideProps {
 const { name = "Slider", min = 0, max = 100, step = 1 } = defineProps<InputSlideProps>();
 
 const inputValue = defineModel<number>({ type: Number, default: 0 });
-const hovering = ref(false);
+
+const inputSliderRef = useTemplateRef<HTMLInputElement>("inputSliderRef");
+const inputSliderTooltipRef = useTemplateRef<HTMLDivElement>("inputSliderTooltipRef");
+const hovering = useElementHover(inputSliderRef);
 const positioning = ref(false);
-const inputSliderRef = ref<HTMLInputElement | null>(null);
-const inputSliderTooltipRef = ref<HTMLDivElement | null>(null);
+
+const sliderValueVar = ns.cssVarName("slider-value");
+const sliderMinVar = ns.cssVarName("slider-min");
+const sliderMaxVar = ns.cssVarName("slider-max");
+
+useEventListener(inputSliderRef, "input", () => {
+  if (!inputSliderRef.value) return;
+
+  inputSliderRef.value.style.setProperty(sliderValueVar, inputSliderRef.value.value.toString());
+});
 
 onMounted(() => {
   if (!inputSliderRef.value) return;
+  const inputSliderStyle = inputSliderRef.value.style;
 
-  inputSliderRef.value.style.setProperty(ns.cssVarName("slider-value"), inputValue.value.toString());
-  inputSliderRef.value.style.setProperty(ns.cssVarName("slider-min"), min ? min.toString() : "0");
-  inputSliderRef.value.style.setProperty(ns.cssVarName("slider-max"), max ? max.toString() : "100");
-  inputSliderRef.value.addEventListener("input", () => {
-    if (!inputSliderRef.value) return;
-
-    inputSliderRef.value.style.setProperty(ns.cssVarName("slider-value"), inputSliderRef.value.value.toString());
-  });
+  inputSliderStyle.setProperty(sliderValueVar, inputValue.value.toString());
+  inputSliderStyle.setProperty(sliderMinVar, min?.toString() ?? "0");
+  inputSliderStyle.setProperty(sliderMaxVar, max?.toString() ?? "100");
 });
 
-const calTooltipPosition = (inputElement: HTMLInputElement, inputTooltipElement: HTMLDivElement) => {
-  if (!inputElement) return;
-  if (!inputTooltipElement) return;
-
+const calTipPosition = (inputElement: HTMLInputElement, inputTooltipElement: HTMLDivElement) => {
   const finalMax = max || 100;
   const finalMin = min || 0;
   const ratio = (inputValue.value - finalMin) / (finalMax - finalMin);
@@ -66,7 +72,7 @@ watch(hovering, () => {
       return;
     }
 
-    calTooltipPosition(inputSliderRef.value, inputSliderTooltipRef.value);
+    calTipPosition(inputSliderRef.value, inputSliderTooltipRef.value);
     positioning.value = false;
   }, 50);
 });
@@ -74,6 +80,9 @@ watch(hovering, () => {
 watch(inputValue, val => {
   if (val < min) val = min;
   if (val > max) val = max;
+
+  if (!inputSliderRef.value || !inputSliderTooltipRef.value) return;
+  calTipPosition(inputSliderRef.value, inputSliderTooltipRef.value);
 });
 
 watch(
@@ -106,8 +115,6 @@ watch(
         :disabled="disabled"
         :step="step"
         :class="[ns.e('label__input'), ns.e('label__input-progress'), ns.is('disabled', disabled)]"
-        @mouseenter="hovering = true"
-        @mouseleave="hovering = false"
       />
       <Transition name="fade">
         <span

@@ -36,11 +36,12 @@ export interface UseWindowSizeOptions {
 /**
  * 实时获取窗口大小
  *
- * @param sizeChangeCallback 钩子函数，当窗口发生改变时调用
+ * @param sizeChangedCallback 钩子函数，当窗口发生改变时调用
+ * @param options 选项
  */
 export const useWindowSize = (
-  options: UseWindowSizeOptions,
-  sizeChangeCallback?: (width: number, height: number) => undefined
+  sizeChangedCallback?: (width: number, height: number) => undefined,
+  options: UseWindowSizeOptions = {}
 ) => {
   const {
     initialWidth = Number.POSITIVE_INFINITY,
@@ -69,7 +70,7 @@ export const useWindowSize = (
         height.value = window.document.documentElement.clientHeight;
       }
 
-      sizeChangeCallback?.(width.value, height.value);
+      sizeChangedCallback?.(width.value, height.value);
     }
   }, 100);
 

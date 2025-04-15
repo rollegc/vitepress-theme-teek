@@ -36,7 +36,7 @@ export * from "./ImageViewer";
 export * from "./Message";
 export * from "./Notice";
 export * from "./Pagination";
-export * from "./ReadingEnhance";
+export * from "./LayoutEnhance";
 export * from "./RightBottomButton";
 export * from "./TransitionCollapse";
 export * from "./VpContainer";

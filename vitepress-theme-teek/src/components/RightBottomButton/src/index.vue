@@ -1,26 +1,26 @@
 <script setup lang="ts" name="RightBottomButton">
 import { provide } from "vue";
 import { useData } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
+// import { useTeekConfig } from "../../../configProvider";
 import { useNamespace } from "../../../hooks";
 import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";
 // import ThemeSize from "./ThemeSize.vue";
-import ThemeStyle from "./ThemeStyle.vue";
+// import ThemeStyle from "./ThemeStyle.vue";
+// import type { ThemeSetting } from "../../../config/types";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
-import type { ThemeSetting } from "../../../config/types";
 
 defineOptions({ name: "RightBottomButton" });
 
 const ns = useNamespace("right-bottom-button");
 provide(rightBottomButtonNsSymbol, ns);
 
-const { getTeekConfigRef } = useTeekConfig();
+// const { getTeekConfigRef } = useTeekConfig();
 const { theme } = useData();
-const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
-  useThemeStyle: true,
-  useThemeSize: true,
-});
+// const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
+//   useThemeStyle: true,
+//   useThemeSize: true,
+// });
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSettin
     <BackTop />
     <ToComment v-if="theme.comment?.provider" />
     <!-- <ThemeSize v-if="themeSettingConfig.useThemeSize" /> -->
-    <ThemeStyle v-if="themeSettingConfig.useThemeStyle" />
+    <!-- <ThemeStyle v-if="themeSettingConfig.useThemeStyle" /> -->
 
     <slot name="teek-right-bottom-after" />
   </div>

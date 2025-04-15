@@ -24,6 +24,7 @@
   opacity: 0;
 }
 
+/* 淡入淡出（线性） */
 .#{$namespace}-fade-linear-enter-active,
 .#{$namespace}-fade-linear-leave-active {
   transition: opacity 0.2s linear;
