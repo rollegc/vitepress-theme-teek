@@ -5,7 +5,7 @@ export interface UseMountedOptions {
   nexTick?: boolean;
 }
 export function useMounted(fn: () => void, options: UseMountedOptions = {}) {
-  const { sync = false, nexTick = false } = options;
+  const { sync = false, nexTick = true } = options;
   const isMounted = shallowRef(false);
   const instance = getCurrentInstance();
 

@@ -57,7 +57,7 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
 </script>
 
 <template>
-  <i :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()">
+  <span :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()">
     <template v-if="slot.default">
       <slot />
     </template>
@@ -75,5 +75,5 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
     <IconifyOnline v-else-if="isIconifyOnline()" :icon="finalIcon" />
 
     <img v-else-if="isImg()" :src="finalIcon" :alt="imgAlt" />
-  </i>
+  </span>
 </template>

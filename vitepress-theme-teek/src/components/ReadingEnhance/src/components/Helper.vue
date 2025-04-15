@@ -1,10 +1,11 @@
 <script setup lang="ts" name="Helper">
-import { inject, ref, unref, watch, nextTick } from "vue";
-import { useNamespace } from "../../../../hooks";
-import { readingEnhanceNsSymbol } from "../readingEnhance";
+import { nextTick, ref, watch } from "vue";
+import { useElementHover } from "../../../../hooks";
+import { ns } from "../readingEnhance";
 import Icon from "../../../Icon";
+import { questionFilledIcon } from "../../../../assets/icons";
 
-const ns = inject(readingEnhanceNsSymbol, useNamespace("reading-enhance"));
+defineOptions({ name: "Helper" });
 
 const props = defineProps<{ virtualRef?: HTMLDivElement; offset?: number }>();
 
@@ -12,20 +13,23 @@ const visible = defineModel({ type: Boolean, default: false });
 const helpElementRef = ref<HTMLSpanElement | null>(null);
 const popupElementRef = ref<HTMLDivElement | null>(null);
 
-const helpPopupStyle = ref({
-  top: "0px",
-  left: "0px",
+const isHovered = useElementHover(helpElementRef);
+
+watch(isHovered, () => {
+  visible.value = isHovered.value;
 });
+
+const popupStyle = ref({ top: "0px", left: "0px" });
 
 watch(visible, async () => {
   await nextTick();
   const { virtualRef, offset = 12 } = props;
-  const refElement = virtualRef || unref(helpElementRef);
+  const refElement = virtualRef || helpElementRef.value;
 
   if (refElement) {
     const rect = refElement.getBoundingClientRect();
-    const popupWidth = unref(popupElementRef)?.offsetWidth || 0;
-    helpPopupStyle.value = {
+    const popupWidth = popupElementRef.value?.offsetWidth || 0;
+    popupStyle.value = {
       top: `${rect.top}px`,
       left: `${rect.left - popupWidth - offset}px`,
     };
@@ -34,11 +38,18 @@ watch(visible, async () => {
 </script>
 
 <template>
-  <span ref="helpElementRef" :class="ns.e('helper')" @mouseenter="visible = true" @mouseleave="visible = false">
-    <Icon icon="ep:question-filled" :size="16" />
+  <span ref="helpElementRef" :class="ns.e('helper')" @click="visible = true">
+    <Icon :icon="questionFilledIcon" :size="16" />
     <Teleport to="body">
-      <Transition :name="ns.joinNamespace('fade-scale')">
-        <div v-show="visible" ref="popupElementRef" :style="helpPopupStyle" :class="ns.e('helper__popup')">
+      <Transition :name="ns.joinNamespace('fade-linear')">
+        <div
+          v-show="visible"
+          ref="popupElementRef"
+          :style="popupStyle"
+          :class="ns.e('helper__popup')"
+          @click.stop
+          @touchstart.stop
+        >
           <slot />
         </div>
       </Transition>

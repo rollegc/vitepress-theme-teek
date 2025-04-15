@@ -138,6 +138,7 @@ export const useStorage = <T extends string | number | boolean | object | null>(
   const read = (event?: StorageEventLike) => {
     const rawValue = event ? event.newValue : storage.getItem(keyComputed.value);
     if (rawValue == null) {
+      console.log(serializer.write(rawInit));
       if (writeDefaults && rawInit != null) storage.setItem(keyComputed.value, serializer.write(rawInit));
       return rawInit;
     }

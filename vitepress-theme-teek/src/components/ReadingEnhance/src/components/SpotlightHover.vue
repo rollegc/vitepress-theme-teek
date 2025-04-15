@@ -1,8 +1,10 @@
-<script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from "vue";
+<script setup lang="ts" name="SpotlightHover">
+import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vitepress";
 import { SpotlightStyle, spotlightStyleStorageKey } from "../readingEnhance";
 import { useEventListener, useStorage } from "../../../../hooks";
+
+defineOptions({ name: "SpotlightHover" });
 
 const props = defineProps<{ enabled: boolean }>();
 
@@ -92,17 +94,19 @@ onMounted(() => {
 });
 
 const route = useRoute();
-watch(route, async () => {
-  await nextTick();
+watch(
+  route,
+  () => {
+    vpDocElement.value = document.querySelector(".VPDoc main .vp-doc") as HTMLDivElement;
 
-  vpDocElement.value = document.querySelector(".VPDoc main .vp-doc") as HTMLDivElement;
+    shouldRecalculate.value = true;
+    boxStyles.value = { display: "none" };
 
-  shouldRecalculate.value = true;
-  boxStyles.value = { display: "none" };
-
-  watchHandler();
-  shouldRecalculate.value = false;
-});
+    watchHandler();
+    shouldRecalculate.value = false;
+  },
+  { flush: "post" }
+);
 
 watch([() => mousePosition.value.x, () => mousePosition.value.y], () => {
   if (props.enabled) watchHandler();
@@ -121,13 +125,13 @@ watch(
     <div
       v-if="props.enabled && !shouldRecalculate"
       :style="boxStyles"
-      aria-hidden="true"
-      focusable="false"
-      class="tk-spotlight-hover"
       :class="[
+        'tk-spotlight-hover',
         spotlightStyle === SpotlightStyle.Under ? 'tk-spotlight-hover__under' : '',
         spotlightStyle === SpotlightStyle.Aside ? 'tk-spotlight-hover__aside' : '',
       ]"
+      aria-hidden="true"
+      focusable="false"
     />
   </Teleport>
 </template>

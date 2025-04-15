@@ -1,15 +1,14 @@
 <script setup lang="ts" name="SpotlightStyle">
-import { computed, inject, ref } from "vue";
-import { useNamespace, useStorage } from "../../../hooks";
+import { computed, ref } from "vue";
+import { useStorage } from "../../../hooks";
 import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "../../../assets/icons";
-import { readingEnhanceNsSymbol, spotlightStyleStorageKey, SpotlightStyle } from "./readingEnhance";
+import { spotlightStyleStorageKey, SpotlightStyle } from "./readingEnhance";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
 
-const ns = inject(readingEnhanceNsSymbol, useNamespace("reading-enhance"));
+defineOptions({ name: "SpotlightStyle" });
 
 const disabled = ref(false);
-
 const spotlightStyle = useStorage(spotlightStyleStorageKey, SpotlightStyle.Aside);
 
 const content = computed(() => [
@@ -38,7 +37,7 @@ const segmentedOptions = computed(() =>
   }))
 );
 
-const messageList = computed(() =>
+const tips = computed(() =>
   content.value.map(item => ({
     title: item.title,
     icon: item.icon,
@@ -48,14 +47,7 @@ const messageList = computed(() =>
 </script>
 
 <template>
-  <BaseTemplate
-    :class="ns.e('spotlight-style')"
-    title="聚光灯样式"
-    :icon="clickIcon"
-    desc="调整聚光灯的样式。"
-    :message-list
-    :disabled
-  >
+  <BaseTemplate :icon="clickIcon" title="聚光灯样式" desc="调整聚光灯的样式。" :tips :disabled>
     <Segmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>
 </template>

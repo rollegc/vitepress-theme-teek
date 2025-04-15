@@ -48,6 +48,7 @@ export { default as circleCloseFilledIcon } from "./circleCloseFilled";
 export { default as infoFilledIcon } from "./infoFilled";
 export { default as successFilledIcon } from "./successFilled";
 export { default as warningFilledIcon } from "./warningFilled";
+export { default as questionFilledIcon } from "./questionFilled";
 
 export { default as autoWidthIcon } from "./reading-enhance/autoWidth";
 export { default as clickIcon } from "./reading-enhance/click";

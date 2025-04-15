@@ -1,26 +1,44 @@
-<script setup lang="ts" name="Template">
-import { inject, ref } from "vue";
-import { readingEnhanceNsSymbol } from "../readingEnhance";
-import { useNamespace } from "../../../../hooks";
+<script setup lang="ts" name="BaseTemplate">
+import { ref, useTemplateRef } from "vue";
+import { ns } from "../readingEnhance";
 import Icon, { type TkIconProps } from "../../../Icon";
 import Title from "./Title.vue";
 import Helper from "./Helper.vue";
-import HighlightBorder from "./HighlightBorder.vue";
+import BorderHighlight from "./BorderHighlight.vue";
+
+defineOptions({ name: "BaseTemplate" });
 
 interface TemplateProps {
+  /**
+   * 标题
+   */
   title?: string;
+  /**
+   * 描述
+   */
   desc?: string;
+  /**
+   * 图标
+   */
   icon?: TkIconProps["icon"];
-  messageList?: { title?: string; content?: string; icon?: TkIconProps["icon"] }[];
+  /**
+   * 提示信息
+   */
+  tips?: { title?: string; content?: string; icon?: TkIconProps["icon"] }[];
+  /**
+   * 是否禁用
+   */
   disabled?: boolean;
+  /**
+   * 是否边框高亮
+   */
+  borderHighlight?: boolean;
 }
 
-defineProps<TemplateProps>();
-
-const ns = inject(readingEnhanceNsSymbol, useNamespace("reading-enhance"));
+const { borderHighlight = true } = defineProps<TemplateProps>();
 
 const helperVisible = ref(false);
-const titleElementRef = ref<HTMLDivElement | null>(null);
+const titleElementRef = useTemplateRef<HTMLDivElement>("titleElementRef");
 </script>
 
 <template>
@@ -30,31 +48,32 @@ const titleElementRef = ref<HTMLDivElement | null>(null);
 
       <Helper v-model="helperVisible" :virtual-ref="titleElementRef!">
         <div :class="ns.e('helper__body')">
-          <h4 :class="ns.em('helper__body', 'title')">
-            <slot name="title">{{ title }}</slot>
+          <h4 :class="ns.em('helper', 'title')">
+            <slot name="helper-title">{{ title }}</slot>
           </h4>
-          <p :class="ns.em('helper__body', 'desc')">
-            <slot name="desc">{{ desc }}</slot>
+          <p :class="ns.em('helper', 'desc')">
+            <slot name="helper-desc">{{ desc }}</slot>
           </p>
 
-          <div v-for="(message, index) in messageList" :key="index" :class="ns.e('helper__body__content')">
-            <div>
-              <Icon
-                v-if="message.icon"
-                :icon="message.icon"
-                :size="16"
-                style="margin-right: 4px; vertical-align: -2px"
-              />
-              <span v-if="message.title" style="font-weight: 600">{{ message.title }}</span>
+          <div v-for="(tip, index) in tips" :key="index" :class="ns.e('helper__body__tip')">
+            <div class="flx-align-center" style="margin-bottom: 6px">
+              <Icon v-if="tip.icon" :icon="tip.icon" :size="16" style="margin-right: 4px" />
+              <span v-if="tip.title" style="font-weight: 600">
+                {{ tip.title }}
+              </span>
             </div>
-            <span v-if="message.content">{{ message.content }}</span>
+            <span v-if="tip.content">{{ tip.content }}</span>
           </div>
         </div>
       </Helper>
     </div>
 
-    <HighlightBorder :active="helperVisible" style="margin-top: 8px">
+    <BorderHighlight v-if="borderHighlight" :active="helperVisible" style="margin-top: 8px">
       <slot />
-    </HighlightBorder>
+    </BorderHighlight>
+
+    <div v-else style="margin-top: 8px">
+      <slot />
+    </div>
   </div>
 </template>

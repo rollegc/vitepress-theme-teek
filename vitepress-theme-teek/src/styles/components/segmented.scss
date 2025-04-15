@@ -2,8 +2,6 @@
 @use "../mixins/function" as *;
 
 @include b(segmented) {
-  color: getCssVar("reading-enhance-menu-text-color");
-  background-color: getCssVar("reading-enhance-menu-bg-color");
   font-size: 0.875rem;
   line-height: 1.25rem;
   padding: 0.25rem;

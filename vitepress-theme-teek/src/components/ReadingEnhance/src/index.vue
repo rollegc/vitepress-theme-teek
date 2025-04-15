@@ -4,23 +4,22 @@ import LayoutPageWidthSlide from "./LayoutPageWidthSlide.vue";
 import LayoutDocWidthSlide from "./LayoutDocWidthSlide.vue";
 import Spotlight from "./Spotlight.vue";
 import SpotlightStyle from "./SpotlightStyle.vue";
-import { useNamespace } from "../../../hooks";
-import { nextTick, provide, ref, watch } from "vue";
+import { useNamespace, useElementHover } from "../../../hooks";
+import { provide, ref, watch, useTemplateRef, nextTick } from "vue";
 import { readingEnhanceNsSymbol } from "./readingEnhance";
+import { readingIcon } from "../../../assets/icons";
 import Icon from "../../Icon";
 
 const ns = useNamespace("reading-enhance");
 
 provide(readingEnhanceNsSymbol, ns);
 
-const visible = ref(false);
-const readingEnhanceRef = ref<HTMLSpanElement | null>(null);
-const popupElementRef = ref<HTMLDivElement | null>(null);
+const readingEnhanceRef = useTemplateRef<HTMLDivElement>("readingEnhanceRef");
+const popupElementRef = useTemplateRef<HTMLDivElement>("popupElementRef");
 
-const popupStyle = ref({
-  top: "0px",
-  left: "0px",
-});
+const visible = useElementHover(readingEnhanceRef);
+
+const popupStyle = ref({ top: "0px", left: "0px" });
 
 watch(visible, async () => {
   await nextTick();
@@ -39,14 +38,8 @@ watch(visible, async () => {
 </script>
 
 <template>
-  <div
-    ref="readingEnhanceRef"
-    :class="ns.b()"
-    @mouseenter="visible = true"
-    @mouseleave="visible = false"
-    @click="visible = true"
-  >
-    <Icon icon="ep:reading" :size="18" />
+  <div ref="readingEnhanceRef" :class="ns.b()" @click="visible = true">
+    <Icon :icon="readingIcon" :size="20" />
     <Transition :name="ns.joinNamespace('fade-linear')">
       <div
         v-show="visible"
