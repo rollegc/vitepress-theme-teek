@@ -26,7 +26,7 @@ const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
   typesShuffle: false,
 });
 
-const descArray = computed<string[]>(() => [
+const descArray = computed(() => [
   ...new Set(
     [unref(frontmatter).tk?.description || unref(bannerConfig).description || []].flat()?.filter((v: string) => !!v)
   ),
@@ -43,21 +43,16 @@ const isSwitchDescStyle = computed(() => unref(bannerConfig).descStyle === "swit
 const {
   text: typesText,
   isFinished,
-  startTypes,
-  stopTypes,
-} = useTextTypes(unref(descArray), {
-  typesInTime: unref(bannerConfig).typesInTime,
-  typesOutTime: unref(bannerConfig).typesOutTime,
-  typesNextTime: unref(bannerConfig).typesNextTime,
+  start: startTypes,
+} = useTextTypes(descArray, {
+  inputTime: unref(bannerConfig).typesInTime,
+  outputTime: unref(bannerConfig).typesOutTime,
+  nextTime: unref(bannerConfig).typesNextTime,
   shuffle: unref(bannerConfig).typesShuffle,
 });
 
 // 文字淡入淡出效果
-const {
-  data: text,
-  startAutoSwitch,
-  stopAutoSwitch,
-} = useSwitchData(unref(descArray), {
+const { data: text, start: startAutoSwitch } = useSwitchData(descArray, {
   timeout: unref(bannerConfig).switchTime,
   shuffle: unref(bannerConfig).switchShuffle,
   onUpdate: (data, newValue) => {
@@ -72,10 +67,6 @@ const {
 onMounted(() => {
   if (unref(isTypesDescStyle)) startTypes();
   if (unref(isSwitchDescStyle)) startAutoSwitch();
-});
-onUnmounted(() => {
-  if (unref(isTypesDescStyle)) stopTypes();
-  if (unref(isSwitchDescStyle)) stopAutoSwitch();
 });
 </script>
 

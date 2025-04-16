@@ -5,7 +5,7 @@ import { autoWidthIcon, scaleIcon } from "../../../assets/icons";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import InputSlide from "./components/InputSlide.vue";
 import { useTeekConfig } from "../../../configProvider";
-import { activateMaxWidthMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
+import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutModeStorageKey, docMaxWidthSlideStorageKey, transitionName, docMaxWidthVar } from "./namespace";
 
 defineOptions({ name: "LayoutDocWidthSlide" });
@@ -36,7 +36,7 @@ const updateMaxWidth = (val: number) => {
 onMounted(() => updateMaxWidth(docMaxWidth.value));
 
 const disabled = useMediaQuery(mobileMaxWidthMedia);
-const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthMedia);
+const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthSlideMedia);
 
 watch(shouldActivateMaxWidth, () => {
   updateMaxWidth(docMaxWidth.value);

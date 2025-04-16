@@ -1,75 +1,97 @@
-import { ref, unref } from "vue";
+import { computed, MaybeRefOrGetter, ref, toValue, watch } from "vue";
+import { useScopeDispose } from "./useScopeDispose";
 
 export interface TypesOption {
   /**
    * 打字间隔时间，单位：毫秒
    */
-  typesInTime?: number;
+  inputTime?: number;
   /**
    * 删字间隔时间，单位：毫秒
    */
-  typesOutTime?: number;
+  outputTime?: number;
   /**
-   * 换行间隔时间，单位：毫秒
+   * 获取新数据间隔时间，单位：毫秒
    */
-  typesNextTime?: number;
+  nextTime?: number;
   /**
-   * 是否随机切换文本
+   * 是否随机获取新数据
    */
   shuffle?: boolean;
+  /**
+   * data 发生变化，是否重新加载
+   *
+   * @default false
+   */
+  reloadWhenDataChanged?: boolean;
 }
 
 /**
  * 打字功能
  *
- * @param typesArray 文字数组
+ * @param data 数据
  * @param option 配置项
  */
-export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
-  const { typesInTime = 200, typesOutTime = 100, typesNextTime = 800, shuffle = false } = option || {};
+export const useTextTypes = (data: MaybeRefOrGetter<string[]>, options: TypesOption = {}) => {
+  const { inputTime = 200, outputTime = 100, nextTime = 800, shuffle = false, reloadWhenDataChanged = false } = options;
+  const dataComputed = computed(() => toValue(data) || []);
 
   const text = ref("");
   const isFinished = ref(false);
 
   let originText = "";
-  let typesInIntervalIdId: NodeJS.Timeout;
-  let typesOutIntervalId: NodeJS.Timeout;
-  // 为 originText 的长度服务
-  let index = 0;
-  // 为 typesArray 组下标服务
-  let length = 0;
+  let inputTimer: ReturnType<typeof setInterval> | null;
+  let outputTimer: ReturnType<typeof setInterval> | null;
+  // 为 originText 长度服务
+  let textIndex = 0;
+  // 为 dataComputed 下标服务
+  let dataIndex = 0;
+
+  const clearInputTimer = () => {
+    if (inputTimer) {
+      clearInterval(inputTimer);
+      inputTimer = null;
+    }
+  };
+
+  const clearOutputTimer = () => {
+    if (outputTimer) {
+      clearInterval(outputTimer);
+      outputTimer = null;
+    }
+  };
 
   /**
    * 打字
    */
   const typesIn = () => {
+    console.log(1);
     isFinished.value = false;
-    originText = unref(typesArray)[length];
+    originText = dataComputed.value[dataIndex];
 
-    // 防止 originText 为空的情况
-    if (!originText) return;
+    if (!originText) return stop();
 
-    text.value = originText.substring(0, index++);
+    text.value = originText.substring(0, textIndex++);
 
-    if (index > originText.length) {
-      if (typesInIntervalIdId) clearInterval(typesInIntervalIdId);
+    if (textIndex > originText.length) {
+      clearInputTimer();
       isFinished.value = true;
       setTimeout(() => {
-        typesOutIntervalId = setInterval(() => {
+        outputTimer = setInterval(() => {
           typesOut();
-        }, typesOutTime);
-      }, typesNextTime);
+        }, outputTime);
+      }, nextTime);
     }
   };
   /**
    * 删字
    */
   const typesOut = () => {
-    if (index >= 0) {
+    if (textIndex >= 0) {
       isFinished.value = false;
-      text.value = originText.substring(0, index--);
+      text.value = originText.substring(0, textIndex--);
     } else {
-      if (typesOutIntervalId) clearInterval(typesOutIntervalId);
+      clearOutputTimer();
       isFinished.value = true;
 
       setTimeout(() => {
@@ -77,40 +99,65 @@ export const useTextTypes = (typesArray: string[], option?: TypesOption) => {
           // 随机选择下一个文本
           let newIndex: number;
           do {
-            newIndex = Math.floor(Math.random() * unref(typesArray).length);
-          } while (newIndex === length);
+            newIndex = Math.floor(Math.random() * dataComputed.value.length);
+          } while (newIndex === dataIndex);
 
-          length = newIndex;
+          dataIndex = newIndex;
         } else {
           // 按顺序选择下一个文本
-          length = (length + 1) % unref(typesArray).length;
+          dataIndex = (dataIndex + 1) % dataComputed.value.length;
         }
 
-        typesInIntervalIdId = setInterval(() => {
+        inputTimer = setInterval(() => {
           typesIn();
-        }, typesInTime);
-      }, typesNextTime);
+        }, inputTime);
+      }, nextTime);
     }
   };
 
   /**
    * 开始打字
    */
-  const startTypes = () => {
+  const start = () => {
     isFinished.value = false;
-    typesInIntervalIdId = setInterval(() => {
+    inputTimer = setInterval(() => {
       typesIn();
-    }, typesInTime);
+    }, inputTime);
   };
 
   /**
    * 停止打字
+   *
+   * @param restore 是否还原数据为开始状态
    */
-  const stopTypes = () => {
-    if (typesInIntervalIdId) clearInterval(typesInIntervalIdId);
-    if (typesOutIntervalId) clearInterval(typesOutIntervalId);
+  const stop = (restore = false) => {
+    clearInputTimer();
+    clearOutputTimer();
     isFinished.value = false;
+
+    if (restore) {
+      text.value = "";
+      originText = "";
+      textIndex = 0;
+      dataIndex = 0;
+    }
   };
 
-  return { text, isFinished, startTypes, stopTypes };
+  /**
+   * 重启打字
+   *
+   * @param restore 是否还原数据为开始状态
+   */
+  const restart = (restore = true) => {
+    stop(restore);
+    start();
+  };
+
+  if (reloadWhenDataChanged) watch(dataComputed, () => restart());
+
+  useScopeDispose(stop);
+
+  return { text, isFinished, start, stop, restart };
 };
+
+export type UseTextTypesReturn = ReturnType<typeof useTextTypes>;

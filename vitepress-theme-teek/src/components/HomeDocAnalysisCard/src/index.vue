@@ -2,7 +2,7 @@
 import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
 import { useTeekConfig, usePosts } from "../../../configProvider";
-import { useNamespace, useLocale, useBuSunZi, type UseBuSunZi } from "../../../hooks";
+import { useNamespace, useLocale, useBuSuanZi, type UseBuSuanZiReturn } from "../../../hooks";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "../../../helper";
 import HomeCard from "../../HomeCard";
 import { docAnalysisIcon } from "../../../assets/icons";
@@ -77,14 +77,14 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
 }));
 // 是否使用访问量功能
 const useSiteView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
-const statisticsInfo: UseBuSunZi = {
+const statisticsInfo: UseBuSuanZiReturn = {
   sitePv: ref(0),
   siteUv: ref(0),
   isGet: ref(false),
 };
 
 // 通过不蒜子获取访问量和访客数
-const { sitePv, siteUv, isGet, request } = useBuSunZi(
+const { sitePv, siteUv, isGet, request } = useBuSuanZi(
   unref(useSiteView),
   unref(statisticsConfig).iteration,
   unref(statisticsConfig).pageIteration
@@ -147,14 +147,14 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
       label: t("tk.docAnalysisCard.viewCount"),
       originValue: unref(sitePv),
       value: unref(isGet) ? `${unref(sitePv)} ${t("tk.docAnalysisCard.viewCountUnit")}` : "Get...",
-      show: useSiteView,
+      show: unref(useSiteView),
     },
     {
       key: "visitCount",
       label: t("tk.docAnalysisCard.visitCount"),
       originValue: unref(siteUv),
       value: unref(isGet) ? `${unref(siteUv)} ${t("tk.docAnalysisCard.visitCountUnit")}` : "Get...",
-      show: useSiteView,
+      show: unref(useSiteView),
     },
     ...(appendInfo as any[]),
   ];

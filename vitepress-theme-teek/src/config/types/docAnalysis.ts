@@ -38,13 +38,13 @@ export interface DocAnalysis {
      */
     provider?: "" | "busuanzi";
     /**
-     * 是否开启首页的访问量和排名统计
+     * 是否开启首页的访问量和排名统计，仅当 provider 存在生效
      *
      * @default true
      */
     siteView?: boolean;
     /**
-     * 是否开启文章页的浏览量统计
+     * 是否开启文章页的浏览量统计，仅当 provider 存在生效
      *
      * @default true
      */

@@ -26,6 +26,7 @@ export * from "./helper";
 export * from "./hooks";
 export * from "./markdown/helper";
 export * from "./locale";
+export * from "./assets/icons";
 export * from "./version";
 
 export default {

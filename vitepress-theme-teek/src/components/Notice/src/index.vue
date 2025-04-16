@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useWindowSize, useVpRouter } from "../../../hooks";
+import { useNamespace, useLocale, useMediaQuery, useVpRouter } from "../../../hooks";
 import Icon from "../../Icon";
 import { noticeIcon, closeIcon } from "../../../assets/icons";
 import { isString } from "../../../helper";
@@ -56,15 +56,17 @@ const noticeTitle = computed(() => {
   return title(unref(localeIndex));
 });
 
-// 是否在移动端隐藏公告功能
-if (unref(noticeConfig).mobileMinify) {
-  useWindowSize(width => {
-    if (width <= 768) destroyNoticeIcon.value = false;
-    else if (destroyNoticeIcon.value !== true) destroyNoticeIcon.value = true;
-  });
-}
+const isMobile = useMediaQuery("(max-width: 768px)");
+watch(
+  () => unref(noticeConfig).mobileMinify,
+  val => {
+    // 是否在移动端隐藏公告图标
+    if (isMobile) destroyNoticeIcon.value = val;
+  },
+  { immediate: true }
+);
 
-let timer: NodeJS.Timeout | null = null;
+let timer: ReturnType<typeof setTimeout> | null;
 
 /**
  * 弹框定时自动关闭
@@ -72,7 +74,10 @@ let timer: NodeJS.Timeout | null = null;
 const closePopoverWhenTimeout = () => {
   const { duration } = unref(noticeConfig);
   if (unref(showPopover) && duration > 0) {
-    if (timer) clearTimeout(timer);
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
     timer = setTimeout(handleClosePopover, duration);
   }
 };
@@ -87,6 +92,7 @@ onMounted(() => {
 
 /**
  * 如果公告弹框的 position 为 center，则当遮罩层出现时禁止滚动，即将滚动去掉
+ *
  * @param action 对滚动条的行为
  */
 const openOrDisableScroll = (action: "open" | "disable") => {

@@ -1,7 +1,17 @@
 import { getCurrentInstance, nextTick, onMounted, shallowRef } from "vue";
 
 export interface UseMountedOptions {
+  /**
+   * 是否在非 onMounted 下执行
+   *
+   * @default false
+   */
   sync?: boolean;
+  /**
+   * 是否在 nextTick 后执行
+   *
+   * @default true
+   */
   nexTick?: boolean;
 }
 export function useMounted(fn?: () => void, options: UseMountedOptions = {}) {

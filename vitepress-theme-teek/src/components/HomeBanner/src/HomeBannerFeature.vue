@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeBannerFeature">
 import { useData, withBase } from "vitepress";
-import { ref, unref } from "vue";
+import { onBeforeUnmount, ref, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useLocale, useWindowSize } from "../../../hooks";
 import type { Banner } from "../../../config/types";
@@ -20,21 +20,32 @@ const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
 
 const active = ref(0);
 const isMobile = ref(false);
-let intervalId: NodeJS.Timeout;
+let timer: ReturnType<typeof setInterval> | null;
+
+const clearTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+};
 
 useWindowSize(width => {
   const { features, featureCarousel } = unref(bannerConfig);
   if (width <= 719) {
     isMobile.value = true;
-    if (intervalId) clearTimeout(intervalId);
+    clearTimer();
     // 移动端的 Feature 采用轮播模式
-    intervalId = setInterval(() => {
+    timer = setInterval(() => {
       active.value = (active.value + 1) % features.length;
     }, featureCarousel);
   } else {
     isMobile.value = false;
-    if (intervalId) clearTimeout(intervalId);
+    clearTimer();
   }
+});
+
+onBeforeUnmount(() => {
+  clearTimer();
 });
 </script>
 

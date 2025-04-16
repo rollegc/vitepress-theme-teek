@@ -22,5 +22,5 @@ export enum LayoutThemeColor {
 }
 
 export const mobileMaxWidthMedia = "(max-width: 768px)";
-export const activateMaxWidthMedia = "(min-width: 1440px)";
+export const activateMaxWidthSlideMedia = "(min-width: 1440px)";
 export const touchMedia = "(pointer: coarse)";

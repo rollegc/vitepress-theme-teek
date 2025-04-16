@@ -1,9 +1,12 @@
 <script setup lang="ts" name="TeekLayoutProvider">
-import Teek, { TkAvatar, teekConfigSymbol, useNamespace } from "vitepress-theme-teek";
-import { provide, ref } from "vue";
+import Teek, { TkAvatar, teekConfigSymbol, useNamespace, clockIcon } from "vitepress-theme-teek";
+import { provide, ref, watch, nextTick } from "vue";
 import { teekDocConfig, teekBlogConfig } from "../config/teekConfig";
+import { useRuntime } from "../helper/useRuntime";
+import { useData } from "vitepress";
 
 const ns = useNamespace("layout-provider");
+const { frontmatter } = useData();
 
 // 默认文档风
 const current = ref("D");
@@ -17,6 +20,11 @@ const handleSwitch = () => {
   if (current.value === "D") teekConfig.value = teekDocConfig;
   else teekConfig.value = teekBlogConfig;
 };
+
+// 页脚运行时间
+useRuntime("2021-10-19 00:00:00", {
+  prefix: `<span style="width: 16px; display: inline-block; vertical-align: -3px; margin-right: 3px;">${clockIcon}</span>小破站已运行 `,
+});
 </script>
 
 <template>

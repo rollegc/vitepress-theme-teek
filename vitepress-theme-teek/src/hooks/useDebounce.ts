@@ -12,12 +12,21 @@ export const useDebounce = <T extends (...args: any[]) => any>(func: T, delay = 
     const callNow = immediate && !timer;
     if (callNow) func(...args);
 
+    const clearTimer = () => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+    };
+
     const later = () => {
-      timer = null;
+      clearTimer();
       if (!immediate) func(...args);
     };
 
-    if (timer) clearTimeout(timer);
+    clearTimer();
     timer = setTimeout(later, delay);
   };
 };
+
+export type UseDebounceReturn = ReturnType<typeof useDebounce>;

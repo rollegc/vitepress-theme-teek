@@ -2,6 +2,12 @@ import { computed, MaybeRefOrGetter, shallowRef, toValue, watchEffect } from "vu
 import { useMounted } from "./useMounted";
 import { useEventListener } from "./useEventListener";
 
+/**
+ * 媒体查询
+ *
+ * @param query 媒体条件，如 (max-width: 768px)
+ * @param match true：如果匹配成功返回 true，false：如果匹配成功返回 false
+ */
 export const useMediaQuery = (query: MaybeRefOrGetter<string>, match = true) => {
   const isSupported = shallowRef(false);
 

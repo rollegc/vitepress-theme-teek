@@ -4,14 +4,24 @@ import { useEventListener } from "./useEventListener";
 import { isClient } from "../helper";
 
 export interface UseElementHoverOptions {
+  /**
+   * 延迟进入的时间，单位毫秒
+   *
+   * @default 0
+   */
   delayEnter?: number;
+  /**
+   * 延迟离开的时间，单位毫秒
+   *
+   *  @default 0
+   */
   delayLeave?: number;
 }
 
-export function useElementHover(
+export const useElementHover = (
   el: MaybeRefOrGetter<EventTarget | null | undefined>,
   options: UseElementHoverOptions = {}
-): ShallowRef<boolean> {
+): ShallowRef<boolean> => {
   const { delayEnter = 0, delayLeave = 0 } = options;
 
   const isHovered = shallowRef(false);
@@ -34,4 +44,6 @@ export function useElementHover(
   useEventListener(el, "mouseleave", () => toggle(false), { passive: true });
 
   return isHovered;
-}
+};
+
+export type UseElementHoverReturn = ReturnType<typeof useElementHover>;

@@ -3,6 +3,7 @@ import { zhCn, type Language } from "../locale";
 import { get } from "../helper";
 
 export type TranslatorOption = Record<string, string | number>;
+// 支持从 provide 获取语言包
 export const localeContextKey: InjectionKey<Ref<Language | undefined>> = Symbol("localeContextKey");
 
 /**

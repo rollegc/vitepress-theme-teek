@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
-import { computed, ref, unref, onMounted, onUnmounted } from "vue";
+import { computed, ref, unref, onMounted } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useLocale, useScrollData } from "../../../hooks";
@@ -29,11 +29,9 @@ const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
 });
 
 // 使用上下滚动功能
-const { visibleData, startAutoScroll, stopAutoScroll } = useScrollData(
-  unref(friendLinkConfig).list,
-  5,
-  unref(friendLinkConfig).scrollSpeed
-);
+const { data, start } = useScrollData(unref(friendLinkConfig).list, 5, {
+  intervalTime: unref(friendLinkConfig).scrollSpeed,
+});
 
 const pageNum = ref(1);
 // 友情链接渲染数据
@@ -41,7 +39,7 @@ const currentFriendLinkList = computed(() => {
   const { list, limit, autoScroll } = unref(friendLinkConfig);
 
   // 如果使用上下滚动功能，则显示滚动数据
-  if (autoScroll) return unref(visibleData);
+  if (autoScroll) return unref(data);
 
   // 分页功能
   const p = unref(pageNum);
@@ -55,11 +53,7 @@ const finalTitle = computed(() => {
 });
 
 onMounted(() => {
-  if (unref(friendLinkConfig).autoScroll) startAutoScroll();
-});
-
-onUnmounted(() => {
-  if (unref(friendLinkConfig).autoScroll) stopAutoScroll();
+  if (unref(friendLinkConfig).autoScroll) start();
 });
 
 // 每一个 li 的 ref 元素，用于获取元素高度来计算实际的 top 位置

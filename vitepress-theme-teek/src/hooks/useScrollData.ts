@@ -1,26 +1,45 @@
-import { ref } from "vue";
+import { computed, MaybeRefOrGetter, ref, toValue, watch } from "vue";
+import { useScopeDispose } from "./useScopeDispose";
+
+export interface UseScrollDataOptions {
+  /**
+   * 自动滚动间隔时间
+   *
+   * @default 3000
+   */
+  intervalTime?: number;
+  /**
+   * data 发生变化，是否重新加载
+   *
+   * @default false
+   */
+  reloadWhenDataChanged?: boolean;
+}
 
 /**
  * 定时对数据进行截取，实现滚动
  *
- * @param list 数据
+ * @param data 数据
  * @param limit 显示数量
- * @param intervalTime 自动滚动间隔时间
+ * @param options 配置项
  */
-export const useScrollData = (list: any[], limit: number, intervalTime = 3000) => {
-  // 当前滚动数据
-  const visibleData = ref(list.slice(0, limit));
+export const useScrollData = (data: MaybeRefOrGetter<any[]>, limit: number, options: UseScrollDataOptions = {}) => {
+  const { intervalTime = 3000, reloadWhenDataChanged = false } = options;
+  const dataComputed = computed(() => toValue(data) || []);
+
+  // 初始化滚动数据
+  const visibleData = ref(dataComputed.value.slice(0, limit));
   let currentIndex = limit;
-  let intervalId: NodeJS.Timeout | null = null;
+  let timer: ReturnType<typeof setInterval> | null = null;
 
   /**
-   * 开启自动滚动
+   * 开启滚动
    */
-  const startAutoScroll = () => {
-    intervalId = setInterval(() => {
-      const nextIndex = (currentIndex + 1) % list.length;
+  const start = () => {
+    timer = setInterval(() => {
+      const nextIndex = (currentIndex + 1) % dataComputed.value.length;
 
-      visibleData.value.push(list[nextIndex]);
+      visibleData.value.push(dataComputed.value[nextIndex]);
       visibleData.value.shift();
 
       currentIndex = nextIndex;
@@ -28,18 +47,41 @@ export const useScrollData = (list: any[], limit: number, intervalTime = 3000) =
   };
 
   /**
-   * 关闭自动滚动
+   * 关闭滚动
+   *
+   *  @param restore 是否还原数据为开始状态
    */
-  const stopAutoScroll = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      intervalId = null;
+  const stop = (restore = false) => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+    if (restore) {
+      visibleData.value = dataComputed.value.slice(0, limit);
+      currentIndex = limit;
     }
   };
 
+  /**
+   * 重启数据滚动
+   *
+   * @param restore 是否还原数据为开始状态
+   */
+  const restart = (restore = true) => {
+    stop(restore);
+    start();
+  };
+
+  if (reloadWhenDataChanged) watch(dataComputed, () => restart());
+
+  useScopeDispose(stop);
+
   return {
-    visibleData,
-    startAutoScroll,
-    stopAutoScroll,
+    data: visibleData,
+    start,
+    stop,
+    restart,
   };
 };
+
+export type UseScrollDataReturn = ReturnType<typeof useScrollData>;
