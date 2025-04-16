@@ -1,17 +1,18 @@
 <script setup lang="ts" name="LayoutPageWidthSlide">
 import { computed, watch, onMounted } from "vue";
-import { useDebounce, useStorage, useMediaQuery } from "../../../hooks";
+import { useDebounce, useStorage, useMediaQuery, useLocale } from "../../../hooks";
 import { autoWidthIcon, scaleIcon } from "../../../assets/icons";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import InputSlide from "./components/InputSlide.vue";
 import { useTeekConfig } from "../../../configProvider";
-import { LayoutMode } from "./layoutEnhance";
+import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutModeStorageKey, pageMaxWidthSlideStorageKey, transitionName, pageMaxWidthVar } from "./namespace";
 
 defineOptions({ name: "LayoutPageWidthSlide" });
 
 const { getTeekConfigRef } = useTeekConfig();
 const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+const { t } = useLocale();
 
 const min = computed(() => 60 * 100);
 const max = computed(() => 100 * 100);
@@ -31,8 +32,8 @@ const updatePageMaxWidth = (val: number) => {
 
 onMounted(() => updatePageMaxWidth(pageMaxWidth.value));
 
-const disabled = useMediaQuery("(max-width: 768px)");
-const shouldActivateMaxWidth = useMediaQuery("(min-width: 1440px)");
+const disabled = useMediaQuery(mobileMaxWidthMedia);
+const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthSlideMedia);
 
 watch(shouldActivateMaxWidth, () => {
   updatePageMaxWidth(pageMaxWidth.value);
@@ -44,7 +45,11 @@ watch(pageMaxWidth, update);
 const format = (val: number) => `${Math.ceil(val / 100)}%`;
 
 const tips = [
-  { title: "调整页面最大宽度", icon: scaleIcon, content: "一个可调整的滑块，用于选择和自定义页面最大宽度。" },
+  {
+    title: t("tk.layoutEnhance.pageLayoutMaxWidth.helpTipTitle"),
+    icon: scaleIcon,
+    content: t("tk.layoutEnhance.pageLayoutMaxWidth.helpTipContent"),
+  },
 ];
 </script>
 
@@ -53,13 +58,21 @@ const tips = [
     <BaseTemplate
       v-show="layoutMode === LayoutMode.SidebarWidthAdjustableOnly || layoutMode === LayoutMode.BothWidthAdjustable"
       :icon="autoWidthIcon"
-      title="页面最大宽度"
-      desc="调整 VitePress 布局中页面的宽度，以适配不同的阅读习惯和屏幕环境。"
+      :title="t('tk.layoutEnhance.pageLayoutMaxWidth.title')"
+      :helper="!layoutEnhanceConfig.layoutSwitch?.pageLayoutMaxWidth?.disableHelp"
+      :helper-desc="t('tk.layoutEnhance.pageLayoutMaxWidth.helpDesc')"
       :tips
       :disabled
-      :helper="!layoutEnhanceConfig.layoutSwitch?.pageLayoutMaxWidth?.disableHelp"
     >
-      <InputSlide v-model="pageMaxWidth" :disabled :min :max :format :class="ns.e('slide')" />
+      <InputSlide
+        v-model="pageMaxWidth"
+        :disabled
+        :min
+        :max
+        :format
+        :class="ns.e('slide')"
+        :aria-label="t('tk.layoutEnhance.pageLayoutMaxWidth.helperTipTitle')"
+      />
     </BaseTemplate>
   </Transition>
 </template>

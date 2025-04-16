@@ -42,3 +42,5 @@ export const useClipboard = (timeout = 1500) => {
 
   return { copy, text, copied, isSupported };
 };
+
+export type UseClipboardReturn = ReturnType<typeof useClipboard>;

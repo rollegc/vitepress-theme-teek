@@ -21,7 +21,7 @@ import "vitepress-theme-teek/tk-plus/banner-full-img-scale.scss"; // Banner 全�
 
 import "./styles/index.scss";
 
-import { useFooterRuntime } from "./helper/useFooterRuntime"; // 首页底部添加运行时间
+import { useRuntime } from "./helper/useRuntime"; // 首页底部添加运行时间
 
 import confetti from "./components/Confetti.vue"; //导入五彩纸屑组件
 import "vitepress-markdown-timeline/dist/theme/index.css"; // 引入时间线样式
@@ -43,7 +43,7 @@ export default {
     name: "LayoutProvider",
     setup() {
       const { frontmatter, isDark, page } = useData();
-      const { start, stop } = useFooterRuntime();
+      const { start, stop } = useRuntime("2021-10-19 00:00:00", { prefix: "小破站已运行 " });
       const route = useRoute();
 
       // 注入评论区实例

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BodyBgImage">
-import { onMounted, onUnmounted, unref } from "vue";
+import { computed, onMounted, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useSwitchData } from "../../../hooks";
@@ -21,20 +21,19 @@ const bodyBgImgConfig = getTeekConfigRef<BodyBgImg>("bodyBgImg", {
   maskBg: "rgba(0, 0, 0, 0.2)",
 });
 
-const dataArray = [unref(bodyBgImgConfig).imgSrc || []].flat().map(item => item && withBase(item));
+const dataArray = computed(() => [unref(bodyBgImgConfig).imgSrc || []].flat().map(item => item && withBase(item)));
 // body 背景图片定时轮播
 const {
   data: imageSrc,
-  startAutoSwitch,
-  stopAutoSwitch,
+  start,
   index,
 } = useSwitchData(dataArray, {
   timeout: unref(bodyBgImgConfig).imgInterval,
   shuffle: unref(bodyBgImgConfig).imgShuffle,
   onAfterUpdate: () => {
     // 预加载下一张图片
-    const nextIndex = (unref(index) + 1) % dataArray.length;
-    const newValue = dataArray[nextIndex];
+    const nextIndex = (unref(index) + 1) % unref(dataArray).length;
+    const newValue = unref(dataArray)[nextIndex];
     if (newValue) {
       const img = new Image();
       img.src = newValue;
@@ -43,11 +42,7 @@ const {
 });
 
 onMounted(() => {
-  startAutoSwitch();
-});
-
-onUnmounted(() => {
-  stopAutoSwitch();
+  start();
 });
 
 const getStyle = () => {

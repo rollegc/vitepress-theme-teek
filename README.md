@@ -50,8 +50,7 @@ pnpm plugin:build
 ## TODO
 
 - 组件生态文档编写
-- useWindowSize 转为 useMediaQuery
-- useTextSwitch、useImageSwitch 在 unmounted 时移除事件监听
+- 背景色支持
+- 部分组件的 var 变量是否添加到命名空间内而不是 root？
 - MD 文档添加/删除自动重启项目
-- 部分组件的 var 变量是否添加到 class 内而不是 root
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

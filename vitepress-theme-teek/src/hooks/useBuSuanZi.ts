@@ -1,4 +1,5 @@
-import { onBeforeUnmount, Ref, ref, unref } from "vue";
+import { ref } from "vue";
+import { useScopeDispose } from "./useScopeDispose";
 
 export interface BusuanziData {
   site_pv: number;
@@ -31,21 +32,39 @@ const callBsz = (url = "//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCa
   });
 };
 
-export interface UseBuSunZi {
-  sitePv?: Ref<number>;
-  siteUv?: Ref<number>;
-  pagePv?: Ref<number>;
-  isGet?: Ref<boolean | null>;
+export interface UseBuSuanZiOptions {
+  /**
+   * 不蒜子统计接口地址
+   */
+  url?: string;
+  /**
+   * 如果请求不蒜子接口失败，是否重试，类型 boolean
+   *
+   * @default false
+   */
+  tryRequest?: boolean;
+  /**
+   * 重试次数，仅当 tryRequest 为 true 时有效
+   *
+   * @default 5
+   */
+  tryCount?: number;
+  /**
+   * 重试间隔时间，单位毫秒，仅当 tryRequest 为 true 时有效
+   *
+   * @default 2000
+   */
+  tryIterationTime?: number;
 }
 
 /**
  * 使用不蒜子统计网站访问量
  *
- * @param initRequest 是否初始化请求，即自动执行一次 request，类型 boolean
- * @param iteration 如果请求不蒜子接口失败，是否重试，重试 5 次后依然失败，则不再重试，类型 boolean
- * @param iterationTime 每次重试的时间，单位毫秒，类型 number
+ * @param immediate 是否初始化请求，即自动执行一次 request
+ * @param options 配置项
  */
-export const useBuSunZi = (initRequest = false, iteration = false, iterationTime = 2000) => {
+export const useBuSuanZi = (immediate = false, options: UseBuSuanZiOptions = {}) => {
+  const { url, tryRequest = false, tryCount = 5, tryIterationTime = 2000 } = options;
   const sitePv = ref(0);
   const siteUv = ref(0);
   const pagePv = ref(0);
@@ -53,11 +72,11 @@ export const useBuSunZi = (initRequest = false, iteration = false, iterationTime
 
   const request = () => {
     // 防止重复调用
-    if (unref(isGet) === false) return;
+    if (isGet.value === false) return;
     isGet.value = false;
 
     // 调用不蒜子接口
-    callBsz().then(data => {
+    callBsz(url).then(data => {
       sitePv.value = data.site_pv || 9999;
       siteUv.value = data.site_uv || 9999;
       pagePv.value = data.page_pv || 9999;
@@ -66,24 +85,32 @@ export const useBuSunZi = (initRequest = false, iteration = false, iterationTime
   };
 
   // 第一次调用
-  if (initRequest) request();
+  if (immediate) request();
 
-  if (iteration) {
+  if (tryRequest) {
     let i = 0;
 
-    // 如果第一次调用获取失败，每 3s 后重新调用，直至尝试 5 次或调用成功
-    const intervalId = setInterval(() => {
-      if (!unref(isGet)) {
-        i += iterationTime;
-        if (i > iterationTime * 5) clearInterval(intervalId);
-        request();
-      } else clearInterval(intervalId);
-    }, iterationTime);
+    const clearTimer = (timer: ReturnType<typeof setInterval> | null) => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
 
-    onBeforeUnmount(() => {
-      if (intervalId) clearInterval(intervalId);
-    });
+    // 重试
+    const timer = setInterval(() => {
+      if (isGet.value) return clearTimer(timer);
+
+      request();
+
+      i += tryIterationTime;
+      if (i > tryIterationTime * tryCount) clearTimer(timer);
+    }, tryIterationTime);
+
+    useScopeDispose(() => clearTimer(timer));
   }
 
   return { sitePv, siteUv, pagePv, isGet, request };
 };
+
+export type UseBuSuanZiReturn = ReturnType<typeof useBuSuanZi>;

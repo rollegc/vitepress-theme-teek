@@ -1,9 +1,13 @@
 import { useData } from "vitepress";
 import { nextTick, provide, unref } from "vue";
 
-export const useViewTransition = () => {
+/**
+ * 使用 View Transition API
+ */
+export const useViewTransition = (duration = 300, easing = "ease-in") => {
   const { isDark, theme } = useData();
 
+  // TODO 从 useTeekConfig 获取配置
   const isOpenViewTransition = unref(theme).viewTransition ?? true;
 
   if (!isOpenViewTransition) return;
@@ -30,8 +34,8 @@ export const useViewTransition = () => {
     document.documentElement.animate(
       { clipPath: isDark.value ? clipPath.reverse() : clipPath },
       {
-        duration: 300,
-        easing: "ease-in",
+        duration,
+        easing,
         pseudoElement: `::view-transition-${isDark.value ? "old" : "new"}(root)`,
       }
     );

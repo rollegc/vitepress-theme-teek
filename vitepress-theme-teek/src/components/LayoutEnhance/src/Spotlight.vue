@@ -1,40 +1,58 @@
 <script setup lang="ts" name="Spotlight">
 import { computed } from "vue";
-import { useStorage, useMediaQuery } from "../../../hooks";
+import { useStorage, useMediaQuery, useLocale } from "../../../hooks";
 import { clickIcon } from "../../../assets/icons";
 import { spotlightStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
 import SpotlightHover from "./components/SpotlightHover.vue";
 import { useTeekConfig } from "../../../configProvider";
+import { touchMedia } from "./layoutEnhance";
 
 defineOptions({ name: "Spotlight" });
 
 const { getTeekConfigRef } = useTeekConfig();
 const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+const { t } = useLocale();
 
-const disabled = useMediaQuery("(pointer: coarse)");
+const disabled = useMediaQuery(touchMedia);
 const spotlight = useStorage(spotlightStorageKey, layoutEnhanceConfig.value.spotlight?.defaultToggle || true);
 
 const segmentedOptions = computed(() => [
-  { value: true, text: "ON", title: "开启", helpMessage: "开启聚光灯。", ariaLabel: "开启" },
-  { value: false, text: "OFF", title: "关闭", helpMessage: "关闭聚光灯。", ariaLabel: "关闭" },
+  {
+    value: true,
+    text: "ON",
+    title: t("tk.layoutEnhance.spotlight.onTipTitle"),
+    ariaLabel: t("tk.layoutEnhance.spotlight.onTipTitle"),
+  },
+  {
+    value: false,
+    text: "OFF",
+    title: t("tk.layoutEnhance.spotlight.offTipTitle"),
+    ariaLabel: t("tk.layoutEnhance.spotlight.offTipTitle"),
+  },
 ]);
 
 const tips = [
-  { title: "ON 开启", content: "开启聚光灯。" },
-  { title: "OFF 关闭", content: "关闭聚光灯。" },
+  {
+    title: `ON ${t("tk.layoutEnhance.spotlight.onTipTitle")}`,
+    content: t("tk.layoutEnhance.spotlight.onHelpTipContent"),
+  },
+  {
+    title: `OFF ${t("tk.layoutEnhance.spotlight.offTipTitle")}`,
+    content: t("tk.layoutEnhance.spotlight.offHelpTipContent"),
+  },
 ];
 </script>
 
 <template>
   <BaseTemplate
     :icon="clickIcon"
-    title="聚光灯"
-    desc="支持在正文中高亮当前鼠标悬停的行和元素，以优化阅读和专注困难的用户的阅读体验。"
+    :title="t('tk.layoutEnhance.spotlight.title')"
+    :helper="!layoutEnhanceConfig.spotlight?.disableHelp"
+    :helper-desc="t('tk.layoutEnhance.spotlight.helpDesc')"
     :tips
     :disabled
-    :helper="!layoutEnhanceConfig.spotlight?.disableHelp"
   >
     <Segmented v-model="spotlight" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>

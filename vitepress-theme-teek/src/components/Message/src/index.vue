@@ -56,19 +56,22 @@ const customStyle = computed(() => ({
   zIndex: currentZIndex.value,
 }));
 
-let timeoutId: NodeJS.Timeout;
+let timer: ReturnType<typeof setTimeout> | null;
+
+const clearTimer = () => {
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+};
 
 const startTimer = () => {
   if (props.duration === 0) return;
 
   clearTimer();
-  timeoutId = setTimeout(() => {
+  timer = setTimeout(() => {
     close();
   }, props.duration);
-};
-
-const clearTimer = () => {
-  if (timeoutId) clearTimeout(timeoutId);
 };
 
 const close = () => {

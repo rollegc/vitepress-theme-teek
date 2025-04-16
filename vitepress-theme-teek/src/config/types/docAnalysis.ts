@@ -38,35 +38,35 @@ export interface DocAnalysis {
      */
     provider?: "" | "busuanzi";
     /**
-     * 是否开启首页的访问量和排名统计
+     * 是否开启首页的访问量和排名统计，仅当 provider 存在生效
      *
      * @default true
      */
     siteView?: boolean;
     /**
-     * 是否开启文章页的浏览量统计
+     * 是否开启文章页的浏览量统计，仅当 provider 存在生效
      *
      * @default true
      */
     pageView?: boolean;
     /**
-     * 是否开启重试机制，当获取访问量失败会尝试重新获取
+     * 如果请求不蒜子接口失败，是否重试，类型 boolean
      *
      * @default false
      */
-    iteration?: boolean;
+    tryRequest?: boolean;
     /**
-     * 如果首页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
+     * 重试次数，仅当 tryRequest 为 true 时有效
      *
-     * @default 2000 (2秒)
+     * @default 5
      */
-    siteIteration?: number;
+    tryCount?: number;
     /**
-     * 如果文章页获取访问量失败，则每隔多少时间后获取一次访问量，直到获取成功或获取 5 次后
+     * 重试间隔时间，单位毫秒，仅当 tryRequest 为 true 时有效
      *
-     * @default 2000 (2秒)
+     * @default 2000
      */
-    pageIteration?: number;
+    tryIterationTime?: number;
   };
   /**
    * 自定义现有信息

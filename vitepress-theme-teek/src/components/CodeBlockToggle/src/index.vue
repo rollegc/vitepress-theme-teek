@@ -71,7 +71,14 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
     fold: { height: ns.cssVar("code-block-fold-height"), display: "none", speed: 400 },
   };
 
-  let timeoutId: NodeJS.Timeout | null = null;
+  let timer: ReturnType<typeof setTimeout> | null;
+
+  const clearTimer = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  };
 
   // 箭头点击事件
   const clickEvent = () => {
@@ -81,13 +88,13 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
 
     codeDom.style.height = state.height;
 
-    if (timeoutId) clearTimeout(timeoutId);
+    clearTimer();
 
     if (preDom || lineNumbersWrapperDom) {
-      timeoutId = setTimeout(() => {
+      timer = setTimeout(() => {
         if (preDom) preDom.style.display = state.display;
         if (lineNumbersWrapperDom) lineNumbersWrapperDom.style.display = state.display;
-        if (timeoutId) clearTimeout(timeoutId);
+        if (timer) clearTimer();
       }, state.speed);
     }
 

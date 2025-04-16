@@ -10,7 +10,7 @@ export enum SpotlightStyle {
   Aside = "aside",
 }
 
-export enum LayoutColor {
+export enum LayoutThemeColor {
   vpDefault = "vp-default",
   vpGreen = "vp-green",
   vpYellow = "vp-yellow",
@@ -20,3 +20,7 @@ export enum LayoutColor {
   epYellow = "el-yellow",
   epRed = "el-red",
 }
+
+export const mobileMaxWidthMedia = "(max-width: 768px)";
+export const activateMaxWidthSlideMedia = "(min-width: 1440px)";
+export const touchMedia = "(pointer: coarse)";

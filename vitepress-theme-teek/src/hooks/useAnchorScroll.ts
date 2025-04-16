@@ -1,25 +1,25 @@
 import { reactive, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useEventListener } from "./useEventListener";
+import { isClient } from "../helper";
 import { useMounted } from "./useMounted";
 
 /**
  * 监听浏览器滚动，当滚动到锚点，自动在 URL 后面添加锚点信息
  */
 export const useAnchorScroll = () => {
+  // TODO 从 useTeekConfig 获取配置
   const { theme } = useData();
   // 初始化当前锚点
-  const currentAnchor = reactive({
-    id: "",
-    top: -1,
-  });
+  const currentAnchor = reactive({ id: "", top: -1 });
 
   /**
    * 定义计算当前锚点的方法
    */
   const calculateCurrentAnchor = () => {
-    // 获取页面中所有的锚点元素
-    const anchors = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    // 获取文档页面中所有的锚点元素
+    const anchors = document.querySelectorAll(".content-container .main :is(h1, h2, h3, h4, h5, h6)");
+
     for (let i = 0; i < anchors.length; i++) {
       const anchor = anchors[i];
 
@@ -39,12 +39,8 @@ export const useAnchorScroll = () => {
   /**
    * 监听 window 对象的滚动事件
    */
-  const onScroll = () => {
-    calculateCurrentAnchor();
-  };
-
   useMounted(() => {
-    useEventListener(window, "scroll", onScroll);
+    useEventListener(window, "scroll", calculateCurrentAnchor);
   });
 
   /**
@@ -55,8 +51,9 @@ export const useAnchorScroll = () => {
 
     watch(
       () => currentAnchor.id,
-      (val: string) => {
-        if (val) window.history.replaceState(history.state || null, "", `#${val}`);
+      val => {
+        if (!isClient || !val) return;
+        window.history.replaceState(history.state || null, "", `#${val}`);
       }
     );
   };

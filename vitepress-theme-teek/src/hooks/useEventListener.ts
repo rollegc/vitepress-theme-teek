@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-import { computed, getCurrentScope, onScopeDispose, toValue, watch } from "vue";
+import { computed, toValue, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
+import { useScopeDispose } from "./useScopeDispose";
 
 /**
  * mounted 监听事件，unmounted 移出监听事件
@@ -59,7 +60,7 @@ export const useEventListener = (
   };
 
   // 组件销毁时执行 cleanup
-  if (getCurrentScope()) onScopeDispose(cleanup);
+  useScopeDispose(cleanup);
 
   // 返回移除事件的函数
   return stop;

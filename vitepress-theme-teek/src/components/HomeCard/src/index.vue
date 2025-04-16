@@ -51,7 +51,7 @@ const pagination = (to: number, type: "prev" | "next") => {
   else pageNum.value = res;
 };
 
-let timer: NodeJS.Timeout;
+let timer: ReturnType<typeof setTimeout> | null;
 
 /**
  * 开启自动翻页
@@ -69,7 +69,10 @@ const startAutoPage = () => {
  * 关闭自动翻页
  */
 const closeAutoPage = () => {
-  if (timer) clearTimeout(timer);
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
 };
 
 onMounted(() => {

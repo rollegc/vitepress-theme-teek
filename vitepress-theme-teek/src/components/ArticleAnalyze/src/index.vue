@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import type { FileInfo } from "vitepress-plugin-doc-analysis";
 import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useBuSunZi, type UseBuSunZi } from "../../../hooks";
+import { useNamespace, useLocale, useBuSuanZi, type UseBuSuanZiReturn } from "../../../hooks";
 import ArticleBreadcrumb from "../../ArticleBreadcrumb";
 import ArticleInfo from "../../ArticleInfo";
 import Icon from "../../Icon";
@@ -93,13 +93,13 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
 // 是否使用访问量功能
 const usePageView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
 
-const statisticsInfo: UseBuSunZi = { pagePv: ref(0), isGet: ref(false) };
+const statisticsInfo: Partial<UseBuSuanZiReturn> = { pagePv: ref(0), isGet: ref(false) };
 // 通过不蒜子获取访问量
-const { pagePv, isGet, request } = useBuSunZi(
-  unref(usePageView),
-  unref(statisticsConfig).iteration,
-  unref(statisticsConfig).pageIteration
-);
+const { pagePv, isGet, request } = useBuSuanZi(unref(usePageView), {
+  tryRequest: unref(statisticsConfig).tryRequest,
+  tryCount: unref(statisticsConfig).tryCount,
+  tryIterationTime: unref(statisticsConfig).tryIterationTime,
+});
 statisticsInfo.pagePv = pagePv;
 statisticsInfo.isGet = isGet;
 

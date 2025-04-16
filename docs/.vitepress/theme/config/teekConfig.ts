@@ -27,6 +27,13 @@ export const teekBlogConfig: TeekConfig = {
       hideOnClickModal: true,
     },
   },
+  footerInfo: {
+    customHtml: `<span id="runtime"></span>`, // 搭配 ../helper/useRuntime.ts 使用才有效果
+  },
+  notice: {
+    enabled: true,
+    position: "center",
+  },
   banner: {
     name: "🎉 Teek Blog",
     bgStyle: "fullImg",

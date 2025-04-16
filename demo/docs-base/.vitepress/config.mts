@@ -90,7 +90,7 @@ const teekConfig = defineTeekConfig({
       name: "桂ICP备2021009994号",
       link: "http://beian.miit.gov.cn/",
     },
-    customHtml: `<p>小破站已运行了 <span id="footer-runtime"></span></p>`, // 搭配 ./theme/helper/useFooterRuntime.ts 使用才有效果
+    customHtml: `<span id="runtime"></span>`, // 搭配 ./theme/helper/useRuntime.ts 使用才有效果
   },
   social: [
     {

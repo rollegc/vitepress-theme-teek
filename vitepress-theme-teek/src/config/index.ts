@@ -22,7 +22,7 @@ import {
 import { createCategory, createPermalink } from "./addFrontmatter";
 
 export * from "./types";
-export { LayoutColor, LayoutMode, SpotlightStyle } from "../components/LayoutEnhance/src/layoutEnhance";
+export { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../components/LayoutEnhance/src/layoutEnhance";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
   const { vitePlugins, markdown = {}, ...teekConfig } = config;
