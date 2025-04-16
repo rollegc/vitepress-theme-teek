@@ -14,9 +14,9 @@ interface TemplateProps {
    */
   title?: string;
   /**
-   * 描述
+   * Helper 内的描述
    */
-  desc?: string;
+  helperDesc?: string;
   /**
    * 图标
    */
@@ -48,7 +48,7 @@ const titleElementRef = useTemplateRef<HTMLDivElement>("titleElementRef");
 <template>
   <div>
     <div ref="titleElementRef" class="flx-align-center">
-      <Title :title :icon="icon" :disabled="disabled" />
+      <Title :title :icon="icon" :disabled="disabled" :aria-label="title" />
 
       <Helper v-if="helper" v-model="helperVisible" :virtual-ref="titleElementRef!">
         <div :class="ns.e('helper__body')">
@@ -56,7 +56,7 @@ const titleElementRef = useTemplateRef<HTMLDivElement>("titleElementRef");
             <slot name="helper-title">{{ title }}</slot>
           </h4>
           <p :class="ns.em('helper', 'desc')">
-            <slot name="helper-desc">{{ desc }}</slot>
+            <slot name="helper-desc">{{ helperDesc }}</slot>
           </p>
 
           <div v-for="(tip, index) in tips" :key="index" :class="ns.e('helper__body__tip')">

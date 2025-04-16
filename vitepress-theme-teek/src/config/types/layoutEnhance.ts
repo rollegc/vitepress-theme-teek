@@ -1,4 +1,4 @@
-import { LayoutColor, LayoutMode, SpotlightStyle } from "../../components/LayoutEnhance/src/layoutEnhance";
+import { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../../components/LayoutEnhance/src/layoutEnhance";
 
 export interface LayoutEnhance {
   /**
@@ -63,7 +63,7 @@ export interface LayoutEnhance {
   /**
    * 布局主题色配置
    */
-  layoutColor?: {
+  layoutThemeColor?: {
     /**
      * 禁用布局主题色切换
      */
@@ -71,10 +71,10 @@ export interface LayoutEnhance {
     /**
      * 布局默认主题色
      *
-     * @default LayoutColor.vpDefault
+     * @default LayoutThemeColor.vpDefault
      */
     defaultColor?:
-      | LayoutColor
+      | LayoutThemeColor
       | "vp-default"
       | "vp-green"
       | "vp-yellow"

@@ -2,7 +2,7 @@
 import LayoutSwitch from "./LayoutSwitch.vue";
 import LayoutPageWidthSlide from "./LayoutPageWidthSlide.vue";
 import LayoutDocWidthSlide from "./LayoutDocWidthSlide.vue";
-import LayoutColor from "./LayoutColor.vue";
+import LayoutThemeColor from "./LayoutThemeColor.vue";
 import Spotlight from "./Spotlight.vue";
 import SpotlightStyle from "./SpotlightStyle.vue";
 import { useElementHover } from "../../../hooks";
@@ -18,7 +18,7 @@ const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
 const disabledList = computed(() => {
   return {
     layoutSwitch: layoutEnhanceConfig.value.layoutSwitch?.disabled ?? false,
-    layoutColor: layoutEnhanceConfig.value.layoutColor?.disabled ?? false,
+    layoutThemeColor: layoutEnhanceConfig.value.layoutThemeColor?.disabled ?? false,
     spotlight: layoutEnhanceConfig.value.spotlight?.disabled ?? false,
   };
 });
@@ -27,7 +27,6 @@ const layoutEnhanceRef = useTemplateRef<HTMLDivElement>("layoutEnhanceRef");
 const popupElementRef = useTemplateRef<HTMLDivElement>("popupElementRef");
 
 const visible = useElementHover(layoutEnhanceRef);
-
 const popupStyle = ref({ top: "0px", left: "0px" });
 
 watch(visible, async () => {
@@ -64,8 +63,8 @@ watch(visible, async () => {
           <LayoutDocWidthSlide />
         </template>
 
-        <template v-if="!disabledList.layoutColor">
-          <LayoutColor />
+        <template v-if="!disabledList.layoutThemeColor">
+          <LayoutThemeColor />
         </template>
 
         <template v-if="!disabledList.spotlight">

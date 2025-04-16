@@ -1,17 +1,18 @@
 <script setup lang="ts" name="LayoutDocWidthSlide">
 import { computed, watch, onMounted } from "vue";
-import { useDebounce, useStorage, useMediaQuery } from "../../../hooks";
+import { useDebounce, useStorage, useMediaQuery, useLocale } from "../../../hooks";
 import { autoWidthIcon, scaleIcon } from "../../../assets/icons";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import InputSlide from "./components/InputSlide.vue";
 import { useTeekConfig } from "../../../configProvider";
-import { LayoutMode } from "./layoutEnhance";
+import { activateMaxWidthMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutModeStorageKey, docMaxWidthSlideStorageKey, transitionName, docMaxWidthVar } from "./namespace";
 
 defineOptions({ name: "LayoutDocWidthSlide" });
 
 const { getTeekConfigRef } = useTeekConfig();
 const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+const { t } = useLocale();
 
 const min = computed(() => 60 * 100);
 const max = computed(() => 100 * 100);
@@ -34,8 +35,8 @@ const updateMaxWidth = (val: number) => {
 
 onMounted(() => updateMaxWidth(docMaxWidth.value));
 
-const disabled = useMediaQuery("(max-width: 768px)");
-const shouldActivateMaxWidth = useMediaQuery("(min-width: 1440px)");
+const disabled = useMediaQuery(mobileMaxWidthMedia);
+const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthMedia);
 
 watch(shouldActivateMaxWidth, () => {
   updateMaxWidth(docMaxWidth.value);
@@ -47,7 +48,11 @@ watch(docMaxWidth, update);
 const format = (val: number) => `${Math.ceil(val / 100)}%`;
 
 const tips = [
-  { title: "调整文档内容最大宽度", icon: scaleIcon, content: "一个可调整的滑块，用于选择和自定义文档内容最大宽度。" },
+  {
+    title: t("tk.layoutEnhance.docLayoutMaxWidth.helpTipTitle"),
+    icon: scaleIcon,
+    content: t("tk.layoutEnhance.docLayoutMaxWidth.helpTipContent"),
+  },
 ];
 </script>
 
@@ -56,13 +61,21 @@ const tips = [
     <BaseTemplate
       v-show="layoutMode === LayoutMode.BothWidthAdjustable"
       :icon="autoWidthIcon"
-      title="文档内容最大宽度"
-      desc="调整 VitePress 布局中文档内容区域的宽度，以适配不同的阅读习惯和屏幕环境。"
+      :title="t('tk.layoutEnhance.docLayoutMaxWidth.title')"
+      :helper="!layoutEnhanceConfig.layoutSwitch?.docLayoutMaxWidth?.disableHelp"
+      :helper-desc="t('tk.layoutEnhance.docLayoutMaxWidth.helpDesc')"
       :tips
       :disabled
-      :helper="!layoutEnhanceConfig.layoutSwitch?.docLayoutMaxWidth?.disableHelp"
     >
-      <InputSlide v-model="docMaxWidth" :disabled :min :max :format :class="ns.e('slide')" />
+      <InputSlide
+        v-model="docMaxWidth"
+        :disabled
+        :min
+        :max
+        :format
+        :class="ns.e('slide')"
+        :aria-label="t('tk.layoutEnhance.docLayoutMaxWidth.helperTipTitle')"
+      />
     </BaseTemplate>
   </Transition>
 </template>
