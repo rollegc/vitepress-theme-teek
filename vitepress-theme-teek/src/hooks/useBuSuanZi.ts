@@ -38,19 +38,19 @@ export interface UseBuSuanZiOptions {
    */
   url?: string;
   /**
-   * 如果请求不蒜子接口失败，是否重试，重试 5 次后依然失败，则不再重试，类型 boolean
+   * 如果请求不蒜子接口失败，是否重试，类型 boolean
    *
    * @default false
    */
   tryRequest?: boolean;
   /**
-   * 如果请求不蒜子接口失败，重试次数，类型 number
+   * 重试次数，仅当 tryRequest 为 true 时有效
    *
    * @default 5
    */
   tryCount?: number;
   /**
-   * 如果请求不蒜子接口失败，重试间隔时间，单位毫秒，类型 number
+   * 重试间隔时间，单位毫秒，仅当 tryRequest 为 true 时有效
    *
    * @default 2000
    */

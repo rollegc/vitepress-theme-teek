@@ -2,6 +2,7 @@ import { reactive, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useEventListener } from "./useEventListener";
 import { isClient } from "../helper";
+import { useMounted } from "./useMounted";
 
 /**
  * 监听浏览器滚动，当滚动到锚点，自动在 URL 后面添加锚点信息
@@ -38,7 +39,9 @@ export const useAnchorScroll = () => {
   /**
    * 监听 window 对象的滚动事件
    */
-  useEventListener(() => window, "scroll", calculateCurrentAnchor);
+  useMounted(() => {
+    useEventListener(window, "scroll", calculateCurrentAnchor);
+  });
 
   /**
    * 文档更新锚点的时候更新 url 中的 hash

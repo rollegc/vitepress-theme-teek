@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeBannerBgImage">
 import { withBase } from "vitepress";
-import { computed, onMounted, onUnmounted, unref } from "vue";
+import { computed, onMounted, unref } from "vue";
 import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useLocale, useSwitchData } from "../../../hooks";
 import { isString } from "../../../helper";

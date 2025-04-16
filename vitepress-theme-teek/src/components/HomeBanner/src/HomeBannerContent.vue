@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBannerContent">
-import { computed, onMounted, onUnmounted, unref } from "vue";
+import { computed, onMounted, unref } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "../../../configProvider";
 import { useNamespace, useLocale, useTextTypes, useSwitchData } from "../../../hooks";

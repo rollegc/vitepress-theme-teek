@@ -29,7 +29,7 @@ const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
 });
 
 // 使用上下滚动功能
-const { data, start } = useScrollData(unref(friendLinkConfig).list, 5, {
+const { data, start, stop } = useScrollData(unref(friendLinkConfig).list, 5, {
   intervalTime: unref(friendLinkConfig).scrollSpeed,
 });
 
@@ -98,12 +98,8 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
         tag="ul"
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
-        @mouseenter="
-          friendLinkConfig.autoScroll ? stopAutoScroll() : friendLinkConfig.autoPage ? closeAutoPage() : () => {}
-        "
-        @mouseleave="
-          friendLinkConfig.autoScroll ? startAutoScroll() : friendLinkConfig.autoPage ? startAutoPage() : () => {}
-        "
+        @mouseenter="friendLinkConfig.autoScroll ? stop() : friendLinkConfig.autoPage ? closeAutoPage() : () => {}"
+        @mouseleave="friendLinkConfig.autoScroll ? stop() : friendLinkConfig.autoPage ? startAutoPage() : () => {}"
         :aria-label="t('tk.friendLinkCard.listLabel')"
       >
         <li

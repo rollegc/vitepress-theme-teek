@@ -77,18 +77,18 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
 }));
 // 是否使用访问量功能
 const useSiteView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
-const statisticsInfo: UseBuSuanZiReturn = {
+const statisticsInfo: Partial<UseBuSuanZiReturn> = {
   sitePv: ref(0),
   siteUv: ref(0),
   isGet: ref(false),
 };
 
 // 通过不蒜子获取访问量和访客数
-const { sitePv, siteUv, isGet, request } = useBuSuanZi(
-  unref(useSiteView),
-  unref(statisticsConfig).iteration,
-  unref(statisticsConfig).pageIteration
-);
+const { sitePv, siteUv, isGet, request } = useBuSuanZi(unref(useSiteView), {
+  tryRequest: unref(statisticsConfig).tryRequest,
+  tryCount: unref(statisticsConfig).tryCount,
+  tryIterationTime: unref(statisticsConfig).tryIterationTime,
+});
 statisticsInfo.sitePv = sitePv;
 statisticsInfo.siteUv = siteUv;
 statisticsInfo.isGet = isGet;
