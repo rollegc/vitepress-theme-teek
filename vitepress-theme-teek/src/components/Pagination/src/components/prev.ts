@@ -1,5 +1,5 @@
 import type Prev from "./prev.vue";
-import type { IconProps } from "../../../Icon/src/icon";
+import type { TkIconProps } from "@teek/components/Icon";
 
 export interface PaginationPrevProps {
   /**
@@ -21,7 +21,7 @@ export interface PaginationPrevProps {
   /**
    * 上一页按钮图标
    */
-  prevIcon?: IconProps["icon"];
+  prevIcon?: TkIconProps["icon"];
 }
 
 export interface PaginationPrevEmits {

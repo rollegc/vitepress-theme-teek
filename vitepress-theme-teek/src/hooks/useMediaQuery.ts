@@ -1,6 +1,6 @@
 import { computed, MaybeRefOrGetter, shallowRef, toValue, watchEffect } from "vue";
-import { useMounted } from "./useMounted";
-import { useEventListener } from "./useEventListener";
+import { useMounted } from "@teek/hooks/useMounted";
+import { useEventListener } from "@teek/hooks/useEventListener";
 
 /**
  * 媒体查询

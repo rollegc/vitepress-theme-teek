@@ -1,5 +1,5 @@
-import { FileInfo } from "plugins/vitepress-plugin-auto-frontmatter";
-import { SiteConfig } from "vitepress";
+import type { SiteConfig } from "vitepress";
+import type { FileInfo } from "vitepress-plugin-auto-frontmatter";
 
 /**
  * 创建 permalink 永久链接

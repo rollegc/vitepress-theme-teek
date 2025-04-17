@@ -1,6 +1,6 @@
 import type { AppContext, VNode } from "vue";
 import { inBrowser } from "vitepress";
-import type { IconProps } from "../../Icon/src/icon";
+import type { TkIconProps } from "@teek/components/Icon";
 
 export const messageTypes = ["success", "info", "warning", "error"] as const;
 
@@ -42,7 +42,7 @@ export interface MessageProps {
   center?: boolean;
   dangerouslyUseHTMLString?: boolean;
   duration?: number;
-  icon?: IconProps["icon"];
+  icon?: TkIconProps["icon"];
   id?: string;
   message?: string | VNode | (() => VNode);
   onClose?: () => void;

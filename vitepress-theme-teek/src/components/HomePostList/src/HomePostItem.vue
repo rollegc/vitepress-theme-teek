@@ -1,12 +1,12 @@
 <script setup lang="ts" name="HomePostItem">
+import type { Article, Post } from "@teek/config/types";
+import type { TkContentData } from "@teek/post/types";
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import type { TkContentData } from "../../../post/types";
-import { createImageViewer } from "../../ImageViewer";
-import ArticleInfo from "../../ArticleInfo";
-import type { Article, Post } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { createImageViewer } from "@teek/components/ImageViewer";
+import ArticleInfo from "@teek/components/ArticleInfo";
 
 defineOptions({ name: "HomePostItem" });
 

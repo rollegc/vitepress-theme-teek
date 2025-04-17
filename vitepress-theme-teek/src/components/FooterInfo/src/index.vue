@@ -1,13 +1,13 @@
 <script setup lang="ts" name="FooterInfo">
+import type { FooterInfo, Social } from "@teek/config/types";
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import { themeIcon, copyrightIcon, icpRecordIcon } from "../../../assets/icons";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { themeIcon, copyrightIcon, icpRecordIcon } from "@teek/assets/icons";
 // @ts-ignore
-import securityRecordImg from "../../../assets/img/securityRecord.png";
-import Icon from "../../Icon";
-import type { FooterInfo, Social } from "../../../config/types";
+import securityRecordImg from "@teek/assets/img/securityRecord.png";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "FooterInfo" });
 

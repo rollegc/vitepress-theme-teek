@@ -1,9 +1,9 @@
 <script setup lang="ts" name="Pagination">
+import type { PaginationProps, PaginationEmits, LayoutKey } from "./pagination";
 import { computed, h, provide, watch, useSlots, VNode } from "vue";
-import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
-import { useNamespace } from "../../../hooks";
-import { paginationKey, type PaginationProps, type PaginationEmits, type LayoutKey } from "./pagination";
-
+import { useNamespace } from "@teek/hooks";
+import { arrowLeftIcon, arrowRightIcon } from "@teek/assets/icons";
+import { paginationKey } from "./pagination";
 import Prev from "./components/prev.vue";
 import Next from "./components/next.vue";
 import Jumper from "./components/jumper.vue";

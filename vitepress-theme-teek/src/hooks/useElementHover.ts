@@ -1,7 +1,7 @@
 import { MaybeRefOrGetter, shallowRef } from "vue";
 import type { ShallowRef } from "vue";
-import { useEventListener } from "./useEventListener";
-import { isClient } from "../helper";
+import { useEventListener } from "@teek/hooks/useEventListener";
+import { isClient } from "@teek/helper";
 
 export interface UseElementHoverOptions {
   /**

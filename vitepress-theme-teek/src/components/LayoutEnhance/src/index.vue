@@ -1,16 +1,16 @@
 <script setup lang="ts" name="LayoutEnhance">
+import { ref, watch, useTemplateRef, nextTick, computed } from "vue";
+import { useElementHover } from "@teek/hooks";
+import { readingIcon } from "@teek/assets/icons";
+import { useTeekConfig } from "@teek/configProvider";
+import { ns } from "./namespace";
+import Icon from "@teek/components/Icon";
 import LayoutSwitch from "./LayoutSwitch.vue";
 import LayoutPageWidthSlide from "./LayoutPageWidthSlide.vue";
 import LayoutDocWidthSlide from "./LayoutDocWidthSlide.vue";
 import LayoutThemeColor from "./LayoutThemeColor.vue";
 import Spotlight from "./Spotlight.vue";
 import SpotlightStyle from "./SpotlightStyle.vue";
-import { useElementHover } from "../../../hooks";
-import { ref, watch, useTemplateRef, nextTick, computed } from "vue";
-import { ns } from "./namespace";
-import { readingIcon } from "../../../assets/icons";
-import { useTeekConfig } from "../../../configProvider";
-import Icon from "../../Icon";
 
 const { getTeekConfigRef } = useTeekConfig();
 const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});

@@ -1,6 +1,7 @@
 import type { DefaultTheme, HeadConfig, UserConfig } from "vitepress";
-import type { TeekConfig } from "./types";
+import type { TeekConfig } from "../config/types";
 import type { Post, TkContentData } from "../post/types";
+import { fileURLToPath } from "node:url";
 import Sidebar from "vitepress-plugin-sidebar-resolve";
 import Permalink from "vitepress-plugin-permalink";
 import MdH1 from "vitepress-plugin-md-h1";
@@ -19,11 +20,10 @@ import {
   containerPlugin,
   createContainersThenUse,
 } from "../markdown";
-import { createCategory, createPermalink } from "./addFrontmatter";
-import { fileURLToPath } from "node:url";
+import { createCategory, createPermalink } from "../config/addFrontmatter";
 
-export * from "./types";
 export { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../components/LayoutEnhance/src/layoutEnhance";
+export * from "../config/types";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
   const { vitePlugins, markdown = {}, ...teekConfig } = config;
@@ -157,7 +157,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
       css: { preprocessorOptions: { scss: { api: "modern" } } },
       resolve: {
         alias: {
-          "@teek": fileURLToPath(new URL("..", import.meta.url)),
+          "@teek": fileURLToPath(new URL("..", import.meta.url)), // alias 为 src 目录
         },
       },
     },

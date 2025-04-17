@@ -1,8 +1,8 @@
 <script setup lang="ts" name="HomeFullscreenWallpaper">
+import type { Wallpaper } from "@teek/config/types";
 import { ref, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useEventListener } from "../../../hooks";
-import type { Wallpaper } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useEventListener } from "@teek/hooks";
 
 defineOptions({ name: "HomeFullscreenWallpaper" });
 

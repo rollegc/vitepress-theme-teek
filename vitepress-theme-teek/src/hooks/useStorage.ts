@@ -1,7 +1,7 @@
 import type { MaybeRefOrGetter, Ref } from "vue";
 import { ref, computed, toValue, watch } from "vue";
-import { useMounted } from "./useMounted";
-import { useEventListener } from "./useEventListener";
+import { useMounted } from "@teek/hooks/useMounted";
+import { useEventListener } from "@teek/hooks/useEventListener";
 
 export type StorageType = "localStorage" | "sessionStorage";
 

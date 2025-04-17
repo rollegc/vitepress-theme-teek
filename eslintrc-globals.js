@@ -65,4 +65,5 @@ export default {
   NodeJS: "readonly",
   PartialKey: "readonly",
   RequiredKeyPartialOther: "readonly",
+  AddEventListenerOptions: "readonly",
 };

@@ -1,4 +1,3 @@
-import { fileURLToPath } from "url";
 import { defineConfig } from "vitepress";
 import { defineTeekConfig } from "vitepress-theme-teek/config";
 import { version } from "vitepress-theme-teek/es/version";

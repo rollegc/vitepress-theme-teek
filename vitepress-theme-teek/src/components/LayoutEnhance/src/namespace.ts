@@ -1,4 +1,4 @@
-import { useNamespace } from "../../../hooks";
+import { useNamespace } from "@teek/hooks";
 
 export const ns = useNamespace("reading-enhance");
 

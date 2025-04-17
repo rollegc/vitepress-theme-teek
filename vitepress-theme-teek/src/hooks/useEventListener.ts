@@ -1,7 +1,6 @@
-/* eslint-disable no-undef */
-import { computed, toValue, watch } from "vue";
 import type { MaybeRefOrGetter } from "vue";
-import { useScopeDispose } from "./useScopeDispose";
+import { computed, toValue, watch } from "vue";
+import { useScopeDispose } from "@teek/hooks/useScopeDispose";
 
 /**
  * mounted 监听事件，unmounted 移出监听事件

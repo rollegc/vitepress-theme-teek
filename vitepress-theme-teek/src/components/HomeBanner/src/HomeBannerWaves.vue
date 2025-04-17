@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBannerWaves">
-import { useNamespace } from "../../../hooks";
+import { useNamespace } from "@teek/hooks";
 
 defineOptions({ name: "HomeBannerWaves" });
 

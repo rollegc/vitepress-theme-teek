@@ -1,8 +1,8 @@
 <script setup lang="ts" name="TeekLayoutProvider">
 import Teek, { TkAvatar, teekConfigSymbol, useNamespace, clockIcon } from "vitepress-theme-teek";
-import { provide, ref, watch, nextTick } from "vue";
+import { provide, ref, watch } from "vue";
 import { teekDocConfig, teekBlogConfig } from "../config/teekConfig";
-import { useRuntime } from "../helper/useRuntime";
+import { useRuntime } from "../hooks/useRuntime";
 import { useData } from "vitepress";
 
 const ns = useNamespace("layout-provider");
@@ -32,7 +32,7 @@ watch(
     if (newC === "B" && newF.layout === "home") start();
     else stop();
   },
-  { immediately: true }
+  { immediate: true, flush: "post" }
 );
 </script>
 

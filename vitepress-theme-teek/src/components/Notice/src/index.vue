@@ -1,12 +1,12 @@
 <script setup lang="ts" name="Notice">
+import type { Notice } from "@teek/config/types";
 import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useMediaQuery, useVpRouter } from "../../../hooks";
-import Icon from "../../Icon";
-import { noticeIcon, closeIcon } from "../../../assets/icons";
-import { isString } from "../../../helper";
-import type { Notice } from "../../../config/types";
+import { useNamespace, useLocale, useMediaQuery, useVpRouter } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { isString } from "@teek/helper";
+import { noticeIcon, closeIcon } from "@teek/assets/icons";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "Notice" });
 

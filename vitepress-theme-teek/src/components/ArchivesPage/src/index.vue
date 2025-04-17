@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ArchivesPage">
 import { withBase, useData } from "vitepress";
-import { useNamespace, useLocale } from "../../../hooks";
-import { usePosts } from "../../../configProvider";
 import { computed, unref } from "vue";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { usePosts } from "@teek/configProvider";
 
 defineOptions({ name: "ArchivesPage" });
 

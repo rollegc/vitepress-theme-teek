@@ -1,5 +1,5 @@
 import { computed, MaybeRefOrGetter, ref, toValue, watch } from "vue";
-import { useScopeDispose } from "./useScopeDispose";
+import { useScopeDispose } from "@teek/hooks/useScopeDispose";
 
 export interface TypesOption {
   /**

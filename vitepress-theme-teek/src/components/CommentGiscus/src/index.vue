@@ -1,10 +1,10 @@
 <script setup lang="ts" name="CommentGiscus">
+import type { CommentProvider } from "@teek/config/types";
 import { ref, nextTick, onMounted, computed, unref, inject } from "vue";
 import { useData } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { isFunction } from "../../../helper";
-import type { CommentProvider } from "../../../config/types";
-import { useNamespace, useVpRouter } from "../../../hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { isFunction } from "@teek/helper";
+import { useNamespace, useVpRouter } from "@teek/hooks";
 import { giscusSymbol } from "./giscus";
 
 defineOptions({ name: "CommentGiscus" });

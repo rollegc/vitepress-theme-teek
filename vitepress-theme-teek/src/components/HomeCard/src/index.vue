@@ -1,10 +1,10 @@
 <script setup lang="ts" name="HomeCard">
+import type { HomeCardProps } from "./homeCard";
 import { unref, onMounted, ref, onUnmounted } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace, useLocale } from "../../../hooks";
-import { arrowLeftIcon, arrowRightIcon } from "../../../assets/icons";
-import { HomeCardProps } from "./homeCard";
-import Icon from "../../Icon";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { arrowLeftIcon, arrowRightIcon } from "@teek/assets/icons";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "HomeCard" });
 

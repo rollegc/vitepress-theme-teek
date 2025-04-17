@@ -1,6 +1,8 @@
-import { computed, inject, type InjectionKey, isRef, ref, Ref, unref } from "vue";
-import { zhCn, type Language } from "../locale";
-import { get } from "../helper";
+import type { InjectionKey } from "vue";
+import type { Language } from "@teek/locale";
+import { computed, inject, isRef, ref, Ref, unref } from "vue";
+import { zhCn } from "@teek/locale";
+import { get } from "@teek/helper";
 
 export type TranslatorOption = Record<string, string | number>;
 // 支持从 provide 获取语言包

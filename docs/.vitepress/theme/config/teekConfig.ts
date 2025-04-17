@@ -28,11 +28,7 @@ export const teekBlogConfig: TeekConfig = {
     },
   },
   footerInfo: {
-    customHtml: `<span id="runtime"></span>`, // 搭配 ../helper/useRuntime.ts 使用才有效果
-  },
-  notice: {
-    enabled: true,
-    position: "center",
+    customHtml: `<span id="runtime"></span>`, // 需要搭配 .vitepress/theme/helper/useRuntime.ts 使用
   },
   banner: {
     name: "🎉 Teek Blog",

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="VpContainer">
-import { computed } from "vue";
-import { useNamespace } from "../../../hooks";
 import type { VpContainerProps } from "./vpContainer";
+import { computed } from "vue";
+import { useNamespace } from "@teek/hooks";
 
 defineOptions({ name: "VpContainer" });
 

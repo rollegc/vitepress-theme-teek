@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Segmented">
-import { useNamespace } from "../../../../hooks";
-import SegmentedHorizontalItem from "./SegmentedItem.vue";
 import type { ModelType } from "./SegmentedItem.vue";
+import { useNamespace } from "@teek/hooks";
+import SegmentedHorizontalItem from "./SegmentedItem.vue";
 
 defineOptions({ name: "Segmented" });
 

@@ -1,8 +1,8 @@
 <script setup lang="ts" name="CodeBlockToggle">
 import { nextTick, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import { useNamespace } from "../../../hooks";
-import { arrowDownIcon } from "../../../assets/icons";
+import { useNamespace } from "@teek/hooks";
+import { arrowDownIcon } from "@teek/assets/icons";
 
 defineOptions({ name: "CodeBlockToggle" });
 

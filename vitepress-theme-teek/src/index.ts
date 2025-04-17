@@ -1,8 +1,7 @@
+import type { TeekConfig } from "./config/types";
 import DefaultTheme from "vitepress/theme";
 import { defineClientComponent, inBrowser } from "vitepress";
-import Layout from "./layout/index.vue";
 import { configProvider } from "./configProvider";
-import { TkCataloguePage, TkArchivesPage, TkDemoCode } from "./components";
 import {
   baiduAnalytics,
   trackPageview,
@@ -13,20 +12,20 @@ import {
   type UmamiAnalytics,
 } from "./helper";
 import "./styles/index.scss";
-import type { TeekConfig } from "./config/types";
+import { TkCataloguePage, TkArchivesPage, TkDemoCode } from "./components";
+import Layout from "./layout/index.vue";
 
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
-
+export type * from "./config/types";
 export type DefaultThemeType = typeof DefaultTheme;
 
-export type * from "./config/types";
+export * from "./assets/icons";
 export * from "./configProvider";
 export * from "./components";
 export * from "./helper";
 export * from "./hooks";
-export * from "./markdown/helper";
 export * from "./locale";
-export * from "./assets/icons";
+export * from "./markdown/helper";
 export * from "./version";
 
 export default {

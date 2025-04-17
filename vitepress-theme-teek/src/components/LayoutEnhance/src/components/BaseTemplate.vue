@@ -1,7 +1,8 @@
 <script setup lang="ts" name="BaseTemplate">
+import type { TkIconProps } from "@teek/components/Icon";
 import { ref, useTemplateRef } from "vue";
 import { ns } from "../namespace";
-import Icon, { type TkIconProps } from "../../../Icon";
+import Icon from "@teek/components/Icon";
 import Title from "./Title.vue";
 import Helper from "./Helper.vue";
 import BorderHighlight from "./BorderHighlight.vue";

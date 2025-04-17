@@ -1,14 +1,14 @@
 <script setup lang="ts" name="ArticleInfo">
+import type { PostBaseInfoProps } from "./articleInfo";
+import type { Article, ArticleInfoPosition } from "@teek/config/types";
 import { useRoute, withBase, useData } from "vitepress";
 import { computed, unref } from "vue";
-import { useTeekConfig, usePosts } from "../../../configProvider";
-import { formatDate, isFunction } from "../../../helper";
-import { TkContentData } from "../../../post/types";
-import { useNamespace, useLocale } from "../../../hooks";
-import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "../../../assets/icons";
-import type { Article, ArticleInfoPosition } from "../../../config/types";
-import type { PostBaseInfoProps } from "./articleInfo";
-import Icon from "../../Icon";
+import { useTeekConfig, usePosts } from "@teek/configProvider";
+import { formatDate, isFunction } from "@teek/helper";
+import { TkContentData } from "@teek/post/types";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "@teek/assets/icons";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "ArticleInfo" });
 

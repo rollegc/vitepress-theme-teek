@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBannerBgPure">
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import type { Banner } from "../../../config/types";
+import type { Banner } from "@teek/config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
 
 defineOptions({ name: "HomeBannerBgPure" });
 

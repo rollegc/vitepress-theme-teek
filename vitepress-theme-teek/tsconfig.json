@@ -1,7 +1,10 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "paths": {}
+    "baseUrl": ".",
+    "paths": {
+      "@teek/*": ["src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "types/*.d.ts"],
   "exclude": ["node_modules", "dist"]

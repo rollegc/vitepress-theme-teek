@@ -1,14 +1,14 @@
 <script setup lang="ts" name="RightBottomButton">
+// import type { ThemeSetting } from "@teek/config/types";
 import { provide } from "vue";
 import { useData } from "vitepress";
-// import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+// import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace } from "@teek/hooks";
+import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";
 // import ThemeSize from "./ThemeSize.vue";
 // import ThemeStyle from "./ThemeStyle.vue";
-// import type { ThemeSetting } from "../../../config/types";
-import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 
 defineOptions({ name: "RightBottomButton" });
 

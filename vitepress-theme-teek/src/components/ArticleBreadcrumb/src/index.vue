@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArticleBreadcrumb">
+import type { Breadcrumb as BreadcrumbType } from "@teek/config/types";
 import { computed, unref } from "vue";
 import { useData, withBase } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import { houseIcon } from "../../../assets/icons";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { houseIcon } from "@teek/assets/icons";
+import Icon from "@teek/components/Icon";
 import Breadcrumb from "./Breadcrumb.vue";
 import BreadcrumbItem from "./BreadcrumbItem.vue";
-import Icon from "../../Icon";
-import type { Breadcrumb as BreadcrumbType } from "../../../config/types";
 
 defineOptions({ name: "ArticleBreadcrumb" });
 

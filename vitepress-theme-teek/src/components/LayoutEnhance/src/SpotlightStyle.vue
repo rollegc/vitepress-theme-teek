@@ -1,12 +1,12 @@
 <script setup lang="ts" name="SpotlightStyle">
 import { computed } from "vue";
-import { useStorage, useMediaQuery, useLocale } from "../../../hooks";
-import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "../../../assets/icons";
+import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "@teek/assets/icons";
 import { SpotlightStyle, touchMedia } from "./layoutEnhance";
 import { spotlightStyleStorageKey, spotlightStorageKey, transitionName } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
-import { useTeekConfig } from "../../../configProvider";
 
 defineOptions({ name: "SpotlightStyle" });
 

@@ -1,6 +1,6 @@
 import { createVNode, isVNode, render, type AppContext } from "vue";
 import { inBrowser } from "vitepress";
-import { isElement, isFunction, isString } from "../../../helper";
+import { isElement, isFunction, isString } from "@teek/helper";
 import MessageConstructor from "./index.vue";
 import { messageDefaults, messageTypes } from "./message";
 import { instances, type MessageContext } from "./instance";

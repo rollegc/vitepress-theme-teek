@@ -1,9 +1,10 @@
 <script setup lang="ts" name="Avatar">
-import { computed, ref, watch, type CSSProperties } from "vue";
-import Icon from "../../Icon";
-import { useNamespace } from "../../../hooks";
 import type { AvatarProps, AvatarEmit } from "./avatar";
-import { addUnit, isString } from "../../../helper";
+import type { CSSProperties } from "vue";
+import { computed, ref, watch } from "vue";
+import Icon from "@teek/components/Icon";
+import { useNamespace } from "@teek/hooks";
+import { addUnit, isString } from "@teek/helper";
 
 defineOptions({ name: "Avatar" });
 

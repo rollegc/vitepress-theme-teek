@@ -1,5 +1,5 @@
 import type { ComputedRef, InjectionKey, ModelRef } from "vue";
-import type { IconProps } from "../../Icon/src/icon";
+import type { TkIconProps } from "@teek/components/Icon";
 
 export interface PaginationContext {
   currentPage?: ModelRef<number>;
@@ -43,7 +43,7 @@ export interface PaginationProps {
   /**
    * 上一页的图标， 比 prev-text 优先级更高
    */
-  prevIcon?: IconProps["icon"];
+  prevIcon?: TkIconProps["icon"];
   /**
    * 替代图标显示的下一页文字
    */
@@ -51,7 +51,7 @@ export interface PaginationProps {
   /**
    * 下一页的图标， 比 next-text 优先级更高
    */
-  nextIcon?: IconProps["icon"];
+  nextIcon?: TkIconProps["icon"];
   /**
    * 分页大小
    *

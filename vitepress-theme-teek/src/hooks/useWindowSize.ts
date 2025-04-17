@@ -1,8 +1,8 @@
 import { shallowRef } from "vue";
-import { useDebounce } from "./useDebounce";
-import { useEventListener } from "./useEventListener";
-import { isClient } from "../helper";
-import { useMounted } from "./useMounted";
+import { isClient } from "@teek/helper";
+import { useDebounce } from "@teek/hooks/useDebounce";
+import { useEventListener } from "@teek/hooks/useEventListener";
+import { useMounted } from "@teek/hooks/useMounted";
 
 export interface UseWindowSizeOptions {
   /**

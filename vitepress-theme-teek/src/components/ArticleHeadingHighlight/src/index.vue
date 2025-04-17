@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticleHeadingHighlight">
 import { nextTick, watch } from "vue";
 import { useRoute } from "vitepress";
-import { useNamespace, useEventListener } from "../../../hooks";
+import { useNamespace, useEventListener } from "@teek/hooks";
 
 const ns = useNamespace("article-heading-highlight");
 

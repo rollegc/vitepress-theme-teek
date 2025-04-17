@@ -1,15 +1,15 @@
 <script setup lang="ts" name="HomeBanner">
 import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import { upperFirst } from "../../../helper";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { upperFirst } from "@teek/helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
 import HomeBannerContent from "./HomeBannerContent.vue";
 import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
-import type { Banner, BodyBgImg } from "../../../config/types";
+import type { Banner, BodyBgImg } from "@teek/config/types";
 
 defineOptions({ name: "HomeBanner" });
 

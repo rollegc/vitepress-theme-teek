@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useNamespace, useLocale } from "../../../../hooks";
-import { usePagination } from "../usePagination";
 import type { PaginationJumperProps } from "./jumper";
+import { ref } from "vue";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { usePagination } from "../usePagination";
 
 defineOptions({ name: "PaginationJumper" });
 

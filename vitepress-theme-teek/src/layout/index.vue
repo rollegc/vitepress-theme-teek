@@ -1,10 +1,11 @@
 <script setup lang="ts" name="TeekLayout">
+import type { TeekConfig } from "@teek/config/types";
+import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { computed, unref, provide } from "vue";
-import { useNamespace, localeContextKey } from "../hooks";
-import { useTeekConfig, usePage } from "../configProvider";
-import type { TeekConfig } from "../config/types";
+import { useNamespace, localeContextKey } from "@teek/hooks";
+import { useTeekConfig, usePage } from "@teek/configProvider";
 import {
   TkHome,
   TkArchivesPage,
@@ -28,9 +29,8 @@ import {
   TkNotice,
   TkVpContainer,
   TkLayoutEnhance,
-} from "../components";
-import { isBoolean } from "../helper";
-import type { Language } from "../locale";
+} from "@teek/components";
+import { isBoolean } from "@teek/helper";
 
 defineOptions({ name: "TeekLayout" });
 

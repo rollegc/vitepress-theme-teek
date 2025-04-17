@@ -1,14 +1,14 @@
 <script setup lang="ts" name="HomeRightInfo">
 import { computed, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
-import { usePage } from "../../../configProvider";
-import HomeMyCard from "../../HomeMyCard";
-import HomeCategoryCard from "../../HomeCategoryCard";
-import HomeTagCard from "../../HomeTagCard";
-import HomeFriendLinkCard from "../../HomeFriendLinkCard";
-import HomeTopArticleCard from "../../HomeTopArticleCard";
-import HomeDocAnalysisCard from "../../HomeDocAnalysisCard";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace } from "@teek/hooks";
+import { usePage } from "@teek/configProvider";
+import HomeMyCard from "@teek/components/HomeMyCard";
+import HomeTopArticleCard from "@teek/components/HomeTopArticleCard";
+import HomeCategoryCard from "@teek/components/HomeCategoryCard";
+import HomeTagCard from "@teek/components/HomeTagCard";
+import HomeFriendLinkCard from "@teek/components/HomeFriendLinkCard";
+import HomeDocAnalysisCard from "@teek/components/HomeDocAnalysisCard";
 
 defineOptions({ name: "HomeRightInfo" });
 

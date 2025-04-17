@@ -1,10 +1,10 @@
 <script setup lang="ts" name="HomeBannerBgImage">
+import type { Banner } from "@teek/config/types";
 import { withBase } from "vitepress";
 import { computed, onMounted, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useSwitchData } from "../../../hooks";
-import { isString } from "../../../helper";
-import type { Banner } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale, useSwitchData } from "@teek/hooks";
+import { isString } from "@teek/helper";
 
 defineOptions({ name: "HomeBannerBgImage" });
 

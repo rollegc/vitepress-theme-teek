@@ -1,18 +1,18 @@
 <script setup lang="ts" name="LayoutSwitch">
 import { computed, onMounted, watch } from "vue";
-import { useStorage, useMediaQuery, useLocale } from "../../../hooks";
-import { LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
-import { layoutModeStorageKey } from "./namespace";
-import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
-import { useTeekConfig } from "../../../configProvider";
+import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
 import {
   fullscreenIcon,
   fullScreenOneIcon,
   fullscreenTwoIcon,
   layoutIcon,
   overallReductionIcon,
-} from "../../../assets/icons";
+} from "@teek/assets/icons";
+import { LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
+import { layoutModeStorageKey } from "./namespace";
+import BaseTemplate from "./components/BaseTemplate.vue";
+import Segmented from "./components/Segmented.vue";
 
 defineOptions({ name: "LayoutSwitch" });
 

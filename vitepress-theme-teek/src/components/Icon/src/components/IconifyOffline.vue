@@ -1,6 +1,7 @@
 <script setup lang="ts" name="IconifyOffline">
-import { Icon, addIcon, type IconifyIcon } from "@iconify/vue/dist/offline";
+import type { IconifyIcon } from "@iconify/vue/dist/offline";
 import { onMounted } from "vue";
+import { Icon, addIcon } from "@iconify/vue/dist/offline";
 
 defineOptions({ name: "IconifyOffline" });
 

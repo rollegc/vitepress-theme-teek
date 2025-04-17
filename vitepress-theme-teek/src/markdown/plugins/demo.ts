@@ -1,10 +1,10 @@
 import type MarkdownIt from "markdown-it";
 import type { Renderer, Token } from "markdown-it";
 import type { SiteConfig } from "vitepress";
-import container from "markdown-it-container";
+import type { Demo } from "../../config";
 import { readFileSync } from "fs";
 import { join, resolve, posix } from "path";
-import type { Demo } from "../../config";
+import container from "markdown-it-container";
 
 interface ContainerOpts {
   marker?: string | undefined;

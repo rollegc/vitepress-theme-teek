@@ -1,12 +1,12 @@
 <script setup lang="ts" name="LayoutThemeColor">
 import { computed, onMounted, watch } from "vue";
-import { clickIcon } from "../../../assets/icons";
-import { useStorage, useMediaQuery, useLocale } from "../../../hooks";
-import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
+import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { clickIcon } from "@teek/assets/icons";
 import { LayoutThemeColor, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutThemeColorSlideStorageKey } from "./namespace";
-import { useTeekConfig } from "../../../configProvider";
+import BaseTemplate from "./components/BaseTemplate.vue";
+import Segmented from "./components/Segmented.vue";
 
 defineOptions({ name: "LayoutThemeColor" });
 
