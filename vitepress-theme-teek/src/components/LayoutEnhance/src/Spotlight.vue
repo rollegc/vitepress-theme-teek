@@ -1,13 +1,13 @@
 <script setup lang="ts" name="Spotlight">
 import { computed } from "vue";
-import { useStorage, useMediaQuery, useLocale } from "../../../hooks";
-import { clickIcon } from "../../../assets/icons";
+import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { clickIcon } from "@teek/assets/icons";
+import { touchMedia } from "./layoutEnhance";
 import { spotlightStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 import Segmented from "./components/Segmented.vue";
 import SpotlightHover from "./components/SpotlightHover.vue";
-import { useTeekConfig } from "../../../configProvider";
-import { touchMedia } from "./layoutEnhance";
 
 defineOptions({ name: "Spotlight" });
 

@@ -1,17 +1,18 @@
 <script lang="ts" setup name="Message">
+import type { MessageEmits, MessageProps, MessageType } from "./message";
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { VPBadge } from "vitepress/theme";
-import { messagePropsDefaults, type MessageEmits, type MessageProps, type MessageType } from "./message";
-import { useEventListener, useNamespace, useZIndex } from "../../../hooks";
-import Icon from "../../Icon";
+import { useEventListener, useNamespace, useZIndex } from "@teek/hooks";
 import {
   closeIcon,
   circleCloseFilledIcon,
   infoFilledIcon,
   successFilledIcon,
   warningFilledIcon,
-} from "../../../assets/icons";
+} from "@teek/assets/icons";
+import { messagePropsDefaults } from "./message";
 import { getLastOffset, getOffsetOrSpace } from "./instance";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "Message" });
 

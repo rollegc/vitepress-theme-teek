@@ -1,5 +1,5 @@
 import { computed, MaybeRefOrGetter, ref, toValue, watch } from "vue";
-import { useScopeDispose } from "./useScopeDispose";
+import { useScopeDispose } from "@teek/hooks/useScopeDispose";
 
 export interface TypesOption {
   /**
@@ -65,7 +65,6 @@ export const useTextTypes = (data: MaybeRefOrGetter<string[]>, options: TypesOpt
    * 打字
    */
   const typesIn = () => {
-    console.log(1);
     isFinished.value = false;
     originText = dataComputed.value[dataIndex];
 

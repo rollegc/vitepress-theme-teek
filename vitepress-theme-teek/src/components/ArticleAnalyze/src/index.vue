@@ -1,15 +1,16 @@
 <script setup lang="ts" name="ArticleAnalyze">
+import type { FileInfo } from "vitepress-plugin-doc-analysis";
+import type { Article, DocAnalysis } from "@teek/config/types";
+import type { TkContentData } from "@teek/post/types";
+import type { UseBuSuanZiReturn } from "@teek/hooks";
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
-import type { FileInfo } from "vitepress-plugin-doc-analysis";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useBuSuanZi, type UseBuSuanZiReturn } from "../../../hooks";
-import ArticleBreadcrumb from "../../ArticleBreadcrumb";
-import ArticleInfo from "../../ArticleInfo";
-import Icon from "../../Icon";
-import type { Article, DocAnalysis } from "../../../config/types";
-import type { TkContentData } from "../../../post/types";
-import { readingIcon, clockIcon, viewIcon } from "../../../assets/icons";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale, useBuSuanZi } from "@teek/hooks";
+import { readingIcon, clockIcon, viewIcon } from "@teek/assets/icons";
+import ArticleBreadcrumb from "@teek/components/ArticleBreadcrumb";
+import ArticleInfo from "@teek/components/ArticleInfo";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "ArticleAnalyze" });
 

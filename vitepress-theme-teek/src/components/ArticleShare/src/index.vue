@@ -1,10 +1,10 @@
 <script setup lang="ts" name="ArticleShare">
+import type { ArticleShare } from "@teek/config";
 import { computed } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useClipboard, useNamespace, useLocale } from "../../../hooks";
-import Icon from "../../Icon";
-import { shareIcon, thumbsIcon } from "../../../assets/icons";
-import type { ArticleShare } from "../../../config";
+import { useTeekConfig } from "@teek/configProvider";
+import { useClipboard, useNamespace, useLocale } from "@teek/hooks";
+import { shareIcon, thumbsIcon } from "@teek/assets/icons";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "ArticleShare" });
 

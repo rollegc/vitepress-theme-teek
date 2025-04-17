@@ -1,12 +1,13 @@
 <script setup lang="ts" name="Home">
+import type { TkHomePostListInstance } from "@teek/components/HomePostList";
 import { ref, unref, provide } from "vue";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { useTeekConfig, usePage } from "@teek/configProvider";
 import { postDataUpdateSymbol } from "./home";
-import { useNamespace, useLocale } from "../../../hooks";
-import { useTeekConfig, usePage } from "../../../configProvider";
-import HomeFullscreenWallpaper from "../../HomeFullscreenWallpaper";
-import HomeBanner from "../../HomeBanner";
-import HomeRightInfo from "../../HomeRightInfo";
-import HomePostList, { type TkHomePostListInstance } from "../../HomePostList";
+import HomeFullscreenWallpaper from "@teek/components/HomeFullscreenWallpaper";
+import HomePostList from "@teek/components/HomePostList";
+import HomeBanner from "@teek/components/HomeBanner";
+import HomeRightInfo from "@teek/components/HomeRightInfo";
 
 defineOptions({ name: "Home" });
 

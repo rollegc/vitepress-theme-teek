@@ -1,12 +1,12 @@
 <script setup lang="ts" name="LayoutPageWidthSlide">
 import { computed, watch, onMounted } from "vue";
-import { useDebounce, useStorage, useMediaQuery, useLocale } from "../../../hooks";
-import { autoWidthIcon, scaleIcon } from "../../../assets/icons";
-import BaseTemplate from "./components/BaseTemplate.vue";
-import InputSlide from "./components/InputSlide.vue";
-import { useTeekConfig } from "../../../configProvider";
+import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { autoWidthIcon, scaleIcon } from "@teek/assets/icons";
 import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutModeStorageKey, pageMaxWidthSlideStorageKey, transitionName, pageMaxWidthVar } from "./namespace";
+import BaseTemplate from "./components/BaseTemplate.vue";
+import InputSlide from "./components/InputSlide.vue";
 
 defineOptions({ name: "LayoutPageWidthSlide" });
 

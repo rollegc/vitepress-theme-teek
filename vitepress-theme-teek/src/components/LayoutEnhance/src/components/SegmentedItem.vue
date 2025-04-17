@@ -1,6 +1,6 @@
 <script setup lang="ts" name="SegmentedItem">
-import Icon from "../../../Icon";
-import { useNamespace } from "../../../../hooks";
+import { useNamespace } from "@teek/hooks";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "SegmentedItem" });
 

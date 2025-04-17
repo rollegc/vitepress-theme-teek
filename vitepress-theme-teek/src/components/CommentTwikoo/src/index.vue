@@ -1,8 +1,8 @@
 <script setup lang="ts" name="CommentTwikoo">
+import type { CommentProvider } from "@teek/config/types";
 import { ref, onMounted, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import type { CommentProvider } from "../../../config/types";
-import { useNamespace, useVpRouter } from "../../../hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useVpRouter } from "@teek/hooks";
 
 defineOptions({ name: "CommentTwikoo" });
 

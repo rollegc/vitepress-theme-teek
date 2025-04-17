@@ -1,7 +1,9 @@
 <script lang="ts">
+import type { PropType } from "vue";
+import type { FocusLayer } from "./utils";
 import { defineComponent, nextTick, onBeforeUnmount, onMounted, provide, ref, unref, watch } from "vue";
 import { useEscapeKeydown } from "./useEscapeKeydown";
-import { isString } from "../../../helper";
+import { isString } from "@teek/helper";
 import {
   createFocusOutPreventedEvent,
   focusFirstDescendant,
@@ -20,9 +22,6 @@ import {
   ON_RELEASE_FOCUS_EVT,
   ON_TRAP_FOCUS_EVT,
 } from "./tokens";
-
-import type { PropType } from "vue";
-import type { FocusLayer } from "./utils";
 
 export default defineComponent({
   name: "FocusTrap",

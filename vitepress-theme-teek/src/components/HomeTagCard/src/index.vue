@@ -1,13 +1,13 @@
 <script setup lang="ts" name="HomeTagCard">
+import type { Tag } from "@teek/config/types";
 import { unref, watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
-import { useNamespace, useLocale } from "../../../hooks";
-import { useTeekConfig, usePosts, useBgColor } from "../../../configProvider";
-import HomeCard from "../../HomeCard";
-import { tagIcon } from "../../../assets/icons";
-import { isFunction } from "../../../helper";
-import type { Tag } from "../../../config/types";
-import { postDataUpdateSymbol } from "../../Home/src/home";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { useTeekConfig, usePosts, useBgColor } from "@teek/configProvider";
+import { tagIcon } from "@teek/assets/icons";
+import { isFunction } from "@teek/helper";
+import { postDataUpdateSymbol } from "@teek/components/Home/src/home";
+import HomeCard from "@teek/components/HomeCard";
 
 defineOptions({ name: "HomeTagCard" });
 

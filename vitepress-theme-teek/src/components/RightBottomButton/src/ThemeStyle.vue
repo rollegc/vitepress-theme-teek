@@ -1,12 +1,12 @@
 <script setup lang="ts" name="ThemeStyle">
+import type { ThemeSetting } from "@teek/config/types";
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useStorage } from "../../../hooks";
-import Icon from "../../Icon";
-import { magicIcon } from "../../../assets/icons";
-import type { ThemeSetting } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale, useStorage } from "@teek/hooks";
+import { magicIcon } from "@teek/assets/icons";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "ThemeStyle" });
 

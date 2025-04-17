@@ -1,5 +1,5 @@
 import type { InjectionKey } from "vue";
-import { CommentProvider } from "../../../config/types";
+import { CommentProvider } from "@teek/config/types";
 
 export interface WalineInstance {
   el: HTMLElement | null;

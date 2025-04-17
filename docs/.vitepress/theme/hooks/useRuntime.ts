@@ -3,15 +3,15 @@ import { useScopeDispose, isClient } from "vitepress-theme-teek";
 
 export interface UseRuntimeOptions {
   /**
-   * 显示的元素 id
+   * 需要插入时间的元素选择器
    *
-   * @default 'runtime'
+   * @default '#runtime'
    */
-  id?: string;
+  selector?: string;
   /**
    * 是否立即开始
    *
-   * @default true
+   * @default false
    */
   immediate?: boolean;
   /**
@@ -50,8 +50,8 @@ export interface UseRuntimeOptions {
 
 export const useRuntime = (initDate: MaybeRef<string>, options: UseRuntimeOptions = {}) => {
   const {
-    id = "runtime",
-    immediate = true,
+    selector = "#runtime",
+    immediate = false,
     prefix = "",
     suffix = "",
     dayColor = "#FFA500",
@@ -87,7 +87,7 @@ export const useRuntime = (initDate: MaybeRef<string>, options: UseRuntimeOption
   const start = () => {
     if (!isClient) return;
 
-    runtimeElement = document.getElementById(id);
+    runtimeElement = document.querySelector(selector);
     if (!runtimeElement) return;
 
     // 初始化

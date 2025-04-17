@@ -1,9 +1,9 @@
 <script setup lang="ts" name="HomeBannerFeature">
+import type { Banner } from "@teek/config/types";
 import { useData, withBase } from "vitepress";
 import { onBeforeUnmount, ref, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useWindowSize } from "../../../hooks";
-import type { Banner } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
 
 defineOptions({ name: "HomeBannerFeature" });
 

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticlePageStyle">
 import { unref, watch } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace } from "../../../hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace } from "@teek/hooks";
 
 const ns = useNamespace("body-bg-image");
 

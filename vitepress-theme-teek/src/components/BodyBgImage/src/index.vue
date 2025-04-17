@@ -1,10 +1,10 @@
 <script setup lang="ts" name="BodyBgImage">
+import type { BodyBgImg } from "@teek/config/types";
 import { computed, onMounted, unref } from "vue";
 import { withBase } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useSwitchData } from "../../../hooks";
-import { isString } from "../../../helper";
-import type { BodyBgImg } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useSwitchData } from "@teek/hooks";
+import { isString } from "@teek/helper";
 
 defineOptions({ name: "BodyBgImage" });
 

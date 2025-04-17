@@ -1,4 +1,4 @@
-import namespaceModule from "../styles/module/namespace.module.scss";
+import namespaceModule from "@teek/styles/module/namespace.module.scss";
 
 /**
  * 命名空间

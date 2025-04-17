@@ -1,6 +1,6 @@
 <script setup lang="ts" name="BreadcrumbItem">
 import { inject } from "vue";
-import { useNamespace } from "../../../hooks";
+import { useNamespace } from "@teek/hooks";
 import { breadcrumbKey, breadcrumbNsSymbol } from "./breadcrumb";
 
 defineOptions({ name: "BreadcrumbItem" });

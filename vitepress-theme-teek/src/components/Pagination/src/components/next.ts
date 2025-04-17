@@ -1,5 +1,5 @@
 import type Next from "./next.vue";
-import type { IconProps } from "../../../Icon/src/icon";
+import type { TkIconProps } from "@teek/components/Icon";
 
 export interface PaginationNextProps {
   /**
@@ -25,7 +25,7 @@ export interface PaginationNextProps {
   /**
    * 下一页按钮图标
    */
-  nextIcon?: IconProps["icon"];
+  nextIcon?: TkIconProps["icon"];
 }
 
 export type PaginationNextInstance = InstanceType<typeof Next>;

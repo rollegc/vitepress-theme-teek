@@ -1,8 +1,8 @@
 <script setup lang="ts" name="AsideBottomAppreciation">
+import type { Appreciation } from "@teek/config/types";
 import { computed, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import type { Appreciation } from "../../../config/types";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
 
 defineOptions({ name: "AsideBottomAppreciation" });
 

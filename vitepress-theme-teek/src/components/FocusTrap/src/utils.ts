@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { isElement, isFocusable } from "../../../helper";
+import { isElement, isFocusable } from "@teek/helper";
 import { FOCUSOUT_PREVENTED, FOCUSOUT_PREVENTED_OPTS } from "./tokens";
 
 const focusReason = ref<"pointer" | "keyboard">();

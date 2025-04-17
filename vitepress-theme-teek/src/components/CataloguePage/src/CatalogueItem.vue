@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CatalogueItem">
-import { withBase } from "vitepress";
 import type { CatalogueItem } from "vitepress-plugin-catalogue";
-import { useNamespace } from "../../../hooks";
+import { withBase } from "vitepress";
+import { useNamespace } from "@teek/hooks";
 
 defineOptions({ name: "CatalogueItem" });
 

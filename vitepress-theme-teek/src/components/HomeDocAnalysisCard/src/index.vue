@@ -1,12 +1,13 @@
 <script setup lang="ts" name="HomeDocAnalysisCard">
+import type { DocAnalysis, DocAnalysisInfo } from "@teek/config/types";
+import type { UseBuSuanZiReturn } from "@teek/hooks";
 import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
-import { useTeekConfig, usePosts } from "../../../configProvider";
-import { useNamespace, useLocale, useBuSuanZi, type UseBuSuanZiReturn } from "../../../hooks";
-import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "../../../helper";
-import HomeCard from "../../HomeCard";
-import { docAnalysisIcon } from "../../../assets/icons";
-import type { DocAnalysis, DocAnalysisInfo } from "../../../config/types";
+import { useTeekConfig, usePosts } from "@teek/configProvider";
+import { useNamespace, useLocale, useBuSuanZi } from "@teek/hooks";
+import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "@teek/helper";
+import { docAnalysisIcon } from "@teek/assets/icons";
+import HomeCard from "@teek/components/HomeCard";
 
 defineOptions({ name: "HomeDocAnalysisCard" });
 

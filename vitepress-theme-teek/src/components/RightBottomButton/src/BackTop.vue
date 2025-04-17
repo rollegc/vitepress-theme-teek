@@ -1,12 +1,12 @@
 <script setup lang="ts" name="BackTop">
+import type { ThemeSetting } from "@teek/config/types";
 import { computed, unref, onMounted, ref, inject } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale, useDebounce, useEventListener } from "../../../hooks";
-import Icon from "../../Icon";
-import Message from "../../Message";
-import { rocketIcon } from "../../../assets/icons";
-import type { ThemeSetting } from "../../../config/types";
+import { useNamespace, useLocale, useDebounce, useEventListener } from "@teek/hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { rocketIcon } from "@teek/assets/icons";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
+import Message from "@teek/components/Message";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "BackTop" });
 

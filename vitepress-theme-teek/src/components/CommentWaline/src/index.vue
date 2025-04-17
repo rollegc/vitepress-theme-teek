@@ -1,9 +1,10 @@
 <script setup lang="ts" name="CommentWaline">
+import type { CommentProvider } from "@teek/config/types";
+import type { WalineInstance } from "./waline";
 import { inject, onMounted } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import type { CommentProvider } from "../../../config/types";
-import { useNamespace, useVpRouter } from "../../../hooks";
-import { type WalineInstance, walineSymbol } from "./waline";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useVpRouter } from "@teek/hooks";
+import { walineSymbol } from "./waline";
 
 defineOptions({ name: "CommentWaline" });
 

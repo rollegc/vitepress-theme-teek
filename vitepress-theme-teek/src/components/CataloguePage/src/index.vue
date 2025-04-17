@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CataloguePage">
 import { computed, unref } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale } from "../../../hooks";
+import { useNamespace, useLocale } from "@teek/hooks";
 import CatalogueItem from "./CatalogueItem.vue";
 
 defineOptions({ name: "CataloguePage" });

@@ -1,12 +1,12 @@
 <script setup lang="ts" name="DemoCode">
+import type { DemoCodeProps } from "./demoCode";
 import { ref, computed, unref, defineAsyncComponent } from "vue";
 import { useData } from "vitepress";
-import Message from "../../Message";
-import { useNamespace, useLocale, useClipboard } from "../../../hooks";
-import Icon from "../../Icon";
-import TransitionCollapse from "../../TransitionCollapse";
-import type { DemoCodeProps } from "./demoCode";
-import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "../../../assets/icons";
+import { useNamespace, useLocale, useClipboard } from "@teek/hooks";
+import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "@teek/assets/icons";
+import Message from "@teek/components/Message";
+import Icon from "@teek/components/Icon";
+import TransitionCollapse from "@teek/components/TransitionCollapse";
 
 defineOptions({ name: "DemoCode" });
 

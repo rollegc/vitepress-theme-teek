@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ArticleImagePreview">
 import { computed, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { createImageViewer } from "../../ImageViewer";
-import { useEventListener } from "../../../hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { useEventListener } from "@teek/hooks";
+import { createImageViewer } from "@teek/components/ImageViewer";
 
 const { getTeekConfig } = useTeekConfig();
 

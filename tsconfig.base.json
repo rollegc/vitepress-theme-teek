@@ -16,6 +16,8 @@
     "preserveSymlinks": true,
     "rootDir": ".",
     "types": [],
-    "paths": {}
+    "paths": {
+      "@teek/*": ["vitepress-theme-teek/src/*"]
+    }
   }
 }

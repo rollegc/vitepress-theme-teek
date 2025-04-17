@@ -1,6 +1,6 @@
 import type MarkdownIt from "markdown-it";
-import { createContainersThenUse } from "../helper";
 import type { ContainerLabel } from "../types";
+import { createContainersThenUse } from "../helper";
 
 /**
  * 创建 Teek 内置的 markdown-it-container 插件

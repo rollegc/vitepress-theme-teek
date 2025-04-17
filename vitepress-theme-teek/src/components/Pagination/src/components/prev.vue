@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import Icon from "../../../Icon";
 import type { PaginationPrevEmits, PaginationPrevProps } from "./prev";
-import { useLocale } from "../../../../hooks";
+import { computed } from "vue";
+import { useLocale } from "@teek/hooks";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "PaginationPrev" });
 

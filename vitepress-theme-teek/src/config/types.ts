@@ -1,4 +1,4 @@
-import type { PaginationProps } from "../components/Pagination/src/pagination";
+import type { TkPaginationProps } from "../components/Pagination";
 import type {
   Appreciation,
   Article,
@@ -25,9 +25,9 @@ import type {
   TopArticle,
   Wallpaper,
   Markdown,
-} from "./types/index";
+} from "../config/types/index";
 
-export type * from "./types/index";
+export type * from "../config/types/index";
 
 export interface TeekConfig {
   /**
@@ -117,7 +117,7 @@ export interface TeekConfig {
   /**
    * 首页 Post 文章列表的分页配置
    */
-  page?: Partial<PaginationProps> & { pageSize?: number };
+  page?: Partial<TkPaginationProps> & { pageSize?: number };
   /**
    * 博主信息，显示在首页左边第一个卡片
    */

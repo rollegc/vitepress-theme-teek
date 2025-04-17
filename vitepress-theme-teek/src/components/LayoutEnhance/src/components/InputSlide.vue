@@ -1,6 +1,6 @@
 <script setup lang="ts" name="InputSlide">
 import { onMounted, ref, useTemplateRef, watch } from "vue";
-import { useElementHover, useEventListener, useNamespace } from "../../../../hooks";
+import { useElementHover, useEventListener, useNamespace } from "@teek/hooks";
 
 defineOptions({ name: "InputSlide" });
 

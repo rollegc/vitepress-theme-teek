@@ -1,7 +1,7 @@
 import type MarkdownIt from "markdown-it";
-import { withBase } from "../../helper/util";
 import type { NavCard } from "../types";
 import type { SiteConfig } from "vitepress";
+import { withBase } from "../../helper/util";
 import { createCardContainer } from "../helper";
 
 const rootClass = "nav-card";

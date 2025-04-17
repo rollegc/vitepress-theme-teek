@@ -1,6 +1,7 @@
 <script setup lang="ts" name="Title">
+import type { TkIconProps } from "@teek/components/Icon";
 import { ns } from "../namespace";
-import Icon, { type TkIconProps } from "../../../Icon";
+import Icon from "@teek/components/Icon";
 
 defineProps<{ title?: string; disabled?: boolean; icon?: TkIconProps["icon"] }>();
 </script>

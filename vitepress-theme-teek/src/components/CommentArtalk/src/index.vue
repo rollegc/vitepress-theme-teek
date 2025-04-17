@@ -1,9 +1,9 @@
 <script setup lang="ts" name="CommentArtalk">
+import type { CommentProvider } from "@teek/config/types";
 import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
-import { useTeekConfig } from "../../../configProvider";
-import type { CommentProvider } from "../../../config/types";
-import { useNamespace, useVpRouter } from "../../../hooks";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useVpRouter } from "@teek/hooks";
 import { artalkSymbol } from "./artalk";
 
 defineOptions({ name: "CommentArtalk" });

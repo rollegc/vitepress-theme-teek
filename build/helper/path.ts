@@ -7,8 +7,8 @@ export const projectRoot = resolve(__dirname, "../../");
 /** vitepress-theme-teek 目录 即 `/vitepress-theme-teek` */
 export const tkRoot = resolve(projectRoot, PKG_NAME);
 
-/** 组件目录 `/vitepress-theme-teek/components` */
-export const compRoot = resolve(tkRoot, "components");
+/** 组件目录 `/vitepress-theme-teek/src` */
+export const tkSrcRoot = resolve(tkRoot, "src");
 
 /** Docs */
 export const docsDirName = "docs";

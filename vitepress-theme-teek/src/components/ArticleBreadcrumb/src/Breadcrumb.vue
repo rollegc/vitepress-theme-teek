@@ -1,7 +1,8 @@
 <script setup lang="ts" name="Breadcrumb">
+import type { BreadcrumbProps } from "./breadcrumb";
 import { onMounted, provide, ref, unref } from "vue";
-import { useNamespace, useLocale } from "../../../hooks";
-import { breadcrumbKey, breadcrumbNsSymbol, type BreadcrumbProps } from "./breadcrumb";
+import { useNamespace, useLocale } from "@teek/hooks";
+import { breadcrumbKey, breadcrumbNsSymbol } from "./breadcrumb";
 
 defineOptions({ name: "Breadcrumb" });
 

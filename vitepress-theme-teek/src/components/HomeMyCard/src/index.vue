@@ -1,13 +1,13 @@
 <script setup lang="ts" name="HomeMyCard">
+import type { Blogger, Social } from "@teek/config/types";
+import type { TkAvatarProps } from "@teek/components/Avatar";
 import { withBase } from "vitepress";
 import { computed, unref } from "vue";
-import { useTeekConfig } from "../../../configProvider";
-import { useNamespace, useLocale } from "../../../hooks";
-import HomeCard from "../../HomeCard";
-import Icon from "../../Icon";
-import Avatar from "../../Avatar";
-import type { Blogger, Social } from "../../../config/types";
-import type { AvatarProps } from "../../Avatar/src/avatar";
+import { useTeekConfig } from "@teek/configProvider";
+import { useNamespace, useLocale } from "@teek/hooks";
+import HomeCard from "@teek/components/HomeCard";
+import Avatar from "@teek/components/Avatar";
+import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "HomeMyCard" });
 
@@ -19,7 +19,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const blogger = getTeekConfigRef<Required<Blogger>>("blogger", { shape: "square" });
 const social = getTeekConfigRef<Social[]>("social", []);
 
-const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as AvatarProps["shape"]);
+const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as TkAvatarProps["shape"]);
 </script>
 
 <template>

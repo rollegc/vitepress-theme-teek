@@ -1,4 +1,4 @@
-import type { IconProps } from "../../Icon/src/icon";
+import type { TkIconProps } from "@teek/components/Icon";
 
 export interface AvatarProps {
   /**
@@ -14,7 +14,7 @@ export interface AvatarProps {
   /**
    * 头像图标
    */
-  icon?: IconProps["icon"];
+  icon?: TkIconProps["icon"];
   /**
    * 图标头像大小
    */

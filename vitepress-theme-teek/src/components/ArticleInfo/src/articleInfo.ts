@@ -1,5 +1,5 @@
-import type { TkContentData } from "../../../post/types";
-import type { ArticleInfoPosition } from "../../../config/types";
+import type { TkContentData } from "@teek/post/types";
+import type { ArticleInfoPosition } from "@teek/config/types";
 
 export interface PostBaseInfoProps {
   /**
