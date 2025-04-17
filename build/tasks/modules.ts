@@ -12,7 +12,6 @@ import {
   excludes,
   webTsConfig,
   tsOutput,
-  VitePressThemeTeekElementPlusAlias,
 } from "../helper";
 import { cssResolver } from "../helper/util";
 
@@ -28,7 +27,7 @@ const buildModules = async () => {
    * 根据 format 生成对应的 bundle
    */
   const getBundles = async (format: "esm" | "cjs") => {
-    const plugins = [VitePressThemeTeekElementPlusAlias(format), ...commonPlugins];
+    const plugins = [...commonPlugins];
 
     if (format === "esm") {
       // 添加构建 Typescript 类型插件

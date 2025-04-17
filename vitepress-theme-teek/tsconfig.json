@@ -1,10 +1,7 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "paths": {
-      "vitepress-theme-teek": ["src/index.ts"],
-      "vitepress-theme-teek/config": ["src/config"]
-    }
+    "paths": {}
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "types/*.d.ts"],
   "exclude": ["node_modules", "dist"]

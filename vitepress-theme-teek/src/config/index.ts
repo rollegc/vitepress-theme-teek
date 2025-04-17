@@ -20,6 +20,7 @@ import {
   createContainersThenUse,
 } from "../markdown";
 import { createCategory, createPermalink } from "./addFrontmatter";
+import { fileURLToPath } from "node:url";
 
 export * from "./types";
 export { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../components/LayoutEnhance/src/layoutEnhance";
@@ -154,6 +155,11 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
       ssr: { noExternal: ["vitepress-theme-teek"] },
       // 解决项目启动后终端打印 Scss 的废弃警告：The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
       css: { preprocessorOptions: { scss: { api: "modern" } } },
+      resolve: {
+        alias: {
+          "@teek": fileURLToPath(new URL("..", import.meta.url)),
+        },
+      },
     },
     markdown: {
       config: md => {

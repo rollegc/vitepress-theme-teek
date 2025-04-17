@@ -1,4 +1,4 @@
-import Teek, { teekConfigSymbol } from "vitepress-theme-teek";
+import Teek from "vitepress-theme-teek";
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue";
 // import "vitepress-theme-teek/index.css";
 import "vitepress-theme-teek/vp-plus/code-block-mobile.scss";

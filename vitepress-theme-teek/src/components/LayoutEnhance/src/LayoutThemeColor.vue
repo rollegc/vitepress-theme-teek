@@ -22,7 +22,7 @@ const disabled = useMediaQuery(mobileMaxWidthMedia);
 
 const update = (val: string) => {
   const el = document.documentElement;
-  const attribute = "layout-color";
+  const attribute = "theme-color";
 
   if (el.getAttribute(attribute) === val) return;
   el.setAttribute(attribute, val);

@@ -65,7 +65,6 @@ export const useTextTypes = (data: MaybeRefOrGetter<string[]>, options: TypesOpt
    * 打字
    */
   const typesIn = () => {
-    console.log(1);
     isFinished.value = false;
     originText = dataComputed.value[dataIndex];
 

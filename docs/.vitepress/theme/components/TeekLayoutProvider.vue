@@ -22,9 +22,18 @@ const handleSwitch = () => {
 };
 
 // 页脚运行时间
-useRuntime("2021-10-19 00:00:00", {
+const { start, stop } = useRuntime("2021-10-19 00:00:00", {
   prefix: `<span style="width: 16px; display: inline-block; vertical-align: -3px; margin-right: 3px;">${clockIcon}</span>小破站已运行 `,
 });
+
+watch(
+  [current, frontmatter],
+  ([newC, newF]) => {
+    if (newC === "B" && newF.layout === "home") start();
+    else stop();
+  },
+  { immediately: true }
+);
 </script>
 
 <template>
