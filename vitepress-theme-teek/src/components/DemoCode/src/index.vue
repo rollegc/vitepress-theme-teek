@@ -3,7 +3,7 @@ import type { DemoCodeProps } from "./demoCode";
 import { ref, computed, unref, defineAsyncComponent } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useClipboard } from "@teek/hooks";
-import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "@teek/assets/icons";
+import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "@teek/assets";
 import Message from "@teek/components/Message";
 import Icon from "@teek/components/Icon";
 import TransitionCollapse from "@teek/components/TransitionCollapse";

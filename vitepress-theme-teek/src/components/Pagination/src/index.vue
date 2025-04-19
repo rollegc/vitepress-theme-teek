@@ -2,7 +2,7 @@
 import type { PaginationProps, PaginationEmits, LayoutKey } from "./pagination";
 import { computed, h, provide, watch, useSlots, VNode } from "vue";
 import { useNamespace } from "@teek/hooks";
-import { arrowLeftIcon, arrowRightIcon } from "@teek/assets/icons";
+import { arrowLeftIcon, arrowRightIcon } from "@teek/assets";
 import { paginationKey } from "./pagination";
 import Prev from "./components/prev.vue";
 import Next from "./components/next.vue";

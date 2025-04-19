@@ -25,9 +25,9 @@ import type {
   TopArticle,
   Wallpaper,
   Markdown,
-} from "../config/types/index";
+} from "./types/index";
 
-export type * from "../config/types/index";
+export type * from "./types/index";
 
 export interface TeekConfig {
   /**

@@ -24,7 +24,9 @@
     "url": "https://github.com/Kele-Bingtang/vitepress-theme-teek/issues"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "package.json"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -44,29 +46,23 @@
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "./dist/index.d.ts"
-      ],
-      "usePermalink": [
-        "./dist/usePermalink.d.ts"
+      "*": [
+        "*",
+        "dist/*",
+        "dist/*.d.ts",
+        "dist/*/index.d.ts"
       ]
     }
   },
   "scripts": {
     "stub": "unbuild --stub",
-    "build": "pnpm run build:plugin && pnpm run build:component",
-    "build:plugin": "unbuild",
-    "build:component": "tsx scripts/copy.ts"
+    "build": "unbuild"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.4",
-    "fs-extra": "^11.2.0",
-    "tinyglobby": "^0.2.10",
-    "unbuild": "^3.2.0",
     "vite": "^6.0.7",
     "vitepress": "^1.6.3"
   },

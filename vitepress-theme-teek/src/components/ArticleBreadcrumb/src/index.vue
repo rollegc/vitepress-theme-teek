@@ -4,7 +4,7 @@ import { computed, unref } from "vue";
 import { useData, withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { houseIcon } from "@teek/assets/icons";
+import { houseIcon } from "@teek/assets";
 import Icon from "@teek/components/Icon";
 import Breadcrumb from "./Breadcrumb.vue";
 import BreadcrumbItem from "./BreadcrumbItem.vue";

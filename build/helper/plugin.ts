@@ -4,20 +4,16 @@ import postcss from "rollup-plugin-postcss";
 import json from "@rollup/plugin-json";
 import autoprefixer from "autoprefixer";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import { PKG_NAME, target, tkSrcRoot } from "../helper";
+import { pkgName, outputPkgName, target } from "../helper";
 import vuePlugin from "@vitejs/plugin-vue";
 import url from "@rollup/plugin-url";
 import cssnano from "cssnano";
 import type { Plugin } from "rollup";
-import alias from "@rollup/plugin-alias";
 
 // rollup 插件。rollup 本身只支持原生 JavaScript 文件打包，如果项目包含 vue、json 等非原生 JavaScript 文件，则利用插件来支持打包
 export const plugins = [
   vitepressThemeTeekClearConsole(),
   VitePressThemeTeekStyleAlias(),
-  alias({
-    entries: [{ find: "@teek", replacement: tkSrcRoot }],
-  }),
   vuePlugin({ isProduction: true }),
   json(),
   // 解析和处理 Node.js 风格的模块导入语句（如 `import something from 'my-package'`），因为 Rollup 本身默认仅支持 ES 模块导入（即通过相对或绝对路径导入本地文件）
@@ -47,11 +43,11 @@ export const plugins = [
  */
 export function VitePressThemeTeekStyleAlias(): Plugin {
   const themeChalk = "theme-chalk";
-  const sourceThemeChalk = `@${PKG_NAME}/${themeChalk}`;
-  const bundleThemeChalk = `${PKG_NAME}/${themeChalk}`;
+  const sourceThemeChalk = `@${pkgName}/${themeChalk}`;
+  const bundleThemeChalk = `${outputPkgName}/${themeChalk}`;
 
   return {
-    name: "vitepress-theme-teek-alias-plugin",
+    name: "vitepress-theme-teek-alias-style-plugin",
     resolveId(id) {
       if (!id.startsWith(sourceThemeChalk)) return;
       return {

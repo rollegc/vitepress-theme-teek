@@ -2,7 +2,7 @@
 import type { PaginationPagerProps } from "./pager";
 import { computed, ref, watchEffect } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { dArrowRightIcon, dArrowLeftIcon, moreFilledIcon } from "@teek/assets/icons";
+import { dArrowRightIcon, dArrowLeftIcon, moreFilledIcon } from "@teek/assets";
 
 defineOptions({ name: "PaginationPager" });
 

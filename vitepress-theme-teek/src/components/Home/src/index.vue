@@ -3,11 +3,11 @@ import type { TkHomePostListInstance } from "@teek/components/HomePostList";
 import { ref, unref, provide } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig, usePage } from "@teek/configProvider";
-import { postDataUpdateSymbol } from "./home";
 import HomeFullscreenWallpaper from "@teek/components/HomeFullscreenWallpaper";
 import HomePostList from "@teek/components/HomePostList";
 import HomeBanner from "@teek/components/HomeBanner";
 import HomeRightInfo from "@teek/components/HomeRightInfo";
+import { postDataUpdateSymbol } from "./home";
 
 defineOptions({ name: "Home" });
 

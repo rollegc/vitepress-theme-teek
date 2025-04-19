@@ -4,7 +4,7 @@ import { unref, watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig, usePosts, useBgColor } from "@teek/configProvider";
-import { tagIcon } from "@teek/assets/icons";
+import { tagIcon } from "@teek/assets";
 import { isFunction } from "@teek/helper";
 import { postDataUpdateSymbol } from "@teek/components/Home/src/home";
 import HomeCard from "@teek/components/HomeCard";

@@ -1,5 +1,5 @@
 import type { DefaultTheme, HeadConfig, UserConfig } from "vitepress";
-import type { TeekConfig } from "../config/types";
+import type { TeekConfig } from "./types";
 import type { Post, TkContentData } from "../post/types";
 import { fileURLToPath } from "node:url";
 import Sidebar from "vitepress-plugin-sidebar-resolve";
@@ -20,10 +20,10 @@ import {
   containerPlugin,
   createContainersThenUse,
 } from "../markdown";
-import { createCategory, createPermalink } from "../config/addFrontmatter";
+import { createCategory, createPermalink } from "./addFrontmatter";
 
 export { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../components/LayoutEnhance/src/layoutEnhance";
-export * from "../config/types";
+export * from "./types";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {
   const { vitePlugins, markdown = {}, ...teekConfig } = config;

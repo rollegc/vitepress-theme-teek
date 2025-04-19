@@ -4,7 +4,7 @@ import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { themeIcon, copyrightIcon, icpRecordIcon } from "@teek/assets/icons";
+import { themeIcon, copyrightIcon, icpRecordIcon } from "@teek/assets";
 // @ts-ignore
 import securityRecordImg from "@teek/assets/img/securityRecord.png";
 import Icon from "@teek/components/Icon";

@@ -2,13 +2,7 @@
 import { computed, onMounted, watch } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/configProvider";
-import {
-  fullscreenIcon,
-  fullScreenOneIcon,
-  fullscreenTwoIcon,
-  layoutIcon,
-  overallReductionIcon,
-} from "@teek/assets/icons";
+import { fullscreenIcon, fullScreenOneIcon, fullscreenTwoIcon, layoutIcon, overallReductionIcon } from "@teek/assets";
 import { LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { layoutModeStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";

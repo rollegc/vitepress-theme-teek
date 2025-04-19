@@ -12,7 +12,7 @@ import {
   scaleToOriginalIcon,
   zoomInIcon,
   zoomOutIcon,
-} from "@teek/assets/icons";
+} from "@teek/assets";
 import FocusTrap from "@teek/components/FocusTrap";
 import Icon from "@teek/components/Icon";
 

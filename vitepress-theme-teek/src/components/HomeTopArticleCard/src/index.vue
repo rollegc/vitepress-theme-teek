@@ -4,7 +4,7 @@ import { computed, ref, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig, usePosts, useBgColor } from "@teek/configProvider";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { topArticleIcon } from "@teek/assets/icons";
+import { topArticleIcon } from "@teek/assets";
 import { TkContentData } from "@teek/post/types";
 import { formatDate, isFunction } from "@teek/helper";
 import HomeCard from "@teek/components/HomeCard";

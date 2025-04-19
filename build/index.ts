@@ -48,7 +48,7 @@ const updateVersionInTs = async () => {
   const tkPackageContent = await readFile(resolve(projectRoot, "package.json"), "utf-8");
   const tkPackageInfo = JSON.parse(tkPackageContent);
 
-  const versionFile = resolve(tkRoot, "src/version.ts");
+  const versionFile = resolve(tkRoot, "version.ts");
   const versionContent = await readFile(versionFile, "utf-8");
   const newVersion = versionContent.replace(/"([^"]+)"/, `"${tkPackageInfo.version}"`);
 

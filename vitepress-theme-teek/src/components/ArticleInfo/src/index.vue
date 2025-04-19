@@ -7,7 +7,7 @@ import { useTeekConfig, usePosts } from "@teek/configProvider";
 import { formatDate, isFunction } from "@teek/helper";
 import { TkContentData } from "@teek/post/types";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "@teek/assets/icons";
+import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "@teek/assets";
 import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "ArticleInfo" });

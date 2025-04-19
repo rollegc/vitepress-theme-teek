@@ -1,5 +1,5 @@
 import { parse, resolve } from "node:path";
-import { tcOutput, tkRoot } from "./helper/path";
+import { tcOutput, pkgRoot } from "./helper/path";
 import glob from "fast-glob";
 import { access, mkdir, writeFile } from "node:fs/promises";
 import { compile } from "sass";
@@ -12,8 +12,8 @@ import { copy } from "fs-extra";
 
 const isDev = process.env.THEME_CHALK_DEV === "true";
 
-/** /vitepress-theme-teek/src/styles  */
-const styleRoot = resolve(tkRoot, "src/styles");
+/** /packages/theme-chalk/src */
+const styleRoot = resolve(pkgRoot, "theme-chalk/src");
 /** ./dist/theme-chalk  */
 const distRoot = resolve(__dirname, "dist/theme-chalk");
 
@@ -41,10 +41,9 @@ const buildStyle = async () => {
     if (!isDev) plugins.push(cssnano);
     const result = await postcss(plugins).process(content.css, { from: undefined });
     const filename = name === "index" ? "index.css" : `tk-${name}.css`;
-    // 在 .//dist/theme-chalk 创建 css 文件
+    // 在 ./dist/theme-chalk 创建 css 文件
     await writeFile(resolve(distRoot, filename), result.css);
   }
-
   // 复制源文件到 ./dist/theme-chalk/src
   await copy(styleRoot, resolve(distRoot, "src"));
 

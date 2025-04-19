@@ -19,7 +19,7 @@ export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/typ
 export type * from "./config/types";
 export type DefaultThemeType = typeof DefaultTheme;
 
-export * from "./assets/icons";
+export * from "./assets";
 export * from "./configProvider";
 export * from "./components";
 export * from "./helper";

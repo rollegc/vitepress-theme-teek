@@ -1,7 +1,7 @@
 <script setup lang="ts" name="LayoutEnhance">
 import { ref, watch, useTemplateRef, nextTick, computed } from "vue";
 import { useElementHover } from "@teek/hooks";
-import { readingIcon } from "@teek/assets/icons";
+import { readingIcon } from "@teek/assets";
 import { useTeekConfig } from "@teek/configProvider";
 import { ns } from "./namespace";
 import Icon from "@teek/components/Icon";

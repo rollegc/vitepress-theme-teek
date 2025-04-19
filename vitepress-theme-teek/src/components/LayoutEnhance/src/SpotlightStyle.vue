@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/configProvider";
-import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "@teek/assets/icons";
+import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "@teek/assets";
 import { SpotlightStyle, touchMedia } from "./layoutEnhance";
 import { spotlightStyleStorageKey, spotlightStorageKey, transitionName } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";

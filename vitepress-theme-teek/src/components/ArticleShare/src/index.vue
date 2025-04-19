@@ -3,7 +3,7 @@ import type { ArticleShare } from "@teek/config";
 import { computed } from "vue";
 import { useTeekConfig } from "@teek/configProvider";
 import { useClipboard, useNamespace, useLocale } from "@teek/hooks";
-import { shareIcon, thumbsIcon } from "@teek/assets/icons";
+import { shareIcon, thumbsIcon } from "@teek/assets";
 import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "ArticleShare" });
