@@ -1,11 +1,11 @@
 <script setup lang="ts" name="HomeTopArticleCard">
-import type { TopArticle } from "@teek/config/types";
+import type { TopArticle } from "@teek/config";
+import type { TkContentData } from "@teek/post";
 import { computed, ref, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig, usePosts, useBgColor } from "@teek/configProvider";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { topArticleIcon } from "@teek/assets";
-import { TkContentData } from "@teek/post/types";
 import { formatDate, isFunction } from "@teek/helper";
 import HomeCard from "@teek/components/HomeCard";
 

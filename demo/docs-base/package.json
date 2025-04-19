@@ -13,7 +13,6 @@
     "@giscus/vue": "^3.1.1",
     "@waline/client": "^3.5.1",
     "artalk": "^2.9.1",
-    "canvas-confetti": "^1.9.3",
     "vitepress": "^1.6.3",
     "vitepress-markdown-timeline": "^1.2.2",
     "vitepress-theme-teek": "workspace:*"

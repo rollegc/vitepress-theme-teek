@@ -38,16 +38,7 @@
     "cz": "git add . && git-cz",
     "czp": "git add . && git-cz && git push"
   },
-  "dependencies": {
-    "@teek/components": "workspace:*",
-    "@teek/config": "workspace:*",
-    "@teek/helper": "workspace:*",
-    "@teek/hooks": "workspace:*",
-    "@teek/locale": "workspace:*",
-    "@teek/markdown": "workspace:*",
-    "@teek/static": "workspace:*",
-    "@teek/theme-chalk": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
     "@commitlint/cli": "^19.8.0",

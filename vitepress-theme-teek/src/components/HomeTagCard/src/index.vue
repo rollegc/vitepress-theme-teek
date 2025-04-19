@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeTagCard">
-import type { Tag } from "@teek/config/types";
+import type { Tag } from "@teek/config";
 import { unref, watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";

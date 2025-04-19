@@ -1,7 +1,6 @@
 import type { InjectionKey, Ref } from "vue";
 import { computed, getCurrentInstance, inject, ref, unref } from "vue";
-import { inBrowser } from "vitepress";
-import { isNumber } from "@teek/helper";
+import { isNumber, isClient } from "@teek/helper";
 
 export interface zIndexInjectionContext {
   current: number;
@@ -38,7 +37,7 @@ export const useZIndex = (zIndexOverrides?: Ref<number>) => {
     return currentZIndex.value;
   };
 
-  if (!inBrowser && !inject(Z_INDEX_INJECTION_KEY)) {
+  if (!isClient && !inject(Z_INDEX_INJECTION_KEY)) {
     console.warn(
       "ZIndexInjection",
       `Looks like you are using server rendering, you must provide a z-index provider to ensure the hydration process to be succeed

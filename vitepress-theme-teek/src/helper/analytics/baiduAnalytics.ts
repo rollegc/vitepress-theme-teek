@@ -1,5 +1,4 @@
-import { inBrowser } from "vitepress";
-import { isString } from "../is";
+import { isString, isClient } from "../is";
 
 declare global {
   interface Window {
@@ -21,7 +20,7 @@ export interface BaiduAnalyticsOptions {
 /** 注册百度统计 */
 export const baiduAnalytics = (options: BaiduAnalyticsOptions) => {
   // 确保在浏览器环境下执行
-  if (!inBrowser) return;
+  if (!isClient) return;
 
   const { id, production = true } = options || {};
   // 确保在生产环境下执行
@@ -48,7 +47,7 @@ export const baiduAnalytics = (options: BaiduAnalyticsOptions) => {
  */
 export const trackPageview = (options: BaiduAnalyticsOptions, pageUrl: string) => {
   // 确保在浏览器环境下执行
-  if (!inBrowser) return;
+  if (!isClient) return;
 
   const { id, production = true } = options || {};
   // 确保在生产环境下执行

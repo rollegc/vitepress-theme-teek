@@ -1,4 +1,4 @@
-import { inBrowser } from "vitepress";
+import { isClient } from "../is";
 
 declare const dataLayer: any[];
 declare const gtag: (...args: any[]) => void;
@@ -22,7 +22,7 @@ export interface GoogleAnalyticsOptions {
 
 export const googleAnalytics = (options: GoogleAnalyticsOptions) => {
   // 确保在浏览器环境下执行
-  if (!inBrowser) return;
+  if (!isClient) return;
   if (window.dataLayer && window.gtag) return;
 
   const { id, production = true } = options || {};

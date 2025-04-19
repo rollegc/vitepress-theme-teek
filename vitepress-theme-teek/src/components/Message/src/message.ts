@@ -1,5 +1,5 @@
 import type { AppContext, VNode } from "vue";
-import { inBrowser } from "vitepress";
+import { isClient } from "@teek/helper";
 import type { TkIconProps } from "@teek/components/Icon";
 
 export const messageTypes = ["success", "info", "warning", "error"] as const;
@@ -34,7 +34,7 @@ export const messagePropsDefaults = {
 
 export const messageDefaults = {
   ...messagePropsDefaults,
-  appendTo: inBrowser ? document.body : (undefined as never),
+  appendTo: isClient ? document.body : (undefined as never),
 };
 
 export interface MessageProps {

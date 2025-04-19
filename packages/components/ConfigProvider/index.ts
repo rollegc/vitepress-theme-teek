@@ -14,9 +14,9 @@ export const teekConfigSymbol: InjectionKey<TeekConfig | Ref<TeekConfig>> = Symb
 /**
  * 创建 Layout 组件
  */
-export const TkConfigProvider = (layout: Component) => {
+export const TeekConfigProvider = (layout: Component) => {
   return defineComponent({
-    name: "ConfigProvider",
+    name: "TeekConfigProvider",
     setup(_, { slots }) {
       // 往主题注入数据
       provide(postsSymbol, useAllPosts());

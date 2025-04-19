@@ -1,5 +1,5 @@
 <script setup lang="ts" name="FooterInfo">
-import type { FooterInfo, Social } from "@teek/config/types";
+import type { FooterInfo, Social } from "@teek/config";
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

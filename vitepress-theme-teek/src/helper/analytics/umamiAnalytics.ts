@@ -1,4 +1,4 @@
-import { inBrowser } from "vitepress";
+import { isClient } from "../is";
 
 declare global {
   interface Window {
@@ -15,7 +15,7 @@ export type UmamiAnalyticsOptions = UmamiAnalytics | UmamiAnalytics[];
 
 export const umamiAnalytics = (options: UmamiAnalyticsOptions, production = true) => {
   // 确保在浏览器环境下执行
-  if (!inBrowser) return;
+  if (!isClient) return;
   // 确保在生产环境下执行
   if (production && process.env.NODE_ENV !== "production") return;
 

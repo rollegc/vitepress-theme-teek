@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeCategoryCard">
-import type { Category } from "@teek/config/types";
+import type { Category } from "@teek/config";
 import { computed, unref, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
 import { useTeekConfig, usePosts } from "@teek/configProvider";

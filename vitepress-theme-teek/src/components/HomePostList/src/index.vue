@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomePostList">
 import type { TkPaginationProps } from "@teek/components/Pagination";
-import type { Post } from "@teek/config/types";
-import type { TkContentData } from "@teek/post/types";
+import type { Post } from "@teek/config";
+import type { TkContentData } from "@teek/post";
 import { reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";

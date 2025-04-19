@@ -3,8 +3,9 @@ import type { BaiduAnalyticsOptions, GoogleAnalyticsOptions, UmamiAnalytics } fr
 import DefaultTheme from "vitepress/theme";
 import { defineClientComponent } from "vitepress";
 import { isClient, baiduAnalytics, trackPageview, googleAnalytics, umamiAnalytics } from "@teek/helper";
+import { TeekConfigProvider, TkLayout, TkCataloguePage, TkArchivesPage, TkDemoCode } from "@teek/components";
+
 import "@teek/theme-chalk/index.scss";
-import { TkConfigProvider, TkLayout, TkCataloguePage, TkArchivesPage, TkDemoCode } from "@teek/components";
 
 export type DefaultThemeType = typeof DefaultTheme;
 export type * from "@teek/config";
@@ -19,7 +20,7 @@ export * from "./version";
 
 export default {
   extends: DefaultTheme,
-  Layout: TkConfigProvider(TkLayout),
+  Layout: TeekConfigProvider(TkLayout),
   enhanceApp({ app, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);

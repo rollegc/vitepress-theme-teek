@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeDocAnalysisCard">
-import type { DocAnalysis, DocAnalysisInfo } from "@teek/config/types";
+import type { DocAnalysis, DocAnalysisInfo } from "@teek/config";
 import type { UseBuSuanZiReturn } from "@teek/hooks";
 import { computed, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";

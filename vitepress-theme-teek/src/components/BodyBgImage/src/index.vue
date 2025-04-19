@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BodyBgImage">
-import type { BodyBgImg } from "@teek/config/types";
+import type { BodyBgImg } from "@teek/config";
 import { computed, onMounted, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

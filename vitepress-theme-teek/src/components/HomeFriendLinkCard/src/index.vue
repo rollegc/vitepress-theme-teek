@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
-import type { FriendLink } from "@teek/config/types";
+import type { FriendLink } from "@teek/config";
 import { computed, ref, unref, onMounted } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

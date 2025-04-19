@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBannerBgImage">
-import type { Banner } from "@teek/config/types";
+import type { Banner } from "@teek/config";
 import { withBase } from "vitepress";
 import { computed, onMounted, unref } from "vue";
 import { useTeekConfig } from "@teek/configProvider";

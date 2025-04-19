@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ArticleBreadcrumb">
-import type { Breadcrumb as BreadcrumbType } from "@teek/config/types";
+import type { Breadcrumb as BreadcrumbType } from "@teek/config";
 import { computed, unref } from "vue";
 import { useData, withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

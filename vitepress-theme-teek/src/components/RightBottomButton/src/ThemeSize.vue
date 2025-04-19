@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ThemeSize">
-import type { ThemeSetting } from "@teek/config/types";
+import type { ThemeSetting } from "@teek/config";
 import { computed, unref, ref, inject, watch } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

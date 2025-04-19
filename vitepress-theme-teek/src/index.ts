@@ -1,19 +1,13 @@
 import type { TeekConfig } from "./config/types";
+import type { BaiduAnalyticsOptions, GoogleAnalyticsOptions, UmamiAnalytics } from "./helper";
 import DefaultTheme from "vitepress/theme";
-import { defineClientComponent, inBrowser } from "vitepress";
-import { configProvider } from "./configProvider";
-import {
-  baiduAnalytics,
-  trackPageview,
-  googleAnalytics,
-  umamiAnalytics,
-  type BaiduAnalyticsOptions,
-  type GoogleAnalyticsOptions,
-  type UmamiAnalytics,
-} from "./helper";
-import "./styles/index.scss";
+import { defineClientComponent } from "vitepress";
+import { TeekConfigProvider } from "./configProvider";
+import { isClient, baiduAnalytics, trackPageview, googleAnalytics, umamiAnalytics } from "./helper";
 import { TkCataloguePage, TkArchivesPage, TkDemoCode } from "./components";
 import Layout from "./layout/index.vue";
+
+import "./styles/index.scss";
 
 export type { TkContentData, Post, GroupCardItem, FrontMatter } from "./post/types";
 export type * from "./config/types";
@@ -30,7 +24,7 @@ export * from "./version";
 
 export default {
   extends: DefaultTheme,
-  Layout: configProvider(Layout),
+  Layout: TeekConfigProvider(Layout),
   enhanceApp({ app, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
@@ -44,7 +38,7 @@ export default {
     const siteAnalysis: Record<string, (options: any) => void> = {
       baidu: (options: BaiduAnalyticsOptions) => {
         baiduAnalytics(options);
-        if (inBrowser) trackPageview(options, window.location.href);
+        if (isClient) trackPageview(options, window.location.href);
       },
       google: (options: GoogleAnalyticsOptions) => googleAnalytics(options),
       umami: (options: UmamiAnalytics) => umamiAnalytics(options),

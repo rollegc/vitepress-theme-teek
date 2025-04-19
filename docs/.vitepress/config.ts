@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
-import { defineTeekConfig } from "../../packages/config";
-import { version } from "../../packages/teek/version";
+import { defineTeekConfig } from "vitepress-theme-teek/config";
+import { version } from "vitepress-theme-teek/es/version";
 
 const description = ["vitepress-theme-teek 使用文档", "vitepress 主题"].toString();
 
@@ -155,9 +155,9 @@ export default defineConfig({
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek" }],
 
-    // search: {
-    //   provider: "local",
-    // },
+    search: {
+      provider: "local",
+    },
     editLink: {
       text: "在 GitHub 上编辑此页",
       pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",

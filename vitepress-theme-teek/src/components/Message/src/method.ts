@@ -1,6 +1,5 @@
 import { createVNode, isVNode, render, type AppContext } from "vue";
-import { inBrowser } from "vitepress";
-import { isElement, isFunction, isString } from "@teek/helper";
+import { isClient, isElement, isFunction, isString } from "@teek/helper";
 import MessageConstructor from "./index.vue";
 import { messageDefaults, messageTypes } from "./message";
 import { instances, type MessageContext } from "./instance";
@@ -113,7 +112,7 @@ const createMessage = (
 };
 
 const message: MessageFn & Partial<Message> & { _context: AppContext | null } = (options = {}, context) => {
-  if (!inBrowser) return { close: () => undefined };
+  if (!isClient) return { close: () => undefined };
 
   const normalized = normalizeOptions(options);
 

@@ -1,16 +1,16 @@
 import Teek from "vitepress-theme-teek";
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue";
 // import "vitepress-theme-teek/index.css";
-import "@teek/theme-chalk/vp-plus/code-block-mobile.scss";
-import "@teek/theme-chalk/vp-plus/sidebar.scss";
-import "@teek/theme-chalk/vp-plus/nav.scss";
-import "@teek/theme-chalk/vp-plus/aside.scss";
-import "@teek/theme-chalk/vp-plus/doc-h1-gradient.scss";
-import "@teek/theme-chalk/vp-plus/table.scss";
-import "@teek/theme-chalk/vp-plus/mark.scss";
-import "@teek/theme-chalk/vp-plus/blockquote.scss";
-import "@teek/theme-chalk/vp-plus/index-rainbow.scss";
-import "@teek/theme-chalk/tk-plus/banner-desc-gradient.scss"; // 博客风格 Banner 描述渐变样式
+import "vitepress-theme-teek/vp-plus/code-block-mobile.scss";
+import "vitepress-theme-teek/vp-plus/sidebar.scss";
+import "vitepress-theme-teek/vp-plus/nav.scss";
+import "vitepress-theme-teek/vp-plus/aside.scss";
+import "vitepress-theme-teek/vp-plus/doc-h1-gradient.scss";
+import "vitepress-theme-teek/vp-plus/table.scss";
+import "vitepress-theme-teek/vp-plus/mark.scss";
+import "vitepress-theme-teek/vp-plus/blockquote.scss";
+import "vitepress-theme-teek/vp-plus/index-rainbow.scss";
+import "vitepress-theme-teek/tk-plus/banner-desc-gradient.scss"; // 博客风格 Banner 描述渐变样式
 import "./styles/code-bg.scss";
 
 export default {

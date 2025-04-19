@@ -13,9 +13,9 @@ export const teekConfigSymbol: InjectionKey<TeekConfig | Ref<TeekConfig>> = Symb
 /**
  * 创建 Layout 组件
  */
-const createConfigProvider = (Layout: Component) => {
+export const TeekConfigProvider = (Layout: Component) => {
   return defineComponent({
-    name: "ConfigProvider",
+    name: "TeekConfigProvider",
     setup(_, { slots }) {
       // 往主题注入数据
       provide(postsSymbol, useAllPosts());
@@ -28,10 +28,6 @@ const createConfigProvider = (Layout: Component) => {
       return () => h(Layout, null, slots);
     },
   });
-};
-
-export const configProvider = (Layout: Component) => {
-  return createConfigProvider(Layout);
 };
 
 /**
