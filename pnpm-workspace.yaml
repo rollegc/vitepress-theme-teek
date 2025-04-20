@@ -1,6 +1,5 @@
 packages:
-  - vitepress-theme-teek
-  # - packages/*
+  - packages/*
   - plugins/*
   - docs
   - build

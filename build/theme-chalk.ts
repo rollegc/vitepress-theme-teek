@@ -13,7 +13,7 @@ import { copy } from "fs-extra";
 const isDev = process.env.THEME_CHALK_DEV === "true";
 
 /** /packages/theme-chalk/src */
-const styleRoot = resolve(pkgRoot, "src/styles");
+const styleRoot = resolve(pkgRoot, "theme-chalk/src");
 /** ./dist/theme-chalk  */
 const distRoot = resolve(__dirname, "dist/theme-chalk");
 

@@ -38,7 +38,7 @@ const buildModules = async () => {
           tsconfigPath: webTsConfig,
           outDir: tsOutput,
           staticImport: true,
-          // exclude: [resolve(pkgRoot, "theme-chalk")],
+          exclude: [resolve(pkgRoot, "theme-chalk")],
           resolvers: [cssResolver],
           beforeWriteFile: (filePath: string, content: string) => {
             let tempPath = filePath;
