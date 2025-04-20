@@ -3,10 +3,10 @@ import { computed, onMounted, watch } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { clickIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { TkSegmented } from "@teek/components/common/Segmented";
 import { LayoutThemeColor, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutThemeColorSlideStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
 
 defineOptions({ name: "LayoutThemeColor" });
 
@@ -112,7 +112,7 @@ const tips = [
     :tips
     :disabled
   >
-    <Segmented v-model="layoutThemeColor" :options="vitePressSegmentedOptions" :disabled="disabled" />
-    <Segmented v-model="layoutThemeColor" :options="elementPluSegmentedOptions" :disabled="disabled" />
+    <TkSegmented v-model="layoutThemeColor" :options="vitePressSegmentedOptions" :disabled="disabled" />
+    <TkSegmented v-model="layoutThemeColor" :options="elementPluSegmentedOptions" :disabled="disabled" />
   </BaseTemplate>
 </template>

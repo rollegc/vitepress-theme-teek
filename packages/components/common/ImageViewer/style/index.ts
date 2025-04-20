@@ -1,2 +1,2 @@
 import "@teek/components/base/style/index";
-import "@teek/theme-chalk/src/components/image-viewer.scss";
+import "@teek/theme-chalk/src/components/common/image-viewer.scss";

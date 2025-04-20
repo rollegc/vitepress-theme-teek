@@ -3,10 +3,10 @@ import { computed } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { TkSegmented } from "@teek/components/common/Segmented";
 import { SpotlightStyle, touchMedia } from "./layoutEnhance";
 import { spotlightStyleStorageKey, spotlightStorageKey, transitionName } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
 
 defineOptions({ name: "SpotlightStyle" });
 
@@ -67,7 +67,7 @@ const tips = computed(() =>
       :tips
       :disabled
     >
-      <Segmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="disabled" />
+      <TkSegmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="disabled" />
     </BaseTemplate>
   </Transition>
 </template>

@@ -3,10 +3,10 @@ import { computed, onMounted, watch } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { fullscreenIcon, fullScreenOneIcon, fullscreenTwoIcon, layoutIcon, overallReductionIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { TkSegmented } from "@teek/components/common/Segmented";
 import { LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { layoutModeStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
 
 defineOptions({ name: "LayoutSwitch" });
 
@@ -94,6 +94,6 @@ const tips = computed(() =>
     :tips
     :disabled
   >
-    <Segmented v-model="layoutMode" :options="segmentedOptions" :disabled="disabled" />
+    <TkSegmented v-model="layoutMode" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>
 </template>

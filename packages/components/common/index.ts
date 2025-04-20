@@ -1,5 +1,6 @@
 export * from "./Avatar";
 export * from "./Breadcrumb";
+export * from "./FocusTrap";
 export * from "./Icon";
 export * from "./ImageViewer";
 export * from "./Message";

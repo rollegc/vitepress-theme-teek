@@ -5,8 +5,8 @@ import { useData, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { houseIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { TkIcon } from "@teek/components/common/Icon";
 import { TkBreadcrumb, TkBreadcrumbItem } from "@teek/components/common/Breadcrumb";
+import { TkIcon } from "@teek/components/common/Icon";
 
 defineOptions({ name: "ArticleBreadcrumb" });
 
@@ -57,7 +57,7 @@ const breadcrumbList = computed(() => {
           <TkIcon :icon="houseIcon" aria-hidden="true" />
         </a>
       </TkBreadcrumbItem>
-      <BreadcrumbItem v-for="(item, index) in breadcrumbList" :key="index">
+      <TkBreadcrumbItem v-for="(item, index) in breadcrumbList" :key="index">
         <component
           :is="item.filePath ? 'a' : 'span'"
           :href="item.filePath && withBase(`/${item.filePath}`)"
@@ -67,7 +67,7 @@ const breadcrumbList = computed(() => {
         >
           {{ item.fileName }}
         </component>
-      </BreadcrumbItem>
+      </TkBreadcrumbItem>
     </TkBreadcrumb>
   </div>
 </template>

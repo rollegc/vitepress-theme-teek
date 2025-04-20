@@ -1,2 +1,2 @@
 import "@teek/components/base/style/index";
-import "@teek/theme-chalk/src/components/home-fullscreen-wallpaper.scss";
+import "@teek/theme-chalk/src/components/theme/home-fullscreen-wallpaper.scss";

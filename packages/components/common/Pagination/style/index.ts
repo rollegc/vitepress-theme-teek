@@ -1,2 +1,2 @@
 import "@teek/components/base/style/index";
-import "@teek/theme-chalk/src/components/pagination.scss";
+import "@teek/theme-chalk/src/components/common/pagination.scss";

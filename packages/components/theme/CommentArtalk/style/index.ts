@@ -1,2 +1,2 @@
 import "@teek/components/base/style/index";
-import "@teek/theme-chalk/src/components/comment-artalk.scss";
+import "@teek/theme-chalk/src/components/theme/comment-artalk.scss";

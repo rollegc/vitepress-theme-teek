@@ -3,10 +3,10 @@ import { computed, watch, onMounted } from "vue";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { TkInputSlide } from "@teek/components/common/InputSlide";
 import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutModeStorageKey, pageMaxWidthSlideStorageKey, transitionName, pageMaxWidthVar } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
-import InputSlide from "./components/InputSlide.vue";
 
 defineOptions({ name: "LayoutPageWidthSlide" });
 
@@ -64,7 +64,7 @@ const tips = [
       :tips
       :disabled
     >
-      <InputSlide
+      <TkInputSlide
         v-model="pageMaxWidth"
         :disabled
         :min

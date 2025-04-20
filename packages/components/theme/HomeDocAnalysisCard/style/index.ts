@@ -1,2 +1,2 @@
 import "@teek/components/base/style/index";
-import "@teek/theme-chalk/src/components/home-doc-analysis-card.scss";
+import "@teek/theme-chalk/src/components/theme/home-doc-analysis-card.scss";

@@ -3,10 +3,10 @@ import { computed } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { clickIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { TkSegmented } from "@teek/components/common/Segmented";
 import { touchMedia } from "./layoutEnhance";
 import { spotlightStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
-import Segmented from "./components/Segmented.vue";
 import SpotlightHover from "./components/SpotlightHover.vue";
 
 defineOptions({ name: "Spotlight" });
@@ -54,7 +54,7 @@ const tips = [
     :tips
     :disabled
   >
-    <Segmented v-model="spotlight" :options="segmentedOptions" :disabled="disabled" />
+    <TkSegmented v-model="spotlight" :options="segmentedOptions" :disabled="disabled" />
   </BaseTemplate>
 
   <SpotlightHover v-if="spotlight && !disabled" :enabled="spotlight && !disabled" />

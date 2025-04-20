@@ -1,2 +1,2 @@
 import "@teek/components/base/style/index";
-import "@teek/theme-chalk/src/components/article-breadcrumb.scss";
+import "@teek/theme-chalk/src/components/theme/article-breadcrumb.scss";
