@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
-import { defineTeekConfig } from "vitepress-theme-teek/config";
-import { version } from "vitepress-theme-teek/es/version";
+import { defineTeekConfig } from "../../packages/config";
+import { version } from "../../packages/teek/version";
 
 const description = ["vitepress-theme-teek 使用文档", "vitepress 主题"].toString();
 

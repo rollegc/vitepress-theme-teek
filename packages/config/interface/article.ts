@@ -1,6 +1,6 @@
 import type { PageData } from "vitepress";
-import type { ImageViewerProps } from "@teek/components/ImageViewer/src/imageViewer";
-import type { VpContainerProps } from "@teek/components/VpContainer/src/vpContainer";
+import type { ImageViewerProps } from "@teek/components/common/ImageViewer/src/imageViewer";
+import type { VpContainerProps } from "@teek/components/common/VpContainer/src/vpContainer";
 
 export type ArticleInfoPosition = "post" | "article";
 

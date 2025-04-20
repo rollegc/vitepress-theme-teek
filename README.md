@@ -19,7 +19,7 @@ pnpm install
 引用包构建
 
 ```bash
-pnpm to:theme stub
+pnpm stub
 ```
 
 ## 项目启动
@@ -44,7 +44,7 @@ pnpm demo:localesRoot dev
 如果项目启动失败，则执行如下命令后再启动：
 
 ```base
-pnpm plugin:build
+pnpm plugins:build
 ```
 
 ## TODO

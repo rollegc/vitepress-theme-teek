@@ -15,10 +15,10 @@
     "demo:locales": "pnpm run -C demo/docs-locales",
     "demo:localesRoot": "pnpm run -C demo/docs-locales-root",
     "to:build": "pnpm run -C build",
-    "stub": "pnpm run to:build stub b&& pnpm run packages:stub && pnpm run plugin:stub",
+    "stub": "pnpm run to:build stub && pnpm run packages:stub && pnpm run plugins:stub",
     "packages:stub": "pnpm -r --filter=./packages/* run stub",
-    "plugin:stub": "pnpm -r --filter=./plugin/* run stub",
-    "plugin:build": "pnpm -r --filter=./plugin/* run build",
+    "plugins:stub": "pnpm -r --filter=./plugins/* run stub",
+    "plugins:build": "pnpm -r --filter=./plugins/* run build",
     "lint:lint-staged": "lint-staged -c .husky/lintstagedrc.js",
     "lint:prettier": "prettier ./**/*.{js,jsx,ts,tsx,vue,css,less,sass,scss} --write",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue --fix",
@@ -38,7 +38,16 @@
     "cz": "git add . && git-cz",
     "czp": "git add . && git-cz && git push"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@teek/components": "workspace:*",
+    "@teek/config": "workspace:*",
+    "@teek/helper": "workspace:*",
+    "@teek/hooks": "workspace:*",
+    "@teek/locale": "workspace:*",
+    "@teek/markdown": "workspace:*",
+    "@teek/static": "workspace:*",
+    "@teek/theme-chalk": "workspace:*"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
     "@commitlint/cli": "^19.8.0",

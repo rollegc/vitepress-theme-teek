@@ -1,4 +1,4 @@
-import type { Message } from "@teek/components/Message/src/message";
+import type { Message } from "@teek/components/common/Message/src/message";
 
 export interface ThemeSetting {
   /**
