@@ -38,12 +38,13 @@ const buildModules = async () => {
           tsconfigPath: webTsConfig,
           outDir: tsOutput,
           staticImport: true,
-          exclude: [resolve(pkgRoot, "theme-chalk")],
+          // exclude: [resolve(pkgRoot, "theme-chalk")],
           resolvers: [cssResolver],
           beforeWriteFile: (filePath: string, content: string) => {
             let tempPath = filePath;
-            // teek 目录下的类型移到根目录
-            if (filePath.includes("dist/types/teek")) tempPath = filePath.replace("dist/types/teek", "dist/types");
+            const sourcePath = "dist/types/src";
+            // 去掉打包后带有 src 的路径
+            if (filePath.includes(sourcePath)) tempPath = filePath.replace(sourcePath, "dist/types");
 
             // 在 cssResolver 里对 content 使用了 JSON.stringify，因此这里需要转换为 JSON
             if (filePath.includes("style/index") || filePath.includes("style/css")) content = JSON.parse(content);

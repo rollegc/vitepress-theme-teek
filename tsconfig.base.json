@@ -17,14 +17,7 @@
     "rootDir": ".",
     "types": [],
     "paths": {
-      // "@teek/components": ["packages/components"],
-      // "@teek/config": ["packages/config"],
-      // "@teek/helper": ["packages/helper"],
-      // "@teek/hooks": ["packages/hooks"],
-      // "@teek/locale": ["packages/locale"],
-      // "@teek/markdown": ["packages/markdown"],
-      // "@teek/static": ["packages/static"],
-      // "vitepress-theme-teek": ["packages/vitepress-theme-teek"]
+      "@teek/*": ["vitepress-theme-teek/src/*"]
     }
   }
 }

@@ -7,6 +7,6 @@
     "skipLibCheck": true,
     "noImplicitAny": false
   },
-  "include": ["packages", "typings"],
+  "include": ["vitepress-theme-teek", "typings"],
   "exclude": ["**/node_modules", "**/dist", "**/*.md"]
 }

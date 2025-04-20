@@ -9,11 +9,15 @@ export const cssResolver: any = {
   name: "vitepress-theme-teek-css-resolver",
   supports: (id: string) => id.includes("/style/css.ts") || id.includes("/style/index.ts"),
   transform: ({ id, code }: { id: string; code: string }) => {
-    // 逻辑与 VitePressThemeTeekAlias、VitePressThemeTeekElementPlusAlias 方法一样（位于 ./plugin）
-    const sourceThemeChalk = `@${pkgName}/theme-chalk`;
+    // 逻辑与 VitePressThemeTeekAlias 方法一样（位于 ./plugin）
+    const sourceThemeChalk = `@${outputPkgName}/theme-chalk`;
+    const sourceBaseCssChalk = `@${pkgName}/components/base/style/css`;
+    const sourceBaseIndexChalk = `@${pkgName}/components/base/style/index`;
     const bundleThemeChalk = `${outputPkgName}/theme-chalk`;
 
     code = code.replaceAll(sourceThemeChalk, bundleThemeChalk);
+    code = code.replaceAll(sourceBaseCssChalk, `${bundleThemeChalk}/base.css`);
+    code = code.replaceAll(sourceBaseIndexChalk, `${bundleThemeChalk}/src/base.scss`);
     // code = code.replaceAll(`@element-plus`, `element-plus/es/components`); // deprecated
     // 移除 `"use strict";` 和换行符
     code = code.replace(/"use strict";\s*/g, "");

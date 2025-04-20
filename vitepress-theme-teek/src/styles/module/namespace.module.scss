@@ -1,6 +1,0 @@
-@use "../mixins/config" as *;
-
-:export {
-  // 命名空间，具体看 src/hooks/useNamespace.ts 的使用
-  namespace: #{$namespace};
-}

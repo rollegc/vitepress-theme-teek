@@ -1,12 +1,12 @@
 import { resolve } from "path";
-import { pkgName, outputPkgName } from "./constants";
+import { outputPkgName } from "./constants";
 
 /** 项目根目录 `/`  */
 export const projectRoot = resolve(__dirname, "..", "..");
-/** `/packages` */
-export const pkgRoot = resolve(projectRoot, "packages");
-/** `/packages/vitepress-theme-teek` */
-export const tkRoot = resolve(pkgRoot, pkgName);
+/** `/vitepress-theme-teek` */
+export const pkgRoot = resolve(projectRoot, outputPkgName);
+/** `/vitepress-theme-teek/src` */
+export const tkRoot = resolve(pkgRoot, "src");
 
 /** `docs` */
 export const docsDirName = "docs";
@@ -20,8 +20,8 @@ export const tkOutput = resolve(buildOutput, outputPkgName);
 /** `/dist/types` */
 export const tsOutput = resolve(buildOutput, "types");
 
-/** `/packages/teek/package.json` */
-export const tkPackage = resolve(tkRoot, "package-release.json");
+/** `/vitepress-theme-teek/package.json` */
+export const tkPackage = resolve(pkgRoot, "package-release.json");
 /** `/package.json` */
 export const projectPackage = resolve(projectRoot, "package.json");
 /** `/docs/package.json` */

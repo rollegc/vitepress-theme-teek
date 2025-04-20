@@ -1,9 +1,4 @@
-// import namespaceModule from "./namespaceModule/namespace.module.scss";
-
-const namespaceModule = {
-  namespace: "tk",
-};
-
+import namespaceModule from "./cssModule/namespace.module.scss";
 /**
  * 命名空间
  *
