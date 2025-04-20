@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Helper">
 import { nextTick, ref, watch } from "vue";
 import { useElementHover } from "@teek/hooks";
-import { questionFilledIcon } from "@teek/assets/icons";
+import { questionFilledIcon } from "@teek/assets";
 import { ns } from "../namespace";
 import Icon from "@teek/components/Icon";
 

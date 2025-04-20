@@ -4,7 +4,7 @@ import postcss from "rollup-plugin-postcss";
 import json from "@rollup/plugin-json";
 import autoprefixer from "autoprefixer";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import { PKG_NAME, target, tkSrcRoot } from "../helper";
+import { tkRoot, pkgName, outputPkgName, target } from "../helper";
 import vuePlugin from "@vitejs/plugin-vue";
 import url from "@rollup/plugin-url";
 import cssnano from "cssnano";
@@ -16,7 +16,7 @@ export const plugins = [
   vitepressThemeTeekClearConsole(),
   VitePressThemeTeekStyleAlias(),
   alias({
-    entries: [{ find: "@teek", replacement: tkSrcRoot }],
+    entries: [{ find: `@${pkgName}`, replacement: tkRoot }],
   }),
   vuePlugin({ isProduction: true }),
   json(),
@@ -43,15 +43,15 @@ export const plugins = [
 ];
 
 /**
- * 将组件目录下的 style/*.ts 里的 ../../../styles 替换为实际的 vitepress-theme-teek 组件样式路径
+ * 将组件目录下的 style/*.ts 里的引入替换为实际的样式路径
  */
 export function VitePressThemeTeekStyleAlias(): Plugin {
   const themeChalk = "theme-chalk";
-  const sourceThemeChalk = `@${PKG_NAME}/${themeChalk}`;
-  const bundleThemeChalk = `${PKG_NAME}/${themeChalk}`;
+  const sourceThemeChalk = `@${outputPkgName}/${themeChalk}`;
+  const bundleThemeChalk = `${outputPkgName}/${themeChalk}`;
 
   return {
-    name: "vitepress-theme-teek-alias-plugin",
+    name: "vitepress-theme-teek-alias-style-plugin",
     resolveId(id) {
       if (!id.startsWith(sourceThemeChalk)) return;
       return {

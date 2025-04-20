@@ -1,9 +1,9 @@
 <script setup lang="ts" name="FooterGroup">
-import type { FooterGroup } from "@teek/config/types";
+import type { FooterGroup } from "@teek/config";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace } from "@teek/hooks";
 import { isExternal } from "@teek/helper";
-import { externalLinkIcon } from "@teek/assets/icons";
+import { externalLinkIcon } from "@teek/assets";
 import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "FooterGroup" });

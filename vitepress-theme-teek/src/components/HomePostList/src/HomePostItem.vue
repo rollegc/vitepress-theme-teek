@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomePostItem">
-import type { Article, Post } from "@teek/config/types";
-import type { TkContentData } from "@teek/post/types";
+import type { Article, Post } from "@teek/config";
+import type { TkContentData } from "@teek/post";
 import { computed, unref } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

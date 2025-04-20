@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/configProvider";
-import { clickIcon } from "@teek/assets/icons";
+import { clickIcon } from "@teek/assets";
 import { touchMedia } from "./layoutEnhance";
 import { spotlightStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";

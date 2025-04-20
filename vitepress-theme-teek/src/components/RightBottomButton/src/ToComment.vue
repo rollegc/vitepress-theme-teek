@@ -1,9 +1,9 @@
 <script setup lang="ts" name="ToComment">
-import type { ThemeSetting } from "@teek/config/types";
+import type { ThemeSetting } from "@teek/config";
 import { computed, unref, ref, inject } from "vue";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale, useDebounce } from "@teek/hooks";
-import { commentIcon } from "@teek/assets/icons";
+import { commentIcon } from "@teek/assets";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 import Icon from "@teek/components/Icon";
 import Message from "@teek/components/Message";

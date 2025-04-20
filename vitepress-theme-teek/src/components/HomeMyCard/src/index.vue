@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeMyCard">
-import type { Blogger, Social } from "@teek/config/types";
+import type { Blogger, Social } from "@teek/config";
 import type { TkAvatarProps } from "@teek/components/Avatar";
 import { withBase } from "vitepress";
 import { computed, unref } from "vue";

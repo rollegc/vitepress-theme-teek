@@ -7,6 +7,7 @@ import {
   tkOutput,
   writeBundlesFn,
   tkRoot,
+  pkgRoot,
   plugins as commonPlugins,
   externalModule,
   excludes,
@@ -16,8 +17,8 @@ import {
 import { cssResolver } from "../helper/util";
 
 const buildModules = async () => {
-  const input = await glob("**/*.{js,ts,vue}", {
-    cwd: tkRoot,
+  const input = await glob(["**/*.{js,ts,vue}"], {
+    cwd: pkgRoot,
     absolute: true,
     onlyFiles: true,
     ignore: excludes,
@@ -33,16 +34,17 @@ const buildModules = async () => {
       // 添加构建 Typescript 类型插件
       plugins.push(
         dts({
-          entryRoot: tkRoot,
+          entryRoot: pkgRoot,
           tsconfigPath: webTsConfig,
           outDir: tsOutput,
           staticImport: true,
-          // exclude: [resolve(tkRoot, "src/assets")],
+          // exclude: [resolve(pkgRoot, "theme-chalk")],
           resolvers: [cssResolver],
           beforeWriteFile: (filePath: string, content: string) => {
             let tempPath = filePath;
-            // 打包默认生成的路径带有 src，因此去掉
-            if (filePath.includes("dist/types/src")) tempPath = filePath.replace("dist/types/src", "dist/types");
+            const sourcePath = "dist/types/src";
+            // 去掉打包后带有 src 的路径
+            if (filePath.includes(sourcePath)) tempPath = filePath.replace(sourcePath, "dist/types");
 
             // 在 cssResolver 里对 content 使用了 JSON.stringify，因此这里需要转换为 JSON
             if (filePath.includes("style/index") || filePath.includes("style/css")) content = JSON.parse(content);
@@ -73,7 +75,7 @@ const buildModules = async () => {
   const commonOptions: OutputOptions = {
     exports: "named",
     preserveModules: true, // 打包的文件按照源目录结构生成
-    preserveModulesRoot: tkRoot + "/src", // 打包后的源目录去掉 ${tkRoot}/src 前缀
+    preserveModulesRoot: tkRoot, // 打包后的源目录去掉前缀
     sourcemap: false,
   };
 

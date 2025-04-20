@@ -2,7 +2,7 @@
 import { computed, onMounted, watch } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/configProvider";
-import { clickIcon } from "@teek/assets/icons";
+import { clickIcon } from "@teek/assets";
 import { LayoutThemeColor, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutThemeColorSlideStorageKey } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";

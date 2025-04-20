@@ -1,4 +1,4 @@
-import type { TeekConfig } from "vitepress-theme-teek/config";
+import type { TeekConfig } from "@teek/config";
 
 // 文档配置
 export const teekDocConfig: TeekConfig = {

@@ -1,12 +1,12 @@
 <script setup lang="ts" name="HomePostList">
 import type { TkPaginationProps } from "@teek/components/Pagination";
-import type { Post } from "@teek/config/types";
-import type { TkContentData } from "@teek/post/types";
+import type { Post } from "@teek/config";
+import type { TkContentData } from "@teek/post";
 import { reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
 import { useTeekConfig, usePosts } from "@teek/configProvider";
-import { emptyIcon } from "@teek/assets/icons";
+import { emptyIcon } from "@teek/assets";
 import Pagination from "@teek/components/Pagination";
 import Icon from "@teek/components/Icon";
 import HomePostItem from "./HomePostItem.vue";

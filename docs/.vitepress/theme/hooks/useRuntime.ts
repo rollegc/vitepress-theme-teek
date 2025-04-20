@@ -1,5 +1,6 @@
 import { computed, type MaybeRef, toValue } from "vue";
-import { useScopeDispose, isClient } from "vitepress-theme-teek";
+import { isClient } from "@teek/helper";
+import { useScopeDispose } from "@teek/hooks";
 
 export interface UseRuntimeOptions {
   /**

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomeBannerBgPure">
-import type { Banner } from "@teek/config/types";
+import type { Banner } from "@teek/config";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale } from "@teek/hooks";
 

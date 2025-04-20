@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CommentWaline">
-import type { CommentProvider } from "@teek/config/types";
+import type { CommentProvider } from "@teek/config";
 import type { WalineInstance } from "./waline";
 import { inject, onMounted } from "vue";
 import { useTeekConfig } from "@teek/configProvider";

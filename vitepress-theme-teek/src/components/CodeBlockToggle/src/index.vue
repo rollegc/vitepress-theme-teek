@@ -2,7 +2,7 @@
 import { nextTick, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { useNamespace } from "@teek/hooks";
-import { arrowDownIcon } from "@teek/assets/icons";
+import { arrowDownIcon } from "@teek/assets";
 
 defineOptions({ name: "CodeBlockToggle" });
 

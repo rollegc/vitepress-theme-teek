@@ -3,7 +3,7 @@ import type { Appreciation } from "@teek/config/types";
 import { computed, ref, unref, watch } from "vue";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { aliPayIcon, weChatPayIcon } from "@teek/assets/icons";
+import { aliPayIcon, weChatPayIcon } from "@teek/assets";
 import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "DocAfterAppreciation" });

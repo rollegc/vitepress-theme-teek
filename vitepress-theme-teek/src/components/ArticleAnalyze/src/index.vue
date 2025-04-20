@@ -1,13 +1,13 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import type { FileInfo } from "vitepress-plugin-doc-analysis";
-import type { Article, DocAnalysis } from "@teek/config/types";
-import type { TkContentData } from "@teek/post/types";
+import type { Article, DocAnalysis } from "@teek/config";
+import type { TkContentData } from "@teek/post";
 import type { UseBuSuanZiReturn } from "@teek/hooks";
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale, useBuSuanZi } from "@teek/hooks";
-import { readingIcon, clockIcon, viewIcon } from "@teek/assets/icons";
+import { readingIcon, clockIcon, viewIcon } from "@teek/assets";
 import ArticleBreadcrumb from "@teek/components/ArticleBreadcrumb";
 import ArticleInfo from "@teek/components/ArticleInfo";
 import Icon from "@teek/components/Icon";

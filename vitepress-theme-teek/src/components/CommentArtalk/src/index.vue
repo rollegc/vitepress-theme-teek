@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CommentArtalk">
-import type { CommentProvider } from "@teek/config/types";
+import type { CommentProvider } from "@teek/config";
 import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

@@ -1,10 +1,10 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
-import type { FriendLink } from "@teek/config/types";
+import type { FriendLink } from "@teek/config";
 import { computed, ref, unref, onMounted } from "vue";
 import { withBase } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";
 import { useNamespace, useLocale, useScrollData } from "@teek/hooks";
-import { friendLinkIcon } from "@teek/assets/icons";
+import { friendLinkIcon } from "@teek/assets";
 import { isFunction } from "@teek/helper";
 import { createImageViewer } from "@teek/components/ImageViewer";
 import HomeCard from "@teek/components/HomeCard";

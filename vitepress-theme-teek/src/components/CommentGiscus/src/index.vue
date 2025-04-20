@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CommentGiscus">
-import type { CommentProvider } from "@teek/config/types";
+import type { CommentProvider } from "@teek/config";
 import { ref, nextTick, onMounted, computed, unref, inject } from "vue";
 import { useData } from "vitepress";
 import { useTeekConfig } from "@teek/configProvider";

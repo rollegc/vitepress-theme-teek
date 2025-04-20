@@ -3,7 +3,7 @@ import type { HomeCardProps } from "./homeCard";
 import { unref, onMounted, ref, onUnmounted } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { arrowLeftIcon, arrowRightIcon } from "@teek/assets/icons";
+import { arrowLeftIcon, arrowRightIcon } from "@teek/assets";
 import Icon from "@teek/components/Icon";
 
 defineOptions({ name: "HomeCard" });

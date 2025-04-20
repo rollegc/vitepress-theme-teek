@@ -29,4 +29,8 @@ export const externalModule = [
   "vitepress-plugin-permalink",
   "vitepress-plugin-permalink/usePermalink",
   "vitepress-plugin-sidebar-resolve",
+  "fsevents",
+  "@vue",
+  "pkg-types",
+  "semver",
 ];

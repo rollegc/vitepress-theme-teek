@@ -2,7 +2,7 @@
 import { computed, watch, onMounted } from "vue";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/configProvider";
-import { autoWidthIcon, scaleIcon } from "@teek/assets/icons";
+import { autoWidthIcon, scaleIcon } from "@teek/assets";
 import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
 import { ns, layoutModeStorageKey, pageMaxWidthSlideStorageKey, transitionName, pageMaxWidthVar } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";

@@ -1,9 +1,9 @@
 <script setup lang="ts" name="BackTop">
-import type { ThemeSetting } from "@teek/config/types";
+import type { ThemeSetting } from "@teek/config";
 import { computed, unref, onMounted, ref, inject } from "vue";
 import { useNamespace, useLocale, useDebounce, useEventListener } from "@teek/hooks";
 import { useTeekConfig } from "@teek/configProvider";
-import { rocketIcon } from "@teek/assets/icons";
+import { rocketIcon } from "@teek/assets";
 import { rightBottomButtonNsSymbol } from "./rightBottomButton";
 import Message from "@teek/components/Message";
 import Icon from "@teek/components/Icon";

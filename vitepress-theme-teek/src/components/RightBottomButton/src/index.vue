@@ -1,5 +1,5 @@
 <script setup lang="ts" name="RightBottomButton">
-// import type { ThemeSetting } from "@teek/config/types";
+// import type { ThemeSetting } from "@teek/config";
 import { provide } from "vue";
 import { useData } from "vitepress";
 // import { useTeekConfig } from "@teek/configProvider";

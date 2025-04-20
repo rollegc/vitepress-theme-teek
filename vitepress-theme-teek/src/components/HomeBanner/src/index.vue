@@ -1,4 +1,5 @@
 <script setup lang="ts" name="HomeBanner">
+import type { Banner, BodyBgImg } from "@teek/config";
 import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useTeekConfig } from "@teek/configProvider";
@@ -9,7 +10,6 @@ import HomeBannerBgImage from "./HomeBannerBgImage.vue";
 import HomeBannerContent from "./HomeBannerContent.vue";
 import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
-import type { Banner, BodyBgImg } from "@teek/config/types";
 
 defineOptions({ name: "HomeBanner" });
 

@@ -3,13 +3,7 @@ import type { MessageEmits, MessageProps, MessageType } from "./message";
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { VPBadge } from "vitepress/theme";
 import { useEventListener, useNamespace, useZIndex } from "@teek/hooks";
-import {
-  closeIcon,
-  circleCloseFilledIcon,
-  infoFilledIcon,
-  successFilledIcon,
-  warningFilledIcon,
-} from "@teek/assets/icons";
+import { closeIcon, circleCloseFilledIcon, infoFilledIcon, successFilledIcon, warningFilledIcon } from "@teek/assets";
 import { messagePropsDefaults } from "./message";
 import { getLastOffset, getOffsetOrSpace } from "./instance";
 import Icon from "@teek/components/Icon";
