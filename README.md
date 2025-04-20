@@ -2,7 +2,7 @@
 
 在线主题文档：[Teek](http://vp.teek.top/)。
 
-## 使用
+## 本地运行
 
 项目拉取
 
@@ -49,6 +49,7 @@ pnpm plugins:build
 
 ## TODO
 
+- pnpm catalog 管理版本
 - 组件生态文档编写
 - 背景色支持
 - 部分组件的 var 变量是否添加到命名空间内而不是 root？

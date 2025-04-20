@@ -7,6 +7,8 @@ import { ns } from "../namespace";
 
 defineOptions({ name: "Helper" });
 
+defineProps<{ virtualEl?: HTMLDivElement; offset?: number }>();
+
 const visible = defineModel({ type: Boolean, default: false });
 
 const beforePopup: PopoverProps["beforePopup"] = options => {

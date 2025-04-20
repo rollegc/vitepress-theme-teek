@@ -2,7 +2,7 @@
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue";
 import { useNamespace, useElementHover, useWindowSize } from "@teek/hooks";
 import type { PopoverProps } from "./popover";
-import { addUnit } from "@teek/helper";
+import { addUnit, removeUnit } from "@teek/helper";
 
 defineOptions({ name: "Popover" });
 
@@ -52,8 +52,8 @@ const calculatePopupPosition = async (isHovered: boolean) => {
   } = popoverElement.getBoundingClientRect();
 
   const popupElement = popupElementRef.value;
-  const pw = width ?? popupElement.offsetWidth;
-  const ph = height ?? popupElement.offsetHeight;
+  const pw = removeUnit(width) ?? popupElement.offsetWidth;
+  const ph = removeUnit(height) ?? popupElement.offsetHeight;
 
   // 判断弹出框是否超出边界
   const hasFreeSpaceOnTheRight = right + pw < windowWidth.value;
