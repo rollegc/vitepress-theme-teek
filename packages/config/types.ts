@@ -1,4 +1,4 @@
-import type { TkPaginationProps } from "../components/Pagination";
+import type { TkPaginationProps } from "../components/common/Pagination";
 import type {
   Appreciation,
   Article,

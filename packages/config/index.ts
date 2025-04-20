@@ -21,7 +21,7 @@ import {
 } from "../markdown";
 import { createCategory, createPermalink } from "./addFrontmatter";
 
-export { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../components/LayoutEnhance/src/layoutEnhance";
+export { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../components/theme/LayoutEnhance/src/layoutEnhance";
 export type * from "./types";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {

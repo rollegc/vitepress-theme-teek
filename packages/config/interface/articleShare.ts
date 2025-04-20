@@ -1,4 +1,4 @@
-import type { IconProps } from "@teek/components/Icon/src/icon";
+import type { IconProps } from "@teek/components/common/Icon/src/icon";
 
 export interface ArticleShare {
   /**
