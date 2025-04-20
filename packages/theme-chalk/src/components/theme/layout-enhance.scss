@@ -23,7 +23,6 @@
   align-items: center;
   margin-right: 8px;
   height: 100%;
-  cursor: pointer;
 
   &::before {
     margin-right: 8px;
@@ -43,16 +42,6 @@
   }
 
   @include e(content) {
-    min-width: 260px;
-    position: fixed;
-    z-index: 99;
-    background-color: getCssVar("reading-enhance-bg-color");
-    box-shadow: var(--vp-shadow-3);
-    border: 1px solid var(--vp-c-divider);
-    padding: 20px;
-    border-radius: 12px;
-    cursor: auto;
-
     & > * {
       margin-bottom: 10px;
       &:last-child {
@@ -112,14 +101,6 @@
 
   @include e(helper__popup) {
     color: getCssVar("reading-enhance-text-color");
-    padding: 16px;
-    background-color: var(--vp-c-bg-elv);
-    border-style: solid 1px var(--vp-c-divider);
-    border-radius: 12px;
-    position: fixed;
-    z-index: 100;
-    box-shadow: var(--vp-shadow-3);
-    cursor: auto;
   }
 
   @include e(helper__body) {

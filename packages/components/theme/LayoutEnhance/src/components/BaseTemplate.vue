@@ -51,7 +51,7 @@ const titleElementRef = useTemplateRef<HTMLDivElement>("titleElementRef");
     <div ref="titleElementRef" class="flx-align-center">
       <Title :title :icon="icon" :disabled="disabled" :aria-label="title" />
 
-      <Helper v-if="helper" v-model="helperVisible" :virtual-ref="titleElementRef!">
+      <Helper v-if="helper" v-model="helperVisible" :virtual-el="titleElementRef!">
         <div :class="ns.e('helper__body')">
           <h4 :class="ns.em('helper', 'title')">
             <slot name="helper-title">{{ title }}</slot>
