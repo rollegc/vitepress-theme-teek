@@ -50,6 +50,7 @@ pnpm plugins:build
 ## TODO
 
 - pnpm catalog 管理版本
+- Popover 添加触发方式
 - 组件生态文档编写
 - 背景色支持
 - 部分组件的 var 变量是否添加到命名空间内而不是 root？

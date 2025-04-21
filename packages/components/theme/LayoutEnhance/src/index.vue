@@ -25,7 +25,7 @@ const disabledList = computed(() => {
 </script>
 
 <template>
-  <TkPopover :class="ns.b()" :x-offset="-14">
+  <TkPopover :class="ns.b()" :y-offset="-4">
     <template #reference>
       <TkIcon :icon="readingIcon" :size="20" />
     </template>
