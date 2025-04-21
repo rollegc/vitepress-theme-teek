@@ -2,6 +2,7 @@
   "version": "1.0.2",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.7.1",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "pnpm run clean && pnpm run to:build build",
@@ -75,7 +76,7 @@
     "standard-version": "^9.5.0",
     "typescript": "^5.8.3",
     "unbuild": "^3.5.0",
-    "vue": "^3.5.13",
+    "vue": "catalog:",
     "vue-eslint-parser": "^10.1.3",
     "vue-tsc": "^2.2.8"
   },

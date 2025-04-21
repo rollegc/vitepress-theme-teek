@@ -8,6 +8,6 @@
     "./src/*": "./src/*"
   },
   "devDependencies": {
-    "sass": "^1.83.1"
+    "sass": "catalog:"
   }
 }

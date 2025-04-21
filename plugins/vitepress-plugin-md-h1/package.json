@@ -43,9 +43,9 @@
     "build": "unbuild"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3"
+    "gray-matter": "catalog:"
   },
   "devDependencies": {
-    "vite": "^6.0.7"
+    "vite": "catalog:"
   }
 }

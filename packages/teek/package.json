@@ -28,10 +28,10 @@
   },
   "module": "./index.ts",
   "devDependencies": {
-    "vitepress": "^1.6.3"
+    "vitepress": "catalog:"
   },
   "peerDependencies": {
-    "vitepress": "^1.6.3"
+    "vitepress": "catalog:"
   },
   "browserslist": [
     "> 1%",

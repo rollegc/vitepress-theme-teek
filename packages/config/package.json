@@ -4,17 +4,17 @@
   "license": "MIT",
   "main": "index.ts",
   "dependencies": {
-    "gray-matter": "^4.0.3",
-    "vitepress": "^1.6.3",
-    "vitepress-plugin-auto-frontmatter": "workspace:*",
-    "vitepress-plugin-catalogue": "workspace:*",
-    "vitepress-plugin-doc-analysis": "workspace:*",
-    "vitepress-plugin-file-content-loader": "workspace:*",
-    "vitepress-plugin-md-h1": "workspace:*",
-    "vitepress-plugin-permalink": "workspace:*",
-    "vitepress-plugin-sidebar-resolve": "workspace:*"
+    "gray-matter": "catalog:",
+    "vitepress": "catalog:",
+    "vitepress-plugin-auto-frontmatter": "catalog:",
+    "vitepress-plugin-catalogue": "catalog:",
+    "vitepress-plugin-doc-analysis": "catalog:",
+    "vitepress-plugin-file-content-loader": "catalog:",
+    "vitepress-plugin-md-h1": "catalog:",
+    "vitepress-plugin-permalink": "catalog:",
+    "vitepress-plugin-sidebar-resolve": "catalog:"
   },
   "devDependencies": {
-    "@types/markdown-it": "^14.1.2"
+    "@types/markdown-it": "catalog:"
   }
 }

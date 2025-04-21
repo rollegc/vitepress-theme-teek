@@ -4,6 +4,6 @@
   "license": "MIT",
   "main": "index.ts",
   "devDependencies": {
-    "vitepress": "^1.6.3"
+    "vitepress": "catalog:"
   }
 }
