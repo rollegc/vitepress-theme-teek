@@ -44,11 +44,11 @@
     "build": "unbuild"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3",
-    "picocolors": "^1.1.1",
-    "tinyglobby": "^0.2.10"
+    "gray-matter": "catalog:",
+    "picocolors": "catalog:",
+    "tinyglobby": "catalog:"
   },
   "devDependencies": {
-    "vite": "^6.0.7"
+    "vite": "catalog:"
   }
 }

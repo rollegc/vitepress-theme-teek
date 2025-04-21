@@ -1,12 +1,15 @@
 <script setup lang="ts" name="Popover">
+import type { NumStr, PopoverProps } from "./popover";
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue";
-import { useNamespace, useElementHover, useWindowSize } from "@teek/hooks";
-import type { PopoverProps } from "./popover";
-import { addUnit } from "@teek/helper";
+import { useNamespace, useZIndex, useElementHover, useWindowSize } from "@teek/hooks";
+import { addUnit, isString, removeUnit } from "@teek/helper";
+import { TkFocusTrap } from "@teek/components/common/FocusTrap";
 
 defineOptions({ name: "Popover" });
 
 const {
+  placement = "bottom",
+  content = "",
   width,
   height,
   offset = 0,
@@ -16,9 +19,15 @@ const {
   transition = true,
   virtualEl,
   beforePopup,
+  zIndex,
 } = defineProps<PopoverProps>();
 
 const ns = useNamespace("popover");
+
+const { nextZIndex } = useZIndex();
+const zIndexRef = ref(zIndex ?? nextZIndex());
+
+const visible = defineModel({ default: false });
 
 const popoverRef = useTemplateRef("popoverRef");
 const popupElementRef = useTemplateRef("popupElementRef");
@@ -26,13 +35,17 @@ const isHovered = useElementHover(popoverRef);
 const popupVisible = useElementHover(popupElementRef);
 const { width: windowWidth, height: windowHeight } = useWindowSize();
 
-const visible = defineModel({ default: false });
+const AUTO = "auto";
 
-const popupCoordinatesX = ref(0);
-const popupCoordinatesY = ref(0);
+const top = ref<NumStr>(AUTO);
+const right = ref<NumStr>(AUTO);
+const bottom = ref<NumStr>(AUTO);
+const left = ref<NumStr>(AUTO);
 
 /**
- * 计算弹出框的位置
+ * 计算弹框的位置
+ *
+ * @isHovered 是否激活弹框
  */
 const calculatePopupPosition = async (isHovered: boolean) => {
   if (!isHovered || !popoverRef.value || !popupElementRef.value) {
@@ -43,49 +56,116 @@ const calculatePopupPosition = async (isHovered: boolean) => {
 
   const popoverElement = (virtualEl as any)?.$el || virtualEl || popoverRef.value;
   const {
-    left,
-    top,
-    right,
-    height: popoverHight,
+    top: popoverTop,
+    right: popoverLeftWidth,
+    bottom: popoverTopHeight,
+    left: popoverLeft,
     width: popoverWidth,
-    bottom,
+    height: popoverHeight,
   } = popoverElement.getBoundingClientRect();
 
+  // 计算实际的 right 和 bottom（popoverLeftWidth 为元素右边框距离视口左侧的距离，等于 left + width，popoverTopHeight 同理，等于 top + height）
+  const popoverRight = windowWidth.value - popoverLeftWidth;
+  const popoverBottom = windowHeight.value - popoverTopHeight;
+
   const popupElement = popupElementRef.value;
-  const pw = width ?? popupElement.offsetWidth;
-  const ph = height ?? popupElement.offsetHeight;
+  const pw = removeUnit(width) ?? popupElement.offsetWidth;
+  const ph = removeUnit(height) ?? popupElement.offsetHeight;
 
-  // 判断弹出框是否超出边界
-  const hasFreeSpaceOnTheRight = right + pw < windowWidth.value;
-  const hasFreeSpaceBelow = bottom + ph < windowHeight.value;
-  const hasFreeSpaceOnTheLeft = left - pw > 0;
-  const hasFreeSpaceAbove = top - ph > 0;
+  const baseX = window.scrollX + (offset || xOffset);
+  const baseY = window.scrollY + (offset || yOffset);
 
-  const finalXOffset = offset || xOffset;
-  let popupLeft = 0;
-  let popupTop = 0;
+  let popupTop: NumStr = AUTO;
+  let popupRight: NumStr = AUTO;
+  let popupBottom: NumStr = AUTO;
+  let popupLeft: NumStr = AUTO;
 
-  if (hasFreeSpaceOnTheRight) popupLeft = left + window.scrollX + finalXOffset;
-  else if (hasFreeSpaceOnTheLeft) popupLeft = left + window.scrollX - pw + popoverWidth - finalXOffset;
-  else {
-    visible.value = false; // 如果左右都超出边界，则不显示弹出框
-    return;
+  if (["top", "bottom"].some(item => placement.startsWith(item))) {
+    // 计算左右位置（top 和 bottom 通用）
+
+    // start 代表等于 popover 元素的 left
+    if (placement.endsWith("start")) popupLeft = Math.max(0, popoverLeft + baseX);
+    // end 代表等于 popover 元素的 right
+    else if (placement.endsWith("end")) popupRight = Math.max(0, popoverRight + baseX);
+    // 否则居中
+    else popupLeft = Math.max(0, popoverLeft + popoverWidth / 2 - pw / 2 + baseX);
+
+    // 弹框超出右边界，则移到左边，且右侧永远贴着右边界
+    if (!isString(popupLeft) && popupLeft + pw > windowWidth.value) {
+      popupLeft = AUTO;
+      popupRight = 0;
+    }
+
+    // 弹框超出左边界，则移到右边，且左侧永远贴着左边界
+    if (!isString(popupRight) && popupRight + pw > windowWidth.value) {
+      popupRight = AUTO;
+      popupLeft = 0;
+    }
+  } else if (["left", "right"].some(item => placement.startsWith(item))) {
+    // 计算上下位置（left 和 right 通用）
+
+    // start 代表等于 popover 元素的 top
+    if (placement.endsWith("start")) popupTop = Math.max(0, popoverTop + baseY);
+    // end 代表等于 popover 元素的 bottom
+    else if (placement.endsWith("end")) popupBottom = Math.max(0, popoverBottom + baseY);
+    // 否则居中
+    else popupTop = Math.max(0, popoverTop + popoverHeight / 2 - ph / 2 + baseY);
+
+    if (!isString(popupTop) && popupTop + ph > windowHeight.value) {
+      // 弹框超出下边界，则移到上边界，且下侧永远贴着下边界
+      popupTop = AUTO;
+      popupBottom = 0;
+    }
+
+    if (!isString(popupBottom) && popupBottom + ph > windowHeight.value) {
+      // 弹框超出上边界，则移到下边界，且上侧永远贴着上边界
+      popupBottom = AUTO;
+      popupTop = 0;
+    }
   }
 
-  const finalYOffset = offset || yOffset;
+  // 计算非通用的位置
+  if (placement.startsWith("bottom")) popupTop = popoverTop + popoverHeight + baseY;
+  else if (placement.startsWith("top")) popupBottom += popoverBottom + popoverHeight + baseY;
+  else if (placement.startsWith("left")) popupRight = popoverRight + popoverWidth + baseX;
+  else if (placement.startsWith("right")) popupLeft = popoverLeft + popoverWidth + baseX;
 
-  if (hasFreeSpaceBelow) popupTop = top + window.scrollY + popoverHight - 6 + finalYOffset;
-  else if (hasFreeSpaceAbove) popupTop = top + window.scrollY - ph + 6 - finalYOffset;
-  else {
-    visible.value = false; // 如果上下都超出边界，则不显示弹出框
-    return;
+  // 弹框超出下边界，则移动到上边界
+  if (!isString(popupTop) && popupTop + ph > windowHeight.value + baseY) {
+    popupTop = AUTO;
+    popupBottom = popoverHeight;
+  }
+  // 弹框超出上边界，则移动到下边界
+  if (!isString(popupBottom) && popupBottom + ph > windowHeight.value + baseY) {
+    popupBottom = AUTO;
+    popupTop = popoverHeight;
+  }
+  if (!isString(popupRight) && popupRight + pw > windowWidth.value + baseX) {
+    // 弹框超出右边界，则移动到左边界
+    popupRight = AUTO;
+    popupLeft = popoverWidth;
+  }
+  if (!isString(popupLeft) && popupLeft + pw > windowWidth.value + baseX) {
+    // 弹框超出右边界，则移动到左边界
+    popupLeft = AUTO;
+    popupRight = popoverWidth;
   }
 
-  // 支持外界修改 left 和 top 位置
-  const result = beforePopup?.({ popupLeft, popupTop, popoverElement, popupElement });
+  // 弹出前回调，支持修改弹框的位置
+  const result =
+    beforePopup?.({
+      top: popupTop,
+      right: popupRight,
+      bottom: popupBottom,
+      left: popupLeft,
+      popoverElement: popoverElement,
+      popupElement: popupElement,
+    }) ?? {};
 
-  popupCoordinatesX.value = result?.left ?? popupLeft;
-  popupCoordinatesY.value = result?.top ?? popupTop;
+  top.value = result.top ?? popupTop;
+  right.value = result.right ?? popupRight;
+  bottom.value = result.bottom ?? popupBottom;
+  left.value = result.left ?? popupLeft;
 };
 
 // 鼠标悬停打开，离开关闭
@@ -99,17 +179,52 @@ watch(popupVisible, newVal => (visible.value = newVal));
 
 const popupStyle = computed(() => {
   return {
-    top: `${popupCoordinatesY.value}px`,
-    left: `${popupCoordinatesX.value}px`,
+    zIndex: zIndexRef.value,
+    top: top.value === AUTO ? AUTO : `${top.value}px`,
+    right: right.value === AUTO ? AUTO : `${right.value}px`,
+    bottom: bottom.value === AUTO ? AUTO : `${bottom.value}px`,
+    left: left.value === AUTO ? AUTO : `${left.value}px`,
     width: addUnit(width),
     height: addUnit(height),
   };
 });
+
+const emit = defineEmits<{ focus: []; blur: []; close: [] }>();
+const focusStartRef = ref<"container" | "first" | HTMLElement>();
+
+// 进入焦点陷阱（打开弹框）
+const onFocusAfterTrapped = () => {
+  emit("focus");
+};
+// 离开焦点陷阱
+const onFocusAfterReleased = (event: CustomEvent) => {
+  if (event.detail?.focusReason !== "pointer") {
+    focusStartRef.value = "first";
+    emit("blur");
+  }
+};
+// focusin 事件
+const onFocusInTrap = (event: FocusEvent) => {
+  if (visible.value && event.target) {
+    focusStartRef.value = event.target as typeof focusStartRef.value;
+  }
+};
+// 阻止离开
+const onFocusoutPrevented = (event: CustomEvent) => {
+  if (event.detail.focusReason === "pointer") {
+    event.preventDefault();
+  }
+};
+// Escape 按键释放焦点
+const onReleaseRequested = () => {
+  emit("close");
+};
 </script>
 
 <template>
   <div ref="popoverRef" :class="ns.b()">
     <slot name="reference"></slot>
+
     <Teleport to="body">
       <Transition :name="transition ? ns.joinNamespace('fade-linear') : ''">
         <div
@@ -121,7 +236,19 @@ const popupStyle = computed(() => {
           @click.stop
           @touchstart.stop
         >
-          <slot />
+          <TkFocusTrap
+            loop
+            :trapped="visible"
+            :focus-trap-el="popupElementRef!"
+            :focus-start-el="focusStartRef"
+            @focus-after-trapped="onFocusAfterTrapped"
+            @focus-after-released="onFocusAfterReleased"
+            @focusin="onFocusInTrap"
+            @focusout-prevented="onFocusoutPrevented"
+            @release-requested="onReleaseRequested"
+          >
+            <slot>{{ content }}</slot>
+          </TkFocusTrap>
         </div>
       </Transition>
     </Teleport>

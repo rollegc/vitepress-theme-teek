@@ -1,5 +1,4 @@
 <script setup lang="ts" name="Helper">
-import type { PopoverProps } from "@teek/components/common/Popover";
 import { questionFilledIcon } from "@teek/static";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkPopover } from "@teek/components/common/Popover";
@@ -7,19 +6,13 @@ import { ns } from "../namespace";
 
 defineOptions({ name: "Helper" });
 
-const visible = defineModel({ type: Boolean, default: false });
+defineProps<{ virtualEl?: HTMLDivElement; offset?: number }>();
 
-const beforePopup: PopoverProps["beforePopup"] = options => {
-  const { popupLeft, popoverElement } = options;
-  const rect = popoverElement.getBoundingClientRect();
-  return {
-    left: popupLeft - rect.width,
-  };
-};
+const visible = defineModel({ type: Boolean, default: false });
 </script>
 
 <template>
-  <TkPopover :class="ns.e('helper')" v-model="visible" :virtual-el :offset="12" :before-popup>
+  <TkPopover :class="ns.e('helper')" v-model="visible" :virtual-el placement="left-start" :x-offset="12">
     <template #reference>
       <TkIcon :icon="questionFilledIcon" :size="16" />
     </template>
