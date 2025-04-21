@@ -1,8 +1,8 @@
 <script setup lang="ts" name="Popover">
-import type { PopoverProps } from "./popover";
+import type { NumStr, PopoverProps } from "./popover";
 import { computed, nextTick, ref, useTemplateRef, watch } from "vue";
 import { useNamespace, useZIndex, useElementHover, useWindowSize } from "@teek/hooks";
-import { addUnit, removeUnit } from "@teek/helper";
+import { addUnit, isString, removeUnit } from "@teek/helper";
 import { TkFocusTrap } from "@teek/components/common/FocusTrap";
 
 defineOptions({ name: "Popover" });
@@ -37,10 +37,10 @@ const { width: windowWidth, height: windowHeight } = useWindowSize();
 
 const AUTO = "auto";
 
-const top = ref<number | string>(AUTO);
-const right = ref<number | string>(AUTO);
-const bottom = ref<number | string>(AUTO);
-const left = ref<number | string>(AUTO);
+const top = ref<NumStr>(AUTO);
+const right = ref<NumStr>(AUTO);
+const bottom = ref<NumStr>(AUTO);
+const left = ref<NumStr>(AUTO);
 
 /**
  * 计算弹框的位置
@@ -75,10 +75,10 @@ const calculatePopupPosition = async (isHovered: boolean) => {
   const baseX = window.scrollX + (offset || xOffset);
   const baseY = window.scrollY + (offset || yOffset);
 
-  let popupTop: number | string = AUTO;
-  let popupRight: number | string = AUTO;
-  let popupBottom: number | string = AUTO;
-  let popupLeft: number | string = AUTO;
+  let popupTop: NumStr = AUTO;
+  let popupRight: NumStr = AUTO;
+  let popupBottom: NumStr = AUTO;
+  let popupLeft: NumStr = AUTO;
 
   if (["top", "bottom"].some(item => placement.startsWith(item))) {
     // 计算左右位置（top 和 bottom 通用）
@@ -91,13 +91,13 @@ const calculatePopupPosition = async (isHovered: boolean) => {
     else popupLeft = Math.max(0, popoverLeft + popoverWidth / 2 - pw / 2 + baseX);
 
     // 弹框超出右边界，则移到左边，且右侧永远贴着右边界
-    if (popupLeft && popupLeft + pw > windowWidth.value) {
+    if (!isString(popupLeft) && popupLeft + pw > windowWidth.value) {
       popupLeft = AUTO;
       popupRight = 0;
     }
 
     // 弹框超出左边界，则移到右边，且左侧永远贴着左边界
-    if (popupRight && popupRight + pw > windowWidth.value) {
+    if (!isString(popupRight) && popupRight + pw > windowWidth.value) {
       popupRight = AUTO;
       popupLeft = 0;
     }
@@ -111,13 +111,13 @@ const calculatePopupPosition = async (isHovered: boolean) => {
     // 否则居中
     else popupTop = Math.max(0, popoverTop + popoverHeight / 2 - ph / 2 + baseY);
 
-    if (popupTop && popupTop + ph > windowHeight.value) {
+    if (!isString(popupTop) && popupTop + ph > windowHeight.value) {
       // 弹框超出下边界，则移到上边界，且下侧永远贴着下边界
       popupTop = AUTO;
       popupBottom = 0;
     }
 
-    if (popupBottom && popupBottom + ph > windowHeight.value) {
+    if (!isString(popupBottom) && popupBottom + ph > windowHeight.value) {
       // 弹框超出上边界，则移到下边界，且上侧永远贴着上边界
       popupBottom = AUTO;
       popupTop = 0;
@@ -131,21 +131,21 @@ const calculatePopupPosition = async (isHovered: boolean) => {
   else if (placement.startsWith("right")) popupLeft = popoverLeft + popoverWidth + baseX;
 
   // 弹框超出下边界，则移动到上边界
-  if (popupTop + ph > windowHeight.value + baseY) {
+  if (!isString(popupTop) && popupTop + ph > windowHeight.value + baseY) {
     popupTop = AUTO;
     popupBottom = popoverHeight;
   }
   // 弹框超出上边界，则移动到下边界
-  if (popupBottom + ph > windowHeight.value + baseY) {
+  if (!isString(popupBottom) && popupBottom + ph > windowHeight.value + baseY) {
     popupBottom = AUTO;
     popupTop = popoverHeight;
   }
-  if (popupRight + pw > windowWidth.value + baseX) {
+  if (!isString(popupRight) && popupRight + pw > windowWidth.value + baseX) {
     // 弹框超出右边界，则移动到左边界
     popupRight = AUTO;
     popupLeft = popoverWidth;
   }
-  if (popupLeft + pw > windowWidth.value + baseX) {
+  if (!isString(popupLeft) && popupLeft + pw > windowWidth.value + baseX) {
     // 弹框超出右边界，则移动到左边界
     popupLeft = AUTO;
     popupRight = popoverWidth;
@@ -239,7 +239,7 @@ const onReleaseRequested = () => {
           <TkFocusTrap
             loop
             :trapped="visible"
-            :focus-trap-el="popupElementRef"
+            :focus-trap-el="popupElementRef!"
             :focus-start-el="focusStartRef"
             @focus-after-trapped="onFocusAfterTrapped"
             @focus-after-released="onFocusAfterReleased"

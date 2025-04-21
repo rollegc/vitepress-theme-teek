@@ -1,3 +1,5 @@
+export type NumStr = number | string;
+
 export interface PopoverProps {
   placement?:
     | "bottom"
@@ -21,11 +23,11 @@ export interface PopoverProps {
   /**
    * 宽度，如果不指定，则会根据内容自动计算
    */
-  width?: string | number;
+  width?: NumStr;
   /**
    * 高度，如果不指定，则会根据内容自动计算
    */
-  height?: string | number;
+  height?: NumStr;
   /**
    * 偏移量，等价于 `xOffset` 和 `yOffset`
    *
@@ -69,26 +71,26 @@ export interface PopoverProps {
    */
   beforePopup?: (
     options: PopoverTransformOptions
-  ) => { top?: number; right?: number; bottom?: number; left?: number } | undefined;
+  ) => { top?: NumStr; right?: NumStr; bottom?: NumStr; left?: NumStr } | undefined;
 }
 
 export interface PopoverTransformOptions {
   /**
    * 弹框的 top 位置
    */
-  top: number;
+  top: NumStr;
   /**
    * 弹框的 right 位置
    */
-  right: number;
+  right: NumStr;
   /**
    * 弹框的 bottom 位置
    */
-  bottom: number;
+  bottom: NumStr;
   /**
    * 弹框的 left 位置
    */
-  left: number;
+  left: NumStr;
   /**
    * 弹框组件根 DOM 元素，如果传入 virtualEl 则是 virtualEl 元素
    */
