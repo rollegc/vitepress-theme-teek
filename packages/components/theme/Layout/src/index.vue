@@ -135,7 +135,7 @@ const usedSlots = [
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
         <ClientOnly>
-          <TkLayoutEnhance />
+          <TkLayoutEnhance position="top" />
         </ClientOnly>
       </template>
 

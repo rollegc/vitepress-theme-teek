@@ -1,7 +1,7 @@
-import type { PopoverOptions, NumStr } from "@teek/hooks";
+import type { UsePopoverSizeOptions, NumStr } from "@teek/hooks";
 
 export interface PopoverProps {
-  placement?: PopoverOptions["placement"];
+  placement?: UsePopoverSizeOptions["placement"];
   /**
    * 显示的内容
    *
@@ -49,7 +49,7 @@ export interface PopoverProps {
   /**
    * 虚拟元素，弹框将在虚拟元素上显示
    */
-  virtualEl?: HTMLDivElement;
+  triggerEl?: HTMLDivElement;
   /**
    * 自定义 z-index
    */
@@ -88,11 +88,11 @@ export interface PopoverTransformOptions {
    */
   left: NumStr;
   /**
-   * 弹框组件根 DOM 元素，如果传入 virtualEl 则是 virtualEl 元素
+   * 触发弹框的 DOM 元素，如果传入 virtualEl 则是 virtualEl 元素
    */
-  popoverElement: HTMLDivElement;
+  triggerElement: HTMLDivElement;
   /**
    * 弹框的 DOM 元素
    */
-  popupElement: HTMLDivElement;
+  popoverElement: HTMLDivElement;
 }

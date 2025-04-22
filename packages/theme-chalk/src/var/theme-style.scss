@@ -1,9 +1,9 @@
 @use "../mixins/function" as *;
 
-/* 所有变量：https://github.com/vuejs/vitepress/blob/main/src/client/layout-color-default/styles/vars.css */
+/* 所有变量：https://github.com/vuejs/vitepress/blob/main/src/client/theme-color-default/styles/vars.css */
 
 /* VitePress 绿色 */
-html[layout-color="vp-green"] {
+html[theme-color="vp-green"] {
   --vp-c-brand-1: var(--vp-c-green-1);
   --vp-c-brand-2: var(--vp-c-green-2);
   --vp-c-brand-3: var(--vp-c-green-3);
@@ -11,7 +11,7 @@ html[layout-color="vp-green"] {
 }
 
 /* VitePress 黄色 */
-html[layout-color="vp-yellow"] {
+html[theme-color="vp-yellow"] {
   --vp-c-brand-1: var(--vp-c-yellow-1);
   --vp-c-brand-2: var(--vp-c-yellow-2);
   --vp-c-brand-3: var(--vp-c-yellow-3);
@@ -19,7 +19,7 @@ html[layout-color="vp-yellow"] {
 }
 
 /* VitePress 红色 */
-html[layout-color="vp-red"] {
+html[theme-color="vp-red"] {
   --vp-c-brand-1: var(--vp-c-red-1);
   --vp-c-brand-2: var(--vp-c-red-2);
   --vp-c-brand-3: var(--vp-c-red-3);
@@ -27,7 +27,7 @@ html[layout-color="vp-red"] {
 }
 
 /* element plus 蓝色 */
-html[layout-color="el-blue"] {
+html[theme-color="el-blue"] {
   --vp-c-brand-1: #{getCssVar("el-color-primary")};
   --vp-c-brand-2: #{getCssVar("el-color-primary-light-3")};
   --vp-c-brand-3: #{getCssVar("el-color-primary-light-5")};
@@ -35,7 +35,7 @@ html[layout-color="el-blue"] {
 }
 
 /* element plus 绿色 */
-html[layout-color="el-green"] {
+html[theme-color="el-green"] {
   --vp-c-brand-1: #{getCssVar("el-color-success")};
   --vp-c-brand-2: #{getCssVar("el-color-success-light-3")};
   --vp-c-brand-3: #{getCssVar("el-color-success-light-5")};
@@ -43,7 +43,7 @@ html[layout-color="el-green"] {
 }
 
 /* element plus 黄色 */
-html[layout-color="el-yellow"] {
+html[theme-color="el-yellow"] {
   --vp-c-brand-1: #{getCssVar("el-color-warning")};
   --vp-c-brand-2: #{getCssVar("el-color-warning-light-3")};
   --vp-c-brand-3: #{getCssVar("el-color-warning-light-5")};
@@ -51,7 +51,7 @@ html[layout-color="el-yellow"] {
 }
 
 /* element plus 红色 */
-html[layout-color="el-red"] {
+html[theme-color="el-red"] {
   --vp-c-brand-1: #{getCssVar("el-color-danger")};
   --vp-c-brand-2: #{getCssVar("el-color-danger-light-3")};
   --vp-c-brand-3: #{getCssVar("el-color-danger-light-5")};

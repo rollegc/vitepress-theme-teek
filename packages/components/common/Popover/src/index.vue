@@ -17,7 +17,7 @@ const {
   yOffset = 0,
   disabled = false,
   transition = true,
-  virtualEl,
+  triggerEl,
   beforePopup,
   zIndex,
   popperClass,
@@ -36,7 +36,9 @@ const popoverRef = useTemplateRef("popoverRef");
 const isHovered = useElementHover(triggerRef);
 const popupVisible = useElementHover(popoverRef);
 
-const { top, right, left, bottom, update } = usePopoverSize(virtualEl || triggerRef, popoverRef, {
+const triggerElComputed = computed(() => triggerEl || triggerRef.value);
+
+const { top, right, left, bottom, update } = usePopoverSize(triggerElComputed, popoverRef, {
   placement,
   offset,
   xOffset,
@@ -63,7 +65,7 @@ const calculatePopoverPosition = async (isHovered: boolean) => {
       right: right.value,
       bottom: left.value,
       left: bottom.value,
-      triggerElement: virtualEl || triggerRef.value,
+      triggerElement: triggerEl || triggerRef.value,
       popoverElement: popoverRef.value,
     }) ?? {};
 
