@@ -6,13 +6,13 @@ import { ns } from "../namespace";
 
 defineOptions({ name: "Helper" });
 
-defineProps<{ virtualEl?: HTMLDivElement; offset?: number }>();
+defineProps<{ triggerEl?: HTMLDivElement; offset?: number }>();
 
 const visible = defineModel({ type: Boolean, default: false });
 </script>
 
 <template>
-  <TkPopover :class="ns.e('helper')" v-model="visible" :virtual-el placement="left-start" :x-offset="12">
+  <TkPopover :class="ns.e('helper')" v-model="visible" :trigger-el placement="left-start">
     <template #reference>
       <TkIcon :icon="questionFilledIcon" :size="16" />
     </template>

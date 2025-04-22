@@ -12,6 +12,10 @@ import LayoutThemeColor from "./LayoutThemeColor.vue";
 import Spotlight from "./Spotlight.vue";
 import SpotlightStyle from "./SpotlightStyle.vue";
 
+defineOptions({ name: "LayoutEnhance" });
+
+defineProps<{ position: "top" | "bottom" }>();
+
 const { getTeekConfigRef } = useTeekConfig();
 const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
 
@@ -25,7 +29,7 @@ const disabledList = computed(() => {
 </script>
 
 <template>
-  <TkPopover :class="ns.b()" :y-offset="-4">
+  <TkPopover :class="[ns.b(), ns.is(position), 'flx-align-center']" :popper-class="ns.e('popover')" :y-offset="-4">
     <template #reference>
       <TkIcon :icon="readingIcon" :size="20" />
     </template>

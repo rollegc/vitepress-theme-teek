@@ -82,7 +82,7 @@ const topTipConfig = computed(() => {
 });
 
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
-const usedSlot = [
+const usedSlots = [
   "home-hero-before",
   "nav-bar-content-after",
   "layout-bottom",
@@ -135,7 +135,7 @@ const usedSlot = [
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
         <ClientOnly>
-          <TkLayoutEnhance />
+          <TkLayoutEnhance position="top" />
         </ClientOnly>
       </template>
 
@@ -228,7 +228,7 @@ const usedSlot = [
 
       <!-- 其他 VP 插槽 -->
       <template
-        v-for="(_, name) in Object.keys($slots).filter(name => !usedSlot.includes(name))"
+        v-for="(_, name) in Object.keys($slots).filter(name => !usedSlots.includes(name))"
         :key="name"
         #[name]="slotData"
       >

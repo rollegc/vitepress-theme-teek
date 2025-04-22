@@ -1,5 +1,6 @@
 <script setup lang="ts" name="RightBottomButton">
 import { useData } from "vitepress";
+// import { TkLayoutEnhance } from "@teek/components/theme/LayoutEnhance";
 import { ns } from "./namespace";
 import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";
@@ -15,6 +16,7 @@ const { theme } = useData();
 
     <BackTop />
     <ToComment v-if="theme.comment?.provider" />
+    <!-- <TkLayoutEnhance :class="ns.e('button')" position="bottom" /> -->
     <!-- <ThemeSize v-if="themeSettingConfig.useThemeSize" /> -->
     <!-- <ThemeStyle v-if="themeSettingConfig.useThemeStyle" /> -->
 

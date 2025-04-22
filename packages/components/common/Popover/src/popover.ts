@@ -1,19 +1,7 @@
-export type NumStr = number | string;
+import type { UsePopoverSizeOptions, NumStr } from "@teek/hooks";
 
 export interface PopoverProps {
-  placement?:
-    | "bottom"
-    | "bottom-start"
-    | "bottom-end"
-    | "top"
-    | "top-start"
-    | "top-end"
-    | "left"
-    | "left-start"
-    | "left-end"
-    | "right"
-    | "right-start"
-    | "right-end";
+  placement?: UsePopoverSizeOptions["placement"];
   /**
    * 显示的内容
    *
@@ -61,11 +49,19 @@ export interface PopoverProps {
   /**
    * 虚拟元素，弹框将在虚拟元素上显示
    */
-  virtualEl?: HTMLDivElement;
+  triggerEl?: HTMLDivElement;
   /**
    * 自定义 z-index
    */
   zIndex?: number;
+  /**
+   * popper 添加类名
+   */
+  popperClass?: string;
+  /**
+   * popper 添加样式
+   */
+  popperStyle?: object;
   /**
    * 弹框弹出前的回调，支持返回新的 `top`、`right`、`bottom`、`left`
    */
@@ -92,11 +88,11 @@ export interface PopoverTransformOptions {
    */
   left: NumStr;
   /**
-   * 弹框组件根 DOM 元素，如果传入 virtualEl 则是 virtualEl 元素
+   * 触发弹框的 DOM 元素，如果传入 virtualEl 则是 virtualEl 元素
    */
-  popoverElement: HTMLDivElement;
+  triggerElement: HTMLDivElement;
   /**
    * 弹框的 DOM 元素
    */
-  popupElement: HTMLDivElement;
+  popoverElement: HTMLDivElement;
 }
