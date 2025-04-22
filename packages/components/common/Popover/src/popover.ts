@@ -1,19 +1,7 @@
-export type NumStr = number | string;
+import type { PopoverOptions, NumStr } from "@teek/hooks";
 
 export interface PopoverProps {
-  placement?:
-    | "bottom"
-    | "bottom-start"
-    | "bottom-end"
-    | "top"
-    | "top-start"
-    | "top-end"
-    | "left"
-    | "left-start"
-    | "left-end"
-    | "right"
-    | "right-start"
-    | "right-end";
+  placement?: PopoverOptions["placement"];
   /**
    * 显示的内容
    *
@@ -66,6 +54,14 @@ export interface PopoverProps {
    * 自定义 z-index
    */
   zIndex?: number;
+  /**
+   * popper 添加类名
+   */
+  popperClass?: string;
+  /**
+   * popper 添加样式
+   */
+  popperStyle?: object;
   /**
    * 弹框弹出前的回调，支持返回新的 `top`、`right`、`bottom`、`left`
    */

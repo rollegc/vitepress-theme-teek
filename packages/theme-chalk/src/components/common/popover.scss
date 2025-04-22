@@ -7,21 +7,15 @@
 }
 
 @include b(popover) {
-  position: relative;
-  cursor: pointer;
-
-  @include e(content) {
-    min-width: 260px;
-    max-width: 100vw;
-    position: absolute;
-    background-color: getCssVar("popover-bg-color");
-    box-shadow: var(--vp-shadow-3);
-    border: 1px solid var(--vp-c-divider);
-    padding: 20px;
-    overflow: auto;
-    border-radius: 12px;
-    cursor: auto;
-    display: flex;
-    flex-direction: column;
-  }
+  min-width: 260px;
+  max-width: 100vw;
+  position: absolute;
+  background-color: getCssVar("popover-bg-color");
+  box-shadow: var(--vp-shadow-3);
+  border: 1px solid var(--vp-c-divider);
+  padding: 10px;
+  overflow: auto;
+  cursor: auto;
+  display: flex;
+  flex-direction: column;
 }
