@@ -47,6 +47,10 @@ export interface PopoverProps {
    */
   transition?: boolean;
   /**
+   * 自定义过渡动画名，仅当 transition 为 true 时生效
+   */
+  transitionName?: string;
+  /**
    * 虚拟元素，弹框将在虚拟元素上显示
    */
   triggerEl?: HTMLDivElement;

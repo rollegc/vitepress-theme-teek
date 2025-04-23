@@ -13,7 +13,7 @@ import type {
   FooterInfo,
   FooterGroup,
   FriendLink,
-  LayoutEnhance,
+  ThemeEnhance,
   Notice,
   Plugins,
   Post,
@@ -105,13 +105,13 @@ export interface TeekConfig {
   /**
    * 右下角的主题设置配置
    *
-   * @deprecated Use `layoutEnhance` instead
+   * @deprecated Use `themeEnhance` instead
    */
   themeSetting?: ThemeSetting;
   /**
    * 布局增强配置
    */
-  layoutEnhance?: LayoutEnhance;
+  themeEnhance?: ThemeEnhance;
   /**
    * 文章默认的作者信息
    */

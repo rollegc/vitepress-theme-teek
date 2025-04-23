@@ -1,4 +1,5 @@
 <script setup lang="ts" name="HomeRightInfo">
+import type { TeekConfig } from "@teek/config";
 import { computed, unref } from "vue";
 import { useNamespace } from "@teek/hooks";
 import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
@@ -13,7 +14,7 @@ defineOptions({ name: "HomeRightInfo" });
 
 const ns = useNamespace("home-right-info");
 const { getTeekConfig } = useTeekConfig();
-const teekConfig = computed(() => getTeekConfig(null, {}));
+const teekConfig = computed(() => getTeekConfig<TeekConfig>(null, {}));
 
 // 获取用户配置 + 默认的卡片排序
 const finalHomeCardSort = computed(() => {

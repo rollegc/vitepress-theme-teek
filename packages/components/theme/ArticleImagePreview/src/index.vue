@@ -1,4 +1,5 @@
 <script setup lang="ts" name="ArticleImagePreview">
+import type { Article } from "@teek/config";
 import { computed, unref } from "vue";
 import { useEventListener } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -8,7 +9,7 @@ const { getTeekConfig } = useTeekConfig();
 
 // 文章图片配置
 const imageViewer = computed(() => {
-  const { imageViewer = {} } = getTeekConfig("article", {});
+  const { imageViewer = {} } = getTeekConfig<Article>("article", {});
   return imageViewer;
 });
 

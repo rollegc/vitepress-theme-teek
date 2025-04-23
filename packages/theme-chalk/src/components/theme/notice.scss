@@ -48,7 +48,7 @@
 
     @include e(popover__header) {
       background-color: var(--vp-c-brand-3);
-      color: #ffffff;
+      color: var(--vp-c-white);
       padding: 6px 4px;
 
       > div {

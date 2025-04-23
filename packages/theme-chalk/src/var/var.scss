@@ -10,13 +10,15 @@
   @include set-css-var("lower-color-4", rgba(253, 253, 253, 0.3));
   @include set-css-var("lower-color-5", rgba(253, 253, 253, 0.5));
   @include set-css-var("lower-color-6", rgba(253, 253, 253, 0.7));
+  @include set-css-var("lower-color-7", #c0c4cc);
   @include set-css-var("bg-color-1", var(--vp-c-bg));
   @include set-css-var("bg-color-2", rgb(255, 255, 255, 0.7));
   @include set-css-var("bg-color-3", #f4f4f4);
+  @include set-css-var("bg-color-4", #ebedf2);
+  @include set-css-var("bg-color-hover-1", #f8f8f8);
   @include set-css-var("shadow-1", 0 1px 8px 0 rgba(0, 0, 0, 0.1));
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.2));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
-  @include set-css-var("item-bg-color-hover", #f8f8f8);
   @include set-css-var("fill-color", #f0f2f5);
   @include set-css-var("fill-color-blank", #ffffff);
   @include set-css-var("fill-color-light", #f5f7fa);
@@ -28,15 +30,17 @@
   @include set-css-var("lower-color-2", #bdc3cc);
   @include set-css-var("lower-color-3", #21252b);
   @include set-css-var("lower-color-4", rgba(34, 34, 34, 0.3));
-  @include set-css-var("lower-color-4", rgba(34, 34, 34, 0.5));
-  @include set-css-var("lower-color-4", rgba(34, 34, 34, 0.7));
+  @include set-css-var("lower-color-5", rgba(34, 34, 34, 0.5));
+  @include set-css-var("lower-color-6", rgba(34, 34, 34, 0.7));
+  @include set-css-var("lower-color-7", #6c6e72);
   @include set-css-var("bg-color-1", var(--vp-c-bg));
   @include set-css-var("bg-color-2", rgb(20, 20, 20, 0.7));
   @include set-css-var("bg-color-3", #27272b);
+  @include set-css-var("bg-color-4", #2c2f35);
+  @include set-css-var("bg-color-hover-1", #27272b);
   @include set-css-var("shadow-1", 0 1px 8px 0 rgba(0, 0, 0, 0.6));
   @include set-css-var("shadow-2", 0 2px 16px 0 rgba(0, 0, 0, 0.7));
   @include set-css-var("line-color", rgba(0, 0, 0, 0.12));
-  @include set-css-var("item-bg-color-hover", #27272b);
   @include set-css-var("fill-color", #303030);
   @include set-css-var("fill-color-blank", transparent);
   @include set-css-var("fill-color-light", #262727);
@@ -48,20 +52,6 @@
   @include set-css-var("gap1", 10px);
   @include set-css-var("gap2", 20px);
   @include set-css-var("gap3", 30px);
-  @include set-css-var("code-block-fold-height", 40px);
-  @include set-css-var("code-block-lang-transform", uppercase);
-  @include set-css-var("home-banner-part-min-height", 450px);
-}
-
-// 使用自定义自定义全局样式变量
-:root {
-  @include set-css-var("home-info-gap", getCssVar("gap1"));
-  @include set-css-var("home-banner-feature-row-gap", getCssVar("gap2"));
-  @include set-css-var("home-top-article-gap", getCssVar("gap1"));
-  @include set-css-var("home-friend-link-gap", getCssVar("gap2"));
-  @include set-css-var("home-article-analyze-gap", getCssVar("gap1"));
-  @include set-css-var("footer-gap", getCssVar("gap2"));
-  @include set-css-var("appreciation-gap", getCssVar("gap1"));
 }
 
 // ep 样式

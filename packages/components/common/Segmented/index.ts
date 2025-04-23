@@ -4,4 +4,5 @@ import SegmentedItem from "./src/SegmentedItem.vue";
 export { Segmented as TkSegmented, SegmentedItem as TkSegmentedItem };
 export default Segmented;
 
+export * from "./src/segmented";
 export * from "./src/instance";

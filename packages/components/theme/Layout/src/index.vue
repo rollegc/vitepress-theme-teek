@@ -14,7 +14,7 @@ import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
 import { TkArticleImagePreview } from "@teek/components/theme/ArticleImagePreview";
 import { TkBodyBgImage } from "@teek/components/theme/BodyBgImage";
 import { TkVpContainer } from "@teek/components/common/VpContainer";
-import { TkLayoutEnhance } from "@teek/components/theme/LayoutEnhance";
+import { TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
 import { TkFooterGroup } from "@teek/components/theme/FooterGroup";
 import { TkFooterInfo } from "@teek/components/theme/FooterInfo";
 import { TkRightBottomButton } from "@teek/components/theme/RightBottomButton";
@@ -135,7 +135,7 @@ const usedSlots = [
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
         <ClientOnly>
-          <TkLayoutEnhance position="top" />
+          <TkThemeEnhance position="top" />
         </ClientOnly>
       </template>
 

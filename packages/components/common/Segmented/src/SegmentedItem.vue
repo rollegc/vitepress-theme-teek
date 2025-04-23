@@ -1,19 +1,11 @@
 <script setup lang="ts" name="SegmentedItem">
+import type { SegmentedItemProps, ModelType } from "./segmented";
 import { useNamespace } from "@teek/hooks";
 import { TkIcon } from "@teek/components/common/Icon";
 
 defineOptions({ name: "SegmentedItem" });
 
-export type ModelType = string | number | object | boolean;
-
-defineProps<{
-  name?: string;
-  icon?: string;
-  text?: string;
-  title: string;
-  value?: ModelType;
-  disabled?: boolean;
-}>();
+defineProps<SegmentedItemProps>();
 
 const ns = useNamespace("segmented-item");
 

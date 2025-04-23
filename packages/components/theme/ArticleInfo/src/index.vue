@@ -28,7 +28,6 @@ const articleConfig = getTeekConfigRef<Article>("article", {
   showUpdateDate: false,
   showCategory: false,
   showTag: false,
-  titleTip: {},
 });
 
 const posts = usePosts();
@@ -58,11 +57,11 @@ const updateDate = computed(() => {
 });
 
 const baseInfo = computed(() => {
-  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag, titleTip = {} } = unref(articleConfig);
+  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag } = unref(articleConfig);
 
   return [
     {
-      title: unref(titleTip).author ?? t("tk.articleInfo.author"),
+      title: t("tk.articleInfo.author"),
       icon: userIcon,
       data: post.author?.name,
       href: post.author?.link,
@@ -70,19 +69,19 @@ const baseInfo = computed(() => {
       show: isShow(showAuthor),
     },
     {
-      title: unref(titleTip).createTime ?? t("tk.articleInfo.createTime"),
+      title: t("tk.articleInfo.createTime"),
       icon: calendarIcon,
       data: unref(createDate),
       show: isShow(showCreateDate),
     },
     {
-      title: unref(titleTip).updateTime ?? t("tk.articleInfo.updateTime"),
+      title: t("tk.articleInfo.updateTime"),
       icon: editPenIcon,
       data: unref(updateDate),
       show: unref(updateDate) && scope === "article" && showUpdateDate,
     },
     {
-      title: unref(titleTip).category ?? t("tk.articleInfo.category"),
+      title: t("tk.articleInfo.category"),
       icon: folderOpenedIcon,
       dataList: post.frontmatter?.categories || [],
       href: "/categories?category={data}",
@@ -90,7 +89,7 @@ const baseInfo = computed(() => {
       show: scope === "post" || isShow(showCategory),
     },
     {
-      title: unref(titleTip).tag ?? t("tk.articleInfo.tag"),
+      title: t("tk.articleInfo.tag"),
       icon: collectionTagIcon,
       dataList: post.frontmatter?.tags || [],
       href: "/tags?tag={data}",

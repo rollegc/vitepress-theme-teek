@@ -1,17 +1,18 @@
 <script setup lang="ts" name="LayoutDocWidthSlide">
+import type { ThemeEnhance } from "@teek/config";
 import { computed, watch, onMounted } from "vue";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkInputSlide } from "@teek/components/common/InputSlide";
-import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
+import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./themeEnhance";
 import { ns, layoutModeStorageKey, docMaxWidthSlideStorageKey, transitionName, docMaxWidthVar } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 
 defineOptions({ name: "LayoutDocWidthSlide" });
 
 const { getTeekConfigRef } = useTeekConfig();
-const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
 
 const min = computed(() => 60 * 100);
@@ -19,11 +20,11 @@ const max = computed(() => 100 * 100);
 
 const docMaxWidth = useStorage(
   docMaxWidthSlideStorageKey,
-  layoutEnhanceConfig.value.layoutSwitch?.docLayoutMaxWidth?.defaultMaxWidth || 90 * 100
+  themeEnhanceConfig.value.layoutSwitch?.docLayoutMaxWidth?.defaultMaxWidth || 90 * 100
 );
-const layoutMode = useStorage<LayoutMode>(
+const layoutMode = useStorage(
   layoutModeStorageKey,
-  layoutEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
+  themeEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
 );
 
 const updateMaxWidth = (val: number) => {
@@ -35,7 +36,7 @@ const updateMaxWidth = (val: number) => {
 
 onMounted(() => updateMaxWidth(docMaxWidth.value));
 
-const disabled = useMediaQuery(mobileMaxWidthMedia);
+const isMobile = useMediaQuery(mobileMaxWidthMedia);
 const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthSlideMedia);
 
 watch(shouldActivateMaxWidth, () => {
@@ -49,9 +50,9 @@ const format = (val: number) => `${Math.ceil(val / 100)}%`;
 
 const tips = [
   {
-    title: t("tk.layoutEnhance.docLayoutMaxWidth.helpTipTitle"),
+    title: t("tk.themeEnhance.docLayoutMaxWidth.helpTipTitle"),
     icon: scaleIcon,
-    content: t("tk.layoutEnhance.docLayoutMaxWidth.helpTipContent"),
+    content: t("tk.themeEnhance.docLayoutMaxWidth.helpTipContent"),
   },
 ];
 </script>
@@ -61,20 +62,20 @@ const tips = [
     <BaseTemplate
       v-show="layoutMode === LayoutMode.BothWidthAdjustable"
       :icon="autoWidthIcon"
-      :title="t('tk.layoutEnhance.docLayoutMaxWidth.title')"
-      :helper="!layoutEnhanceConfig.layoutSwitch?.docLayoutMaxWidth?.disableHelp"
-      :helper-desc="t('tk.layoutEnhance.docLayoutMaxWidth.helpDesc')"
+      :title="t('tk.themeEnhance.docLayoutMaxWidth.title')"
+      :helper="!themeEnhanceConfig.layoutSwitch?.docLayoutMaxWidth?.disableHelp"
+      :helper-desc="t('tk.themeEnhance.docLayoutMaxWidth.helpDesc')"
       :tips
-      :disabled
+      :disabled="isMobile"
     >
       <TkInputSlide
         v-model="docMaxWidth"
-        :disabled
+        :disabled="isMobile"
         :min
         :max
         :format
         :class="ns.e('slide')"
-        :aria-label="t('tk.layoutEnhance.docLayoutMaxWidth.helperTipTitle')"
+        :aria-label="t('tk.themeEnhance.docLayoutMaxWidth.helperTipTitle')"
       />
     </BaseTemplate>
   </Transition>

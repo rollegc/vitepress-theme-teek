@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import type { Article, DocAnalysis, DocDocAnalysisFileInfo } from "@teek/config";
+import type { Article, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } from "@teek/config";
 import type { TkContentData } from "@teek/config";
 import type { UseBuSuanZiReturn } from "@teek/hooks";
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
@@ -21,7 +21,7 @@ const { theme, frontmatter } = useData();
 
 // 文章基本信息
 const post = computed<TkContentData>(() => ({
-  author: getTeekConfig("author", {}),
+  author: getTeekConfig<TeekConfig["author"]>("author", {}),
   date: unref(frontmatter).date,
   frontmatter: unref(frontmatter),
   url: "",
@@ -45,7 +45,6 @@ const articleConfig = getTeekConfigRef<Article>("article", {
   showInfo: true,
   showIcon: true,
   teleport: {},
-  titleTip: {},
 });
 
 // 是否展示作者、日期、分类、标签等信息
@@ -118,11 +117,7 @@ watch(route, () => {
 
       <div v-if="docAnalysisConfig.wordCount" class="flx-center">
         <TkIcon v-if="articleConfig.showIcon" :icon="readingIcon" aria-hidden="true" />
-        <a
-          :title="articleConfig.titleTip?.wordCount ?? t('tk.articleAnalyze.wordCount')"
-          class="hover-color"
-          :aria-label="articleConfig.titleTip?.wordCount ?? t('tk.articleAnalyze.wordCount')"
-        >
+        <a :title="t('tk.articleAnalyze.wordCount')" class="hover-color" :aria-label="t('tk.articleAnalyze.wordCount')">
           {{ pageViewInfo.wordCount }}
         </a>
       </div>
@@ -130,9 +125,9 @@ watch(route, () => {
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
         <TkIcon v-if="articleConfig.showIcon" :icon="clockIcon" />
         <a
-          :title="articleConfig.titleTip?.readingTime ?? t('tk.articleAnalyze.readingTime')"
+          :title="t('tk.articleAnalyze.readingTime')"
           class="hover-color"
-          :aria-label="articleConfig.titleTip?.readingTime ?? t('tk.articleAnalyze.readingTime')"
+          :aria-label="t('tk.articleAnalyze.readingTime')"
         >
           {{ pageViewInfo.readingTime }}
         </a>
@@ -140,11 +135,7 @@ watch(route, () => {
 
       <div v-if="usePageView" class="flx-center">
         <TkIcon v-if="articleConfig.showIcon" :icon="viewIcon" />
-        <a
-          :title="articleConfig.titleTip?.pageView ?? t('tk.articleAnalyze.pageView')"
-          class="hover-color"
-          :aria-label="articleConfig.titleTip?.pageView ?? t('tk.articleAnalyze.pageView')"
-        >
+        <a :title="t('tk.articleAnalyze.pageView')" class="hover-color" :aria-label="t('tk.articleAnalyze.pageView')">
           {{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}
         </a>
       </div>

@@ -1,5 +1,10 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("home-top-article-gap", getCssVar("gap1"));
+}
 
 @include b(top-article) {
   @include e(list) {
@@ -25,7 +30,7 @@
         &.sticky {
           font-size: getCssVar("home-font-size-small");
           background-color: getCssVar("num-bg-color");
-          color: #ffffff;
+          color: var(--vp-c-white);
           border-radius: 8px 0;
         }
       }

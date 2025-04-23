@@ -175,20 +175,8 @@ export default {
       themeSizeTitle: "Theme Size Switch",
       themeStyleTitle: "Theme Style Switch",
       toComment: "Go to Comment",
-      vpLabel: "VP Theme",
-      vpTip: "VitePress Theme",
-      default: "Default",
-      vpGreen: "Green",
-      vpYellow: "Yellow",
-      vpRed: "Red",
-      epLabel: "EP Theme",
-      epTip: "Element Plus Theme",
-      epBlue: "Blue",
-      epGreen: "Green",
-      epYellow: "Yellow",
-      epRed: "Red",
     },
-    layoutEnhance: {
+    themeEnhance: {
       title: "Layout Enhancement",
       layoutSwitch: {
         title: "Layout Switch",
@@ -218,8 +206,12 @@ export default {
         helpTipTitle: "Adjust Page Maximum Width",
         helpTipContent: "A slider to select and customize the maximum width of the page.",
       },
-      layoutThemeColor: {
+      themeColor: {
         title: "Layout Theme Color",
+        vpLabel: "VP Theme",
+        epLabel: "EP Theme",
+        vpTip: "VitePress Theme",
+        epTip: "Element Plus Theme",
         defaultLabel: "Default",
         blueLabel: "Blue",
         greenLabel: "Green",

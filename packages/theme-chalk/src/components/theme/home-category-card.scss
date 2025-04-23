@@ -21,7 +21,7 @@
       text-overflow: ellipsis;
 
       &:hover {
-        background-color: getCssVar("item-bg-color-hover");
+        background-color: getCssVar("bg-color-hover-1");
         border-color: getCssVar("theme-color");
       }
 

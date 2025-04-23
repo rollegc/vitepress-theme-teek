@@ -2,6 +2,7 @@ import { computed, MaybeRefOrGetter, nextTick, ref, toValue } from "vue";
 import { useWindowSize } from "./useWindowSize";
 import { useScrollbarSize } from "./useScrollbarSize";
 import { isClient, isString } from "@teek/helper";
+import { useEventListener } from "./useEventListener";
 
 export interface UsePopoverSizeOptions {
   placement?:
@@ -121,12 +122,12 @@ export const usePopoverSize = (
       // 计算 top-xx 和 bottom-xx 通用位置：left 和 right
       if (placement.endsWith("start")) popoverLeft = expectLeft() - triggerWidth;
       else if (placement.endsWith("end")) popoverRight = expectRight() - triggerWidth;
-      else popoverLeft = Math.max(0, triggerLeft + triggerWidth / 2 - popoverWidth / 2 + x); // 居中
+      else popoverLeft = triggerLeft + triggerWidth / 2 - popoverWidth / 2 + x; // 居中
     } else if (placementIsX) {
       // 计算 left-xx 和 right-xx 通用位置：top 和 bottom
       if (placement.endsWith("start")) popoverTop = expectTop() - triggerHeight;
       else if (placement.endsWith("end")) popoverBottom = expectBottom() - triggerHeight;
-      else popoverTop = Math.max(0, triggerTop + triggerHeight / 2 - popoverHeight / 2 + y); // 居中
+      else popoverTop = triggerTop + triggerHeight / 2 - popoverHeight / 2 + y; // 居中
     }
 
     // 计算非通用的位置
@@ -135,37 +136,36 @@ export const usePopoverSize = (
     else if (placement.startsWith("bottom")) popoverTop = expectTop() + defaultSpace;
     else if (placement.startsWith("left")) popoverRight = expectRight() + defaultSpace;
 
-    const isOverTop = !isString(popoverBottom) && popoverBottom + popoverHeight > windowHeight.value - y;
-    const isOverRight = !isString(popoverLeft) && popoverLeft + popoverWidth > windowWidth.value + x;
-    const isOverBottom = !isString(popoverTop) && popoverTop + popoverHeight > windowHeight.value + y;
-    const isOverLeft = !isString(popoverRight) && popoverRight + popoverWidth > windowWidth.value - x;
+    const isOverTop = () => !isString(popoverBottom) && popoverBottom + popoverHeight > windowHeight.value - y;
+    const isOverRight = () => !isString(popoverLeft) && popoverLeft + popoverWidth > windowWidth.value + x;
+    const isOverBottom = () => !isString(popoverTop) && popoverTop + popoverHeight > windowHeight.value + y;
+    const isOverLeft = () => !isString(popoverRight) && popoverRight + popoverWidth > windowWidth.value - x;
 
-    // 上下边界检测
-    if (!isOverTop || !isOverBottom) {
-      if (isOverTop) {
-        // 弹框超出上边界，则移动到下边
-        popoverBottom = AUTO;
-        popoverTop = (placementIsX ? expectTop() - triggerHeight : expectTop()) + defaultSpace;
-      }
-      if (isOverBottom) {
-        // 弹框超出下边界，则移动到上边
-        popoverTop = AUTO;
-        popoverBottom = (placementIsX ? expectBottom() - triggerHeight : expectBottom()) + defaultSpace;
-      }
+    // 弹框超出上边界，则移动到下边，如果也超出下边界，则还原位置
+    if (isOverTop()) {
+      popoverTop = (placementIsX ? expectTop() - triggerHeight : expectTop()) + defaultSpace;
+      if (isOverBottom()) popoverTop = AUTO;
+      else popoverBottom = AUTO;
     }
 
-    // 左右边界检测
-    if (!isOverLeft || !isOverRight) {
-      if (isOverRight) {
-        // 弹框超出右边界，则移动到左边
-        popoverLeft = AUTO;
-        popoverRight = (placementIsY ? expectRight() - triggerWidth : expectRight()) + defaultSpace;
-      }
-      if (isOverLeft) {
-        // 弹框超出左边界，则移动到右边
-        popoverRight = AUTO;
-        popoverLeft = (placementIsY ? expectLeft() - triggerWidth : expectLeft()) + defaultSpace;
-      }
+    // 弹框超出下边界，则移动到上边，如果也超出上边界，则还原位置
+    if (isOverBottom()) {
+      popoverBottom = (placementIsX ? expectBottom() - triggerHeight : expectBottom()) + defaultSpace;
+      if (isOverTop()) popoverBottom = AUTO;
+      else popoverTop = AUTO;
+    }
+
+    // 弹框超出右边界，则移动到左边，如果也超出左边界，则还原位置
+    if (isOverRight()) {
+      popoverRight = (placementIsY ? expectRight() - triggerWidth : expectRight()) + defaultSpace;
+      if (isOverLeft()) popoverRight = AUTO;
+      else popoverLeft = AUTO;
+    }
+    // 弹框超出左边界，则移动到右边，如果也超出右边界，则还原位置
+    if (isOverLeft()) {
+      popoverLeft = (placementIsY ? expectLeft() - triggerWidth : expectLeft()) + defaultSpace;
+      if (isOverRight()) popoverLeft = AUTO;
+      else popoverRight = AUTO;
     }
 
     top.value = popoverTop;
@@ -177,5 +177,12 @@ export const usePopoverSize = (
   // 初始计算
   calculatePosition();
 
-  return { top, right, bottom, left, update: calculatePosition };
+  const update = () => {
+    calculatePosition();
+  };
+
+  // 滚动改变时更新
+  useEventListener(window, "scroll", update);
+
+  return { top, right, bottom, left, update };
 };

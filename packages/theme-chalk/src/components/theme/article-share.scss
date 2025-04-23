@@ -16,7 +16,7 @@
     padding: 7px 14px;
     width: 100%;
     overflow: hidden;
-    color: var(--vp-c-brand-1);
+    color: getCssVar("theme-color");
     background-color: var(--vp-c-bg-alt);
 
     &::before {
@@ -42,7 +42,7 @@
     }
 
     &.copied {
-      color: var(--vp-c-brand-1);
+      color: getCssVar("theme-color");
       background-color: var(--vp-c-brand-soft);
 
       &::before {

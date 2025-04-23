@@ -17,6 +17,7 @@ const {
   yOffset = 0,
   disabled = false,
   transition = true,
+  transitionName,
   triggerEl,
   beforePopup,
   zIndex,
@@ -134,7 +135,7 @@ const onReleaseRequested = () => {
     <slot name="reference" />
 
     <Teleport to="body">
-      <Transition :name="transition ? ns.joinNamespace('fade-linear') : ''">
+      <Transition :name="transition ? transitionName || ns.joinNamespace('fade-linear') : ''">
         <div
           v-if="!disabled"
           v-show="visible"

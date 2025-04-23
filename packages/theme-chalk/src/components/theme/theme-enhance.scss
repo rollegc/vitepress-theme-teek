@@ -4,23 +4,17 @@
 @use "../../mixins/config" as *;
 
 :root {
-  @include set-css-var("reading-enhance-bg-color", var(--vp-c-bg-elv));
-  @include set-css-var("reading-enhance-text-color", var(--vp-c-text-1));
-  @include set-css-var("reading-enhance-inner-bg-color", #ebedf2);
-}
-
-:root.dark {
-  @include set-css-var("reading-enhance-inner-bg-color", #2c2f35);
+  @include set-css-var("theme-enhance-bg-color", var(--vp-c-bg-elv));
+  @include set-css-var("theme-enhance-text-color", var(--vp-c-text-1));
+  @include set-css-var("theme-enhance-inner-bg-color", getCssVar("bg-color-4"));
 }
 
 @include b(segmented) {
-  color: getCssVar("reading-enhance-text-color");
-  background-color: getCssVar("reading-enhance-inner-bg-color");
+  color: getCssVar("theme-enhance-text-color");
+  background-color: getCssVar("theme-enhance-inner-bg-color");
 }
 
-@include b(reading-enhance) {
-  height: 100%;
-
+@include b(theme-enhance) {
   @include when(top) {
     margin-right: 8px;
 
@@ -40,10 +34,11 @@
   }
 
   @media (max-width: 768px) {
-    display: none;
+    display: none !important;
   }
 
   @include e(popover) {
+    width: 340px;
     padding: 20px;
     border-radius: 12px;
   }
@@ -58,11 +53,16 @@
   }
 
   @include e(layout-color) {
+    h3 {
+      display: inline-block;
+      font-size: 12px;
+      opacity: 0.8;
+    }
     .#{$namespace}-segmented {
       border-radius: 0;
 
       &-item.is-active {
-        color: var(--vp-c-brand-1);
+        color: getCssVar("theme-color");
         background-color: var(--vp-c-brand-soft);
 
         &:hover {
@@ -79,7 +79,7 @@
     flex: 1 1 0%;
     font-size: 14px;
     font-weight: 500;
-    color: getCssVar("reading-enhance-text-color");
+    color: getCssVar("theme-enhance-text-color");
     padding-right: 16px;
     user-select: none;
     gap: 4px;
@@ -92,7 +92,7 @@
   @include e(helper) {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0.5;
-    color: getCssVar("reading-enhance-text-color");
+    color: getCssVar("theme-enhance-text-color");
     cursor: help;
 
     &:hover {
@@ -107,7 +107,7 @@
   }
 
   @include e(helper__popup) {
-    color: getCssVar("reading-enhance-text-color");
+    color: getCssVar("theme-enhance-text-color");
   }
 
   @include e(helper__body) {
@@ -119,7 +119,7 @@
     line-height: 20px;
     padding: 12px;
     border-radius: 12px;
-    background-color: getCssVar("reading-enhance-inner-bg-color");
+    background-color: getCssVar("theme-enhance-inner-bg-color");
     margin-bottom: 10px;
 
     &:last-child {
@@ -128,21 +128,21 @@
   }
 
   @include e(slide) {
-    color: getCssVar("reading-enhance-text-color");
-    background-color: getCssVar("reading-enhance-inner-bg-color");
+    color: getCssVar("theme-enhance-text-color");
+    background-color: getCssVar("theme-enhance-inner-bg-color");
   }
 
   /* 滑动消失出现效果 */
-  .#{$namespace}-reading-enhance-slide-move,
-  .#{$namespace}-reading-enhance-slide-enter-active,
-  .#{$namespace}-reading-enhance-slide-leave-active {
+  .#{$namespace}-theme-enhance-slide-move,
+  .#{$namespace}-theme-enhance-slide-enter-active,
+  .#{$namespace}-theme-enhance-slide-leave-active {
     transition: all 0.2s ease-in-out;
   }
-  .#{$namespace}-reading-enhance-slide-enter-from {
+  .#{$namespace}-theme-enhance-slide-enter-from {
     transform: translateY(-15px);
     opacity: 0;
   }
-  .#{$namespace}-reading-enhance-slide-leave-to {
+  .#{$namespace}-theme-enhance-slide-leave-to {
     transform: translateY(-15px);
     opacity: 0;
   }

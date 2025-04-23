@@ -10,6 +10,7 @@
 @use "./home-banner-waves";
 
 :root {
+  @include set-css-var("home-banner-part-min-height", 450px);
   // 网状背景图
   @include set-css-var(
     "bg-img-default",
@@ -50,13 +51,13 @@
 /* 全屏图片风格或 body 图片风格时，修改顶部导航栏样式 */
 .VPNavBar.home.full-img-nav-bar {
   background-color: transparent !important;
-  color: #ffffff;
+  color: var(--vp-c-white);
 
   .VPNavBarTitle .title,
   .VPNavBarMenuLink,
   .VPNavBarMenuGroup .text,
   .VPSocialLink {
-    color: #ffffff;
+    color: var(--vp-c-white);
 
     &.active,
     &:hover {
@@ -74,21 +75,21 @@
     .vp-icon,
     .DocSearch-Button-Placeholder,
     .tk-icon {
-      color: #ffffff;
+      color: var(--vp-c-white);
     }
 
     .DocSearch-Button-Key {
-      color: #ffffff;
+      color: var(--vp-c-white);
       border: none;
       &::after {
-        color: #ffffff;
+        color: var(--vp-c-white);
       }
     }
   }
 
   .VPNavBarTranslations {
     .text {
-      color: #ffffff;
+      color: var(--vp-c-white);
     }
   }
 }

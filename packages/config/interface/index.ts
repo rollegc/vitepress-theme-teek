@@ -12,7 +12,7 @@ export type * from "./docAnalysis";
 export type * from "./footerGroup";
 export type * from "./footerInfo";
 export type * from "./friendLink";
-export type * from "./layoutEnhance";
+export type * from "./themeEnhance";
 export type * from "./markdown";
 export type * from "./notice";
 export type * from "./plugins";
