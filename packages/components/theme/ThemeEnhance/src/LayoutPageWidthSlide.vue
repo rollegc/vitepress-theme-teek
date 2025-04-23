@@ -1,17 +1,18 @@
 <script setup lang="ts" name="LayoutPageWidthSlide">
+import type { ThemeEnhance } from "@teek/config";
 import { computed, watch, onMounted } from "vue";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkInputSlide } from "@teek/components/common/InputSlide";
-import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./layoutEnhance";
+import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./themeEnhance";
 import { ns, layoutModeStorageKey, pageMaxWidthSlideStorageKey, transitionName, pageMaxWidthVar } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 
 defineOptions({ name: "LayoutPageWidthSlide" });
 
 const { getTeekConfigRef } = useTeekConfig();
-const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
 
 const min = computed(() => 60 * 100);
@@ -19,11 +20,11 @@ const max = computed(() => 100 * 100);
 
 const pageMaxWidth = useStorage(
   pageMaxWidthSlideStorageKey,
-  layoutEnhanceConfig.value.layoutSwitch?.pageLayoutMaxWidth?.defaultMaxWidth || 90 * 100
+  themeEnhanceConfig.value.layoutSwitch?.pageLayoutMaxWidth?.defaultMaxWidth || 90 * 100
 );
-const layoutMode = useStorage<LayoutMode>(
+const layoutMode = useStorage(
   layoutModeStorageKey,
-  layoutEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
+  themeEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
 );
 
 const updatePageMaxWidth = (val: number) => {
@@ -32,7 +33,7 @@ const updatePageMaxWidth = (val: number) => {
 
 onMounted(() => updatePageMaxWidth(pageMaxWidth.value));
 
-const disabled = useMediaQuery(mobileMaxWidthMedia);
+const isMobile = useMediaQuery(mobileMaxWidthMedia);
 const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthSlideMedia);
 
 watch(shouldActivateMaxWidth, () => {
@@ -46,9 +47,9 @@ const format = (val: number) => `${Math.ceil(val / 100)}%`;
 
 const tips = [
   {
-    title: t("tk.layoutEnhance.pageLayoutMaxWidth.helpTipTitle"),
+    title: t("tk.themeEnhance.pageLayoutMaxWidth.helpTipTitle"),
     icon: scaleIcon,
-    content: t("tk.layoutEnhance.pageLayoutMaxWidth.helpTipContent"),
+    content: t("tk.themeEnhance.pageLayoutMaxWidth.helpTipContent"),
   },
 ];
 </script>
@@ -58,20 +59,20 @@ const tips = [
     <BaseTemplate
       v-show="layoutMode === LayoutMode.SidebarWidthAdjustableOnly || layoutMode === LayoutMode.BothWidthAdjustable"
       :icon="autoWidthIcon"
-      :title="t('tk.layoutEnhance.pageLayoutMaxWidth.title')"
-      :helper="!layoutEnhanceConfig.layoutSwitch?.pageLayoutMaxWidth?.disableHelp"
-      :helper-desc="t('tk.layoutEnhance.pageLayoutMaxWidth.helpDesc')"
+      :title="t('tk.themeEnhance.pageLayoutMaxWidth.title')"
+      :helper="!themeEnhanceConfig.layoutSwitch?.pageLayoutMaxWidth?.disableHelp"
+      :helper-desc="t('tk.themeEnhance.pageLayoutMaxWidth.helpDesc')"
       :tips
-      :disabled
+      :disabled="isMobile"
     >
       <TkInputSlide
         v-model="pageMaxWidth"
-        :disabled
+        :disabled="isMobile"
         :min
         :max
         :format
         :class="ns.e('slide')"
-        :aria-label="t('tk.layoutEnhance.pageLayoutMaxWidth.helperTipTitle')"
+        :aria-label="t('tk.themeEnhance.pageLayoutMaxWidth.helperTipTitle')"
       />
     </BaseTemplate>
   </Transition>

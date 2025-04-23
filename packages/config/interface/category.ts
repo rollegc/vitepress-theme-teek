@@ -4,7 +4,7 @@ export interface Category {
    *
    * @default true
    */
-  enable?: boolean;
+  enabled?: boolean;
   /**
    * 分类页访问地址
    *

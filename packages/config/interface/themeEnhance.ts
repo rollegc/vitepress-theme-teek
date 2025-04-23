@@ -1,6 +1,10 @@
-import { LayoutThemeColor, LayoutMode, SpotlightStyle } from "../../components/theme/LayoutEnhance/src/layoutEnhance";
+import type { ThemeColor, LayoutMode, SpotlightStyle } from "../../components/theme/ThemeEnhance/src/themeEnhance";
 
-export interface LayoutEnhance {
+export interface ThemeEnhance {
+  /**
+   * 位置，top 为导航栏右侧，bottom 为右下角
+   */
+  position?: "top" | "bottom";
   /**
    * 布局切换配置
    */
@@ -21,6 +25,10 @@ export interface LayoutEnhance {
      * @default false
      */
     disableHelp?: boolean;
+    /**
+     * 禁用布局切换动画
+     */
+    disableAnimation?: boolean;
     /**
      * 内容布局最大宽度滑块配置
      */
@@ -54,27 +62,25 @@ export interface LayoutEnhance {
        * @default false
        */
       disableHelp?: boolean;
-      /**
-       * 禁用布局最大宽度动画
-       */
-      disableAnimation?: boolean;
     };
   };
   /**
    * 布局主题色配置
    */
-  layoutThemeColor?: {
+  themeColor?: {
     /**
      * 禁用布局主题色切换
+     *
+     * @default false
      */
     disabled?: boolean;
     /**
      * 布局默认主题色
      *
-     * @default LayoutThemeColor.vpDefault
+     * @default ThemeColor.vpDefault
      */
     defaultColor?:
-      | LayoutThemeColor
+      | ThemeColor
       | "vp-default"
       | "vp-green"
       | "vp-yellow"
@@ -89,6 +95,38 @@ export interface LayoutEnhance {
      * @default false
      */
     disableHelp?: boolean;
+    /**
+     * 是否在移动端禁用
+     *
+     * @default false
+     */
+    disabledInMobile?: boolean;
+    /**
+     * 自定义主题色，将会追加到内置主题色后面
+     */
+    append?: {
+      /**
+       * 主题组名称
+       */
+      label: string;
+      /**
+       * 主题组提示信息，鼠标悬停时显示
+       */
+      tip?: string;
+      /**
+       * 主题组内容
+       */
+      options: {
+        /**
+         * 主题名称，用于页面文字渲染
+         */
+        label: string;
+        /**
+         * 主题标识，在 html 标签的 theme 属性添加该标识
+         */
+        value: string;
+      }[];
+    }[];
   };
   /**
    * 聚光灯配置

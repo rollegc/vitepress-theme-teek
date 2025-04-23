@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vitepress";
 import { useEventListener, useStorage } from "@teek/hooks";
-import { SpotlightStyle } from "../layoutEnhance";
+import { SpotlightStyle } from "../themeEnhance";
 import { spotlightStyleStorageKey } from "../namespace";
 
 defineOptions({ name: "SpotlightHover" });

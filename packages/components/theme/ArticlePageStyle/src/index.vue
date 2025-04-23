@@ -1,4 +1,5 @@
 <script setup lang="ts" name="ArticlePageStyle">
+import type { TeekConfig } from "@teek/config";
 import { unref, watch } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { useNamespace } from "@teek/hooks";
@@ -7,7 +8,7 @@ const ns = useNamespace("body-bg-image");
 
 const { getTeekConfigRef } = useTeekConfig();
 
-const pageStyle = getTeekConfigRef("pageStyle", "default");
+const pageStyle = getTeekConfigRef<TeekConfig["pageStyle"]>("pageStyle", "default");
 
 watch(
   pageStyle,

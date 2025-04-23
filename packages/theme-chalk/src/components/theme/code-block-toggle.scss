@@ -1,5 +1,11 @@
 @use "../../mixins/function" as *;
 @use "../../mixins/config" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("code-block-fold-height", 40px);
+  @include set-css-var("code-block-lang-transform", uppercase);
+}
 
 html[code-block="#{$namespace}"] {
   // 因为 stroke 无法直接写 var(--vp-c-text-1)，所以只能写死 var(--vp-c-text-1) 的具体颜色，如果改动了 var(--vp-c-text-1) 的值，则需要修改 stroke 为对于的值

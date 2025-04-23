@@ -16,7 +16,6 @@ const { getTeekConfigRef } = useTeekConfig();
 
 const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   toCommentDone: undefined,
-  titleTip: {},
 });
 
 // 前往评论区
@@ -43,11 +42,11 @@ const scrollToComment = useDebounce(() => {
   <transition :name="ns.joinNamespace('fade')">
     <div
       v-show="showToComment"
-      :title="themeSettingConfig.titleTip.toComment ?? t('tk.rightBottomButton.toComment')"
+      :title="t('tk.rightBottomButton.toComment')"
       :class="ns.e('button')"
       @click="scrollToComment"
       role="button"
-      :aria-label="themeSettingConfig.titleTip.toComment ?? t('tk.rightBottomButton.toComment')"
+      :aria-label="t('tk.rightBottomButton.toComment')"
     >
       <TkIcon :icon="commentIcon" aria-hidden="true" />
     </div>

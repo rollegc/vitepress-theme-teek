@@ -70,7 +70,7 @@ export const useScrollbarSize = () => {
     calculate();
   };
 
-  useEventListener(window, "resize", calculate);
+  useEventListener(window, "resize", update);
 
   // TODO 使用 MutationObserver 监听 DOM 变化，然后触发 update 方法
 

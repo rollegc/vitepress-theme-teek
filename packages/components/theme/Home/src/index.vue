@@ -1,4 +1,5 @@
 <script setup lang="ts" name="Home">
+import type { TeekConfig } from "@teek/config";
 import type { TkHomePostListInstance } from "@teek/components";
 import { ref, unref, provide } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
@@ -17,7 +18,12 @@ const { t } = useLocale();
 const { isHomePage } = usePage();
 const { getTeekConfigRef } = useTeekConfig();
 
-const teekConfig = getTeekConfigRef(null, { teekHome: true, banner: {}, wallpaper: {}, bodyBgImg: {} });
+const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
+  teekHome: true,
+  banner: {},
+  wallpaper: {},
+  bodyBgImg: {},
+});
 
 const homePostListInstance = ref<TkHomePostListInstance | null>(null);
 

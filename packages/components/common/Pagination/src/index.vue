@@ -34,7 +34,7 @@ const pageSizeModel = defineModel<number>("pageSize", { type: Number, default: 1
 const isAbsent = (v: unknown): v is undefined => typeof v !== "number";
 
 // 总页数
-const pageCountBridge = computed<number>(() => {
+const pageCountBridge = computed(() => {
   let pageCount = 0;
   if (!isAbsent(props.pageCount)) pageCount = props.pageCount;
   else if (!isAbsent(props.total)) pageCount = Math.max(1, Math.ceil(props.total / pageSizeModel.value));

@@ -6,30 +6,25 @@
   @include set-css-var("segmented-item-text", var(--vp-c-text-1));
   @include set-css-var("segmented-item-active-text", var(--vp-c-text-1));
   @include set-css-var("segmented-item-active-bg", var(--vp-c-bg-elv));
-  @include set-css-var("segmented-item-shadow-color", #bababa8c);
+  @include set-css-var("segmented-item-shadow-color", getCssVar("lower-color-7"));
 }
 
 :root.dark {
   @include set-css-var("segmented-item-active-text", var(--vp-c-bg-elv));
   @include set-css-var("segmented-item-active-bg", var(--vp-c-text-1));
-  @include set-css-var("segmented-item-shadow-color", #535353db);
 }
 
 @include b(segmented-item) {
   width: 100%;
   color: getCssVar("segmented-item-text");
-  white-space: nowrap;
   font-weight: 500;
   font-size: 14px;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  border-radius: 0.375rem;
-  justify-content: center;
-  display: inline-flex;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: flex;
   align-items: center;
-  user-select: none;
+  justify-content: center;
+  flex: 1;
   cursor: pointer;
   transition:
     background-color 0.25s,

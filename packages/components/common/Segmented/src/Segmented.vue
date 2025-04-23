@@ -1,5 +1,5 @@
 <script setup lang="ts" name="Segmented">
-import type { ModelType } from "./SegmentedItem.vue";
+import type { SegmentedProps, ModelType } from "./segmented";
 import { useNamespace } from "@teek/hooks";
 import SegmentedHorizontalItem from "./SegmentedItem.vue";
 
@@ -7,16 +7,7 @@ defineOptions({ name: "Segmented" });
 
 const ns = useNamespace("segmented");
 
-interface Item {
-  name?: string;
-  icon?: string;
-  text?: string;
-  title: string;
-  ariaLabel: string;
-  value?: ModelType;
-}
-
-defineProps<{ disabled?: boolean; options: Item[] }>();
+defineProps<SegmentedProps>();
 
 const model = defineModel<ModelType>();
 </script>

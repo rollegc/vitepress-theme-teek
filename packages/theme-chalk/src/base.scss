@@ -5,6 +5,8 @@
 @use "./common/transition-fade";
 @use "./common/transition-slide";
 @use "./var/var";
+@use "./var/theme-color";
+@use "./var/theme-size";
 
 @use "./md-plugin/todo";
 @use "./md-plugin/container";

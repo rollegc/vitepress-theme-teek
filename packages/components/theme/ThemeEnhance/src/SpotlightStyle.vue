@@ -1,39 +1,40 @@
 <script setup lang="ts" name="SpotlightStyle">
+import type { ThemeEnhance } from "@teek/config";
 import { computed } from "vue";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";
-import { SpotlightStyle, touchMedia } from "./layoutEnhance";
+import { SpotlightStyle, touchMedia } from "./themeEnhance";
 import { spotlightStyleStorageKey, spotlightStorageKey, transitionName } from "./namespace";
 import BaseTemplate from "./components/BaseTemplate.vue";
 
 defineOptions({ name: "SpotlightStyle" });
 
 const { getTeekConfigRef } = useTeekConfig();
-const layoutEnhanceConfig = getTeekConfigRef("layoutEnhance", {});
+const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
 
 const spotlightStyle = useStorage(
   spotlightStyleStorageKey,
-  layoutEnhanceConfig.value.spotlight?.defaultStyle || SpotlightStyle.Aside
+  themeEnhanceConfig.value.spotlight?.defaultStyle || SpotlightStyle.Aside
 );
-const spotlightToggledOn = useStorage(spotlightStorageKey, layoutEnhanceConfig.value.spotlight?.defaultToggle || false);
-const disabled = useMediaQuery(touchMedia);
+const spotlightToggledOn = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultToggle || false);
+const isMobile = useMediaQuery(touchMedia);
 
 const content = computed(() => [
   {
     value: SpotlightStyle.Aside,
-    title: t("tk.layoutEnhance.spotlightStyles.asideTipTitle"),
-    helpMessage: t("tk.layoutEnhance.spotlightStyles.asideHelpTipContent"),
-    ariaLabel: t("tk.layoutEnhance.spotlightStyles.asideTipTitle"),
+    title: t("tk.themeEnhance.spotlightStyles.asideTipTitle"),
+    helpMessage: t("tk.themeEnhance.spotlightStyles.asideHelpTipContent"),
+    ariaLabel: t("tk.themeEnhance.spotlightStyles.asideTipTitle"),
     icon: alignTextLeftIcon,
   },
   {
     value: SpotlightStyle.Under,
-    title: t("tk.layoutEnhance.spotlightStyles.underTipTitle"),
-    helpMessage: t("tk.layoutEnhance.spotlightStyles.underHelpTipContent"),
-    ariaLabel: t("tk.layoutEnhance.spotlightStyles.underTipTitle"),
+    title: t("tk.themeEnhance.spotlightStyles.underTipTitle"),
+    helpMessage: t("tk.themeEnhance.spotlightStyles.underHelpTipContent"),
+    ariaLabel: t("tk.themeEnhance.spotlightStyles.underTipTitle"),
     icon: alignLeftIcon,
   },
 ]);
@@ -61,13 +62,13 @@ const tips = computed(() =>
     <BaseTemplate
       v-if="spotlightToggledOn"
       :icon="clickIcon"
-      :title="t('tk.layoutEnhance.spotlightStyles.title')"
-      :helper="!layoutEnhanceConfig.spotlight?.disableHelp"
-      :helper-desc="t('tk.layoutEnhance.spotlightStyles.helpDesc')"
+      :title="t('tk.themeEnhance.spotlightStyles.title')"
+      :helper="!themeEnhanceConfig.spotlight?.disableHelp"
+      :helper-desc="t('tk.themeEnhance.spotlightStyles.helpDesc')"
       :tips
-      :disabled
+      :disabled="isMobile"
     >
-      <TkSegmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="disabled" />
+      <TkSegmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="isMobile" />
     </BaseTemplate>
   </Transition>
 </template>

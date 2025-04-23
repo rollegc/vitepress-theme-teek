@@ -32,5 +32,5 @@ export * from "./HomeTagCard";
 export * from "./HomeTopArticleCard";
 export * from "./Layout";
 export * from "./Notice";
-export * from "./LayoutEnhance";
 export * from "./RightBottomButton";
+export * from "./ThemeEnhance";

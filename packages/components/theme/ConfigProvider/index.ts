@@ -80,7 +80,7 @@ export const usePosts = (): Ref<PostData> => {
 export const useBgColor = () => {
   const { getTeekConfigRef } = useTeekConfig();
 
-  return getTeekConfigRef("bgColor", [
+  return getTeekConfigRef<string[]>("bgColor", [
     "#e74c3c",
     "#409EFF",
     "#DAA96E",
@@ -134,7 +134,7 @@ export const useTeekConfig = () => {
    * 获取 Teek 的主题配置数据（响应式）
    */
   const getTeekConfigRef = <T = any>(key?: keyof TeekConfig | null, defaultValue?: any) => {
-    return computed<T>(() => getTeekConfig(key, defaultValue));
+    return computed(() => getTeekConfig<T>(key, defaultValue));
   };
 
   return { getTeekConfig, getTeekConfigRef };

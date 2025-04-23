@@ -1,5 +1,10 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("footer-gap", getCssVar("gap2"));
+}
 
 @include b(footer-info) {
   width: 100%;

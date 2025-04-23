@@ -33,7 +33,7 @@ const toggleShowContent = () => {
 
 watch(
   () => unref(docAfterOptions).expand,
-  (newValue: boolean | undefined) => {
+  newValue => {
     showContent.value = newValue;
   }
 );

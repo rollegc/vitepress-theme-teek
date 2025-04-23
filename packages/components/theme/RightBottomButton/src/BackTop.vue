@@ -15,7 +15,6 @@ const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
   backTopDone: undefined,
-  titleTip: {},
 });
 
 // 返回顶部 & 前往评论区
@@ -53,12 +52,12 @@ useEventListener(window, "scroll", watchScroll);
   <transition :name="ns.joinNamespace('fade')">
     <div
       v-show="showToTop"
-      :title="themeSettingConfig.titleTip.backTop ?? t('tk.rightBottomButton.backTopTitle')"
+      :title="t('tk.rightBottomButton.backTopTitle')"
       :class="[ns.e('button'), 'back-top']"
       @click="scrollToTop"
       :style="{ [ns.cssVarName('progress')]: progress }"
       role="button"
-      :aria-label="themeSettingConfig.titleTip.backTop ?? t('tk.rightBottomButton.backTopTitle')"
+      :aria-label="t('tk.rightBottomButton.backTopTitle')"
       :aria-valuenow="progress"
       aria-valuemin="0"
       aria-valuemax="100"

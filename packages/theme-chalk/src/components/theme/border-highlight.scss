@@ -9,6 +9,6 @@
   border-radius: 6px;
 
   @include when(active) {
-    outline-color: var(--vp-c-brand-1);
+    outline-color: getCssVar("theme-color");
   }
 }

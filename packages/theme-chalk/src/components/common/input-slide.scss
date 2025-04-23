@@ -4,7 +4,7 @@
 
 :root {
   @include set-css-var("slider-height", 32px);
-  @include set-css-var("slider-shadow-color", #aeaeaecd);
+  @include set-css-var("slider-shadow-color", getCssVar("lower-color-7"));
   @include set-css-var("slider-thumb-height", 32px);
   @include set-css-var("slider-thumb-width", 32px);
   @include set-css-var("slider-thumb-border-radius", 6px);
@@ -20,7 +20,6 @@
 }
 
 :root.dark {
-  @include set-css-var("slider-shadow-color", #535353db);
   @include set-css-var("slider-thumb-color", #e1e2da);
   @include set-css-var("slider-track-color", #e1e2da);
   @include set-css-var("slider-track-progress-color", #e1e2da);
