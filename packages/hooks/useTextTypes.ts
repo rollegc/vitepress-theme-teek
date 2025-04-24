@@ -144,11 +144,9 @@ export const useTextTypes = (data: MaybeRefOrGetter<string[]>, options: TypesOpt
 
   /**
    * 重启打字
-   *
-   * @param restore 是否还原数据为开始状态
    */
-  const restart = (restore = true) => {
-    stop(restore);
+  const restart = () => {
+    stop(true);
     start();
   };
 

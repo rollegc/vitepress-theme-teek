@@ -128,11 +128,9 @@ export const useSwitchData = (dataList: MaybeRefOrGetter<any[]>, options: UseSwi
 
   /**
    * 重启数据切换
-   *
-   * @param restore 是否还原数据为开始状态
    */
-  const restart = (restore = true) => {
-    stop(restore);
+  const restart = () => {
+    stop(true);
     start();
   };
 

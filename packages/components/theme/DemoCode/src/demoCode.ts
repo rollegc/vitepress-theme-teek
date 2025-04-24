@@ -19,4 +19,10 @@ export interface DemoCodeProps {
    * 配置项
    */
   demo: string;
+  /**
+   * 只看组件效果，不显示工具栏和源码查看
+   *
+   * @default false
+   */
+  effect: string;
 }
