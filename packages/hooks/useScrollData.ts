@@ -64,11 +64,9 @@ export const useScrollData = (data: MaybeRefOrGetter<any[]>, limit: number, opti
 
   /**
    * 重启数据滚动
-   *
-   * @param restore 是否还原数据为开始状态
    */
-  const restart = (restore = true) => {
-    stop(restore);
+  const restart = () => {
+    stop(true);
     start();
   };
 

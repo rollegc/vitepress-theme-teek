@@ -206,6 +206,7 @@ export default {
       },
       themeColor: {
         title: "主题色",
+        speedLabel: "扩散",
         vpLabel: "VP 主题",
         epLabel: "EP 主题",
         vpTip: "VitePress 主题",
@@ -215,7 +216,8 @@ export default {
         greenLabel: "绿色",
         yellowLabel: "黄色",
         redLabel: "红色",
-        helpDesc: "提供 VitePress 的基础色板和 ElementPlus 的基础色板进行选择",
+        helpDesc:
+          "提供 VitePress 的基础色板和 ElementPlus 的基础色板进行选择，通过扩散开关可以将主题色扩散至其他元素，如侧边栏背景色、字体色等",
         vpHelpTipTitle: "VitePress 基础色板",
         vpHelpTipContent: "提供蓝（默认）、绿、黄、红 4 种 VitePress 基础色板",
         epHelpTipTitle: "ElementPlus 基础色板",

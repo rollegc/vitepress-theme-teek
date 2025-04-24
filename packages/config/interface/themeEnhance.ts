@@ -90,6 +90,12 @@ export interface ThemeEnhance {
       | "el-yellow"
       | "el-red";
     /**
+     * 是否将颜色扩散到全局（根据主题色计算其他颜色）
+     *
+     * @default false
+     */
+    defaultSpread?: boolean;
+    /**
      * 禁用聚光灯帮助提示
      *
      * @default false

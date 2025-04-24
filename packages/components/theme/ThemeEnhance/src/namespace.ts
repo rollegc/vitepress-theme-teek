@@ -10,5 +10,6 @@ export const layoutModeStorageKey = ns.joinNamespace("layoutMode");
 export const pageMaxWidthSlideStorageKey = ns.joinNamespace("pageMaxWidthSlide");
 export const docMaxWidthSlideStorageKey = ns.joinNamespace("docMaxWidthSlide");
 export const themeColorStorageKey = ns.joinNamespace("themeColor");
+export const themeBgColorStorageKey = ns.joinNamespace("themeBgColor");
 export const spotlightStorageKey = ns.joinNamespace("spotlight");
 export const spotlightStyleStorageKey = ns.joinNamespace("spotlightStyle");

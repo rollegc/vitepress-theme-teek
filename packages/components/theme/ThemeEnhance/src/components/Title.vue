@@ -12,10 +12,8 @@ defineProps<{ title?: string; disabled?: boolean; icon?: TkIconProps["icon"] }>(
       <TkIcon v-if="icon" :icon="icon" :size="16" />
     </slot>
 
-    <slot name="title">
+    <slot>
       <span v-if="title">{{ title }}</span>
     </slot>
-
-    <slot />
   </div>
 </template>

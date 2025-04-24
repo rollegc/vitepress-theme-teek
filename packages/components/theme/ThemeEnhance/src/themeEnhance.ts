@@ -21,6 +21,17 @@ export enum ThemeColor {
   epRed = "el-red",
 }
 
+export const themeColorList = [
+  ThemeColor.vpDefault,
+  ThemeColor.vpGreen,
+  ThemeColor.vpYellow,
+  ThemeColor.vpRed,
+  ThemeColor.epBlue,
+  ThemeColor.epGreen,
+  ThemeColor.epYellow,
+  ThemeColor.epRed,
+] as string[];
+
 export const mobileMaxWidthMedia = "(max-width: 768px)";
 export const activateMaxWidthSlideMedia = "(min-width: 1440px)";
 export const touchMedia = "(pointer: coarse)";

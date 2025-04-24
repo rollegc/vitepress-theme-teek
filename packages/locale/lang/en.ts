@@ -208,6 +208,7 @@ export default {
       },
       themeColor: {
         title: "Layout Theme Color",
+        speedLabel: "Speed",
         vpLabel: "VP Theme",
         epLabel: "EP Theme",
         vpTip: "VitePress Theme",
@@ -217,7 +218,8 @@ export default {
         greenLabel: "Green",
         yellowLabel: "Yellow",
         redLabel: "Red",
-        helpDesc: "Provide VitePress color palettes and ElementPlus color palettes selection.",
+        helpDesc:
+          "Provide VitePress base color palette and ElementPlus base color palette for selection. The theme color can be diffused to other elements such as sidebar background color, font color, etc. through the diffusion switch.",
         vpHelpTipTitle: "VitePress Base Color Palette",
         vpHelpTipContent: "Provides 4 VitePress base color palettes: Blue (default), Green, Yellow, Red.",
         epHelpTipTitle: "ElementPlus Base Color Palette",

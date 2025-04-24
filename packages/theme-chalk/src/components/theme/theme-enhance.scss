@@ -52,7 +52,10 @@
     }
   }
 
-  @include e(layout-color) {
+  @include e(theme-color) {
+    .label {
+      margin-right: 10px;
+    }
     h3 {
       display: inline-block;
       font-size: 12px;
@@ -62,7 +65,7 @@
       border-radius: 0;
 
       &-item.is-active {
-        color: getCssVar("theme-color");
+        color: var(--vp-c-brand-1);
         background-color: var(--vp-c-brand-soft);
 
         &:hover {

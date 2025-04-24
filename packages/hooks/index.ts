@@ -14,6 +14,7 @@ export * from "./useScrollData";
 export * from "./useStorage";
 export * from "./useSwitchData";
 export * from "./useTextTypes";
+export * from "./useThemeColor";
 export * from "./useViewTransition";
 export * from "./useVpRouter";
 export * from "./useWindowSize";

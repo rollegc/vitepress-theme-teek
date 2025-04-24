@@ -106,58 +106,62 @@ const copyCode = async () => {
 </script>
 
 <template>
-  <div :class="ns.b('description')" v-html="decodedDescription" />
+  <component v-if="effect" :is="DemoComponent" />
 
-  <div :class="ns.b()">
-    <div :class="ns.e('effect')">
-      <component :is="DemoComponent" />
-    </div>
+  <template v-else>
+    <div v-if="decodedDescription" :class="ns.b('description')" v-html="decodedDescription" />
 
-    <div :class="ns.e('button-group')">
-      <slot name="teek-demo-code-button-left" />
-
-      <TkIcon
-        v-if="playgroundUrl"
-        :title="playgroundButtonTip"
-        @click="handleEditPlayground"
-        :icon="playgroundIcon"
-        role="link"
-        :aria-label="playgroundButtonTip"
-      />
-      <TkIcon
-        v-if="githubUrl"
-        :title="githubButtonTip"
-        @click="handleEditGithub"
-        :icon="githubIcon"
-        role="link"
-        :aria-label="githubUrl"
-      />
-      <TkIcon :title="copyButtonTip" :icon="copyIcon" @click="copyCode" role="button" :aria-label="copyButtonTip" />
-      <TkIcon
-        :title="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
-        @click="handleToggleSourceVisible()"
-        :icon="codeIcon"
-        role="button"
-        :aria-label="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
-      />
-
-      <slot name="teek-demo-code-button-right" />
-    </div>
-
-    <TkTransitionCollapse>
-      <div v-show="sourceVisible" :class="ns.joinNamespace('vp-code')" v-html="decodeSource" />
-    </TkTransitionCollapse>
-
-    <Transition :name="ns.joinNamespace('fade-linear')">
-      <div
-        v-show="sourceVisible"
-        :class="ns.e('float-control')"
-        @click="handleToggleSourceVisible(false)"
-        role="button"
-      >
-        <TkIcon :icon="caretTopIcon" />
-        <span>{{ expandSourceButtonTip }}</span>
+    <div :class="ns.b()">
+      <div :class="ns.e('effect')">
+        <component :is="DemoComponent" />
       </div>
-    </Transition>
-  </div>
+
+      <div :class="ns.e('button-group')">
+        <slot name="teek-demo-code-button-left" />
+
+        <TkIcon
+          v-if="playgroundUrl"
+          :title="playgroundButtonTip"
+          @click="handleEditPlayground"
+          :icon="playgroundIcon"
+          role="link"
+          :aria-label="playgroundButtonTip"
+        />
+        <TkIcon
+          v-if="githubUrl"
+          :title="githubButtonTip"
+          @click="handleEditGithub"
+          :icon="githubIcon"
+          role="link"
+          :aria-label="githubUrl"
+        />
+        <TkIcon :title="copyButtonTip" :icon="copyIcon" @click="copyCode" role="button" :aria-label="copyButtonTip" />
+        <TkIcon
+          :title="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
+          @click="handleToggleSourceVisible()"
+          :icon="codeIcon"
+          role="button"
+          :aria-label="sourceVisible ? expandSourceButtonTip : collapseSourceButtonTip"
+        />
+
+        <slot name="teek-demo-code-button-right" />
+      </div>
+
+      <TkTransitionCollapse>
+        <div v-show="sourceVisible" :class="ns.joinNamespace('vp-code')" v-html="decodeSource" />
+      </TkTransitionCollapse>
+
+      <Transition :name="ns.joinNamespace('fade-linear')">
+        <div
+          v-show="sourceVisible"
+          :class="ns.e('float-control')"
+          @click="handleToggleSourceVisible(false)"
+          role="button"
+        >
+          <TkIcon :icon="caretTopIcon" />
+          <span>{{ expandSourceButtonTip }}</span>
+        </div>
+      </Transition>
+    </div>
+  </template>
 </template>
