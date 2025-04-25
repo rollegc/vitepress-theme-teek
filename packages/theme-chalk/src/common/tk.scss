@@ -8,7 +8,7 @@
   padding: 20px 30px;
   box-shadow: var(--vp-shadow-3);
   border-radius: 10px;
-  background-color: getCssVar("bg-color-1");
+  background-color: getCssVar("bg-color");
 
   /* 隐藏 md 内容 */
   & ~ div:not(.#{$namespace}-page) {
@@ -48,27 +48,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-// .#{$namespace}-layout .VPContent .VPDoc {
-//   /* 文章内容宽度加大 */
-//   .container {
-//     max-width: var(--vp-content-container, 1104px);
-//     @media (min-width: 960px) {
-//       max-width: var(--vp-content-container, 992px);
-//     }
-//   }
-
-//   .content {
-//     max-width: var(--vp-content-container, 784px);
-//     @media (min-width: 960px) {
-//       max-width: var(--vp-content-container, 752px);
-//     }
-//   }
-
-//   &.has-aside .content-container {
-//     max-width: var(--vp-content-container, 688px);
-//   }
-// }
 
 /* Badge 添加 success 样式 */
 .VPBadge.success {

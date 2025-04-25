@@ -20,7 +20,7 @@ export interface ThemeEnhance {
      */
     defaultMode?: LayoutMode | "fullWidth" | "sidebarWidthAdjustableOnly" | "bothWidthAdjustable" | "original";
     /**
-     * 禁用布局切换帮助提示
+     * 禁用帮助提示
      *
      * @default false
      */
@@ -40,7 +40,7 @@ export interface ThemeEnhance {
        */
       defaultMaxWidth?: number;
       /**
-       * 禁用内容布局最大宽度帮助提示
+       * 禁用帮助提示
        *
        * @default false
        */
@@ -57,7 +57,7 @@ export interface ThemeEnhance {
        */
       defaultMaxWidth?: number;
       /**
-       * 禁用页面布局最大宽度帮助提示
+       * 禁用帮助提示
        *
        * @default false
        */
@@ -96,7 +96,7 @@ export interface ThemeEnhance {
      */
     defaultSpread?: boolean;
     /**
-     * 禁用聚光灯帮助提示
+     * 禁用帮助提示
      *
      * @default false
      */
@@ -151,7 +151,7 @@ export interface ThemeEnhance {
      */
     defaultStyle?: SpotlightStyle | "aside" | "under";
     /**
-     * 禁用聚光灯帮助提示
+     * 禁用帮助提示
      *
      * @default false
      */

@@ -38,6 +38,7 @@ const disabledList = computed(() => {
     v-if="!isMobile && themeEnhanceConfig.position === 'top'"
     :class="[ns.b(), ns.is(position), 'flx-align-center']"
     :popper-class="ns.e('popover')"
+    :y-offset="-10"
   >
     <template #reference>
       <TkIcon :icon="readingIcon" :size="20" />

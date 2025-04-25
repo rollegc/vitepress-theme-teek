@@ -2,10 +2,7 @@ import type { TeekConfig } from "@teek/config";
 
 // 文档配置
 export const teekDocConfig: TeekConfig = {
-  themeSetting: {
-    themeSize: "large",
-  },
-  layoutEnhance: {
+  themeEnhance: {
     layoutSwitch: {
       defaultMode: "bothWidthAdjustable",
     },
@@ -16,9 +13,6 @@ export const teekDocConfig: TeekConfig = {
 export const teekBlogConfig: TeekConfig = {
   teekHome: true,
   vpHome: false,
-  themeSetting: {
-    themeSize: "default",
-  },
   wallpaper: {
     enabled: true,
   },

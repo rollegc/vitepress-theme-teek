@@ -23,7 +23,7 @@
       margin-top: 2rem;
       position: sticky;
       top: var(--vp-nav-height);
-      background-color: getCssVar("bg-color-1");
+      background-color: getCssVar("bg-color");
       z-index: 1;
 
       .year {
@@ -55,7 +55,7 @@
             &:hover {
               padding-left: 1rem;
               color: getCssVar("theme-color");
-              background: getCssVar("bg-color-hover-1");
+              background: getCssVar("fill-color-light");
             }
 
             .date {

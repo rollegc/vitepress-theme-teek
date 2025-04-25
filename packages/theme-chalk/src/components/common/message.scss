@@ -49,7 +49,7 @@
   @include when(plain) {
     background-color: getCssVar("message-bg-color-overlay");
     border-color: getCssVar("message-bg-color-overlay");
-    box-shadow: getCssVar("shadow-1");
+    box-shadow: getCssVar("card-shadow");
   }
 
   p {

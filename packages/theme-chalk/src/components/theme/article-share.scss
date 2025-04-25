@@ -1,8 +1,9 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "../../mixins/config" as *;
 
 @include b(article-share) {
-  padding: 14px 14px 14px 0;
+  padding: 14px 0;
 
   @include e(button) {
     font-weight: 500;
@@ -49,6 +50,14 @@
         left: 0;
         background-color: var(--vp-c-brand-soft);
       }
+    }
+  }
+}
+
+@include multiple-b((segment, segment-nav)) {
+  .#{$namespace}-article-share {
+    &__button {
+      background-color: var(--vp-c-white);
     }
   }
 }

@@ -64,44 +64,27 @@
       }
     }
 
+    &.index-auto {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
     @media (max-width: 1440px) {
-      &.index-4,
-      &.index-auto {
+      &.index-4 {
         grid-template-columns: repeat(auto-fill, minmax(calc(100% / 3 - 2 * var(--column-gap)), 1fr));
       }
     }
     @media (max-width: 768px) {
       &.index-4,
-      &.index-3,
-      &.index-auto {
+      &.index-3 {
         grid-template-columns: repeat(auto-fill, minmax(calc(100% / 2 - var(--column-gap)), 1fr));
       }
     }
     @media (max-width: 640px) {
       &.index-4,
       &.index-3,
-      &.index-2,
-      &.index-auto {
+      &.index-2 {
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
       }
     }
-  }
-}
-
-/* 自适应主题尺寸 */
-html[theme-size="wide"] {
-  .share-card-container .index-auto {
-    grid-template-columns: repeat(auto-fill, minmax(calc(100% / 4 - 2 * var(--column-gap)), 1fr));
-  }
-}
-html[theme-size="large"] {
-  .share-card-container .index-auto {
-    grid-template-columns: repeat(auto-fill, minmax(calc(100% / 3 - 2 * var(--column-gap)), 1fr));
-  }
-}
-html[theme-size="default"],
-html[theme-size="small"] {
-  .share-card-container .index-auto {
-    grid-template-columns: repeat(auto-fill, minmax(calc(100% / 2 - 2 * var(--column-gap)), 1fr));
   }
 }

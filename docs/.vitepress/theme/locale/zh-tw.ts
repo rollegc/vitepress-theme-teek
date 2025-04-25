@@ -188,7 +188,7 @@ export default {
       epYellow: "黃色",
       epRed: "紅色",
     },
-    layoutEnhance: {
+    themeEnhance: {
       title: "佈局增強",
       layoutSwitch: {
         title: "佈局切換",

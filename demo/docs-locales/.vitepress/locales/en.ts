@@ -11,12 +11,6 @@ const teekConfig = defineTeekConfig({
       updateTime: "updateTime",
     },
   },
-  themeSetting: {
-    themeStyleLabel: {
-      default: "Default",
-      vpGreen: "VP Green",
-    },
-  },
 });
 
 export default defineConfig({

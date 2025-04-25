@@ -20,15 +20,15 @@ $progress-thickness: calc($button-size / 10);
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    box-shadow: getCssVar("shadow-1");
+    box-shadow: getCssVar("card-shadow");
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: getCssVar("bg-color-1");
+    background: getCssVar("bg-color");
 
     &:hover {
       background-color: getCssVar("theme-color");
-      box-shadow: getCssVar("shadow-2");
+      box-shadow: getCssVar("hover-shadow");
 
       .#{$namespace}-icon {
         color: var(--vp-c-white);
@@ -84,12 +84,12 @@ $progress-thickness: calc($button-size / 10);
       font-size: 14px;
       padding: 0 10px 0 15px;
       &:hover {
-        background-color: getCssVar("bg-color-hover-1");
+        background-color: getCssVar("fill-color-light");
         color: getCssVar("theme-color");
       }
       &.active {
         background-color: getCssVar("theme-color");
-        color: getCssVar("bg-color-1");
+        color: getCssVar("bg-color");
       }
     }
   }

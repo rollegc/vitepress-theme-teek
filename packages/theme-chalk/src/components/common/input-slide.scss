@@ -4,7 +4,7 @@
 
 :root {
   @include set-css-var("slider-height", 32px);
-  @include set-css-var("slider-shadow-color", getCssVar("lower-color-7"));
+  @include set-css-var("slider-shadow-color", getCssVar("text-color-disabled"));
   @include set-css-var("slider-thumb-height", 32px);
   @include set-css-var("slider-thumb-width", 32px);
   @include set-css-var("slider-thumb-border-radius", 6px);

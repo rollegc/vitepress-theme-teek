@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BackTop">
-import type { ThemeSetting } from "@teek/config";
+import type { TeekConfig } from "@teek/config";
 import { computed, unref, onMounted, ref } from "vue";
 import { useLocale, useDebounce, useEventListener } from "@teek/hooks";
 import { rocketIcon } from "@teek/static";
@@ -13,9 +13,7 @@ defineOptions({ name: "BackTop" });
 const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
-const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
-  backTopDone: undefined,
-});
+const backTopDone = getTeekConfigRef<TeekConfig["backTopDone"]>("backTopDone");
 
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
@@ -25,7 +23,7 @@ const progress = ref(0);
 const scrollToTop = useDebounce(() => {
   document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
   setTimeout(() => {
-    unref(themeSettingConfig).backTopDone?.(TkMessage);
+    backTopDone.value?.(TkMessage);
   }, 600);
 }, 500);
 

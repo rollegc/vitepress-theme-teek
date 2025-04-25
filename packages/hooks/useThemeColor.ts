@@ -14,6 +14,9 @@ const vpText1 = "--vp-c-text-1";
 const vpText2 = "--vp-c-text-2";
 const vpText3 = "--vp-c-text-3";
 
+const tkBgColorElm = "--tk-bg-color-elm";
+const tkBgColorMute = "--tk-bg-color-mute";
+
 export const varNameList = {
   vpIndigo1,
   vpIndigo2,
@@ -26,6 +29,8 @@ export const varNameList = {
   vpText1,
   vpText2,
   vpText3,
+  tkBgColorElm,
+  tkBgColorMute,
 };
 
 /**
@@ -56,19 +61,7 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
   const colorComputed = computed(() => toValue(color));
 
   const clear = () => {
-    [
-      vpIndigo1,
-      vpIndigo2,
-      vpIndigo3,
-      vpIndigoSoft,
-      vpBg,
-      vpBgAlt,
-      vpBgSoft,
-      vpBgElv,
-      vpText1,
-      vpText2,
-      vpText3,
-    ].forEach(key => {
+    Object.values(varNameList).forEach(key => {
       removeStyleVar(key);
     });
   };
@@ -89,13 +82,15 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
 
       [vpBg]: getLightColor(primary, 0.96)!,
       [vpBgAlt]: getLightColor(primary, 0.93)!,
-
-      [vpBgElv]: "#ffffff",
+      [vpBgElv]: getLightColor(primary, 0.945)!,
       [vpBgSoft]: getLightColor(primary, 0.93)!,
 
       [vpText1]: getDarkColor(primary, 0.6)!,
       [vpText2]: getDarkColor(primary, 0.7)!,
       [vpText3]: getLightColor(primary, 0.6)!,
+
+      [tkBgColorElm]: getLightColor(primary, 0.945)!,
+      [tkBgColorMute]: getLightColor(primary, 0.91)!,
     };
 
     Object.keys(lightVarMap).forEach(key => {
@@ -122,7 +117,11 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
       [vpBgAlt]: getDarkColor(primary, 0.94)!,
       [vpBgElv]: getDarkColor(primary, 0.92)!,
       [vpBgSoft]: getDarkColor(primary, 0.94)!,
+
       [vpText1]: getLightColor(primary, 0.9)!,
+
+      [tkBgColorElm]: getDarkColor(primary, 0.92)!,
+      [tkBgColorMute]: getDarkColor(primary, 0.91)!,
     };
 
     Object.keys(darkVarMap).forEach(key => {

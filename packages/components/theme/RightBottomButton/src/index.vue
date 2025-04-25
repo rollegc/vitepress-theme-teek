@@ -1,6 +1,7 @@
 <script setup lang="ts" name="RightBottomButton">
 import type { ThemeEnhance } from "@teek/config";
 import { useData } from "vitepress";
+import { computed } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { mobileMaxWidthMedia, TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
 import { useMediaQuery } from "@teek/hooks";
@@ -16,6 +17,10 @@ const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { theme } = useData();
 
 const isMobile = useMediaQuery(mobileMaxWidthMedia);
+const disabledThemeColor = computed(() => {
+  const { themeColor = {} } = themeEnhanceConfig.value;
+  return !isMobile.value || (themeColor.disabled ?? themeColor.disabledInMobile);
+});
 </script>
 
 <template>
@@ -30,7 +35,7 @@ const isMobile = useMediaQuery(mobileMaxWidthMedia);
       position="bottom"
       :y-offset="7"
     />
-    <ThemeColor v-if="isMobile && !themeEnhanceConfig.themeColor?.disabled" />
+    <ThemeColor v-if="!disabledThemeColor" />
 
     <slot name="teek-right-bottom-after" />
   </div>

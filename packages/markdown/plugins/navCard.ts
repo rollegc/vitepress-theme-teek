@@ -1,7 +1,7 @@
 import type MarkdownIt from "markdown-it";
-import type { NavCard } from "../types";
 import type { SiteConfig } from "vitepress";
-import { withBase } from "@teek/helper";
+import type { NavCard } from "../types";
+import { isStringNumber, withBase } from "@teek/helper";
 import { createCardContainer } from "../helper";
 
 const rootClass = "nav-card";
@@ -40,23 +40,29 @@ const getNavCardHtml = (navCard: { data: NavCard.Item[]; config: NavCard.Config 
   const { data = [], config = {} } = navCard;
   if (!data.length) return "";
 
-  const { cardNum: defaultNum = 2, cardGap = 20, lineClamp = 2, target = "_blank" } = config;
-  let cardNum = info && typeof info !== "string" ? Number(info) : defaultNum;
+  const { cardNum = "auto", cardGap = 20, lineClamp = 2, target = "_blank" } = config;
+  const cardNumValue = info || cardNum + "";
+  // 默认卡片数量为 4
+  let num = 4;
 
-  if (cardNum > 4 || cardNum < 1) cardNum = defaultNum;
-  const index = info === "auto" ? "auto" : cardNum;
+  if (cardNumValue && isStringNumber(cardNumValue)) {
+    const value = Number(cardNumValue);
+    if (value >= 1 && value <= 4) num = value;
+  }
+
+  const index = cardNumValue === "auto" ? "auto" : num;
 
   return `
     <div
       class="${rootClass} index-${index}"
-      style="--row-gap: ${cardGap}px; --column-gap: ${cardGap}px; --column-min-width: calc(100% / ${cardNum} - ${cardGap * (cardNum - 1)}px);"
+      style="--row-gap: ${cardGap}px; --column-gap: ${cardGap}px; --column-min-width: calc(100% / ${num} - ${cardGap * (num - 1)}px);"
     >
       ${data
         .map(
           card => `
             <${card.link ? "a" : "span"}
               href="${card.link}" target="${target}"
-              class="${rootClass}__item"
+              class="${rootClass}__item ${num ? `row-${num}` : ""}"
               style="--desc-line-clamp: ${lineClamp}"
             >
               <div class="${rootClass}__item__info">
