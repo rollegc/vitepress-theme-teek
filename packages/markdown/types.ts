@@ -6,9 +6,9 @@ export declare namespace ShareCard {
     /**
      * 每行显示的卡片数量
      *
-     * @default 3
+     * @default 'auto'
      */
-    cardNum?: number;
+    cardNum?: number | "auto";
     /**
      * 跳转方式
      *

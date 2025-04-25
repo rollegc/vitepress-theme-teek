@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed, unref, provide } from "vue";
+import { computed, unref, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
 import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
 import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
@@ -52,6 +52,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekHome: true,
   vpHome: true,
   codeBlock: true,
+  themeSize: "",
   bodyBgImg: {},
   notice: {},
   comment: { provider: "" },
@@ -80,6 +81,18 @@ const commentConfig = computed(() => {
 const topTipConfig = computed(() => {
   return unref(teekConfig).article.topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
 });
+
+const themeSizeAttribute = ns.joinNamespace("theme-size");
+
+watch(
+  () => unref(teekConfig).themeSize,
+  newValue => {
+    // 设置或删除主题尺寸
+    if (newValue) document.documentElement.setAttribute(ns.joinNamespace(themeSizeAttribute), newValue);
+    else document.documentElement.removeAttribute(themeSizeAttribute);
+  },
+  { immediate: true, flush: "post" }
+);
 
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [

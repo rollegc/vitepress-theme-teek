@@ -1,3 +1,4 @@
+import type { Message } from "@teek/components/common/Message/src/message";
 import type { TkPaginationProps } from "../components/common/Pagination";
 import type {
   Appreciation,
@@ -21,7 +22,6 @@ import type {
   SiteAnalytics,
   Social,
   Tag,
-  ThemeSetting,
   TopArticle,
   Wallpaper,
   Markdown,
@@ -99,15 +99,23 @@ export interface TeekConfig {
    */
   pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
   /**
+   * 设置当前主题尺寸（只影响 Teek 主题首页和自定义页，不影响 VitePress 默认主题）
+   *
+   * @default ''
+   */
+  themeSize?: "small" | "default" | "large" | "wide";
+  /**
+   * 回到顶部后的回调
+   */
+  backTopDone?: (TkMessage: Message) => void;
+  /**
+   * 滚动到评论后的回调
+   */
+  toCommentDone?: (TkMessage: Message) => void;
+  /**
    *  body 背景图片配置
    */
   bodyBgImg?: BodyBgImg;
-  /**
-   * 右下角的主题设置配置
-   *
-   * @deprecated Use `themeEnhance` instead
-   */
-  themeSetting?: ThemeSetting;
   /**
    * 布局增强配置
    */

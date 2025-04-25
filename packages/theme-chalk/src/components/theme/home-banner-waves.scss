@@ -1,5 +1,13 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("waves-fill-color-1", rgba(253, 253, 253, 0.7));
+  @include set-css-var("waves-fill-color-2", rgba(253, 253, 253, 0.5));
+  @include set-css-var("waves-fill-color-3", rgba(253, 253, 253, 0.3));
+  @include set-css-var("waves-fill-color-4", #fdfdfd);
+}
 
 @include b(banner-waves) {
   margin-top: -11vh;
@@ -17,7 +25,7 @@
       &:nth-child(1) {
         animation-delay: -2s;
         animation-duration: 7s;
-        fill: getCssVar("lower-color-6");
+        fill: getCssVar("waves-fill-color-1");
 
         :is(.dark .dark\:fill-black) {
           fill: #000 !important;
@@ -27,7 +35,7 @@
       &:nth-child(2) {
         animation-delay: -3s;
         animation-duration: 10s;
-        fill: getCssVar("lower-color-5");
+        fill: getCssVar("waves-fill-color-2");
 
         :is(.dark .dark\:fill-black) {
           fill: #000;
@@ -37,13 +45,13 @@
       &:nth-child(3) {
         animation-delay: -4s;
         animation-duration: 13s;
-        fill: getCssVar("lower-color-4");
+        fill: getCssVar("waves-fill-color-3");
       }
 
       &:nth-child(4) {
         animation-delay: -5s;
         animation-duration: 20s;
-        fill: getCssVar("lower-color-3");
+        fill: getCssVar("waves-fill-color-4");
       }
 
       /* 波浪动画 */

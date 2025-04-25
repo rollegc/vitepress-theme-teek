@@ -4,9 +4,8 @@
 @use "../../mixins/config" as *;
 
 :root {
-  @include set-css-var("theme-enhance-bg-color", var(--vp-c-bg-elv));
   @include set-css-var("theme-enhance-text-color", var(--vp-c-text-1));
-  @include set-css-var("theme-enhance-inner-bg-color", getCssVar("bg-color-4"));
+  @include set-css-var("theme-enhance-inner-bg-color", getCssVar("fill-color-dark"));
 }
 
 @include b(segmented) {
@@ -15,6 +14,7 @@
 }
 
 @include b(theme-enhance) {
+  height: 100%;
   @include when(top) {
     margin-right: 8px;
 

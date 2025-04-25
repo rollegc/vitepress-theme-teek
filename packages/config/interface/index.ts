@@ -20,6 +20,5 @@ export type * from "./post";
 export type * from "./siteAnalysis";
 export type * from "./social";
 export type * from "./tag";
-export type * from "./themeSetting";
 export type * from "./topArticle";
 export type * from "./wallpaper";

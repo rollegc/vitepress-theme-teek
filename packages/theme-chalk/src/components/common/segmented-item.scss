@@ -5,12 +5,12 @@
 :root {
   @include set-css-var("segmented-item-text", var(--vp-c-text-1));
   @include set-css-var("segmented-item-active-text", var(--vp-c-text-1));
-  @include set-css-var("segmented-item-active-bg", var(--vp-c-bg-elv));
-  @include set-css-var("segmented-item-shadow-color", getCssVar("lower-color-7"));
+  @include set-css-var("segmented-item-active-bg", getCssVar("bg-color-elm"));
+  @include set-css-var("segmented-item-shadow-color", getCssVar("text-color-disabled"));
 }
 
 :root.dark {
-  @include set-css-var("segmented-item-active-text", var(--vp-c-bg-elv));
+  @include set-css-var("segmented-item-active-text", getCssVar("bg-color-elm"));
   @include set-css-var("segmented-item-active-bg", var(--vp-c-text-1));
 }
 

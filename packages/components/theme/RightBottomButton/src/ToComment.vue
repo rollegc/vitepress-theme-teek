@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ToComment">
-import type { ThemeSetting } from "@teek/config";
+import type { TeekConfig } from "@teek/config";
 import { computed, unref, ref } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkMessage } from "@teek/components/common/Message";
@@ -11,12 +11,9 @@ import { ns } from "./namespace";
 defineOptions({ name: "ToComment" });
 
 const { t } = useLocale();
-
 const { getTeekConfigRef } = useTeekConfig();
 
-const themeSettingConfig = getTeekConfigRef<Required<ThemeSetting>>("themeSetting", {
-  toCommentDone: undefined,
-});
+const toCommentDone = getTeekConfigRef<TeekConfig["toCommentDone"]>("toCommentDone");
 
 // 前往评论区
 const scrollTop = ref(0);
@@ -33,7 +30,7 @@ const showToComment = computed(() => {
 const scrollToComment = useDebounce(() => {
   document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
   setTimeout(() => {
-    unref(themeSettingConfig).toCommentDone?.(TkMessage);
+    toCommentDone.value?.(TkMessage);
   }, 600);
 }, 500);
 </script>

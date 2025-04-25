@@ -6,12 +6,12 @@
   width: getCssVar("home-card-width");
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: getCssVar("shadow-1");
+  box-shadow: getCssVar("card-shadow");
   transition: box-shadow 0.5s;
-  background-color: getCssVar("bg-color-2");
+  background-color: getCssVar("bg-color-elm");
 
   &:hover {
-    box-shadow: getCssVar("shadow-2");
+    box-shadow: getCssVar("hover-shadow");
   }
 
   @include e(header) {
