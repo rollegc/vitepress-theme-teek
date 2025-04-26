@@ -182,7 +182,7 @@ export default {
       vpYellow: "黃色",
       vpRed: "紅色",
       epLabel: "EP 主題",
-      epTip: "Element Plus 主題",
+      epTip: "ElementPlus 主題",
       epBlue: "藍色",
       epGreen: "綠色",
       epYellow: "黃色",

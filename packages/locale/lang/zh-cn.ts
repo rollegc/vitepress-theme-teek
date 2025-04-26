@@ -210,7 +210,7 @@ export default {
         vpLabel: "VP 主题",
         epLabel: "EP 主题",
         vpTip: "VitePress 主题",
-        epTip: "Element Plus 主题",
+        epTip: "ElementPlus 主题",
         defaultLabel: "默认",
         blueLabel: "蓝色",
         greenLabel: "绿色",

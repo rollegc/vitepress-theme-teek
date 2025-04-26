@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ThemeColor">
 import type { ThemeEnhance } from "@teek/config";
 import type { SegmentedOption } from "@teek/components/common/Segmented";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { useStorage, useMediaQuery, useLocale, useThemeColor, varNameList } from "@teek/hooks";
 import { clickIcon } from "@teek/static";
@@ -26,6 +26,8 @@ const themeColor = useStorage<string>(
 );
 const isSpread = useStorage(themeBgColorStorageKey, themeEnhanceConfig.value.themeColor?.defaultSpread || false);
 
+const oldThemeColor = ref(themeColor.value);
+
 // 主题色
 const primaryColor = ref("");
 // 根据 primaryColor 计算其他 var 变量需要的颜色，并直接覆盖这些 var 变量的颜色
@@ -37,13 +39,10 @@ const { start, stop, clear } = useThemeColor(primaryColor, () => {
 });
 
 /**
- * 更新主题模式
+ * 更新主题色
  */
-const update = (val?: string) => {
-  if (!val) return;
+const update = (val: string) => {
   const el = document.documentElement;
-
-  if (themeColor.value !== val) themeColor.value = val;
 
   if (el.getAttribute(themeColorAttribute) === val) return;
   el.setAttribute(themeColorAttribute, val);
@@ -55,8 +54,20 @@ const update = (val?: string) => {
 
 watch(themeColor, update);
 
-// 文章单独设置主题模式
-watch(() => frontmatter.value.themeColor, update);
+// 文章单独设置主题色
+watch(
+  () => frontmatter.value.themeColor,
+  newVal => {
+    if (newVal) {
+      oldThemeColor.value = themeColor.value;
+      themeColor.value = newVal;
+    } else {
+      // 还原
+      themeColor.value = oldThemeColor.value;
+    }
+  },
+  { immediate: true }
+);
 
 // 扩散到其他 var 变量（useThemeColor hooks）
 watch(
@@ -68,11 +79,6 @@ watch(
   { immediate: true, flush: "post" }
 );
 
-onMounted(() => {
-  if (frontmatter.value.themeColor) update(frontmatter.value.themeColor);
-  else update(themeColor.value);
-});
-
 const themeColorSelectList = computed(() => {
   const { append = [] } = themeEnhanceConfig.value.themeColor || {};
   return [
@@ -82,25 +88,25 @@ const themeColorSelectList = computed(() => {
       options: [
         {
           value: ThemeColor.vpDefault,
-          text: t("tk.themeEnhance.themeColor.defaultLabel"),
+          label: t("tk.themeEnhance.themeColor.defaultLabel"),
           title: `VitePress ${t("tk.themeEnhance.themeColor.defaultLabel")}`,
           ariaLabel: `VitePress ${t("tk.themeEnhance.themeColor.defaultLabel")}`,
         },
         {
           value: ThemeColor.vpGreen,
-          text: t("tk.themeEnhance.themeColor.greenLabel"),
+          label: t("tk.themeEnhance.themeColor.greenLabel"),
           title: `VitePress ${t("tk.themeEnhance.themeColor.greenLabel")}`,
           ariaLabel: `VitePress ${t("tk.themeEnhance.themeColor.greenLabel")}`,
         },
         {
           value: ThemeColor.vpYellow,
-          text: t("tk.themeEnhance.themeColor.yellowLabel"),
+          label: t("tk.themeEnhance.themeColor.yellowLabel"),
           title: `VitePress ${t("tk.themeEnhance.themeColor.yellowLabel")}`,
           ariaLabel: `VitePress ${t("tk.themeEnhance.themeColor.yellowLabel")}`,
         },
         {
           value: ThemeColor.vpRed,
-          text: t("tk.themeEnhance.themeColor.redLabel"),
+          label: t("tk.themeEnhance.themeColor.redLabel"),
           title: `VitePress ${t("tk.themeEnhance.themeColor.redLabel")}`,
           ariaLabel: `VitePress ${t("tk.themeEnhance.themeColor.redLabel")}`,
         },
@@ -112,25 +118,25 @@ const themeColorSelectList = computed(() => {
       options: [
         {
           value: ThemeColor.epBlue,
-          text: `${t("tk.themeEnhance.themeColor.blueLabel")}`,
+          label: `${t("tk.themeEnhance.themeColor.blueLabel")}`,
           title: `ElementPlus ${t("tk.themeEnhance.themeColor.blueLabel")}`,
           ariaLabel: `ElementPlus ${t("tk.themeEnhance.themeColor.blueLabel")}`,
         },
         {
           value: ThemeColor.epGreen,
-          text: `${t("tk.themeEnhance.themeColor.greenLabel")}`,
+          label: `${t("tk.themeEnhance.themeColor.greenLabel")}`,
           title: `ElementPlus ${t("tk.themeEnhance.themeColor.greenLabel")}`,
           ariaLabel: `ElementPlus ${t("tk.themeEnhance.themeColor.greenLabel")}`,
         },
         {
           value: ThemeColor.epYellow,
-          text: `${t("tk.themeEnhance.themeColor.yellowLabel")}`,
+          label: `${t("tk.themeEnhance.themeColor.yellowLabel")}`,
           title: `ElementPlus ${t("tk.themeEnhance.themeColor.yellowLabel")}`,
           ariaLabel: `ElementPlus ${t("tk.themeEnhance.themeColor.yellowLabel")}`,
         },
         {
           value: ThemeColor.epRed,
-          text: `${t("tk.themeEnhance.themeColor.redLabel")}`,
+          label: `${t("tk.themeEnhance.themeColor.redLabel")}`,
           title: `ElementPlus ${t("tk.themeEnhance.themeColor.redLabel")}`,
           ariaLabel: `ElementPlus ${t("tk.themeEnhance.themeColor.redLabel")}`,
         },

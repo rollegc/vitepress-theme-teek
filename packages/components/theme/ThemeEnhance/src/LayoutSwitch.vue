@@ -1,6 +1,7 @@
 <script setup lang="ts" name="LayoutSwitch">
 import type { ThemeEnhance } from "@teek/config";
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
+import { useData } from "vitepress";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { fullscreenIcon, fullScreenOneIcon, fullscreenTwoIcon, layoutIcon, overallReductionIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -14,12 +15,15 @@ defineOptions({ name: "LayoutSwitch" });
 const { getTeekConfigRef } = useTeekConfig();
 const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
+const { frontmatter } = useData();
 
 const layoutMode = useStorage(
   layoutModeStorageKey,
   themeEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
 );
 const isMobile = useMediaQuery(mobileMaxWidthMedia);
+
+const oldLayoutMode = ref(layoutMode.value);
 
 const update = (val: string) => {
   const el = document.documentElement;
@@ -32,9 +36,22 @@ watch(layoutMode, val => {
   update(val);
 });
 
-onMounted(() => {
-  update(layoutMode.value);
+// 文章单独设置布局模式
+watch(
+  () => frontmatter.value.layoutMode,
+  newVal => {
+    if (newVal) {
+      oldLayoutMode.value = layoutMode.value;
+      layoutMode.value = newVal;
+    } else {
+      // 还原为全局配置
+      layoutMode.value = oldLayoutMode.value;
+    }
+  },
+  { immediate: true }
+);
 
+onMounted(() => {
   if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) {
     document.documentElement.setAttribute(`${layoutModeAttribute}-animated`, "true");
   }

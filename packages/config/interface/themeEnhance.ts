@@ -1,8 +1,11 @@
 import type { ThemeColor, LayoutMode, SpotlightStyle } from "../../components/theme/ThemeEnhance/src/themeEnhance";
+import type { SegmentedOption } from "../../components/common/Segmented/src/segmented";
 
 export interface ThemeEnhance {
   /**
    * 位置，top 为导航栏右侧，bottom 为右下角
+   *
+   * @default 'top'
    */
   position?: "top" | "bottom";
   /**
@@ -30,39 +33,29 @@ export interface ThemeEnhance {
      */
     disableAnimation?: boolean;
     /**
-     * 内容布局最大宽度滑块配置
+     * 内容布局最大宽度的默认百分比，仅限 0-100
+     *
+     * @default 90 (90%)
      */
-    docLayoutMaxWidth?: {
-      /**
-       * 内容布局最大宽度的默认百分比
-       *
-       * @default 80 (80%)
-       */
-      defaultMaxWidth?: number;
-      /**
-       * 禁用帮助提示
-       *
-       * @default false
-       */
-      disableHelp?: boolean;
-    };
+    defaultDocMaxWidth?: number;
     /**
-     * 页面布局最大宽度滑块配置
+     * 禁用帮助提示
+     *
+     * @default false
      */
-    pageLayoutMaxWidth?: {
-      /**
-       * 页面布局最大宽度的默认百分比
-       *
-       * @default 100 (100%)
-       */
-      defaultMaxWidth?: number;
-      /**
-       * 禁用帮助提示
-       *
-       * @default false
-       */
-      disableHelp?: boolean;
-    };
+    disableDocMaxWidthHelp?: boolean;
+    /**
+     * 页面布局最大宽度的默认百分比，仅限 0-100
+     *
+     * @default 90 (90%)
+     */
+    defaultPageMaxWidth?: number;
+    /**
+     * 禁用帮助提示
+     *
+     * @default false
+     */
+    disablePageMaxWidthHelp?: boolean;
   };
   /**
    * 布局主题色配置
@@ -85,12 +78,12 @@ export interface ThemeEnhance {
       | "vp-green"
       | "vp-yellow"
       | "vp-red"
-      | "el-blue"
-      | "el-green"
-      | "el-yellow"
-      | "el-red";
+      | "ep-blue"
+      | "ep-green"
+      | "ep-yellow"
+      | "ep-red";
     /**
-     * 是否将颜色扩散到全局（根据主题色计算其他颜色）
+     * 是否将主题色扩散到其他元素（根据主题色计算其他元素需要的颜色）
      *
      * @default false
      */
@@ -122,16 +115,7 @@ export interface ThemeEnhance {
       /**
        * 主题组内容
        */
-      options: {
-        /**
-         * 主题名称，用于页面文字渲染
-         */
-        label: string;
-        /**
-         * 主题标识，在 html 标签的 theme 属性添加该标识
-         */
-        value: string;
-      }[];
+      options: SegmentedOption[];
     }[];
   };
   /**
@@ -161,6 +145,6 @@ export interface ThemeEnhance {
      *
      * @default true
      */
-    defaultToggle?: boolean;
+    defaultValue?: boolean;
   };
 }

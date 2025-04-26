@@ -4,7 +4,7 @@ import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { artalkSymbol } from "./artalk";
+import { artalkContext } from "./artalk";
 
 defineOptions({ name: "CommentArtalk" });
 
@@ -25,7 +25,7 @@ const artalkId = "artalk";
 
 const initArtalkByInject = () => {
   // 尝试从上下文获取 artalk 实例函数
-  const getArtalkInstance = inject(artalkSymbol, () => null);
+  const getArtalkInstance = inject(artalkContext, () => null);
   const el = unref(artalkRef) || `#${artalkId}`;
 
   const artalkInstance = getArtalkInstance?.(artalkOptions, el);

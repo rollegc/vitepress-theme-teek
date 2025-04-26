@@ -212,7 +212,7 @@ export default {
         vpLabel: "VP Theme",
         epLabel: "EP Theme",
         vpTip: "VitePress Theme",
-        epTip: "Element Plus Theme",
+        epTip: "ElementPlus Theme",
         defaultLabel: "Default",
         blueLabel: "Blue",
         greenLabel: "Green",

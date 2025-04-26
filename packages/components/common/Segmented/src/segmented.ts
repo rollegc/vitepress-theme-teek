@@ -14,9 +14,9 @@ export interface SegmentedItemProps extends SegmentedBase {
 }
 
 export interface SegmentedBase {
-  title: string;
-  name?: string;
+  value: ModelType;
+  label?: string;
   icon?: string;
-  text?: string;
-  value?: ModelType;
+  title?: string;
+  name?: string;
 }

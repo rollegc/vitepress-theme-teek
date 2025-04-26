@@ -15,10 +15,10 @@ export enum ThemeColor {
   vpGreen = "vp-green",
   vpYellow = "vp-yellow",
   vpRed = "vp-red",
-  epBlue = "el-blue",
-  epGreen = "el-green",
-  epYellow = "el-yellow",
-  epRed = "el-red",
+  epBlue = "ep-blue",
+  epGreen = "ep-green",
+  epYellow = "ep-yellow",
+  epRed = "ep-red",
 }
 
 export const themeColorList = [

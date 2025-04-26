@@ -3,15 +3,7 @@ import { defineTeekConfig } from "vitepress-theme-teek/config";
 
 const description = ["Hd Security Documentation", "Authentication Framework"].toString();
 
-const teekConfig = defineTeekConfig({
-  article: {
-    titleTip: {
-      author: "Author",
-      createTime: "createTime",
-      updateTime: "updateTime",
-    },
-  },
-});
+const teekConfig = defineTeekConfig({});
 
 export default defineConfig({
   lang: "en-US",

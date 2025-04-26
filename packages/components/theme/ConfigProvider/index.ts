@@ -8,8 +8,8 @@ import { useAnchorScroll, useViewTransition } from "@teek/hooks";
 import { emptyPost } from "@teek/config/post/helper";
 import { isFunction, isObject } from "@teek/helper";
 
-export const postsSymbol: InjectionKey<PostData> = Symbol("posts");
-export const teekConfigSymbol: InjectionKey<TeekConfig | Ref<TeekConfig>> = Symbol("teekConfig");
+export const postsContext: InjectionKey<PostData> = Symbol("posts");
+export const teekConfigContext: InjectionKey<TeekConfig | Ref<TeekConfig>> = Symbol("teekConfig");
 
 /**
  * 创建 Layout 组件
@@ -19,7 +19,7 @@ export const TeekConfigProvider = (layout: Component) => {
     name: "TeekConfigProvider",
     setup(_, { slots }) {
       // 往主题注入数据
-      provide(postsSymbol, useAllPosts());
+      provide(postsContext, useAllPosts());
 
       // 开启监听器
       usePermalink().startWatch();
@@ -99,7 +99,7 @@ export const useBgColor = () => {
  */
 export const useTeekConfig = () => {
   const { theme, frontmatter } = useData();
-  const teekConfigProvide = inject(teekConfigSymbol, {});
+  const teekConfigProvide = inject(teekConfigContext, {});
 
   /**
    * 获取 Teek 的主题配置数据

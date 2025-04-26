@@ -1,6 +1,7 @@
 <script setup lang="ts" name="Spotlight">
 import type { ThemeEnhance } from "@teek/config";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
+import { useData } from "vitepress";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { clickIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -15,20 +16,38 @@ defineOptions({ name: "Spotlight" });
 const { getTeekConfigRef } = useTeekConfig();
 const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
+const { frontmatter } = useData();
 
 const isMobile = useMediaQuery(touchMedia);
-const spotlight = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultToggle ?? true);
+
+const spotlight = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultValue ?? true);
+const oldSpotlight = ref(spotlight.value);
+
+// 文章单独设置是否使用聚光灯
+watch(
+  () => frontmatter.value.spotlight,
+  newVal => {
+    if (newVal !== undefined) {
+      oldSpotlight.value = spotlight.value;
+      spotlight.value = newVal;
+    } else {
+      // 还原
+      spotlight.value = oldSpotlight.value;
+    }
+  },
+  { immediate: true }
+);
 
 const segmentedOptions = computed(() => [
   {
     value: true,
-    text: "ON",
+    label: "ON",
     title: t("tk.themeEnhance.spotlight.onTipTitle"),
     ariaLabel: t("tk.themeEnhance.spotlight.onTipTitle"),
   },
   {
     value: false,
-    text: "OFF",
+    label: "OFF",
     title: t("tk.themeEnhance.spotlight.offTipTitle"),
     ariaLabel: t("tk.themeEnhance.spotlight.offTipTitle"),
   },

@@ -10,9 +10,9 @@ tags:
   - 公共组件
 ---
 
-Avatar 组件是基于 Element Plus 的 Avatar 组件进行二次封装，添加了部分功能。
+Avatar 组件是基于 ElementPlus 的 Avatar 组件进行二次封装，添加了部分功能。
 
-大部分功能请看 Element Plus 的 [Avatar 文档](https://element-plus.org/zh-CN/component/avatar.html)。
+大部分功能请看 ElementPlus 的 [Avatar 文档](https://element-plus.org/zh-CN/component/avatar.html)。
 
 ## 文本头像
 
@@ -24,7 +24,7 @@ avatar/text
 
 ## 在线 Icon
 
-支持传入在线 Iconify 图标，具体参考 [Iconify](https://iconify.design)。
+支持传入在线 Iconify 图标，请前往 [Iconify](https://iconify.design) 寻找您需要的图标。
 
 ::: demo
 avatar/icon

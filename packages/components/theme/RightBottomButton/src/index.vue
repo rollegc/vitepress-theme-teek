@@ -34,7 +34,12 @@ const disabledThemeColor = computed(() => {
       :class="ns.e('button')"
       position="bottom"
       :y-offset="7"
-    />
+    >
+      <template v-for="(_, name) in $slots" :key="name" #[name]>
+        <slot :name="name" />
+      </template>
+    </TkThemeEnhance>
+
     <ThemeColor v-if="!disabledThemeColor" />
 
     <slot name="teek-right-bottom-after" />

@@ -1,23 +1,34 @@
 <script setup lang="ts" name="VpContainer">
+import { computed, useSlots } from "vue";
 import type { VpContainerProps } from "./vpContainer";
-import { computed } from "vue";
 import { useNamespace } from "@teek/hooks";
 
 defineOptions({ name: "VpContainer" });
 
 const ns = useNamespace("vp-container");
 
-const { type = "tip", title, text = "", textHtml = "" } = defineProps<VpContainerProps>();
+const { type = "tip", title, text = "" } = defineProps<VpContainerProps>();
 
-const useContainer = computed(() => text || textHtml);
+const slots = useSlots();
+
+const hasTitle = computed(() => title || slots.title);
+const hasText = computed(() => text || slots.default);
 </script>
 
 <template>
-  <div v-if="useContainer" :class="[ns.b(), 'vp-doc']">
+  <div v-if="hasTitle || hasText" :class="[ns.b(), 'vp-doc']">
     <div :class="[type, 'custom-block', { 'no-title': !title }]">
-      <div v-if="title" class="custom-block-title">{{ title }}</div>
-      <p v-if="textHtml" v-html="textHtml"></p>
-      <p v-else>{{ text }}</p>
+      <div v-if="hasTitle" class="custom-block-title">
+        <slot name="title">
+          {{ title }}
+        </slot>
+      </div>
+
+      <p v-if="hasText">
+        <slot>
+          {{ text }}
+        </slot>
+      </p>
     </div>
   </div>
 </template>

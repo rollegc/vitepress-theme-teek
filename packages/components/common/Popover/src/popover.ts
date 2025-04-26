@@ -1,6 +1,17 @@
 import type { UsePopoverSizeOptions, NumStr } from "@teek/hooks";
 
 export interface PopoverProps {
+  /**
+   * 触发方式
+   *
+   * @default 'hover'
+   */
+  trigger?: "click" | "focus" | "hover" | "contextmenu";
+  /**
+   * 显示位置
+   *
+   * @default 'bottom'
+   */
   placement?: UsePopoverSizeOptions["placement"];
   /**
    * 显示的内容
@@ -8,12 +19,6 @@ export interface PopoverProps {
    * @default ''
    */
   content?: string;
-  /**
-   * 触发方式
-   *
-   * @default 'hover'
-   */
-  trigger?: "click" | "focus" | "hover" | "contextmenu";
   /**
    * 宽度，如果不指定，则会根据内容自动计算
    */
