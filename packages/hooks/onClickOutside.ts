@@ -104,7 +104,8 @@ export const onClickOutside = (
   }
 
   const listener = (event: Event) => {
-    const el = toValue(target);
+    const plain = toValue(target);
+    const el = (plain as VueInstance)?.$el ?? plain;
 
     if (event.target == null) return;
 
@@ -143,7 +144,8 @@ export const onClickOutside = (
       window,
       "pointerdown",
       e => {
-        const el = toValue(target);
+        const plain = toValue(target);
+        const el = (plain as VueInstance)?.$el ?? plain;
         shouldListen = !shouldIgnore(e) && !!(el && !e.composedPath().includes(el));
       },
       { passive: true }
@@ -154,7 +156,8 @@ export const onClickOutside = (
         "blur",
         event => {
           setTimeout(() => {
-            const el = toValue(target);
+            const plain = toValue(target);
+            const el = (plain as VueInstance)?.$el ?? plain;
             if (window.document.activeElement?.tagName === "IFRAME" && !el?.contains(window.document.activeElement)) {
               handler(event as any);
             }
