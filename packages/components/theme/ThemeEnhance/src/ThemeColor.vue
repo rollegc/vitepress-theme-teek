@@ -39,7 +39,8 @@ const { start, stop, clear } = useThemeColor(primaryColor, () => {
 /**
  * 更新主题模式
  */
-const update = (val: string) => {
+const update = (val?: string) => {
+  if (!val) return;
   const el = document.documentElement;
 
   if (themeColor.value !== val) themeColor.value = val;
@@ -52,17 +53,10 @@ const update = (val: string) => {
   primaryColor.value = getComputedStyle(el).getPropertyValue(varNameList.vpIndigo1);
 };
 
-watch(themeColor, val => {
-  update(val);
-});
+watch(themeColor, update);
 
 // 文章单独设置主题模式
-watch(
-  () => frontmatter.value.themeColor,
-  newVal => {
-    if (newVal) update(newVal);
-  }
-);
+watch(() => frontmatter.value.themeColor, update);
 
 // 扩散到其他 var 变量（useThemeColor hooks）
 watch(

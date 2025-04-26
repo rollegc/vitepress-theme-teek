@@ -9,6 +9,12 @@ export interface PopoverProps {
    */
   content?: string;
   /**
+   * 触发方式
+   *
+   * @default 'hover'
+   */
+  trigger?: "click" | "focus" | "hover" | "contextmenu";
+  /**
    * 宽度，如果不指定，则会根据内容自动计算
    */
   width?: NumStr;
@@ -99,4 +105,10 @@ export interface PopoverTransformOptions {
    * 弹框的 DOM 元素
    */
   popoverElement: HTMLDivElement;
+}
+
+export interface PopoverEmits {
+  focus: [];
+  blur: [];
+  close: [];
 }

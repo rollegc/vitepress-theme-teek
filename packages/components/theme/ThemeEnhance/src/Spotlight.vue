@@ -17,7 +17,7 @@ const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
 
 const isMobile = useMediaQuery(touchMedia);
-const spotlight = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultToggle || true);
+const spotlight = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultToggle ?? true);
 
 const segmentedOptions = computed(() => [
   {

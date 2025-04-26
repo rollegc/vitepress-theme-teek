@@ -159,7 +159,7 @@ export interface ThemeEnhance {
     /**
      * 聚光灯默认开关状态
      *
-     * @default false
+     * @default true
      */
     defaultToggle?: boolean;
   };

@@ -83,7 +83,6 @@ const topTipConfig = computed(() => {
 });
 
 const themeSizeAttribute = ns.joinNamespace("theme-size");
-
 watch(
   () => unref(teekConfig).themeSize,
   newValue => {

@@ -66,7 +66,7 @@ const teleportInfo = () => {
   const targetDom = docDomContainer?.querySelector(selector);
 
   // 传送前先尝试删除传送位置的自己，避免传送重新渲染
-  targetDom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach((v: Element) => v.remove());
+  targetDom?.parentElement?.querySelectorAll(`.${ns.e("wrapper")}`).forEach(v => v.remove());
 
   baseInfoRefConst.classList.add(className);
   targetDom?.[position]?.(baseInfoRefConst);

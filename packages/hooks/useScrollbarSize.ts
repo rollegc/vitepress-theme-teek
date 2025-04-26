@@ -15,7 +15,10 @@ export const useScrollbarSize = () => {
   const createMeasureElement = () => {
     if (measureElement) return measureElement;
 
+    document.querySelector("#measure-element")?.remove();
+
     measureElement = document.createElement("div");
+    measureElement.id = "measure-element";
     // 设置样式强制显示滚动条
     measureElement.style.cssText = `
         position: fixed;
@@ -34,8 +37,10 @@ export const useScrollbarSize = () => {
   const clearMeasureElement = () => {
     if (!measureElement) return;
 
-    document.body.removeChild(measureElement);
-    measureElement = null;
+    if (document.body.contains(measureElement)) {
+      document.body.removeChild(measureElement);
+      measureElement = null;
+    }
   };
 
   const calculate = () => {

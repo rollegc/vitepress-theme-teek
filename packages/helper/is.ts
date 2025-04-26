@@ -186,6 +186,15 @@ export const isImgPath = (path: string): boolean => {
   return /(https?:\/\/|data:image\/).*?\.(png|jpg|jpeg|gif|svg|webp|ico)/gi.test(path);
 };
 
+export const isIOS = () => {
+  return (
+    isClient &&
+    window?.navigator?.userAgent &&
+    (/iP(?:ad|hone|od)/.test(window.navigator.userAgent) ||
+      (window?.navigator?.maxTouchPoints > 2 && /iPad|Macintosh/.test(window?.navigator.userAgent)))
+  );
+};
+
 /**
  * 是否为空值项（包含数组、对象判断）
  *

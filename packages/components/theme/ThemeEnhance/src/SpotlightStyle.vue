@@ -19,7 +19,7 @@ const spotlightStyle = useStorage(
   spotlightStyleStorageKey,
   themeEnhanceConfig.value.spotlight?.defaultStyle || SpotlightStyle.Aside
 );
-const spotlightToggledOn = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultToggle || false);
+const spotlightToggledOn = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultToggle ?? true);
 const isMobile = useMediaQuery(touchMedia);
 
 const content = computed(() => [
