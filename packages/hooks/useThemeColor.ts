@@ -72,6 +72,7 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
   const switchLight = () => {
     if (!isClient) return;
     const primary = colorComputed.value;
+    console.log(primary);
     if (!primary) return;
 
     const lightVarMap = {
@@ -131,7 +132,7 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
   };
 
   const isStop = shallowRef(false);
-  let stopWatch: ReturnType<typeof watch>;
+  let stopWatch: ReturnType<typeof watch> | null = null;
 
   const update = () => {
     if (isStop.value) return;
@@ -142,14 +143,17 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
   };
 
   const start = () => {
-    if (!isStop.value) return;
+    if (!isStop.value || !!stopWatch) return;
     isStop.value = false;
 
-    stopWatch = watch(isDark, update, { flush: "post", immediate: true });
+    update();
+
+    stopWatch = watch(isDark, update, { flush: "post" });
   };
 
   const stop = () => {
     stopWatch?.();
+    stopWatch = null;
     isStop.value = true;
     clear();
   };
