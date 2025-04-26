@@ -10,6 +10,4 @@ tags:
   - 公共组件
 ---
 
-::: warning 🚧 施工中
-很高兴见到你！但很抱歉，这个页面还在施工中，如果没有找到你感兴趣的信息，你可以先在侧边栏的导航中寻找你感兴趣的内容来开始阅读
-::::
+更多用法请看 ElementPlus 的 [Breadcrumb 文档](https://element-plus.org/zh-CN/component/breadcrumb.html)。

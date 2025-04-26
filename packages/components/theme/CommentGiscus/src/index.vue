@@ -5,7 +5,7 @@ import { useData } from "vitepress";
 import { isFunction } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { giscusSymbol } from "./giscus";
+import { giscusContext } from "./giscus";
 
 defineOptions({ name: "CommentGiscus" });
 
@@ -42,7 +42,7 @@ const giscusTheme = computed(() => {
 });
 
 // 尝试从上下文获取 giscus 组件
-const giscusComponentFn = inject(giscusSymbol, () => null);
+const giscusComponentFn = inject(giscusContext, () => null);
 const giscusComponent = giscusComponentFn?.(giscusOptions);
 
 const isShow = ref(false);

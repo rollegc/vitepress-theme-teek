@@ -1,5 +1,5 @@
 <script setup lang="ts" name="TeekLayoutProvider">
-import Teek, { TkAvatar, teekConfigSymbol, useNamespace, clockIcon } from "vitepress-theme-teek";
+import Teek, { TkAvatar, teekConfigContext, useNamespace, clockIcon } from "vitepress-theme-teek";
 import { provide, ref, watch } from "vue";
 import { teekDocConfig, teekBlogConfig } from "../config/teekConfig";
 import { useRuntime } from "../hooks/useRuntime";
@@ -12,7 +12,7 @@ const { frontmatter } = useData();
 const current = ref("D");
 
 const teekConfig = ref(current.value === "D" ? teekDocConfig : teekBlogConfig);
-provide(teekConfigSymbol, teekConfig);
+provide(teekConfigContext, teekConfig);
 
 const handleSwitch = () => {
   current.value = current.value === "D" ? "B" : "D";

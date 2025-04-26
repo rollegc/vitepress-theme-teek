@@ -40,6 +40,8 @@ const disabledList = computed(() => {
     :popper-class="ns.e('popover')"
     :y-offset="-10"
   >
+    <slot name="teek-theme-enhance-top" />
+
     <template #reference>
       <TkIcon :icon="readingIcon" :size="20" />
     </template>
@@ -58,6 +60,8 @@ const disabledList = computed(() => {
         <Spotlight />
         <SpotlightStyle />
       </template>
+
+      <slot name="teek-theme-enhance-bottom" />
     </div>
   </TkPopover>
 </template>

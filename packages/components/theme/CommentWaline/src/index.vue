@@ -4,7 +4,7 @@ import type { WalineInstance } from "./waline";
 import { inject, onMounted } from "vue";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { walineSymbol } from "./waline";
+import { walineContext } from "./waline";
 
 defineOptions({ name: "CommentWaline" });
 
@@ -21,7 +21,7 @@ const walineId = "waline";
 
 const initWalineByInject = () => {
   // 尝试从上下文获取 waline 实例
-  const getWalineInstance = inject(walineSymbol, () => null);
+  const getWalineInstance = inject(walineContext, () => null);
   if (getWalineInstance) waline = getWalineInstance?.(walineOptions, `#${walineId}`);
 
   return waline;

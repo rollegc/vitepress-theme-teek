@@ -7,6 +7,6 @@ export interface WalineInstance {
   destroy: () => void;
 }
 
-export const walineSymbol: InjectionKey<
+export const walineContext: InjectionKey<
   (options: CommentProvider["waline"], el: string | HTMLElement | null) => WalineInstance | null
 > = Symbol("waline");

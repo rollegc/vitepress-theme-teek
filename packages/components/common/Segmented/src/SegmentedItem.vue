@@ -13,25 +13,21 @@ const model = defineModel<ModelType>();
 </script>
 
 <template>
-  <label
-    :class="[ns.b(), ns.is('active', model === value && !disabled), ns.is('disabled', disabled)]"
-    :title="title"
-    :disabled="disabled"
-  >
+  <label :class="[ns.b(), ns.is('active', model === value && !disabled), ns.is('disabled', disabled)]" :title :disabled>
     <input
       v-model="model"
       type="radio"
-      :value="value"
-      :name="name"
+      :value
+      :name
+      :disabled
       :checked="model === value"
       :aria-checked="model === value"
-      :disabled="disabled"
       role="radio"
       style="display: none"
     />
     <span :class="ns.e('content')">
-      <TkIcon v-if="icon" :icon="icon" aria-hidden="true" />
-      <span v-if="text">{{ text }}</span>
+      <TkIcon v-if="icon" :icon aria-hidden="true" />
+      <span v-if="label">{{ label }}</span>
     </span>
   </label>
 </template>

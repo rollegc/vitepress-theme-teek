@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue";
 import { TkPopover } from "vitepress-theme-teek";
-
-const visible = ref(false);
 </script>
 
 <template>
@@ -97,27 +94,17 @@ button {
   padding: 8px 15px;
   font-size: 14px;
   border-radius: 4px;
-
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  line-height: 1;
   height: 32px;
-  white-space: nowrap;
-  cursor: pointer;
-  color: var(--vp-c-text-1);
-  text-align: center;
-  box-sizing: border-box;
-  outline: none;
   transition: 0.1s;
   font-weight: 500;
-  -webkit-user-select: none;
   user-select: none;
-  vertical-align: middle;
   border: 1px solid #dcdfe6;
 
   &:hover {
-    background-color: var(--vp-c-brand-3);
+    background-color: var(--tk-fill-color-dark);
   }
 }
 </style>

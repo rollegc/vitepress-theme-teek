@@ -28,7 +28,7 @@ import { TkNotice } from "@teek/components/theme/Notice";
 import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
 
-import { isBoolean } from "@teek/helper";
+import { isBoolean, isClient } from "@teek/helper";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -83,10 +83,10 @@ const topTipConfig = computed(() => {
 });
 
 const themeSizeAttribute = ns.joinNamespace("theme-size");
-
 watch(
   () => unref(teekConfig).themeSize,
   newValue => {
+    if (!isClient) return;
     // 设置或删除主题尺寸
     if (newValue) document.documentElement.setAttribute(ns.joinNamespace(themeSizeAttribute), newValue);
     else document.documentElement.removeAttribute(themeSizeAttribute);
@@ -148,7 +148,11 @@ const usedSlots = [
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
         <ClientOnly>
-          <TkThemeEnhance position="top" />
+          <TkThemeEnhance position="top">
+            <template v-for="(_, name) in $slots" :key="name" #[name]>
+              <slot :name="name" />
+            </template>
+          </TkThemeEnhance>
         </ClientOnly>
       </template>
 

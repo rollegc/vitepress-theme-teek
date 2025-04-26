@@ -72,7 +72,7 @@ const themeColorList = computed(() => {
       ],
     },
     ...append,
-  ];
+  ] as { label: string; tip: string; options: { label: string; value: string }[] }[];
 });
 </script>
 

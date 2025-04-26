@@ -1,6 +1,6 @@
 import { defineComponent, h, nextTick, provide, watch } from "vue";
 import { useData, useRoute } from "vitepress";
-import Teek, { artalkSymbol, giscusSymbol, walineSymbol } from "vitepress-theme-teek";
+import Teek, { artalkContext, giscusContext, walineContext } from "vitepress-theme-teek";
 // import "vitepress-theme-teek/index.css";
 import NoticeContent from "./components/NoticeContent.vue";
 import BannerImgArrow from "./components/BannerImgArrow.vue";
@@ -43,9 +43,9 @@ export default {
       const route = useRoute();
 
       // 注入评论区实例
-      provide(walineSymbol, (options, el) => init({ serverURL: options.serverURL!, dark: options.dark, el }));
-      provide(giscusSymbol, () => Giscus);
-      provide(artalkSymbol, (options, el) =>
+      provide(walineContext, (options, el) => init({ serverURL: options.serverURL!, dark: options.dark, el }));
+      provide(giscusContext, () => Giscus);
+      provide(artalkContext, (options, el) =>
         Artalk.init({
           el,
           darkMode: isDark.value,

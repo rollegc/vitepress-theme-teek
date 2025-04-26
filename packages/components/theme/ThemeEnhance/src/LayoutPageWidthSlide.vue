@@ -20,7 +20,7 @@ const max = computed(() => 100 * 100);
 
 const pageMaxWidth = useStorage(
   pageMaxWidthSlideStorageKey,
-  themeEnhanceConfig.value.layoutSwitch?.pageLayoutMaxWidth?.defaultMaxWidth || 90 * 100
+  (themeEnhanceConfig.value.layoutSwitch?.defaultPageMaxWidth || 90) * 100
 );
 const layoutMode = useStorage(
   layoutModeStorageKey,
@@ -60,7 +60,7 @@ const tips = [
       v-show="layoutMode === LayoutMode.SidebarWidthAdjustableOnly || layoutMode === LayoutMode.BothWidthAdjustable"
       :icon="autoWidthIcon"
       :title="t('tk.themeEnhance.pageLayoutMaxWidth.title')"
-      :helper="!themeEnhanceConfig.layoutSwitch?.pageLayoutMaxWidth?.disableHelp"
+      :helper="!themeEnhanceConfig.layoutSwitch?.disablePageMaxWidthHelp"
       :helper-desc="t('tk.themeEnhance.pageLayoutMaxWidth.helpDesc')"
       :tips
       :disabled="isMobile"

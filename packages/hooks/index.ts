@@ -1,3 +1,4 @@
+export * from "./onClickOutside";
 export * from "./useAnchorScroll";
 export * from "./useBuSuanZi";
 export * from "./useClipboard";

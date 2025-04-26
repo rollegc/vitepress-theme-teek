@@ -31,6 +31,7 @@ const {
 const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));
 const decodedDescription = computed(() => decodeURIComponent(props.description));
+const effect = computed(() => props.effect === "true");
 
 // 预加载 Demo 组件，防止 VitePress 打包时不包含 Demo 组件
 const moduleFiles = (import.meta as any).glob("/examples/**/*.vue", { eager: true });

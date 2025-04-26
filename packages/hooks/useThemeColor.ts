@@ -145,13 +145,7 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
     if (!isStop.value) return;
     isStop.value = false;
 
-    stopWatch = watch(
-      isDark,
-      () => {
-        update();
-      },
-      { flush: "post", immediate: true }
-    );
+    stopWatch = watch(isDark, update, { flush: "post", immediate: true });
   };
 
   const stop = () => {

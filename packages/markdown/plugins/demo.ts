@@ -39,11 +39,13 @@ const demoPlugin = (md: MarkdownIt, option: Demo = {}) => {
         }
         if (!source) throw new Error(`Incorrect source file path: ${sourceFile}`);
 
-        return `<TkDemoCode effect="${description === "effect"}" source="${encodeURIComponent(
+        const effect = description === "effect";
+
+        return `<TkDemoCode effect="${effect}" source="${encodeURIComponent(
           md.render(`\`\`\` vue\n${source}\`\`\``)
         )}" path="${posix.join(path, sourceFile)}" raw-source="${encodeURIComponent(
           source
-        )}" description="${encodeURIComponent(md.render(description))}" demo="${encodeURIComponent(JSON.stringify(option))}">`;
+        )}" description="${effect ? "" : encodeURIComponent(md.render(description))}" demo="${encodeURIComponent(JSON.stringify(option))}">`;
       } else return "</TkDemoCode>";
     },
   };

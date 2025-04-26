@@ -117,7 +117,7 @@ export interface TeekConfig {
    */
   bodyBgImg?: BodyBgImg;
   /**
-   * 布局增强配置
+   * 主题增强配置
    */
   themeEnhance?: ThemeEnhance;
   /**

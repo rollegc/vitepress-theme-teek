@@ -20,7 +20,7 @@ const max = computed(() => 100 * 100);
 
 const docMaxWidth = useStorage(
   docMaxWidthSlideStorageKey,
-  themeEnhanceConfig.value.layoutSwitch?.docLayoutMaxWidth?.defaultMaxWidth || 90 * 100
+  (themeEnhanceConfig.value.layoutSwitch?.defaultDocMaxWidth || 90) * 100
 );
 const layoutMode = useStorage(
   layoutModeStorageKey,
@@ -63,7 +63,7 @@ const tips = [
       v-show="layoutMode === LayoutMode.BothWidthAdjustable"
       :icon="autoWidthIcon"
       :title="t('tk.themeEnhance.docLayoutMaxWidth.title')"
-      :helper="!themeEnhanceConfig.layoutSwitch?.docLayoutMaxWidth?.disableHelp"
+      :helper="!themeEnhanceConfig.layoutSwitch?.disableDocMaxWidthHelp"
       :helper-desc="t('tk.themeEnhance.docLayoutMaxWidth.helpDesc')"
       :tips
       :disabled="isMobile"
