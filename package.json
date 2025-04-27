@@ -27,7 +27,7 @@
     "prepare": "husky",
     "cs": "pnpm changeset",
     "cs:version": "pnpm changeset version",
-    "cs:release": "pnpm run plugin:build && changeset publish",
+    "cs:release": "pnpm run plugins:build && changeset publish",
     "cs:pre": "changeset pre enter",
     "cs:pre:exit": "changeset pre enter exit",
     "release": "standard-version",

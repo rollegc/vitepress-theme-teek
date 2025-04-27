@@ -68,13 +68,14 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
           // @ts-expect-error gray-matter types are wrong
           typeof renderExcerpt === "string" ? { excerpt_separator: renderExcerpt } : { excerpt: renderExcerpt }
         );
+
         const url =
           "/" +
           normalizePath(relative(srcDir, file))
             .replace(/(^|\/)index\.md$/, "$1")
             .replace(/\.md$/, cleanUrls ? "" : ".html");
         const html = render ? md.render(src) : undefined;
-        const renderedExcerpt = renderExcerpt ? excerpt && md.render(excerpt) : undefined;
+        const renderedExcerpt = renderExcerpt && excerpt?.endsWith("\n") ? md.render(excerpt) : undefined;
 
         const data: FileContentLoaderData = {
           src: includeSrc ? src : undefined,

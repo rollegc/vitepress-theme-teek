@@ -1,7 +1,7 @@
 import type { FileContentLoaderData } from "vitepress-plugin-file-content-loader";
 import type { TkContentData, PostData } from "./types";
 import type { RequiredKeyPartialOther } from "@teek/helper";
-import { SiteConfig } from "vitepress";
+import type { SiteConfig } from "vitepress";
 import { getTitleFromMd } from "vitepress-plugin-sidebar-resolve";
 import { basename, join } from "node:path";
 import { statSync } from "node:fs";
@@ -36,7 +36,7 @@ export const transformData = (data: FileContentLoaderData): TkContentData => {
     title: getTitle(data),
     date: getDate(data, siteConfig.srcDir),
     excerpt,
-    capture: getCaptureText(data),
+    capture: data.html?.split("\n").slice(0, 4).join("\n") || getCaptureText(data),
   };
 };
 
@@ -123,9 +123,13 @@ export function getDate(post: RequiredKeyPartialOther<TkContentData, "frontmatte
 
 /**
  * 截取 markdown 文件前 count 数的内容
+ *
+ * @param post 文章数据
+ * @param count 截取数量，默认 300
  */
-export const getCaptureText = (post: TkContentData, count = 400) => {
+export const getCaptureText = (post: TkContentData, count = 300) => {
   const { content = "" } = matter(post.src || "", {});
+
   return (
     content
       // 首个标题

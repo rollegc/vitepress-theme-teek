@@ -16,7 +16,8 @@ export type TkContentData = FileContentLoaderData & {
   date?: string;
   /**
    * 截取文章开头文字
-   * @default '文章开头前 400 文字'
+   *
+   * @default '文章开头前 300 文字'
    */
   capture?: string;
 };

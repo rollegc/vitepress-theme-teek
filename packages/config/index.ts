@@ -125,6 +125,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
       // 指定摘录格式
       excerpt: "<!-- more -->",
       includeSrc: true,
+      render: teekConfig.post?.captureRender,
       transformData,
       transformRaw,
       themeConfigKey: "posts",

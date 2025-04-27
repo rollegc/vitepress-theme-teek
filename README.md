@@ -49,7 +49,6 @@ pnpm plugins:build
 
 ## TODO
 
-- post.showCapture 支持 md 渲染
 - 代码块支持默认折叠
 - 考虑替换 ClientOnly
 - 添加 titleTag

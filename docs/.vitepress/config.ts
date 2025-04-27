@@ -15,6 +15,10 @@ const teekConfig = defineTeekConfig({
       suffix: "Teek",
     },
   },
+  post: {
+    showCapture: true,
+    captureRender: false,
+  },
   articleShare: { enabled: true },
   vitePlugins: {
     sidebarOption: {
