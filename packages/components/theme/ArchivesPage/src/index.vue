@@ -61,6 +61,9 @@ const defaultLabel = computed(() => {
                 <a :href="item.url && withBase(item.url)" :aria-label="`${item.title}`">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>
+                  <span :class="[ns.joinNamespace('title-tag'), 'small']" v-if="item.frontmatter.titleTag">
+                    {{ item.frontmatter.titleTag }}
+                  </span>
                 </a>
               </li>
             </ul>

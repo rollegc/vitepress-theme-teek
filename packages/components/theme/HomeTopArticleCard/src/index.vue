@@ -98,6 +98,9 @@ const getStyle = (num: number, index: number) => {
           <div :class="ns.e('list__item__info')">
             <a :href="item.url && withBase(item.url)" class="hover-color flx-align-center">
               <span class="title sle">{{ item.title }}</span>
+              <span :class="[ns.joinNamespace('title-tag'), 'mini']" v-if="item.frontmatter.titleTag">
+                {{ item.frontmatter.titleTag }}
+              </span>
             </a>
             <div class="date">{{ formatPostDate(item.date) }}</div>
           </div>

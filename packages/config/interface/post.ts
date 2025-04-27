@@ -32,11 +32,17 @@ export interface Post {
    */
   coverImgMode?: "default" | "full";
   /**
-   * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 400 个字符作为摘要
+   * 是否在摘要位置显示文章部分文字，当为 true 且不使用 frontmatter.describe 和 <!-- more --> 时，会自动截取前 300 个字符作为摘要
    *
    * @default false
    */
   showCapture?: boolean;
+  /**
+   * 截取文章文字时，是否渲染为 HTML 标签，如果为 false 则保留纯文本
+   *
+   * @default false
+   */
+  captureRender?: boolean;
   /**
    * 文章信息（作者、创建时间、分类、标签等信息）是否添加 | 分隔符
    *

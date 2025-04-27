@@ -3,7 +3,6 @@ packages:
   - plugins/*
   - docs
   - build
-  - demo/*
 
 catalog:
   vue: ^3.5.13
@@ -20,9 +19,17 @@ catalog:
   "@types/markdown-it": ^14.1.2
   "@types/markdown-it-container": ^2.0.10
   vitepress-plugin-auto-frontmatter: ^1.0.7
-  vitepress-plugin-catalogue: ^1.0.9
+  vitepress-plugin-catalogue: ^1.0.14
   vitepress-plugin-doc-analysis: ^1.0.10
-  vitepress-plugin-file-content-loader: ^1.0.9
+  vitepress-plugin-file-content-loader: ^1.0.11
   vitepress-plugin-md-h1: ^1.0.8
   vitepress-plugin-permalink: ^1.0.17
   vitepress-plugin-sidebar-resolve: ^1.0.8
+
+catalogs:
+  vue:
+    '@vue/compiler-core': ^3.5.13
+    '@vue/compiler-dom': ^3.5.13
+    '@vue/reactivity': ^3.5.13
+    '@vue/runtime-core': ^3.5.13
+    '@vue/runtime-dom': ^3.5.13

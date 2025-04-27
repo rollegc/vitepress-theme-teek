@@ -100,8 +100,9 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
   if (mdH1) {
     const selfBeforeInject = mdH1Option.beforeInject;
     mdH1Option.beforeInject = (frontmatter, id, title) => {
-      if (frontmatter.layout === "cataloguePage" || frontmatter.catalogue) return false;
-      if (frontmatter.layout === "archivesPage" || frontmatter.archivesPage) return false;
+      if (["cataloguePage", "TkCataloguePage"].includes(frontmatter.layout) || frontmatter.catalogue) return false;
+      if (["archivesPage", "TkArchivesPage"].includes(frontmatter.layout) || frontmatter.archivesPage) return false;
+      if (frontmatter.titleTag) return `${title} <span class="tk-title-tag large">${frontmatter.titleTag}</span>`;
 
       return selfBeforeInject?.(frontmatter, id, title);
     };
@@ -125,6 +126,7 @@ export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Co
       // 指定摘录格式
       excerpt: "<!-- more -->",
       includeSrc: true,
+      render: teekConfig.post?.captureRender,
       transformData,
       transformRaw,
       themeConfigKey: "posts",

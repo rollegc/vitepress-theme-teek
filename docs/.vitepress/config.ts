@@ -15,6 +15,13 @@ const teekConfig = defineTeekConfig({
       suffix: "Teek",
     },
   },
+  codeBlock: {
+    copiedDone: TkMessage => TkMessage.success("复制成功！"),
+  },
+  post: {
+    showCapture: true,
+    captureRender: true,
+  },
   articleShare: { enabled: true },
   vitePlugins: {
     sidebarOption: {

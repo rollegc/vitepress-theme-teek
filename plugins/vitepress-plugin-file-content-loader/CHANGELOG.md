@@ -1,5 +1,17 @@
 # vitepress-plugin-file-content-loader
 
+## 1.0.11
+
+### Patch Changes
+
+- unbuild 3.5.0 下降为 3.2.0，修复打包后默认导出丢失问题
+
+## 1.0.10
+
+### Patch Changes
+
+- 摘要标识限制在单行生效
+
 ## 1.0.9
 
 ### Patch Changes

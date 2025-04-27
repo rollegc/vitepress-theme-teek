@@ -1,3 +1,0 @@
-# English
-
-Locales Test

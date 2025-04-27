@@ -82,6 +82,9 @@ const isShowInfo = computed(() => {
         <!-- 标题 -->
         <a class="title hover-color" :href="postUrl" :aria-label="post.title">
           {{ post.title }}
+          <span :class="ns.joinNamespace('title-tag')" v-if="post.frontmatter.titleTag">
+            {{ post.frontmatter.titleTag }}
+          </span>
         </a>
 
         <!-- 摘要 top -->

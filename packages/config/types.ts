@@ -75,11 +75,26 @@ export interface TeekConfig {
    */
   viewTransition?: boolean;
   /**
-   * 是否使用新版代码块样式，如果为 false 则使用官方默认样式。新版代码块支持折叠
-   *
-   * @default true
+   * 新版代码块配置
    */
-  codeBlock?: boolean;
+  codeBlock?: {
+    /**
+     * 是否禁用新版代码块
+     *
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * 超出高度后自动折叠，设置 true 则默认折叠，false 则默认不折叠
+     *
+     * @default 700
+     */
+    collapseHeight?: number | boolean;
+    /**
+     * 复制代码完成后的回调，如果不设置或传入 false 或 undefined，则使用 VitePress 默认提示
+     */
+    copiedDone?: (TkMessage: Message) => boolean | unknown;
+  };
   /**
    * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序
    *

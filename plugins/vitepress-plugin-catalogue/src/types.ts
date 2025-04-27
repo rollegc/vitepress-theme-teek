@@ -68,6 +68,10 @@ export interface CatalogueItem {
    */
   title: string;
   /**
+   * 文件 frontmatter
+   */
+  frontmatter: Record<string, any>;
+  /**
    * 文件路径
    */
   link?: string;

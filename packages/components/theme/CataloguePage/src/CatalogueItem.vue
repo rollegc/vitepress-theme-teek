@@ -15,6 +15,9 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
   <li :class="item.children ? nsSub.b() : nsItem.b()">
     <a v-if="!item.children" :href="item.link && withBase(item.link)" :aria-label="`${index}. ${item.title}`">
       {{ index }}. {{ item.title }}
+      <span :class="[nsItem.joinNamespace('title-tag'), 'small']" v-if="item.frontmatter.titleTag">
+        {{ item.frontmatter.titleTag }}
+      </span>
     </a>
 
     <template v-else>
