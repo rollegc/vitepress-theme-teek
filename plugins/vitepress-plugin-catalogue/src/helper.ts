@@ -128,10 +128,8 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
-      const { data: { title: frontmatterTitle, catalogue, inCatalogue = true } = {}, content: mdContent } = matter(
-        content,
-        {}
-      );
+      const { data: frontmatter = {}, content: mdContent } = matter(content, {});
+      const { title: frontmatterTitle, catalogue, inCatalogue = true } = frontmatter;
 
       // 不扫描目录页和 inCatalogue 为 false 的文档
       if (catalogue || !inCatalogue) return [];
@@ -143,6 +141,7 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
       const catalogueItem = {
         title: finalTitle,
         link: prefix + name,
+        frontmatter,
       };
 
       if (isIllegalIndex(index)) catalogueItemListNoIndex.push(catalogueItem);

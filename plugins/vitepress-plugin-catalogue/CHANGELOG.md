@@ -1,5 +1,35 @@
 # vitepress-plugin-catalogue
 
+## 1.0.14
+
+### Patch Changes
+
+- unbuild 3.5.0 下降为 3.2.0，修复打包后默认导出丢失问题
+
+## 1.0.13
+
+### Patch Changes
+
+- TS 类型修复
+
+## 1.0.12
+
+### Patch Changes
+
+- 类型修复
+
+## 1.0.11
+
+### Patch Changes
+
+- 添加 TS 类型
+
+## 1.0.10
+
+### Patch Changes
+
+- 目录页数据添加 frontmatter
+
 ## 1.0.9
 
 ### Patch Changes

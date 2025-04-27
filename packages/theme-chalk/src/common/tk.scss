@@ -49,6 +49,45 @@
   transform: translate(-50%, -50%);
 }
 
+.#{$namespace}-title-tag {
+  display: inline-block;
+  height: 22px;
+  line-height: 18px;
+  border: 1px solid getCssVar("theme-color");
+  color: getCssVar("theme-color");
+  -webkit-text-fill-color: getCssVar("theme-color");
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 4px;
+  font-weight: 500;
+
+  &.large {
+    font-size: 16px;
+    height: 24px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  &.small {
+    font-size: 13px;
+    height: 19px;
+    line-height: 15px;
+  }
+
+  &.mini {
+    font-size: 12px;
+    height: 18px;
+    line-height: 14px;
+  }
+}
+
+h1 {
+  .#{$namespace}-title-tag {
+    transform: translateY(-4px);
+  }
+}
+
 /* Badge 添加 success 样式 */
 .VPBadge.success {
   border-color: getCssVar("el-color-success-light-8");
@@ -59,94 +98,4 @@
 a.hover-color:hover {
   color: getCssVar("theme-color");
   cursor: pointer;
-}
-
-/* flex */
-.flx {
-  display: flex;
-}
-
-.flx-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flx-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.flx-column-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.flx-align-center {
-  display: flex;
-  align-items: center;
-}
-
-.flx-justify-center {
-  display: flex;
-  justify-content: center;
-}
-
-.flx-justify-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.flx-justify-around {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.flx-start-justify-center {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.flx-wrap-between {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.flx-wrap-justify-center {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.flx-1 {
-  flex: 1;
-}
-
-/* 文字单行省略号 */
-.sle {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* 文字多行省略号 */
-.mle {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-}
-
-/* 文字多了自动换行 */
-.break-word {
-  word-break: break-all;
-  word-wrap: break-word;
 }
