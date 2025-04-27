@@ -22,9 +22,13 @@ const progress = ref(0);
 
 const scrollToTop = useDebounce(() => {
   document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
-  setTimeout(() => {
-    backTopDone.value?.(TkMessage);
-  }, 600);
+  setTimeout(
+    () => {
+      backTopDone.value?.(TkMessage);
+    },
+    600,
+    true
+  );
 }, 500);
 
 const watchScroll = () => {

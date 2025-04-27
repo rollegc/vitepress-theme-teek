@@ -29,9 +29,13 @@ const showToComment = computed(() => {
 
 const scrollToComment = useDebounce(() => {
   document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
-  setTimeout(() => {
-    toCommentDone.value?.(TkMessage);
-  }, 600);
+  setTimeout(
+    () => {
+      toCommentDone.value?.(TkMessage);
+    },
+    600,
+    true
+  );
 }, 500);
 </script>
 
