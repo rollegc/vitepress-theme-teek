@@ -51,7 +51,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekTheme: true,
   teekHome: true,
   vpHome: true,
-  codeBlock: true,
+  codeBlock: { disabled: false },
   themeSize: "",
   bodyBgImg: {},
   notice: {},
@@ -174,7 +174,7 @@ const usedSlots = [
           <TkArticleAnalyze />
           <TkArticleImagePreview />
           <TkArticlePageStyle />
-          <TkCodeBlockToggle v-if="teekConfig.codeBlock" />
+          <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
         </ClientOnly>
 
         <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />

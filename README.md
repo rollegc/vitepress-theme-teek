@@ -49,7 +49,6 @@ pnpm plugins:build
 
 ## TODO
 
-- 代码块支持默认折叠
 - 考虑替换 ClientOnly
 - 添加 titleTag
 - 组件生态文档编写

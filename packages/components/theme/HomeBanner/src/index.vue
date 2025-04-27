@@ -3,7 +3,7 @@ import type { Banner, BodyBgImg } from "@teek/config";
 import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, unref } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale, useEventListener } from "@teek/hooks";
 import { upperFirst } from "@teek/helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
@@ -89,15 +89,12 @@ onMounted(() => {
   if (unref(currentBgStyle).isBannerFullImgBgStyle || unref(currentBgStyle).isBodyFullImgBgStyle) {
     // 全屏图片模式，监听滚轮，修改导航栏样式（透明化）
     toggleClass();
-    window.addEventListener("scroll", toggleClass);
+    useEventListener(window, "scroll", toggleClass);
   }
 });
 
 onUnmounted(() => {
   document.querySelector(".VPNavBar")?.classList.remove("full-img-nav-bar");
-  if (unref(currentBgStyle).isBannerFullImgBgStyle || unref(currentBgStyle).isBodyImgBgStyle) {
-    window.removeEventListener("scroll", toggleClass);
-  }
 });
 
 const className = computed(() => {

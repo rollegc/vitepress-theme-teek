@@ -1,25 +1,31 @@
 <script setup lang="ts" name="CodeBlockToggle">
 import { nextTick, unref, watch } from "vue";
-import { useRoute, useData } from "vitepress";
-import { useNamespace } from "@teek/hooks";
+import { useEventListener, useNamespace } from "@teek/hooks";
+import { isBoolean } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
+import { TkMessage } from "@teek/components/common/Message";
+import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { TeekConfig } from "@teek/config";
 
 defineOptions({ name: "CodeBlockToggle" });
 
 const ns = useNamespace("");
-const { frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+
+const codeBlockConfig = getTeekConfigRef<NonNullable<TeekConfig["codeBlock"]>>("codeBlock", {
+  collapseHeight: 700,
+  copiedDone: undefined,
+});
 
 const documentAttribute = "code-block";
 const foldClass = "fold";
 const arrowClass = "code-arrow";
 
-const route = useRoute();
-
 watch(
-  route,
-  () => {
-    const { codeBlock = true } = unref(frontmatter);
-    if (codeBlock === false) return document.documentElement.removeAttribute(documentAttribute);
+  codeBlockConfig,
+  newVal => {
+    const { disabled } = newVal || {};
+    if (disabled) return document.documentElement.removeAttribute(documentAttribute);
 
     document.documentElement.setAttribute(documentAttribute, ns.namespace);
     nextTick(() => initCodeBlock());
@@ -34,14 +40,23 @@ const initCodeBlock = () => {
   const modes = document.querySelectorAll(".vp-doc div[class*='language-']") as unknown as HTMLElement[];
 
   Array.from(modes).forEach(item => {
+    const copyDom = item.querySelector<HTMLElement>(`.copy`);
+
+    copyDom?.addEventListener("click", e => {
+      if (unref(codeBlockConfig).copiedDone?.(TkMessage)) {
+        // 阻止其他监听器执行
+        e.stopImmediatePropagation();
+      }
+    });
+
     // 当支持自定义 class 来忽略，代码块父元素的 class 中包含 vp-code-block，则跳过
     if (item.parentElement?.className.includes(ns.joinNamespace("vp-code"))) return;
 
-    const arrowElement: HTMLElement | null = item.querySelector(`.${arrowClass}`);
+    const arrowElement = item.querySelector<HTMLElement>(`.${arrowClass}`);
     // 手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面
     if (arrowElement) return;
 
-    const newArrowElement: HTMLElement | null = document.createElement("div");
+    const newArrowElement = document.createElement("div");
     newArrowElement.classList.add(arrowClass);
     // 添加箭头图标
     newArrowElement.innerHTML = arrowDownIcon;
@@ -63,8 +78,8 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
   // 初始化代码块高度，确保第一次折叠时就有动画
   codeDom.style.height = `${modeHeight}px`;
   // 获取代码块的元素
-  const preDom: HTMLElement | null = codeDom.querySelector("pre");
-  const lineNumbersWrapperDom: HTMLElement | null = codeDom.querySelector(".line-numbers-wrapper");
+  const preDom = codeDom.querySelector<HTMLElement>("pre");
+  const lineNumbersWrapperDom = codeDom.querySelector<HTMLElement>(".line-numbers-wrapper");
 
   const codeBlockState = {
     expand: { height: `${modeHeight}px`, display: "block", speed: 80 },
@@ -81,7 +96,7 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
   };
 
   // 箭头点击事件
-  const clickEvent = () => {
+  const toggle = () => {
     const isFold = arrowDom.classList.contains(foldClass);
     // 如果是折叠状态，则需要展开
     const state = codeBlockState[isFold ? "expand" : "fold"];
@@ -101,7 +116,12 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
     arrowDom.classList.toggle(foldClass);
   };
 
-  arrowDom.addEventListener("click", clickEvent);
+  useEventListener(arrowDom, "click", toggle);
+
+  const collapseHeight = unref(codeBlockConfig).collapseHeight;
+
+  if (isBoolean(collapseHeight)) collapseHeight && toggle();
+  else if (collapseHeight && modeHeight > collapseHeight) toggle();
 };
 
 /**

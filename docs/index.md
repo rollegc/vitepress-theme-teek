@@ -86,8 +86,8 @@ import { useData } from 'vitepress'
  * 将 `#hero-text` 元素移动到 `.VPHero .text` 元素内部。
  */
   onMounted(() => {
-    const p = document.querySelector('.VPHero .text') as HTMLElement | null
-    const s = document.querySelector('#hero-text') as HTMLElement | null
+    const p = document.querySelector<HTMLElement>('.VPHero .text')
+    const s = document.querySelector<HTMLElement>('#hero-text')
 
   if (!p || !s) return
 
