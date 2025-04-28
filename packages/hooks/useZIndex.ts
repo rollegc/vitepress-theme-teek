@@ -1,6 +1,6 @@
 import type { InjectionKey, Ref } from "vue";
 import { computed, getCurrentInstance, inject, ref, unref } from "vue";
-import { isNumber, isClient } from "@teek/helper";
+import { isNumber } from "@teek/helper";
 
 export interface zIndexInjectionContext {
   current: number;
@@ -16,7 +16,7 @@ const zIndex = ref(0);
 export const defaultInitialZIndex = 2000;
 
 // For SSR
-export const Z_INDEX_INJECTION_KEY: InjectionKey<zIndexInjectionContext> = Symbol("zIndexContextKey");
+export const Z_INDEX_INJECTION_KEY: InjectionKey<zIndexInjectionContext> = Symbol("tkZIndexContextKey");
 
 export const zIndexContextKey: InjectionKey<Ref<number | undefined>> = Symbol("zIndexContextKey");
 
@@ -46,7 +46,7 @@ export const useZIndex = (zIndexOverrides?: Ref<number>) => {
     return currentZIndex.value;
   };
 
-  if (!isClient && !inject(Z_INDEX_INJECTION_KEY)) {
+  if (inject(Z_INDEX_INJECTION_KEY, undefined)) {
     console.warn(
       "ZIndexInjection",
       `Looks like you are using server rendering, you must provide a z-index provider to ensure the hydration process to be succeed

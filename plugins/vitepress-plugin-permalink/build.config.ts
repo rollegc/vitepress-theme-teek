@@ -1,16 +1,11 @@
 import { defineBuildConfig } from "unbuild";
+import { copy } from "fs-extra";
 
 export default defineBuildConfig({
   entries: [
     "src/index",
     "src/usePermalink",
-    {
-      builder: "mkdist",
-      input: "src/components",
-      outDir: "dist/components",
-      pattern: ["**/*.vue"],
-      loaders: ["vue"],
-    },
+    { builder: "mkdist", input: "src/components", outDir: "dist/components", pattern: ["**/*.vue"], loaders: ["vue"] },
   ],
   clean: true,
   declaration: true,
@@ -20,6 +15,11 @@ export default defineBuildConfig({
       exports: "named",
     },
   },
-  externals: ["vitepress", "vue", "vite"],
+  externals: ["vitepress", "vue", "vite", "fs-extra"],
   failOnWarn: false,
+  hooks: {
+    "build:done": async () => {
+      await copy("src/vitepress-router.d.ts", "dist/vitepress-router.d.ts");
+    },
+  },
 });

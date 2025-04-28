@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-permalink",
   "type": "module",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "扫描 Markdown 文档，生成永久链接",
   "author": {
     "name": "teeker",
@@ -63,6 +63,8 @@
     "picocolors": "catalog:"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "fs-extra": "^11.2.0",
     "vite": "catalog:",
     "vitepress": "catalog:"
   },

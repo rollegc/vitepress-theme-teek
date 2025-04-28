@@ -14,7 +14,7 @@ export type BindPosition = "before" | "after";
  * @param bindPosition 绑定的位置，before 为在原函数之前绑定，after 为在原函数之后绑定
  */
 export const useVpRouter = () => {
-  const router = useRouter() as VpRouter & { state: Record<string, any> };
+  const router = useRouter() as VpRouter & { state: Record<string, any>; onAfterUrlLoad: (href: string) => void };
 
   const bindBeforeRouteChange = (
     stateFlag: string,

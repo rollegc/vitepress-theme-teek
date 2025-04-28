@@ -49,7 +49,6 @@ pnpm plugins:build
 
 ## TODO
 
-- 考虑替换 ClientOnly
 - 组件生态文档编写
 - MD 文档添加/删除自动重启项目
 - 归档页添加 commit 图标风格，如：`http://niubin.site/archive.html`

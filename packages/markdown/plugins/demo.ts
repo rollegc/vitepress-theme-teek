@@ -27,7 +27,10 @@ const demoPlugin = (md: MarkdownIt, option: Demo = {}) => {
       const desc = tokens[idx].info.trim().match(/^demo\s*(.*)$/);
 
       if (tokens[idx].nesting === 1 /* 标签打开 */) {
-        const description = desc && desc.length > 1 ? desc[1] : "";
+        let description = desc && desc.length > 1 ? desc[1].trim() : "";
+        const effect = description.startsWith("effect");
+        if (effect) description = description.replace("effect", "").trim();
+
         const sourceFileToken = tokens[idx + 2];
         let source = "";
         const containerContent = sourceFileToken.children?.[0].content ?? "";
@@ -39,13 +42,11 @@ const demoPlugin = (md: MarkdownIt, option: Demo = {}) => {
         }
         if (!source) throw new Error(`Incorrect source file path: ${sourceFile}`);
 
-        const effect = description === "effect";
-
         return `<TkDemoCode effect="${effect}" source="${encodeURIComponent(
           md.render(`\`\`\` vue\n${source}\`\`\``)
         )}" path="${posix.join(path, sourceFile)}" raw-source="${encodeURIComponent(
           source
-        )}" description="${effect ? "" : encodeURIComponent(md.render(description))}" demo="${encodeURIComponent(JSON.stringify(option))}">`;
+        )}" description="${encodeURIComponent(md.render(description))}" demo="${encodeURIComponent(JSON.stringify(option))}">`;
       } else return "</TkDemoCode>";
     },
   };

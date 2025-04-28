@@ -13,8 +13,8 @@
     &:not(.split):not(:last-child) {
       margin-right: 16px;
     }
-    i {
-      vertical-align: -2px;
+    @include e(icon) {
+      vertical-align: -1px;
       margin-right: 3px;
     }
   }

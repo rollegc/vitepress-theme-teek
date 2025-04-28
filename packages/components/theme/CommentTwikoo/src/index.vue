@@ -1,6 +1,7 @@
 <script setup lang="ts" name="CommentTwikoo">
 import type { CommentProvider } from "@teek/config";
 import { ref, onMounted, unref } from "vue";
+import { isClient } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
@@ -22,7 +23,9 @@ const {
 } = twikooOptions;
 
 const initTwikoo = () => {
-  if (!envId) return;
+  if (!isClient) return console.error("[Teek Error] Not in the client");
+
+  if (!envId) return console.error("[Teek Error] Twikoo initialization failed. Please configure the 'envId'");
   (window as any).twikoo.init({ ...options, envId, el: "#twikoo" });
 };
 
@@ -38,8 +41,6 @@ const reloadTwikoo = (to: string) => {
 };
 
 onMounted(() => {
-  if (!envId) return console.error("[Teek Error] Twikoo initialization failed. Please configure the 'envId'");
-
   initJs();
   // 路由切换后更新评论内容
   unref(twikooJs) && vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));

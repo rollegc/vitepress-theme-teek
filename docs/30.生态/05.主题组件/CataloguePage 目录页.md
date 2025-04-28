@@ -10,10 +10,6 @@ tags:
   - 主题组件
 ---
 
-如果您已经引入 Teek 全部功能，则无需执行本内容的步骤。
-
-本内容仅介绍在其他主题或 VitePress 默认主题中单独引入。
-
 ## 基础使用
 
 将归档页注册到全局里：
@@ -21,6 +17,7 @@ tags:
 ```ts
 import DefaultTheme from "vitepress/theme";
 import { TkCataloguePage } from "vitepress-theme-teek";
+import "vitepress-theme-teek/theme-chalk/tk-catalogue-page.css";
 
 export default {
   extends: DefaultTheme,

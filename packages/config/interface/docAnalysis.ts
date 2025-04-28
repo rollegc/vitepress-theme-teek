@@ -69,6 +69,12 @@ export interface DocAnalysis {
      * @default 2000
      */
     tryIterationTime?: number;
+    /**
+     * 是否只统计永久链接的浏览量，如果为 false，则统计 VitePress 默认的文档目录链接
+     *
+     * @default true
+     */
+    permalink?: boolean;
   };
   /**
    * 自定义现有信息

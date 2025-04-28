@@ -35,7 +35,7 @@ const previewImage = (e: Event) => {
   }
 };
 
-useEventListener(document.querySelector("#VPContent"), "click", previewImage);
+useEventListener(() => document.querySelector("#VPContent"), "click", previewImage);
 </script>
 
 <template></template>

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@teek/components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "all components are settled here",
   "license": "MIT",
   "main": "index.ts",

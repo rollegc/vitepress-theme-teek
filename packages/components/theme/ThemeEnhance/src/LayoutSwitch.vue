@@ -2,6 +2,7 @@
 import type { ThemeEnhance } from "@teek/config";
 import { computed, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
+import { isClient } from "@teek/helper";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { fullscreenIcon, fullScreenOneIcon, fullscreenTwoIcon, layoutIcon, overallReductionIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -26,15 +27,15 @@ const isMobile = useMediaQuery(mobileMaxWidthMedia);
 const oldLayoutMode = ref(layoutMode.value);
 
 const update = (val: string) => {
+  if (!isClient) return;
+
   const el = document.documentElement;
 
   if (el.getAttribute(layoutModeAttribute) === val) return;
   el.setAttribute(layoutModeAttribute, val);
 };
 
-watch(layoutMode, val => {
-  update(val);
-});
+watch(layoutMode, update);
 
 // 文章单独设置布局模式
 watch(

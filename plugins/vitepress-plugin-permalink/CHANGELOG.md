@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.18
+
+### Patch Changes
+
+- 新增 router.onAfterUrlLoad 钩子和 router.state.permalinkPlugin 标识
+
 ## 1.0.17
 
 ### Patch Changes

@@ -10,6 +10,37 @@ tags:
   - 主题组件
 ---
 
-::: warning 🚧 施工中
-很高兴见到你！但很抱歉，这个页面还在施工中，如果没有找到你感兴趣的信息，你可以先在侧边栏的导航中寻找你感兴趣的内容来开始阅读
-::::
+使用组件预览组件可以渲染一个 Vue 组件的效果，并支持代码复制、查看源代码等功能。
+
+## 基础使用
+
+```ts
+import DefaultTheme from "vitepress/theme";
+import { TkDemoCode, teekConfigContext } from "vitepress-theme-teek";
+import "vitepress-theme-teek/theme-chalk/tk-demo-code.css";
+import { h } from "vue";
+
+provide(teekConfigContext, {
+  markdown: {
+    demo: {
+      playgroundUrl: "", // Playground 链接
+      playgroundMainFileName: "App.vue", // Playground 主文件名
+      githubUrl: "", // Github 链接
+      playgroundButtonTip: "在 Playground 中编辑", // 鼠标悬浮 Playground 按钮提示
+      githubButtonTip: "在 Github 中编辑", // 鼠标悬浮 Github 按钮提示
+      copyButtonTip: "复制代码", // 鼠标悬浮复制代码按钮提示
+      collapseSourceButtonTip: "查看源代码", // 鼠标悬浮查看源代码按钮提示
+      expandSourceButtonTip: "隐藏源代码", // 鼠标悬浮隐藏源代码按钮提示
+
+      // ... 更多配置请看配置系列文章
+    },
+  },
+});
+
+export default {
+  extends: DefaultTheme,
+  enhanceApp({ app, siteData }) {
+    app.component("TkDemoCode", TkDemoCode);
+  },
+};
+```

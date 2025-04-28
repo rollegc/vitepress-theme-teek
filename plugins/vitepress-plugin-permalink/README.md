@@ -149,6 +149,38 @@ permalink: /guide-api
 
 如果永久链接不生效，代表 `usePermalink().startWatch()` 并没有被执行，请在注册 vitepress 或者任意主题前加载该函数，如何注册请看 ([扩展默认主题 | VitePress](https://vitepress.dev/zh/guide/extending-default-theme#layout-slots))
 
+### router.state.permalinkPlugin
+
+如果使用了 `usePermalink` 函数，则会在 `router.state` 中添加 `permalinkPlugin: true`，因此您可以根据这个来判断是否判断插件生效。
+
+```typescript
+import { useRouter } from "vitepress";
+
+const router = useRouter();
+
+console.log(router.state.permalinkPlugin);
+```
+
+### router.onAfterUrlLoad
+
+插件提供了 `router.onAfterUrlLoad` 钩子，当浏览器链接发生变化后，触发该钩子，你可以在参数里接收当前地址栏最新的链接。
+
+`router.onAfterUrlLoad` 钩子在 VitePress 所有的 `router.onAfterXxx` 之后执行，目的是获取本插件提供的永久链接。
+
+```typescript
+import { useRouter } from "vitepress";
+
+const router = useRouter();
+
+router.onAfterUrlLoad = (href: string) => {
+  console.log(href);
+};
+```
+
+**使用场景**
+
+在使用访问量插件如不蒜子时，您需要提供当前的链接来统计其访问量，那么您可以在该钩子拿到地址栏最终的链接，然后提供给访问量插件。
+
 ### notFoundDelayLoad 配置项
 
 使用了 `usePermalink` 函数来提供 `permalink` 功能，但是在第一次进入页面或刷新、回退、前进时，会有 404 页面短暂出现，因此需要引用 `NotFoundDelay.vue` 组件来延迟 404 页面的加载时间。

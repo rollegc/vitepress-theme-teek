@@ -3,6 +3,7 @@ import type { TkPaginationProps } from "@teek/components/common/Pagination";
 import type { Post, TkContentData } from "@teek/config";
 import { reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
+import { isClient } from "@teek/helper";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
 import { emptyIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
@@ -45,6 +46,8 @@ const currentPosts = ref<TkContentData[]>([]);
 const pageNumKey = "pageNum";
 
 const updateData = () => {
+  if (!isClient) return;
+
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
   const p = Number(searchParams.get(pageNumKey)) || 1;

@@ -10,15 +10,14 @@ tags:
   - 公共组件
 ---
 
-如果您已经引入 Teek 全部功能，则无需执行本内容的步骤。
-
-本内容仅介绍在其他主题或 VitePress 默认主题中单独引入。
+使用赞赏组件可以在文章页使用赞助功能。
 
 ## 文章页底部赞赏
 
 ```ts
 import DefaultTheme from "vitepress/theme";
 import { TkDocAfterAppreciation, teekConfigContext } from "vitepress-theme-teek";
+import "vitepress-theme-teek/theme-chalk/tk-article-appreciation.css";
 import { h } from "vue";
 
 provide(teekConfigContext, {
@@ -29,6 +28,8 @@ provide(teekConfigContext, {
       collapseTitle: "下次一定", // 折叠标题，支持 HTML
       content: `<img src='/teek-logo-large.png'>`, // 赞赏内容，支持 HTML
       expand: false, // 是否默认展开，默认 false
+
+      // ... 更多配置请看配置系列文章
     },
   },
 });

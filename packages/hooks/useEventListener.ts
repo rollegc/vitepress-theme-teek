@@ -1,6 +1,7 @@
 import type { MaybeRefOrGetter } from "vue";
 import { computed, toValue, watch } from "vue";
 import { useScopeDispose } from "./useScopeDispose";
+import { isClient } from "@teek/helper";
 
 /**
  * mounted 监听事件，unmounted 移出监听事件
@@ -38,7 +39,9 @@ export const useEventListener = (
   };
 
   const el = computed(() => {
-    const plain = toValue(target);
+    if (!isClient) return;
+
+    const plain = toValue(target) || window;
     return (plain as any)?.$el ?? plain;
   });
 

@@ -1,6 +1,7 @@
 <script setup lang="ts" name="LayoutPageWidthSlide">
 import type { ThemeEnhance } from "@teek/config";
 import { computed, watch, onMounted } from "vue";
+import { isClient } from "@teek/helper";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -28,6 +29,8 @@ const layoutMode = useStorage(
 );
 
 const updatePageMaxWidth = (val: number) => {
+  if (!isClient) return;
+
   document.body.style.setProperty(pageMaxWidthVar, `${Math.ceil(val / 100)}%`);
 };
 

@@ -10,20 +10,19 @@ tags:
   - 主题组件
 ---
 
-如果您已经引入 Teek 全部功能，则无需执行本内容的步骤。
-
-本内容仅介绍在其他主题或 VitePress 默认主题中单独引入。
+使用文章分享组件可以分享文章页的链接。
 
 ## 基础使用
 
 ```ts
 import DefaultTheme from "vitepress/theme";
 import { TkArticleShare, teekConfigContext } from "vitepress-theme-teek";
+import "vitepress-theme-teek/theme-chalk/tk-article-share.css";
 import { h } from "vue";
 
 provide(teekConfigContext, {
   articleShare: {
-    /* */
+    // ... 更多配置请看配置系列文章
   },
 });
 

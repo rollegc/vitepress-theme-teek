@@ -1,9 +1,8 @@
 <script setup lang="ts" name="HomeDocAnalysisCard">
 import type { DocAnalysis, DocAnalysisInfo } from "@teek/config";
-import type { UseBuSuanZiReturn } from "@teek/hooks";
-import { computed, ref, unref, watch } from "vue";
-import { useData, useRoute } from "vitepress";
-import { useNamespace, useLocale, useBuSuanZi } from "@teek/hooks";
+import { computed, unref, watch } from "vue";
+import { useData } from "vitepress";
+import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/hooks";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "@teek/helper";
 import { docAnalysisIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
@@ -74,15 +73,11 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
   siteView: true,
   iteration: false,
   pageIteration: 2000,
+  permalink: true,
   ...unref(docAnalysisConfig).statistics,
 }));
 // 是否使用访问量功能
 const useSiteView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
-const statisticsInfo: Partial<UseBuSuanZiReturn> = {
-  sitePv: ref(0),
-  siteUv: ref(0),
-  isGet: ref(false),
-};
 
 // 通过不蒜子获取访问量和访客数
 const { sitePv, siteUv, isGet, request } = useBuSuanZi(unref(useSiteView), {
@@ -90,21 +85,36 @@ const { sitePv, siteUv, isGet, request } = useBuSuanZi(unref(useSiteView), {
   tryCount: unref(statisticsConfig).tryCount,
   tryIterationTime: unref(statisticsConfig).tryIterationTime,
 });
-statisticsInfo.sitePv = sitePv;
-statisticsInfo.siteUv = siteUv;
-statisticsInfo.isGet = isGet;
 
-const route = useRoute();
-watch(route, () => {
-  if (unref(useSiteView)) request();
+const statisticsInfo = computed(() => ({ siteUv: siteUv.value, sitePv: sitePv.value, isGet: isGet.value }));
+
+// 支持开关
+watch(useSiteView, newVal => {
+  if (newVal) request();
 });
+
+const vpRouter = useVpRouter();
+const { router } = vpRouter;
+
+// 如果使用了 permalink 插件，则可以使用该插件提供的 onAfterUrlLoad 回调监听 URL 变化事件
+if (unref(statisticsConfig).permalink && router.state.permalinkPlugin) {
+  vpRouter.bindRouterFn("urlChange", () => {
+    router.onAfterUrlLoad = () => {
+      if (unref(useSiteView)) request();
+    };
+  });
+} else {
+  watch(router.route, () => {
+    if (unref(useSiteView)) request();
+  });
+}
 
 type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number };
 
 const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
   const { createTime, appendInfo, overrideInfo } = unref(docAnalysisConfig);
   const { fileList = [], totalFileWords, lastCommitTime } = unref(docAnalysisInfo);
-  const { siteUv, sitePv, isGet } = statisticsInfo;
+  const { siteUv, sitePv, isGet } = statisticsInfo.value;
 
   const list: DocAnalysisResolve[] = [
     {
