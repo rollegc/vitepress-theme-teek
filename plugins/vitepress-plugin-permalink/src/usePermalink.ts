@@ -51,7 +51,10 @@ export default function usePermalink() {
     if (permalink) {
       // 存在 permalink 则在 URL 替换
       return nextTick(() => {
-        history.replaceState(history.state || null, "", `${b}${permalink}${search}${hash}`);
+        const to = b + permalink + search + hash;
+        history.replaceState(history.state || null, "", to);
+
+        router.onAfterUrlLoad?.(to);
       });
     }
 
@@ -62,10 +65,13 @@ export default function usePermalink() {
       // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
       history.replaceState(history.state || null, "", targetUrl);
       router.go(targetUrl);
-    }
+    } else router.onAfterUrlLoad?.(href);
   };
 
-  onBeforeMount(() => replaceUrlWhenPermalinkExist(window.location.href));
+  onBeforeMount(() => {
+    if (!router.state.permalinkPlugin) router.state = { ...router.state, permalinkPlugin: true };
+    replaceUrlWhenPermalinkExist(window.location.href);
+  });
 
   /**
    * 尝试通过路由地址获取文件地址（当路由地址为 permalink 时才有值返回，否则返回空）

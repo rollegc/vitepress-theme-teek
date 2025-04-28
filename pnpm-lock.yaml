@@ -58,8 +58,8 @@ catalogs:
       specifier: ^1.0.8
       version: 1.0.8
     vitepress-plugin-permalink:
-      specifier: ^1.0.17
-      version: 1.0.17
+      specifier: ^1.0.18
+      version: 1.0.18
     vitepress-plugin-sidebar-resolve:
       specifier: ^1.0.8
       version: 1.0.8
@@ -291,7 +291,7 @@ importers:
         version: 4.3.0(vue@3.5.13(typescript@5.8.3))
       vitepress-plugin-permalink:
         specifier: 'catalog:'
-        version: 1.0.17(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
+        version: 1.0.18(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
     devDependencies:
       vitepress:
         specifier: 'catalog:'
@@ -322,7 +322,7 @@ importers:
         version: 1.0.8
       vitepress-plugin-permalink:
         specifier: 'catalog:'
-        version: 1.0.17(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
+        version: 1.0.18(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
       vitepress-plugin-sidebar-resolve:
         specifier: 'catalog:'
         version: 1.0.8(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
@@ -457,6 +457,12 @@ importers:
         specifier: 'catalog:'
         version: 1.1.1
     devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
       vite:
         specifier: 'catalog:'
         version: 6.0.7(@types/node@22.14.0)(jiti@2.4.2)(sass@1.83.1)(tsx@4.19.3)(yaml@2.7.1)
@@ -4851,8 +4857,8 @@ packages:
   vitepress-plugin-md-h1@1.0.8:
     resolution: {integrity: sha512-26R0uwwy/0e8kNVtWEF69LOMNZJGuQZAo8cBaJxQTLwB3cF5f0Oori4r7A9UkQJfQqPO/nMYa2umGQpXMkk7NQ==}
 
-  vitepress-plugin-permalink@1.0.17:
-    resolution: {integrity: sha512-mQ50kAN256OzPaCQ0u9X81lJd0O1f4SFzDUlDiHBGM4Y1RzkGM1BO1vx6+5+x7yHFnpMZzSkmq4/DXhPMlzpoA==}
+  vitepress-plugin-permalink@1.0.18:
+    resolution: {integrity: sha512-SXJHD84cXHsdg2nF5iSubUn2LH64oEif/UKTR2ho9t4Qjdtd5RdqAE4KLrB1TESVnMpE6PYCIxRdNbhsdhGVuA==}
     peerDependencies:
       vitepress: ^1.6.3
 
@@ -9511,7 +9517,7 @@ snapshots:
     dependencies:
       gray-matter: 4.0.3
 
-  vitepress-plugin-permalink@1.0.17(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
+  vitepress-plugin-permalink@1.0.18(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1

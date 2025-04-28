@@ -72,7 +72,6 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
   const switchLight = () => {
     if (!isClient) return;
     const primary = colorComputed.value;
-    console.log(primary);
     if (!primary) return;
 
     const lightVarMap = {

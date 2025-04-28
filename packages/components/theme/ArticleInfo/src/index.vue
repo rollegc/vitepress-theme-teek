@@ -115,7 +115,7 @@ const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
         role="group"
         :aria-label="item.title"
       >
-        <TkIcon v-if="articleConfig.showIcon" :icon="item.icon" aria-hidden="true" />
+        <TkIcon v-if="articleConfig.showIcon" :icon="item.icon" :class="ns.e('icon')" aria-hidden="true" />
         <a
           v-if="item.data"
           :title="item.title"

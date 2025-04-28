@@ -1,10 +1,9 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import type { Article, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } from "@teek/config";
 import type { TkContentData } from "@teek/config";
-import type { UseBuSuanZiReturn } from "@teek/hooks";
 import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
-import { useRoute, useData } from "vitepress";
-import { useNamespace, useLocale, useBuSuanZi } from "@teek/hooks";
+import { useData } from "vitepress";
+import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/hooks";
 import { readingIcon, clockIcon, viewIcon } from "@teek/static/icons";
 import { TkArticleBreadcrumb } from "@teek/components/theme/ArticleBreadcrumb";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -18,6 +17,8 @@ const { t } = useLocale();
 
 const { getTeekConfig, getTeekConfigRef } = useTeekConfig();
 const { theme, frontmatter } = useData();
+const vpRouter = useVpRouter();
+const { router } = vpRouter;
 
 // 文章基本信息
 const post = computed<TkContentData>(() => ({
@@ -34,7 +35,7 @@ const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<DocDocAnalysisFileInfo> = {};
   unref(docAnalysisInfo).eachFileWords?.forEach(item => {
-    if (item.fileInfo.relativePath === route.data.relativePath) pageViewInfo = item;
+    if (item.fileInfo.relativePath === router.route.data.relativePath) pageViewInfo = item;
   });
 
   return pageViewInfo;
@@ -56,6 +57,7 @@ const isShowInfo = computed(() => {
 
 const baseInfoRef = ref<HTMLDivElement>();
 
+// 传送到指定位置
 const teleportInfo = () => {
   const { selector, position = "after", className = "teleport" } = unref(articleConfig).teleport || {};
   const baseInfoRefConst = unref(baseInfoRef);
@@ -73,7 +75,7 @@ const teleportInfo = () => {
 };
 
 onMounted(() => {
-  nextTick(() => teleportInfo());
+  nextTick(teleportInfo);
 });
 
 const docAnalysisConfig = getTeekConfigRef<DocAnalysis>("docAnalysis", {
@@ -85,27 +87,41 @@ const docAnalysisConfig = getTeekConfigRef<DocAnalysis>("docAnalysis", {
 const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => ({
   provider: "",
   pageView: true,
-  iteration: false,
-  pageIteration: 2000,
+  tryRequest: false,
+  tryCount: 5,
+  tryIterationTime: 2000,
+  permalink: true,
   ...unref(docAnalysisConfig).statistics,
 }));
 // 是否使用访问量功能
 const usePageView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
 
-const statisticsInfo: Partial<UseBuSuanZiReturn> = { pagePv: ref(0), isGet: ref(false) };
 // 通过不蒜子获取访问量
 const { pagePv, isGet, request } = useBuSuanZi(unref(usePageView), {
   tryRequest: unref(statisticsConfig).tryRequest,
   tryCount: unref(statisticsConfig).tryCount,
   tryIterationTime: unref(statisticsConfig).tryIterationTime,
 });
-statisticsInfo.pagePv = pagePv;
-statisticsInfo.isGet = isGet;
 
-const route = useRoute();
-watch(route, () => {
-  if (unref(usePageView)) request();
+const statisticsInfo = computed(() => ({ pagePv: pagePv.value, isGet: isGet.value }));
+
+// 支持开关
+watch(usePageView, newVal => {
+  if (newVal) request();
 });
+
+// 如果使用了 permalink 插件，则可以使用该插件提供的 onAfterUrlLoad 回调监听 URL 变化事件
+if (unref(statisticsConfig).permalink && router.state.permalinkPlugin) {
+  vpRouter.bindRouterFn("urlChange", () => {
+    router.onAfterUrlLoad = () => {
+      if (unref(usePageView)) request();
+    };
+  });
+} else {
+  watch(router.route, () => {
+    if (unref(usePageView)) request();
+  });
+}
 </script>
 
 <template>
