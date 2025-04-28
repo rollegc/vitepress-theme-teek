@@ -1,6 +1,7 @@
 <script setup lang="ts" name="BackTop">
 import type { TeekConfig } from "@teek/config";
 import { computed, unref, onMounted, ref } from "vue";
+import { isClient } from "@teek/helper";
 import { useLocale, useDebounce, useEventListener } from "@teek/hooks";
 import { rocketIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -20,16 +21,18 @@ const scrollTop = ref(0);
 const showToTop = computed(() => unref(scrollTop) > 100);
 const progress = ref(0);
 
-const scrollToTop = useDebounce(() => {
-  document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
-  setTimeout(
-    () => {
+const scrollToTop = useDebounce(
+  () => {
+    if (!isClient) return;
+
+    document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
       backTopDone.value?.(TkMessage);
-    },
-    600,
-    true
-  );
-}, 500);
+    }, 600);
+  },
+  500,
+  true
+);
 
 const watchScroll = () => {
   scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -47,7 +50,7 @@ onMounted(() => {
   updateScrollProgress();
 });
 
-useEventListener(window, "scroll", watchScroll);
+useEventListener(() => window, "scroll", watchScroll);
 </script>
 
 <template>

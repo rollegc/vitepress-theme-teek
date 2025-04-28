@@ -3,6 +3,7 @@ import type { ThemeEnhance } from "@teek/config";
 import type { SegmentedOption } from "@teek/components/common/Segmented";
 import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
+import { isClient } from "@teek/helper";
 import { useStorage, useMediaQuery, useLocale, useThemeColor, varNameList } from "@teek/hooks";
 import { clickIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -42,6 +43,8 @@ const { start, stop, clear } = useThemeColor(primaryColor, () => {
  * 更新主题色
  */
 const update = (val: string) => {
+  if (!isClient) return;
+
   const el = document.documentElement;
 
   if (el.getAttribute(themeColorAttribute) === val) return;

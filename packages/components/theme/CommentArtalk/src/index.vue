@@ -2,6 +2,7 @@
 import type { CommentProvider } from "@teek/config";
 import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
+import { isClient } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { artalkContext } from "./artalk";
@@ -39,6 +40,8 @@ const initArtalkByInject = () => {
 };
 
 const initArtalkByJs = () => {
+  if (!isClient) return console.error("[Teek Error] Not in the client");
+
   const Artalk = (window as any).Artalk;
   const el = unref(artalkRef) || `#${artalkId}`;
 

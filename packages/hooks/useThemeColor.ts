@@ -50,10 +50,12 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
   const ignoreListConst = isFunction(ignoreList) ? ignoreList() : ignoreList || [];
 
   const setStyleVar = (key: string, value: string) => {
+    if (!isClient) return;
     document.documentElement.style.setProperty(key, value);
   };
 
   const removeStyleVar = (key: string) => {
+    if (!isClient) return;
     document.documentElement.style.removeProperty(key);
   };
 

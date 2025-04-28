@@ -1,3 +1,4 @@
+import { isClient } from "@teek/helper";
 import { ref } from "vue";
 
 /**
@@ -8,10 +9,12 @@ export const useClipboard = (timeout = 1500) => {
   const text = ref("");
   const isSupported = ref(false);
 
-  if (!navigator.clipboard && !document.execCommand) isSupported.value = false;
+  if (isClient && !!navigator.clipboard && !!document.execCommand) isSupported.value = true;
   else isSupported.value = true;
 
   const copy = async (str: string, size = -1) => {
+    if (!isClient) return;
+
     if (navigator.clipboard) {
       return await navigator.clipboard.writeText(str).then(() => {
         text.value = str;

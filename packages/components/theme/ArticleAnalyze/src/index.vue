@@ -64,7 +64,7 @@ const teleportInfo = () => {
   // 没有指定选择器，则不进行传送
   if (!selector || !baseInfoRefConst) return;
 
-  const docDomContainer = window.document.querySelector("#VPContent");
+  const docDomContainer = document.querySelector("#VPContent");
   const targetDom = docDomContainer?.querySelector(selector);
 
   // 传送前先尝试删除传送位置的自己，避免传送重新渲染

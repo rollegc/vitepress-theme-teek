@@ -1,12 +1,13 @@
 <script setup lang="ts" name="ArticleHeadingHighlight">
 import { nextTick, watch } from "vue";
 import { useRoute } from "vitepress";
+import { isClient } from "@teek/helper";
 import { useNamespace, useEventListener } from "@teek/hooks";
 
 const ns = useNamespace("article-heading-highlight");
 
 const handleHighlight = () => {
-  if (!window?.location?.hash) return;
+  if (!isClient || !window.location.hash) return;
 
   const targetedHashId = decodeURIComponent(window.location.hash);
   if (!targetedHashId) return;
@@ -38,7 +39,7 @@ watch(route, async () => {
   handleHighlight();
 });
 
-useEventListener(window, "hashchange", handleHighlight);
+useEventListener(() => window, "hashchange", handleHighlight);
 </script>
 
 <template></template>

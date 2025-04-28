@@ -3,7 +3,7 @@ import type { Notice } from "@teek/config";
 import { computed, onMounted, ref, unref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useMediaQuery, useVpRouter } from "@teek/hooks";
-import { isString } from "@teek/helper";
+import { isClient, isString } from "@teek/helper";
 import { noticeIcon, closeIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
@@ -96,6 +96,7 @@ onMounted(() => {
  * @param action 对滚动条的行为
  */
 const openOrDisableScroll = (action: "open" | "disable") => {
+  if (!isClient) return;
   if (unref(noticeConfig).position !== "center") return;
 
   const actions: Record<"open" | "disable", "add" | "remove"> = {

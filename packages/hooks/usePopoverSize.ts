@@ -81,7 +81,7 @@ export const usePopoverSize = (
    * 计算 Popover 的位置
    */
   const calculatePosition = async () => {
-    if (!triggerEl.value || !popoverEl.value || !isClient) return;
+    if (!isClient || !triggerEl.value || !popoverEl.value) return;
 
     await nextTick();
 
@@ -182,7 +182,7 @@ export const usePopoverSize = (
   };
 
   // 滚动改变时更新
-  useEventListener(window, "scroll", update);
+  useEventListener(() => window, "scroll", update);
 
   return { top, right, bottom, left, update };
 };

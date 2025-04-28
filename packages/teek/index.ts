@@ -1,7 +1,6 @@
 import type { TeekConfig } from "@teek/config";
 import type { BaiduAnalyticsOptions, GoogleAnalyticsOptions, UmamiAnalytics } from "@teek/helper";
 import DefaultTheme from "vitepress/theme";
-import { defineClientComponent } from "vitepress";
 import { isClient, baiduAnalytics, trackPageview, googleAnalytics, umamiAnalytics } from "@teek/helper";
 import { TeekConfigProvider, TkLayout, TkCataloguePage, TkArchivesPage, TkDemoCode } from "@teek/components";
 
@@ -24,10 +23,7 @@ export default {
   enhanceApp({ app, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
-
-    // TkDemoCode 组件用到 DOM API，因此需要防止 SSR 构建报错
-    const ClientTkDemoCode = defineClientComponent(async () => TkDemoCode);
-    app.component("TkDemoCode", ClientTkDemoCode);
+    app.component("TkDemoCode", TkDemoCode);
 
     // 站点分析
     const siteAnalytics = (siteData.value.themeConfig.siteAnalytics as TeekConfig["siteAnalytics"]) || [];

@@ -2,6 +2,7 @@
 import type { CommentProvider } from "@teek/config";
 import type { WalineInstance } from "./waline";
 import { inject, onMounted } from "vue";
+import { isClient } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { walineContext } from "./waline";
@@ -39,6 +40,8 @@ const initWalineByJs = async () => {
  * 默认点击个人头像会滚动到页面顶部，因为个人头像由 a 标签包裹，且 href="#"，所以删除 href 属性
  */
 const preventJump = () => {
+  if (!isClient) return;
+
   const loginNickLink = document.querySelector<HTMLAnchorElement>(".wl-login-nick");
   loginNickLink && loginNickLink.removeAttribute("href");
 };

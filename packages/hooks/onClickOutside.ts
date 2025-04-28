@@ -1,7 +1,7 @@
 // From https://github.com/vueuse/vueuse/blob/main/packages/core/onClickOutside/index.ts
 import type { ComponentPublicInstance, MaybeRef, MaybeRefOrGetter, VNode } from "vue";
 import { toValue } from "vue";
-import { isIOS } from "@teek/helper";
+import { isClient, isIOS } from "@teek/helper";
 import { useEventListener } from "./useEventListener";
 
 export type VueInstance = ComponentPublicInstance;
@@ -58,7 +58,7 @@ export const onClickOutside = (
 ) => {
   const { ignore = [], capture = true, detectIframe = false, controls = false } = options;
 
-  if (!window) {
+  if (!isClient) {
     return controls ? { stop: () => {}, cancel: () => {}, trigger: () => {} } : () => {};
   }
 

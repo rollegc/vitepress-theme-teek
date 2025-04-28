@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CodeBlockToggle">
 import { nextTick, unref, watch } from "vue";
 import { useEventListener, useNamespace } from "@teek/hooks";
-import { isBoolean } from "@teek/helper";
+import { isBoolean, isClient } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
 import { TkMessage } from "@teek/components/common/Message";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -24,6 +24,8 @@ const arrowClass = "code-arrow";
 watch(
   codeBlockConfig,
   newVal => {
+    if (!isClient) return;
+
     const { disabled } = newVal || {};
     if (disabled) return document.documentElement.removeAttribute(documentAttribute);
 

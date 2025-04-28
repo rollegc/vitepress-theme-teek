@@ -1,5 +1,6 @@
 import type { MaybeRefOrGetter, Ref } from "vue";
 import { ref, computed, toValue, watch } from "vue";
+import { isClient } from "@teek/helper";
 import { useMounted } from "./useMounted";
 import { useEventListener } from "./useEventListener";
 
@@ -85,22 +86,25 @@ export const useStorage = <T extends string | number | boolean | object | null>(
   options: UseStorageOptions<T> = {}
 ): RemovableRef<T> => {
   const { flush = "pre", deep = true, writeDefaults = true, mergeDefaults = false, initOnMounted } = options;
-  const storage = storageType === "localStorage" ? localStorage : sessionStorage;
+
   // 默认值
   const rawInit: T = toValue(defaults);
+  const data = ref(rawInit) as RemovableRef<T>;
+  if (!isClient) return data;
+
   // 获取序列器
   const type = guessSerializerType<T>(rawInit);
   const serializer = StorageSerializers[type];
 
   const keyComputed = computed<string>(() => toValue(key));
-  const data = ref(rawInit) as RemovableRef<T>;
+
+  const storage = storageType === "localStorage" ? localStorage : sessionStorage;
 
   watch(keyComputed, () => update(), { flush });
   // 外界修改 data 后更新到 storage
   watch(data, () => write(data.value), { flush, deep });
 
   useMounted(() => {
-    useEventListener(window, "storage", update, { passive: true });
     if (!initOnMounted) update();
   });
 
@@ -171,6 +175,8 @@ export const useStorage = <T extends string | number | boolean | object | null>(
   };
 
   if (!initOnMounted) update();
+
+  useEventListener(() => window, "storage", update, { passive: true });
 
   return data;
 };

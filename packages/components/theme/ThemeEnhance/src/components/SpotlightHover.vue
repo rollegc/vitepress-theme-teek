@@ -1,6 +1,7 @@
 <script setup lang="ts" name="SpotlightHover">
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vitepress";
+import { isClient } from "@teek/helper";
 import { useEventListener, useStorage } from "@teek/hooks";
 import { SpotlightStyle } from "../themeEnhance";
 import { spotlightStyleStorageKey } from "../namespace";
@@ -38,6 +39,8 @@ const findChildElementUnderVPDocElement = (element: HTMLElement | null) => {
 };
 
 const watchHandler = () => {
+  if (!isClient) return;
+
   const element = document.elementFromPoint(mousePosition.value.x, mousePosition.value.y) as HTMLElement | null;
 
   if (!(element && vpDocElement.value?.contains(element))) return;
@@ -85,10 +88,14 @@ const watchHandler = () => {
   }
 };
 
-useEventListener(document, "mousemove", (event: MouseEvent) => {
-  mousePosition.value = { x: event.clientX, y: event.clientY };
-});
-useEventListener(document, "scroll", watchHandler, true);
+useEventListener(
+  () => document,
+  "mousemove",
+  (event: MouseEvent) => {
+    mousePosition.value = { x: event.clientX, y: event.clientY };
+  }
+);
+useEventListener(() => document, "scroll", watchHandler, true);
 
 onMounted(() => {
   vpDocElement.value = document.querySelector(".VPDoc main .vp-doc") as HTMLDivElement;

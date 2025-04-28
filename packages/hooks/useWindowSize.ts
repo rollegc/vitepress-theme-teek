@@ -54,32 +54,32 @@ export const useWindowSize = (
   const height = shallowRef(initialHeight);
 
   const update = useDebounce(() => {
-    if (isClient) {
-      if (type === "outer") {
-        width.value = window.outerWidth;
-        height.value = window.outerHeight;
-      } else if (type === "visual" && window.visualViewport) {
-        const { width: visualViewportWidth, height: visualViewportHeight, scale } = window.visualViewport;
-        width.value = Math.round(visualViewportWidth * scale);
-        height.value = Math.round(visualViewportHeight * scale);
-      } else if (includeScrollbar) {
-        width.value = window.innerWidth;
-        height.value = window.innerHeight;
-      } else {
-        width.value = window.document.documentElement.clientWidth;
-        height.value = window.document.documentElement.clientHeight;
-      }
+    if (!isClient) return;
 
-      sizeChangedCallback?.(width.value, height.value);
+    if (type === "outer") {
+      width.value = window.outerWidth;
+      height.value = window.outerHeight;
+    } else if (type === "visual" && window.visualViewport) {
+      const { width: visualViewportWidth, height: visualViewportHeight, scale } = window.visualViewport;
+      width.value = Math.round(visualViewportWidth * scale);
+      height.value = Math.round(visualViewportHeight * scale);
+    } else if (includeScrollbar) {
+      width.value = window.innerWidth;
+      height.value = window.innerHeight;
+    } else {
+      width.value = window.document.documentElement.clientWidth;
+      height.value = window.document.documentElement.clientHeight;
     }
+
+    sizeChangedCallback?.(width.value, height.value);
   }, 100);
 
   update();
   useMounted(update);
 
-  useEventListener(window, "resize", update, { passive: true });
+  useEventListener(() => window, "resize", update, { passive: true });
 
-  if (window && type === "visual" && window.visualViewport) {
+  if (isClient && type === "visual" && window.visualViewport) {
     useEventListener(window.visualViewport, "resize", update, { passive: true });
   }
 

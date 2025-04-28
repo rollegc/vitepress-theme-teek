@@ -1,11 +1,12 @@
 <script setup lang="ts" name="ToComment">
 import type { TeekConfig } from "@teek/config";
 import { computed, unref, ref } from "vue";
+import { isClient } from "@teek/helper";
+import { useLocale, useDebounce } from "@teek/hooks";
+import { commentIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkMessage } from "@teek/components/common/Message";
 import { TkIcon } from "@teek/components/common/Icon";
-import { useLocale, useDebounce } from "@teek/hooks";
-import { commentIcon } from "@teek/static";
 import { ns } from "./namespace";
 
 defineOptions({ name: "ToComment" });
@@ -27,16 +28,18 @@ const showToComment = computed(() => {
   return unref(scrollTop) < height;
 });
 
-const scrollToComment = useDebounce(() => {
-  document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
-  setTimeout(
-    () => {
+const scrollToComment = useDebounce(
+  () => {
+    if (!isClient) return;
+
+    document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
       toCommentDone.value?.(TkMessage);
-    },
-    600,
-    true
-  );
-}, 500);
+    }, 600);
+  },
+  500,
+  true
+);
 </script>
 
 <template>

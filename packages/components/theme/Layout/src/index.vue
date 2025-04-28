@@ -5,6 +5,7 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import { computed, unref, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
+import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
 import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
 import { TkDocAfterAppreciation, TkAsideBottomAppreciation } from "@teek/components/theme/ArticleAppreciation";
@@ -27,8 +28,6 @@ import { TkArticlePageStyle } from "@teek/components/theme/ArticlePageStyle";
 import { TkNotice } from "@teek/components/theme/Notice";
 import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
-
-import { isBoolean, isClient } from "@teek/helper";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -109,51 +108,46 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
-    <ClientOnly>
-      <TkArticleHeadingHighlight />
+    <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
 
-      <TkRightBottomButton>
-        <!-- 通用插槽 -->
-        <template v-for="(_, name) in $slots" :key="name" #[name]>
-          <slot :name="name" />
-        </template>
-      </TkRightBottomButton>
+    <TkArticleHeadingHighlight />
 
-      <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
+    <TkRightBottomButton>
+      <!-- 通用插槽 -->
+      <template v-for="(_, name) in $slots" :key="name" #[name]>
+        <slot :name="name" />
+      </template>
+    </TkRightBottomButton>
 
-      <TkNotice v-if="teekConfig.notice?.enabled">
-        <template v-for="(_, name) in $slots" :key="name" #[name]>
-          <slot :name="name" />
-        </template>
-      </TkNotice>
-    </ClientOnly>
+    <TkNotice v-if="teekConfig.notice?.enabled">
+      <template v-for="(_, name) in $slots" :key="name" #[name]>
+        <slot :name="name" />
+      </template>
+    </TkNotice>
 
     <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">
       <template #home-hero-before>
         <slot name="home-hero-before" />
         <slot name="teek-home-before" />
 
-        <ClientOnly>
-          <!-- 自定义首页 -->
-          <TkHome v-if="teekConfig.teekHome">
-            <template v-for="(_, name) in $slots" :key="name" #[name]>
-              <slot :name="name" />
-            </template>
-          </TkHome>
-        </ClientOnly>
+        <!-- 自定义首页 -->
+        <TkHome v-if="teekConfig.teekHome">
+          <template v-for="(_, name) in $slots" :key="name" #[name]>
+            <slot :name="name" />
+          </template>
+        </TkHome>
 
         <slot name="teek-home-after" />
       </template>
 
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
-        <ClientOnly>
-          <TkThemeEnhance position="top">
-            <template v-for="(_, name) in $slots" :key="name" #[name]>
-              <slot :name="name" />
-            </template>
-          </TkThemeEnhance>
-        </ClientOnly>
+
+        <TkThemeEnhance position="top">
+          <template v-for="(_, name) in $slots" :key="name" #[name]>
+            <slot :name="name" />
+          </template>
+        </TkThemeEnhance>
       </template>
 
       <template #layout-bottom>
@@ -170,13 +164,10 @@ const usedSlots = [
         <slot name="doc-before" />
         <slot name="teek-article-analyze-before" />
 
-        <ClientOnly>
-          <TkArticleAnalyze />
-          <TkArticleImagePreview />
-          <TkArticlePageStyle />
-          <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
-        </ClientOnly>
-
+        <TkArticleAnalyze />
+        <TkArticleImagePreview />
+        <TkArticlePageStyle />
+        <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
         <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
 
         <slot name="teek-article-analyze-after" />
@@ -193,15 +184,13 @@ const usedSlots = [
 
         <!-- 评论区 -->
         <template v-if="commentConfig.enabled && commentConfig.provider">
-          <ClientOnly>
-            <template v-if="commentConfig.provider === 'render'"><slot name="teek-comment" /></template>
-            <component
-              v-else
-              :is="commentConfig.components?.[commentConfig.provider]"
-              :id="`${ns.namespace}-comment`"
-              :class="ns.e('comment')"
-            />
-          </ClientOnly>
+          <template v-if="commentConfig.provider === 'render'"><slot name="teek-comment" /></template>
+          <component
+            v-else
+            :is="commentConfig.components?.[commentConfig.provider]"
+            :id="`${ns.namespace}-comment`"
+            :class="ns.e('comment')"
+          />
         </template>
 
         <slot name="teek-comment-after" />
@@ -235,11 +224,10 @@ const usedSlots = [
 
       <template #aside-outline-before>
         <slot name="teek-article-share-before" />
-        <ClientOnly>
-          <TkArticleShare v-if="teekConfig.articleShare.enabled" />
-        </ClientOnly>
-        <slot name="teek-article-share-after" />
 
+        <TkArticleShare v-if="teekConfig.articleShare.enabled" />
+
+        <slot name="teek-article-share-after" />
         <slot name="aside-outline-before" />
       </template>
 
