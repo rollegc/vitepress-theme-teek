@@ -8,5 +8,5 @@ export interface WalineInstance {
 }
 
 export const walineContext: InjectionKey<
-  (options: CommentProvider["waline"], el: string | HTMLElement | null) => WalineInstance | null
+  (el: string | HTMLElement | null, options: CommentProvider["waline"]) => WalineInstance | null
 > = Symbol("waline");

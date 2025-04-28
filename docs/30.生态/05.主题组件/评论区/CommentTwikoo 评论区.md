@@ -1,5 +1,5 @@
 ---
-title: CommentTwikoo
+title: CommentTwikoo 评论区
 date: 2025-04-13 15:52:45
 permalink: /ecosystem/components/twikoo
 categories:
@@ -10,15 +10,14 @@ tags:
   - 主题组件
 ---
 
-如果您已经引入 Teek 全部功能，则无需执行本内容的步骤。
-
-本内容仅介绍在其他主题或 VitePress 默认主题中单独引入。
+使用 Twikoo 快速搭建一个评论区。
 
 ## 基础使用
 
 ```ts
 import DefaultTheme from "vitepress/theme";
 import { TkCommentArtalk, teekConfigContext } from "vitepress-theme-teek";
+import "vitepress-theme-teek/theme-chalk/tk-comment-twikoo.css";
 import { h } from "vue";
 
 provide(teekConfigContext, {

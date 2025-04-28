@@ -23,7 +23,7 @@ const walineId = "waline";
 const initWalineByInject = () => {
   // 尝试从上下文获取 waline 实例
   const getWalineInstance = inject(walineContext, () => null);
-  if (getWalineInstance) waline = getWalineInstance?.(walineOptions, `#${walineId}`);
+  if (getWalineInstance) waline = getWalineInstance?.(`#${walineId}`, walineOptions);
 
   return waline;
 };

@@ -10,15 +10,14 @@ tags:
   - 主题组件
 ---
 
-如果您已经引入 Teek 全部功能，则无需执行本内容的步骤。
-
-本内容仅介绍在其他主题或 VitePress 默认主题中单独引入。
+使用页脚组件可以在页脚自定义内容，如版权信息、备案信息等。
 
 ## 基础使用
 
 ```ts
 import DefaultTheme from "vitepress/theme";
 import { TkFooterInfo, teekConfigContext } from "vitepress-theme-teek";
+import "vitepress-theme-teek/theme-chalk/tk-footer-info.css";
 import { h } from "vue";
 
 provide(teekConfigContext, {
@@ -34,6 +33,7 @@ provide(teekConfigContext, {
       link: "http://beian.miit.gov.cn/",
     },
     customHtml: `<span style="color: var(--tk-theme-color)">自定义标签内容</span>`,
+    // ... 更多配置请看配置系列文章
   },
 });
 

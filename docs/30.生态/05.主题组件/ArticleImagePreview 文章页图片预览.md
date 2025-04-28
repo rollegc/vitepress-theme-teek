@@ -10,9 +10,7 @@ tags:
   - 主题组件
 ---
 
-如果您已经引入 Teek 全部功能，则无需执行本内容的步骤。
-
-本内容仅介绍在其他主题或 VitePress 默认主题中单独引入。
+使用文章页图片预览组件可以在文章页进行图片预览。
 
 ## 基础使用
 
@@ -26,7 +24,8 @@ provide(teekConfigContext, {
     article: {
       imageViewer: {
         hideOnClickModal: true, // 点击图片时隐藏预览
-        // ...
+
+        // ... 更多配置请看配置系列文章
       },
     },
   },

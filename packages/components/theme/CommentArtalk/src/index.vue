@@ -29,7 +29,7 @@ const initArtalkByInject = () => {
   const getArtalkInstance = inject(artalkContext, () => null);
   const el = unref(artalkRef) || `#${artalkId}`;
 
-  const artalkInstance = getArtalkInstance?.(artalkOptions, el);
+  const artalkInstance = getArtalkInstance?.(el, artalkOptions);
 
   if (!artalkInstance) return false;
 
