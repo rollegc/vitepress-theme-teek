@@ -45,10 +45,7 @@ const initCodeBlock = () => {
     const copyDom = item.querySelector<HTMLElement>(`.copy`);
 
     copyDom?.addEventListener("click", e => {
-      if (unref(codeBlockConfig).copiedDone?.(TkMessage)) {
-        // 阻止其他监听器执行
-        e.stopImmediatePropagation();
-      }
+      unref(codeBlockConfig).copiedDone?.(TkMessage);
     });
 
     // 当支持自定义 class 来忽略，代码块父元素的 class 中包含 vp-code-block，则跳过

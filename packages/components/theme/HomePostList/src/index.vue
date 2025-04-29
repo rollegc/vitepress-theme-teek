@@ -3,7 +3,7 @@ import type { TkPaginationProps } from "@teek/components/common/Pagination";
 import type { Post, TkContentData } from "@teek/config";
 import { reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
-import { isClient } from "@teek/helper";
+import { isClient, removeUnit } from "@teek/helper";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
 import { emptyIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
@@ -120,9 +120,9 @@ const handlePagination = () => {
   // 滚动
   nextTick(() => {
     const rootStyles = getComputedStyle(document.documentElement);
-    const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
+    const navHeight = removeUnit(rootStyles.getPropertyValue("--vp-c-text-1"));
     // 滚动返回时，减去导航栏的高度
-    document.querySelector("html")?.scrollTo({ top: window.innerHeight - Number(navHeight), behavior: "smooth" });
+    document.querySelector("html")?.scrollTo({ top: window.innerHeight - navHeight, behavior: "smooth" });
   });
 };
 
