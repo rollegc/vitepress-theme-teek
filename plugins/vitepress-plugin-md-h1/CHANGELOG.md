@@ -1,5 +1,11 @@
 # vitepress-plugin-md-h1
 
+## 1.0.9
+
+### Patch Changes
+
+- package url 更新
+
 ## 1.0.8
 
 ### Patch Changes

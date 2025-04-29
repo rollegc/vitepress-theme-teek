@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.1.0-alpha.2",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.7.1",
@@ -12,9 +12,6 @@
     "docs:build": "pnpm run -C docs build",
     "docs:preview": "pnpm run -C docs preview",
     "docs:baiduPush": "pnpm run -C docs baiduPush",
-    "demo:base": "pnpm run -C demo/docs-base",
-    "demo:locales": "pnpm run -C demo/docs-locales",
-    "demo:localesRoot": "pnpm run -C demo/docs-locales-root",
     "to:build": "pnpm run -C build",
     "stub": "pnpm run to:build stub && pnpm run packages:stub && pnpm run plugins:stub",
     "packages:stub": "pnpm -r --filter=./packages/* run stub",

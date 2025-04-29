@@ -1,5 +1,11 @@
 # vitepress-plugin-catalogue
 
+## 1.0.15
+
+### Patch Changes
+
+- package url 更新
+
 ## 1.0.14
 
 ### Patch Changes

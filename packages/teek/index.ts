@@ -4,7 +4,7 @@ import DefaultTheme from "vitepress/theme";
 import { isClient, baiduAnalytics, trackPageview, googleAnalytics, umamiAnalytics } from "@teek/helper";
 import { TeekConfigProvider, TkLayout, TkCataloguePage, TkArchivesPage, TkDemoCode } from "@teek/components";
 
-import "@teek/theme-chalk/index.scss";
+import "../theme-chalk/src/index.scss";
 
 export type DefaultThemeType = typeof DefaultTheme;
 export type * from "@teek/config";

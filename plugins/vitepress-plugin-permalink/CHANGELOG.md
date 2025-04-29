@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.0.19
+
+### Patch Changes
+
+- package url 更新
+
 ## 1.0.18
 
 ### Patch Changes

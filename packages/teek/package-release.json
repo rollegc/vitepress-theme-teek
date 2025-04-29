@@ -6,9 +6,9 @@
   "author": {
     "name": "teeker",
     "email": "2456019588@qq.com",
-    "url": "https://tianke99.cn"
+    "url": "https://vp.teek.top"
   },
-  "keywords": ["vitepress", "theme", "markdown", "vue", "ui", "blog"],
+  "keywords": ["vitepress", "theme", "markdown", "vue", "vite", "ui", "blog", "doc"],
   "license": "MIT",
   "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teek/tree/master",
   "repository": {
@@ -70,7 +70,7 @@
     "vitepress-plugin-doc-analysis": "^1.0.10",
     "vitepress-plugin-file-content-loader": "^1.0.11",
     "vitepress-plugin-md-h1": "^1.0.8",
-    "vitepress-plugin-permalink": "^1.0.17",
+    "vitepress-plugin-permalink": "^1.0.18",
     "vitepress-plugin-sidebar-resolve": "^1.0.8"
   },
   "devDependencies": {

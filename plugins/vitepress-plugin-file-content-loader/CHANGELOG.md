@@ -1,5 +1,11 @@
 # vitepress-plugin-file-content-loader
 
+## 1.0.12
+
+### Patch Changes
+
+- package url 更新
+
 ## 1.0.11
 
 ### Patch Changes
