@@ -54,7 +54,7 @@ useEventListener(() => window, "scroll", watchScroll);
 </script>
 
 <template>
-  <transition :name="ns.joinNamespace('fade')">
+  <Transition :name="ns.joinNamespace('fade')">
     <div
       v-show="showToTop"
       :title="t('tk.rightBottomButton.backTopTitle')"
@@ -69,5 +69,5 @@ useEventListener(() => window, "scroll", watchScroll);
     >
       <TkIcon :icon="rocketIcon" aria-hidden="true" />
     </div>
-  </transition>
+  </Transition>
 </template>

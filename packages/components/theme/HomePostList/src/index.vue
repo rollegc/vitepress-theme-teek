@@ -23,6 +23,8 @@ const { frontmatter } = useData();
 const postConfig = getTeekConfigRef<Required<Post>>("post", {
   coverImgMode: "default",
   emptyLabel: t("tk.homePost.emptyLabel"),
+  transition: true,
+  transitionName: ns.joinNamespace("fade"),
 });
 // 自定义一页数量 & 分页组件的 Props
 const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});
@@ -132,11 +134,15 @@ defineExpose({ updateData });
 <template>
   <div :class="ns.b()">
     <template v-if="currentPosts">
-      <ul :aria-label="t('tk.homePost.label')">
+      <TransitionGroup
+        tag="ul"
+        :name="postConfig.transition ? postConfig.transitionName : ''"
+        :aria-label="t('tk.homePost.label')"
+      >
         <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
           <HomePostItem :post :coverImgMode />
         </li>
-      </ul>
+      </TransitionGroup>
       <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <TkPagination
           v-if="posts.sortPostsByDateAndSticky.length >= pageSize"

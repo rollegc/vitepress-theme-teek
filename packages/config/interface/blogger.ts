@@ -8,7 +8,7 @@ export interface Blogger {
   /**
    * 博主头像
    */
-  avatar: string;
+  avatar?: string;
   /**
    * 博主签名
    */

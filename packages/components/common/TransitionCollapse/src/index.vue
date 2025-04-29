@@ -81,7 +81,7 @@ const on = {
 </script>
 
 <template>
-  <transition :name="ns.b()" v-on="on">
+  <Transition :name="ns.b()" v-on="on">
     <slot />
-  </transition>
+  </Transition>
 </template>

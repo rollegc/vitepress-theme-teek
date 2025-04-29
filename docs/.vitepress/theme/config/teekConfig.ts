@@ -65,7 +65,7 @@ export const teekBlogConfig: TeekConfig = {
         avatar: "https://teek.seasir.top/avatar/avatar.webp",
         name: "Hyde Blog",
         desc: "人心中的成见是一座大山",
-        link: "https://hyde.seasir.top/",
+        link: "https://teek.seasir.top/",
       },
       {
         avatar: "https://wiki.eryajf.net/img/logo.png",

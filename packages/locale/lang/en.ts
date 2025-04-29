@@ -177,7 +177,7 @@ export default {
       toComment: "Go to Comment",
     },
     themeEnhance: {
-      title: "Layout Enhancement",
+      title: "Theme Enhancement",
       layoutSwitch: {
         title: "Layout Switch",
         helpDesc: "Adjust VitePress layout styles to adapt to different reading habits and screen environments.",
