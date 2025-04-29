@@ -55,7 +55,7 @@ const update = (val: string) => {
   primaryColor.value = getComputedStyle(el).getPropertyValue(varNameList.vpIndigo1);
 };
 
-watch(themeColor, update, { immediate: true, flush: "post" });
+watch(themeColor, update, { immediate: true });
 
 // 文章单独设置主题色
 watch(

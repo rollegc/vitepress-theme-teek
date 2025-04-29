@@ -1,6 +1,6 @@
 <script setup lang="ts" name="LayoutPageWidthSlide">
 import type { ThemeEnhance } from "@teek/config";
-import { computed, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { isClient } from "@teek/helper";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
@@ -8,6 +8,7 @@ import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkInputSlide } from "@teek/components/common/InputSlide";
 import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./themeEnhance";
 import { ns, layoutModeStorageKey, pageMaxWidthSlideStorageKey, transitionName, pageMaxWidthVar } from "./namespace";
+import { useAnimated } from "./useAnimated";
 import BaseTemplate from "./components/BaseTemplate.vue";
 
 defineOptions({ name: "LayoutPageWidthSlide" });
@@ -28,17 +29,19 @@ const layoutMode = useStorage(
   themeEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
 );
 
+const { start: startAnimated } = useAnimated();
+
 const updatePageMaxWidth = (val: number) => {
   if (!isClient) return;
+  if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) startAnimated();
 
   document.body.style.setProperty(pageMaxWidthVar, `${Math.ceil(val / 100)}%`);
 };
 
-onMounted(() => updatePageMaxWidth(pageMaxWidth.value));
-
 const isMobile = useMediaQuery(mobileMaxWidthMedia);
 const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthSlideMedia);
 
+// 初始化会马上触发一次
 watch(shouldActivateMaxWidth, () => {
   updatePageMaxWidth(pageMaxWidth.value);
 });
