@@ -1,6 +1,6 @@
 <script setup lang="ts" name="LayoutDocWidthSlide">
 import type { ThemeEnhance } from "@teek/config";
-import { computed, watch, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { isClient } from "@teek/helper";
 import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
@@ -8,6 +8,7 @@ import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkInputSlide } from "@teek/components/common/InputSlide";
 import { activateMaxWidthSlideMedia, LayoutMode, mobileMaxWidthMedia } from "./themeEnhance";
 import { ns, layoutModeStorageKey, docMaxWidthSlideStorageKey, transitionName, docMaxWidthVar } from "./namespace";
+import { useAnimated } from "./useAnimated";
 import BaseTemplate from "./components/BaseTemplate.vue";
 
 defineOptions({ name: "LayoutDocWidthSlide" });
@@ -21,15 +22,18 @@ const max = computed(() => 100 * 100);
 
 const docMaxWidth = useStorage(
   docMaxWidthSlideStorageKey,
-  (themeEnhanceConfig.value.layoutSwitch?.defaultDocMaxWidth || 90) * 100
+  (themeEnhanceConfig.value.layoutSwitch?.defaultDocMaxWidth || 95) * 100
 );
 const layoutMode = useStorage(
   layoutModeStorageKey,
   themeEnhanceConfig.value.layoutSwitch?.defaultMode || LayoutMode.Original
 );
 
+const { start: startAnimated } = useAnimated();
+
 const updateMaxWidth = (val: number) => {
   if (!isClient) return;
+  if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) startAnimated();
 
   const bodyStyle = document.body.style;
   if (!shouldActivateMaxWidth.value) bodyStyle.setProperty(ns.joinNamespace("page-max-width"), `100%`);
@@ -37,9 +41,8 @@ const updateMaxWidth = (val: number) => {
   bodyStyle.setProperty(docMaxWidthVar, `${Math.ceil(val / 100)}%`);
 };
 
-onMounted(() => updateMaxWidth(docMaxWidth.value));
-
 const isMobile = useMediaQuery(mobileMaxWidthMedia);
+// 初始化会马上触发一次
 const shouldActivateMaxWidth = useMediaQuery(activateMaxWidthSlideMedia);
 
 watch(shouldActivateMaxWidth, () => {

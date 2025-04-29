@@ -126,7 +126,7 @@ defineExpose({
 </script>
 
 <template>
-  <transition
+  <Transition
     :name="ns.b('fade')"
     @before-enter="isStartTransition = true"
     @before-leave="onClose"
@@ -159,5 +159,5 @@ defineExpose({
       </slot>
       <TkIcon v-if="showClose" :icon="closeIcon" :class="ns.e('closeBtn')" @click.stop="close" />
     </div>
-  </transition>
+  </Transition>
 </template>

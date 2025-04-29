@@ -9,7 +9,7 @@
 
 html[layout-mode="fullWidth"] {
   @media (min-width: 1280px) {
-    /* Overriding styles of navbar section */
+    /* 覆盖 navbar 样式 */
     .VPNavBar.has-sidebar > .wrapper > .container > .title {
       padding-left: max(32px, calc((100% - (getCssVar("full-width-max-width") - 64px)) / 2)) !important;
       width: calc((100% - (getCssVar("full-width-max-width") - 64px)) / 2 + var(--vp-sidebar-width) - 32px) !important;
@@ -26,13 +26,13 @@ html[layout-mode="fullWidth"] {
       padding-right: 32px !important;
     }
 
-    /* Overriding styles of sidebar section */
+    /* 覆盖 sidebar 样式 */
     .VPSidebar {
       padding-left: max(32px, calc((100% - (getCssVar("full-width-max-width") - 64px)) / 2)) !important;
       width: calc((100% - (getCssVar("full-width-max-width") - 64px)) / 2 + var(--vp-sidebar-width) - 32px) !important;
     }
 
-    /* Overriding styles of document section */
+    /* 覆盖 doc 样式 */
     .VPContent.has-sidebar {
       padding-left: calc((100vw - getCssVar("full-width-max-width")) / 2 + var(--vp-sidebar-width)) !important;
       padding-right: calc((100vw - getCssVar("full-width-max-width")) / 2) !important;
@@ -74,7 +74,7 @@ html[layout-mode="fullWidth"] {
 
 html[layout-mode="sidebarWidthAdjustableOnly"] {
   @media (min-width: 1280px) {
-    /* Overriding styles of navbar section */
+    /* 覆盖 navbar 样式 */
     .VPNavBar.has-sidebar > .wrapper > .container > .title {
       padding-left: max(32px, calc((100% - (getCssVar("page-max-width") - 64px)) / 2)) !important;
       width: calc((100% - (getCssVar("page-max-width") - 64px)) / 2 + var(--vp-sidebar-width) - 32px) !important;
@@ -91,7 +91,7 @@ html[layout-mode="sidebarWidthAdjustableOnly"] {
       padding-right: 32px !important;
     }
 
-    /* Overriding styles of sidebar section */
+    /* 覆盖 sidebar 样式 */
     .VPSidebar {
       padding-left: max(32px, calc((100% - (getCssVar("page-max-width") - 64px)) / 2)) !important;
       width: calc((100% - (getCssVar("page-max-width") - 64px)) / 2 + var(--vp-sidebar-width) - 32px) !important;
@@ -117,7 +117,7 @@ html[layout-mode="sidebarWidthAdjustableOnly"] {
 
 html[layout-mode="bothWidthAdjustable"] {
   @media (min-width: 1280px) {
-    /* Overriding styles of navbar section */
+    /* 覆盖 navbar 样式 */
     .VPNavBar.has-sidebar > .wrapper > .container > .title {
       padding-left: max(32px, calc((100% - (getCssVar("page-max-width") - 64px)) / 2)) !important;
       width: calc((100% - (getCssVar("page-max-width") - 64px)) / 2 + var(--vp-sidebar-width) - 32px) !important;
@@ -134,7 +134,7 @@ html[layout-mode="bothWidthAdjustable"] {
       padding-right: 32px !important;
     }
 
-    /* Overriding styles of sidebar section */
+    /* 覆盖 sidebar 样式 */
     .VPSidebar {
       padding-left: max(32px, calc((100% - (getCssVar("page-max-width") - 64px)) / 2)) !important;
       width: calc((100% - (getCssVar("page-max-width") - 64px)) / 2 + var(--vp-sidebar-width) - 32px) !important;
@@ -181,15 +181,15 @@ html[layout-mode="bothWidthAdjustable"] {
   }
 }
 
-/* animated */
+/* 动画 */
 html[layout-mode-animated="true"] {
-  /* with sidebar */
+  /* sidebar */
   .VPNavBar.has-sidebar > .wrapper > .container > .title {
     transition:
       width 0.5s ease-in-out,
       padding-left 0.5s ease-in-out;
   }
-  /* without sidebar */
+  /* navBar */
   .VPNavBar > .wrapper > .container > .title {
     transition:
       width 0.5s ease-in-out,
@@ -202,7 +202,7 @@ html[layout-mode-animated="true"] {
       max-width 0.5s ease-in-out;
   }
 
-  /* with sidebar */
+  /* sidebar */
   .VPNavBar.has-sidebar > .wrapper > .container > .content,
   .VPNavBar > .wrapper > .container > .content {
     transition:
@@ -210,7 +210,6 @@ html[layout-mode-animated="true"] {
       padding-left 0.5s ease-in-out;
   }
 
-  /* line below the nav */
   .VPNavBar.has-sidebar > .divider {
     transition:
       padding-left 0.5s ease-in-out,

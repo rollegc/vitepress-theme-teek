@@ -43,7 +43,7 @@ const scrollToComment = useDebounce(
 </script>
 
 <template>
-  <transition :name="ns.joinNamespace('fade')">
+  <Transition :name="ns.joinNamespace('fade')">
     <div
       v-show="showToComment"
       :title="t('tk.rightBottomButton.toComment')"
@@ -54,5 +54,5 @@ const scrollToComment = useDebounce(
     >
       <TkIcon :icon="commentIcon" aria-hidden="true" />
     </div>
-  </transition>
+  </Transition>
 </template>

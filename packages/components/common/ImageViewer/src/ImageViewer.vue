@@ -316,7 +316,7 @@ defineExpose({
 
 <template>
   <teleport :disabled="!teleported" to="body">
-    <transition name="viewer-fade" appear>
+    <Transition name="viewer-fade" appear>
       <div ref="wrapper" :tabindex="-1" :class="ns.e('wrapper')" :style="{ zIndex }">
         <TkFocusTrap
           loop
@@ -388,6 +388,6 @@ defineExpose({
           <slot />
         </TkFocusTrap>
       </div>
-    </transition>
+    </Transition>
   </teleport>
 </template>

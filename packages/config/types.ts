@@ -91,9 +91,9 @@ export interface TeekConfig {
      */
     collapseHeight?: number | boolean;
     /**
-     * 复制代码完成后的回调，如果不设置或传入 false 或 undefined，则使用 VitePress 默认提示
+     * 复制代码完成后的回调
      */
-    copiedDone?: (TkMessage: Message) => boolean | unknown;
+    copiedDone?: (TkMessage: Message) => void;
   };
   /**
    * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序

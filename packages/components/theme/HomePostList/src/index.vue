@@ -3,7 +3,7 @@ import type { TkPaginationProps } from "@teek/components/common/Pagination";
 import type { Post, TkContentData } from "@teek/config";
 import { reactive, ref, unref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
-import { isClient } from "@teek/helper";
+import { isClient, removeUnit } from "@teek/helper";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
 import { emptyIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
@@ -23,6 +23,8 @@ const { frontmatter } = useData();
 const postConfig = getTeekConfigRef<Required<Post>>("post", {
   coverImgMode: "default",
   emptyLabel: t("tk.homePost.emptyLabel"),
+  transition: true,
+  transitionName: ns.joinNamespace("fade"),
 });
 // 自定义一页数量 & 分页组件的 Props
 const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});
@@ -120,9 +122,9 @@ const handlePagination = () => {
   // 滚动
   nextTick(() => {
     const rootStyles = getComputedStyle(document.documentElement);
-    const navHeight = rootStyles.getPropertyValue("--vp-nav-height").trim().replace("px", "");
+    const navHeight = removeUnit(rootStyles.getPropertyValue("--vp-c-text-1"));
     // 滚动返回时，减去导航栏的高度
-    document.querySelector("html")?.scrollTo({ top: window.innerHeight - Number(navHeight), behavior: "smooth" });
+    document.querySelector("html")?.scrollTo({ top: window.innerHeight - navHeight, behavior: "smooth" });
   });
 };
 
@@ -132,11 +134,15 @@ defineExpose({ updateData });
 <template>
   <div :class="ns.b()">
     <template v-if="currentPosts">
-      <ul :aria-label="t('tk.homePost.label')">
+      <TransitionGroup
+        tag="ul"
+        :name="postConfig.transition ? postConfig.transitionName : ''"
+        :aria-label="t('tk.homePost.label')"
+      >
         <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
           <HomePostItem :post :coverImgMode />
         </li>
-      </ul>
+      </TransitionGroup>
       <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <TkPagination
           v-if="posts.sortPostsByDateAndSticky.length >= pageSize"

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="LayoutSwitch">
 import type { ThemeEnhance } from "@teek/config";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
 import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
@@ -9,6 +9,7 @@ import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";
 import { LayoutMode, layoutModeAttribute, mobileMaxWidthMedia } from "./themeEnhance";
 import { layoutModeStorageKey } from "./namespace";
+import { useAnimated } from "./useAnimated";
 import BaseTemplate from "./components/BaseTemplate.vue";
 
 defineOptions({ name: "LayoutSwitch" });
@@ -26,8 +27,11 @@ const isMobile = useMediaQuery(mobileMaxWidthMedia);
 
 const oldLayoutMode = ref(layoutMode.value);
 
+const { start: startAnimated } = useAnimated();
+
 const update = (val: string) => {
   if (!isClient) return;
+  if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) startAnimated();
 
   const el = document.documentElement;
 
@@ -35,7 +39,7 @@ const update = (val: string) => {
   el.setAttribute(layoutModeAttribute, val);
 };
 
-watch(layoutMode, update);
+watch(layoutMode, update, { immediate: true });
 
 // 文章单独设置布局模式
 watch(
@@ -51,12 +55,6 @@ watch(
   },
   { immediate: true }
 );
-
-onMounted(() => {
-  if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) {
-    document.documentElement.setAttribute(`${layoutModeAttribute}-animated`, "true");
-  }
-});
 
 const content = computed(() => [
   {

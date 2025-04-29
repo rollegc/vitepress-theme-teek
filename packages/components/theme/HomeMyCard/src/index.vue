@@ -25,7 +25,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as TkAv
 <template>
   <slot name="teek-home-my-before" />
 
-  <TkHomeCard :class="ns.b()" :aria-label="t('tk.myCard.label')">
+  <TkHomeCard v-if="blogger.name" :class="ns.b()" :aria-label="t('tk.myCard.label')">
     <div :class="`${ns.e('avatar')} ${blogger.shape} flx-center`">
       <TkAvatar
         v-if="blogger.avatar"
@@ -38,7 +38,7 @@ const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as TkAv
         aria-hidden="true"
       />
       <TkAvatar
-        v-else-if="blogger.name"
+        v-else
         :size="100"
         :text="blogger.name"
         :text-size="50"

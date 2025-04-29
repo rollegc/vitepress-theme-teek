@@ -50,6 +50,18 @@ export interface Post {
    */
   splitSeparator?: boolean;
   /**
+   * 是否开启过渡动画
+   *
+   * @default true
+   */
+  transition?: boolean;
+  /**
+   * 自定义过渡动画名称
+   *
+   * @default 'tk-fade'
+   */
+  transitionName?: string;
+  /**
    * 封面图查看器配置
    */
   imageViewer?: Omit<ImageViewerProps, "urlList">;
