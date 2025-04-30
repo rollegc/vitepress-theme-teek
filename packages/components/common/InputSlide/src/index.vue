@@ -17,7 +17,7 @@ interface InputSlideProps {
 
 const { name = "Slider", min = 0, max = 100, step = 1 } = defineProps<InputSlideProps>();
 
-const inputValue = defineModel<number>({ type: Number, default: 0 });
+const inputValue = defineModel({ default: 0 });
 
 const inputSliderRef = useTemplateRef<HTMLInputElement>("inputSliderRef");
 const inputSliderTooltipRef = useTemplateRef<HTMLDivElement>("inputSliderTooltipRef");

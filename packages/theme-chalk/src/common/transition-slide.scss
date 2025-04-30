@@ -40,6 +40,23 @@
   position: absolute;
 }
 
+/* 滑动淡入效果 */
+.#{$namespace}-slide-fade-move,
+.#{$namespace}-slide-fade-enter-active,
+.#{$namespace}-slide-fade-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+.#{$namespace}-slide-fade-enter-from {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+.#{$namespace}-slide-fade-leave-to {
+  transform: translateX(0);
+  display: none;
+}
+
 /* 上下滚动效果 */
 .#{$namespace}-scroll-move,
 .#{$namespace}-scroll-enter-active,

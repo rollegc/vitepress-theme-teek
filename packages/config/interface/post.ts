@@ -38,12 +38,6 @@ export interface Post {
    */
   showCapture?: boolean;
   /**
-   * 截取文章文字时，是否渲染为 HTML 标签，如果为 false 则保留纯文本
-   *
-   * @default false
-   */
-  captureRender?: boolean;
-  /**
    * 文章信息（作者、创建时间、分类、标签等信息）是否添加 | 分隔符
    *
    * @default false
@@ -58,7 +52,7 @@ export interface Post {
   /**
    * 自定义过渡动画名称
    *
-   * @default 'tk-fade'
+   * @default 'tk-slide-fade'
    */
   transitionName?: string;
   /**

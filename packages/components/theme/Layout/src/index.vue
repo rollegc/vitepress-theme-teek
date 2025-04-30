@@ -109,9 +109,7 @@ const usedSlots = [
 <template>
   <template v-if="teekConfig.teekTheme">
     <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
-
     <TkArticleHeadingHighlight />
-
     <TkRightBottomButton>
       <!-- 通用插槽 -->
       <template v-for="(_, name) in $slots" :key="name" #[name]>

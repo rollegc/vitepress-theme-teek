@@ -211,7 +211,7 @@ export default {
         epLabel: "EP 主题",
         vpTip: "VitePress 主题",
         epTip: "ElementPlus 主题",
-        defaultLabel: "默认",
+        defaultLabel: "预设",
         blueLabel: "蓝色",
         greenLabel: "绿色",
         yellowLabel: "黄色",

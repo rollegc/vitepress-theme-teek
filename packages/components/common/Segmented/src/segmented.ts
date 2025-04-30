@@ -1,3 +1,5 @@
+import type { TkIconProps } from "@teek/components/common/Icon";
+
 export type ModelType = string | number | object | boolean;
 
 export interface SegmentedProps {
@@ -16,7 +18,7 @@ export interface SegmentedItemProps extends SegmentedBase {
 export interface SegmentedBase {
   value: ModelType;
   label?: string;
-  icon?: string;
+  icon?: TkIconProps["icon"];
   title?: string;
   name?: string;
 }

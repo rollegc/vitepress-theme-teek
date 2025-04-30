@@ -5,6 +5,7 @@ import { useRouter, useData, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { categoryIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
+import { pageNumKey } from "@teek/components/theme/HomePostList/src/homePostList";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
@@ -72,6 +73,8 @@ const handleSwitchCategory = (category = "") => {
   const inCategoriesPage = categoriesPageLinkConst === pathname;
 
   // 先删除旧的参数再追加新的
+  searchParams.delete(pageNumKey);
+  searchParams.append(pageNumKey, "1");
   searchParams.delete(categoryKey);
   if (category) searchParams.append(categoryKey, category);
 
@@ -121,7 +124,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
     :titleClick="handleSwitchCategory"
     :autoPage="categoryConfig.autoPage"
     :pageSpeed="categoryConfig.pageSpeed"
-    :class="ns.b()"
+    :class="[ns.b(), ns.is('page', categoriesPage)]"
     :aria-label="t('tk.categoryCard.label')"
   >
     <template #default="{ transitionName }">
@@ -142,7 +145,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
           :style="`top: ${index * itemRefs?.[index]?.getBoundingClientRect().height || 0}px`"
           :aria-label="item.name"
         >
-          <span>{{ item.name }}</span>
+          <span class="sle">{{ item.name }}</span>
           <span>{{ item.length }}</span>
         </a>
 

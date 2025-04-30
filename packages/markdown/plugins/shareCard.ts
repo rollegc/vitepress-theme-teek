@@ -69,7 +69,7 @@ const renderShareCard = (
               class="${rootClass}__item ${num ? `row-${num}` : ""}"
               style="--item-bg-color: ${card.bgColor || "var(--vp-c-gray-1)"}; --item-text-color: ${card.textColor || "var(--vp-c-text-1)"};"
              >
-              ${card.avatar ? `<img src="${withBase(base, card.avatar)}" alt="${card.name}">` : ""}
+              ${card.avatar ? `<img src="${withBase(base, card.avatar)}" alt="${card.name}" @click="${(e: Event) => e.preventDefault()}">` : ""}
               <div>
                 <p class="name">${card.name}</p>
                 <p class="desc">${card.desc}</p>
