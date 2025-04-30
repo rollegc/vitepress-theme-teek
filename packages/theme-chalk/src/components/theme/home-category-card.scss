@@ -2,23 +2,28 @@
 @use "../../mixins/function" as *;
 
 @include b(category) {
+  @include when(page) {
+    position: sticky;
+    top: 72px;
+    max-height: calc(100vh - 160px);
+    min-height: 67px;
+    overflow-y: auto;
+  }
+
   @include e(list) {
     position: relative;
     margin-top: 5px;
 
     a {
-      width: 100%;
       display: flex;
       justify-content: space-between;
+      width: 100%;
       padding: 8px 12px 7px 5px;
       font-size: getCssVar("home-font-size-middle");
       line-height: getCssVar("home-font-size-middle");
       transition: background-color border-color 0.2s;
       border-left: 2px solid transparent;
       margin-top: -1px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
 
       &:hover {
         background-color: getCssVar("fill-color-light");

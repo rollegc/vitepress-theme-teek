@@ -36,7 +36,7 @@ export const transformData = (data: FileContentLoaderData): TkContentData => {
     title: getTitle(data),
     date: getDate(data, siteConfig.srcDir),
     excerpt,
-    capture: data.html?.split("\n").slice(0, 4).join("\n") || getCaptureText(data),
+    capture: getCaptureText(data),
   };
 };
 

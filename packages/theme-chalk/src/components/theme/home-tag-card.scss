@@ -2,6 +2,14 @@
 @use "../../mixins/function" as *;
 
 @include b(tag) {
+  @include when(page) {
+    position: sticky;
+    top: 72px;
+    max-height: calc(100vh - 160px);
+    min-height: 67px;
+    overflow-y: auto;
+  }
+
   @include e(list) {
     position: relative;
     margin-top: 5px;

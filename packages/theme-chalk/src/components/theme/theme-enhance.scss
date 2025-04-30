@@ -62,8 +62,6 @@
       opacity: 0.8;
     }
     .#{$namespace}-segmented {
-      border-radius: 0;
-
       &-item.is-active {
         color: var(--vp-c-brand-1);
         background-color: var(--vp-c-brand-soft);

@@ -9,6 +9,7 @@ import { emptyIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkPagination } from "@teek/components/common/Pagination";
 import { TkIcon } from "@teek/components/common/Icon";
+import { pageNumKey } from "./homePostList";
 import HomePostItem from "./HomePostItem.vue";
 
 defineOptions({ name: "HomePostList" });
@@ -24,7 +25,7 @@ const postConfig = getTeekConfigRef<Required<Post>>("post", {
   coverImgMode: "default",
   emptyLabel: t("tk.homePost.emptyLabel"),
   transition: true,
-  transitionName: ns.joinNamespace("fade"),
+  transitionName: ns.joinNamespace("slide-fade"),
 });
 // 自定义一页数量 & 分页组件的 Props
 const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});
@@ -36,6 +37,8 @@ const pageNum = ref(1);
 const pageSize = ref(unref(pageConfig).pageSize || 10);
 const total = ref(0);
 
+const isPaging = defineModel({ default: false });
+
 watch(
   () => unref(pageConfig).pageSize,
   newValue => {
@@ -45,7 +48,6 @@ watch(
 
 const route = useRoute();
 const currentPosts = ref<TkContentData[]>([]);
-const pageNumKey = "pageNum";
 
 const updateData = () => {
   if (!isClient) return;
@@ -54,6 +56,8 @@ const updateData = () => {
   const { searchParams } = new URL(window.location.href);
   const p = Number(searchParams.get(pageNumKey)) || 1;
   if (p !== unref(pageNum)) pageNum.value = p;
+  // 大于 1 代表开始分页
+  isPaging.value = p > 1;
 
   const postConst = unref(posts);
   const frontmatterConst = unref(frontmatter);
@@ -84,6 +88,29 @@ watch(
   { immediate: true }
 );
 
+/**
+ * 切换分页时，记录到 URL 上
+ */
+const handlePagination = () => {
+  const { searchParams } = new URL(window.location.href!);
+  // 先删除旧的再追加新的
+  searchParams.delete(pageNumKey);
+  searchParams.append(pageNumKey, String(unref(pageNum)));
+  // 替换 URL，但不刷新
+  window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
+
+  // 更新数据
+  updateData();
+
+  // 滚动
+  nextTick(() => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const navHeight = removeUnit(rootStyles.getPropertyValue("--vp-c-text-1"));
+    // 滚动返回时，减去导航栏的高度
+    document.querySelector("html")?.scrollTo({ top: window.innerHeight - navHeight, behavior: "smooth" });
+  });
+};
+
 const pagePropsRef = reactive<TkPaginationProps>({ ...unref(pageConfig) });
 const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = unref(pageConfig);
 const targetSize = "small";
@@ -106,28 +133,6 @@ useWindowSize(width => {
   } else if (coverImgMode.value !== unref(postConfig).coverImgMode) coverImgMode.value = unref(postConfig).coverImgMode;
 });
 
-/**
- * 切换分页时，记录到 URL 上
- */
-const handlePagination = () => {
-  const { searchParams } = new URL(window.location.href!);
-  // 先删除旧的再追加新的
-  searchParams.delete(pageNumKey);
-  searchParams.append(pageNumKey, String(unref(pageNum)));
-  // 替换 URL，但不刷新
-  window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
-  // 更新数据
-  updateData();
-
-  // 滚动
-  nextTick(() => {
-    const rootStyles = getComputedStyle(document.documentElement);
-    const navHeight = removeUnit(rootStyles.getPropertyValue("--vp-c-text-1"));
-    // 滚动返回时，减去导航栏的高度
-    document.querySelector("html")?.scrollTo({ top: window.innerHeight - navHeight, behavior: "smooth" });
-  });
-};
-
 defineExpose({ updateData });
 </script>
 
@@ -145,7 +150,7 @@ defineExpose({ updateData });
       </TransitionGroup>
       <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <TkPagination
-          v-if="posts.sortPostsByDateAndSticky.length >= pageSize"
+          v-if="currentPosts.length >= pageSize"
           v-model:page-size="pageSize"
           v-model:current-page="pageNum"
           :total="total"

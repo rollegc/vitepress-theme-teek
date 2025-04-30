@@ -5,6 +5,7 @@ import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { tagIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
+import { pageNumKey } from "@teek/components/theme/HomePostList";
 import { useTeekConfig, usePosts, useBgColor } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
@@ -80,6 +81,8 @@ const handleSwitchTag = (tag = "") => {
   const inCategoriesPage = categoriesPageLinkConst === pathname;
 
   // 先删除旧的参数再追加新的
+  searchParams.delete(pageNumKey);
+  searchParams.append(pageNumKey, "1");
   searchParams.delete(tagKey);
   if (tag) searchParams.append(tagKey, tag);
 
@@ -127,7 +130,7 @@ watch(
     :titleClick="handleSwitchTag"
     :autoPage="tagConfig.autoPage"
     :pageSpeed="tagConfig.pageSpeed"
-    :class="ns.b()"
+    :class="[ns.b(), ns.is('page', tagsPage)]"
     :aria-label="t('tk.tagCard.label')"
   >
     <template #default="{ transitionName }">

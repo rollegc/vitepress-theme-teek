@@ -24,7 +24,6 @@ const teekConfig = defineTeekConfig({
   },
   post: {
     showCapture: true,
-    captureRender: true,
   },
   articleShare: { enabled: true },
   vitePlugins: {

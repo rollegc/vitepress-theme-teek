@@ -28,20 +28,25 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
 const homePostListInstance = ref<TkHomePostListInstance | null>(null);
 
 provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
+
+// 翻页 > 1 则隐藏 Banner
+const isPaging = ref(false);
 </script>
 
 <template>
   <div :class="ns.b()" role="main" :aria-label="t('tk.home.label')">
-    <TkHomeBanner v-if="isHomePage && (teekConfig.banner.enabled ?? true)">
-      <template v-for="(_, name) in $slots" :key="name" #[name]>
-        <slot :name="name" />
-      </template>
-    </TkHomeBanner>
+    <div v-if="isHomePage && (teekConfig.banner.enabled ?? true)" v-show="!isPaging">
+      <TkHomeBanner>
+        <template v-for="(_, name) in $slots" :key="name" #[name]>
+          <slot :name="name" />
+        </template>
+      </TkHomeBanner>
+    </div>
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
       <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
         <slot name="teek-home-post-before" />
-        <TkHomePostList ref="homePostListInstance" />
+        <TkHomePostList v-model="isPaging" ref="homePostListInstance" />
         <slot name="teek-home-post-after" />
       </div>
 
