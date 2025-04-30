@@ -30,12 +30,6 @@ pnpm stub
 pnpm docs:dev
 ```
 
-如果项目启动失败，则执行如下命令后再启动：
-
-```base
-pnpm plugins:build
-```
-
 ## TODO
 
 - 瀑布相册页
