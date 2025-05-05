@@ -3,7 +3,7 @@
 
 @include b(home) {
   @include e(content) {
-    margin: 3rem auto 0;
+    margin: 48px auto 0;
     max-width: getCssVar("home-max-width");
     gap: getCssVar("home-gap");
 

@@ -6,7 +6,7 @@
 
 @include b(post-list) {
   @include e(empty) {
-    padding: 1.5rem;
+    padding: 24px;
     margin: 0.5px;
 
     @include e(empty__title) {

@@ -6,8 +6,8 @@
 @include b(catalogue) {
   @include e(header) {
     border-bottom: 1px solid getCssVar("line-color");
-    margin-top: 1rem;
-    padding-bottom: 1.2rem;
+    margin-top: 16px;
+    padding-bottom: 19px;
 
     .description {
       margin-top: 10px;
@@ -16,14 +16,14 @@
 
   @include e(wrapper) {
     .title {
-      font-size: 1.45rem;
-      margin: 2rem 0 1rem;
+      font-size: 23px;
+      margin: 32px 0 16px;
     }
 
     .post {
       display: inline-block;
       width: 50%;
-      margin-bottom: 1rem;
+      margin-bottom: 16px;
     }
   }
 }
