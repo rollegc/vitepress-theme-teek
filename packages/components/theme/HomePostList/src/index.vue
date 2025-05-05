@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomePostList">
 import type { TkPaginationProps } from "@teek/components/common/Pagination";
 import type { Post, TkContentData } from "@teek/config";
-import { reactive, ref, unref, watch, nextTick } from "vue";
+import { reactive, ref, watch, nextTick } from "vue";
 import { useRoute, useData } from "vitepress";
 import { isClient, removeUnit } from "@teek/helper";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
@@ -30,17 +30,17 @@ const postConfig = getTeekConfigRef<Required<Post>>("post", {
 // 自定义一页数量 & 分页组件的 Props
 const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});
 
-const coverImgMode = ref(unref(postConfig).coverImgMode);
+const coverImgMode = ref(postConfig.value.coverImgMode);
 
 // 分页信息
 const pageNum = ref(1);
-const pageSize = ref(unref(pageConfig).pageSize || 10);
+const pageSize = ref(pageConfig.value.pageSize || 10);
 const total = ref(0);
 
 const isPaging = defineModel({ default: false });
 
 watch(
-  () => unref(pageConfig).pageSize,
+  () => pageConfig.value.pageSize,
   newValue => {
     pageSize.value = newValue || 10;
   }
@@ -55,12 +55,12 @@ const updateData = () => {
   // 分页处理，如果 URL 查询参数存在 pageNum，则加载对应的 post
   const { searchParams } = new URL(window.location.href);
   const p = Number(searchParams.get(pageNumKey)) || 1;
-  if (p !== unref(pageNum)) pageNum.value = p;
+  if (p !== pageNum.value) pageNum.value = p;
   // 大于 1 代表开始分页
   isPaging.value = p > 1;
 
-  const postConst = unref(posts);
-  const frontmatterConst = unref(frontmatter);
+  const postConst = posts.value;
+  const frontmatterConst = frontmatter.value;
 
   let post = postConst.sortPostsByDateAndSticky;
 
@@ -77,7 +77,7 @@ const updateData = () => {
   // 总数处理
   if (total.value !== post?.length) total.value = post?.length || 0;
 
-  currentPosts.value = post?.slice((unref(pageNum) - 1) * unref(pageSize), unref(pageNum) * unref(pageSize));
+  currentPosts.value = post?.slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
 };
 
 watch(
@@ -95,7 +95,7 @@ const handlePagination = () => {
   const { searchParams } = new URL(window.location.href!);
   // 先删除旧的再追加新的
   searchParams.delete(pageNumKey);
-  searchParams.append(pageNumKey, String(unref(pageNum)));
+  searchParams.append(pageNumKey, String(pageNum.value));
   // 替换 URL，但不刷新
   window.history.pushState({}, "", `${window.location.pathname}?${searchParams.toString()}`);
 
@@ -111,8 +111,8 @@ const handlePagination = () => {
   });
 };
 
-const pagePropsRef = reactive<TkPaginationProps>({ ...unref(pageConfig) });
-const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = unref(pageConfig);
+const pagePropsRef = reactive<TkPaginationProps>({ ...pageConfig.value });
+const { size = "default", layout = "prev, pager, next, jumper, ->, total" } = pageConfig.value;
 const targetSize = "small";
 const targetLayout = "prev, pager, next";
 
@@ -130,7 +130,7 @@ useWindowSize(width => {
 
   if (width <= 960) {
     if (coverImgMode.value !== "default") coverImgMode.value = "default";
-  } else if (coverImgMode.value !== unref(postConfig).coverImgMode) coverImgMode.value = unref(postConfig).coverImgMode;
+  } else if (coverImgMode.value !== postConfig.value.coverImgMode) coverImgMode.value = postConfig.value.coverImgMode;
 });
 
 defineExpose({ updateData });

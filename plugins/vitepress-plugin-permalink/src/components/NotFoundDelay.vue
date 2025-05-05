@@ -1,6 +1,6 @@
 <script setup lang="ts" name="NotFoundDelay">
 import { useRouter, useData } from "vitepress";
-import { nextTick, onBeforeMount, onMounted, ref, unref } from "vue";
+import { nextTick, onBeforeMount, onMounted, ref } from "vue";
 // @ts-ignore
 import option from "virtual:not-found-option";
 import type { NotFoundOption } from "..";
@@ -20,7 +20,7 @@ onMounted(() => {
   // 延迟 notFoundDelayLoad 再加载 404 页面。因为 permalink 插件支持自定义 URL，但是 VP 初始化时根据自定义 URL 寻找文档会 404，因此这里延迟来给 permalink 插件寻找正确的文档路径
   setTimeout(() => {
     disableNotFoundPage.value = false;
-    nextTick(() => (document.title = unref(title)));
+    nextTick(() => (document.title = title.value));
   }, notFoundDelayLoad);
 });
 

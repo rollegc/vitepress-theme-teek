@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBannerFeature">
 import type { Banner } from "@teek/config";
 import { useData, withBase } from "vitepress";
-import { onBeforeUnmount, ref, unref } from "vue";
+import { onBeforeUnmount, ref } from "vue";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
@@ -14,7 +14,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const { frontmatter } = useData();
 
 const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
-  features: unref(frontmatter).tk?.features || [],
+  features: frontmatter.value.tk?.features || [],
   featureCarousel: 4000,
 });
 
@@ -30,7 +30,7 @@ const clearTimer = () => {
 };
 
 useWindowSize(width => {
-  const { features, featureCarousel } = unref(bannerConfig);
+  const { features, featureCarousel } = bannerConfig.value;
   if (width <= 719) {
     isMobile.value = true;
     clearTimer();

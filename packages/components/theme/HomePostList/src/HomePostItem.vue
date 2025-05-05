@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomePostItem">
 import type { Article, Post, TkContentData } from "@teek/config";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -29,7 +29,7 @@ const articleConfig = getTeekConfigRef<Article>("article", {
 
 const postUrl = post.url && withBase(post.url);
 const excerpt = computed(
-  () => post.frontmatter.description || post.excerpt || (unref(postConfig).showCapture && post.capture)
+  () => post.frontmatter.description || post.excerpt || (postConfig.value.showCapture && post.capture)
 );
 
 /**
@@ -37,7 +37,7 @@ const excerpt = computed(
  */
 const handleViewImg = (imgUrl: string | string[]) => {
   const urlList = [imgUrl || []].flat() as string[];
-  createImageViewer({ ...unref(postConfig).imageViewer, urlList });
+  createImageViewer({ ...postConfig.value.imageViewer, urlList });
 };
 
 const coverImgMap = computed(() => {
@@ -62,7 +62,7 @@ const coverImgMap = computed(() => {
 
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {
-  const arr = [unref(articleConfig).showInfo].flat();
+  const arr = [articleConfig.value.showInfo].flat();
   if (arr.includes(true) || arr.includes("post")) return true;
   return false;
 });

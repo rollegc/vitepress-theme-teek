@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from "vue";
 import type { FocusLayer } from "./utils";
-import { defineComponent, nextTick, onBeforeUnmount, onMounted, provide, ref, unref, watch } from "vue";
+import { defineComponent, nextTick, onBeforeUnmount, onMounted, provide, ref, watch } from "vue";
 import { useEscapeKeydown } from "./useEscapeKeydown";
 import { isString } from "@teek/helper";
 import {
@@ -134,7 +134,7 @@ export default defineComponent({
     const releaseOnFocus = (e: Event) => emit(ON_RELEASE_FOCUS_EVT, e);
 
     const onFocusIn = (e: FocusEvent) => {
-      const trapContainer = unref(forwardRef);
+      const trapContainer = forwardRef.value;
       if (!trapContainer) return;
 
       const target = e.target as HTMLElement | null;
@@ -157,7 +157,7 @@ export default defineComponent({
     };
 
     const onFocusOut = (e: Event) => {
-      const trapContainer = unref(forwardRef);
+      const trapContainer = forwardRef.value;
       if (focusLayer.paused || !trapContainer) return;
 
       if (props.trapped) {
@@ -186,7 +186,7 @@ export default defineComponent({
     async function startTrap() {
       // 等待 forwardRef 获取实例
       await nextTick();
-      const trapContainer = unref(forwardRef);
+      const trapContainer = forwardRef.value;
       if (trapContainer) {
         focusableStack.push(focusLayer);
         const prevFocusedElement = trapContainer.contains(document.activeElement)
@@ -218,7 +218,7 @@ export default defineComponent({
     }
 
     function stopTrap() {
-      const trapContainer = unref(forwardRef);
+      const trapContainer = forwardRef.value;
 
       if (trapContainer) {
         trapContainer.removeEventListener(FOCUS_AFTER_TRAPPED, trapOnFocus);

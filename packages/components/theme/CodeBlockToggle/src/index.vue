@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CodeBlockToggle">
-import { nextTick, unref, watch } from "vue";
+import { nextTick, watch } from "vue";
 import { useEventListener, useNamespace } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
@@ -45,7 +45,7 @@ const initCodeBlock = () => {
     const copyDom = item.querySelector<HTMLElement>(`.copy`);
 
     copyDom?.addEventListener("click", e => {
-      unref(codeBlockConfig).copiedDone?.(TkMessage);
+      codeBlockConfig.value.copiedDone?.(TkMessage);
     });
 
     // 当支持自定义 class 来忽略，代码块父元素的 class 中包含 vp-code-block，则跳过
@@ -117,7 +117,7 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
 
   useEventListener(arrowDom, "click", toggle);
 
-  const collapseHeight = unref(codeBlockConfig).collapseHeight;
+  const collapseHeight = codeBlockConfig.value.collapseHeight;
 
   if (isBoolean(collapseHeight)) collapseHeight && toggle();
   else if (collapseHeight && modeHeight > collapseHeight) toggle();

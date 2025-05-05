@@ -1,6 +1,6 @@
 <script setup lang="ts" name="BodyBgImage">
 import type { BodyBgImg } from "@teek/config";
-import { computed, onMounted, unref } from "vue";
+import { computed, onMounted } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useSwitchData } from "@teek/hooks";
 import { isString } from "@teek/helper";
@@ -21,19 +21,19 @@ const bodyBgImgConfig = getTeekConfigRef<BodyBgImg>("bodyBgImg", {
   maskBg: "rgba(0, 0, 0, 0.2)",
 });
 
-const dataArray = computed(() => [unref(bodyBgImgConfig).imgSrc || []].flat().map(item => item && withBase(item)));
+const dataArray = computed(() => [bodyBgImgConfig.value.imgSrc || []].flat().map(item => item && withBase(item)));
 // body 背景图片定时轮播
 const {
   data: imageSrc,
   start,
   index,
 } = useSwitchData(dataArray, {
-  timeout: unref(bodyBgImgConfig).imgInterval,
-  shuffle: unref(bodyBgImgConfig).imgShuffle,
+  timeout: bodyBgImgConfig.value.imgInterval,
+  shuffle: bodyBgImgConfig.value.imgShuffle,
   onAfterUpdate: () => {
     // 预加载下一张图片
-    const nextIndex = (unref(index) + 1) % unref(dataArray).length;
-    const newValue = unref(dataArray)[nextIndex];
+    const nextIndex = (index.value + 1) % dataArray.value.length;
+    const newValue = dataArray.value[nextIndex];
     if (newValue) {
       const img = new Image();
       img.src = newValue;
@@ -46,7 +46,7 @@ onMounted(() => {
 });
 
 const getStyle = () => {
-  const { imgSrc, imgOpacity, maskBg } = unref(bodyBgImgConfig);
+  const { imgSrc, imgOpacity, maskBg } = bodyBgImgConfig.value;
   const imgBgVar = ns.cssVarName("body-bg-img");
   const imgBgOpacityVar = ns.cssVarName("body-bg-img-opacity");
   const maskBgColorVar = ns.cssVarName("body-mask-bg-color");
@@ -55,7 +55,7 @@ const getStyle = () => {
   if (!imgSrc?.length) return { [imgBgVar]: ns.cssVar("bg-img-default") };
 
   return {
-    [imgBgVar]: `url(${unref(imageSrc)}) center center / cover no-repeat`,
+    [imgBgVar]: `url(${imageSrc.value}) center center / cover no-repeat`,
     [imgBgOpacityVar]: imgOpacity,
     [maskBgColorVar]: isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
   };

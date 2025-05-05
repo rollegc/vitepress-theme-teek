@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeBannerContent">
 import type { Banner } from "@teek/config";
-import { computed, onMounted, unref } from "vue";
+import { computed, onMounted } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useTextTypes, useSwitchData } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -15,7 +15,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const { site, frontmatter } = useData();
 // Banner 配置项
 const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
-  name: unref(frontmatter).tk?.name || unref(site).title || "",
+  name: frontmatter.value.tk?.name || site.value.title || "",
   descStyle: "default",
   description: [],
   switchTime: 4000,
@@ -28,16 +28,16 @@ const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
 
 const descArray = computed(() => [
   ...new Set(
-    [unref(frontmatter).tk?.description || unref(bannerConfig).description || []].flat()?.filter((v: string) => !!v)
+    [frontmatter.value.tk?.description || bannerConfig.value.description || []].flat()?.filter((v: string) => !!v)
   ),
 ]);
 
 // 文本描述默认风格
-const isDefaultDescStyle = computed(() => unref(bannerConfig).descStyle === "default");
+const isDefaultDescStyle = computed(() => bannerConfig.value.descStyle === "default");
 // 文本描述打字机风格
-const isTypesDescStyle = computed(() => unref(bannerConfig).descStyle === "types");
+const isTypesDescStyle = computed(() => bannerConfig.value.descStyle === "types");
 // 文本描述切换风格
-const isSwitchDescStyle = computed(() => unref(bannerConfig).descStyle === "switch");
+const isSwitchDescStyle = computed(() => bannerConfig.value.descStyle === "switch");
 
 // 文字打印输入输出效果
 const {
@@ -45,16 +45,16 @@ const {
   isFinished,
   start: startTypes,
 } = useTextTypes(descArray, {
-  inputTime: unref(bannerConfig).typesInTime,
-  outputTime: unref(bannerConfig).typesOutTime,
-  nextTime: unref(bannerConfig).typesNextTime,
-  shuffle: unref(bannerConfig).typesShuffle,
+  inputTime: bannerConfig.value.typesInTime,
+  outputTime: bannerConfig.value.typesOutTime,
+  nextTime: bannerConfig.value.typesNextTime,
+  shuffle: bannerConfig.value.typesShuffle,
 });
 
 // 文字淡入淡出效果
 const { data: text, start: startAutoSwitch } = useSwitchData(descArray, {
-  timeout: unref(bannerConfig).switchTime,
-  shuffle: unref(bannerConfig).switchShuffle,
+  timeout: bannerConfig.value.switchTime,
+  shuffle: bannerConfig.value.switchShuffle,
   onUpdate: (data, newValue) => {
     // 重新渲染数据，同时触发动画
     data.value = "";
@@ -65,8 +65,8 @@ const { data: text, start: startAutoSwitch } = useSwitchData(descArray, {
 });
 
 onMounted(() => {
-  if (unref(isTypesDescStyle)) startTypes();
-  if (unref(isSwitchDescStyle)) startAutoSwitch();
+  if (isTypesDescStyle.value) startTypes();
+  if (isSwitchDescStyle.value) startAutoSwitch();
 });
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeTagCard">
 import type { Tag } from "@teek/config";
-import { unref, watch, computed, ref, inject, onMounted } from "vue";
+import { watch, computed, ref, inject, onMounted } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { tagIcon } from "@teek/static";
@@ -35,25 +35,25 @@ const tagConfig = getTeekConfigRef<Required<Tag>>("tag", {
 
 const posts = usePosts();
 const boColor = useBgColor();
-const tags = computed(() => unref(posts).groupCards.tags);
+const tags = computed(() => posts.value.groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
 const currentTags = computed(() => {
-  const { limit } = unref(tagConfig);
-  const t = unref(tags);
-  const p = unref(pageNum);
+  const { limit } = tagConfig.value;
+  const t = tags.value;
+  const p = pageNum.value;
   return tagsPage ? t : t.slice((p - 1) * limit, p * limit);
 });
 
 const finalTitle = computed(() => {
-  const { pageTitle, homeTitle } = unref(tagConfig);
+  const { pageTitle, homeTitle } = tagConfig.value;
   const pt = isFunction(pageTitle) ? pageTitle(tagIcon) : pageTitle;
   const ht = isFunction(homeTitle) ? homeTitle(tagIcon) : homeTitle;
   return { pt, ht };
 });
 
 const getTagStyle = (index: number) => {
-  const tagBgColor = unref(tagConfig).bgColor || unref(boColor);
+  const tagBgColor = tagConfig.value.bgColor || boColor.value;
 
   // 标签背景色
   const color = tagBgColor[index % tagBgColor.length];
@@ -62,9 +62,9 @@ const getTagStyle = (index: number) => {
 
 const tagsPageLink = computed(() => {
   // 兼容国际化功能，如果没有配置国际化，则返回 '/tags'
-  const localeIndexConst = unref(localeIndex);
+  const localeIndexConst = localeIndex.value;
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  return `${localeName}${unref(tagConfig).path}${unref(site).cleanUrls ? "" : ".html"}`;
+  return `${localeName}${tagConfig.value.path}${site.value.cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});
@@ -77,7 +77,7 @@ const tagKey = "tag";
  */
 const handleSwitchTag = (tag = "") => {
   const { pathname, searchParams } = new URL(window.location.href);
-  const categoriesPageLinkConst = withBase(unref(tagsPageLink));
+  const categoriesPageLinkConst = withBase(tagsPageLink.value);
   const inCategoriesPage = categoriesPageLinkConst === pathname;
 
   // 先删除旧的参数再追加新的
@@ -89,7 +89,7 @@ const handleSwitchTag = (tag = "") => {
   const searchParamsStr = tag ? `?${searchParams.toString()}` : "";
 
   // 避免重复点击
-  if (inCategoriesPage && unref(selectedTag) === tag) return;
+  if (inCategoriesPage && selectedTag.value === tag) return;
   selectedTag.value = tag;
 
   // 如果此时不在分类页，则跳转至分类页

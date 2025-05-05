@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleBreadcrumb">
 import type { Breadcrumb as BreadcrumbType } from "@teek/config";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useData, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { houseIcon } from "@teek/static";
@@ -24,11 +24,11 @@ const breadcrumb = getTeekConfigRef<BreadcrumbType>("breadcrumb", {
   homeLabel: t("tk.articleBreadcrumb.home"),
 });
 
-const relativePathArr = computed(() => unref(page).relativePath.split("/") || []);
+const relativePathArr = computed(() => page.value.relativePath.split("/") || []);
 
 const breadcrumbList = computed(() => {
   const classifyList: { fileName: string; filePath: string }[] = [];
-  const relativePathArrConst: string[] = unref(relativePathArr);
+  const relativePathArrConst: string[] = relativePathArr.value;
 
   relativePathArrConst.forEach((item, index) => {
     // 去除「序号.」的前缀，并获取文件名
@@ -36,12 +36,12 @@ const breadcrumbList = computed(() => {
 
     // 兼容国际化功能，如果配置多语言，在面包屑去掉多语言根目录名
     if (
-      (index !== relativePathArrConst.length - 1 || unref(breadcrumb).showCurrentName) &&
-      fileName !== unref(localeIndex)
+      (index !== relativePathArrConst.length - 1 || breadcrumb.value.showCurrentName) &&
+      fileName !== localeIndex.value
     ) {
       classifyList.push({
         fileName,
-        filePath: unref(theme).catalogues?.inv[item]?.filePath || "",
+        filePath: theme.value.catalogues?.inv[item]?.filePath || "",
       });
     }
   });

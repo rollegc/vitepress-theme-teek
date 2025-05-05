@@ -1,6 +1,6 @@
 <script setup lang="ts" name="FooterInfo">
 import type { FooterInfo, Social } from "@teek/config";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "@teek/static";
@@ -20,7 +20,7 @@ const footerInfo = getTeekConfigRef<FooterInfo>("footerInfo", {});
 const social = getTeekConfigRef<Social[]>("social", []);
 
 const footerData = computed(() => {
-  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = unref(footerInfo) || {};
+  const { theme = {}, copyright = {}, icpRecord, securityRecord }: FooterInfo = footerInfo.value || {};
   const data: Social[] = [];
   // 1.主题版权
   if (theme.show !== false) {

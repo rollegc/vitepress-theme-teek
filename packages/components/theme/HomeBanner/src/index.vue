@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBanner">
 import type { Banner, BodyBgImg } from "@teek/config";
 import { useData } from "vitepress";
-import { computed, onMounted, onUnmounted, ref, unref } from "vue";
+import { computed, onMounted, onUnmounted, ref, nextTick } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { useNamespace, useLocale, useEventListener } from "@teek/hooks";
 import { upperFirst } from "@teek/helper";
@@ -26,7 +26,7 @@ const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
   textColor: "#ffffff",
   titleFontSize: "3.2rem",
   descFontSize: "1.4rem",
-  features: unref(frontmatter).tk?.features || [],
+  features: frontmatter.value.tk?.features || [],
 });
 // bodyBgImg 配置项
 const bodyBgImgConfig = getTeekConfigRef<Required<BodyBgImg>>("bodyBgImg", {
@@ -35,8 +35,8 @@ const bodyBgImgConfig = getTeekConfigRef<Required<BodyBgImg>>("bodyBgImg", {
 });
 
 const currentBgStyle = computed(() => {
-  const { bgStyle } = unref(bannerConfig);
-  const { imgSrc, bannerStyle } = unref(bodyBgImgConfig);
+  const { bgStyle } = bannerConfig.value;
+  const { imgSrc, bannerStyle } = bodyBgImgConfig.value;
   // 纯色背景风格
   const isBannerPureBgStyle = bgStyle === "pure";
   // 局部图片背景风格
@@ -62,7 +62,7 @@ const getStyle = () => {
   const titleTextVar = ns.cssVarName("banner-title-text");
   const descTextVar = ns.cssVarName("banner-desc-text");
   const textColorVar = ns.cssVarName("banner-text-color");
-  const { titleFontSize, descFontSize, textColor } = unref(bannerConfig);
+  const { titleFontSize, descFontSize, textColor } = bannerConfig.value;
 
   return { [titleTextVar]: titleFontSize, [descTextVar]: descFontSize, [textColorVar]: textColor };
 };
@@ -72,21 +72,23 @@ const bannerRef = ref<HTMLElement | null>(null);
 /**
  * 修改导航栏样式（透明化）
  */
-const toggleClass = () => {
+const toggleClass = async () => {
+  if (!bannerRef.value) return;
+  await nextTick();
+
   const vPNavDom = document.querySelector(".VPNavBar");
+  if (!vPNavDom) return;
   // 获取窗口高度
-  const windowH = unref(bannerRef)?.clientHeight;
+  const windowH = bannerRef.value.clientHeight;
 
-  if (!vPNavDom || !windowH) return;
-
-  const offset = unref(currentBgStyle).isBodyImgBgStyle ? 0 : 100;
-  if (unref(bannerRef) && document.documentElement.scrollTop + offset < windowH) {
+  const offset = currentBgStyle.value.isBodyImgBgStyle ? 0 : 100;
+  if (document.documentElement.scrollTop + offset < windowH) {
     vPNavDom.classList.add("full-img-nav-bar");
   } else vPNavDom.classList.remove("full-img-nav-bar");
 };
 
 onMounted(() => {
-  if (unref(currentBgStyle).isBannerFullImgBgStyle || unref(currentBgStyle).isBodyFullImgBgStyle) {
+  if (currentBgStyle.value.isBannerFullImgBgStyle || currentBgStyle.value.isBodyFullImgBgStyle) {
     // 全屏图片模式，监听滚轮，修改导航栏样式（透明化）
     toggleClass();
     useEventListener(window, "scroll", toggleClass);
@@ -104,7 +106,7 @@ const className = computed(() => {
     isBannerFullImgBgStyle,
     isBodyPartImgBgStyle,
     isBodyFullImgBgStyle,
-  } = unref(currentBgStyle);
+  } = currentBgStyle.value;
 
   // body 优先级高
   if (isBodyPartImgBgStyle) return ns.is("part-img");
@@ -126,9 +128,9 @@ const styleComponentMap: Record<string, any> = {
 };
 
 const styleComponent = computed(() => {
-  const { isBodyImgBgStyle } = unref(currentBgStyle);
-  const { bgStyle } = unref(bannerConfig);
-  const { bannerStyle } = unref(bodyBgImgConfig);
+  const { isBodyImgBgStyle } = currentBgStyle.value;
+  const { bgStyle } = bannerConfig.value;
+  const { bannerStyle } = bodyBgImgConfig.value;
   const currentStyle = isBodyImgBgStyle ? `body${upperFirst(bannerStyle)}` : `banner${upperFirst(bgStyle)}`;
 
   return styleComponentMap[currentStyle];

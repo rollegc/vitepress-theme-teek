@@ -1,6 +1,6 @@
 <script setup lang="ts" name="Breadcrumb">
 import type { BreadcrumbProps } from "./breadcrumb";
-import { onMounted, provide, ref, unref } from "vue";
+import { onMounted, provide, ref } from "vue";
 import { useLocale } from "@teek/hooks";
 import { breadcrumbKey } from "./breadcrumb";
 import { ns } from "./namespace";
@@ -16,7 +16,7 @@ const breadcrumb = ref<HTMLDivElement>();
 provide(breadcrumbKey, { separator });
 
 onMounted(() => {
-  const items = unref(breadcrumb)?.querySelectorAll(`.${ns.e("item")}`);
+  const items = breadcrumb.value?.querySelectorAll(`.${ns.e("item")}`);
 
   if (items?.length) {
     items[items.length - 1].setAttribute("aria-current", "page");

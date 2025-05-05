@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticlePageStyle">
 import type { TeekConfig } from "@teek/config";
-import { unref, watch } from "vue";
+import { watch } from "vue";
 import { isClient } from "@teek/helper";
 import { useNamespace } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -22,7 +22,7 @@ watch(
       tkLayoutDom?.classList.remove(ns.joinNamespace(item))
     );
 
-    tkLayoutDom?.classList.add(ns.joinNamespace(unref(pageStyle)));
+    tkLayoutDom?.classList.add(ns.joinNamespace(pageStyle.value));
   },
   { immediate: true }
 );

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Home">
 import type { TeekConfig } from "@teek/config";
 import type { TkHomePostListInstance } from "@teek/components";
-import { ref, unref, provide } from "vue";
+import { ref, provide } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
 import { TkHomeFullscreenWallpaper } from "@teek/components/theme/HomeFullscreenWallpaper";
@@ -27,7 +27,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
 
 const homePostListInstance = ref<TkHomePostListInstance | null>(null);
 
-provide(postDataUpdateSymbol, () => unref(homePostListInstance)?.updateData());
+provide(postDataUpdateSymbol, () => homePostListInstance.value?.updateData());
 
 // 翻页 > 1 则隐藏 Banner
 const isPaging = ref(false);

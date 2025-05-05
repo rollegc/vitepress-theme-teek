@@ -1,7 +1,7 @@
 import type { PostData } from "@teek/config/post/types";
 import type { TeekConfig } from "@teek/config";
-import type { Component } from "vue";
-import { computed, defineComponent, h, inject, InjectionKey, provide, Ref, unref } from "vue";
+import type { Component, Ref, InjectionKey } from "vue";
+import { computed, defineComponent, h, inject, provide, unref } from "vue";
 import { useData } from "vitepress";
 import usePermalink from "vitepress-plugin-permalink/usePermalink";
 import { useAnchorScroll, useViewTransition } from "@teek/hooks";
@@ -39,16 +39,16 @@ export const usePage = () => {
 
   // 当前页面是否为首页
   const isHomePage = computed(
-    () => !unref(isCategoriesPage) && !unref(isTagsPage) && unref(frontmatter).layout === "home"
+    () => !isCategoriesPage.value && !isTagsPage.value && frontmatter.value.layout === "home"
   );
   // 当前页面是否为分类页
-  const isCategoriesPage = computed(() => unref(frontmatter).categoriesPage);
+  const isCategoriesPage = computed(() => frontmatter.value.categoriesPage);
   // 当前页面是否为标签页
-  const isTagsPage = computed(() => unref(frontmatter).tagsPage);
+  const isTagsPage = computed(() => frontmatter.value.tagsPage);
   // 当前页面是否为归档页
-  const isArchivesPage = computed(() => unref(frontmatter).archivesPage);
+  const isArchivesPage = computed(() => frontmatter.value.archivesPage);
   // 当前页面是否为目录页
-  const isCataloguePage = computed(() => unref(frontmatter).catalogue);
+  const isCataloguePage = computed(() => frontmatter.value.catalogue);
 
   return { isHomePage, isCategoriesPage, isTagsPage, isArchivesPage, isCataloguePage };
 };
@@ -58,7 +58,7 @@ export const usePage = () => {
  */
 export const useAllPosts = (): PostData => {
   const { theme } = useData();
-  const posts = unref(theme).posts;
+  const posts = theme.value.posts;
 
   return posts || emptyPost;
 };
@@ -71,7 +71,7 @@ export const usePosts = (): Ref<PostData> => {
   const posts = useAllPosts();
 
   // 兼容国际化功能，先从多语言下获取 posts 数据，获取不到说明没有使用多语言功能，则获取所有 posts 数据。因为多语言可以随时切换，因此使用 computed
-  return computed(() => posts.locales?.[unref(localeIndex)] || posts);
+  return computed(() => posts.locales?.[localeIndex.value] || posts);
 };
 
 /**
@@ -113,12 +113,12 @@ export const useTeekConfig = () => {
 
     // 返回所有 TeekConfig 数据
     if (!key) {
-      return { ...dv, ...unref(theme), ...unref(frontmatter), ...unref(frontmatter).tk, ...unref(teekConfigProvide) };
+      return { ...dv, ...theme.value, ...frontmatter.value, ...frontmatter.value.tk, ...unref(teekConfigProvide) };
     }
 
     // 返回指定 key 的 TeekConfig 数据
-    const valueFromTheme = unref(theme)[key];
-    const valueFromFrontmatter = unref(frontmatter).tk?.[key] ?? unref(frontmatter)[key];
+    const valueFromTheme = theme.value[key];
+    const valueFromFrontmatter = frontmatter.value.tk?.[key] ?? frontmatter.value[key];
     const valueFromInject = unref(teekConfigProvide)[key];
 
     // 对象格式，根据优先级合并里面的内容

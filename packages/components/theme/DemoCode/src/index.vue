@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DemoCode">
 import type { DemoCodeProps } from "./demoCode";
-import { ref, computed, unref, defineAsyncComponent } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useClipboard } from "@teek/hooks";
 import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "@teek/static";
@@ -26,7 +26,7 @@ const {
   copyButtonTip = t("tk.demoCode.copy"),
   collapseSourceButtonTip = t("tk.demoCode.collapseSource"),
   expandSourceButtonTip = t("tk.demoCode.expandSource"),
-} = { ...JSON.parse(decodeURIComponent(props.demo)), ...unref(frontmatter).demo };
+} = { ...JSON.parse(decodeURIComponent(props.demo)), ...frontmatter.value.demo };
 
 const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));
@@ -60,7 +60,7 @@ const handleToggleSourceVisible = (bol?: boolean) => {
  */
 const handleEditPlayground = () => {
   const encoded = getPlaygroundEncoded(props.source);
-  const darkParam = unref(isDark) ? "?theme=dark" : "";
+  const darkParam = isDark.value ? "?theme=dark" : "";
   const link = playgroundUrl.includes("?")
     ? `${playgroundUrl}${darkParam.replace("?", "&")}`
     : `${playgroundUrl}${darkParam}`;
@@ -92,9 +92,9 @@ const handleEditGithub = () => {
 const copyCode = async () => {
   if (!isSupported) console.error(t("tk.demoCode.notSupport"));
 
-  await copy(unref(decodeRawSource));
+  await copy(decodeRawSource.value);
 
-  unref(copied)
+  copied.value
     ? TkMessage.success({
         message: t("tk.demoCode.copySuccess"),
         plain: true,

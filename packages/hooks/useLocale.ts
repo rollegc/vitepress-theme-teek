@@ -1,6 +1,6 @@
 import type { InjectionKey } from "vue";
 import type { Language } from "@teek/locale";
-import { computed, inject, isRef, ref, Ref, unref } from "vue";
+import { computed, inject, isRef, ref, Ref } from "vue";
 import { zhCn } from "@teek/locale";
 import { get } from "@teek/helper";
 
@@ -18,7 +18,7 @@ export const useLocale = (localeOverride?: Ref<Language | undefined>) => {
   const locale = localeOverride || inject(localeContextKey, ref());
   // 默认语言是 zhCn
   const finalLocale = computed(() => locale?.value || zhCn);
-  const lang = computed(() => unref(finalLocale).lang);
+  const lang = computed(() => finalLocale.value.lang);
   const localeRef = isRef(finalLocale) ? finalLocale : ref(finalLocale);
 
   const translate = (path: string, option: TranslatorOption | undefined, locale: Language) => {
@@ -29,7 +29,7 @@ export const useLocale = (localeOverride?: Ref<Language | undefined>) => {
     lang,
     locale: localeRef,
     t: (path: string, option?: TranslatorOption) => {
-      return translate(path, option, unref(finalLocale));
+      return translate(path, option, finalLocale.value);
     },
     translate,
   };

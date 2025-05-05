@@ -115,7 +115,7 @@ watch(popupVisible, newVal => {
   if (trigger === "hover") visible.value = newVal;
 });
 
-const popoverContainerId = "tk-popover-container";
+const popoverContainerId = ns.joinNamespace("popover-container");
 
 onBeforeMount(() => {
   // 所有的 Popover 放在 body 下的一个 div 里

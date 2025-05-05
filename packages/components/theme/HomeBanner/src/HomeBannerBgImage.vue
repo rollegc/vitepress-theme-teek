@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBannerBgImage">
 import type { Banner } from "@teek/config";
 import { withBase } from "vitepress";
-import { computed, onMounted, unref } from "vue";
+import { computed, onMounted } from "vue";
 import { useNamespace, useLocale, useSwitchData } from "@teek/hooks";
 import { isString } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -23,23 +23,23 @@ const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
 });
 
 // 局部图片背景风格
-const isPartImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "partImg");
+const isPartImgBgStyle = computed(() => bannerConfig.value.bgStyle === "partImg");
 // 全屏图片背景风格
-const isFullImgBgStyle = computed(() => unref(bannerConfig).bgStyle === "fullImg");
+const isFullImgBgStyle = computed(() => bannerConfig.value.bgStyle === "fullImg");
 
-const dataArray = computed(() => [unref(bannerConfig).imgSrc || []].flat().map(item => item && withBase(item)));
+const dataArray = computed(() => [bannerConfig.value.imgSrc || []].flat().map(item => item && withBase(item)));
 // banner 背景图片定时轮播
 const {
   data: imageSrc,
   start,
   index,
 } = useSwitchData(dataArray, {
-  timeout: unref(bannerConfig).imgInterval,
-  shuffle: unref(bannerConfig).imgShuffle,
+  timeout: bannerConfig.value.imgInterval,
+  shuffle: bannerConfig.value.imgShuffle,
   onAfterUpdate: () => {
     // 预加载下一张图片
-    const nextIndex = (unref(index) + 1) % unref(dataArray).length;
-    const newValue = unref(dataArray)[nextIndex];
+    const nextIndex = (index.value + 1) % dataArray.value.length;
+    const newValue = dataArray.value[nextIndex];
     if (newValue) {
       const img = new Image();
       img.src = newValue;
@@ -52,7 +52,7 @@ onMounted(() => {
 });
 
 const getStyle = () => {
-  const { imgSrc, maskBg, imgInterval } = unref(bannerConfig);
+  const { imgSrc, maskBg, imgInterval } = bannerConfig.value;
   const imgBgVar = ns.cssVarName("banner-img-bg");
   const maskBgColorVar = ns.cssVarName("banner-mask-bg-color");
   const imgSwitchIntervalVar = ns.cssVarName("banner-img-switch-interval-s");
@@ -61,7 +61,7 @@ const getStyle = () => {
   if (!imgSrc?.length) return { [imgBgVar]: ns.cssVar("bg-img-default") };
 
   return {
-    [imgBgVar]: `url(${unref(imageSrc)}) center center / cover no-repeat`,
+    [imgBgVar]: `url(${imageSrc.value}) center center / cover no-repeat`,
     [maskBgColorVar]: isString(maskBg) ? maskBg : `rgba(0, 0, 0, ${maskBg})`,
     [imgSwitchIntervalVar]: imgInterval / 1000 + "s",
   };

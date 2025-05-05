@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
 import type { FriendLink } from "@teek/config";
-import { computed, ref, unref, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale, useScrollData } from "@teek/hooks";
 import { friendLinkIcon } from "@teek/static";
@@ -29,39 +29,39 @@ const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
 });
 
 // 使用上下滚动功能
-const { data, start, stop } = useScrollData(unref(friendLinkConfig).list, 5, {
-  intervalTime: unref(friendLinkConfig).scrollSpeed,
+const { data, start, stop } = useScrollData(friendLinkConfig.value.list, 5, {
+  intervalTime: friendLinkConfig.value.scrollSpeed,
 });
 
 const pageNum = ref(1);
 // 友情链接渲染数据
 const currentFriendLinkList = computed(() => {
-  const { list, limit, autoScroll } = unref(friendLinkConfig);
+  const { list, limit, autoScroll } = friendLinkConfig.value;
 
   // 如果使用上下滚动功能，则显示滚动数据
-  if (autoScroll) return unref(data);
+  if (autoScroll) return data.value;
 
   // 分页功能
-  const p = unref(pageNum);
+  const p = pageNum.value;
   return list.slice((p - 1) * limit, p * limit);
 });
 
 const finalTitle = computed(() => {
-  const { title } = unref(friendLinkConfig);
+  const { title } = friendLinkConfig.value;
   if (isFunction(title)) return title(friendLinkIcon);
   return title;
 });
 
 onMounted(() => {
-  if (unref(friendLinkConfig).autoScroll) start();
+  if (friendLinkConfig.value.autoScroll) start();
 });
 
 // 每一个 li 的 ref 元素，用于获取元素高度来计算实际的 top 位置
 const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getLiStyle = (index: number) => {
-  if (unref(friendLinkConfig).autoScroll) return {};
-  const clientRect = unref(itemRefs)?.[index]?.getBoundingClientRect();
+  if (friendLinkConfig.value.autoScroll) return {};
+  const clientRect = itemRefs.value?.[index]?.getBoundingClientRect();
 
   // 分页动画需要指定 top，否则默认移动到 0px 位置
   return {
@@ -73,7 +73,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
   // @click.stop 不起作用，因此手动阻止冒泡到 a 标签
   e.preventDefault();
 
-  createImageViewer({ ...unref(friendLinkConfig).imageViewer, urlList: [imgSrc] });
+  createImageViewer({ ...friendLinkConfig.value.imageViewer, urlList: [imgSrc] });
 };
 </script>
 

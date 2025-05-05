@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeFullscreenWallpaper">
 import type { Wallpaper } from "@teek/config";
-import { ref, unref } from "vue";
+import { ref } from "vue";
 import { useNamespace, useEventListener } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
@@ -23,10 +23,10 @@ const wallpaperConfig = getTeekConfigRef<Wallpaper>("wallpaper", {
  */
 const handleKeyDown = (event: KeyboardEvent) => {
   // 全屏模式禁止打开 F12 开发者工具
-  if (event.key === "F12" && unref(isFullscreen)) return event.preventDefault();
+  if (event.key === "F12" && isFullscreen.value) return event.preventDefault();
 
   // 全屏模式禁止使用 Ctrl + Shift + I 打开开发者工具
-  if (event.key === "I" && event.ctrlKey && event.shiftKey && unref(isFullscreen)) return event.preventDefault();
+  if (event.key === "I" && event.ctrlKey && event.shiftKey && isFullscreen.value) return event.preventDefault();
 
   if (event.key === "F11") {
     // 阻止浏览器全屏默
@@ -64,7 +64,7 @@ const handleFullscreenChange = () => {
 
   isFullscreen.value = !!document.fullscreenElement;
 
-  const { hideBanner, hideWaves, hideMask } = unref(wallpaperConfig);
+  const { hideBanner, hideWaves, hideMask } = wallpaperConfig.value;
   const options = [
     { el: htmlDom, executeClass: ns.b() },
     { el: bannerCenterDom, executeClass: "no-feature" },
@@ -106,7 +106,7 @@ const addOrRemoveClass = (
  */
 const handleContextMenu = (event: MouseEvent) => {
   // 全屏模式禁用右键菜单
-  if (unref(isFullscreen)) event.preventDefault();
+  if (isFullscreen.value) event.preventDefault();
 };
 
 const getDocument = () => document;

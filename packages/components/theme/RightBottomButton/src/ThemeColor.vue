@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ThemeColor">
 import type { ThemeEnhance } from "@teek/config";
-import { computed, onMounted, unref, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 import { useData } from "vitepress";
 import { useLocale, useStorage } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -21,7 +21,7 @@ const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 
 const themeColor = useStorage<string>(
   themeColorStorageKey,
-  unref(themeEnhanceConfig).themeColor?.defaultColor || ThemeColor.vpDefault
+  themeEnhanceConfig.value.themeColor?.defaultColor || ThemeColor.vpDefault
 );
 
 const update = (val: typeof themeColor.value | string) => {
@@ -37,7 +37,7 @@ const update = (val: typeof themeColor.value | string) => {
  * 支持文章单独设置主题色
  */
 watch(
-  () => unref(frontmatter).themeColor,
+  () => frontmatter.value.themeColor,
   newVal => {
     if (newVal) update(newVal);
   }
@@ -49,7 +49,7 @@ onMounted(() => {
 });
 
 const themeColorList = computed(() => {
-  const { append = [] } = unref(themeEnhanceConfig).themeColor || {};
+  const { append = [] } = themeEnhanceConfig.value.themeColor || {};
   return [
     {
       label: t("tk.themeEnhance.themeColor.vpLabel"),

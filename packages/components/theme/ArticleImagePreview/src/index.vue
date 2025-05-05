@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleImagePreview">
 import type { Article } from "@teek/config";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useEventListener } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { createImageViewer } from "@teek/components/common/ImageViewer";
@@ -31,7 +31,7 @@ const previewImage = (e: Event) => {
       initialIndex = urlList.length - 1;
     }
 
-    createImageViewer({ infinite: false, ...unref(imageViewer), urlList, initialIndex });
+    createImageViewer({ infinite: false, ...imageViewer.value, urlList, initialIndex });
   }
 };
 

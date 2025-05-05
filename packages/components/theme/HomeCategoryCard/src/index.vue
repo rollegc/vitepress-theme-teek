@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import type { Category } from "@teek/config";
-import { computed, unref, ref, inject, onMounted, watch } from "vue";
+import { computed, ref, inject, onMounted, watch } from "vue";
 import { useRouter, useData, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { categoryIcon } from "@teek/static";
@@ -33,19 +33,19 @@ const categoryConfig = getTeekConfigRef<Required<Category>>("category", {
 
 const posts = usePosts();
 const pageNum = ref(1);
-const categories = computed(() => unref(posts).groupCards.categories);
+const categories = computed(() => posts.value.groupCards.categories);
 
 // 当前显示的分类，如果是在分类页，则显示所有分类，如果在首页，则分页显示
 const currentCategories = computed(() => {
-  const { limit } = unref(categoryConfig);
-  const c = unref(categories);
-  const p = unref(pageNum);
+  const { limit } = categoryConfig.value;
+  const c = categories.value;
+  const p = pageNum.value;
   return categoriesPage ? c : c.slice((p - 1) * limit, p * limit);
 });
 
 // 标题
 const finalTitle = computed(() => {
-  const { pageTitle, homeTitle } = unref(categoryConfig);
+  const { pageTitle, homeTitle } = categoryConfig.value;
   const pt = isFunction(pageTitle) ? pageTitle(categoryIcon) : pageTitle;
   const ht = isFunction(homeTitle) ? homeTitle(categoryIcon) : homeTitle;
   return { pt, ht };
@@ -53,10 +53,10 @@ const finalTitle = computed(() => {
 
 // 分类页链接
 const categoriesPageLink = computed(() => {
-  const localeIndexConst = unref(localeIndex);
+  const localeIndexConst = localeIndex.value;
   const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
   // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
-  return `${localeName}${unref(categoryConfig).path}${unref(site).cleanUrls ? "" : ".html"}`;
+  return `${localeName}${categoryConfig.value.path}${site.value.cleanUrls ? "" : ".html"}`;
 });
 
 const updatePostListData = inject(postDataUpdateSymbol, () => {});
@@ -69,7 +69,7 @@ const categoryKey = "category";
  */
 const handleSwitchCategory = (category = "") => {
   const { pathname, searchParams } = new URL(window.location.href);
-  const categoriesPageLinkConst = withBase(unref(categoriesPageLink));
+  const categoriesPageLinkConst = withBase(categoriesPageLink.value);
   const inCategoriesPage = categoriesPageLinkConst === pathname;
 
   // 先删除旧的参数再追加新的
@@ -81,7 +81,7 @@ const handleSwitchCategory = (category = "") => {
   const searchParamsStr = category ? `?${searchParams.toString()}` : "";
 
   // 避免重复点击
-  if (inCategoriesPage && unref(selectedCategory) === category) return;
+  if (inCategoriesPage && selectedCategory.value === category) return;
   selectedCategory.value = category;
 
   // 如果此时不在分类页，则跳转至分类页

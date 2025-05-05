@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeTopArticleCard">
 import type { TopArticle, TkContentData } from "@teek/config";
-import { computed, ref, unref } from "vue";
+import { computed, ref } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { topArticleIcon } from "@teek/static";
@@ -26,7 +26,7 @@ const topArticleConfig = getTeekConfigRef<Required<TopArticle>>("topArticle", {
 });
 
 const topArticleList = computed(() => {
-  const sortPostsByDateAndSticky: TkContentData[] = unref(posts).sortPostsByDateAndSticky;
+  const sortPostsByDateAndSticky: TkContentData[] = posts.value.sortPostsByDateAndSticky;
   return sortPostsByDateAndSticky.filter(p => p.frontmatter.top)?.map((p, index) => ({ ...p, num: index + 1 }));
 });
 
@@ -34,20 +34,20 @@ const pageNum = ref(1);
 
 // 当前页的文章列表
 const currentTopArticleList = computed(() => {
-  const { limit } = unref(topArticleConfig);
-  const p = unref(pageNum);
-  return unref(topArticleList).slice((p - 1) * limit, p * limit);
+  const { limit } = topArticleConfig.value;
+  const p = pageNum.value;
+  return topArticleList.value.slice((p - 1) * limit, p * limit);
 });
 
 const formatPostDate = (date?: string) => {
-  const dateFormatConst = unref(topArticleConfig).dateFormat;
+  const dateFormatConst = topArticleConfig.value.dateFormat;
 
   if (isFunction(dateFormatConst)) return dateFormatConst(date || "");
   return formatDate(date || new Date(), dateFormatConst);
 };
 
 const finalTitle = computed(() => {
-  const { title } = unref(topArticleConfig);
+  const { title } = topArticleConfig.value;
   if (isFunction(title)) return title(topArticleIcon);
   return title;
 });
@@ -57,8 +57,8 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getStyle = (num: number, index: number) => {
   return {
-    [ns.cssVarName("num-bg-color")]: unref(bgColor)[num % unref(bgColor).length],
-    top: `calc(${index} * (calc(${ns.cssVar("home-top-article-gap")} + ${unref(itemRefs)?.[index]?.getBoundingClientRect().height || 0}px)))`,
+    [ns.cssVarName("num-bg-color")]: bgColor.value[num % bgColor.value.length],
+    top: `calc(${index} * (calc(${ns.cssVar("home-top-article-gap")} + ${itemRefs.value?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
 </script>

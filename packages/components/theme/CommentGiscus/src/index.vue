@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CommentGiscus">
 import type { CommentProvider } from "@teek/config";
-import { ref, nextTick, onMounted, computed, unref, inject } from "vue";
+import { ref, nextTick, onMounted, computed, inject } from "vue";
 import { useData } from "vitepress";
 import { isFunction } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
@@ -37,8 +37,8 @@ const {
 } = giscusOptions;
 
 const giscusTheme = computed(() => {
-  if (isFunction(giscusThemeConfig)) return giscusThemeConfig(unref(isDark));
-  return giscusThemeConfig || (unref(isDark) ? "dark" : "light");
+  if (isFunction(giscusThemeConfig)) return giscusThemeConfig(isDark.value);
+  return giscusThemeConfig || (isDark.value ? "dark" : "light");
 });
 
 // 尝试从上下文获取 giscus 组件
