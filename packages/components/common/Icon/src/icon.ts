@@ -1,10 +1,11 @@
-import type { IconifyIcon } from "@iconify/vue/dist/offline";
+import type { Component } from "vue";
+import type { IconifyIcon } from "@iconify/vue";
 
 export interface IconProps {
   /**
    * 图标
    */
-  icon: string | Object | Comment | IconifyIcon;
+  icon: string | Object | Component | IconifyIcon;
   /**
    * 图标类型
    */
@@ -18,7 +19,7 @@ export interface IconProps {
   /**
    * 图标颜色
    *
-   * @default inherit
+   * @default 'inherit'
    */
   color?: string;
   /**
@@ -40,5 +41,5 @@ export interface IconProps {
   /**
    * 自定义图标样式
    */
-  style?: Record<string, string>;
+  style?: Record<string, any>;
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts" name="CataloguePage">
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import CatalogueItem from "./CatalogueItem.vue";
@@ -12,7 +12,7 @@ const { t } = useLocale();
 const { theme, frontmatter } = useData();
 
 // 目录列表
-const catalogues = computed(() => unref(theme).catalogues?.inv[unref(frontmatter).path]?.catalogues);
+const catalogues = computed(() => theme.value.catalogues?.inv[frontmatter.value.path]?.catalogues);
 </script>
 
 <template>

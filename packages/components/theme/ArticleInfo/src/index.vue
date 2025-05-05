@@ -2,7 +2,7 @@
 import type { PostBaseInfoProps } from "./articleInfo";
 import type { Article, ArticleInfoPosition, TkContentData } from "@teek/config";
 import { useRoute, withBase, useData } from "vitepress";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { formatDate, isFunction } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "@teek/static";
@@ -35,11 +35,11 @@ const route = useRoute();
 
 // 文章创建时间，先读取 post.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在文档的 frontmatter 配置 date，让文章扫描耗费性能降低）
 const createDate = computed(() => {
-  const originPosts: TkContentData[] = unref(posts).originPosts;
+  const originPosts: TkContentData[] = posts.value.originPosts;
   const date =
     post.date ||
     originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`))[0]?.date;
-  const dateFormatConst = unref(articleConfig).dateFormat;
+  const dateFormatConst = articleConfig.value.dateFormat;
 
   if (isFunction(dateFormatConst)) return dateFormatConst(date || "");
   return formatDate(date || new Date(), dateFormatConst);
@@ -47,17 +47,17 @@ const createDate = computed(() => {
 
 // 文章更新时间，取 git 的最后一次提交时间
 const updateDate = computed(() => {
-  const date = unref(page).lastUpdated;
+  const date = page.value.lastUpdated;
   if (!date) return "";
 
-  const dateFormatConst = unref(articleConfig).dateFormat;
+  const dateFormatConst = articleConfig.value.dateFormat;
 
   if (isFunction(dateFormatConst)) return dateFormatConst(date);
   return formatDate(date, dateFormatConst);
 });
 
 const baseInfo = computed(() => {
-  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag } = unref(articleConfig);
+  const { showAuthor, showCreateDate, showUpdateDate, showCategory, showTag } = articleConfig.value;
 
   return [
     {
@@ -71,14 +71,14 @@ const baseInfo = computed(() => {
     {
       title: t("tk.articleInfo.createTime"),
       icon: calendarIcon,
-      data: unref(createDate),
+      data: createDate.value,
       show: isShow(showCreateDate),
     },
     {
       title: t("tk.articleInfo.updateTime"),
       icon: editPenIcon,
-      data: unref(updateDate),
-      show: unref(updateDate) && scope === "article" && showUpdateDate,
+      data: updateDate.value,
+      show: updateDate.value && scope === "article" && showUpdateDate,
     },
     {
       title: t("tk.articleInfo.category"),

@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ToComment">
 import type { TeekConfig } from "@teek/config";
-import { computed, unref, ref } from "vue";
+import { computed, ref } from "vue";
 import { isClient } from "@teek/helper";
-import { useLocale, useDebounce } from "@teek/hooks";
+import { useLocale, useDebounce, useEventListener } from "@teek/hooks";
 import { commentIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkMessage } from "@teek/components/common/Message";
@@ -25,7 +25,7 @@ const showToComment = computed(() => {
   let height = 0;
   if (docContentHeight) height = docContentHeight - docFooterHeight - window.innerHeight / 2;
 
-  return unref(scrollTop) < height;
+  return scrollTop.value < height;
 });
 
 const scrollToComment = useDebounce(
@@ -40,6 +40,12 @@ const scrollToComment = useDebounce(
   500,
   true
 );
+
+const watchScroll = () => {
+  scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop || 0;
+};
+
+useEventListener(() => window, "scroll", watchScroll);
 </script>
 
 <template>

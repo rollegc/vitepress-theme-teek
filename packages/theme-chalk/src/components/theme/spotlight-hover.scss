@@ -1,17 +1,18 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
 @use "../../mixins/mixins" as *;
+@use "../../mixins/config" as *;
 
 :root {
   @include set-css-var("spotlight-under-bg-color", var(--vp-c-brand-soft));
 }
 
-.tk-spotlight-hover {
+.#{$namespace}-spotlight-hover {
   pointer-events: none;
   position: fixed;
 }
 
-.tk-spotlight-hover__aside::before {
+.#{$namespace}-spotlight-hover__aside::before {
   content: "";
   position: absolute;
   display: block;
@@ -22,6 +23,6 @@
   left: -24px;
 }
 
-.tk-spotlight-hover__under {
+.#{$namespace}-spotlight-hover__under {
   background-color: getCssVar("spotlight-under-bg-color");
 }

@@ -25,7 +25,7 @@ html[code-block="#{$namespace}"] {
 
   .vp-doc div:not(.#{$namespace}-vp-code) > div[class*="language-"],
   .#{$namespace}-postItem__info__left__excerpt div[class*="language-"] {
-    transition: height 0.3s;
+    transition: height 0.3s ease-in-out;
     overflow: hidden;
 
     .vp-code {

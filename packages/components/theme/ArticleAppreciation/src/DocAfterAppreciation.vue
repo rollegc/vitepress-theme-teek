@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DocAfterAppreciation">
 import type { Appreciation } from "@teek/config";
-import { computed, ref, unref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { aliPayIcon, weChatPayIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -15,12 +15,12 @@ const { getTeekConfigRef } = useTeekConfig();
 
 const appreciateConfig = getTeekConfigRef<Required<Appreciation<"doc-after">>>("appreciation", { position: "" });
 
-const docAfterOptions = computed(() => unref(appreciateConfig).options || { expand: false });
+const docAfterOptions = computed(() => appreciateConfig.value.options || { expand: false });
 
-const showContent = ref(unref(docAfterOptions).expand);
+const showContent = ref(docAfterOptions.value.expand);
 
 const icon = computed(() => {
-  const { icon } = unref(docAfterOptions);
+  const { icon } = docAfterOptions.value;
   if (icon === "aliPay") return aliPayIcon;
   if (icon === "weChatPay") return weChatPayIcon;
 
@@ -32,7 +32,7 @@ const toggleShowContent = () => {
 };
 
 watch(
-  () => unref(docAfterOptions).expand,
+  () => docAfterOptions.value.expand,
   newValue => {
     showContent.value = newValue;
   }

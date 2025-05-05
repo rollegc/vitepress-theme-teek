@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CommentArtalk">
 import type { CommentProvider } from "@teek/config";
-import { inject, onMounted, onUnmounted, ref, unref, watch } from "vue";
+import { inject, onMounted, onUnmounted, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
@@ -27,7 +27,7 @@ const artalkId = "artalk";
 const initArtalkByInject = () => {
   // 尝试从上下文获取 artalk 实例函数
   const getArtalkInstance = inject(artalkContext, () => null);
-  const el = unref(artalkRef) || `#${artalkId}`;
+  const el = artalkRef.value || `#${artalkId}`;
 
   const artalkInstance = getArtalkInstance?.(el, artalkOptions);
 
@@ -43,18 +43,18 @@ const initArtalkByJs = () => {
   if (!isClient) return console.error("[Teek Error] Not in the client");
 
   const Artalk = (window as any).Artalk;
-  const el = unref(artalkRef) || `#${artalkId}`;
+  const el = artalkRef.value || `#${artalkId}`;
 
-  if (!Artalk || !unref(artalkRef)) {
+  if (!Artalk || !artalkRef.value) {
     return console.error("[Teek Error] Artalk initialization failed. Unable to load online js file from " + server);
   }
 
   artalk.value = Artalk.init({
-    darkMode: unref(isDark),
+    darkMode: isDark.value,
     ...options,
     el,
     pageKey: vpRouter.route.path,
-    pageTitle: unref(page).title,
+    pageTitle: page.value.title,
     server: server,
     site: site,
   });
@@ -63,15 +63,15 @@ const initArtalkByJs = () => {
 };
 
 const initJs = () => {
-  const t = unref(artalkJs);
+  const t = artalkJs.value;
   if (t) t.onload = initArtalkByJs;
 };
 
 const reloadArtalk = () => {
-  const a = unref(artalk);
+  const a = artalk.value;
   a?.update({
     pageKey: vpRouter.route.path,
-    pageTitle: unref(page).title,
+    pageTitle: page.value.title,
   });
 
   a?.reload();
@@ -82,7 +82,7 @@ onMounted(() => {
   if (!initArtalkByInject() && server) {
     initJs();
     // 路由切换后更新评论内容
-    return unref(artalk) && vpRouter.bindAfterRouteChange(ns.joinNamespace("artalk"), () => reloadArtalk());
+    return artalk.value && vpRouter.bindAfterRouteChange(ns.joinNamespace("artalk"), () => reloadArtalk());
   }
 
   console.error(
@@ -91,14 +91,14 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  const a = unref(artalk);
+  const a = artalk.value;
   if (a) a.destroy();
 });
 
 const switchDark = () => {
   setTimeout(() => {
-    const a = unref(artalk);
-    if (a) a.setDarkMode(unref(isDark));
+    const a = artalk.value;
+    if (a) a.setDarkMode(isDark.value);
   }, 100);
 };
 

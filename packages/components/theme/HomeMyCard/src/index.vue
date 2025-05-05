@@ -2,7 +2,7 @@
 import type { Blogger, Social } from "@teek/config";
 import type { TkAvatarProps } from "@teek/components/common/Avatar";
 import { withBase } from "vitepress";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
@@ -19,7 +19,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const blogger = getTeekConfigRef<Required<Blogger>>("blogger", { shape: "square" });
 const social = getTeekConfigRef<Social[]>("social", []);
 
-const shape = computed(() => unref(blogger).shape.replace("-rotate", "") as TkAvatarProps["shape"]);
+const shape = computed(() => blogger.value.shape.replace("-rotate", "") as TkAvatarProps["shape"]);
 </script>
 
 <template>

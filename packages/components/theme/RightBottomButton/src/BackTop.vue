@@ -1,6 +1,6 @@
 <script setup lang="ts" name="BackTop">
 import type { TeekConfig } from "@teek/config";
-import { computed, unref, onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { isClient } from "@teek/helper";
 import { useLocale, useDebounce, useEventListener } from "@teek/hooks";
 import { rocketIcon } from "@teek/static";
@@ -18,7 +18,7 @@ const backTopDone = getTeekConfigRef<TeekConfig["backTopDone"]>("backTopDone");
 
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
-const showToTop = computed(() => unref(scrollTop) > 100);
+const showToTop = computed(() => scrollTop.value > 100);
 const progress = ref(0);
 
 const scrollToTop = useDebounce(
@@ -38,6 +38,7 @@ const watchScroll = () => {
   scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop || 0;
   updateScrollProgress();
 };
+
 /**
  * 更新返回顶部的进度条
  */

@@ -31,10 +31,10 @@
   background-color: rgba(225, 228, 232, 0.5);
   width: 100%;
   appearance: none;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   border: none;
-  padding: 0.25rem;
-  font-size: 0.875rem;
+  padding: 4px;
+  font-size: 14px;
   color: #d1d5db;
 
   @include e(label) {
@@ -186,10 +186,10 @@
   @include e(label__tooltip) {
     top: calc(0px - getCssVar("slider-height") - 16px);
     position: absolute;
-    min-width: 3rem;
-    border-radius: 0.5rem;
+    min-width: 48px;
+    border-radius: 8px;
     background-color: #000000;
-    padding: 0.5rem;
+    padding: 8px;
     text-align: center;
     color: #ffffff;
   }

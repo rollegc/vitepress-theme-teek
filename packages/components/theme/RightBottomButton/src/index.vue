@@ -1,7 +1,8 @@
 <script setup lang="ts" name="RightBottomButton">
-import type { ThemeEnhance } from "@teek/config";
-import { useData } from "vitepress";
+import type { TeekConfig, ThemeEnhance } from "@teek/config";
 import { computed } from "vue";
+import { useData } from "vitepress";
+import { isBoolean } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { mobileMaxWidthMedia, TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
 import { useMediaQuery } from "@teek/hooks";
@@ -14,7 +15,15 @@ defineOptions({ name: "RightBottomButton" });
 
 const { getTeekConfigRef } = useTeekConfig();
 const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
-const { theme } = useData();
+const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, { comment: { provider: "" } });
+const { frontmatter } = useData();
+
+const commentConfig = computed(() => {
+  const comment = frontmatter.value.comment ?? teekConfig.value.comment;
+  if (isBoolean(comment)) return { enabled: comment };
+
+  return { enabled: true, provider: comment.provider };
+});
 
 const isMobile = useMediaQuery(mobileMaxWidthMedia);
 const disabledThemeColor = computed(() => {
@@ -28,7 +37,7 @@ const disabledThemeColor = computed(() => {
     <slot name="teek-right-bottom-before" />
 
     <BackTop />
-    <ToComment v-if="theme.comment?.provider" />
+    <ToComment v-if="commentConfig.enabled && commentConfig.provider" />
     <TkThemeEnhance
       v-if="!isMobile && themeEnhanceConfig.position === 'bottom'"
       :class="ns.e('button')"

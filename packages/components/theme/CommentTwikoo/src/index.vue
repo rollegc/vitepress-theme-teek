@@ -1,6 +1,6 @@
 <script setup lang="ts" name="CommentTwikoo">
 import type { CommentProvider } from "@teek/config";
-import { ref, onMounted, unref } from "vue";
+import { ref, onMounted } from "vue";
 import { isClient } from "@teek/helper";
 import { useNamespace, useVpRouter } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -32,7 +32,7 @@ const initTwikoo = () => {
 const twikooJs = ref<HTMLScriptElement | null>(null);
 
 const initJs = () => {
-  const t = unref(twikooJs);
+  const t = twikooJs.value;
   if (t) t.onload = initTwikoo;
 };
 
@@ -43,7 +43,7 @@ const reloadTwikoo = (to: string) => {
 onMounted(() => {
   initJs();
   // 路由切换后更新评论内容
-  unref(twikooJs) && vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));
+  twikooJs.value && vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));
 });
 </script>
 

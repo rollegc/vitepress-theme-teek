@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeDocAnalysisCard">
 import type { DocAnalysis, DocAnalysisInfo } from "@teek/config";
-import { computed, unref, watch } from "vue";
+import { computed, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/hooks";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "@teek/helper";
@@ -24,15 +24,15 @@ const docAnalysisConfig = getTeekConfigRef<Required<DocAnalysis>>("docAnalysis",
   appendInfo: [],
 });
 
-const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
+const docAnalysisInfo = computed(() => theme.value.docAnalysisInfo || {});
 
 const finalTitle = computed(() => {
-  const { title } = unref(docAnalysisConfig);
+  const { title } = docAnalysisConfig.value;
   if (isFunction(title)) return title(docAnalysisIcon);
   return title;
 });
 
-const createToNowDay = computed(() => formatDiffDateToDay(unref(docAnalysisConfig).createTime || getNowDate()));
+const createToNowDay = computed(() => formatDiffDateToDay(docAnalysisConfig.value.createTime || getNowDate()));
 
 const posts = usePosts();
 
@@ -40,7 +40,7 @@ const posts = usePosts();
  * 本周新增的文章数
  */
 const postAddNum = computed(() => {
-  const sortPostsByDate = unref(posts).sortPostsByDate;
+  const sortPostsByDate = posts.value.sortPostsByDate;
   let weekAddNum = 0;
   let monthAddNum = 0;
 
@@ -74,16 +74,16 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
   iteration: false,
   pageIteration: 2000,
   permalink: true,
-  ...unref(docAnalysisConfig).statistics,
+  ...docAnalysisConfig.value.statistics,
 }));
 // 是否使用访问量功能
-const useSiteView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).siteView);
+const useSiteView = computed(() => !!statisticsConfig.value.provider && statisticsConfig.value.siteView);
 
 // 通过不蒜子获取访问量和访客数
-const { sitePv, siteUv, isGet, request } = useBuSuanZi(unref(useSiteView), {
-  tryRequest: unref(statisticsConfig).tryRequest,
-  tryCount: unref(statisticsConfig).tryCount,
-  tryIterationTime: unref(statisticsConfig).tryIterationTime,
+const { sitePv, siteUv, isGet, request } = useBuSuanZi(useSiteView.value, {
+  tryRequest: statisticsConfig.value.tryRequest,
+  tryCount: statisticsConfig.value.tryCount,
+  tryIterationTime: statisticsConfig.value.tryIterationTime,
 });
 
 const statisticsInfo = computed(() => ({ siteUv: siteUv.value, sitePv: sitePv.value, isGet: isGet.value }));
@@ -97,23 +97,23 @@ const vpRouter = useVpRouter();
 const { router } = vpRouter;
 
 // 如果使用了 permalink 插件，则可以使用该插件提供的 onAfterUrlLoad 回调监听 URL 变化事件
-if (unref(statisticsConfig).permalink && router.state.permalinkPlugin) {
+if (statisticsConfig.value.permalink && router.state.permalinkPlugin) {
   vpRouter.bindRouterFn("urlChange", () => {
     router.onAfterUrlLoad = () => {
-      if (unref(useSiteView)) request();
+      if (useSiteView.value) request();
     };
   });
 } else {
   watch(router.route, () => {
-    if (unref(useSiteView)) request();
+    if (useSiteView.value) request();
   });
 }
 
 type DocAnalysisResolve = DocAnalysisInfo & { originValue?: string | number };
 
 const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
-  const { createTime, appendInfo, overrideInfo } = unref(docAnalysisConfig);
-  const { fileList = [], totalFileWords, lastCommitTime } = unref(docAnalysisInfo);
+  const { createTime, appendInfo, overrideInfo } = docAnalysisConfig.value;
+  const { fileList = [], totalFileWords, lastCommitTime } = docAnalysisInfo.value;
   const { siteUv, sitePv, isGet } = statisticsInfo.value;
 
   const list: DocAnalysisResolve[] = [
@@ -126,20 +126,20 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
     {
       key: "weekAddNum",
       label: t("tk.docAnalysisCard.weekAddNum"),
-      originValue: unref(postAddNum)?.weekAddNum,
-      value: `${unref(postAddNum)?.weekAddNum} ${t("tk.docAnalysisCard.fileUnit")}`,
+      originValue: postAddNum.value?.weekAddNum,
+      value: `${postAddNum.value?.weekAddNum} ${t("tk.docAnalysisCard.fileUnit")}`,
     },
     {
       key: "monthAddNum",
       label: t("tk.docAnalysisCard.monthAddNum"),
-      originValue: unref(postAddNum)?.monthAddNum,
-      value: `${unref(postAddNum)?.monthAddNum} ${t("tk.docAnalysisCard.fileUnit")}`,
+      originValue: postAddNum.value?.monthAddNum,
+      value: `${postAddNum.value?.monthAddNum} ${t("tk.docAnalysisCard.fileUnit")}`,
     },
     {
       key: "runtime",
       label: t("tk.docAnalysisCard.runtime"),
       originValue: createTime,
-      value: `${unref(createToNowDay) === 0 ? t("tk.docAnalysisCard.runtimeLess") : `${unref(createToNowDay)} ${t("tk.docAnalysisCard.runtimeUnit")}`}`,
+      value: `${createToNowDay.value === 0 ? t("tk.docAnalysisCard.runtimeLess") : `${createToNowDay.value} ${t("tk.docAnalysisCard.runtimeUnit")}`}`,
     },
     {
       key: "totalWordCount",
@@ -156,16 +156,16 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
     {
       key: "viewCount",
       label: t("tk.docAnalysisCard.viewCount"),
-      originValue: unref(sitePv),
-      value: unref(isGet) ? `${unref(sitePv)} ${t("tk.docAnalysisCard.viewCountUnit")}` : "Get...",
-      show: unref(useSiteView),
+      originValue: sitePv,
+      value: isGet ? `${sitePv} ${t("tk.docAnalysisCard.viewCountUnit")}` : "Get...",
+      show: useSiteView.value,
     },
     {
       key: "visitCount",
       label: t("tk.docAnalysisCard.visitCount"),
-      originValue: unref(siteUv),
-      value: unref(isGet) ? `${unref(siteUv)} ${t("tk.docAnalysisCard.visitCountUnit")}` : "Get...",
-      show: unref(useSiteView),
+      originValue: siteUv,
+      value: isGet ? `${siteUv} ${t("tk.docAnalysisCard.visitCountUnit")}` : "Get...",
+      show: useSiteView.value,
     },
     ...(appendInfo as any[]),
   ];

@@ -1,7 +1,8 @@
 @use "../mixins/mixins" as *;
 @use "../mixins/function" as *;
+@use "../mixins/config" as *;
 
-html[theme-size="wide"] {
+html[#{$namespace}-theme-size="wide"] {
   @include set-css-var("home-max-width", 1400px);
   @include set-css-var("home-gap", getCssVar("gap3"));
   @include set-css-var("home-post-simple-img-width", 160px);
@@ -20,7 +21,7 @@ html[theme-size="wide"] {
   @include set-css-var("home-footer-group-width", 100%);
 }
 
-html[theme-size="large"] {
+html[#{$namespace}-theme-size="large"] {
   @include set-css-var("home-max-width", 1330px);
   @include set-css-var("home-gap", getCssVar("gap3"));
   @include set-css-var("home-post-simple-img-width", 160px);
@@ -40,7 +41,7 @@ html[theme-size="large"] {
 }
 
 :root,
-html[theme-size="default"] {
+html[#{$namespace}-theme-size="default"] {
   @include set-css-var("home-max-width", 1140px);
   @include set-css-var("home-gap", getCssVar("gap2"));
   @include set-css-var("home-post-simple-img-width", 120px);
@@ -60,7 +61,7 @@ html[theme-size="default"] {
   @include set-css-var("home-footer-group-width", 80%);
 }
 
-html[theme-size="small"] {
+html[#{$namespace}-theme-size="small"] {
   @include set-css-var("home-max-width", 1000px);
   @include set-css-var("home-gap", getCssVar("gap2"));
   @include set-css-var("home-post-simple-img-width", 100px);
@@ -82,18 +83,18 @@ html[theme-size="small"] {
 
 @media (min-width: 768px) {
   :root,
-  html[theme-size="large"],
-  html[theme-size="default"],
-  html[theme-size="small"] {
+  html[#{$namespace}-theme-size="large"],
+  html[#{$namespace}-theme-size="default"],
+  html[#{$namespace}-theme-size="small"] {
     @include set-css-var("home-card-width", 280px);
   }
 }
 
 @media (max-width: 768px) {
   :root,
-  html[theme-size="large"],
-  html[theme-size="default"],
-  html[theme-size="small"] {
+  html[#{$namespace}-theme-size="large"],
+  html[#{$namespace}-theme-size="default"],
+  html[#{$namespace}-theme-size="small"] {
     @include set-css-var("home-card-width", 100%);
   }
 }

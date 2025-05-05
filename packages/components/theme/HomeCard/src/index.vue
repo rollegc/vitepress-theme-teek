@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeCard">
 import type { HomeCardProps } from "./homeCard";
-import { unref, onMounted, ref, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { arrowLeftIcon, arrowRightIcon } from "@teek/static";
@@ -42,7 +42,7 @@ const pagination = (to: number, type: "prev" | "next") => {
   transitionName.value = ns.joinNamespace(`slide-${type}`);
 
   if (page && autoPage) startAutoPage();
-  const index = unref(pageNum) % pageTotalNum;
+  const index = pageNum.value % pageTotalNum;
   const res = (index + to) % pageTotalNum;
 
   // 修改页码，对超出或低出的页码进行调整

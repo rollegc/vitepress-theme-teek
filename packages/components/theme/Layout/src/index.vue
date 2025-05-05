@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
-import { computed, unref, provide, watch } from "vue";
+import { computed, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
@@ -61,7 +61,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
 });
 
 const commentConfig = computed(() => {
-  const comment = unref(teekConfig).comment;
+  const comment = frontmatter.value.comment ?? teekConfig.value.comment;
   if (isBoolean(comment)) return { enabled: comment };
 
   return {
@@ -78,16 +78,16 @@ const commentConfig = computed(() => {
 });
 
 const topTipConfig = computed(() => {
-  return unref(teekConfig).article.topTip?.(unref(frontmatter), unref(localeIndex), unref(page));
+  return teekConfig.value.article.topTip?.(frontmatter.value, localeIndex.value, page.value);
 });
 
 const themeSizeAttribute = ns.joinNamespace("theme-size");
 watch(
-  () => unref(teekConfig).themeSize,
+  () => teekConfig.value.themeSize,
   newValue => {
     if (!isClient) return;
     // 设置或删除主题尺寸
-    if (newValue) document.documentElement.setAttribute(ns.joinNamespace(themeSizeAttribute), newValue);
+    if (newValue) document.documentElement.setAttribute(themeSizeAttribute, newValue);
     else document.documentElement.removeAttribute(themeSizeAttribute);
   },
   { immediate: true, flush: "post" }
@@ -149,7 +149,7 @@ const usedSlots = [
       </template>
 
       <template #layout-bottom>
-        <TkFooterGroup />
+        <TkFooterGroup v-if="isHomePage" />
         <slot name="teek-footer-info-before" />
 
         <TkFooterInfo v-if="isHomePage" />
@@ -231,7 +231,7 @@ const usedSlots = [
 
       <!-- 其他 VP 插槽 -->
       <template
-        v-for="(_, name) in Object.keys($slots).filter(name => !usedSlots.includes(name))"
+        v-for="name in Object.keys($slots).filter(name => !usedSlots.includes(name))"
         :key="name"
         #[name]="slotData"
       >

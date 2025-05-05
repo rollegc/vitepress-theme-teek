@@ -1,5 +1,5 @@
 .container.share-card-container {
-  margin: 0.7rem 0;
+  margin: 11px 0;
 
   .share-card {
     display: grid;
@@ -37,7 +37,7 @@
         height: 60px;
         border-radius: 50%;
         border: 2px solid var(--vp-c-bg);
-        margin: 1rem;
+        margin: 16px;
         margin-right: 0;
         box-shadow: 3px 2px 5px rgba(0, 0, 0, 0.08);
         transition: all 0.4s;
@@ -45,21 +45,21 @@
 
       div {
         flex: 1;
-        padding: 1rem 0;
+        padding: 16px 0;
         p {
           margin: 0;
-          padding: 0 1rem;
+          padding: 0 16px;
           transition: text-shadow 0.4s;
           text-align: center;
         }
         .name {
-          margin: 0.2rem 0 0.3rem 0;
+          margin: 3px 0 5px 0;
         }
         .desc {
-          font-size: 0.8rem;
-          line-height: 1.1rem;
+          font-size: 13px;
+          line-height: 17px;
           opacity: 0.8;
-          margin-bottom: 0.2rem;
+          margin-bottom: 3px;
         }
       }
     }

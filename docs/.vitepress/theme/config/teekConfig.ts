@@ -95,14 +95,12 @@ export const teekBlogConfig: TeekConfig = {
   },
   social: [
     {
-      icon: "icon-github",
-      iconType: "iconfont",
+      icon: "mdi:github",
       name: "GitHub",
       link: "https://github.com/kele-bingtang",
     },
     {
-      icon: "icon-gitee2",
-      iconType: "iconfont",
+      icon: "simple-icons:gitee",
       name: "Gitee",
       link: "https://gitee.com/kele-bingtang",
     },

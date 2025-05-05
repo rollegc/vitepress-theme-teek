@@ -1,6 +1,6 @@
 <script setup lang="ts" name="HomeRightInfo">
 import type { TeekConfig } from "@teek/config";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useNamespace } from "@teek/hooks";
 import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
 import { TkHomeMyCard } from "@teek/components/theme/HomeMyCard";
@@ -18,7 +18,7 @@ const teekConfig = computed(() => getTeekConfig<TeekConfig>(null, {}));
 
 // 获取用户配置 + 默认的卡片排序
 const finalHomeCardSort = computed(() => {
-  const configCardSort = unref(teekConfig).homeCardSort || [];
+  const configCardSort = teekConfig.value.homeCardSort || [];
   return ["my", ...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
@@ -26,10 +26,10 @@ const { isHomePage, isCategoriesPage, isTagsPage } = usePage();
 
 // 定义组件映射
 const componentMap = computed(() => {
-  const { topArticle, category, tag, docAnalysis, friendLink } = unref(teekConfig);
-  const homePage = unref(isHomePage);
-  const categoriesPage = unref(isCategoriesPage);
-  const tagsPage = unref(isTagsPage);
+  const { topArticle, category, tag, docAnalysis, friendLink } = teekConfig.value;
+  const homePage = isHomePage.value;
+  const categoriesPage = isCategoriesPage.value;
+  const tagsPage = isTagsPage.value;
 
   return {
     my: {

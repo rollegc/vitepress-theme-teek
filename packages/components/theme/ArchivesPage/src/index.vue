@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArchivesPage">
 import { withBase, useData } from "vitepress";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts } from "@teek/components/theme/ConfigProvider";
 
@@ -14,13 +14,14 @@ const { frontmatter } = useData();
 const posts = usePosts();
 
 const defaultLabel = computed(() => {
+  const frontmatterConst = frontmatter.value;
   return {
-    title: unref(frontmatter).title ?? t("tk.archives.title"),
-    totalCount: unref(frontmatter).totalCount ?? t("tk.archives.totalCount"),
-    year: unref(frontmatter).year ?? t("tk.archives.year"),
-    month: unref(frontmatter).month ?? t("tk.archives.month"),
-    count: unref(frontmatter).count ?? t("tk.archives.count"),
-    notFound: unref(frontmatter).notFound ?? t("tk.archives.notFound"),
+    title: frontmatterConst.title ?? t("tk.archives.title"),
+    totalCount: frontmatterConst.totalCount ?? t("tk.archives.totalCount"),
+    year: frontmatterConst.year ?? t("tk.archives.year"),
+    month: frontmatterConst.month ?? t("tk.archives.month"),
+    count: frontmatterConst.count ?? t("tk.archives.count"),
+    notFound: frontmatterConst.notFound ?? t("tk.archives.notFound"),
   };
 });
 </script>

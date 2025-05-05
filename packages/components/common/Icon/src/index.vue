@@ -28,10 +28,10 @@ const getStyle = () => {
 /**
  * 当 props.icon 为字符串时，支持传入修饰符来代替 props.iconType
  *
- * 1、icon 为 if- 或 IF- 开头，则默认为 iconfont
- * 2、icon 为 uni- 或 UNI- 开头，则默认为 unicode
- * 3、icon 为 sym- 或 SYM- 开头，则默认为 symbol
- * 4、icon 为 img- 或 IMG- 开头，则默认为 img
+ * 1、icon 为 img- 或 IMG- 开头，则默认为 img
+ * 2、icon 为 if- 或 IF- 开头，则默认为 iconfont
+ * 3、icon 为 uni- 或 UNI- 开头，则默认为 unicode
+ * 4、icon 为 sym- 或 SYM- 开头，则默认为 symbol
  */
 const finalIcon = computed<any>(() => {
   if (isString(icon)) return icon.replace(/^(if-|uni-|sym-|img-)/, "");
@@ -66,14 +66,10 @@ const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().
       <component :is="finalIcon" :size />
     </template>
 
-    <SvgIcon v-else-if="isSvgIcon()" :icon="finalIcon" />
-
-    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()!" />
-
-    <IconifyOffline v-else-if="isIconifyOffline()" :icon="finalIcon" />
-
-    <IconifyOnline v-else-if="isIconifyOnline()" :icon="finalIcon" />
-
     <img v-else-if="isImg()" :src="finalIcon" :alt="imgAlt" />
+    <SvgIcon v-else-if="isSvgIcon()" :icon="finalIcon" />
+    <FontIcon v-else-if="isFontIcon()" :icon="finalIcon" :iconType="getFontIconType()!" />
+    <IconifyOffline v-else-if="isIconifyOffline()" :icon="finalIcon" />
+    <IconifyOnline v-else-if="isIconifyOnline()" :icon="finalIcon" />
   </span>
 </template>

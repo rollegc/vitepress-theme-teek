@@ -4,7 +4,7 @@ import { useRoute } from "vitepress";
 import { isClient } from "@teek/helper";
 import { useEventListener, useStorage } from "@teek/hooks";
 import { SpotlightStyle } from "../themeEnhance";
-import { spotlightStyleStorageKey } from "../namespace";
+import { ns, spotlightStyleStorageKey } from "../namespace";
 
 defineOptions({ name: "SpotlightHover" });
 
@@ -134,9 +134,9 @@ watch(
       v-if="props.enabled && !shouldRecalculate"
       :style="boxStyles"
       :class="[
-        'tk-spotlight-hover',
-        spotlightStyle === SpotlightStyle.Under ? 'tk-spotlight-hover__under' : '',
-        spotlightStyle === SpotlightStyle.Aside ? 'tk-spotlight-hover__aside' : '',
+        ns.joinNamespace('spotlight-hover'),
+        spotlightStyle === SpotlightStyle.Under ? ns.joinNamespace('spotlight-hover__under') : '',
+        spotlightStyle === SpotlightStyle.Aside ? ns.joinNamespace('spotlight-hover__aside') : '',
       ]"
       aria-hidden="true"
       focusable="false"

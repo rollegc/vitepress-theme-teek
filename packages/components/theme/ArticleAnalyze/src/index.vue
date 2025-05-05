@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import type { Article, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } from "@teek/config";
 import type { TkContentData } from "@teek/config";
-import { computed, nextTick, onMounted, ref, unref, watch } from "vue";
+import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/hooks";
 import { readingIcon, clockIcon, viewIcon } from "@teek/static/icons";
@@ -23,18 +23,18 @@ const { router } = vpRouter;
 // 文章基本信息
 const post = computed<TkContentData>(() => ({
   author: getTeekConfig<TeekConfig["author"]>("author", {}),
-  date: unref(frontmatter).date,
-  frontmatter: unref(frontmatter),
+  date: frontmatter.value.date,
+  frontmatter: frontmatter.value,
   url: "",
 }));
 
 // 站点信息数据
-const docAnalysisInfo = computed(() => unref(theme).docAnalysisInfo || {});
+const docAnalysisInfo = computed(() => theme.value.docAnalysisInfo || {});
 
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<DocDocAnalysisFileInfo> = {};
-  unref(docAnalysisInfo).eachFileWords?.forEach(item => {
+  docAnalysisInfo.value.eachFileWords?.forEach(item => {
     if (item.fileInfo.relativePath === router.route.data.relativePath) pageViewInfo = item;
   });
 
@@ -50,7 +50,7 @@ const articleConfig = getTeekConfigRef<Article>("article", {
 
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {
-  const arr = [unref(articleConfig).showInfo].flat();
+  const arr = [articleConfig.value.showInfo].flat();
   if (arr.includes(true) || arr.includes("article")) return true;
   return false;
 });
@@ -59,8 +59,8 @@ const baseInfoRef = ref<HTMLDivElement>();
 
 // 传送到指定位置
 const teleportInfo = () => {
-  const { selector, position = "after", className = "teleport" } = unref(articleConfig).teleport || {};
-  const baseInfoRefConst = unref(baseInfoRef);
+  const { selector, position = "after", className = "teleport" } = articleConfig.value.teleport || {};
+  const baseInfoRefConst = baseInfoRef.value;
   // 没有指定选择器，则不进行传送
   if (!selector || !baseInfoRefConst) return;
 
@@ -91,16 +91,16 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
   tryCount: 5,
   tryIterationTime: 2000,
   permalink: true,
-  ...unref(docAnalysisConfig).statistics,
+  ...docAnalysisConfig.value.statistics,
 }));
 // 是否使用访问量功能
-const usePageView = computed(() => !!unref(statisticsConfig).provider && unref(statisticsConfig).pageView);
+const usePageView = computed(() => !!statisticsConfig.value.provider && statisticsConfig.value.pageView);
 
 // 通过不蒜子获取访问量
-const { pagePv, isGet, request } = useBuSuanZi(unref(usePageView), {
-  tryRequest: unref(statisticsConfig).tryRequest,
-  tryCount: unref(statisticsConfig).tryCount,
-  tryIterationTime: unref(statisticsConfig).tryIterationTime,
+const { pagePv, isGet, request } = useBuSuanZi(usePageView.value, {
+  tryRequest: statisticsConfig.value.tryRequest,
+  tryCount: statisticsConfig.value.tryCount,
+  tryIterationTime: statisticsConfig.value.tryIterationTime,
 });
 
 const statisticsInfo = computed(() => ({ pagePv: pagePv.value, isGet: isGet.value }));
@@ -111,15 +111,15 @@ watch(usePageView, newVal => {
 });
 
 // 如果使用了 permalink 插件，则可以使用该插件提供的 onAfterUrlLoad 回调监听 URL 变化事件
-if (unref(statisticsConfig).permalink && router.state.permalinkPlugin) {
+if (statisticsConfig.value.permalink && router.state.permalinkPlugin) {
   vpRouter.bindRouterFn("urlChange", () => {
     router.onAfterUrlLoad = () => {
-      if (unref(usePageView)) request();
+      if (usePageView.value) request();
     };
   });
 } else {
   watch(router.route, () => {
-    if (unref(usePageView)) request();
+    if (usePageView.value) request();
   });
 }
 </script>

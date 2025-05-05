@@ -1,6 +1,6 @@
 <script setup lang="ts" name="AsideBottomAppreciation">
 import type { Appreciation } from "@teek/config";
-import { computed, unref } from "vue";
+import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
@@ -13,7 +13,7 @@ const { getTeekConfigRef } = useTeekConfig();
 
 const appreciateConfig = getTeekConfigRef<Required<Appreciation<"aside-bottom">>>("appreciation", { position: "" });
 
-const asideBottomOptions = computed(() => unref(appreciateConfig).options || {});
+const asideBottomOptions = computed(() => appreciateConfig.value.options || {});
 </script>
 
 <template>

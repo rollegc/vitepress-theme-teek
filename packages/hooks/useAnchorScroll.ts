@@ -1,4 +1,4 @@
-import { reactive, unref, watch } from "vue";
+import { reactive, watch } from "vue";
 import { useData } from "vitepress";
 import { useEventListener } from "@teek/hooks/useEventListener";
 import { isClient } from "@teek/helper";
@@ -8,7 +8,6 @@ import { useMounted } from "@teek/hooks/useMounted";
  * 监听浏览器滚动，当滚动到锚点，自动在 URL 后面添加锚点信息
  */
 export const useAnchorScroll = () => {
-  // TODO 从 useTeekConfig 获取配置
   const { theme } = useData();
   // 初始化当前锚点
   const currentAnchor = reactive({ id: "", top: -1 });
@@ -47,7 +46,7 @@ export const useAnchorScroll = () => {
    * 文档更新锚点的时候更新 url 中的 hash
    */
   const startWatch = () => {
-    if (unref(theme).anchorScroll === false) return;
+    if (theme.value.anchorScroll === false) return;
 
     watch(
       () => currentAnchor.id,

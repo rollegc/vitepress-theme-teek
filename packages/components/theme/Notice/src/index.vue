@@ -1,6 +1,6 @@
 <script setup lang="ts" name="Notice">
 import type { Notice } from "@teek/config";
-import { computed, onMounted, ref, unref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale, useMediaQuery, useVpRouter } from "@teek/hooks";
 import { isClient, isString } from "@teek/helper";
@@ -34,31 +34,31 @@ const noticeConfig = getTeekConfigRef<Required<Notice>>("notice", {
 });
 
 const destroyNoticeIcon = ref(false);
-const showNoticeIcon = computed(() => !unref(showPopover) && !unref(destroyNoticeIcon));
-const showPopover = ref(unref(noticeConfig).initOpen);
+const showNoticeIcon = computed(() => !showPopover.value && !destroyNoticeIcon.value);
+const showPopover = ref(noticeConfig.value.initOpen);
 
 watch(
-  () => unref(noticeConfig).initOpen,
+  () => noticeConfig.value.initOpen,
   (newValue: boolean) => (showPopover.value = newValue)
 );
 
 // 公告样式
 const styleObj = computed(() => {
-  const { noticeStyle } = unref(noticeConfig);
+  const { noticeStyle } = noticeConfig.value;
   if (!noticeStyle) return "";
   return noticeStyle.trim().startsWith(`.${ns.b()}`) ? noticeStyle : `.${ns.b()} { ${noticeStyle} }`;
 });
 
 // 公告标题
 const noticeTitle = computed(() => {
-  const { title } = unref(noticeConfig);
+  const { title } = noticeConfig.value;
   if (isString(title)) return title;
-  return title(unref(localeIndex));
+  return title(localeIndex.value);
 });
 
 const isMobile = useMediaQuery("(max-width: 768px)");
 watch(
-  () => unref(noticeConfig).mobileMinify,
+  () => noticeConfig.value.mobileMinify,
   val => {
     // 是否在移动端隐藏公告图标
     if (isMobile) destroyNoticeIcon.value = val;
@@ -72,8 +72,8 @@ let timer: ReturnType<typeof setTimeout> | null;
  * 弹框定时自动关闭
  */
 const closePopoverWhenTimeout = () => {
-  const { duration } = unref(noticeConfig);
-  if (unref(showPopover) && duration > 0) {
+  const { duration } = noticeConfig.value;
+  if (showPopover.value && duration > 0) {
     if (timer) {
       clearTimeout(timer);
       timer = null;
@@ -85,7 +85,7 @@ const closePopoverWhenTimeout = () => {
 onMounted(() => {
   // 调用自定义的切换后回调
   vpRouter.bindAfterRouteChange(ns.joinNamespace("notice"), () =>
-    unref(noticeConfig).onAfterRouteChange?.(vpRouter.route, unref(showNoticeIcon), unref(showPopover))
+    noticeConfig.value.onAfterRouteChange?.(vpRouter.route, showNoticeIcon.value, showPopover.value)
   );
   closePopoverWhenTimeout();
 });
@@ -97,7 +97,7 @@ onMounted(() => {
  */
 const openOrDisableScroll = (action: "open" | "disable") => {
   if (!isClient) return;
-  if (unref(noticeConfig).position !== "center") return;
+  if (noticeConfig.value.position !== "center") return;
 
   const actions: Record<"open" | "disable", "add" | "remove"> = {
     open: "remove",
@@ -107,17 +107,17 @@ const openOrDisableScroll = (action: "open" | "disable") => {
 };
 
 // 记录公告弹框状态的缓存 Key
-const storageKey = computed(() => `${ns.b()}-${unref(localeIndex)}`);
+const storageKey = computed(() => `${ns.b()}-${localeIndex.value}`);
 
-if (unref(noticeConfig).useStorage) {
+if (noticeConfig.value.useStorage) {
   // 多语言切换后，读取新语言的缓存，更新公告弹框状态
   watch(
     localeIndex,
     () => {
       // 二次校验，因为 noticeConfig 是 computed，因此后面可能会变化
-      if (!unref(noticeConfig).useStorage) return;
+      if (!noticeConfig.value.useStorage) return;
 
-      const oldValue = localStorage.getItem(unref(storageKey));
+      const oldValue = localStorage.getItem(storageKey.value);
       if (oldValue) {
         const isShowPopover = oldValue === "true";
         showPopover.value = isShowPopover;
@@ -147,7 +147,7 @@ const handleClosePopover = () => {
   showPopover.value = false;
   storagePopoverState("false");
 
-  if (!unref(noticeConfig).reopen) destroyNoticeIcon.value = true;
+  if (!noticeConfig.value.reopen) destroyNoticeIcon.value = true;
 
   if (timer) clearTimeout(timer);
   openOrDisableScroll("open");
@@ -158,7 +158,7 @@ const handleClosePopover = () => {
  * @param state 状态
  */
 const storagePopoverState = (state: string) => {
-  if (unref(noticeConfig).useStorage) localStorage.setItem(unref(storageKey), state);
+  if (noticeConfig.value.useStorage) localStorage.setItem(storageKey.value, state);
 };
 </script>
 

@@ -1,5 +1,5 @@
 import type { InjectionKey, Ref } from "vue";
-import { computed, getCurrentInstance, inject, ref, unref } from "vue";
+import { computed, getCurrentInstance, inject, ref } from "vue";
 import { isNumber } from "@teek/helper";
 
 export interface zIndexInjectionContext {
@@ -33,7 +33,7 @@ export const useZIndex = (zIndexOverrides?: Ref<number>) => {
 
   // 获取最终可用的 z-index
   const initialZIndex = computed(() => {
-    const zIndexFromInjection = unref(zIndexInjection);
+    const zIndexFromInjection = zIndexInjection?.value;
     return isNumber(zIndexFromInjection) ? zIndexFromInjection : defaultInitialZIndex;
   });
 

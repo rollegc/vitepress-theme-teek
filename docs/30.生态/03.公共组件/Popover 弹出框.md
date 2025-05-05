@@ -24,24 +24,24 @@ popover/basic
 
 ### 属性
 
-| 属性名       | 说明                                                                                                                                        | 类型                                        | Default |
-| :----------- | :------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------ | :------ |
-| placement    | 出现位置                                                                                                                                    | `click` / `focus` / `hover` / `contextmenu` | bottom  |
-| trigger      | 触发方式                                                                                                                                    | `enum`                                      | hover   |
-| content      | 显示的内容，也可以通过写入默认 `slot` 修改显示内容                                                                                          | `string`                                    | ''      |
-| width        | 宽度，如果不指定，则会根据内容自动计算                                                                                                      | `string` / `number`                         | —       |
-| height       | 高度，如果不指定，则会根据内容自动计算                                                                                                      | `string` / `number`                         | —       |
-| disabled     | Popover 是否可用                                                                                                                            | `boolean`                                   | false   |
-| v-model      | Popover 是否显示                                                                                                                            | `boolean`                                   | false   |
-| offset       | 浮层偏移量，等于 `x-offset` 和 `y-offset`                                                                                                   | `number`                                    | 0       |
-| x-offset     | 水平方向浮层偏移量                                                                                                                          | `number`                                    | 0       |
-| y-offset     | 垂直方向浮层偏移量                                                                                                                          | `number`                                    | 0       |
-| transition   | 定义渐变动画，默认是 el-fade-in-linear                                                                                                      | `string`                                    | —       |
-| show-arrow   | 是否显示 Tooltip 箭头， 欲了解更多信息，请参考 [ElPopper](https://github.com/element-plus/element-plus/tree/dev/packages/components/popper) | `boolean`                                   | true    |
-| popper-class | 为 popper 添加类名                                                                                                                          | `string`                                    | —       |
-| popper-style | 为 popper 自定义样式                                                                                                                        | `string` / `object`                         | —       |
-| trigger-el   | 代表 `reference` 插槽的参照元素                                                                                                             | `HTMLElement`                               | —       |
-| beforePopup  | 弹框弹出前的回调，支持返回新的 `top`、`right`、`bottom`、`left`                                                                             | `PopoverTransformOptions`                   | —       |
+| 属性名       | 说明                                                                                                                                        | 类型                                        | 默认值 |
+| :----------- | :------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------ | :----- |
+| placement    | 出现位置                                                                                                                                    | `click` / `focus` / `hover` / `contextmenu` | bottom |
+| trigger      | 触发方式                                                                                                                                    | `enum`                                      | hover  |
+| content      | 显示的内容，也可以通过写入默认 `slot` 修改显示内容                                                                                          | `string`                                    | ''     |
+| width        | 宽度，如果不指定，则会根据内容自动计算                                                                                                      | `string` / `number`                         | —      |
+| height       | 高度，如果不指定，则会根据内容自动计算                                                                                                      | `string` / `number`                         | —      |
+| disabled     | Popover 是否可用                                                                                                                            | `boolean`                                   | false  |
+| v-model      | Popover 是否显示                                                                                                                            | `boolean`                                   | false  |
+| offset       | 浮层偏移量，等于 `x-offset` 和 `y-offset`                                                                                                   | `number`                                    | 0      |
+| x-offset     | 水平方向浮层偏移量                                                                                                                          | `number`                                    | 0      |
+| y-offset     | 垂直方向浮层偏移量                                                                                                                          | `number`                                    | 0      |
+| transition   | 定义渐变动画，默认是 el-fade-in-linear                                                                                                      | `string`                                    | —      |
+| show-arrow   | 是否显示 Tooltip 箭头， 欲了解更多信息，请参考 [ElPopper](https://github.com/element-plus/element-plus/tree/dev/packages/components/popper) | `boolean`                                   | true   |
+| popper-class | 为 popper 添加类名                                                                                                                          | `string`                                    | —      |
+| popper-style | 为 popper 自定义样式                                                                                                                        | `string` / `object`                         | —      |
+| trigger-el   | 代表 `reference` 插槽的参照元素                                                                                                             | `HTMLElement`                               | —      |
+| beforePopup  | 弹框弹出前的回调，支持返回新的 `top`、`right`、`bottom`、`left`                                                                             | `PopoverTransformOptions`                   | —      |
 
 ```typescript
 interface PopoverTransformOptions {
