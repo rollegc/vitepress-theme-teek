@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.0...v1.1.1) (2025-05-05)
+
+### Bug Fixes
+
+- 🐞 插槽失效修复，themeSize 失效修复，comment 失效修复，滚动到评论区按钮丢失修复，unref 全面改为 .value ([26fe007](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/26fe007cfedf6ff6bfa5938a36c32ea2004fa520))
+
+### Docs
+
+- 📚 文档内容更新 ([5a36ae8](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5a36ae8ea58c162e7367f77e6e5d252507282c36))
+
+### Code Refactoring
+
+- ♻️ rem 改为 px ([e73e409](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e73e409b51fb86c3e404547f1ed523685fdb92a3))
+
 ## [1.1.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.0.2...v1.1.0) (2025-04-30)
 
 ### Features
