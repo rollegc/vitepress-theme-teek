@@ -1,6 +1,6 @@
 <script setup lang="ts" name="TeekLayoutProvider">
 import Teek, { TkAvatar, teekConfigContext, useNamespace, clockIcon } from "vitepress-theme-teek";
-import { provide, ref, watch } from "vue";
+import { provide, ref, watch, nextTick } from "vue";
 import { teekDocConfig, teekBlogConfig } from "../config/teekConfig";
 import { useRuntime } from "../hooks/useRuntime";
 import { useData } from "vitepress";
@@ -28,11 +28,12 @@ const { start, stop } = useRuntime("2021-10-19 00:00:00", {
 
 watch(
   [current, frontmatter],
-  ([newC, newF]) => {
+  async ([newC, newF]) => {
+    await nextTick();
     if (newC === "B" && newF.layout === "home") start();
     else stop();
   },
-  { immediate: true, flush: "post" }
+  { immediate: true }
 );
 </script>
 
