@@ -117,6 +117,7 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
       const catalogueItem = {
         title: mdTitle || title,
         children: createCatalogueList(filePath, option, `${prefix}${dirOrFilename}/`),
+        frontmatter: {},
       };
 
       if (isIllegalIndex(index)) catalogueItemListNoIndex.push(catalogueItem);
