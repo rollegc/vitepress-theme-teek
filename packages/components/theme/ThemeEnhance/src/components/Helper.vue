@@ -9,7 +9,7 @@ defineOptions({ name: "Helper" });
 
 defineProps<{ triggerEl?: HTMLDivElement; offset?: number }>();
 
-const visible = defineModel({ type: Boolean, default: false });
+const visible = defineModel({ default: false });
 
 const popoverVisible = ref(visible.value);
 

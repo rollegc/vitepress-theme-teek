@@ -107,7 +107,7 @@ const handleTitleClick = () => {
         mode="out-in"
         :class="`${ns.e('list')} flx-column`"
         @mouseenter="friendLinkConfig.autoScroll ? stop() : friendLinkConfig.autoPage ? closeAutoPage() : () => {}"
-        @mouseleave="friendLinkConfig.autoScroll ? stop() : friendLinkConfig.autoPage ? startAutoPage() : () => {}"
+        @mouseleave="friendLinkConfig.autoScroll ? start() : friendLinkConfig.autoPage ? startAutoPage() : () => {}"
         :aria-label="t('tk.friendLinkCard.listLabel')"
       >
         <li

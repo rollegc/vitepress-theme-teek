@@ -1,6 +1,6 @@
 <script setup lang="ts" name="Popover">
 import type { PopoverProps, PopoverEmits } from "./popover";
-import { computed, ref, useTemplateRef, watch, onBeforeMount } from "vue";
+import { computed, ref, watch, onBeforeMount } from "vue";
 import { useNamespace, useZIndex, useElementHover, usePopoverSize, onClickOutside } from "@teek/hooks";
 import { addUnit } from "@teek/helper";
 import { TkFocusTrap } from "@teek/components/common/FocusTrap";
@@ -34,8 +34,8 @@ const zIndexRef = ref(zIndex ?? nextZIndex());
 
 const visible = defineModel({ default: false });
 
-const triggerRef = useTemplateRef("triggerRef");
-const popoverRef = useTemplateRef("popoverRef");
+const triggerRef = ref();
+const popoverRef = ref();
 const isHovered = useElementHover(triggerRef);
 const popupVisible = useElementHover(popoverRef);
 

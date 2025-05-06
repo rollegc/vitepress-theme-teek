@@ -1,6 +1,6 @@
 <script setup lang="ts" name="BaseTemplate">
 import type { TkIconProps } from "@teek/components/common/Icon";
-import { ref, useTemplateRef } from "vue";
+import { ref } from "vue";
 import { ns } from "../namespace";
 import { TkIcon } from "@teek/components/common/Icon";
 import Title from "./Title.vue";
@@ -43,7 +43,7 @@ interface TemplateProps {
 const { borderHighlight = true } = defineProps<TemplateProps>();
 
 const helperVisible = ref(false);
-const titleElementRef = useTemplateRef<HTMLDivElement>("titleElementRef");
+const titleElementRef = ref();
 </script>
 
 <template>
