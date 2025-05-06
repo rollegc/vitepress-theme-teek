@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.1...v1.1.2) (2025-05-06)
+
+### Features
+
+- 🚀 1.1.1 发布 ([27be153](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/27be153380960818c015e1fbef77a070cc5dbb4a))
+
+### Bug Fixes
+
+- 🐞 热门标签背景白色背景修复，details 下的代码块风格还原默认，友情链接 Title 支持点击跳转，permalink 插件发版 ([2d461c1](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2d461c1ad10811ced9d46ae96e18c3cacdc0e282))
+
+### Docs
+
+- 📚 文档内容更新 ([01422d4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/01422d41534624767b61acf31a66805e848a41d7))
+- 📚 config.ts 改为 config.mts ([c4571bd](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c4571bd09c0cb5cceac0d047d2031ded25cfacc8))
+- 📚 readme 文档更新 ([adf63e4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/adf63e4faa1ba544dd2f9ae030529bfa0e30686e))
+
 ## [1.1.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.0...v1.1.1) (2025-05-05)
 
 ### Bug Fixes
