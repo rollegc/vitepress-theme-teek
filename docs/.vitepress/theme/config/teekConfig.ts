@@ -92,6 +92,7 @@ export const teekBlogConfig: TeekConfig = {
         link: "http://niubin.site/",
       },
     ],
+    autoScroll: true,
   },
   social: [
     {

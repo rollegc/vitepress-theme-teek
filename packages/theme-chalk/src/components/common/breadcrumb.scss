@@ -31,7 +31,7 @@
       }
     }
 
-    &:last-child {
+    &:last-child:not(:first-child) {
       .#{$namespace}-breadcrumb__inner,
       .#{$namespace}-breadcrumb__inner a {
         &,
@@ -42,6 +42,12 @@
         }
       }
 
+      .#{$namespace}-breadcrumb__separator {
+        display: none;
+      }
+    }
+
+    &:first-child {
       .#{$namespace}-breadcrumb__separator {
         display: none;
       }

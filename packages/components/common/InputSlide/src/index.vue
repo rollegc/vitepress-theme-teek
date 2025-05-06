@@ -1,5 +1,5 @@
 <script setup lang="ts" name="InputSlide">
-import { onMounted, ref, useTemplateRef, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useElementHover, useEventListener, useNamespace } from "@teek/hooks";
 
 defineOptions({ name: "InputSlide" });
@@ -19,8 +19,8 @@ const { name = "Slider", min = 0, max = 100, step = 1 } = defineProps<InputSlide
 
 const inputValue = defineModel({ default: 0 });
 
-const inputSliderRef = useTemplateRef<HTMLInputElement>("inputSliderRef");
-const inputSliderTooltipRef = useTemplateRef<HTMLDivElement>("inputSliderTooltipRef");
+const inputSliderRef = ref();
+const inputSliderTooltipRef = ref();
 const hovering = useElementHover(inputSliderRef);
 const positioning = ref(false);
 
@@ -43,7 +43,7 @@ onMounted(() => {
   inputSliderStyle.setProperty(sliderMaxVar, max?.toString() ?? "100");
 });
 
-const calTipPosition = (inputElement: HTMLInputElement, inputTooltipElement: HTMLDivElement) => {
+const calTipPosition = (inputElement: HTMLInputElement, inputTooltipElement: HTMLSpanElement) => {
   const finalMax = max || 100;
   const finalMin = min || 0;
   const ratio = (inputValue.value - finalMin) / (finalMax - finalMin);
