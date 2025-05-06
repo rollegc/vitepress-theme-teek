@@ -1,3 +1,5 @@
+import type { VpRouter } from "@teek/hooks";
+
 export interface TopArticle {
   /**
    * 是否启用精选文章卡片
@@ -41,4 +43,10 @@ export interface TopArticle {
    * @default 'yyyy-MM-dd hh:mm:ss'
    */
   dateFormat?: "yyyy-MM-dd" | "yyyy-MM-dd hh:mm:ss" | ((date: number | string) => string);
+  /**
+   * 点击标题时触发，可以通过 router.go 跳转到其他页面，也可以通过 window.open 打开新窗口
+   *
+   * @since v1.1.2
+   */
+  titleClick?: (router: VpRouter) => void;
 }

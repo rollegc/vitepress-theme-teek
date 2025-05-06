@@ -97,7 +97,7 @@ const vpRouter = useVpRouter();
 const { router } = vpRouter;
 
 // 如果使用了 permalink 插件，则可以使用该插件提供的 onAfterUrlLoad 回调监听 URL 变化事件
-if (statisticsConfig.value.permalink && router.state.permalinkPlugin) {
+if (statisticsConfig.value.permalink && router.state?.permalinkPlugin) {
   vpRouter.bindRouterFn("urlChange", () => {
     router.onAfterUrlLoad = () => {
       if (useSiteView.value) request();

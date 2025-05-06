@@ -48,8 +48,9 @@ const initCodeBlock = () => {
       codeBlockConfig.value.copiedDone?.(TkMessage);
     });
 
-    // 当支持自定义 class 来忽略，代码块父元素的 class 中包含 vp-code-block，则跳过
-    if (item.parentElement?.className.includes(ns.joinNamespace("vp-code"))) return;
+    // 忽略部分 class：代码块父元素的 class 中包含 details、tk-vp-code 则跳过
+    const className = item.parentElement?.className;
+    if (className?.includes("details") || className?.includes(ns.joinNamespace("vp-code"))) return;
 
     const arrowElement = item.querySelector<HTMLElement>(`.${arrowClass}`);
     // 手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面

@@ -3,7 +3,6 @@ import type { TeekConfig } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
 import { computed, defineComponent, h, inject, provide, unref } from "vue";
 import { useData } from "vitepress";
-import usePermalink from "vitepress-plugin-permalink/usePermalink";
 import { useAnchorScroll, useViewTransition } from "@teek/hooks";
 import { emptyPost } from "@teek/config/post/helper";
 import { isFunction, isObject } from "@teek/helper";
@@ -22,7 +21,6 @@ export const TeekConfigProvider = (layout: Component) => {
       provide(postsContext, useAllPosts());
 
       // 开启监听器
-      usePermalink().startWatch();
       useAnchorScroll().startWatch();
       useViewTransition();
 
