@@ -40,7 +40,7 @@ export type { AutoFrontmatterOption, FileInfo as AutoFrontmatterFileInfo } from 
 export type { Catalogue, CatalogueInfo, CatalogueItem, CatalogueOption } from "vitepress-plugin-catalogue";
 export type { FileContentLoaderData, FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 export type { MdH1Option } from "vitepress-plugin-md-h1";
-export type { NotFoundOption, Permalink, PermalinkOption } from "vitepress-plugin-permalink";
+export type { Permalink, PermalinkOption } from "vitepress-plugin-permalink";
 export type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 
 export interface TeekConfig {

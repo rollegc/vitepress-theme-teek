@@ -1,4 +1,5 @@
 import type { ImageViewerProps } from "@teek/components/common/ImageViewer/src/imageViewer";
+import type { VpRouter } from "@teek/hooks";
 
 export interface FriendLink {
   /**
@@ -80,4 +81,10 @@ export interface FriendLink {
    * 友情链接头像查看器配置
    */
   imageViewer?: Omit<ImageViewerProps, "urlList">;
+  /**
+   * 点击标题时触发，可以通过 router.go 跳转到其他页面，也可以通过 window.open 打开新窗口
+   *
+   * @since v1.1.2
+   */
+  titleClick?: (router: VpRouter) => void;
 }

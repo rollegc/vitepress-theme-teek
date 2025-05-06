@@ -85,8 +85,7 @@ const handleSwitchCategory = (category = "") => {
   selectedCategory.value = category;
 
   // 如果此时不在分类页，则跳转至分类页
-  const to = (router as any).to || router.go;
-  if (!inCategoriesPage) return to(categoriesPageLinkConst + searchParamsStr);
+  if (!inCategoriesPage) return router.go(categoriesPageLinkConst + searchParamsStr);
 
   // 如果在分类页，则替换 URL，但不刷新
   window.history.pushState({}, "", pathname + searchParamsStr);

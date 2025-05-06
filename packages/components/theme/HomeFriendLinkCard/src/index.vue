@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
 import type { FriendLink } from "@teek/config";
 import { computed, ref, onMounted } from "vue";
-import { withBase } from "vitepress";
+import { withBase, useRouter } from "vitepress";
 import { useNamespace, useLocale, useScrollData } from "@teek/hooks";
 import { friendLinkIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
@@ -26,6 +26,7 @@ const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
   autoPage: false,
   pageSpeed: 4000,
   imageViewer: {},
+  titleClick: undefined,
 });
 
 // 使用上下滚动功能
@@ -75,6 +76,12 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
 
   createImageViewer({ ...friendLinkConfig.value.imageViewer, urlList: [imgSrc] });
 };
+
+const router = useRouter();
+
+const handleTitleClick = () => {
+  friendLinkConfig.value.titleClick?.(router);
+};
 </script>
 
 <template>
@@ -86,6 +93,7 @@ const handleViewImg = (imgSrc: string, e: MouseEvent) => {
     :pageSize="friendLinkConfig.limit"
     :total="friendLinkConfig.list.length"
     :title="finalTitle"
+    :titleClick="friendLinkConfig.titleClick ? handleTitleClick : undefined"
     :autoPage="friendLinkConfig.autoPage"
     :pageSpeed="friendLinkConfig.pageSpeed"
     :class="ns.b()"

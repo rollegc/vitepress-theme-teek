@@ -1,5 +1,12 @@
 # vitepress-plugin-permalink
 
+## 1.1.0
+
+### Minor Changes
+
+- 采用 load 钩子解决 404 问题
+- 移除 404 延迟组件及其配置项
+
 ## 1.0.19
 
 ### Patch Changes

@@ -9,7 +9,6 @@
     "*/style/*"
   ],
   "dependencies": {
-    "vitepress-plugin-permalink": "catalog:",
     "@iconify/vue": "catalog:"
   },
   "devDependencies": {

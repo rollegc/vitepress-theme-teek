@@ -27,6 +27,12 @@ export interface Markdown {
 
 export interface Demo {
   /**
+   * 是否禁用 demo 插件
+   *
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * Playground 链接
    */
   playgroundUrl?: string;

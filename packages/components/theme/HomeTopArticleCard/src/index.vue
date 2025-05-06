@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeTopArticleCard">
 import type { TopArticle, TkContentData } from "@teek/config";
 import { computed, ref } from "vue";
-import { withBase } from "vitepress";
+import { useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { topArticleIcon } from "@teek/static";
 import { formatDate, isFunction } from "@teek/helper";
@@ -61,6 +61,12 @@ const getStyle = (num: number, index: number) => {
     top: `calc(${index} * (calc(${ns.cssVar("home-top-article-gap")} + ${itemRefs.value?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
+
+const router = useRouter();
+
+const handleTitleClick = () => {
+  topArticleConfig.value.titleClick?.(router);
+};
 </script>
 
 <template>
@@ -72,6 +78,7 @@ const getStyle = (num: number, index: number) => {
     :pageSize="topArticleConfig.limit"
     :total="topArticleList.length"
     :title="finalTitle"
+    :titleClick="topArticleConfig.titleClick ? handleTitleClick : undefined"
     :autoPage="topArticleConfig.autoPage"
     :pageSpeed="topArticleConfig.pageSpeed"
     :class="ns.b()"

@@ -1,9 +1,9 @@
 import type { Plugin } from "vite";
 import type { DefaultTheme } from "vitepress";
 import createPermalinks, { standardLink } from "./helper";
-import type { NotFoundOption, Permalink, PermalinkOption } from "./types";
+import type { Permalink, PermalinkOption } from "./types";
 import { dirname, join } from "node:path";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import logger from "./log";
 
@@ -12,13 +12,8 @@ export * from "./types";
 /**
  * 默认暴露 2 个插件集
  */
-export default function VitePluginVitePressPermalink(
-  option: { permalinkOption?: PermalinkOption; notFoundOption?: NotFoundOption } = {}
-) {
-  return [
-    VitePluginVitePressNotFoundDelayLoad(option.notFoundOption),
-    VitePluginVitePressAutoPermalink(option.permalinkOption),
-  ];
+export default function VitePluginVitePressPermalink(option: { permalinkOption?: PermalinkOption } = {}) {
+  return [VitePluginVitePressAutoPermalink(option.permalinkOption), VitePluginVitePressUsePermalink()];
 }
 
 /**
@@ -26,6 +21,8 @@ export default function VitePluginVitePressPermalink(
  */
 export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): Plugin & { name: string } {
   let isExecute = false;
+  let permalinksObj: Permalink = { map: {}, inv: {} };
+  let vpSrcDir = "";
 
   return {
     name: "vite-plugin-vitepress-auto-permalink",
@@ -39,6 +36,7 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
         srcDir,
         rewrites,
       } = config.vitepress;
+      vpSrcDir = srcDir;
 
       const baseDir = option.path ? join(srcDir, option.path) : srcDir;
       const permalinks = createPermalinks({ ...option, path: baseDir }, cleanUrls);
@@ -65,6 +63,7 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
       }
 
       themeConfig.permalinks = { map: pathToPermalink, inv: permalinkToPath } as Permalink;
+      permalinksObj = themeConfig.permalinks;
 
       logger.info("Injected Permalinks Data Successfully. 注入永久链接数据成功!");
 
@@ -86,6 +85,18 @@ export function VitePluginVitePressAutoPermalink(option: PermalinkOption = {}): 
           cleanUrls,
         });
       });
+    },
+    resolveId: (id: string) => {
+      if (!id.endsWith(".md")) return;
+
+      // 通过 permalink 获取文件地址
+      const relativeFilePath =
+        permalinksObj.inv[id.replace(".md", "")] || permalinksObj.inv[id.replace(".md", ".html")];
+
+      if (!relativeFilePath) return;
+
+      const absoluteFilePath = join(vpSrcDir, `${relativeFilePath}.md`);
+      if (existsSync(absoluteFilePath)) return { id: absoluteFilePath, external: "absolute" };
     },
   };
 }
@@ -161,7 +172,7 @@ const setActiveMatchWhenUsePermalink = (
   });
 };
 
-// ---------- VitePluginVitePressNotFoundDelayLoad 插件 ---------
+// ---------- VitePluginVitePressUsePermalink 插件 ---------
 
 const isESM = () => {
   return typeof __filename === "undefined" || typeof __dirname === "undefined";
@@ -171,18 +182,16 @@ const getDirname = () => {
   return isESM() ? dirname(fileURLToPath(import.meta.url)) : __dirname;
 };
 
-const componentName = "NotFoundDelay";
+const componentName = "UsePermalink";
 const componentFile = `${componentName}.vue`;
 const aliasComponentFile = `${getDirname()}/components/${componentFile}`;
-const virtualModuleId = "virtual:not-found-option";
-const resolvedVirtualModuleId = `\0${virtualModuleId}`;
 
 /**
- * 将 NotFoundDelay 组件传入 VitePress 的 not-found 插槽
+ * 将 UsePermalink 组件传入 VitePress 的 layout-top 插槽
  */
-export function VitePluginVitePressNotFoundDelayLoad(option: NotFoundOption = {}): Plugin & { name: string } {
+export function VitePluginVitePressUsePermalink(): Plugin & { name: string } {
   return {
-    name: "vite-plugin-vitepress-not-found-delay-load",
+    name: "vite-plugin-vitepress-use-permalink",
     config() {
       return {
         resolve: {
@@ -192,24 +201,22 @@ export function VitePluginVitePressNotFoundDelayLoad(option: NotFoundOption = {}
         },
       };
     },
-    resolveId(id: string) {
-      if (id === virtualModuleId) return resolvedVirtualModuleId;
-    },
     load(id: string) {
-      // 使用虚拟模块将 option 传入组件里
-      if (id === resolvedVirtualModuleId) return `export default ${JSON.stringify(option)}`;
-
       // 在 Layout.vue 插槽插入自定义组件
       if (id.endsWith("vitepress/dist/client/theme-default/Layout.vue")) {
         // 读取原始的 Vue 文件内容
         const code = readFileSync(id, "utf-8");
 
         // 插入自定义组件
-        const slotPosition = '<slot name="not-found" />';
+        const slotName = "layout-top";
+        const slotPosition = `<slot name="${slotName}" />`;
         const setupPosition = '<script setup lang="ts">';
 
         return code
-          .replace(slotPosition, `<${componentName}><template #not-found>${slotPosition}</template></${componentName}>`)
+          .replace(
+            slotPosition,
+            `<${componentName}><template #${slotName}>${slotPosition}</template></${componentName}>`
+          )
           .replace(setupPosition, `${setupPosition}\nimport ${componentName} from './${componentFile}'`);
       }
     },
