@@ -1,4 +1,4 @@
-import { useRouter, useData } from "vitepress";
+import { useRouter, useData, inBrowser } from "vitepress";
 import { nextTick, onBeforeMount } from "vue";
 
 export default function usePermalink() {
@@ -10,7 +10,9 @@ export default function usePermalink() {
   const permalinkKeys = Object.keys(permalinks);
 
   /**
-   * 判断路由是否为文档路由，如果为文档路由，则替换为 permalink
+   * 判断路由是否为文档路由，
+   * 1、如果为文档路由，则替换为 permalink
+   * 2、如果为 permalink，则跳转到文档路由，然后重新触发该方法的第 1 点，即将文档路由替换为 permalink（先加载 404 页面再瞬间跳转文档路由）
    *
    * @param href 访问的文档地址或 permalink
    */
@@ -22,18 +24,28 @@ export default function usePermalink() {
     const decodePath = decodeURIComponent(pathname.slice(base.length));
     const permalink = permalinks.map[decodePath.replace(/\.html/, "")];
 
-    if (!permalink) return router.onAfterUrlLoad?.(href);
-
     // 如果当前 pathname 和 permalink 相同，则不需要处理
     if (permalink === "/" + decodePath) return;
 
-    // 存在 permalink 则在 URL 替换
-    nextTick(() => {
-      const to = base.replace(/\/$/, "") + permalink + search + hash;
-      history.replaceState(history.state || null, "", to);
+    if (permalink) {
+      // 存在 permalink 则在 URL 替换
+      return nextTick(() => {
+        const to = base.replace(/\/$/, "") + permalink + search + hash;
+        history.replaceState(history.state || null, "", to);
 
-      router.onAfterUrlLoad?.(to);
-    });
+        router.onAfterUrlLoad?.(to);
+      });
+    }
+
+    // 不存在 permalink 则获取文档地址来跳转（router.onBeforeRouteChange 在跳转前已经执行了该逻辑，因此这里触发率 0%，只是用于兜底，因为 router.onBeforeRouteChange 可能因为用户使用不当被覆盖）
+    const filePath = teyGetFilePathByPermalink(pathname);
+    if (filePath) {
+      if (inBrowser) document.title = "";
+      const targetUrl = base + filePath + search + hash;
+      // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
+      history.replaceState(history.state || null, "", targetUrl);
+      router.go(targetUrl);
+    } else router.onAfterUrlLoad?.(href);
   };
 
   onBeforeMount(() => {
