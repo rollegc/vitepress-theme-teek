@@ -106,7 +106,7 @@ watch(isDark, () => switchDark());
 </script>
 
 <template>
-  <div class="artalk-container">
+  <div :class="ns.b('artalk')">
     <link v-if="server" rel="stylesheet" :href="`${server}/dist/Artalk.css`" crossorigin="anonymous" />
     <div :id="artalkId" ref="artalkRef" />
     <component v-if="server" :is="'script'" :src="`${server}/dist/Artalk.js`" crossorigin="anonymous" ref="artalkJs" />

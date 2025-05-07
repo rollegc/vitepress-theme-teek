@@ -12,7 +12,7 @@ import { TkHomeCard } from "@teek/components/theme/HomeCard";
 
 defineOptions({ name: "HomeTagCard" });
 
-const ns = useNamespace("tags");
+const ns = useNamespace("tag");
 const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();

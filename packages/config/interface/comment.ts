@@ -27,15 +27,26 @@ export type CommentProvider = {
     envId: string;
     /**
      * twikoo.js 在线链接
-     * @default 'https://gcore.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.min.js'
+     *
+     * @default 'https://cdn.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.nocss.js'
      */
-    link?: string;
+    jsLink?: string;
+    /**
+     * twikoo.css 在线链接
+     *
+     * @default 'https://cdn.jsdelivr.net/npm/twikoo@{version}/dist/twikoo.css'
+     */
+    cssLink?: string;
     /**
      * twikoo 版本号，不定期更新为最新版
      *
-     * @default '1.6.41'
+     * @default '1.6.42'
      */
     version?: string;
+    /**
+     * twikoo 的 css、js 的 integrity
+     */
+    jsIntegrity?: string;
     /**
      * 页面渲染后多少毫秒开始渲染 twikoo，如果设置太短，可能获取的 DOM 还没加载完成
      *
