@@ -1,3 +1,5 @@
-.artalk-container {
+@use "../../mixins/bem" as *;
+
+@include b(artalk) {
   --at-color-main: var(--vp-c-brand-2);
 }

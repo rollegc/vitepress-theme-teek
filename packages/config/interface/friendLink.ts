@@ -11,30 +11,7 @@ export interface FriendLink {
   /**
    * 友情链接数据列表
    */
-  list?: {
-    /**
-     * 友链名称
-     */
-    name: string;
-    /**
-     * 友链头像
-     */
-    avatar?: string;
-    /**
-     * 友链描述
-     */
-    desc?: string;
-    /**
-     * 友链链接
-     */
-    link?: string;
-    /**
-     * img 标签的 alt
-     *
-     * @default name
-     */
-    alt?: string;
-  }[];
+  list?: FriendLinkItem[];
   /**
    * 首页卡片标题
    *
@@ -87,4 +64,29 @@ export interface FriendLink {
    * @since v1.1.2
    */
   titleClick?: (router: VpRouter) => void;
+}
+
+export interface FriendLinkItem {
+  /**
+   * 友链名称
+   */
+  name: string;
+  /**
+   * 友链头像
+   */
+  avatar?: string;
+  /**
+   * 友链描述
+   */
+  desc?: string;
+  /**
+   * 友链链接
+   */
+  link?: string;
+  /**
+   * img 标签的 alt
+   *
+   * @default name
+   */
+  alt?: string;
 }

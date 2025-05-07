@@ -58,8 +58,8 @@ catalogs:
       specifier: ^1.0.9
       version: 1.0.9
     vitepress-plugin-permalink:
-      specifier: ^1.1.0
-      version: 1.1.0
+      specifier: ^1.1.1
+      version: 1.1.1
     vitepress-plugin-sidebar-resolve:
       specifier: ^1.0.9
       version: 1.0.9
@@ -319,7 +319,7 @@ importers:
         version: 1.0.9
       vitepress-plugin-permalink:
         specifier: 'catalog:'
-        version: 1.1.0(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
+        version: 1.1.1(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
       vitepress-plugin-sidebar-resolve:
         specifier: 'catalog:'
         version: 1.0.9(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
@@ -4854,8 +4854,8 @@ packages:
   vitepress-plugin-md-h1@1.0.9:
     resolution: {integrity: sha512-On7mAzx1HvqgErpMb9MGaHjK2zbSm7LY5qkUcM1226fOAMluFSiv3MPhLJnCxTfXOQUY+ckTJS/ResLMUkWKQQ==}
 
-  vitepress-plugin-permalink@1.1.0:
-    resolution: {integrity: sha512-NseN9hJPXKUX2CRlINW6ij0z/8tuD4aHN9xUAhsMTR09dblU5xEm/bmJ81qP3+Y/WnzqAJDtZIH1CI4nWVxUpQ==}
+  vitepress-plugin-permalink@1.1.1:
+    resolution: {integrity: sha512-/+vOjal485rvYuWn7n3JUY+aUzqqeGjecrsWAV1P8iVL+f/STZIJrntShvsrabfQdKUjMm0AvoAQpiHxL4WurA==}
     peerDependencies:
       vitepress: ^1.6.3
 
@@ -9514,7 +9514,7 @@ snapshots:
     dependencies:
       gray-matter: 4.0.3
 
-  vitepress-plugin-permalink@1.1.0(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
+  vitepress-plugin-permalink@1.1.1(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1

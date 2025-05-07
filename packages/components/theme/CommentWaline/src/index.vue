@@ -63,7 +63,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="waline-container">
+  <div :class="ns.b('waline')">
     <link v-if="cssLink" rel="stylesheet" :href="cssLink" :integrity="cssIntegrity" crossorigin="anonymous" />
     <div :id="walineId" />
   </div>

@@ -25,7 +25,7 @@ provide(teekConfigContext, {
     options: {
       // twikoo 配置，官网：https://twikoo.js.org/
       envId: "https://vp.teek.top/",
-      link: "https://gcore.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js",
+      link: "https://gcore.jsdelivr.net/npm/twikoo@1.6.42/dist/twikoo.all.min.js",
     },
 });
 

@@ -10,21 +10,31 @@
   padding-bottom: 20px;
 
   @include e(title) {
+    display: inline-flex;
     margin-bottom: 14px;
     font-weight: 700;
     font-size: 16px;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   @include e(link) {
     font-size: 14px;
-    line-height: 2.2;
     color: var(--vp-c-text-1);
 
     a {
+      max-width: 120px;
+      width: max-content;
       display: inline-flex;
       align-items: center;
-      transition: color 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition:
+        color 0.25s cubic-bezier(0.25, 0.1, 0.25, 1),
+        background-color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      padding: 8px;
+      border-radius: 12px;
+
+      &:hover {
+        background-color: getCssVar("fill-color-light");
+      }
     }
   }
 

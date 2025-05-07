@@ -1,13 +1,13 @@
 <script setup lang="ts" name="HomeFriendLinkCard">
 import type { FriendLink } from "@teek/config";
 import { computed, ref, onMounted } from "vue";
-import { withBase, useRouter } from "vitepress";
+import { useRouter } from "vitepress";
 import { useNamespace, useLocale, useScrollData } from "@teek/hooks";
 import { friendLinkIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { createImageViewer } from "@teek/components/common/ImageViewer";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import ItemInfo from "./ItemInfo.vue";
 
 defineOptions({ name: "HomeFriendLinkCard" });
 
@@ -70,13 +70,6 @@ const getLiStyle = (index: number) => {
   };
 };
 
-const handleViewImg = (imgSrc: string, e: MouseEvent) => {
-  // @click.stop 不起作用，因此手动阻止冒泡到 a 标签
-  e.preventDefault();
-
-  createImageViewer({ ...friendLinkConfig.value.imageViewer, urlList: [imgSrc] });
-};
-
 const router = useRouter();
 
 const handleTitleClick = () => {
@@ -110,32 +103,27 @@ const handleTitleClick = () => {
         @mouseleave="friendLinkConfig.autoScroll ? start() : friendLinkConfig.autoPage ? startAutoPage() : () => {}"
         :aria-label="t('tk.friendLinkCard.listLabel')"
       >
-        <li
-          :ref="friendLinkConfig.autoScroll ? '' : 'itemRefs'"
-          v-for="(item, index) in currentFriendLinkList"
-          :key="item.name"
-          :class="ns.e('list__item')"
-          :style="getLiStyle(index)"
-        >
-          <a
-            :href="item.link && withBase(item.link)"
-            target="_blank"
-            class="hover-color flx-align-center"
-            :aria-label="item.name"
+        <template v-if="friendLinkConfig.autoScroll">
+          <li
+            v-for="(item, index) in currentFriendLinkList"
+            :key="item.name"
+            :class="ns.e('list__item')"
+            :style="getLiStyle(index)"
           >
-            <img
-              :src="item.avatar && withBase(item.avatar)"
-              class="friend-avatar"
-              :alt="item.name || item.alt"
-              @click="handleViewImg(item.avatar, $event)"
-              aria-hidden="true"
-            />
-            <div :class="ns.e('list__item__info')">
-              <div class="friend-name sle">{{ item.name }}</div>
-              <div class="friend-desc sle">{{ item.desc }}</div>
-            </div>
-          </a>
-        </li>
+            <ItemInfo :item :ns />
+          </li>
+        </template>
+        <template v-else>
+          <li
+            ref="itemRefs"
+            v-for="(item, index) in currentFriendLinkList"
+            :key="item.name"
+            :class="ns.e('list__item')"
+            :style="getLiStyle(index)"
+          >
+            <ItemInfo :item :ns />
+          </li>
+        </template>
       </TransitionGroup>
 
       <div v-else :class="ns.m('empty')" :aria-label="friendLinkConfig.emptyLabel">

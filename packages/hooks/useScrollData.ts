@@ -32,17 +32,22 @@ export const useScrollData = (data: MaybeRefOrGetter<any[]>, limit: number, opti
   let currentIndex = limit;
   let timer: ReturnType<typeof setInterval> | null = null;
 
+  const scrollData = () => {
+    const nextIndex = (currentIndex + 1) % dataComputed.value.length;
+
+    visibleData.value.push(dataComputed.value[nextIndex]);
+    visibleData.value.shift();
+
+    currentIndex = nextIndex;
+  };
+
   /**
    * 开启滚动
    */
   const start = () => {
+    scrollData();
     timer = setInterval(() => {
-      const nextIndex = (currentIndex + 1) % dataComputed.value.length;
-
-      visibleData.value.push(dataComputed.value[nextIndex]);
-      visibleData.value.shift();
-
-      currentIndex = nextIndex;
+      scrollData();
     }, intervalTime);
   };
 

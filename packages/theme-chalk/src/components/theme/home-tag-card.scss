@@ -1,7 +1,7 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
 
-@include b(tags) {
+@include b(tag) {
   @include when(page) {
     position: sticky;
     top: 72px;

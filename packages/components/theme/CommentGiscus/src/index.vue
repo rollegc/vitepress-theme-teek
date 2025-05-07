@@ -69,7 +69,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="isShow" class="giscus-container">
+  <div v-if="isShow" :class="ns.b('giscus')">
     <component
       v-if="giscusComponent"
       :is="giscusComponent"

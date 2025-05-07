@@ -79,5 +79,11 @@ $namespace: tk-layout-provider;
       user-select: none;
     }
   }
+
+  // > span {
+  //   width: var(--tk-avatar-size);
+  //   height: var(--tk-avatar-size);
+  //   border-radius: 50%;
+  // }
 }
 </style>
