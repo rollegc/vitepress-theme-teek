@@ -24,11 +24,7 @@ const footerGroupConfig = getTeekConfigRef<FooterGroup[]>("footerGroup", []);
       </div>
 
       <ul>
-        <li
-          v-for="(link, idx) in group.links || []"
-          :key="(link.name || '') + idx"
-          :class="[ns.e('link'), 'flx-align-center']"
-        >
+        <li v-for="(link, idx) in group.links || []" :key="(link.name || '') + idx" :class="[ns.e('link')]">
           <TkIcon v-if="link.icon" :icon="link.icon" style="margin-right: 4px" aria-hidden="true" />
           <a
             :name="link.name"
@@ -40,7 +36,7 @@ const footerGroupConfig = getTeekConfigRef<FooterGroup[]>("footerGroup", []);
             rel="noopener noreferrer"
             :aria-describedby="link.name"
           >
-            {{ link.name }}
+            <span class="sle">{{ link.name }}</span>
             <TkIcon
               v-if="isExternal(link.link || '')"
               :icon="externalLinkIcon"

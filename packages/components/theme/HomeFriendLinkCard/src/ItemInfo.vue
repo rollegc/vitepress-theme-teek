@@ -8,7 +8,6 @@ import { createImageViewer } from "@teek/components/common/ImageViewer";
 defineProps<{ item: FriendLinkItem; ns: UseNamespaceReturn }>();
 
 const { getTeekConfigRef } = useTeekConfig();
-
 const friendLinkConfig = getTeekConfigRef<FriendLink>("friendLink", { imageViewer: {} });
 
 const handleViewImg = (imgSrc: string | undefined, e: MouseEvent) => {
@@ -16,7 +15,6 @@ const handleViewImg = (imgSrc: string | undefined, e: MouseEvent) => {
   e.preventDefault();
 
   if (!imgSrc) return;
-
   createImageViewer({ ...friendLinkConfig.value.imageViewer, urlList: [imgSrc] });
 };
 </script>
