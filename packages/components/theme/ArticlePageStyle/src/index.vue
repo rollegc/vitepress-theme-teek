@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticlePageStyle">
 import type { TeekConfig } from "@teek/config";
-import { watch } from "vue";
+import { watch, nextTick } from "vue";
 import { isClient } from "@teek/helper";
 import { useNamespace } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -13,8 +13,10 @@ const pageStyle = getTeekConfigRef<TeekConfig["pageStyle"]>("pageStyle", "defaul
 
 watch(
   pageStyle,
-  () => {
+  async () => {
     if (!isClient) return;
+
+    await nextTick();
 
     const tkLayoutDom = document.querySelector(`.${ns.joinNamespace("layout")}`);
     // 清除可能已经存在的 pageStyle

@@ -34,8 +34,8 @@ const handleViewImg = (imgSrc: string | undefined, e: MouseEvent) => {
       aria-hidden="true"
     />
     <div :class="ns.e('list__item__info')">
-      <div class="friend-name sle">{{ item.name }}</div>
-      <div class="friend-desc sle">{{ item.desc }}</div>
+      <div class="friend-name sle" :title="item.name">{{ item.name }}</div>
+      <div class="friend-desc sle" :title="item.desc">{{ item.desc }}</div>
     </div>
   </a>
 </template>
