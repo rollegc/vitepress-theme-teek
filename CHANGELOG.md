@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.3...v1.1.4) (2025-05-07)
+
+### Features
+
+- 🚀 1.1.4 版本发布 ([ec32978](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ec32978d90b3e84a0f3a06e197924bc16bb4cb36))
+- 🚀 footerGroup 样式美化 ([9ed1878](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/9ed1878e2cb94c686309bb9a93d4c7b00f76913f))
+- 🚀 permalink 发版，修复刷新 404 问题 ([efd9db9](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/efd9db9c437adf40d9e6881b1c0d611557054af2))
+
+### Bug Fixes
+
+- 🐞 修复 twikoo 样式全局污染问题 ([b8d84ba](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b8d84badcc7b9eb7bda518df8d96a0e0964b18e1))
+- 🐞 修复友链卡片滚动和翻页动画不兼容问题 ([7747de8](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7747de82ea757d860bc97d9b04b1a4f1bed1db2c))
+- 🐞 useTemplateRef 改为 ref 来修复控制台警告问题，修复友链卡片鼠标悬停后无法滚动问题 ([0996544](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/0996544d2e55234cc87f8884f8136a9efd41f0ef))
+
+### Docs
+
+- 📚 文档新增个人友链 ([c45d6ef](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c45d6ef8d35c929112227f819d69f03ce80899c7))
+- 📚 cHANGELOG 文档更新 ([7f8e584](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7f8e58401c09687cc24d6255b29664148b7da19e))
+
 ## [1.1.3](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.2...v1.1.3) (2025-05-06)
 
 ### Bug Fixes
