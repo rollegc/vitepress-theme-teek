@@ -5,6 +5,8 @@ export enum LayoutMode {
   Original = "original",
 }
 
+export type LayoutModeVal = "fullWidth" | "sidebarWidthAdjustableOnly" | "bothWidthAdjustable" | "original";
+
 export enum SpotlightStyle {
   Under = "under",
   Aside = "aside",

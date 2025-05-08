@@ -1,5 +1,6 @@
 <script setup lang="ts" name="LayoutSwitch">
 import type { ThemeEnhance } from "@teek/config";
+import type { LayoutModeVal } from "./themeEnhance";
 import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
@@ -29,9 +30,10 @@ const oldLayoutMode = ref(layoutMode.value);
 
 const { start: startAnimated } = useAnimated();
 
-const update = (val: string) => {
+const update = (val: LayoutModeVal) => {
   if (!isClient) return;
-  if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) startAnimated();
+  const { layoutSwitch } = themeEnhanceConfig.value;
+  if (!layoutSwitch?.disableAnimation) startAnimated();
 
   const el = document.documentElement;
 
