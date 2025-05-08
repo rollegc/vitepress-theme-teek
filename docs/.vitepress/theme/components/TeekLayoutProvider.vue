@@ -12,6 +12,7 @@ const { frontmatter } = useData();
 const current = ref("D");
 
 const teekConfig = ref(current.value === "D" ? teekDocConfig : teekBlogConfig);
+
 provide(teekConfigContext, teekConfig);
 
 const handleSwitch = () => {

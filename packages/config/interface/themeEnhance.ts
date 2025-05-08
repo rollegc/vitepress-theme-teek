@@ -1,4 +1,9 @@
-import type { ThemeColor, LayoutMode, SpotlightStyle } from "../../components/theme/ThemeEnhance/src/themeEnhance";
+import type {
+  ThemeColor,
+  LayoutMode,
+  SpotlightStyle,
+  LayoutModeVal,
+} from "../../components/theme/ThemeEnhance/src/themeEnhance";
 import type { SegmentedOption } from "../../components/common/Segmented/src/segmented";
 
 export interface ThemeEnhance {
@@ -21,7 +26,7 @@ export interface ThemeEnhance {
      *
      * @default LayoutMode.Original
      */
-    defaultMode?: LayoutMode | "fullWidth" | "sidebarWidthAdjustableOnly" | "bothWidthAdjustable" | "original";
+    defaultMode?: LayoutMode | LayoutModeVal;
     /**
      * 禁用帮助提示
      *

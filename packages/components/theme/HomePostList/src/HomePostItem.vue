@@ -121,14 +121,14 @@ const isShowInfo = computed(() => {
       <div :class="`${ns.e('info__right')} flx-align-center`">
         <div
           v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length"
-          class="cover-img"
+          :class="`${coverImgMode} cover`"
           :aria-label="t('tk.homePost.coverImgLabel')"
         >
           <component
             :is="coverImgMap[coverImgMode].is"
             v-bind="coverImgMap[coverImgMode].props"
-            :class="coverImgMode"
             aria-hidden="true"
+            class="cover-img"
           />
         </div>
       </div>

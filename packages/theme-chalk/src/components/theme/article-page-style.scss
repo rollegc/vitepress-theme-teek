@@ -2,29 +2,23 @@
 @use "../../mixins/function" as *;
 
 html[layout-mode="original"] {
-  /* 官方默认样式 */
-  @include b(default) {
-    .VPContent:not(.is-home) {
-      background-color: getCssVar("bg-color");
-    }
-  }
-
   /* 单卡片风格样式 */
   @include multiple-b((card, card-nav)) {
     .VPContent:not(.is-home) {
-      .VPDoc.has-sidebar {
-        background-color: getCssVar("bg-color");
-        padding-top: 0;
-        padding-left: 10px;
-      }
-
-      .VPDoc:not(.has-sidebar) {
-        padding-top: 0;
-        .container {
+      .VPDoc {
+        &.has-sidebar {
           background-color: getCssVar("bg-color");
-          & > .content {
-            padding-left: 0;
-            padding-right: 10px;
+          padding-top: 0;
+          padding-left: 10px;
+        }
+        &:not(.has-sidebar) {
+          padding-top: 0;
+          .container {
+            background-color: getCssVar("bg-color");
+            & > .content {
+              padding-left: 0;
+              padding-right: 10px;
+            }
           }
         }
       }
@@ -34,11 +28,11 @@ html[layout-mode="original"] {
   /* 片段卡片风格样式 */
   @include multiple-b((segment, segment-nav)) {
     .VPContent:not(.is-home) {
-      .VPDoc:not(.has-sidebar) .container > .content {
-        max-width: 845px;
-      }
       .VPDoc {
         padding: 0;
+        &:not(.has-sidebar) .container > .content {
+          max-width: 845px;
+        }
         .container > .content {
           background-color: getCssVar("bg-color");
           .content-container {
@@ -109,6 +103,7 @@ html[layout-mode="original"] {
     .VPContent:not(.is-home) {
       background-color: getCssVar("bg-color-mute");
       .VPDoc {
+        position: relative;
         /* 文档内容 */
         .container > .content {
           padding-top: 20px;

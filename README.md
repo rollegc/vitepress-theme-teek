@@ -4,7 +4,7 @@
 
 [Github](https://github.com/Kele-Bingtang/vitepress-theme-teek) ｜
 [Gitee](https://gitee.com/kele-bingtang/vitepress-theme-teek) ｜
-[Preview](https://note.teek.top/) ｜
+[Preview](https://notes.teek.top/) ｜
 [Docs](http://vp.teek.top/)
 
 ✨一个轻量、简洁高效、灵活配置的 VitePress 主题。

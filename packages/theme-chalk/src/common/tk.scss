@@ -95,7 +95,10 @@ h1 {
   background-color: getCssVar("el-color-success-light-9");
 }
 
-a.hover-color:hover {
-  color: getCssVar("theme-color");
-  cursor: pointer;
+a.hover-color {
+  transition: color 0.2s;
+  &:hover {
+    color: getCssVar("theme-color");
+    cursor: pointer;
+  }
 }

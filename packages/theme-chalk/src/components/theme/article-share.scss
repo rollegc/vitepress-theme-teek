@@ -57,7 +57,7 @@
 @include multiple-b((segment, segment-nav)) {
   .#{$namespace}-article-share {
     &__button {
-      background-color: var(--vp-c-white);
+      background-color: getCssVar("bg-color");
     }
   }
 }

@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.1.4](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.3...v1.1.4) (2025-05-07)
+## [1.1.4](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.3...v1.1.4) (2025-05-07)
 
 ### Features
 
@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Docs
 
 - 📚 文档新增个人友链 ([c45d6ef](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c45d6ef8d35c929112227f819d69f03ce80899c7))
-- 📚 cHANGELOG 文档更新 ([7f8e584](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7f8e58401c09687cc24d6255b29664148b7da19e))
+- 📚 CHANGELOG 文档更新 ([7f8e584](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7f8e58401c09687cc24d6255b29664148b7da19e))
 
 ## [1.1.3](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.2...v1.1.3) (2025-05-06)
 

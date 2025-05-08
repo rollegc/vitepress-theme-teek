@@ -53,7 +53,12 @@ const breadcrumbList = computed(() => {
   <div :class="`${ns.b()}`" role="navigation" :aria-label="t('tk.articleBreadcrumb.label')">
     <TkBreadcrumb v-if="breadcrumb?.enabled" :separator="breadcrumb.separator">
       <TkBreadcrumbItem>
-        <a :href="withBase('/')" :title="breadcrumb.homeLabel" class="hover-color" :aria-label="breadcrumb.homeLabel">
+        <a
+          :href="withBase('/')"
+          :title="breadcrumb.homeLabel"
+          class="home hover-color"
+          :aria-label="breadcrumb.homeLabel"
+        >
           <TkIcon :icon="houseIcon" aria-hidden="true" />
         </a>
       </TkBreadcrumbItem>
