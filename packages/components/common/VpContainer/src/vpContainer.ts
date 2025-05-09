@@ -2,7 +2,7 @@ export interface VpContainerProps {
   /**
    * 类型
    *
-   * @default 'tip;
+   * @default 'tip'
    */
   type?: "info" | "tip" | "warning" | "danger";
   /**
@@ -10,7 +10,7 @@ export interface VpContainerProps {
    */
   title?: string;
   /**
-   * 内容
+   * 文本
    */
   text?: string;
 }

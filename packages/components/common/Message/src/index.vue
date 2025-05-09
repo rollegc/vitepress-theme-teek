@@ -31,6 +31,7 @@ const height = ref(0);
 
 const badeTypeMap: Record<MessageType, string> = {
   info: "info",
+  primary: "primary",
   success: "success",
   warning: "warning",
   error: "danger",

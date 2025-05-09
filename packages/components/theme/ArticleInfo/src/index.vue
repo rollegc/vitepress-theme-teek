@@ -101,8 +101,7 @@ const baseInfo = computed(() => {
 
 const isShow = (showInfo?: boolean | ArticleInfoPosition[]) => {
   const arr = [showInfo || []].flat();
-  if (arr.includes(true) || arr.includes(scope)) return true;
-  return false;
+  return arr.includes(true) || arr.includes(scope);
 };
 </script>
 

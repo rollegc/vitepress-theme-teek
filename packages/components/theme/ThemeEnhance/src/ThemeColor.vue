@@ -5,7 +5,7 @@ import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
 import { useStorage, useMediaQuery, useLocale, useThemeColor, varNameList } from "@teek/hooks";
-import { clickIcon } from "@teek/static";
+import { waterIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";
 import { ThemeColor, mobileMaxWidthMedia, themeColorAttribute, themeColorList } from "./themeEnhance";
@@ -158,7 +158,7 @@ const tips = [
 <template>
   <BaseTemplate
     :class="ns.e('theme-color')"
-    :icon="clickIcon"
+    :icon="waterIcon"
     :helper="!themeEnhanceConfig.themeColor?.disableHelp"
     :helper-desc="t('tk.themeEnhance.themeColor.helpDesc')"
     :tips

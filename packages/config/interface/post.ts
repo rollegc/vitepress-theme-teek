@@ -1,6 +1,14 @@
 import type { ImageViewerProps } from "@teek/components/common/ImageViewer/src/imageViewer";
+import type { TitleTagProps } from "@teek/components/common/TitleTag/src/titleTag";
 
 export interface Post {
+  /**
+   * 文章模板风格，list 为列表风格，card 为卡片风格
+   *
+   * @since v1.1.5
+   * @default list
+   */
+  postStyle?: "list" | "card";
   /**
    * 文章摘要位置
    *
@@ -59,4 +67,18 @@ export interface Post {
    * 封面图查看器配置
    */
   imageViewer?: Omit<ImageViewerProps, "urlList">;
+  /**
+   * 列表模式下的标题标签位置（postStyle 为 list）
+   *
+   * @since v1.1.5
+   * @default 'right'
+   */
+  listStyleTitleTagPosition?: TitleTagProps["position"];
+  /**
+   * 卡片模式下的标题标签位置（postStyle 为 list）
+   *
+   * @since v1.1.5
+   * @default 'left'
+   */
+  cardStyleTitleTagPosition?: TitleTagProps["position"];
 }

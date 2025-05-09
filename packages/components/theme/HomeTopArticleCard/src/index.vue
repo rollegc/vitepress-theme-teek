@@ -5,7 +5,8 @@ import { useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { topArticleIcon } from "@teek/static";
 import { formatDate, isFunction } from "@teek/helper";
-import { useTeekConfig, usePosts, useBgColor } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
+import { TkTitleTag } from "@teek/components/common/TitleTag";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
 
 defineOptions({ name: "HomeTopArticleCard" });
@@ -52,12 +53,12 @@ const finalTitle = computed(() => {
   return title;
 });
 
-const bgColor = useBgColor();
+const tagColor = useTagColor();
 const itemRefs = ref<HTMLLIElement[]>([]);
 
 const getStyle = (num: number, index: number) => {
   return {
-    [ns.cssVarName("num-bg-color")]: bgColor.value[num % bgColor.value.length],
+    [ns.cssVarName("num-bg-color")]: tagColor.value[num % tagColor.value.length].text,
     top: `calc(${index} * (calc(${ns.cssVar("home-top-article-gap")} + ${itemRefs.value?.[index]?.getBoundingClientRect().height || 0}px)))`,
   };
 };
@@ -105,9 +106,7 @@ const handleTitleClick = () => {
           <div :class="ns.e('list__item__info')">
             <a :href="item.url && withBase(item.url)" class="hover-color flx-align-center">
               <span class="title sle">{{ item.title }}</span>
-              <span :class="[ns.joinNamespace('title-tag'), 'mini']" v-if="item.frontmatter.titleTag">
-                {{ item.frontmatter.titleTag }}
-              </span>
+              <TkTitleTag :text="item.frontmatter.titleTag" position="right" size="mini" />
             </a>
             <div class="date">{{ formatPostDate(item.date) }}</div>
           </div>

@@ -2,23 +2,27 @@
 import { TkMessage } from "vitepress-theme-teek";
 import { h } from "vue";
 
-const open1 = () => {
+const openDefault = () => {
   TkMessage("This is a message.");
 };
 
-const open2 = () => {
+const openPrimary = () => {
+  TkMessage.primary("Oops, this is a primary message.");
+};
+
+const openSuccess = () => {
   TkMessage({
     message: "Congrats, this is a success message.",
     type: "success",
   });
 };
-const open3 = () => {
+const openWarning = () => {
   TkMessage({
     message: "Warning, this is a warning message.",
     type: "warning",
   });
 };
-const open4 = () => {
+const openError = () => {
   TkMessage.error("Oops, this is a error message.");
 };
 
@@ -31,20 +35,21 @@ const openVn = () => {
   });
 };
 
-const open5 = () => {
+const openPlain = () => {
   TkMessage({ message: "Congrats, this is a success message.", type: "success", plain: true });
 };
 </script>
 
 <template>
   <div class="message-container">
-    <button @click="open2">Success</button>
-    <button @click="open3">Warning</button>
-    <button @click="open1">Message</button>
-    <button @click="open4">Error</button>
+    <button @click="openPrimary">Primary</button>
+    <button @click="openSuccess">Success</button>
+    <button @click="openWarning">Warning</button>
+    <button @click="openDefault">Message</button>
+    <button @click="openError">Error</button>
     <button @click="openVn">VNode</button>
 
-    <button @click="open5">Plain Success</button>
+    <button @click="openPlain">Plain Success</button>
   </div>
 </template>
 

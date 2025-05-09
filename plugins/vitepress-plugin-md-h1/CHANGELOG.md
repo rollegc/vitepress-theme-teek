@@ -1,5 +1,11 @@
 # vitepress-plugin-md-h1
 
+## 1.0.10
+
+### Patch Changes
+
+- noTitle 改为 autoTitle
+
 ## 1.0.9
 
 ### Patch Changes

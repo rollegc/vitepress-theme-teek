@@ -56,7 +56,7 @@
     margin: 0;
   }
 
-  @each $type in (success, info, warning, error) {
+  @each $type in (primary, success, info, warning, error) {
     @include m($type) {
       @include set-css-var("message-bg-color", getCssVar("el-color", $type, "light-9"));
       @include set-css-var("message-border-color", getCssVar("el-color", $type, "light-8"));

@@ -146,6 +146,7 @@ const {
     @click="toggleVisible('click')"
     @contextmenu="toggleVisible('contextmenu')"
     @focus="toggleVisible('focus')"
+    @touchstart="visible = !visible"
     v-bind="$attrs"
   >
     <slot name="reference" />

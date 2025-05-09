@@ -44,3 +44,12 @@ export default {
   },
 };
 ```
+
+## 插槽
+
+DemoCode 组件默认有 4 个按钮，如果需要自定义按钮，可以通过 `slots` 来实现。
+
+- `teek-demo-code-button-left`：最左侧按钮插槽
+- `teek-demo-code-button-right`：最右侧按钮插槽
+
+`app.component` 注册组件时，同名的组件会被覆盖，因此无论 Teek 之前是否已经注册（全局引入时自动注册）过 `TkDemoCode` 组件，您都可以通过 `app.component` 来覆盖。

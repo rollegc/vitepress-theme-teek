@@ -37,24 +37,22 @@ const isPaging = ref(false);
   <div :class="ns.b()" role="main" :aria-label="t('tk.home.label')">
     <div v-if="isHomePage && (teekConfig.banner.enabled ?? true)" v-show="!isPaging">
       <TkHomeBanner>
-        <template v-for="(_, name) in $slots" :key="name" #[name]>
-          <slot :name="name" />
-        </template>
+        <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
       </TkHomeBanner>
     </div>
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
       <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
         <slot name="teek-home-post-before" />
-        <TkHomePostList v-model="isPaging" ref="homePostListInstance" />
+        <TkHomePostList v-model="isPaging" ref="homePostListInstance">
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        </TkHomePostList>
         <slot name="teek-home-post-after" />
       </div>
 
       <div :class="ns.e('content__info')" :aria-label="t('tk.home.cardLabel')">
         <TkHomeRightInfo>
-          <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name" />
-          </template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkHomeRightInfo>
       </div>
     </div>

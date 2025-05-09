@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomePostList">
 import type { TkPaginationProps } from "@teek/components/common/Pagination";
 import type { Post, TkContentData } from "@teek/config";
-import { reactive, ref, watch, nextTick } from "vue";
+import { reactive, ref, watch, nextTick, computed } from "vue";
 import { useRoute, useData } from "vitepress";
 import { isClient, removeUnit } from "@teek/helper";
 import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
@@ -11,6 +11,7 @@ import { TkPagination } from "@teek/components/common/Pagination";
 import { TkIcon } from "@teek/components/common/Icon";
 import { pageNumKey } from "./homePostList";
 import HomePostItem from "./HomePostItem.vue";
+import HomePostItemCard from "./HomePostItemCard.vue";
 
 defineOptions({ name: "HomePostList" });
 
@@ -22,6 +23,7 @@ const posts = usePosts();
 const { frontmatter } = useData();
 
 const postConfig = getTeekConfigRef<Required<Post>>("post", {
+  postStyle: "list",
   coverImgMode: "default",
   emptyLabel: t("tk.homePost.emptyLabel"),
   transition: true,
@@ -34,17 +36,12 @@ const coverImgMode = ref(postConfig.value.coverImgMode);
 
 // 分页信息
 const pageNum = ref(1);
-const pageSize = ref(pageConfig.value.pageSize || 10);
 const total = ref(0);
 
 const isPaging = defineModel({ default: false });
 
-watch(
-  () => pageConfig.value.pageSize,
-  newValue => {
-    pageSize.value = newValue || 10;
-  }
-);
+const defaultPageSize = computed(() => (postConfig.value.postStyle === "list" ? 10 : 15));
+const pageSize = computed(() => pageConfig.value.pageSize || defaultPageSize.value);
 
 const route = useRoute();
 const currentPosts = ref<TkContentData[]>([]);
@@ -61,7 +58,6 @@ const updateData = () => {
 
   const postConst = posts.value;
   const frontmatterConst = frontmatter.value;
-
   let post = postConst.sortPostsByDateAndSticky;
 
   if (frontmatterConst.categoriesPage) {
@@ -76,7 +72,6 @@ const updateData = () => {
 
   // 总数处理
   if (total.value !== post?.length) total.value = post?.length || 0;
-
   currentPosts.value = post?.slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
 };
 
@@ -101,7 +96,6 @@ const handlePagination = () => {
 
   // 更新数据
   updateData();
-
   // 滚动
   nextTick(() => {
     const rootStyles = getComputedStyle(document.documentElement);
@@ -137,17 +131,21 @@ defineExpose({ updateData });
 </script>
 
 <template>
-  <div :class="ns.b()">
+  <div :class="[ns.b(), ns.is('card', postConfig.postStyle === 'card')]">
     <template v-if="currentPosts">
-      <TransitionGroup
-        tag="ul"
-        :name="postConfig.transition ? postConfig.transitionName : ''"
-        :aria-label="t('tk.homePost.label')"
-      >
-        <li v-for="post in currentPosts" :key="post.url" :class="`${coverImgMode}-cover`">
-          <HomePostItem :post :coverImgMode />
-        </li>
-      </TransitionGroup>
+      <slot name="teek-home-post-list" v-bind="{ currentPosts, transitionName: postConfig.transitionName }">
+        <TransitionGroup
+          tag="ul"
+          :name="postConfig.transition ? postConfig.transitionName : ''"
+          :aria-label="t('tk.homePost.label')"
+        >
+          <li v-for="post in currentPosts" :key="post.url" :class="{ 'full-img': coverImgMode === 'full' }">
+            <HomePostItemCard v-if="postConfig.postStyle === 'card'" :post />
+            <HomePostItem v-else :post :coverImgMode />
+          </li>
+        </TransitionGroup>
+      </slot>
+
       <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <TkPagination
           v-if="currentPosts.length >= pageSize"
@@ -160,6 +158,7 @@ defineExpose({ updateData });
         />
       </div>
     </template>
+
     <div v-else :class="[ns.e('empty'), 'flx-column-center']" :aria-label="postConfig.emptyLabel">
       <TkIcon :icon="emptyIcon" :size="160" color="var(--vp-c-text-3)" aria-hidden="true" />
       <span :class="ns.e('empty__title')">{{ postConfig.emptyLabel }}</span>

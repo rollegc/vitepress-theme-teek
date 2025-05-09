@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.5](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.4...v1.1.5) (2025-05-09)
+
+### Features
+
+- 🚀 博主头像 circle 支持旋转一次，支持新增背景图 ([00fe665](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/00fe665220af031591b2bde26a929297284b3620))
+- 🚀 新增文章列表的卡片风格、新增 TitleTag 组件 ([43f01dd](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/43f01dd6380367193837d7e0c5538354b3fbf1d6))
+- 🚀 mdH1 插件将 noTitle 改为 autoTitle ([9cb008a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/9cb008a7082a12559e15ab64cc911b5e98d285d1))
+- 🚀 message 组件新增 primary 类型 ([44604fb](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/44604fb701345291b4b5c53859200fc58bdc989a))
+
+### Bug Fixes
+
+- 🐞 修复 pageStyle 配置项第一次进入无法初始化功能问题 ([bdb4bb8](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bdb4bb8622d6e3f15d458159693689bfb2739554))
+- 🐞 修复 TitleTag EP 样式失效问题，新增 TitleTag 使用文档 ([8a88eb1](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/8a88eb1875f2bd56372321b05a480fe1ea4518c7))
+- 🐞 修复文章列表封面图模式为 full 时显示的样式问题 ([f97365f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/f97365fd1db3add8871de187fdafbc51e710c285))
+- 🐞 优化 full 封面图样式，优化文章页风格样式，优化部分动画效果，优化部分代码风格 ([148290b](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/148290bb430dbdfb9fd399546312b06b9936a1af))
+
 ## [1.1.4](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.3...v1.1.4) (2025-05-07)
 
 ### Features

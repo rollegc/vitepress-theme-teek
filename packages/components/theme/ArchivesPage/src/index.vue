@@ -3,6 +3,7 @@ import { withBase, useData } from "vitepress";
 import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts } from "@teek/components/theme/ConfigProvider";
+import { TkTitleTag } from "@teek/components/common/TitleTag";
 
 defineOptions({ name: "ArchivesPage" });
 
@@ -62,9 +63,7 @@ const defaultLabel = computed(() => {
                 <a :href="item.url && withBase(item.url)" :aria-label="`${item.title}`">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <span>{{ item.title }}</span>
-                  <span :class="[ns.joinNamespace('title-tag'), 'small']" v-if="item.frontmatter.titleTag">
-                    {{ item.frontmatter.titleTag }}
-                  </span>
+                  <TkTitleTag :text="item.frontmatter.titleTag" position="right" size="small" />
                 </a>
               </li>
             </ul>
