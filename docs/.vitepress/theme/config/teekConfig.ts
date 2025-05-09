@@ -38,7 +38,7 @@ export const teekBlogConfig: TeekConfig = {
   },
   blogger: {
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
-    shape: "square",
+    shape: "circle-rotate",
     name: "天客",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
   },

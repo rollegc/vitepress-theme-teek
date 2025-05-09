@@ -19,13 +19,22 @@ const { getTeekConfigRef } = useTeekConfig();
 const blogger = getTeekConfigRef<Required<Blogger>>("blogger", { shape: "square" });
 const social = getTeekConfigRef<Social[]>("social", []);
 
-const shape = computed(() => blogger.value.shape.replace("-rotate", "") as TkAvatarProps["shape"]);
+const shape = computed(() => blogger.value.shape.replace(/-.*$/, "") as TkAvatarProps["shape"]);
+
+const isCircleBgImg = computed(() => shape.value === "circle" && !!blogger.value.circleBgImg);
+const avatarBgStyle = computed(() => ({ backgroundImage: `url(${withBase(blogger.value.circleBgImg)})` }));
 </script>
 
 <template>
   <slot name="teek-home-my-before" />
 
-  <TkHomeCard v-if="blogger.name" :class="ns.b()" :aria-label="t('tk.myCard.label')">
+  <TkHomeCard
+    v-if="blogger.name"
+    :class="[ns.b(), ns.is('circle-bg', isCircleBgImg)]"
+    :aria-label="t('tk.myCard.label')"
+  >
+    <div v-if="isCircleBgImg" :class="ns.em('avatar__circle', 'bg')" :style="avatarBgStyle" />
+
     <div :class="`${ns.e('avatar')} ${blogger.shape} flx-center`">
       <TkAvatar
         v-if="blogger.avatar"
