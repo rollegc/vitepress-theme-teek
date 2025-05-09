@@ -69,7 +69,7 @@
     "vitepress-plugin-catalogue": "^1.0.15",
     "vitepress-plugin-doc-analysis": "^1.0.11",
     "vitepress-plugin-file-content-loader": "^1.0.12",
-    "vitepress-plugin-md-h1": "^1.0.9",
+    "vitepress-plugin-md-h1": "^1.0.10",
     "vitepress-plugin-permalink": "^1.1.1",
     "vitepress-plugin-sidebar-resolve": "^1.0.9"
   },

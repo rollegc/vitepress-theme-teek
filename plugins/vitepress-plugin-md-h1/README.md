@@ -40,10 +40,10 @@ export default defineConfig({
 
 ## 🛠️ Options
 
-| name         | description                                                  | type                                                         | default |
-| ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------- |
-| ignoreList   | 忽略的文件路径，支持正则表达式                               | `string[]`                                                   | `[]`    |
-| beforeInject | 添加一级标题前的钩子，如果返回 false，则不添加一级标题，如果返回 string，则使用返回值作为一级标题，string 必须是一个非空字符串 | `(frontmatter: Record<string, any>, id: string, title: string) => boolean | string | void` |         |
+| name         | description                                                                                                                    | type                                                                      | default |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- | ------- | ----- | --- |
+| ignoreList   | 忽略的文件路径，支持正则表达式                                                                                                 | `string[]`                                                                | `[]`    |
+| beforeInject | 添加一级标题前的钩子，如果返回 false，则不添加一级标题，如果返回 string，则使用返回值作为一级标题，string 必须是一个非空字符串 | `(frontmatter: Record<string, any>, id: string, title: string) => boolean | string  | void` |     |
 
 ## 📘 TypeScript
 
@@ -70,7 +70,7 @@ export interface MdH1Option {
 
 ```yaml
 ---
-noTitle: false
+autoTitle: false
 ---
 ```
 
@@ -82,9 +82,11 @@ import MdH1 from "vitepress-plugin-md-h1";
 
 export default defineConfig({
   vite: {
-    plugins: [MdH1({
-      ignoreList: ["xxx"],
-    })],
+    plugins: [
+      MdH1({
+        ignoreList: ["xxx"],
+      }),
+    ],
   },
 });
 ```
@@ -97,18 +99,20 @@ import MdH1 from "vitepress-plugin-md-h1";
 
 export default defineConfig({
   vite: {
-    plugins: [MdH1({
-      beforeInject: (frontmatter, id, title) => {
-        // 根据 frontmatter 的某个值判断
-        if (frontmatter.catalogue) return false;
-        
-        // 根据文档路径判断
-        if(id.includes("@page")) return false;
-        
-        // 根据即将生成的一级标题判断
-        if(title === "简介") return false;
-      },
-    })],
+    plugins: [
+      MdH1({
+        beforeInject: (frontmatter, id, title) => {
+          // 根据 frontmatter 的某个值判断
+          if (frontmatter.catalogue) return false;
+
+          // 根据文档路径判断
+          if (id.includes("@page")) return false;
+
+          // 根据即将生成的一级标题判断
+          if (title === "简介") return false;
+        },
+      }),
+    ],
   },
 });
 ```
@@ -121,15 +125,17 @@ import MdH1 from "vitepress-plugin-md-h1";
 
 export default defineConfig({
   vite: {
-    plugins: [MdH1({
-      beforeInject: (frontmatter, id, title) => {
-        // 根据 frontmatter 的某个值判断
-        if (frontmatter.archivesPage) return "归档页";
-        
-        // 根据即将生成的一级标题判断
-        if(title === "简介") return "文档简介";
-      },
-    })],
+    plugins: [
+      MdH1({
+        beforeInject: (frontmatter, id, title) => {
+          // 根据 frontmatter 的某个值判断
+          if (frontmatter.archivesPage) return "归档页";
+
+          // 根据即将生成的一级标题判断
+          if (title === "简介") return "文档简介";
+        },
+      }),
+    ],
   },
 });
 ```
