@@ -96,6 +96,7 @@ onUnmounted(() => {
         </a>
         <span v-else class="title flx-align-center" v-html="title"></span>
       </slot>
+
       <slot name="page" v-bind="{ pagination }">
         <div v-if="page">
           <slot name="page-left" v-bind="{ pagination }">

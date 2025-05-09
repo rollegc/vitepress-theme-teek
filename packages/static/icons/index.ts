@@ -49,6 +49,7 @@ export { default as infoFilledIcon } from "./infoFilled";
 export { default as successFilledIcon } from "./successFilled";
 export { default as warningFilledIcon } from "./warningFilled";
 export { default as questionFilledIcon } from "./questionFilled";
+export { default as topIcon } from "./top";
 
 export { default as autoWidthIcon } from "./theme-enhance/autoWidth";
 export { default as clickIcon } from "./theme-enhance/click";
@@ -59,3 +60,4 @@ export { default as overallReductionIcon } from "./theme-enhance/overallReductio
 export { default as alignLeftIcon } from "./theme-enhance/alignLeft";
 export { default as alignTextLeftIcon } from "./theme-enhance/alignTextLeft";
 export { default as scaleIcon } from "./theme-enhance/scale";
+export { default as waterIcon } from "./theme-enhance/water";

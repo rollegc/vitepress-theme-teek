@@ -75,19 +75,17 @@ export const usePosts = (): Ref<PostData> => {
 /**
  * 获取默认背景色
  */
-export const useBgColor = () => {
+export const useTagColor = () => {
   const { getTeekConfigRef } = useTeekConfig();
 
-  return getTeekConfigRef<string[]>("bgColor", [
-    "#e74c3c",
-    "#409EFF",
-    "#DAA96E",
-    "#0C819F",
-    "#27ae60",
-    "#ff5c93",
-    "#fd726d",
-    "#f39c12",
-    "#9b59b6",
+  return getTeekConfigRef<NonNullable<TeekConfig["tagColor"]>>("tagColor", [
+    { border: "#bfdbfe", bg: "#eff6ff", text: "#2563eb" },
+    { border: "#e9d5ff", bg: "#faf5ff", text: "#9333ea" },
+    { border: "#fbcfe8", bg: "#fdf2f8", text: "#db2777" },
+    { border: "#a7f3d0", bg: "#ecfdf5", text: "#059669" },
+    { border: "#fde68a", bg: "#fffbeb", text: "#d97706" },
+    { border: "#a5f3fc", bg: "#ecfeff", text: "#0891b2" },
+    { border: "#c7d2fe", bg: "#eef2ff", text: "#4f46e5" },
   ]);
 };
 

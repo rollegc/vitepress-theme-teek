@@ -5,6 +5,7 @@ import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { createImageViewer } from "@teek/components/common/ImageViewer";
+import { TkTitleTag } from "@teek/components/common/TitleTag";
 import { TkArticleInfo } from "@teek/components/theme/ArticleInfo";
 
 defineOptions({ name: "HomePostItem" });
@@ -22,6 +23,7 @@ const postConfig = getTeekConfigRef<Post>("post", {
   showCapture: false,
   splitSeparator: false,
   imageViewer: {},
+  listStyleTitleTagPosition: "right",
 });
 const articleConfig = getTeekConfigRef<Article>("article", {
   showInfo: true,
@@ -63,8 +65,7 @@ const coverImgMap = computed(() => {
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {
   const arr = [articleConfig.value.showInfo].flat();
-  if (arr.includes(true) || arr.includes("post")) return true;
-  return false;
+  return arr.includes(true) || arr.includes("post");
 });
 </script>
 
@@ -77,20 +78,27 @@ const isShowInfo = computed(() => {
       :aria-label="t('tk.homePost.pinLabel')"
     />
 
-    <div :class="[ns.e('info'), 'flx']">
-      <div :class="ns.e('info__left')">
+    <div class="list flx">
+      <div :class="ns.e('left')">
         <!-- 标题 -->
-        <a class="title hover-color" :href="postUrl" :aria-label="post.title">
-          {{ post.title }}
-          <span :class="ns.joinNamespace('title-tag')" v-if="post.frontmatter.titleTag">
-            {{ post.frontmatter.titleTag }}
-          </span>
+        <a :class="[ns.e('left__title'), 'hover-color', 'sle']" :href="postUrl" :aria-label="post.title">
+          <TkTitleTag
+            v-if="postConfig.listStyleTitleTagPosition === 'left'"
+            :text="post.frontmatter.titleTag"
+            :position="postConfig.listStyleTitleTagPosition"
+          />
+          <span>{{ post.title }}</span>
+          <TkTitleTag
+            v-if="postConfig.listStyleTitleTagPosition === 'right'"
+            :text="post.frontmatter.titleTag"
+            :position="postConfig.listStyleTitleTagPosition"
+          />
         </a>
 
         <!-- 摘要 top -->
         <div
           v-if="excerpt && postConfig.excerptPosition === 'top'"
-          :class="`${ns.e('info__left__excerpt')} top`"
+          :class="`${ns.e('left__excerpt')} top`"
           :aria-label="t('tk.homePost.excerptLabel')"
         >
           <div class="excerpt" v-html="excerpt" />
@@ -100,14 +108,14 @@ const isShowInfo = computed(() => {
         </div>
 
         <!-- 文章信息 -->
-        <div :class="ns.e('info__left__footer')" :aria-label="t('tk.homePost.infoLabel')">
+        <div :class="ns.e('left__footer')" :aria-label="t('tk.homePost.infoLabel')">
           <TkArticleInfo v-if="isShowInfo" :post scope="post" :split="postConfig.splitSeparator" />
         </div>
 
         <!-- 摘要 bottom -->
         <div
           v-if="excerpt && postConfig.excerptPosition === 'bottom'"
-          :class="`${ns.e('info__left__excerpt')} bottom`"
+          :class="`${ns.e('left__excerpt')} bottom`"
           :aria-label="t('tk.homePost.excerptLabel')"
         >
           <div class="excerpt" v-html="excerpt" />
@@ -118,7 +126,7 @@ const isShowInfo = computed(() => {
       </div>
 
       <!-- 右侧封面图 -->
-      <div :class="`${ns.e('info__right')} flx-align-center`">
+      <div :class="`${ns.e('right')} flx-align-center`">
         <div
           v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length"
           :class="`${coverImgMode} cover`"

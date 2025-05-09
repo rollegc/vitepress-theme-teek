@@ -1,0 +1,78 @@
+@use "../../mixins/bem" as *;
+@use "../../mixins/function" as *;
+
+@include b(title-tag) {
+  display: inline-block;
+  height: 22px;
+  line-height: 18px;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  border: 1px solid getCssVar("theme-color");
+  color: getCssVar("theme-color");
+  -webkit-text-fill-color: getCssVar("theme-color");
+
+  @include m(vp-primary) {
+    border: 1px solid var(--vp-c-indigo-1);
+    color: var(--vp-c-indigo-1);
+    -webkit-text-fill-color: var(--vp-c-indigo-1);
+  }
+
+  @include m(vp-info) {
+    border: 1px solid var(--vp-c-gray-1);
+    color: var(--vp-c-gray-1);
+    -webkit-text-fill-color: var(--vp-c-gray-1);
+  }
+
+  @include m(vp-success) {
+    border: 1px solid var(--vp-c-green-1);
+    color: var(--vp-c-green-1);
+    -webkit-text-fill-color: var(--vp-c-green-1);
+  }
+
+  @include m(vp-warning) {
+    border: 1px solid var(--vp-c-yellow-1);
+    color: var(--vp-c-yellow-1);
+    -webkit-text-fill-color: var(--vp-c-yellow-1);
+  }
+
+  @include m(vp-danger) {
+    border: 1px solid var(--vp-c-red-1);
+    color: var(--vp-c-red-1);
+    -webkit-text-fill-color: var(--vp-c-red-1);
+  }
+
+  @each $type in (primary, success, info, warning, error) {
+    @include m($type) {
+      color: getCssVar("el-color", $type);
+    }
+  }
+
+  @include m(right) {
+    margin-left: 4px;
+  }
+
+  @include m(left) {
+    margin-right: 4px;
+  }
+
+  @include m(large) {
+    font-size: 16px;
+    height: 24px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+
+  @include m(small) {
+    font-size: 13px;
+    height: 19px;
+    line-height: 15px;
+  }
+
+  @include m(mini) {
+    font-size: 12px;
+    height: 18px;
+    line-height: 14px;
+  }
+}

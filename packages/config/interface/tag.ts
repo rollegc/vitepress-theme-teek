@@ -53,8 +53,4 @@ export interface Tag {
    * @default 4000 (4秒)
    */
   pageSpeed?: number;
-  /**
-   * 自定义 tag 的背景颜色，默认取 theme.bgColor
-   */
-  bgColor?: string[];
 }

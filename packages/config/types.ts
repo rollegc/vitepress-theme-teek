@@ -103,10 +103,8 @@ export interface TeekConfig {
   homeCardSort?: ("topArticle" | "category" | "tag" | "friendLink" | "docAnalysis")[];
   /**
    * 主题背景色，用于精选文章卡片的 top + sticky 功能和标签卡片的背景色，支持在首页 index.md 的 frontmatter 配置 tk.bgColor
-   *
-   * @default '["#e74c3c", "#409EFF", "#DAA96E", "#0C819F", "#27ae60", "#ff5c93", "#fd726d", "#f39c12", "#9b59b6"]'
    */
-  bgColor?: string[];
+  tagColor?: { bg: string; text: string; border: string }[];
   /**
    * 文章页的样式风格，default 为 VitePress 原生风格，card 为单卡片风格，segment 为片段卡片风格，card-nav 和 segment-nav 会额外修改导航栏样式
    *

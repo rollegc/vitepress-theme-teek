@@ -6,7 +6,7 @@ import { useNamespace, useLocale } from "@teek/hooks";
 import { tagIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList";
-import { useTeekConfig, usePosts, useBgColor } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
 
@@ -34,7 +34,7 @@ const tagConfig = getTeekConfigRef<Required<Tag>>("tag", {
 });
 
 const posts = usePosts();
-const boColor = useBgColor();
+const tagColor = useTagColor();
 const tags = computed(() => posts.value.groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
@@ -53,11 +53,16 @@ const finalTitle = computed(() => {
 });
 
 const getTagStyle = (index: number) => {
-  const tagBgColor = tagConfig.value.bgColor || boColor.value;
+  const tagColorConst = tagColor.value;
 
-  // 标签背景色
-  const color = tagBgColor[index % tagBgColor.length];
-  return { backgroundColor: color, "--home-tag-color": color };
+  // 标签色
+  const color = tagColorConst[index % tagColorConst.length];
+  return {
+    [ns.cssVarName("home-tag-bg-color")]: color.bg,
+    backgroundColor: color.bg,
+    color: color.text,
+    borderColor: color.border,
+  };
 };
 
 const tagsPageLink = computed(() => {

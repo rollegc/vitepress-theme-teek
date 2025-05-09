@@ -44,9 +44,7 @@ const disabledThemeColor = computed(() => {
       position="bottom"
       :y-offset="7"
     >
-      <template v-for="(_, name) in $slots" :key="name" #[name]>
-        <slot :name="name" />
-      </template>
+      <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
     </TkThemeEnhance>
 
     <ThemeColor v-if="!disabledThemeColor" />

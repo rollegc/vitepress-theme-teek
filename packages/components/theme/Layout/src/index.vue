@@ -112,15 +112,11 @@ const usedSlots = [
     <TkArticleHeadingHighlight />
     <TkRightBottomButton>
       <!-- 通用插槽 -->
-      <template v-for="(_, name) in $slots" :key="name" #[name]>
-        <slot :name="name" />
-      </template>
+      <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
     </TkRightBottomButton>
 
     <TkNotice v-if="teekConfig.notice?.enabled">
-      <template v-for="(_, name) in $slots" :key="name" #[name]>
-        <slot :name="name" />
-      </template>
+      <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
     </TkNotice>
 
     <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">
@@ -130,9 +126,7 @@ const usedSlots = [
 
         <!-- 自定义首页 -->
         <TkHome v-if="teekConfig.teekHome">
-          <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name" />
-          </template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkHome>
 
         <slot name="teek-home-after" />
@@ -142,9 +136,7 @@ const usedSlots = [
         <slot name="nav-bar-content-after" />
 
         <TkThemeEnhance position="top">
-          <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name" />
-          </template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkThemeEnhance>
       </template>
 
@@ -207,14 +199,10 @@ const usedSlots = [
         <slot name="teek-page-top-before" />
 
         <TkArchivesPage v-if="isArchivesPage">
-          <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name" />
-          </template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkArchivesPage>
         <TkCataloguePage v-if="isCataloguePage">
-          <template v-for="(_, name) in $slots" :key="name" #[name]>
-            <slot :name="name" />
-          </template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkCataloguePage>
 
         <slot name="teek-page-top-after" />

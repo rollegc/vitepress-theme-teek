@@ -1,24 +1,25 @@
 @use "../../mixins/bem" as *;
-@use "../../mixins/config" as *;
 @use "../../mixins/function" as *;
 
 @use "./home-post-item";
+@use "./home-post-item-card";
 
 @include b(post-list) {
+  @include when(card) {
+    > ul {
+      display: grid;
+      row-gap: 1.1rem;
+      column-gap: 1.1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+  }
+
   @include e(empty) {
     padding: 24px;
     margin: 0.5px;
 
     @include e(empty__title) {
       margin-top: 20px;
-    }
-  }
-
-  /* 封面图为 full 风格样式 */
-  .full-cover:nth-child(2n) .#{$namespace}-post-item__info {
-    flex-direction: row-reverse;
-    .full .cover-img {
-      clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
     }
   }
 

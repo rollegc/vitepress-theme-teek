@@ -2,5 +2,5 @@
 
 - 站点信息内容前添加 Icon
 - 头像支持 square 半透明 + circle：https://kuailemao.xyz/，circle 添加旋转一次功能
-- 文章列表支持新风格：https://blog.imsyy.top/
 - 文章页底部添加最近文章更新区域
+- noTitle 配置项修改

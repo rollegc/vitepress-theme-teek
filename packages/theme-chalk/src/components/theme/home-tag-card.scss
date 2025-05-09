@@ -14,10 +14,9 @@
     position: relative;
     margin-top: 5px;
     a {
-      color: getCssVar("bg-color");
       display: inline-block;
       padding: 0 7px;
-      transition: transform 0.4s;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 3px;
       margin: 0 5px 6px;
       height: 24px;
@@ -26,11 +25,11 @@
       text-align: center;
 
       &:hover {
-        transform: scale(1.05);
+        transform: translateY(-2px) scale(1.05);
       }
 
       &.active {
-        box-shadow: 0 5px 10px -5px var(--home-tag-color);
+        box-shadow: 0 5px 10px -5px getCssVar("home-tag-bg-color");
         transform: scale(1.15);
         &:hover {
           text-decoration: none;
