@@ -133,18 +133,18 @@ defineExpose({ updateData });
 <template>
   <div :class="[ns.b(), ns.is('card', postConfig.postStyle === 'card')]">
     <template v-if="currentPosts">
-      <TransitionGroup
-        tag="ul"
-        :name="postConfig.transition ? postConfig.transitionName : ''"
-        :aria-label="t('tk.homePost.label')"
-      >
-        <slot name="teek-home-post-list" v-bind="{ currentPosts }">
-          <li v-for="post in currentPosts" :key="post.url">
-            <HomePostItemCard v-if="postConfig.postStyle === 'card'" :post :coverImgMode />
+      <slot name="teek-home-post-list" v-bind="{ currentPosts, transitionName: postConfig.transitionName }">
+        <TransitionGroup
+          tag="ul"
+          :name="postConfig.transition ? postConfig.transitionName : ''"
+          :aria-label="t('tk.homePost.label')"
+        >
+          <li v-for="post in currentPosts" :key="post.url" :class="{ 'full-img': coverImgMode === 'full' }">
+            <HomePostItemCard v-if="postConfig.postStyle === 'card'" :post />
             <HomePostItem v-else :post :coverImgMode />
           </li>
-        </slot>
-      </TransitionGroup>
+        </TransitionGroup>
+      </slot>
 
       <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <TkPagination

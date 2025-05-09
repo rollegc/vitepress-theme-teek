@@ -26,4 +26,14 @@
   @include b(pagination) {
     padding: 15px 2px 0;
   }
+
+  /* 封面图为 full 风格样式时，偶数封面图居左 */
+  li.full-img:nth-child(2n) {
+    .list {
+      flex-direction: row-reverse;
+      .full .cover-img {
+        clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+      }
+    }
+  }
 }
