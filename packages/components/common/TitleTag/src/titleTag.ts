@@ -6,7 +6,18 @@ export interface TitleTagProps {
   /**
    * 类型
    */
-  type?: "vp-primary" | "vp-info" | "vp-warning" | "vp-danger" | "ep-primary" | "ep-info" | "ep-warning" | "ep-danger";
+  type?:
+    | "vp-primary"
+    | "vp-info"
+    | "vp-success"
+    | "vp-warning"
+    | "vp-danger"
+    | "vp-important"
+    | "ep-primary"
+    | "ep-info"
+    | "ep-success"
+    | "ep-warning"
+    | "ep-danger";
   /**
    * 位置
    */

@@ -8,5 +8,6 @@ export * from "./Message";
 export * from "./Pagination";
 export * from "./Popover";
 export * from "./Segmented";
+export * from "./TitleTag";
 export * from "./TransitionCollapse";
 export * from "./VpContainer";

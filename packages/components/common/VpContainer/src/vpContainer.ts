@@ -10,7 +10,7 @@ export interface VpContainerProps {
    */
   title?: string;
   /**
-   * 内容
+   * 文本
    */
   text?: string;
 }

@@ -1,5 +1,6 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "sass:string";
 
 @include b(title-tag) {
   display: inline-block;
@@ -43,9 +44,19 @@
     -webkit-text-fill-color: var(--vp-c-red-1);
   }
 
-  @each $type in (primary, success, info, warning, error) {
-    @include m($type) {
+  @include m(vp-important) {
+    border: 1px solid var(--vp-c-purple-1);
+    color: var(--vp-c-purple-1);
+    -webkit-text-fill-color: var(--vp-c-purple-1);
+  }
+
+  @each $epType in (ep-primary, ep-info, ep-success, ep-warning, ep-danger) {
+    @include m($epType) {
+      $type: string.slice($epType, 4);
+
+      border: 1px solid getCssVar("el-color", $type);
       color: getCssVar("el-color", $type);
+      -webkit-text-fill-color: getCssVar("el-color", $type);
     }
   }
 
