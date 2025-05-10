@@ -40,6 +40,9 @@ export default {
       text: "分享此页面",
       copiedText: "链接已复制",
     },
+    articleUpdate: {
+      label: "最近更新",
+    },
     catalogue: {
       label: "目录页",
       title: "目录",

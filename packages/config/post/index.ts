@@ -79,6 +79,7 @@ const resolvePosts = (posts: TkContentData[]): PostData => {
   const groupCards = getGroupCards(groupPosts);
 
   return {
+    allPosts: posts,
     originPosts,
     sortPostsByDateAndSticky,
     sortPostsByDate,

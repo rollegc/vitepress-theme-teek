@@ -4,6 +4,7 @@ import type { GroupCardItem, TkContentData, PostData } from "./types";
  * Post 空数据，方便定义空对象
  */
 export const emptyPost: PostData = {
+  allPosts: [],
   originPosts: [],
   sortPostsByDateAndSticky: [],
   sortPostsByDate: [],
