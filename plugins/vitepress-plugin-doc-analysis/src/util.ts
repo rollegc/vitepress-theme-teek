@@ -60,7 +60,7 @@ export function getReadTime(len: number[], cn: number = 300, en: number = 160) {
     if (hour === 0) return day + "d";
     return day + "d" + hour + "h";
   }
-  return readingTime < 1 ? "1" : Math.trunc(readingTime * 10) / 10 + "m"; // 取一位小数
+  return (readingTime < 1 ? "1" : Math.trunc(readingTime * 10) / 10) + "m"; // 取一位小数
 }
 
 /**

@@ -28,7 +28,7 @@ const defaultLabel = computed(() => {
 </script>
 
 <template>
-  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="t('tk.archives.label')">
+  <div :class="[ns.b(), ns.joinNamespace('page')]" :aria-label="t('tk.archives.label')">
     <slot name="teek-archives-top-before" />
 
     <div :class="`${ns.e('header')} flx-justify-between`">

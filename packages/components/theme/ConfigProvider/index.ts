@@ -47,8 +47,10 @@ export const usePage = () => {
   const isArchivesPage = computed(() => frontmatter.value.archivesPage);
   // 当前页面是否为目录页
   const isCataloguePage = computed(() => frontmatter.value.catalogue);
+  // 当前页面是否为文章清单页
+  const isArticleOverviewPage = computed(() => frontmatter.value.articleOverviewPage);
 
-  return { isHomePage, isCategoriesPage, isTagsPage, isArchivesPage, isCataloguePage };
+  return { isHomePage, isCategoriesPage, isTagsPage, isArchivesPage, isCataloguePage, isArticleOverviewPage };
 };
 
 /**

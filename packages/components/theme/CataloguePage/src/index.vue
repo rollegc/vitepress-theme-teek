@@ -16,7 +16,7 @@ const catalogues = computed(() => theme.value.catalogues?.inv[frontmatter.value.
 </script>
 
 <template>
-  <div :class="`${ns.b()} ${ns.joinNamespace('page')}`" :aria-label="t('tk.catalogue.label')">
+  <div :class="[ns.b(), ns.joinNamespace('page')]" :aria-label="t('tk.catalogue.label')">
     <slot name="teek-catalogue-top-before" />
 
     <div :class="ns.e('header')" role="group" aria-labelledby="catalogue-header-title">

@@ -5,6 +5,7 @@ export * from "./ArticleBreadcrumb";
 export * from "./ArticleHeadingHighlight";
 export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
+export * from "./ArticleOverviewPage";
 export * from "./ArticlePageStyle";
 export * from "./ArticleShare";
 export * from "./ArticleUpdate";

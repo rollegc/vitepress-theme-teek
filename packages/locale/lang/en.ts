@@ -35,10 +35,23 @@ export default {
       category: "Category",
       tag: "Tag",
     },
+    articleOverview: {
+      label: "Article Overview",
+      overview: " Overview",
+      category: " Category",
+      name: "Category",
+      title: "Title",
+      date: "Publish Time",
+      wordCount: "Word Count",
+      readingTime: "Reading Time",
+    },
     articleShare: {
       label: "Article Sharing",
       text: "Share this page",
       copiedText: "Link copied",
+    },
+    articleUpdate: {
+      label: "Recent Update",
     },
     catalogue: {
       label: "Catalogue Page",

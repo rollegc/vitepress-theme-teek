@@ -29,6 +29,7 @@ import { TkNotice } from "@teek/components/theme/Notice";
 import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
 import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
+import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -43,7 +44,7 @@ const { Layout } = DefaultTheme;
 
 const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
-const { isHomePage, isArchivesPage, isCataloguePage } = usePage();
+const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePage();
 const { frontmatter, localeIndex, page } = useData();
 
 // 支持 theme 或 frontmatter 配置
@@ -209,6 +210,7 @@ const usedSlots = [
         <TkCataloguePage v-if="isCataloguePage">
           <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkCataloguePage>
+        <TkArticleOverviewPage v-if="isArticleOverviewPage" />
 
         <slot name="teek-page-top-after" />
       </template>

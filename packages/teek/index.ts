@@ -2,7 +2,14 @@ import type { TeekConfig } from "@teek/config";
 import type { BaiduAnalyticsOptions, GoogleAnalyticsOptions, UmamiAnalytics } from "@teek/helper";
 import DefaultTheme from "vitepress/theme";
 import { isClient, baiduAnalytics, trackPageview, googleAnalytics, umamiAnalytics } from "@teek/helper";
-import { TeekConfigProvider, TkLayout, TkCataloguePage, TkArchivesPage, TkDemoCode } from "@teek/components";
+import {
+  TeekConfigProvider,
+  TkLayout,
+  TkCataloguePage,
+  TkArchivesPage,
+  TkDemoCode,
+  TkArticleOverviewPage,
+} from "@teek/components";
 
 import "../theme-chalk/src/index.scss";
 
@@ -23,6 +30,7 @@ export default {
   enhanceApp({ app, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
+    app.component("ArticleOverviewPage", TkArticleOverviewPage);
     app.component("TkDemoCode", TkDemoCode);
 
     // 站点分析

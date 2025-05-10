@@ -1,0 +1,10 @@
+@use "../../mixins/bem" as *;
+
+@include b(article-overview) {
+  h2 {
+    padding-top: 0;
+    padding-bottom: 12px;
+    border-top: none;
+    border-bottom: 1px solid var(--vp-c-divider);
+  }
+}

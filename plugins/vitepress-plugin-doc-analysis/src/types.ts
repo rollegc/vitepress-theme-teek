@@ -19,14 +19,22 @@ export interface DocAnalysisOption {
   ignoreIndexMd?: boolean;
   /**
    * 1 分钟内阅读的中文字数
+   *
    * @default 300
    */
   cn?: number;
   /**
    * 1 分钟内阅读的英文字数
+   *
    * @default 160
    */
   en?: number;
+  /**
+   * 自定义函数来返回额外的文件信息，最终存放到 fileInfo 里
+   *
+   * @param filePath 文件路径信息
+   */
+  transformFile?: (filePath: FilePathInfo) => Record<string, any> | undefined;
 }
 
 export interface DocAnalysis {
@@ -76,4 +84,8 @@ export interface FilePathInfo {
    * 文件相对路径
    */
   relativePath: string;
+  /**
+   * 通过 transformFile 配置项得到的其他信息
+   */
+  [key: string]: any;
 }
