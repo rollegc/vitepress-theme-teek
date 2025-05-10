@@ -69,11 +69,11 @@ const enhancedCategories = computed(() => {
     </div>
 
     <template v-for="item in enhancedCategories" :key="item.name">
-      <h2>{{ item.name }} {{ t("tk.articleOverview.overview") }}</h2>
-      <a :href="`${categoriesPageLink}?category=${item.name}`">
+      <h2 id="overview-title">{{ item.name }} {{ t("tk.articleOverview.overview") }}</h2>
+      <a :href="`${categoriesPageLink}?category=${item.name}`" :aria-describedby="`overview-title`">
         {{ item.name }} {{ t("tk.articleOverview.category") }}
       </a>
-      <table>
+      <table :aria-describedby="`overview-title`">
         <thead>
           <tr>
             <th>{{ t("tk.articleOverview.name") }}</th>
@@ -87,7 +87,7 @@ const enhancedCategories = computed(() => {
           <tr v-for="data in item.data" :key="data.url">
             <td>{{ item.name }}</td>
             <td>
-              <a :href="data.url && withBase(data.url)">{{ data.title }}</a>
+              <a :href="data.url && withBase(data.url)" :aria-label="data.title">{{ data.title }}</a>
             </td>
             <td>{{ data.date }}</td>
             <td>{{ data.wordCount }}</td>

@@ -25,7 +25,7 @@ const {
 } = twikooOptions;
 
 const initTwikoo = () => {
-  if (!isClient) return console.error("[Teek Error] Not in the client");
+  if (!isClient) return console.error("[Teek Error] Not in a client");
   if (!envId) return console.error("[Teek Error] Twikoo initialization failed. Please configure the 'envId'");
 
   if ((window as any).twikoo) (window as any).twikoo.init({ ...options, envId, el: "#twikoo" });

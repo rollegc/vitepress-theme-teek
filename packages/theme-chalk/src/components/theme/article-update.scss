@@ -1,5 +1,11 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("article-update-num-color", getCssVar("theme-color"));
+  @include set-css-var("article-update-more-color", var(--vp-c-brand-2));
+}
 
 @include b(article-update) {
   border-radius: 2px;
@@ -23,7 +29,7 @@
       height: 50px;
       border-bottom: 1px dotted var(--vp-c-divider);
       &:last-child {
-        color: var(--vp-c-brand-2);
+        color: getCssVar("article-update-more-color");
         &:hover {
           color: getCssVar("theme-color");
         }
@@ -34,7 +40,7 @@
   @include m(num) {
     width: 50px;
     font-size: 17px;
-    color: getCssVar("theme-color");
+    color: getCssVar("article-update-num-color");
     text-align: center;
     margin: 0;
   }

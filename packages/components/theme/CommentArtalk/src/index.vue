@@ -40,7 +40,7 @@ const initArtalkByInject = () => {
 };
 
 const initArtalkByJs = () => {
-  if (!isClient) return console.error("[Teek Error] Not in the client");
+  if (!isClient) return console.error("[Teek Error] Not in a client");
 
   const Artalk = (window as any).Artalk;
   const el = artalkRef.value || `#${artalkId}`;

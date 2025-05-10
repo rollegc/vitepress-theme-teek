@@ -111,9 +111,9 @@ const handleContextMenu = (event: MouseEvent) => {
 
 const getDocument = () => document;
 
-useEventListener(getDocument(), "keydown", handleKeyDown);
-useEventListener(getDocument(), "fullscreenchange", handleFullscreenChange);
-useEventListener(getDocument(), "contextmenu", handleContextMenu);
+useEventListener(getDocument, "keydown", handleKeyDown);
+useEventListener(getDocument, "fullscreenchange", handleFullscreenChange);
+useEventListener(getDocument, "contextmenu", handleContextMenu);
 </script>
 
 <template>

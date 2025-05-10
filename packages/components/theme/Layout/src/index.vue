@@ -169,7 +169,7 @@ const usedSlots = [
         <slot name="doc-after" />
 
         <slot name="teek-doc-update-before" />
-        <TkArticleUpdate />
+        <TkArticleUpdate v-if="frontmatter.articleUpdate !== false" />
         <slot name="teek-doc-update-after" />
 
         <slot name="teek-doc-after-appreciation-before" />

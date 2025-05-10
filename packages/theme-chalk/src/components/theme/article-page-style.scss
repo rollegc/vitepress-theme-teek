@@ -1,7 +1,17 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
+@use "../../mixins/config" as *;
 
 html[layout-mode="original"] {
+  body:not(:has(.is-home)):has(
+      .#{$namespace}-card,
+      .#{$namespace}-card-nav,
+      .#{$namespace}-segment,
+      .#{$namespace}-segment-nav
+    ) {
+    background-color: getCssVar("bg-color-mute");
+  }
+
   /* 单卡片风格样式 */
   @include multiple-b((card, card-nav)) {
     .VPContent:not(.is-home) {
@@ -101,7 +111,6 @@ html[layout-mode="original"] {
     }
 
     .VPContent:not(.is-home) {
-      background-color: getCssVar("bg-color-mute");
       .VPDoc {
         position: relative;
         /* 文档内容 */

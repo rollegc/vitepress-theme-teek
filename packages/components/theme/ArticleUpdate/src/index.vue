@@ -1,4 +1,5 @@
 <script setup lang="ts" name="ArticleUpdate">
+import type { TkContentData } from "@teek/config";
 import { computed } from "vue";
 import { withBase, useRoute, useData } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
@@ -27,7 +28,7 @@ const updatePosts = computed(() => {
   const path = "/" + route.data.relativePath.replace(".md", "");
   return [
     ...posts.value.sortPostsByDate.filter(item => ![route.path, path, `${path}.html`].includes(item.url)).slice(0, 3),
-    { title: "更多文章 >", url: archivesUrl.value },
+    { title: "更多文章 >", url: archivesUrl.value, frontmatter: {}, date: "" } as TkContentData,
   ];
 });
 </script>
@@ -51,7 +52,7 @@ const updatePosts = computed(() => {
         <div :class="ns.e('content')">
           <a v-if="item.url" :href="withBase(item.url)" class="flx-1 hover-color" :aria-label="item.title">
             <span class="sle">{{ item.title }}</span>
-            <TkTitleTag :text="item.frontmatter?.titleTag" position="right" size="small" />
+            <TkTitleTag :text="item.frontmatter.titleTag" position="right" size="small" />
           </a>
           <span v-if="item.date" :class="ns.em('content', 'date')">{{ item.date }}</span>
         </div>
