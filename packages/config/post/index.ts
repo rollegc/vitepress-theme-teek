@@ -30,8 +30,8 @@ export const transformData = (data: FileContentLoaderData): TkContentData => {
   if (frontmatter.date) frontmatter.date = formatDate(frontmatter.date);
 
   return {
-    url: url,
-    frontmatter: frontmatter,
+    url,
+    frontmatter,
     author: themeConfig.author,
     title: getTitle(data),
     date: getDate(data, siteConfig.srcDir),
@@ -79,6 +79,7 @@ const resolvePosts = (posts: TkContentData[]): PostData => {
   const groupCards = getGroupCards(groupPosts);
 
   return {
+    allPosts: posts,
     originPosts,
     sortPostsByDateAndSticky,
     sortPostsByDate,

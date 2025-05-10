@@ -35,10 +35,23 @@ export default {
       category: "分类",
       tag: "标签",
     },
+    articleOverview: {
+      label: "文章清单",
+      overview: " 清单",
+      category: " 目录",
+      name: "文章目录",
+      title: "文章标题",
+      date: "发布时间",
+      wordCount: "文章字数",
+      readingTime: "预阅读时长",
+    },
     articleShare: {
       label: "文章分享",
       text: "分享此页面",
       copiedText: "链接已复制",
+    },
+    articleUpdate: {
+      label: "最近更新",
     },
     catalogue: {
       label: "目录页",

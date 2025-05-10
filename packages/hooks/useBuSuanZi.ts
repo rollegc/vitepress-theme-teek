@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { isClient } from "@teek/helper";
 import { useScopeDispose } from "./useScopeDispose";
 
 export interface BusuanziData {
@@ -71,6 +72,7 @@ export const useBuSuanZi = (immediate = false, options: UseBuSuanZiOptions = {})
   const isGet = ref<boolean | null>(null);
 
   const request = () => {
+    if (!isClient) return;
     // 防止重复调用
     if (isGet.value === false) return;
     isGet.value = false;

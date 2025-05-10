@@ -23,7 +23,10 @@
       line-height: getCssVar("home-font-size-middle");
       transition:
         background-color 0.2s,
-        border-color 0.2s;
+        border-color 0.2s,
+        color 0.2s,
+        opacity 0.5s ease,
+        transform 0.5s ease;
       border-left: 2px solid transparent;
       margin-top: -1px;
 

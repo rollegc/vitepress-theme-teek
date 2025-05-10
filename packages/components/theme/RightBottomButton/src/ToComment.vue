@@ -20,6 +20,8 @@ const toCommentDone = getTeekConfigRef<TeekConfig["toCommentDone"]>("toCommentDo
 const scrollTop = ref(0);
 
 const showToComment = computed(() => {
+  if (!isClient) return false;
+
   const docContentHeight = document.querySelector(".content-container .main")?.getBoundingClientRect().height;
   const docFooterHeight = document.querySelector(".VPDocFooter")?.getBoundingClientRect().height || 200;
   let height = 0;

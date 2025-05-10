@@ -181,8 +181,9 @@ export const usePopoverSize = (
     calculatePosition();
   };
 
-  // 滚动改变时更新
+  // 滚动、尺寸变化时重新更新
   useEventListener(() => window, "scroll", update);
+  useEventListener(() => window, "resize", update);
 
   return { top, right, bottom, left, update };
 };

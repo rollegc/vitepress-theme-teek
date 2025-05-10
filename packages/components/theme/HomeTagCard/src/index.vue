@@ -154,7 +154,8 @@ watch(
           :class="[{ active: item.name === selectedTag }, ns.joinNamespace('pointer')]"
           :aria-label="item.name"
         >
-          {{ item.name }}
+          <span>{{ item.name }}</span>
+          <span class="num">{{ item.length }}</span>
         </a>
 
         <a

@@ -39,27 +39,31 @@ export default defineConfig({
 
 ## 🛠️ Options
 
-| name          | description                              | type       | default                        |
-| ------------- | ---------------------------------------- | ---------- | ------------------------------ |
-| ignoreList    | 忽略的文件/文件夹列表，支持正则表达式    | `string[]` | `[]`                           |
-| path          | 指定扫描的根目录                         | `string`   | `vitepress` 的 `srcDir` 配置项 |
-| ignoreIndexMd | 是否忽略每个目录下的 `index.md` 文件     | `boolean`  | `false`                        |
-| cn            | 1 分钟内阅读的中文字数，阅读时间计算需要 | `number`   | 300                            |
-| en            | 1 分钟内阅读的英文字数，阅读时间计算需要 | `number`   | 160                            |
+| name          | description                                            | type       | default                        |
+| ------------- | ------------------------------------------------------ | ---------- | ------------------------------ |
+| ignoreList    | 忽略的文件/文件夹列表，支持正则表达式                  | `string[]` | `[]`                           |
+| path          | 指定扫描的根目录                                       | `string`   | `vitepress` 的 `srcDir` 配置项 |
+| ignoreIndexMd | 是否忽略每个目录下的 `index.md` 文件                   | `boolean`  | `false`                        |
+| cn            | 1 分钟内阅读的中文字数，阅读时间计算需要               | `number`   | 300                            |
+| en            | 1 分钟内阅读的英文字数，阅读时间计算需要               | `number`   | 160                            |
+| transformFile | 自定义函数来返回额外的文件信息，最终存放到 fileInfo 里 | `Function` | -                              |
 
 ## 📖 Usage
 
 获取插件分析后的数据：
 
-```javascript
+```vue
+<script setup lang="ts">
 import { useData } from "vitepress";
 import type { DocAnalysis } from "vitepress-plugin-doc-analysis";
 
-const { theme, localeIndex } = useData();
-
+const { theme } = useData();
 const { fileList, totalFileWords, eachFileWords, lastCommitTime }: DocAnalysis = theme.value;
 
 // 如果处在国际化环境下，vitepress 会将当前语言的 themeConfig 放到 theme 里，与原先的 theme 进行合并
+</script>
+
+<template></template>
 ```
 
 如果不希望某个 Markdown 文档被插件分析，请在该文档 `frontmatter` 配置：
@@ -68,6 +72,50 @@ const { fileList, totalFileWords, eachFileWords, lastCommitTime }: DocAnalysis =
 ---
 docAnalysis: false
 ---
+```
+
+## 📚 Example
+
+### transformFile
+
+通过 `transformFile` 配置项，可以自定义返回的文件信息。
+
+```typescript
+import type {} from "vitepress-plugin-doc-analysis";
+import DocAnalysis from "vitepress-plugin-doc-analysis";
+import { defineConfig } from "vitepress";
+import { statSync } from "node:fs";
+
+const docAnalysisOption = {
+  transformFile: (fileInfo: FilePathInfo) => {
+    // 获取文件的修改时间
+    const mtime = statSync(fileInfo.relativePath).mtime.toLocaleString();
+    return { mtime };
+  },
+};
+
+export default defineConfig({
+  vite: {
+    plugins: [DocAnalysis(docAnalysisOption)],
+  },
+});
+```
+
+验证：
+
+```vue
+<script setup lang="ts">
+import { useData } from "vitepress";
+import type { DocAnalysis } from "vitepress-plugin-doc-analysis";
+
+const { theme } = useData();
+const { fileList }: DocAnalysis = theme.value;
+
+// 此时多出了 mtime
+console.log(fileList);
+</script>
+
+<template></template>
 ```
 
 ## 📘 TypeScript
@@ -96,14 +144,22 @@ export interface DocAnalysisOption {
   ignoreIndexMd?: boolean;
   /**
    * 1 分钟内阅读的中文字数
+   *
    * @default 300
    */
   cn?: number;
   /**
    * 1 分钟内阅读的英文字数
+   *
    * @default 160
    */
   en?: number;
+  /**
+   * 自定义函数来返回额外的文件信息，最终存放到 fileInfo 里
+   *
+   * @param filePath 文件路径信息
+   */
+  transformFile?: (filePath: FilePathInfo) => Record<string, any> | undefined;
 }
 ```
 
@@ -157,6 +213,10 @@ export interface FilePathInfo {
    * 文件相对路径
    */
   relativePath: string;
+  /**
+   * 通过 transformFile 配置项得到的其他信息
+   */
+  [key: string]: any;
 }
 ```
 

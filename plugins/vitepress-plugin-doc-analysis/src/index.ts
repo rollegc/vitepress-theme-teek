@@ -50,14 +50,21 @@ export default function VitePluginVitePressDocAnalysis(option: DocAnalysisOption
 const doDocAnalysisThenSet = async (themeConfig: any, fileList: FilePathInfo[], option: DocAnalysisOption) => {
   const filePathList = fileList.map(item => item.filePath);
 
+  // 支持自定义函数来返回额外的文件信息
+  const { transformFile } = option;
+  const newFileList = fileList.map(file => {
+    if (transformFile) file = { ...transformFile(file), ...file };
+    return file;
+  });
+
   const totalFileWords = getTotalFileWords(filePathList);
-  const eachFileWords = getEachFileWords(fileList, option.cn, option.en);
+  const eachFileWords = getEachFileWords(newFileList, option.cn, option.en);
   const lastCommitTime = (await getGitLastCommitTime()) || getLastUpdateTime(filePathList);
 
   // 防止 themeConfig 为 undefined
   themeConfig = themeConfig || {};
   themeConfig.docAnalysisInfo = {
-    fileList,
+    fileList: newFileList,
     totalFileWords,
     eachFileWords,
     lastCommitTime,

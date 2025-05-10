@@ -24,7 +24,11 @@ export type TkContentData = FileContentLoaderData & {
 
 export interface PostData {
   /**
-   * 文章列表
+   * 所有文章也页表
+   */
+  allPosts: TkContentData[];
+  /**
+   * 排除了 article false 和 layout home 的文章列表
    */
   originPosts: TkContentData[];
   /**

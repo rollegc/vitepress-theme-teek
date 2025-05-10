@@ -28,7 +28,7 @@ $progress-thickness: calc($button-size / 10);
 
     &:hover {
       background-color: getCssVar("theme-color");
-      box-shadow: getCssVar("hover-shadow");
+      box-shadow: 0 0 15px getCssVar("theme-color");
 
       .#{$namespace}-icon {
         color: var(--vp-c-white);

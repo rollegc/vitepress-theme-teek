@@ -1,5 +1,11 @@
 # vitepress-plugin-doc-analysis
 
+## 1.0.12
+
+### Patch Changes
+
+- 新增 transfornFile 函数支持自定义返回文件相关的数据
+
 ## 1.0.11
 
 ### Patch Changes
