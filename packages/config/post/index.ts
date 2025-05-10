@@ -30,8 +30,8 @@ export const transformData = (data: FileContentLoaderData): TkContentData => {
   if (frontmatter.date) frontmatter.date = formatDate(frontmatter.date);
 
   return {
-    url: url,
-    frontmatter: frontmatter,
+    url,
+    frontmatter,
     author: themeConfig.author,
     title: getTitle(data),
     date: getDate(data, siteConfig.srcDir),

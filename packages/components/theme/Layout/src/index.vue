@@ -28,6 +28,7 @@ import { TkArticlePageStyle } from "@teek/components/theme/ArticlePageStyle";
 import { TkNotice } from "@teek/components/theme/Notice";
 import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
+import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -165,6 +166,10 @@ const usedSlots = [
 
       <template #doc-after>
         <slot name="doc-after" />
+
+        <slot name="teek-doc-update-before" />
+        <TkArticleUpdate />
+        <slot name="teek-doc-update-after" />
 
         <slot name="teek-doc-after-appreciation-before" />
         <TkDocAfterAppreciation v-if="teekConfig.appreciation.position === 'doc-after'" />

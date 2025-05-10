@@ -7,6 +7,7 @@ export * from "./ArticleImagePreview";
 export * from "./ArticleInfo";
 export * from "./ArticlePageStyle";
 export * from "./ArticleShare";
+export * from "./ArticleUpdate";
 export * from "./BodyBgImage";
 export * from "./CataloguePage";
 export * from "./CodeBlockToggle";

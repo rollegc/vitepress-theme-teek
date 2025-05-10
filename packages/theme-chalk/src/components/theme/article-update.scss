@@ -1,0 +1,58 @@
+@use "../../mixins/bem" as *;
+@use "../../mixins/function" as *;
+
+@include b(article-update) {
+  border-radius: 2px;
+  margin: 16px 0;
+  border: 1px solid var(--vp-c-divider);
+
+  @include e(title) {
+    border-bottom: 1px solid var(--vp-c-divider);
+    font-size: 18px;
+    padding: 16px;
+    .edit-icon {
+      margin-right: 5px;
+    }
+  }
+
+  > ul {
+    overflow: hidden;
+    > li {
+      width: 100%;
+      padding: 8px 0;
+      height: 50px;
+      border-bottom: 1px dotted var(--vp-c-divider);
+      &:last-child {
+        color: var(--vp-c-brand-2);
+        &:hover {
+          color: getCssVar("theme-color");
+        }
+      }
+    }
+  }
+
+  @include m(num) {
+    width: 50px;
+    font-size: 17px;
+    color: getCssVar("theme-color");
+    text-align: center;
+    margin: 0;
+  }
+
+  @include e(content) {
+    flex: 1;
+    display: flex;
+    a {
+      &:hover {
+        text-decoration: underline;
+        text-decoration-color: getCssVar("theme-color");
+      }
+    }
+
+    @include m(date) {
+      margin-right: 15px;
+      color: var(--vp-c-text-3);
+      font-size: 14px;
+    }
+  }
+}

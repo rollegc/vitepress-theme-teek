@@ -1,6 +1,17 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
 @use "../../mixins/config" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("body-bg-img-nav-color", rgb(255, 255, 255, 0.9));
+  @include set-css-var("body-bg-img-sidebar-color", rgb(255, 255, 255, 0.8));
+}
+
+:root.dark {
+  @include set-css-var("body-bg-img-nav-color", rgb(27, 27, 31, 0.9));
+  @include set-css-var("body-bg-img-sidebar-color", rgb(27, 27, 31, 0.8));
+}
 
 @include b(body-bg-image) {
   position: fixed;
@@ -9,7 +20,7 @@
   z-index: -999999;
   height: 100vh;
   width: 100vw;
-  transition: background-image 1s;
+  transition: background-image 1 s;
   background: getCssVar("body-bg-img");
   opacity: getCssVar("body-bg-img-opacity");
 
@@ -19,8 +30,22 @@
     background-color: getCssVar("body-mask-bg-color");
   }
 
-  /* 兼容 ArticlePageStyle 组件 */
-  & ~ .Layout {
+  & ~ .#{$namespace}-layout.Layout {
+    .VPContent:not(.is-home) {
+      background-color: getCssVar("bg-color");
+    }
+    @media (min-width: 1280px) {
+      header.VPNav .VPNavBar {
+        &.home {
+          background-color: getCssVar("body-bg-img-nav-color");
+        }
+        &:not(.home) {
+          background-color: getCssVar("body-bg-img-nav-color");
+        }
+      }
+    }
+
+    /* 兼容 ArticlePageStyle 组件 */
     &.#{$namespace}-card,
     &.#{$namespace}-card-nav,
     &.#{$namespace}-segment,
@@ -28,16 +53,14 @@
       .VPContent:not(.is-home) {
         background-color: transparent;
       }
-
       @media (min-width: 1280px) {
-        /* 导航栏 */
         .VPNav .VPNavBar:not(.home) {
           .content-body {
             background-color: transparent;
           }
         }
         .VPSidebar {
-          background-color: getCssVar("bg-color-elm");
+          background-color: getCssVar("body-bg-img-sidebar-color");
           .curtain {
             background-color: transparent;
           }
@@ -45,6 +68,15 @@
       }
     }
 
+    .VPContent.is-home {
+      .vp-doc {
+        > div {
+          padding: 0 32px 1px;
+          width: calc((getCssVar(home-max-width)) - getCssVar("home-card-width"));
+          background-color: getCssVar("bg-color");
+        }
+      }
+    }
     .VPNavBar.home .divider {
       display: none;
     }
