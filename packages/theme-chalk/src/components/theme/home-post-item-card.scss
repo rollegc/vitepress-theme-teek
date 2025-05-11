@@ -9,6 +9,7 @@
   background-color: getCssVar("bg-color-elm");
   transition: box-shadow 0.4s;
   position: relative;
+  height: 100%;
   &:hover {
     box-shadow: var(--tk-hover-shadow);
   }
@@ -16,25 +17,24 @@
   .top {
     position: absolute;
     top: -5px;
-    right: 0;
+    right: -4px;
     color: var(#{getCssVarName("top-color")}, var(#{getCssVarName("theme-color")}));
     opacity: 0.8;
     z-index: 9;
   }
 
   @include e(cover-img) {
-    position: relative;
-    display: inline-block;
     overflow: hidden;
+
     .cover-img {
       width: 100%;
       height: 100%;
-      transition: transform 0.3s linear;
+      transition: transform 0.4s linear;
       object-fit: cover;
       cursor: pointer;
 
       &:hover {
-        transform: scale(1.1, 1.1);
+        transform: scale(1.2, 1.2);
       }
     }
   }

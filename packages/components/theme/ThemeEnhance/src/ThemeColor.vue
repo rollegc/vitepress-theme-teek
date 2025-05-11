@@ -159,6 +159,7 @@ const tips = [
   <BaseTemplate
     :class="ns.e('theme-color')"
     :icon="waterIcon"
+    :title="t('tk.themeEnhance.themeColor.title')"
     :helper="!themeEnhanceConfig.themeColor?.disableHelp"
     :helper-desc="t('tk.themeEnhance.themeColor.helpDesc')"
     :tips
@@ -173,6 +174,7 @@ const tips = [
         </div>
       </div>
     </template>
+
     <template v-for="item in themeColorSelectList" :key="item.label">
       <h3 :title="item.tip" :aria-label="item.label">{{ item.label }}</h3>
       <TkSegmented v-model="themeColor" :options="item.options" :disabled="isMobile" />

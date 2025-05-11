@@ -100,6 +100,11 @@
       opacity: 1;
     }
 
+    @include m(title) {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
     @include m(desc) {
       font-size: 14px;
       line-height: 20px;

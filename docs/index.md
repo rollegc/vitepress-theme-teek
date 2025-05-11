@@ -3,19 +3,6 @@ layout: home
 
 tk:
   teekHome: false
-  features:
-    - title: 指南
-      description: Hd Security 使用指南说明
-      link: /01.指南/
-      imgUrl: /img/web.png
-    - title: 设计
-      description: Hd Security 设计思路说明
-      link: /design/
-      imgUrl: /img/ui.png
-    - title: API
-      description: Hd Security 所有的 API 介绍
-      link: /07.API/01.API - 登录/
-      imgUrl: /img/other.png
 
 hero:
   name: Teek

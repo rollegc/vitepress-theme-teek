@@ -139,7 +139,7 @@ if (statisticsConfig.value.permalink && router.state?.permalinkPlugin) {
       </div>
 
       <div v-if="docAnalysisConfig.readingTime" class="flx-center">
-        <TkIcon v-if="articleConfig.showIcon" :icon="clockIcon" />
+        <TkIcon v-if="articleConfig.showIcon" :icon="clockIcon" style="margin-right: 3px" />
         <a
           :title="t('tk.articleAnalyze.readingTime')"
           class="hover-color"
@@ -150,7 +150,7 @@ if (statisticsConfig.value.permalink && router.state?.permalinkPlugin) {
       </div>
 
       <div v-if="usePageView" class="flx-center">
-        <TkIcon v-if="articleConfig.showIcon" :icon="viewIcon" />
+        <TkIcon v-if="articleConfig.showIcon" :icon="viewIcon" style="margin-right: 3px" />
         <a :title="t('tk.articleAnalyze.pageView')" class="hover-color" :aria-label="t('tk.articleAnalyze.pageView')">
           {{ statisticsInfo.isGet ? statisticsInfo.pagePv : "Get..." }}
         </a>
