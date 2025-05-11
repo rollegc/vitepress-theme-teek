@@ -5,6 +5,7 @@ import { withBase, useData } from "vitepress";
 import { formatDate } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts, useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import VPDocAsideOutline from "vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue";
 
 defineOptions({ name: "ArticleOverviewPage" });
 
@@ -69,40 +70,54 @@ const formatPublishDate = (date?: string) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('page'), 'vp-doc']">
-    <h1 v-if="frontmatter.title">{{ frontmatter.title }}</h1>
-
-    <div class="vp-doc">
-      <Content />
+  <div :class="[ns.b(), 'VPDoc']">
+    <div class="aside">
+      <div class="aside-container">
+        <VPDocAsideOutline />
+      </div>
     </div>
 
-    <template v-for="item in enhancedCategories" :key="item.name">
-      <h2 id="overview-title">{{ item.name }} {{ t("tk.articleOverview.overview") }}</h2>
-      <a :href="`${categoriesPageLink}?category=${item.name}`" :aria-describedby="`overview-title`">
-        {{ item.name }} {{ t("tk.articleOverview.category") }}
-      </a>
-      <table :aria-describedby="`overview-title`">
-        <thead>
-          <tr>
-            <th>{{ t("tk.articleOverview.name") }}</th>
-            <th>{{ t("tk.articleOverview.title") }}</th>
-            <th>{{ t("tk.articleOverview.date") }}</th>
-            <th>{{ t("tk.articleOverview.wordCount") }}</th>
-            <th>{{ t("tk.articleOverview.readingTime") }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="data in item.data" :key="data.url">
-            <td>{{ item.name }}</td>
-            <td>
-              <a :href="data.url && withBase(data.url)" :aria-label="data.title">{{ data.title }}</a>
-            </td>
-            <td>{{ formatPublishDate(data.date) }}</td>
-            <td>{{ data.wordCount }}</td>
-            <td>{{ data.readingTime }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </template>
+    <div :class="[ns.joinNamespace('page'), 'vp-doc']">
+      <h1 v-if="frontmatter.title">{{ frontmatter.title }}</h1>
+
+      <Content />
+
+      <template v-for="item in enhancedCategories" :key="item.name">
+        <h2 :id="`${item.name}-${t('tk.articleOverview.overview')}`">
+          {{ item.name }} {{ t("tk.articleOverview.overview") }}
+          <a
+            class="header-anchor"
+            :href="`#${item.name}-${t('tk.articleOverview.overview')}`"
+            :aria-label="`Permalink to '${item.name}-${t('tk.articleOverview.overview')}'`"
+          ></a>
+        </h2>
+
+        <a :href="`${categoriesPageLink}?category=${item.name}`" :aria-describedby="`overview-title`">
+          {{ item.name }} {{ t("tk.articleOverview.category") }}
+        </a>
+        <table :aria-describedby="`overview-title`">
+          <thead>
+            <tr>
+              <th>{{ t("tk.articleOverview.name") }}</th>
+              <th>{{ t("tk.articleOverview.title") }}</th>
+              <th>{{ t("tk.articleOverview.date") }}</th>
+              <th>{{ t("tk.articleOverview.wordCount") }}</th>
+              <th>{{ t("tk.articleOverview.readingTime") }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="data in item.data" :key="data.url">
+              <td>{{ item.name }}</td>
+              <td>
+                <a :href="data.url && withBase(data.url)" :aria-label="data.title">{{ data.title }}</a>
+              </td>
+              <td>{{ formatPublishDate(data.date) }}</td>
+              <td>{{ data.wordCount }}</td>
+              <td>{{ data.readingTime }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+    </div>
   </div>
 </template>
