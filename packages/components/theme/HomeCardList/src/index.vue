@@ -1,4 +1,4 @@
-<script setup lang="ts" name="HomeRightInfo">
+<script setup lang="ts" name="HomeCardList">
 import type { TeekConfig } from "@teek/config";
 import { computed } from "vue";
 import { useNamespace } from "@teek/hooks";
@@ -10,9 +10,9 @@ import { TkHomeTagCard } from "@teek/components/theme/HomeTagCard";
 import { TkHomeFriendLinkCard } from "@teek/components/theme/HomeFriendLinkCard";
 import { TkHomeDocAnalysisCard } from "@teek/components/theme/HomeDocAnalysisCard";
 
-defineOptions({ name: "HomeRightInfo" });
+defineOptions({ name: "HomeCardList" });
 
-const ns = useNamespace("home-right-info");
+const ns = useNamespace("home-card-list");
 const { getTeekConfig } = useTeekConfig();
 const teekConfig = computed(() => getTeekConfig<TeekConfig>(null, {}));
 

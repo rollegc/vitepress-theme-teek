@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.5...v1.2.0) (2025-05-11)
+
+### Features
+
+- 🚀 1.1.5 版本发布 ([241c817](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/241c8173ff6a03a9df92b5b5926fa3a0e9ec7ba8))
+- 🚀 1.2.0 版本发布 ([c62fd0a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c62fd0a1d0d54842887384df7366c1cb362851e9))
+- 🚀 标签栏添加数量显示，文章页底部添加最新更新栏 ([16e147e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/16e147ec007736419e598617315f29653671e4ec))
+- 🚀 文档新增配置切换功能，卡片文章列表高度保持一致，修复文章列表进入分类页、标签页不高亮问题，优化部分样式 ([98841f9](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/98841f911517bb40e461218950911c62afe49b0a))
+- 🚀 新增 homeCardListPosition 配置项切换首页卡片列表位置，清单页添加 publishDateFormat 配置项格式化发布日期，新增部分文档说明 ([3e8478e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3e8478ecd6e723aac782014d957b363330f72456))
+- 🚀 新增文章清单页，文档分析插件新增 transformFile 配置项 ([5b2dcd6](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5b2dcd6324bfc3ab1b0994580fd27b2e64744fc4))
+- 🚀 章页底部最近更新栏添加多语言支持，支持归档页跳转 ([3457c91](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3457c91e30862905d689437a42f875327d6624b0))
+
+### Bug Fixes
+
+- 🐞 修复 srr 报 is not defined，修复 feature、category card 动画丢失问题，ArticleUpdate 组件支持 frontmatter 关闭 ([aa52c08](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/aa52c0863cbb43eddb8aaf354860f9e811faddda))
+
 ## [1.1.5](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.4...v1.1.5) (2025-05-09)
 
 ### Features

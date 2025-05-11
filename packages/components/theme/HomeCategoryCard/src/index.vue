@@ -103,8 +103,14 @@ onMounted(() => {
 watch(
   () => categoriesPage,
   () => {
-    // 离开分类页后，激活状态清楚
-    if (!categoriesPage) selectedCategory.value = "";
+    // 离开分类页后，激活状态清除
+    if (!categoriesPage) {
+      selectedCategory.value = "";
+      return;
+    }
+    const { searchParams } = new URL(window.location.href);
+    const category = searchParams.get(categoryKey);
+    if (category && selectedCategory.value !== category) selectedCategory.value = category;
   }
 );
 

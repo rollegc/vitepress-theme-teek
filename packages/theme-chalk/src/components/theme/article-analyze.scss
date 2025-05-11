@@ -1,6 +1,7 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
 @use "../../mixins/mixins" as *;
+@use "../../mixins/config" as *;
 
 :root {
   @include set-css-var("home-article-analyze-gap", getCssVar("gap1"));
@@ -18,6 +19,10 @@
     &.teleport {
       margin-top: 10px;
       margin-bottom: 10px;
+    }
+
+    .#{$namespace}-icon {
+      margin-right: 3px;
     }
 
     & > div:not(:last-child) {

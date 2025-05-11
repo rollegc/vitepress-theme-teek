@@ -7,7 +7,7 @@ import { ref, watch } from "vue";
 
 defineOptions({ name: "Helper" });
 
-defineProps<{ triggerEl?: HTMLDivElement; offset?: number }>();
+defineProps<{ triggerEl?: HTMLDivElement }>();
 
 const visible = defineModel({ default: false });
 

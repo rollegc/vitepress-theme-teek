@@ -16,19 +16,16 @@
 @include b(theme-enhance) {
   height: 100%;
   @include when(top) {
-    margin-right: 8px;
-
     &::before {
-      margin-right: 8px;
-      margin-left: 8px;
+      margin-right: 16px;
+      margin-left: 16px;
       width: 1px;
       height: 24px;
       background-color: var(--vp-c-divider);
       content: "";
     }
 
-    & > :first-child {
-      margin-left: 8px;
+    .tk-icon {
       cursor: pointer;
     }
   }
@@ -98,6 +95,11 @@
 
     &:hover {
       opacity: 1;
+    }
+
+    @include m(title) {
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
     @include m(desc) {

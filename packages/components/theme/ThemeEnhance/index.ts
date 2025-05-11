@@ -1,6 +1,7 @@
 import ThemeEnhance from "./src/index.vue";
+import TkSwitch from "./src/components/Switch.vue";
 
-export { ThemeEnhance as TkThemeEnhance };
+export { ThemeEnhance as TkThemeEnhance, TkSwitch as TkSwitch };
 export default ThemeEnhance;
 
 export * from "./src/themeEnhance";

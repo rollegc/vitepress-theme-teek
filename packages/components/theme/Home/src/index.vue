@@ -7,7 +7,7 @@ import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
 import { TkHomeFullscreenWallpaper } from "@teek/components/theme/HomeFullscreenWallpaper";
 import { TkHomePostList } from "@teek/components/theme/HomePostList";
 import { TkHomeBanner } from "@teek/components/theme/HomeBanner";
-import { TkHomeRightInfo } from "@teek/components/theme/HomeRightInfo";
+import { TkHomeCardList } from "@teek/components/theme/HomeCardList";
 import { postDataUpdateSymbol } from "./home";
 
 defineOptions({ name: "Home" });
@@ -20,6 +20,7 @@ const { getTeekConfigRef } = useTeekConfig();
 
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekHome: true,
+  homeCardListPosition: "right",
   banner: {},
   wallpaper: {},
   bodyBgImg: {},
@@ -42,6 +43,16 @@ const isPaging = ref(false);
     </div>
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
+      <div
+        v-if="teekConfig.homeCardListPosition === 'left'"
+        :class="ns.e('content__info')"
+        :aria-label="t('tk.home.cardLabel')"
+      >
+        <TkHomeCardList>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        </TkHomeCardList>
+      </div>
+
       <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
         <slot name="teek-home-post-before" />
         <TkHomePostList v-model="isPaging" ref="homePostListInstance">
@@ -50,10 +61,14 @@ const isPaging = ref(false);
         <slot name="teek-home-post-after" />
       </div>
 
-      <div :class="ns.e('content__info')" :aria-label="t('tk.home.cardLabel')">
-        <TkHomeRightInfo>
+      <div
+        v-if="teekConfig.homeCardListPosition === 'right'"
+        :class="ns.e('content__info')"
+        :aria-label="t('tk.home.cardLabel')"
+      >
+        <TkHomeCardList>
           <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
-        </TkHomeRightInfo>
+        </TkHomeCardList>
       </div>
     </div>
 

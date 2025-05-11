@@ -117,7 +117,14 @@ watch(
   () => tagsPage,
   () => {
     // 离开分类页后，激活状态清楚
-    if (!tagsPage) selectedTag.value = "";
+    if (!tagsPage) {
+      selectedTag.value = "";
+      return;
+    }
+
+    const { searchParams } = new URL(window.location.href);
+    const tag = searchParams.get(tagKey);
+    if (tag && selectedTag.value !== tag) selectedTag.value = tag;
   }
 );
 </script>

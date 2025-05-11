@@ -6,6 +6,6 @@
   @include set-css-var("home-info-gap", getCssVar("gap1"));
 }
 
-@include b(home-right-info) {
+@include b(home-card-list) {
   gap: getCssVar(home-info-gap);
 }

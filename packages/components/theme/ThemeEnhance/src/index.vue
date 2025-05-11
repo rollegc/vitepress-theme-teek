@@ -40,12 +40,12 @@ const disabledList = computed(() => {
     :popper-class="ns.e('popover')"
     :y-offset="-10"
   >
-    <slot name="teek-theme-enhance-top" />
-
     <template #reference>
       <TkIcon :icon="readingIcon" :size="20" />
     </template>
     <div :class="ns.e('content')">
+      <slot name="teek-theme-enhance-top" />
+
       <template v-if="!disabledList.layoutSwitch">
         <LayoutSwitch />
         <LayoutPageWidthSlide />

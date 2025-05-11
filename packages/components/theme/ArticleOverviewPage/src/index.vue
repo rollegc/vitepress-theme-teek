@@ -2,6 +2,7 @@
 import type { Category } from "@teek/config";
 import { computed } from "vue";
 import { withBase, useData } from "vitepress";
+import { formatDate } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
@@ -58,6 +59,13 @@ const enhancedCategories = computed(() => {
       )
   );
 });
+
+const formatPublishDate = (date?: string) => {
+  const publishDateFormat = frontmatter.value.publishDateFormat;
+
+  if (!publishDateFormat) return date;
+  return formatDate(date || new Date(), publishDateFormat);
+};
 </script>
 
 <template>
@@ -89,7 +97,7 @@ const enhancedCategories = computed(() => {
             <td>
               <a :href="data.url && withBase(data.url)" :aria-label="data.title">{{ data.title }}</a>
             </td>
-            <td>{{ data.date }}</td>
+            <td>{{ formatPublishDate(data.date) }}</td>
             <td>{{ data.wordCount }}</td>
             <td>{{ data.readingTime }}</td>
           </tr>

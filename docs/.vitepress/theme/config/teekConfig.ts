@@ -10,31 +10,14 @@ export const teekDocConfig: TeekConfig = {
 };
 
 // 博客配置
-export const teekBlogConfig: TeekConfig = {
+const teekBlogCommonConfig: TeekConfig = {
   teekHome: true,
   vpHome: false,
   wallpaper: {
     enabled: true,
   },
-  post: {
-    imageViewer: {
-      hideOnClickModal: true,
-    },
-    coverImgMode: "full",
-  },
   footerInfo: {
     customHtml: `<span id="runtime"></span>`, // 需要搭配 .vitepress/theme/helper/useRuntime.ts 使用
-  },
-  banner: {
-    name: "🎉 Teek Blog",
-    bgStyle: "fullImg",
-    imgSrc: ["/blog/banner-bg1.jpg", "/blog/banner-bg2.png"],
-    description: [
-      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
-      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
-      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
-    ],
-    descStyle: "types",
   },
   blogger: {
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
@@ -113,6 +96,68 @@ export const teekBlogConfig: TeekConfig = {
       link: "https://gitee.com/kele-bingtang",
     },
   ],
+};
+
+export const teekBlogConfig: TeekConfig = {
+  ...teekBlogCommonConfig,
+  banner: {
+    name: "🎉 Teek Blog",
+    description: "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+  },
+};
+
+export const teekBlogParkConfig: TeekConfig = {
+  ...teekBlogCommonConfig,
+  banner: {
+    name: "🎉 Teek Blog",
+    bgStyle: "partImg",
+    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    description: [
+      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
+      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
+    ],
+    descStyle: "switch",
+  },
+};
+
+export const teekBlogCardConfig: TeekConfig = {
+  ...teekBlogCommonConfig,
+  post: {
+    imageViewer: { hideOnClickModal: true },
+    postStyle: "card",
+  },
+  homeCardListPosition: "left",
+  banner: {
+    name: "🎉 Teek Blog",
+    bgStyle: "fullImg",
+    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    description: [
+      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
+      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
+    ],
+    descStyle: "types",
+  },
+};
+
+export const teekBlogFullConfig: TeekConfig = {
+  ...teekBlogCommonConfig,
+  post: {
+    imageViewer: { hideOnClickModal: true },
+    coverImgMode: "full",
+  },
+  banner: {
+    name: "🎉 Teek Blog",
+    bgStyle: "fullImg",
+    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    description: [
+      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
+      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
+    ],
+    descStyle: "types",
+  },
   comment: {
     provider: "giscus",
     options: {
@@ -121,5 +166,13 @@ export const teekBlogConfig: TeekConfig = {
       category: "Announcements",
       categoryId: "DIC_kwDONpVfBM4Cm3v9",
     },
+  },
+};
+
+export const teekBlogBodyConfig: TeekConfig = {
+  ...teekBlogCommonConfig,
+  pageStyle: "segment-nav",
+  bodyBgImg: {
+    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
   },
 };

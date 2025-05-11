@@ -17,6 +17,7 @@
   appearance: none;
   display: inline-flex;
   align-items: stretch;
+  flex-wrap: wrap;
   width: 100%;
   gap: getCssVar("segmented-gap");
 }

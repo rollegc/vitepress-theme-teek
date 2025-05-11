@@ -139,8 +139,13 @@ export default defineConfig({
       { text: "指南", link: "/guide/intro", activeMatch: "/01.指南/" },
       { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
       { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
-      { text: "常见问题", link: "/theme/qa", activeMatch: "/20.常见问题/" },
-      { text: "案例", link: "/case" },
+      {
+        text: "资源",
+        items: [
+          { text: "案例", link: "/case" },
+          { text: "常见问题", link: "/theme/qa", activeMatch: "/20.常见问题/" },
+        ],
+      },
       {
         text: "生态",
         items: [
@@ -148,6 +153,15 @@ export default defineConfig({
           { text: "Helper", link: "/ecosystem/helper" },
           { text: "Hooks", link: "/ecosystem/hooks" },
           { text: "Markdown 插件工具", link: "/ecosystem/md-plugin-utils" },
+        ],
+      },
+      {
+        text: "Pages",
+        items: [
+          { text: "归档", link: "/archives" },
+          { text: "清单", link: "/articleOverview" },
+          { text: "分类", link: "/categories" },
+          { text: "标签", link: "/tags" },
         ],
       },
       {

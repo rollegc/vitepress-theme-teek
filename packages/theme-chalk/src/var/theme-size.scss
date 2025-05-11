@@ -3,7 +3,7 @@
 @use "../mixins/config" as *;
 
 html[#{$namespace}-theme-size="wide"] {
-  @include set-css-var("home-max-width", 1400px);
+  @include set-css-var("home-max-width", 1420px);
   @include set-css-var("home-gap", getCssVar("gap3"));
   @include set-css-var("home-post-simple-img-width", 160px);
   @include set-css-var("home-post-full-img-width", 480px);
