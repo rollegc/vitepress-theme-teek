@@ -127,6 +127,7 @@ export const teekBlogCardConfig: TeekConfig = {
     imageViewer: { hideOnClickModal: true },
     postStyle: "card",
   },
+  homeCardListPosition: "left",
   banner: {
     name: "🎉 Teek Blog",
     bgStyle: "fullImg",

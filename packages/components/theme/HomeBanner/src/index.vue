@@ -74,6 +74,10 @@ const bannerRef = ref<HTMLElement | null>(null);
  */
 const toggleClass = async () => {
   if (!bannerRef.value) return;
+
+  const current = currentBgStyle.value;
+  // onMounted 已经校验一次，这里再次校验是防止 bannerStyle 配置项动态修改导致兼容性问题
+  if (!current.isBannerFullImgBgStyle && !current.isBodyFullImgBgStyle) return;
   await nextTick();
 
   const vPNavDom = document.querySelector(".VPNavBar");
@@ -81,7 +85,7 @@ const toggleClass = async () => {
   // 获取窗口高度
   const windowH = bannerRef.value.clientHeight;
 
-  const offset = currentBgStyle.value.isBodyImgBgStyle ? 0 : 100;
+  const offset = current.isBodyImgBgStyle ? 0 : 100;
   if (document.documentElement.scrollTop + offset < windowH) {
     vPNavDom.classList.add("full-img-nav-bar");
   } else vPNavDom.classList.remove("full-img-nav-bar");

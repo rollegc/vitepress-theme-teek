@@ -27,7 +27,7 @@ export * from "./HomeCategoryCard";
 export * from "./HomeDocAnalysisCard";
 export * from "./HomeFriendLinkCard";
 export * from "./HomeFullscreenWallpaper";
-export * from "./HomeRightInfo";
+export * from "./HomeCardList";
 export * from "./HomeMyCard";
 export * from "./HomePostList";
 export * from "./HomeTagCard";

@@ -15,7 +15,7 @@ import {
 const ns = "config-switch";
 const tipInfo = {
   title: "配置切换",
-  desc: "Teek 主题增强面板没有该功能，这是 Teek 文档通过插槽额外实现的配置切换功能",
+  desc: "配置切换是 Teek 文档项目通过插槽额外实现的功能，并非是 Teek 增强面板自带的功能。",
   tips: [
     { title: "说明 1", content: "这里预设了一些 Teek 的配置模板，点击可快速切换查看效果" },
     {
@@ -35,7 +35,7 @@ const segmentedOptions = [
   { value: "blog-part", label: "博客小图", title: "首页 Banner 小图" },
   { value: "blog-full", label: "博客大图", title: "首页 Banner 大图 + 评论" },
   { value: "blog-body", label: "博客全图", title: "全站背景图" },
-  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表" },
+  { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表" },
 ];
 
 // 默认文档风格
@@ -56,6 +56,7 @@ const update = async (style: string) => {
   if (!isClient) return;
 
   const navDom = document.querySelector(".VPNavBar") as HTMLElement;
+
   // 兼容 Teek Banner 样式
   if (["blog-full", "blog-body"].includes(style)) navDom?.classList.add("full-img-nav-bar");
   else navDom?.classList.remove("full-img-nav-bar");

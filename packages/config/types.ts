@@ -96,6 +96,12 @@ export interface TeekConfig {
     copiedDone?: (TkMessage: Message) => void;
   };
   /**
+   * 首页卡片栏列表位置
+   *
+   * @default 'right'
+   */
+  homeCardListPosition?: "left" | "right";
+  /**
    * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序
    *
    * @default '["topArticle", "category", "tag", "friendLink", "docAnalysis"]'
