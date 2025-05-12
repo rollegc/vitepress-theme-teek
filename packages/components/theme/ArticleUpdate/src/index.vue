@@ -1,10 +1,10 @@
 <script setup lang="ts" name="ArticleUpdate">
-import type { TkContentData } from "@teek/config";
+import type { TkContentData, Article } from "@teek/config";
 import { computed } from "vue";
 import { withBase, useRoute, useData } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { editPenIcon } from "@teek/static";
-import { usePosts } from "@teek/components/theme/ConfigProvider";
+import { usePosts, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkTitleTag } from "@teek/components/common/TitleTag";
 
@@ -15,6 +15,11 @@ const { t } = useLocale();
 const posts = usePosts();
 const route = useRoute();
 const { frontmatter } = useData();
+const { getTeekConfigRef } = useTeekConfig();
+
+const articleConfig = getTeekConfigRef<Article>("article", {
+  articleUpdateLimit: 3,
+});
 
 const archivesUrl = computed(() => {
   const archivesPost = posts.value.allPosts.find(
@@ -27,7 +32,9 @@ const archivesUrl = computed(() => {
 const updatePosts = computed(() => {
   const path = "/" + route.data.relativePath.replace(".md", "");
   return [
-    ...posts.value.sortPostsByDate.filter(item => ![route.path, path, `${path}.html`].includes(item.url)).slice(0, 3),
+    ...posts.value.sortPostsByDate
+      .filter(item => ![route.path, path, `${path}.html`].includes(item.url))
+      .slice(0, articleConfig.value.articleUpdateLimit),
     { title: "更多文章 >", url: archivesUrl.value, frontmatter: {}, date: "" } as TkContentData,
   ];
 });

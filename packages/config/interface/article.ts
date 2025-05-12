@@ -87,4 +87,18 @@ export interface Article {
    * 文章页图片查看器配置
    */
   imageViewer?: Omit<ImageViewerProps, "urlList" | "initialIndex" | "infinite">;
+  /**
+   * 是否启用文章最近更新栏
+   *
+   * @since v1.2.1
+   * @default true
+   */
+  articleUpdate?: boolean;
+  /**
+   * 文章最近更新栏显示数量
+   *
+   * @since v1.2.1
+   * @default 3
+   */
+  articleUpdateLimit?: number;
 }

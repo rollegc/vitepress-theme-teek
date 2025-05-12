@@ -57,7 +57,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   bodyBgImg: {},
   notice: {},
   comment: { provider: "" },
-  article: {},
+  article: { articleUpdate: true },
   articleShare: {},
   appreciation: {},
 });
@@ -169,7 +169,7 @@ const usedSlots = [
         <slot name="doc-after" />
 
         <slot name="teek-doc-update-before" />
-        <TkArticleUpdate v-if="frontmatter.articleUpdate !== false" />
+        <TkArticleUpdate v-if="teekConfig.article.articleUpdate && frontmatter.articleUpdate !== false" />
         <slot name="teek-doc-update-after" />
 
         <slot name="teek-doc-after-appreciation-before" />
