@@ -82,11 +82,9 @@ const toggleClass = async () => {
 
   const vPNavDom = document.querySelector(".VPNavBar");
   if (!vPNavDom) return;
-  // 获取窗口高度
-  const windowH = bannerRef.value.clientHeight;
 
   const offset = current.isBodyImgBgStyle ? 0 : 100;
-  if (document.documentElement.scrollTop + offset < windowH) {
+  if (document.documentElement.scrollTop + offset < document.documentElement.clientHeight) {
     vPNavDom.classList.add("full-img-nav-bar");
   } else vPNavDom.classList.remove("full-img-nav-bar");
 };

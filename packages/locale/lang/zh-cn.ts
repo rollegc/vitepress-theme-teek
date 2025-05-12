@@ -56,7 +56,6 @@ export default {
     catalogue: {
       label: "目录页",
       title: "目录",
-      docLabel: "文档内容",
     },
     demoCode: {
       playground: "在 Playground 中编辑",

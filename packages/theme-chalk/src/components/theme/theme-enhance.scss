@@ -68,6 +68,10 @@
           background-color: var(--vp-c-brand-soft);
         }
       }
+      &-item {
+        min-width: 66px;
+        max-width: 66px;
+      }
     }
   }
 

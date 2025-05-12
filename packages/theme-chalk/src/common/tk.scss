@@ -1,42 +1,6 @@
 @use "../mixins/config" as *;
 @use "../mixins/function" as *;
 
-/* 自定义页面样式 */
-.#{$namespace}-page {
-  max-width: getCssVar("page-width");
-  margin: 24px auto;
-  padding: 20px 30px;
-  box-shadow: var(--vp-shadow-3);
-  border-radius: 10px;
-  background-color: getCssVar("bg-color");
-
-  /* 隐藏 md 内容 */
-  & ~ div:not(.#{$namespace}-page) {
-    display: none;
-  }
-}
-
-/* 自定义页面一级标题样式 */
-.#{$namespace}-page-title-h1 {
-  font-size: 32px;
-  line-height: 32px;
-  font-weight: 600;
-}
-
-/* 自定义页面二级标题样式 */
-.#{$namespace}-page-title-h2 {
-  font-size: 27px;
-  line-height: 27px;
-  font-weight: 600;
-}
-
-/* 自定义页面三级标题样式 */
-.#{$namespace}-page-title-h3 {
-  font-size: 22px;
-  line-height: 22px;
-  font-weight: 500;
-}
-
 .#{$namespace}-pointer {
   cursor: pointer;
 }

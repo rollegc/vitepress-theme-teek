@@ -56,7 +56,6 @@ export default {
     catalogue: {
       label: "Catalogue Page",
       title: "Table of Contents",
-      docLabel: "Document Content",
     },
     demoCode: {
       playground: "Edit in Playground",
