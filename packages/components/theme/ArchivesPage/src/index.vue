@@ -3,6 +3,7 @@ import { withBase, useData } from "vitepress";
 import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts } from "@teek/components/theme/ConfigProvider";
+import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import { TkTitleTag } from "@teek/components/common/TitleTag";
 
 defineOptions({ name: "ArchivesPage" });
@@ -28,17 +29,21 @@ const defaultLabel = computed(() => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('page')]" :aria-label="t('tk.archives.label')">
+  <TkArticlePage :class="ns.b()" :aria-label="t('tk.archives.label')">
     <slot name="teek-archives-top-before" />
 
     <div :class="`${ns.e('header')} flx-justify-between`">
-      <h1 :class="ns.joinNamespace('page-title-h1')">{{ defaultLabel.title }}</h1>
+      <h1>{{ defaultLabel.title }}</h1>
       <div class="count">
         {{ defaultLabel.totalCount.replace("{count}", posts.sortPostsByDate.length) }}
       </div>
     </div>
 
     <slot name="teek-archives-top-after" />
+
+    <div class="vp-doc">
+      <Content />
+    </div>
 
     <div :class="ns.e('timeline')">
       <template v-for="(monthPosts, year) in posts.groupPostsByYearMonth" :key="year">
@@ -71,9 +76,5 @@ const defaultLabel = computed(() => {
         </div>
       </template>
     </div>
-
-    <div class="vp-doc">
-      <Content />
-    </div>
-  </div>
+  </TkArticlePage>
 </template>

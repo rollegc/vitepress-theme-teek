@@ -1,7 +1,8 @@
 import ThemeEnhance from "./src/index.vue";
-import TkSwitch from "./src/components/Switch.vue";
+import Switch from "./src/components/Switch.vue";
+import BaseTemplate from "./src/components/BaseTemplate.vue";
 
-export { ThemeEnhance as TkThemeEnhance, TkSwitch as TkSwitch };
+export { ThemeEnhance as TkThemeEnhance, Switch as TkSwitch, BaseTemplate as TkThemeEnhanceBaseTemplate };
 export default ThemeEnhance;
 
 export * from "./src/themeEnhance";

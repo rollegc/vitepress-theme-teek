@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { useData } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
+import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import CatalogueItem from "./CatalogueItem.vue";
 
 defineOptions({ name: "CataloguePage" });
@@ -16,11 +17,11 @@ const catalogues = computed(() => theme.value.catalogues?.inv[frontmatter.value.
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('page')]" :aria-label="t('tk.catalogue.label')">
+  <TkArticlePage :class="ns.b()" :aria-label="t('tk.catalogue.label')">
     <slot name="teek-catalogue-top-before" />
 
     <div :class="ns.e('header')" role="group" aria-labelledby="catalogue-header-title">
-      <h2 id="catalogue-header-title" :class="ns.joinNamespace('page-title-h2')">{{ frontmatter.title }}</h2>
+      <h2 id="catalogue-header-title">{{ frontmatter.title }}</h2>
       <div class="description">{{ frontmatter.desc || frontmatter.description }}</div>
     </div>
 
@@ -35,8 +36,8 @@ const catalogues = computed(() => theme.value.catalogues?.inv[frontmatter.value.
       </ul>
     </div>
 
-    <div class="vp-doc" :aria-label="t('tk.catalogue.docLabel')">
+    <div class="vp-doc">
       <Content />
     </div>
-  </div>
+  </TkArticlePage>
 </template>
