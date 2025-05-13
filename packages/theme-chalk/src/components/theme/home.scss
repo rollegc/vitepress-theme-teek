@@ -15,6 +15,15 @@
     @include e(content__info) {
       position: sticky;
       top: calc(var(--vp-nav-height) + 10px);
+
+      @include when(left) {
+        order: -1;
+
+        /* 移动端，左侧侧信息栏移到底部  */
+        @media (max-width: 768px) {
+          order: 1;
+        }
+      }
     }
   }
 

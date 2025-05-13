@@ -1,19 +1,20 @@
 <script setup lang="ts" name="ArticlePage">
+import type { ArticlePageProps } from "./articlePage";
 import { useNamespace } from "@teek/hooks";
 import DocAsideOutline from "./components/DocAsideOutline.vue";
 
 defineOptions({ name: "ArticlePage" });
 
-defineProps<{ doc?: boolean; outline?: boolean; sidebar?: boolean }>();
+defineProps<ArticlePageProps>();
 
 const ns = useNamespace("article-page");
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.is('aside', outline)]">
-    <div v-if="outline" :class="ns.e('aside')">
+  <div :class="[ns.b(), ns.is('aside', aside)]">
+    <div v-if="aside" :class="ns.e('aside')">
       <div :class="ns.e('aside__container')">
-        <DocAsideOutline :sidebar />
+        <DocAsideOutline />
       </div>
     </div>
 
@@ -22,3 +23,5 @@ const ns = useNamespace("article-page");
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped></style>

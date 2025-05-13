@@ -50,6 +50,7 @@
       color: var(--vp-c-text-1);
       &:hover {
         transform: none;
+        color: getCssVar("theme-color");
       }
     }
   }

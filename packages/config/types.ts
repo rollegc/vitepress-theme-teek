@@ -118,7 +118,7 @@ export interface TeekConfig {
    */
   pageStyle?: "default" | "card" | "segment" | "card-nav" | "segment-nav";
   /**
-   * 设置当前主题尺寸（只影响 Teek 主题首页和自定义页，不影响 VitePress 默认主题）
+   * 设置当前主题尺寸（只影响 Teek 主题首页和功能页，不影响 VitePress 默认主题）
    *
    * @default ''
    */

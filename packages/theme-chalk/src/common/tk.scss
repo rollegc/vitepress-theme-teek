@@ -13,12 +13,6 @@
   transform: translate(-50%, -50%);
 }
 
-h1 {
-  .#{$namespace}-title-tag {
-    transform: translateY(-4px);
-  }
-}
-
 /* Badge 添加 success 样式 */
 .VPBadge.success {
   border-color: getCssVar("el-color-success-light-8");

@@ -30,7 +30,7 @@ export default {
   enhanceApp({ app, siteData }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
-    app.component("ArticleOverviewPage", TkArticleOverviewPage);
+    app.component("TkArticleOverviewPage", TkArticleOverviewPage);
     app.component("TkDemoCode", TkDemoCode);
 
     // 站点分析

@@ -7,8 +7,6 @@ import DocAsideOutlineItem from "./DocAsideOutlineItem.vue";
 
 defineOptions({ name: "DocAsideOutline" });
 
-const { sidebar = false } = defineProps<{ sidebar?: boolean }>();
-
 const ns = useNamespace("aside-outline");
 const { frontmatter, theme } = useData();
 
@@ -21,7 +19,7 @@ onContentUpdated(() => {
 const container = ref();
 const marker = ref();
 
-useActiveAnchor(container, marker, sidebar);
+useActiveAnchor(container, marker);
 </script>
 
 <template>

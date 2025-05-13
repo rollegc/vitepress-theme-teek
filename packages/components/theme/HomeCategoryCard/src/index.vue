@@ -1,12 +1,12 @@
 <script setup lang="ts" name="HomeCategoryCard">
 import type { Category } from "@teek/config";
 import { computed, ref, inject, onMounted, watch } from "vue";
-import { useRouter, useData, withBase } from "vitepress";
+import { useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { categoryIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList/src/homePostList";
-import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePagePath, usePosts } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
 
@@ -17,7 +17,7 @@ const { categoriesPage = false } = defineProps<{ categoriesPage?: boolean }>();
 const ns = useNamespace("category");
 const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
-const { localeIndex, site } = useData();
+const { categoryPath } = usePagePath();
 
 // 分类配置项
 const categoryConfig = getTeekConfigRef<Required<Category>>("category", {
@@ -51,14 +51,6 @@ const finalTitle = computed(() => {
   return { pt, ht };
 });
 
-// 分类页链接
-const categoriesPageLink = computed(() => {
-  const localeIndexConst = localeIndex.value;
-  const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  // 兼容国际化功能，如果没有配置多语言，则返回 '/categories'
-  return `${localeName}${categoryConfig.value.path}${site.value.cleanUrls ? "" : ".html"}`;
-});
-
 const updatePostListData = inject(postDataUpdateSymbol, () => {});
 const router = useRouter();
 const selectedCategory = ref("");
@@ -69,8 +61,8 @@ const categoryKey = "category";
  */
 const handleSwitchCategory = (category = "") => {
   const { pathname, searchParams } = new URL(window.location.href);
-  const categoriesPageLinkConst = withBase(categoriesPageLink.value);
-  const inCategoriesPage = categoriesPageLinkConst === pathname;
+  const categoriesPathConst = withBase(categoryPath.value);
+  const inCategoriesPage = categoriesPathConst === pathname;
 
   // 先删除旧的参数再追加新的
   searchParams.delete(pageNumKey);
@@ -85,7 +77,7 @@ const handleSwitchCategory = (category = "") => {
   selectedCategory.value = category;
 
   // 如果此时不在分类页，则跳转至分类页
-  if (!inCategoriesPage) return router.go(categoriesPageLinkConst + searchParamsStr);
+  if (!inCategoriesPage) return router.go(categoriesPathConst + searchParamsStr);
 
   // 如果在分类页，则替换 URL，但不刷新
   window.history.pushState({}, "", pathname + searchParamsStr);
@@ -156,7 +148,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 
         <a
           v-if="!categoriesPage && categoryConfig.limit < categories.length"
-          :href="withBase(categoriesPageLink)"
+          :href="withBase(categoryPath)"
           :aria-label="categoryConfig.moreLabel"
         >
           {{ categoryConfig.moreLabel }}

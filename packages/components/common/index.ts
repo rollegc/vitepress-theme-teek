@@ -1,3 +1,4 @@
+export * from "./ArticlePage";
 export * from "./Avatar";
 export * from "./Breadcrumb";
 export * from "./FocusTrap";

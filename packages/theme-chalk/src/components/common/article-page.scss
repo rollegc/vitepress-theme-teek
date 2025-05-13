@@ -3,9 +3,11 @@
 @use "../../mixins/config" as *;
 
 @include b(article-page) {
+  max-width: getCssVar("page-width");
+  margin: 24px auto;
+
   @include when(aside) {
     display: flex;
-    justify-content: center;
 
     .#{$namespace}-doc {
       margin: 24px 0;
@@ -13,21 +15,29 @@
   }
 
   .#{$namespace}-doc {
-    max-width: getCssVar("page-width");
     margin: 24px auto;
     padding: 20px 30px;
     box-shadow: var(--vp-shadow-3);
     border-radius: 10px;
     background-color: getCssVar("bg-color");
+    overflow-y: auto;
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
   }
 
   @include e(aside) {
     position: relative;
-    display: block;
+    display: none;
     order: 2;
     flex-grow: 1;
     padding-left: 32px;
     max-width: 256px;
+
+    @media (min-width: 1280px) {
+      display: block;
+    }
   }
 
   @include e(aside__container) {

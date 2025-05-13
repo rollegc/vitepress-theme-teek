@@ -1,9 +1,9 @@
 // From https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/composables/outline.ts
 import type { Header } from "vitepress";
 import type { DefaultTheme } from "vitepress/theme";
-import type { MaybeRef, Ref } from "vue";
+import type { Ref } from "vue";
 import { getScrollOffset } from "vitepress";
-import { computed, onMounted, onUnmounted, onUpdated, toValue } from "vue";
+import { onMounted, onUnmounted, onUpdated } from "vue";
 import { useMediaQuery, useDebounce, useNamespace } from "@teek/hooks";
 
 const ignoreRE = /\b(?:VPBadge|header-anchor|footnote-ref|ignore-header)\b/;
@@ -64,25 +64,8 @@ export function resolveHeaders(headers: MenuItem[], range?: DefaultTheme.Config[
   return buildTree(headers, high, low);
 }
 
-export const useAside = (hasSidebar: MaybeRef<boolean>) => {
-  const is960 = useMediaQuery("(min-width: 960px)");
+export const useActiveAnchor = (container: Ref<HTMLElement>, marker: Ref<HTMLElement>) => {
   const is1280 = useMediaQuery("(min-width: 1280px)");
-
-  const isAsideEnabled = computed(() => {
-    if (!is1280.value && !is960.value) return false;
-    return toValue(hasSidebar) ? is1280.value : is960.value;
-  });
-
-  return { isAsideEnabled };
-};
-
-export const useActiveAnchor = (
-  container: Ref<HTMLElement>,
-  marker: Ref<HTMLElement>,
-  hasSidebar: MaybeRef<boolean> = false
-) => {
-  const { isAsideEnabled } = useAside(hasSidebar);
-
   const onScroll = useDebounce(setActiveLink, 100);
 
   let prevActiveLink: HTMLAnchorElement | null = null;
@@ -102,7 +85,7 @@ export const useActiveAnchor = (
   });
 
   function setActiveLink() {
-    if (!isAsideEnabled.value) return;
+    if (!is1280.value) return;
 
     const scrollY = window.scrollY;
     const innerHeight = window.innerHeight;

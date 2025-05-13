@@ -69,7 +69,7 @@ const formatPublishDate = (date?: string) => {
 </script>
 
 <template>
-  <TkArticlePage doc outline :class="ns.b()">
+  <TkArticlePage doc aside :class="ns.b()">
     <h1 v-if="frontmatter.title">
       {{ frontmatter.title }}
       <a class="header-anchor" :href="`#${frontmatter.title}`" :aria-label="`Permalink to '${frontmatter.title}'`" />

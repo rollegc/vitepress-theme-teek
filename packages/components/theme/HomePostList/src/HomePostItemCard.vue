@@ -24,12 +24,13 @@ const postConfig = getTeekConfigRef<Post>("post", {
   splitSeparator: false,
   imageViewer: {},
   cardStyleTitleTagPosition: "left",
+  defaultCoverImg: [],
 });
 const articleConfig = getTeekConfigRef<Article>("article", { showInfo: true });
 
 const postUrl = post.url && withBase(post.url);
-const imgSrcList = [post.frontmatter.coverImg || []].flat();
 
+const imgSrcList = computed(() => [post.frontmatter.coverImg || postConfig.value.defaultCoverImg || []].flat());
 const excerpt = computed(
   () => post.frontmatter.description || post.excerpt || (postConfig.value.showCapture && post.capture)
 );
@@ -57,7 +58,7 @@ const isShowInfo = computed(() => {
       :aria-label="t('tk.homePost.pinLabel')"
     />
 
-    <div v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length" :class="ns.e('cover-img')">
+    <div v-if="imgSrcList.length" :class="ns.e('cover-img')">
       <img :src="withBase(imgSrcList[0])" class="cover-img" @click="handleViewImg(imgSrcList)" />
     </div>
 

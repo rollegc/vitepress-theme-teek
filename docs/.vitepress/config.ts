@@ -149,14 +149,15 @@ export default defineConfig({
       {
         text: "生态",
         items: [
-          { text: "Components", link: "/ecosystem/components" },
-          { text: "Helper", link: "/ecosystem/helper" },
-          { text: "Hooks", link: "/ecosystem/hooks" },
+          { text: "Components 组件", link: "/ecosystem/components" },
+          { text: "运行时 API", link: "/reference/runtime-api" },
+          { text: "Helper 工具", link: "/ecosystem/helper" },
+          { text: "Hooks 函数", link: "/ecosystem/hooks" },
           { text: "Markdown 插件工具", link: "/ecosystem/md-plugin-utils" },
         ],
       },
       {
-        text: "Pages",
+        text: "功能页",
         items: [
           { text: "归档", link: "/archives" },
           { text: "清单", link: "/articleOverview" },

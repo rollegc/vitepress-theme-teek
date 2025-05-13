@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { TkHomePostListInstance } from "@teek/components";
 import { ref, provide } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkHomeFullscreenWallpaper } from "@teek/components/theme/HomeFullscreenWallpaper";
 import { TkHomePostList } from "@teek/components/theme/HomePostList";
 import { TkHomeBanner } from "@teek/components/theme/HomeBanner";
@@ -15,7 +15,7 @@ defineOptions({ name: "Home" });
 const ns = useNamespace("home");
 const { t } = useLocale();
 
-const { isHomePage } = usePage();
+const { isHomePage } = usePageState();
 const { getTeekConfigRef } = useTeekConfig();
 
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
@@ -43,16 +43,6 @@ const isPaging = ref(false);
     </div>
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
-      <div
-        v-if="teekConfig.homeCardListPosition === 'left'"
-        :class="ns.e('content__info')"
-        :aria-label="t('tk.home.cardLabel')"
-      >
-        <TkHomeCardList>
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
-        </TkHomeCardList>
-      </div>
-
       <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
         <slot name="teek-home-post-before" />
         <TkHomePostList v-model="isPaging" ref="homePostListInstance">
@@ -62,8 +52,7 @@ const isPaging = ref(false);
       </div>
 
       <div
-        v-if="teekConfig.homeCardListPosition === 'right'"
-        :class="ns.e('content__info')"
+        :class="[ns.e('content__info'), teekConfig.homeCardListPosition === 'left' ? ns.is('left') : ns.is('right')]"
         :aria-label="t('tk.home.cardLabel')"
       >
         <TkHomeCardList>
