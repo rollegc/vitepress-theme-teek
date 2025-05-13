@@ -156,7 +156,7 @@ const usedSlots = [
         <slot name="doc-before" />
         <slot name="teek-article-analyze-before" />
 
-        <TkArticleAnalyze />
+        <TkArticleAnalyze v-if="frontmatter.article !== false" />
         <TkArticleImagePreview />
         <TkArticlePageStyle />
         <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />

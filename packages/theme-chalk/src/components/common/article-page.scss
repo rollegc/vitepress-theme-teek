@@ -3,12 +3,11 @@
 @use "../../mixins/config" as *;
 
 @include b(article-page) {
+  max-width: getCssVar("page-width");
+  margin: 24px auto;
+
   @include when(aside) {
     display: flex;
-    justify-content: center;
-    @media (min-width: 1280px) {
-      margin-left: 10vw;
-    }
 
     .#{$namespace}-doc {
       margin: 24px 0;
@@ -16,7 +15,6 @@
   }
 
   .#{$namespace}-doc {
-    max-width: getCssVar("page-width");
     margin: 24px auto;
     padding: 20px 30px;
     box-shadow: var(--vp-shadow-3);

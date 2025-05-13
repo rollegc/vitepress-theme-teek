@@ -14,7 +14,7 @@ const ns = useNamespace("article-page");
   <div :class="[ns.b(), ns.is('aside', aside)]">
     <div v-if="aside" :class="ns.e('aside')">
       <div :class="ns.e('aside__container')">
-        <DocAsideOutline :sidebar />
+        <DocAsideOutline />
       </div>
     </div>
 
@@ -23,3 +23,5 @@ const ns = useNamespace("article-page");
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped></style>
