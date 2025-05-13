@@ -81,4 +81,11 @@ export interface Post {
    * @default 'left'
    */
   cardStyleTitleTagPosition?: TitleTagProps["position"];
+  /**
+   * 默认封面图地址，如果不设置封面图则使用默认封面图地址
+   *
+   * @since v1.2.1
+   * @default []
+   */
+  defaultCoverImg?: string[];
 }

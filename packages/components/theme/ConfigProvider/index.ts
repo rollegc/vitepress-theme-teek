@@ -77,7 +77,7 @@ export const useTeekConfig = () => {
 };
 
 /**
- * 返回自定义页面状态
+ * 返回功能页面状态
  */
 export const usePageState = () => {
   const { frontmatter } = useData();

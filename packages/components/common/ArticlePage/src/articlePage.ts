@@ -11,10 +11,4 @@ export interface ArticlePageProps {
    * @default false
    */
   aside?: boolean;
-  /**
-   * 是否使用侧边栏
-   *
-   * @default false
-   */
-  sidebar?: boolean;
 }

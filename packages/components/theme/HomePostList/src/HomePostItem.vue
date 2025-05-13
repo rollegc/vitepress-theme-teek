@@ -24,6 +24,7 @@ const postConfig = getTeekConfigRef<Post>("post", {
   splitSeparator: false,
   imageViewer: {},
   listStyleTitleTagPosition: "right",
+  defaultCoverImg: [],
 });
 const articleConfig = getTeekConfigRef<Article>("article", {
   showInfo: true,
@@ -42,21 +43,23 @@ const handleViewImg = (imgUrl: string | string[]) => {
   createImageViewer({ ...postConfig.value.imageViewer, urlList });
 };
 
+const imgSrcList = computed(() => [post.frontmatter.coverImg || postConfig.value.defaultCoverImg || []].flat());
+
 const coverImgMap = computed(() => {
-  const imgSrcList = [post.frontmatter.coverImg || []].flat();
+  const imgSrcListConst = imgSrcList.value;
   return {
     default: {
       is: "div",
       props: {
-        style: `background-image: url(${withBase(imgSrcList[0])});`,
-        onClick: () => handleViewImg(imgSrcList),
+        style: `background-image: url(${withBase(imgSrcListConst[0])});`,
+        onClick: () => handleViewImg(imgSrcListConst),
       },
     },
     full: {
       is: "img",
       props: {
-        src: withBase(imgSrcList[0]),
-        onClick: () => handleViewImg(imgSrcList),
+        src: withBase(imgSrcListConst[0]),
+        onClick: () => handleViewImg(imgSrcListConst),
       },
     },
   };
@@ -127,11 +130,7 @@ const isShowInfo = computed(() => {
 
       <!-- 右侧封面图 -->
       <div :class="`${ns.e('right')} flx-align-center`">
-        <div
-          v-if="post.frontmatter.coverImg || post.frontmatter.coverImg?.length"
-          :class="`${coverImgMode} cover`"
-          :aria-label="t('tk.homePost.coverImgLabel')"
-        >
+        <div v-if="imgSrcList.length" :class="`${coverImgMode} cover`" :aria-label="t('tk.homePost.coverImgLabel')">
           <component
             :is="coverImgMap[coverImgMode].is"
             v-bind="coverImgMap[coverImgMode].props"

@@ -12,6 +12,7 @@
 @include b(demo-code) {
   border: 1px solid var(--vp-c-divider);
   border-radius: 4px 4px 0 0;
+  overflow-y: auto;
 
   @include e(effect) {
     padding: 24px;

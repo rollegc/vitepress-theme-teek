@@ -104,6 +104,7 @@ export const teekBlogConfig: TeekConfig = {
   banner: {
     name: "🎉 Teek Blog",
     description: "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+    bgStyle: "partImg",
   },
 };
 
@@ -113,7 +114,7 @@ export const teekBlogParkConfig: TeekConfig = {
   banner: {
     name: "🎉 Teek Blog",
     bgStyle: "partImg",
-    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
     description: [
       "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
       "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
@@ -133,7 +134,7 @@ export const teekBlogFullConfig: TeekConfig = {
   banner: {
     name: "🎉 Teek Blog",
     bgStyle: "fullImg",
-    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
     description: [
       "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
       "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
@@ -157,7 +158,7 @@ export const teekBlogBodyConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   pageStyle: "segment-nav",
   bodyBgImg: {
-    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
   },
 };
 
@@ -172,7 +173,7 @@ export const teekBlogCardConfig: TeekConfig = {
   banner: {
     name: "🎉 Teek Blog",
     bgStyle: "fullImg",
-    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
     description: [
       "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
       "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",

@@ -43,16 +43,6 @@ const isPaging = ref(false);
     </div>
 
     <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
-      <div
-        v-if="teekConfig.homeCardListPosition === 'left'"
-        :class="ns.e('content__info')"
-        :aria-label="t('tk.home.cardLabel')"
-      >
-        <TkHomeCardList>
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
-        </TkHomeCardList>
-      </div>
-
       <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
         <slot name="teek-home-post-before" />
         <TkHomePostList v-model="isPaging" ref="homePostListInstance">
@@ -62,8 +52,7 @@ const isPaging = ref(false);
       </div>
 
       <div
-        v-if="teekConfig.homeCardListPosition === 'right'"
-        :class="ns.e('content__info')"
+        :class="[ns.e('content__info'), teekConfig.homeCardListPosition === 'left' ? ns.is('left') : ns.is('right')]"
         :aria-label="t('tk.home.cardLabel')"
       >
         <TkHomeCardList>
