@@ -24,7 +24,7 @@ export type TkContentData = FileContentLoaderData & {
 
 export interface PostData {
   /**
-   * 所有文章也页表
+   * 所有文章列表
    */
   allPosts: TkContentData[];
   /**

@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { TkHomePostListInstance } from "@teek/components";
 import { ref, provide } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
-import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkHomeFullscreenWallpaper } from "@teek/components/theme/HomeFullscreenWallpaper";
 import { TkHomePostList } from "@teek/components/theme/HomePostList";
 import { TkHomeBanner } from "@teek/components/theme/HomeBanner";
@@ -15,7 +15,7 @@ defineOptions({ name: "Home" });
 const ns = useNamespace("home");
 const { t } = useLocale();
 
-const { isHomePage } = usePage();
+const { isHomePage } = usePageState();
 const { getTeekConfigRef } = useTeekConfig();
 
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {

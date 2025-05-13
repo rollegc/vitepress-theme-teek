@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import { computed } from "vue";
 import { useNamespace } from "@teek/hooks";
-import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkHomeMyCard } from "@teek/components/theme/HomeMyCard";
 import { TkHomeTopArticleCard } from "@teek/components/theme/HomeTopArticleCard";
 import { TkHomeCategoryCard } from "@teek/components/theme/HomeCategoryCard";
@@ -22,7 +22,7 @@ const finalHomeCardSort = computed(() => {
   return ["my", ...new Set([...configCardSort, ...["topArticle", "category", "tag", "friendLink", "docAnalysis"]])];
 });
 
-const { isHomePage, isCategoriesPage, isTagsPage } = usePage();
+const { isHomePage, isCategoriesPage, isTagsPage } = usePageState();
 
 // 定义组件映射
 const componentMap = computed(() => {

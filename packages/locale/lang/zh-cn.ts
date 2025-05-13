@@ -231,7 +231,7 @@ export default {
         helpDesc:
           "提供 VitePress 的基础色板和 ElementPlus 的基础色板进行选择，通过扩散开关可以将主题色扩散至其他元素，如侧边栏背景色、字体色等",
         vpHelpTipTitle: "VitePress 基础色板",
-        vpHelpTipContent: "提供蓝（默认）、绿、黄、红 4 种 VitePress 基础色板",
+        vpHelpTipContent: "提供蓝（预设）、绿、黄、红 4 种 VitePress 基础色板",
         epHelpTipTitle: "ElementPlus 基础色板",
         epHelpTipContent: "提供蓝、绿、黄、红 4 种 ElementPlus 基础色板",
       },

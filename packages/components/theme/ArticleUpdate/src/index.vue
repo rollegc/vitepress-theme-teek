@@ -4,7 +4,7 @@ import { computed } from "vue";
 import { withBase, useRoute, useData } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { editPenIcon } from "@teek/static";
-import { usePosts, useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { usePosts, useTeekConfig, usePagePath } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkTitleTag } from "@teek/components/common/TitleTag";
 
@@ -16,17 +16,10 @@ const posts = usePosts();
 const route = useRoute();
 const { frontmatter } = useData();
 const { getTeekConfigRef } = useTeekConfig();
+const { archivesPath } = usePagePath();
 
 const articleConfig = getTeekConfigRef<Article>("article", {
   articleUpdateLimit: 3,
-});
-
-const archivesUrl = computed(() => {
-  const archivesPost = posts.value.allPosts.find(
-    item => item.frontmatter.layout === "TkCataloguePage" || item.frontmatter.archivesPage === true
-  );
-
-  return archivesPost?.url;
 });
 
 const updatePosts = computed(() => {
@@ -35,7 +28,7 @@ const updatePosts = computed(() => {
     ...posts.value.sortPostsByDate
       .filter(item => ![route.path, path, `${path}.html`].includes(item.url))
       .slice(0, articleConfig.value.articleUpdateLimit),
-    { title: "更多文章 >", url: archivesUrl.value, frontmatter: {}, date: "" } as TkContentData,
+    { title: "更多文章 >", url: archivesPath.value, frontmatter: {}, date: "" } as TkContentData,
   ];
 });
 </script>
@@ -44,7 +37,12 @@ const updatePosts = computed(() => {
   <div :class="ns.b()" v-show="frontmatter.article !== false">
     <div :class="[ns.e('title'), 'flx-align-center']">
       <TkIcon :icon="editPenIcon" class="edit-icon" aria-hidden="true" />
-      <a v-if="archivesUrl" :href="withBase(archivesUrl)" class="hover-color" :aria-label="t('tk.articleUpdate.label')">
+      <a
+        v-if="archivesPath"
+        :href="withBase(archivesPath)"
+        class="hover-color"
+        :aria-label="t('tk.articleUpdate.label')"
+      >
         {{ t("tk.articleUpdate.label") }}
       </a>
       <span v-else>{{ t("tk.articleUpdate.label") }}</span>

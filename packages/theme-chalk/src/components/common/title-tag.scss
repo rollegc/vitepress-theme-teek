@@ -87,3 +87,9 @@
     line-height: 14px;
   }
 }
+
+h1 {
+  @include b(title-tag) {
+    transform: translateY(-4px);
+  }
+}

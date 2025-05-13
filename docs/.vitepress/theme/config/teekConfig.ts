@@ -9,7 +9,7 @@ export const teekDocConfig: TeekConfig = {
   },
 };
 
-// 博客配置
+// 博客基础配置
 const teekBlogCommonConfig: TeekConfig = {
   teekHome: true,
   vpHome: false,
@@ -98,6 +98,7 @@ const teekBlogCommonConfig: TeekConfig = {
   ],
 };
 
+// 博客默认配置
 export const teekBlogConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   banner: {
@@ -106,6 +107,7 @@ export const teekBlogConfig: TeekConfig = {
   },
 };
 
+// 博客小图配置
 export const teekBlogParkConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   banner: {
@@ -121,26 +123,7 @@ export const teekBlogParkConfig: TeekConfig = {
   },
 };
 
-export const teekBlogCardConfig: TeekConfig = {
-  ...teekBlogCommonConfig,
-  post: {
-    imageViewer: { hideOnClickModal: true },
-    postStyle: "card",
-  },
-  homeCardListPosition: "left",
-  banner: {
-    name: "🎉 Teek Blog",
-    bgStyle: "fullImg",
-    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
-    description: [
-      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
-      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
-      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
-    ],
-    descStyle: "types",
-  },
-};
-
+// 博客大图配置
 export const teekBlogFullConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   post: {
@@ -169,10 +152,32 @@ export const teekBlogFullConfig: TeekConfig = {
   },
 };
 
+// 博客全图配置
 export const teekBlogBodyConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   pageStyle: "segment-nav",
   bodyBgImg: {
     imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+  },
+};
+
+// 博客卡片配置
+export const teekBlogCardConfig: TeekConfig = {
+  ...teekBlogCommonConfig,
+  post: {
+    imageViewer: { hideOnClickModal: true },
+    postStyle: "card",
+  },
+  homeCardListPosition: "left",
+  banner: {
+    name: "🎉 Teek Blog",
+    bgStyle: "fullImg",
+    imgSrc: ["/blog/banner-bg1.webp", "/blog/banner-bg2.webp"],
+    description: [
+      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
+      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
+    ],
+    descStyle: "types",
   },
 };

@@ -6,7 +6,7 @@ import { useData } from "vitepress";
 import { computed, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
-import { useTeekConfig, usePage } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
 import { TkDocAfterAppreciation, TkAsideBottomAppreciation } from "@teek/components/theme/ArticleAppreciation";
 import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
@@ -44,7 +44,7 @@ const { Layout } = DefaultTheme;
 
 const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
-const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePage();
+const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
 const { frontmatter, localeIndex, page } = useData();
 
 // 支持 theme 或 frontmatter 配置

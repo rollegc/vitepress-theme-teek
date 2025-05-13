@@ -1,12 +1,12 @@
 <script setup lang="ts" name="HomeTagCard">
 import type { Tag } from "@teek/config";
 import { watch, computed, ref, inject, onMounted } from "vue";
-import { useData, useRouter, withBase } from "vitepress";
+import { useRouter, withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { tagIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList";
-import { useTeekConfig, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePagePath, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
 
@@ -17,12 +17,9 @@ const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 const { tagsPage = false } = defineProps<{ tagsPage?: boolean }>();
 
-const { site, localeIndex } = useData();
-
 const pageNum = ref(1);
 // 标签配置项
 const tagConfig = getTeekConfigRef<Required<Tag>>("tag", {
-  path: "/tags",
   pageTitle: t("tk.tagCard.pageTitle", { icon: tagIcon }),
   homeTitle: t("tk.tagCard.homeTitle", { icon: tagIcon }),
   emptyLabel: t("tk.tagCard.emptyLabel"),
@@ -33,8 +30,10 @@ const tagConfig = getTeekConfigRef<Required<Tag>>("tag", {
   bgColor: "",
 });
 
+const { tagPath } = usePagePath();
 const posts = usePosts();
 const tagColor = useTagColor();
+
 const tags = computed(() => posts.value.groupCards.tags);
 
 // 当前显示的标签，如果是在标签页，则显示所有标签，如果在首页，则显示前 limit 个标签
@@ -65,13 +64,6 @@ const getTagStyle = (index: number) => {
   };
 };
 
-const tagsPageLink = computed(() => {
-  // 兼容国际化功能，如果没有配置国际化，则返回 '/tags'
-  const localeIndexConst = localeIndex.value;
-  const localeName = localeIndexConst !== "root" ? `/${localeIndexConst}` : "";
-  return `${localeName}${tagConfig.value.path}${site.value.cleanUrls ? "" : ".html"}`;
-});
-
 const updatePostListData = inject(postDataUpdateSymbol, () => {});
 const router = useRouter();
 const selectedTag = ref("");
@@ -82,7 +74,7 @@ const tagKey = "tag";
  */
 const handleSwitchTag = (tag = "") => {
   const { pathname, searchParams } = new URL(window.location.href);
-  const categoriesPageLinkConst = withBase(tagsPageLink.value);
+  const categoriesPageLinkConst = withBase(tagPath.value);
   const inCategoriesPage = categoriesPageLinkConst === pathname;
 
   // 先删除旧的参数再追加新的
@@ -167,7 +159,7 @@ watch(
 
         <a
           v-if="!tagsPage && tagConfig.limit < tags.length"
-          :href="withBase(tagsPageLink)"
+          :href="withBase(tagPath)"
           class="more"
           :aria-label="tagConfig.moreLabel"
         >
