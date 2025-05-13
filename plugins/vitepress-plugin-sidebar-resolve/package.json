@@ -15,7 +15,7 @@
     "sidebar"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teek/tree/master/plugins/vitepress-plugin-catalogue",
+  "homepage": "https://github.com/Kele-Bingtang/vitepress-theme-teek/tree/master/plugins/vitepress-plugin-sidebar-resolve",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kele-Bingtang/vitepress-theme-teek.git"
