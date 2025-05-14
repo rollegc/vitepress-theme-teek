@@ -134,16 +134,13 @@ const addPermalink = () => {
   const autoFrontmatterOption = { pattern: "**/*.md" };
 
   autoFrontmatterOption.transform = frontmatter => {
-    // 调用可能存在的 transform（支持外界使用）
-    let transformResult = transform?.(frontmatter, fileInfo) || {};
-
     // 如果文件本身存在了 permalink，则不生成
-    if (!frontmatter.permalink) {
-      transformResult = { ...transformResult, ...createPermalink() };
-    }
+    if (frontmatter.permalink) return;
+
+    const transformResult = { ...frontmatter, ...createPermalink() };
 
     // 确保返回值存在，如果返回 {} 将会清空文件本身的 frontmatter，返回 undefined 则告诉插件不使用 transform 返回的数据
-    return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
+    return Object.keys(transformResult).length ? transformResult : undefined;
   };
 
   plugins.push(AutoFrontmatter(autoFrontmatterOption));
@@ -205,16 +202,13 @@ const addCategories = () => {
   const autoFrontmatterOption = { pattern: "**/*.md" };
 
   autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
-    // 调用可能存在的 transform（支持外界使用）
-    let transformResult = transform?.(frontmatter, fileInfo) || {};
-
     // 如果文件本身存在了 categories，则不生成
-    if (!frontmatter.categories) {
-      transformResult = { ...transformResult, ...createCategories(fileInfo) };
-    }
+    if (frontmatter.categories) return;
+
+    const transformResult = { ...frontmatter, ...createCategories(fileInfo) };
 
     // 确保返回值存在，如果返回 {} 将会清空文件本身的 frontmatter，返回 undefined 则告诉插件不使用 transform 返回的数据
-    return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
+    return Object.keys(transformResult).length ? transformResult : undefined;
   };
 
   plugins.push(AutoFrontmatter(autoFrontmatterOption));

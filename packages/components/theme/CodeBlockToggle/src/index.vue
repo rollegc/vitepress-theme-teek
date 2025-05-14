@@ -1,18 +1,18 @@
 <script setup lang="ts" name="CodeBlockToggle">
+import type { CodeBlock } from "@teek/config";
 import { nextTick, watch } from "vue";
 import { useEventListener, useNamespace } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
 import { TkMessage } from "@teek/components/common/Message";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { TeekConfig } from "@teek/config";
 
 defineOptions({ name: "CodeBlockToggle" });
 
 const ns = useNamespace("");
 const { getTeekConfigRef } = useTeekConfig();
 
-const codeBlockConfig = getTeekConfigRef<NonNullable<TeekConfig["codeBlock"]>>("codeBlock", {
+const codeBlockConfig = getTeekConfigRef<CodeBlock>("codeBlock", {
   collapseHeight: 700,
   copiedDone: undefined,
 });

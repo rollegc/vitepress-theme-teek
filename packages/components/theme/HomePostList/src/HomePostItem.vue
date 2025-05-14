@@ -1,12 +1,12 @@
 <script setup lang="ts" name="HomePostItem">
-import type { Article, Post, TkContentData } from "@teek/config";
+import type { ArticleAnalyze, Post, TkContentData } from "@teek/config";
 import { computed } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { createImageViewer } from "@teek/components/common/ImageViewer";
-import { TkTitleTag } from "@teek/components/common/TitleTag";
 import { TkArticleInfo } from "@teek/components/theme/ArticleInfo";
+import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "HomePostItem" });
 
@@ -26,7 +26,7 @@ const postConfig = getTeekConfigRef<Post>("post", {
   listStyleTitleTagPosition: "right",
   defaultCoverImg: [],
 });
-const articleConfig = getTeekConfigRef<Article>("article", {
+const articleConfig = getTeekConfigRef<ArticleAnalyze>("articleAnalyze", {
   showInfo: true,
 });
 
@@ -85,17 +85,7 @@ const isShowInfo = computed(() => {
       <div :class="ns.e('left')">
         <!-- 标题 -->
         <a :class="[ns.e('left__title'), 'hover-color', 'sle']" :href="postUrl" :aria-label="post.title">
-          <TkTitleTag
-            v-if="postConfig.listStyleTitleTagPosition === 'left'"
-            :text="post.frontmatter.titleTag"
-            :position="postConfig.listStyleTitleTagPosition"
-          />
-          <span>{{ post.title }}</span>
-          <TkTitleTag
-            v-if="postConfig.listStyleTitleTagPosition === 'right'"
-            :text="post.frontmatter.titleTag"
-            :position="postConfig.listStyleTitleTagPosition"
-          />
+          <TkArticleTitle :post :title-tag-props="{ position: postConfig.listStyleTitleTagPosition }" />
         </a>
 
         <!-- 摘要 top -->

@@ -1,14 +1,19 @@
+import type { PageData } from "vitepress";
+import type { VpContainerProps } from "@teek/components/common/VpContainer/src/vpContainer";
 import type { Message } from "@teek/components/common/Message/src/message";
 import type { TkPaginationProps } from "../components/common/Pagination";
 import type {
   Appreciation,
-  Article,
+  ArticleAnalyze,
+  ArticleShare,
+  ArticleUpdate,
   Author,
   Banner,
   Blogger,
   BodyBgImg,
   Breadcrumb,
   Category,
+  CodeBlock,
   CommentConfig,
   DocAnalysis,
   FooterInfo,
@@ -18,7 +23,6 @@ import type {
   Notice,
   Plugins,
   Post,
-  ArticleShare,
   SiteAnalytics,
   Social,
   Tag,
@@ -74,27 +78,7 @@ export interface TeekConfig {
    * @default true
    */
   viewTransition?: boolean;
-  /**
-   * 新版代码块配置
-   */
-  codeBlock?: {
-    /**
-     * 是否禁用新版代码块
-     *
-     * @default false
-     */
-    disabled?: boolean;
-    /**
-     * 超出高度后自动折叠，设置 true 则默认折叠，false 则默认不折叠
-     *
-     * @default 700
-     */
-    collapseHeight?: number | boolean;
-    /**
-     * 复制代码完成后的回调
-     */
-    copiedDone?: (TkMessage: Message) => void;
-  };
+
   /**
    * 首页卡片栏列表位置
    *
@@ -131,6 +115,18 @@ export interface TeekConfig {
    * 滚动到评论后的回调
    */
   toCommentDone?: (TkMessage: Message) => void;
+  /**
+   * 文章页顶部使用 VitePress 容器添加提示
+   *
+   * @param frontmatter 文档 frontmatter
+   * @param localeIndex 当前国际化语言
+   * @param page 文章信息，即 useData().page 的信息
+   */
+  articleTopTip?: (
+    frontmatter: PageData["frontmatter"],
+    localeIndex: string,
+    page: PageData
+  ) => VpContainerProps | undefined;
   /**
    *  body 背景图片配置
    */
@@ -196,13 +192,21 @@ export interface TeekConfig {
    */
   footerInfo?: FooterInfo;
   /**
+   * 新版代码块配置
+   */
+  codeBlock?: CodeBlock;
+  /**
    * 文章信息配置
    */
-  article?: Article;
+  articleAnalyze?: ArticleAnalyze;
   /**
    * 文章分享配置
    */
   articleShare?: ArticleShare;
+  /**
+   * 文章页最近更新栏配置
+   */
+  articleUpdate?: ArticleUpdate;
   /**
    * 赞赏功能配置
    */

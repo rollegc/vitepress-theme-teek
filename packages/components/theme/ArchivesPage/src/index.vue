@@ -4,7 +4,7 @@ import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
-import { TkTitleTag } from "@teek/components/common/TitleTag";
+import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "ArchivesPage" });
 
@@ -67,8 +67,7 @@ const defaultLabel = computed(() => {
               <li v-for="item in p" :key="item.url">
                 <a :href="item.url && withBase(item.url)" :aria-label="`${item.title}`">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
-                  <span>{{ item.title }}</span>
-                  <TkTitleTag :text="item.frontmatter.titleTag" position="right" size="small" />
+                  <TkArticleTitle :post="item" :title-tag-props="{ position: 'right', size: 'small' }" />
                 </a>
               </li>
             </ul>

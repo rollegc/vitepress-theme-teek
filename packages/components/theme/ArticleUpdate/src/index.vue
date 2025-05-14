@@ -1,12 +1,12 @@
 <script setup lang="ts" name="ArticleUpdate">
-import type { TkContentData, Article } from "@teek/config";
+import type { TkContentData, ArticleUpdate } from "@teek/config";
 import { computed } from "vue";
 import { withBase, useRoute, useData } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { editPenIcon } from "@teek/static";
 import { usePosts, useTeekConfig, usePagePath } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
-import { TkTitleTag } from "@teek/components/common/TitleTag";
+import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "ArticleUpdate" });
 
@@ -18,8 +18,8 @@ const { frontmatter } = useData();
 const { getTeekConfigRef } = useTeekConfig();
 const { archivesPath } = usePagePath();
 
-const articleConfig = getTeekConfigRef<Article>("article", {
-  articleUpdateLimit: 3,
+const articleConfig = getTeekConfigRef<ArticleUpdate>("articleUpdate", {
+  limit: 3,
 });
 
 const updatePosts = computed(() => {
@@ -27,7 +27,7 @@ const updatePosts = computed(() => {
   return [
     ...posts.value.sortPostsByDate
       .filter(item => ![route.path, path, `${path}.html`].includes(item.url))
-      .slice(0, articleConfig.value.articleUpdateLimit),
+      .slice(0, articleConfig.value.limit),
     { title: "更多文章 >", url: archivesPath.value, frontmatter: {}, date: "" } as TkContentData,
   ];
 });
@@ -56,8 +56,7 @@ const updatePosts = computed(() => {
 
         <div :class="ns.e('content')">
           <a v-if="item.url" :href="withBase(item.url)" class="flx-1 hover-color" :aria-label="item.title">
-            <span class="sle">{{ item.title }}</span>
-            <TkTitleTag :text="item.frontmatter.titleTag" position="right" size="small" />
+            <TkArticleTitle :post="item" :title-tag-props="{ position: 'right', size: 'small' }" />
           </a>
           <span v-if="item.date" :class="ns.em('content', 'date')">{{ item.date }}</span>
         </div>

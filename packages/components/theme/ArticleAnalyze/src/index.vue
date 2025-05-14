@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ArticleAnalyze">
-import type { Article, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } from "@teek/config";
+import type { ArticleAnalyze, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } from "@teek/config";
 import type { TkContentData } from "@teek/config";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
@@ -42,7 +42,7 @@ const pageViewInfo = computed(() => {
 });
 
 // 文章信息配置项
-const articleConfig = getTeekConfigRef<Article>("article", {
+const articleConfig = getTeekConfigRef<ArticleAnalyze>("articleAnalyze", {
   showInfo: true,
   showIcon: true,
   teleport: {},

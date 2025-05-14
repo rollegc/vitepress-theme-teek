@@ -8,6 +8,7 @@ export * from "./ArticleInfo";
 export * from "./ArticleOverviewPage";
 export * from "./ArticlePageStyle";
 export * from "./ArticleShare";
+export * from "./ArticleTitle";
 export * from "./ArticleUpdate";
 export * from "./BodyBgImage";
 export * from "./CataloguePage";

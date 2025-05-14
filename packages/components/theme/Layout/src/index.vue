@@ -57,7 +57,8 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   bodyBgImg: {},
   notice: {},
   comment: { provider: "" },
-  article: { articleUpdate: true },
+  articleUpdate: { enabled: true },
+  articleTopTip: undefined,
   articleShare: {},
   appreciation: {},
 });
@@ -80,7 +81,7 @@ const commentConfig = computed(() => {
 });
 
 const topTipConfig = computed(() => {
-  return teekConfig.value.article.topTip?.(frontmatter.value, localeIndex.value, page.value);
+  return teekConfig.value.articleTopTip?.(frontmatter.value, localeIndex.value, page.value);
 });
 
 const themeSizeAttribute = ns.joinNamespace("theme-size");
@@ -169,7 +170,7 @@ const usedSlots = [
         <slot name="doc-after" />
 
         <slot name="teek-doc-update-before" />
-        <TkArticleUpdate v-if="teekConfig.article.articleUpdate && frontmatter.articleUpdate !== false" />
+        <TkArticleUpdate v-if="teekConfig.articleUpdate.enabled && frontmatter.articleUpdate !== false" />
         <slot name="teek-doc-update-after" />
 
         <slot name="teek-doc-after-appreciation-before" />

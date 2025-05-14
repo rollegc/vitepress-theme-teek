@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HomePostItemCard">
-import type { Article, Post, TkContentData } from "@teek/config";
+import type { ArticleAnalyze, Post, TkContentData } from "@teek/config";
 import { computed } from "vue";
 import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
@@ -7,8 +7,8 @@ import { topIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { createImageViewer } from "@teek/components/common/ImageViewer";
 import { TkIcon } from "@teek/components/common/Icon";
-import { TkTitleTag } from "@teek/components/common/TitleTag";
 import { TkArticleInfo } from "@teek/components/theme/ArticleInfo";
+import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "HomePostItemCard" });
 
@@ -26,7 +26,7 @@ const postConfig = getTeekConfigRef<Post>("post", {
   cardStyleTitleTagPosition: "left",
   defaultCoverImg: [],
 });
-const articleConfig = getTeekConfigRef<Article>("article", { showInfo: true });
+const articleConfig = getTeekConfigRef<ArticleAnalyze>("articleAnalyze", { showInfo: true });
 
 const postUrl = post.url && withBase(post.url);
 
@@ -64,17 +64,7 @@ const isShowInfo = computed(() => {
 
     <div :class="[ns.e('info')]">
       <a class="title hover-color, sle" :href="postUrl" :aria-label="post.title">
-        <TkTitleTag
-          v-if="postConfig.cardStyleTitleTagPosition === 'left'"
-          :text="post.frontmatter.titleTag"
-          :position="postConfig.cardStyleTitleTagPosition"
-        />
-        <span>{{ post.title }}</span>
-        <TkTitleTag
-          v-if="postConfig.cardStyleTitleTagPosition === 'right'"
-          :text="post.frontmatter.titleTag"
-          :position="postConfig.cardStyleTitleTagPosition"
-        />
+        <TkArticleTitle :post :title-tag-props="{ position: postConfig.cardStyleTitleTagPosition }" />
       </a>
 
       <span v-if="excerpt" class="excerpt mle" v-html="excerpt" :aria-label="t('tk.homePost.excerptLabel')" />
