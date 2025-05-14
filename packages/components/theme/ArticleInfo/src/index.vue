@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticleInfo">
 import type { PostBaseInfoProps } from "./articleInfo";
-import type { Article, ArticleInfoPosition, TkContentData } from "@teek/config";
+import type { ArticleAnalyze, ArticleInfoPosition, TkContentData } from "@teek/config";
 import { useRoute, withBase, useData } from "vitepress";
 import { computed } from "vue";
 import { formatDate, isFunction } from "@teek/helper";
@@ -20,7 +20,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const { page } = useData();
 
 // 文章信息配置项
-const articleConfig = getTeekConfigRef<Article>("article", {
+const articleConfig = getTeekConfigRef<ArticleAnalyze>("articleAnalyze", {
   showIcon: true,
   dateFormat: "yyyy-MM-dd",
   showAuthor: true,

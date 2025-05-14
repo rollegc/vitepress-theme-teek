@@ -1,5 +1,5 @@
 ---
-title: ArticlePage 文章页
+title: ArticlePage 文章页 <Badge type="tip" text="v1.2.0" name />
 date: 2025-05-13 01:29:21
 permalink: /ecosystem/components/article-page
 categories:

@@ -1,5 +1,5 @@
 ---
-title: ArticleUpdate 文章最近更新栏
+title: ArticleUpdate 文章最近更新栏 <Badge type="tip" text="v1.2.0" />
 date: 2025-05-12 22:58:00
 permalink: /ecosystem/components/article-update
 categories:
@@ -21,8 +21,8 @@ import "vitepress-theme-teek/theme-chalk/tk-article-update.css";
 import { h } from "vue";
 
 provide(teekConfigContext, {
-  article: {
-    articleUpdateLimit: 3, // 默认为 3，表示最多显示 3 条最近更新文章
+  articleUpdate: {
+    limit: 3, // 默认为 3，表示最多显示 3 条最近更新文章
   },
 });
 

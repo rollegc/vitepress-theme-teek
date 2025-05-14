@@ -12,42 +12,35 @@
   font-weight: 500;
   border: 1px solid getCssVar("theme-color");
   color: getCssVar("theme-color");
-  -webkit-text-fill-color: getCssVar("theme-color");
 
   @include m(vp-primary) {
     border: 1px solid var(--vp-c-indigo-1);
     color: var(--vp-c-indigo-1);
-    -webkit-text-fill-color: var(--vp-c-indigo-1);
   }
 
   @include m(vp-info) {
     border: 1px solid var(--vp-c-gray-1);
     color: var(--vp-c-gray-1);
-    -webkit-text-fill-color: var(--vp-c-gray-1);
   }
 
   @include m(vp-success) {
     border: 1px solid var(--vp-c-green-1);
     color: var(--vp-c-green-1);
-    -webkit-text-fill-color: var(--vp-c-green-1);
   }
 
   @include m(vp-warning) {
     border: 1px solid var(--vp-c-yellow-1);
     color: var(--vp-c-yellow-1);
-    -webkit-text-fill-color: var(--vp-c-yellow-1);
   }
 
   @include m(vp-danger) {
     border: 1px solid var(--vp-c-red-1);
     color: var(--vp-c-red-1);
-    -webkit-text-fill-color: var(--vp-c-red-1);
   }
 
   @include m(vp-important) {
     border: 1px solid var(--vp-c-purple-1);
     color: var(--vp-c-purple-1);
-    -webkit-text-fill-color: var(--vp-c-purple-1);
   }
 
   @each $epType in (ep-primary, ep-info, ep-success, ep-warning, ep-danger) {
@@ -56,7 +49,6 @@
 
       border: 1px solid getCssVar("el-color", $type);
       color: getCssVar("el-color", $type);
-      -webkit-text-fill-color: getCssVar("el-color", $type);
     }
   }
 

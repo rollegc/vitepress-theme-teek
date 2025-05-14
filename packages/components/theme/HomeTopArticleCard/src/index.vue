@@ -6,8 +6,8 @@ import { useNamespace, useLocale } from "@teek/hooks";
 import { topArticleIcon } from "@teek/static";
 import { formatDate, isFunction } from "@teek/helper";
 import { useTeekConfig, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
-import { TkTitleTag } from "@teek/components/common/TitleTag";
 import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "HomeTopArticleCard" });
 
@@ -105,8 +105,7 @@ const handleTitleClick = () => {
           <span :class="['num', { sticky: item.frontmatter.sticky }]">{{ item.num }}</span>
           <div :class="ns.e('list__item__info')">
             <a :href="item.url && withBase(item.url)" class="hover-color flx-align-center">
-              <span class="title sle">{{ item.title }}</span>
-              <TkTitleTag :text="item.frontmatter.titleTag" position="right" size="mini" />
+              <TkArticleTitle :post="item" :title-tag-props="{ position: 'right', size: 'mini' }" />
             </a>
             <div class="date">{{ formatPostDate(item.date) }}</div>
           </div>

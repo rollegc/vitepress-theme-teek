@@ -1,5 +1,5 @@
 ---
-title:
+title: Popover 弹出框 <Badge type="tip" text="v1.1.0" />
 date: 2025-04-22 21:23:28
 permalink: /ecosystem/components/popover
 categories:

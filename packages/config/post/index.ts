@@ -29,11 +29,16 @@ export const transformData = (data: FileContentLoaderData): TkContentData => {
 
   if (frontmatter.date) frontmatter.date = formatDate(frontmatter.date);
 
+  const title = getTitle(data);
+  // 如果 title 带有 HTML，则进行切割
+  const titleHtml = splitIfExitsComponent(title);
+
   return {
     url,
     frontmatter,
     author: themeConfig.author,
-    title: getTitle(data),
+    title: titleHtml.text,
+    titleHtml,
     date: getDate(data, siteConfig.srcDir),
     excerpt,
     capture: getCaptureText(data),
@@ -157,4 +162,31 @@ export const getCaptureText = (post: TkContentData, count = 300) => {
       ?.trim()
       ?.slice(0, count)
   );
+};
+
+/**
+ * 分割 HTML 字符串，如果有大写开头的标签，则为 componentText
+ */
+export const splitIfExitsComponent = (
+  str: string
+): { text?: string; componentText?: string; position?: "before" | "after" } => {
+  // 匹配大写开头的完整标签或自闭合标签
+  const tagPattern = /<([A-Z][^>\s]*)(?:\s+[^>]*)?(?:\/>|>([\s\S]*?)<\/\1>)/g;
+  const match = tagPattern.exec(str);
+
+  if (!match) return { text: str };
+
+  const fullTag = match[0];
+  const tagIndex = str.indexOf(fullTag);
+  const before = str.slice(0, tagIndex).trim();
+  const after = str.slice(tagIndex + fullTag.length).trim();
+
+  // 纯组件本身
+  if (!before && !after) return { text: "", componentText: fullTag, position: "after" };
+  // 组件在前面
+  if (!before && after) return { text: after, componentText: fullTag, position: "before" };
+  // 组件在后面
+  if (!after && before) return { text: before, componentText: fullTag, position: "after" };
+  // 组件在中间（默认作为 after）
+  return { text: before, componentText: fullTag, position: "after" };
 };

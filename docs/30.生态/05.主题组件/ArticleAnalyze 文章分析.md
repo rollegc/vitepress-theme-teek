@@ -21,7 +21,7 @@ import { h } from "vue";
 
 provide(teekConfigContext, {
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
-  article: {
+  articleAnalyze: {
     showIcon: true,
     dateFormat: "yyyy-MM-dd",
     showAuthor: true,

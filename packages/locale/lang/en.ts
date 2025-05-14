@@ -50,6 +50,9 @@ export default {
       text: "Share this page",
       copiedText: "Link copied",
     },
+    articleTitle: {
+      label: "Article Title",
+    },
     articleUpdate: {
       label: "Recent Update",
     },

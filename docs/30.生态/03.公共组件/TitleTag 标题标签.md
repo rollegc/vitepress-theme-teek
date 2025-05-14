@@ -1,5 +1,5 @@
 ---
-title: TitleTag 标题标签
+title: TitleTag 标题标签 <Badge type="tip" text="v1.1.5" />
 date: 2025-05-10 01:10:39
 permalink: /ecosystem/components/title-tag
 categories:

@@ -50,6 +50,9 @@ export default {
       text: "分享此页面",
       copiedText: "链接已复制",
     },
+    articleTitle: {
+      label: "文章标题",
+    },
     articleUpdate: {
       label: "最近更新",
     },

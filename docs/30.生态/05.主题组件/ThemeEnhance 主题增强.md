@@ -1,5 +1,5 @@
 ---
-title: ThemeEnhance 主题增强
+title: ThemeEnhance 主题增强 <Badge type="tip" text="v1.1.0" />
 date: 2025-04-29 02:41:47
 permalink: /ecosystem/components/theme-enhance
 categories:

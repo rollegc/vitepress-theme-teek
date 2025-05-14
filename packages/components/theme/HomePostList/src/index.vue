@@ -72,7 +72,10 @@ const updateData = () => {
 
   // 总数处理
   if (total.value !== post?.length) total.value = post?.length || 0;
-  currentPosts.value = post?.slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
+
+  currentPosts.value = post
+    ?.filter(item => item.frontmatter.inHomePost !== false)
+    .slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
 };
 
 watch(
