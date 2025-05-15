@@ -43,6 +43,8 @@ Type 类型为：
 - `ep-warning`
 - `ep-danger`
 
+`position` 配置项告诉组件位于文本的哪个位置，当为 `left` 时，添加 `margin-right: 4px;` 样式，当为 `right` 时，添加 `margin-left: 4px;` 样式。
+
 ### 插槽
 
 | 插槽名  | 说明                         |

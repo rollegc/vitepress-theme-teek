@@ -22,6 +22,12 @@ export interface AutoFrontmatterOption {
    * 插件默认已经忽略 node_modules 和 dist 目录的所有文件
    */
   globOptions?: GlobOptions;
+  /**
+   * 每次启动项目时，是否重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则直接覆盖文件本身存在的 frontmatter
+   *
+   * @default false
+   */
+  reCover?: boolean;
 }
 
 export interface FileInfo {

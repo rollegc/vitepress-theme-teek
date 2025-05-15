@@ -1,10 +1,9 @@
 <script setup lang="ts" name="ArticleTitle">
 import type { TkContentData } from "@teek/config";
 import type { TkTitleTagProps } from "@teek/components/common/TitleTag";
-import { computed } from "vue";
-import { parseElementNameAndAttrs } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { TkTitleTag } from "@teek/components/common/TitleTag";
+import { createDynamicComponent } from "./compile";
 
 defineOptions({ name: "ArticleTitle" });
 
@@ -12,12 +11,6 @@ const props = defineProps<{ post: TkContentData; titleTagProps?: TkTitleTagProps
 
 const ns = useNamespace("article-title");
 const { t } = useLocale();
-
-// 获取文章标题的 HTML 信息
-const componentInfo = computed(() => {
-  if (!props.post.titleHtml.componentText) return {};
-  return parseElementNameAndAttrs(props.post.titleHtml.componentText);
-});
 </script>
 
 <template>
@@ -29,17 +22,9 @@ const componentInfo = computed(() => {
       :aria-label="post.frontmatter.titleTag"
     />
 
-    <template v-if="post.titleHtml?.position === 'before'">
-      <component v-if="componentInfo.isComponent" :is="componentInfo.name" v-bind="componentInfo.attrs" class="left" />
-      <span v-else v-html="post.titleHtml" />
-    </template>
-
-    <slot><span class="sle" v-html="post.titleHtml?.text || post.title" /></slot>
-
-    <template v-if="post.titleHtml?.position === 'after'">
-      <component v-if="componentInfo.isComponent" :is="componentInfo.name" v-bind="componentInfo.attrs" class="right" />
-      <span v-else v-html="post.titleHtml" />
-    </template>
+    <slot>
+      <component :is="createDynamicComponent(props.post.title)" />
+    </slot>
 
     <TkTitleTag
       v-if="post.frontmatter.titleTag && titleTagProps.position === 'right'"

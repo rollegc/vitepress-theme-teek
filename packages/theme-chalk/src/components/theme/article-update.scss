@@ -49,6 +49,7 @@
     flex: 1;
     display: flex;
     a {
+      padding-right: 10px;
       &:hover {
         text-decoration: underline;
         text-decoration-color: getCssVar("theme-color");

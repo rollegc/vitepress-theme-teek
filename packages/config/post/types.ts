@@ -11,10 +11,6 @@ export type TkContentData = FileContentLoaderData & {
    */
   title?: string;
   /**
-   * 文章标题的 HTML
-   */
-  titleHtml?: { text?: string; componentText?: string; position?: "before" | "after" };
-  /**
    * 文章创建时间
    */
   date?: string;
