@@ -4,7 +4,7 @@
 
 > 说明：只在页面加载 Markdown 内容时生成一级标题，并不会真正修改 Markdown 文档内容。
 
-插件默认不会给 `frontmatter.layout` 为 `home` 的 Markdown 注入一级标题。
+插件默认只给 `frontmatter.layout` 不存在或者 `frontmatter.layout` 为 `doc` 的 Markdown 注入一级标题，如果希望强制注入一级标题，可以使用 `autoTitle` 配置。
 
 ## ✨ Feature
 

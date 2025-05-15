@@ -46,34 +46,3 @@ export const get = (object: Record<string, any>, path: string, defaultValue?: an
     return obj || defaultValue;
   }
 };
-
-/**
- * 解析元素的名字和属性，如果是 HTMl 原生元素，则只返回 name，如果是 Vue 组件，则返回 name 和 attrs
- */
-export const parseElementNameAndAttrs = (elementStr: string) => {
-  // 提取标签名（兼容原生 HTML 标签和 Vue 组件）
-  const tagNameMatch = elementStr.match(/^<(\w+)/);
-  if (!tagNameMatch) return { name: elementStr, isComponent: false };
-
-  const tagName = tagNameMatch[1];
-  const isComponent = /^[A-Z]/.test(tagName); // 判断是否为组件
-
-  // 提取属性
-  const attrsRegex = /([\w-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([\w-.]+)))?/gi;
-  const attrs: Record<string, any> = {};
-  let match: RegExpExecArray | null;
-
-  while ((match = attrsRegex.exec(elementStr)) !== null) {
-    const [, key, value1, value2, value3] = match;
-    const value = value1 ?? value2 ?? value3 ?? true;
-
-    // 处理类型
-    if ((value as any) === true) attrs[key] = true;
-    else if (!isNaN(value as any)) attrs[key] = Number(value);
-    else if (value === "true") attrs[key] = true;
-    else if (value === "false") attrs[key] = false;
-    else attrs[key] = value;
-  }
-
-  return { name: tagName, attrs, isComponent };
-};

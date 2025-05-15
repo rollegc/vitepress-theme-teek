@@ -9,6 +9,8 @@ import {
   TkArchivesPage,
   TkDemoCode,
   TkArticleOverviewPage,
+  TkTitleTag,
+  TkIcon,
 } from "@teek/components";
 
 import "../theme-chalk/src/index.scss";
@@ -32,6 +34,8 @@ export default {
     app.component("TkArchivesPage", TkArchivesPage);
     app.component("TkArticleOverviewPage", TkArticleOverviewPage);
     app.component("TkDemoCode", TkDemoCode);
+    app.component("TkTitleTag", TkTitleTag);
+    app.component("TkIcon", TkIcon);
 
     // 站点分析
     const siteAnalytics = (siteData.value.themeConfig.siteAnalytics as TeekConfig["siteAnalytics"]) || [];

@@ -1,5 +1,5 @@
 ---
-title: ArticlePage 文章页 <Badge type="tip" text="v1.2.0" name />
+title: ArticlePage 文章页 <Badge type="tip" text="v1.2.0" />
 date: 2025-05-13 01:29:21
 permalink: /ecosystem/components/article-page
 categories:
@@ -10,14 +10,36 @@ tags:
   - 公共组件
 ---
 
-当在 Markdown 文档将 `frontmatter.layout` 设置为 `page`，VitePress 不会对该 Markdown 生成的文章页应用任何样式，这对于创建一个完全自定义的页面时很有用。
+当在 Markdown 文档将 `frontmatter.layout` 设置为 `page`，VitePress 不会对该 Markdown 生成的文章页应用任何样式，这对于需要创建一个完全自定义的页面时很有用。
 
-ArticlePage 文章页是一个用于完全自定义页面快速构建的组件，Teek 提供的 `目录页`、`归档页`、`清单页` 都是基于该组件构建的。
+**ArticlePage 文章页** 是一个快速构建自定义页面的组件，Teek 提供的 `目录页`、`归档页`、`清单页` 都是基于该组件构建的。
 
 ## 基础使用
 
-::: demo
+::: demo 构建一个基础的文章页框架
 articlePage/basic
+:::
+
+## 使用文章页样式
+
+::: demo 使用 VitePress 的文章页样式
+
+```yaml
+effect: articlePage/doc-iframe
+file: articlePage/doc
+```
+
+:::
+
+## 使用大纲栏
+
+::: demo 当存在 h1 到 h6 标题标签时，使用 `aside` 配置项，会自动生成一个大纲栏。
+
+```yaml
+effect: articlePage/aside-iframe
+file: articlePage/aside
+```
+
 :::
 
 ## API
