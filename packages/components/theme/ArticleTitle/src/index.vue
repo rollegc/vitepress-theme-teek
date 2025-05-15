@@ -7,7 +7,7 @@ import { createDynamicComponent } from "./compile";
 
 defineOptions({ name: "ArticleTitle" });
 
-const props = defineProps<{ post: TkContentData; titleTagProps?: TkTitleTagProps }>();
+defineProps<{ post: TkContentData; titleTagProps?: TkTitleTagProps }>();
 
 const ns = useNamespace("article-title");
 const { t } = useLocale();
@@ -16,18 +16,18 @@ const { t } = useLocale();
 <template>
   <span :class="ns.b()" :aria-label="t('tk.articleTitle.label')">
     <TkTitleTag
-      v-if="post.frontmatter.titleTag && titleTagProps.position === 'left'"
+      v-if="post.frontmatter.titleTag && titleTagProps?.position === 'left'"
       :text="post.frontmatter.titleTag"
       v-bind="titleTagProps"
       :aria-label="post.frontmatter.titleTag"
     />
 
     <slot>
-      <component :is="createDynamicComponent(props.post.title)" />
+      <component v-if="post.title" :is="createDynamicComponent(post.title)" />
     </slot>
 
     <TkTitleTag
-      v-if="post.frontmatter.titleTag && titleTagProps.position === 'right'"
+      v-if="post.frontmatter.titleTag && titleTagProps?.position === 'right'"
       :text="post.frontmatter.titleTag"
       v-bind="titleTagProps"
       :aria-label="post.frontmatter.titleTag"

@@ -111,16 +111,17 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
-    <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
-    <TkArticleHeadingHighlight />
-    <TkRightBottomButton>
-      <!-- 通用插槽 -->
-      <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
-    </TkRightBottomButton>
-
-    <TkNotice v-if="teekConfig.notice?.enabled">
-      <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
-    </TkNotice>
+    <template v-if="frontmatter.layout !== false">
+      <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
+      <TkArticleHeadingHighlight />
+      <TkNotice v-if="teekConfig.notice?.enabled">
+        <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+      </TkNotice>
+      <TkRightBottomButton>
+        <!-- 通用插槽 -->
+        <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+      </TkRightBottomButton>
+    </template>
 
     <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">
       <template #home-hero-before>

@@ -27,7 +27,7 @@ export interface AutoFrontmatterOption {
    *
    * @default false
    */
-  reCover?: boolean;
+  recover?: boolean;
 }
 
 export interface FileInfo {

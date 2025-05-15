@@ -20,7 +20,8 @@ export default function VitePluginVitePressMdH1(option: MdH1Option = {}): Plugin
       const content = readFileSync(id, "utf-8");
       const { data: frontmatter = {}, content: mdContent } = matter(content, {});
 
-      if (frontmatter.layout === "home" || frontmatter.autoTitle === false) return;
+      if (frontmatter.autoTitle === undefined && ![undefined, "doc"].includes(frontmatter.layout)) return;
+      if (frontmatter.autoTitle === false) return;
       // 如果已经存在一级标题，则不需要往下处理
       if (mdContent.trimStart().split(/\r?\n/)[0].startsWith("# ")) return;
 

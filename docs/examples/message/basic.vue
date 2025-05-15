@@ -42,12 +42,12 @@ const openPlain = () => {
 
 <template>
   <div class="message-container">
-    <button @click="openPrimary">Primary</button>
-    <button @click="openSuccess">Success</button>
-    <button @click="openWarning">Warning</button>
-    <button @click="openDefault">Message</button>
-    <button @click="openError">Error</button>
-    <button @click="openVn">VNode</button>
+    <button class="hover-color" @click="openPrimary">Primary</button>
+    <button class="hover-color" @click="openSuccess">Success</button>
+    <button class="hover-color" @click="openWarning">Warning</button>
+    <button class="hover-color" @click="openDefault">Message</button>
+    <button class="hover-color" @click="openError">Error</button>
+    <button class="hover-color" @click="openVn">VNode</button>
 
     <button @click="openPlain">Plain Success</button>
   </div>

@@ -3,28 +3,31 @@
 @use "../../mixins/config" as *;
 
 @include b(article-page) {
-  max-width: getCssVar("page-width");
-  margin: 24px auto;
+  margin: 25px auto;
+  width: 100%;
+
+  @media (min-width: 1280px) {
+    width: getCssVar("page-width");
+  }
+  @media (max-width: 1280px) {
+    padding: 0 15px;
+  }
 
   @include when(aside) {
     display: flex;
 
-    .#{$namespace}-doc {
-      margin: 24px 0;
+    @media (min-width: 1280px) {
+      width: calc(getCssVar("page-width") + 256px);
     }
   }
 
   .#{$namespace}-doc {
-    margin: 24px auto;
     padding: 20px 30px;
     box-shadow: var(--vp-shadow-3);
     border-radius: 10px;
     background-color: getCssVar("bg-color");
     overflow-y: auto;
-
-    @media (max-width: 768px) {
-      max-width: 100%;
-    }
+    flex: 1;
   }
 
   @include e(aside) {
@@ -136,9 +139,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition:
-      color 0.3s,
-      font-weight 0.3s;
+    transition: color 0.3s;
 
     &:hover {
       font-weight: 700;

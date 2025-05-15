@@ -26,7 +26,7 @@ const {
   copyButtonTip = t("tk.demoCode.copy"),
   collapseSourceButtonTip = t("tk.demoCode.collapseSource"),
   expandSourceButtonTip = t("tk.demoCode.expandSource"),
-} = { ...JSON.parse(decodeURIComponent(props.demo)), ...frontmatter.value.demo };
+} = { ...JSON.parse(decodeURIComponent(props.options)), ...frontmatter.value.demo };
 
 const decodeSource = computed(() => decodeURIComponent(props.source));
 const decodeRawSource = computed(() => decodeURIComponent(props.rawSource));

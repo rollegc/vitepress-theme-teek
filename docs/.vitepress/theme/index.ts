@@ -13,6 +13,7 @@ import "@teek/theme-chalk/vp-plus/index-rainbow.scss";
 import "@teek/theme-chalk/vp-plus/doc-fade-in.scss";
 import "@teek/theme-chalk/tk-plus/banner-desc-gradient.scss"; // 博客风格 Banner 描述渐变样式
 import "./styles/code-bg.scss";
+import "./styles/iframe.scss";
 
 export default {
   extends: Teek,

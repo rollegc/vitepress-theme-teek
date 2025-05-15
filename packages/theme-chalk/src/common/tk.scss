@@ -20,7 +20,7 @@
   background-color: getCssVar("el-color-success-light-9");
 }
 
-a.hover-color {
+.hover-color {
   transition: color 0.2s;
   &:hover {
     color: getCssVar("theme-color");
