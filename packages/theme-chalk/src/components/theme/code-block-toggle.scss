@@ -80,13 +80,6 @@ html[code-block="#{$namespace}"] {
       background-size: 14px;
       background-color: transparent;
       border: none;
-      color: var(--vp-c-text-1);
-      fill: var(--vp-c-text-1);
-      &:hover,
-      .copied {
-        background-color: transparent;
-        border: none;
-      }
     }
 
     /* 语言和一键复制图标不会消失 */
@@ -108,6 +101,11 @@ html[code-block="#{$namespace}"] {
     transform: translateY(-50%);
     transition: all 0.3s;
     user-select: none;
+    color: var(--vp-c-text-2);
+
+    &:hover {
+      color: var(--vp-c-text-1);
+    }
 
     svg {
       width: 16px;

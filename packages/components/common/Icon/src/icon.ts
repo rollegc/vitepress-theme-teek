@@ -5,7 +5,7 @@ export interface IconProps {
   /**
    * 图标
    */
-  icon: string | Object | Component | IconifyIcon;
+  icon?: string | Object | Component | IconifyIcon;
   /**
    * 图标类型
    */

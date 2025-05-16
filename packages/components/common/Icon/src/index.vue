@@ -12,7 +12,7 @@ defineOptions({ name: "Icon" });
 
 const ns = useNamespace("icon");
 
-const { icon, iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps & { icon: any }>();
+const { icon = "", iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps & { icon: any }>();
 
 const slot = useSlots();
 

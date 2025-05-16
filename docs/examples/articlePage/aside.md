@@ -1,6 +1,7 @@
 ---
 layout: false
 permalink: /iframe/articlePage/aside
+article: false
 ---
 
 <script setup lang="ts">
