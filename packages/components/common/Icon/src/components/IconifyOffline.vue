@@ -1,6 +1,6 @@
 <script setup lang="ts" name="IconifyOffline">
 import type { IconifyIcon } from "@iconify/vue";
-import { onMounted } from "vue";
+import { onMounted, useId } from "vue";
 import { Icon, addIcon } from "@iconify/vue";
 
 defineOptions({ name: "IconifyOffline" });
@@ -8,7 +8,8 @@ defineOptions({ name: "IconifyOffline" });
 const props = defineProps<{ icon: IconifyIcon }>();
 
 onMounted(() => {
-  addIcon(props.icon + "", props.icon as IconifyIcon);
+  const id = useId();
+  addIcon(`iconify-${id}`, props.icon as IconifyIcon);
 });
 </script>
 

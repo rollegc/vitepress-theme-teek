@@ -8,6 +8,7 @@
 
   @media (min-width: 1280px) {
     width: getCssVar("page-width");
+    transform: translateX(80px);
   }
   @media (max-width: 1280px) {
     padding: 0 15px;
@@ -17,7 +18,7 @@
     display: flex;
 
     @media (min-width: 1280px) {
-      width: calc(getCssVar("page-width") + 256px);
+      width: calc(getCssVar("page-width") + 280px);
     }
   }
 

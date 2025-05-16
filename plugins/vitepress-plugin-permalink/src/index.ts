@@ -202,7 +202,7 @@ const getDirname = () => {
 };
 
 /**
- * 1、将 UsePermalink 组件传入 VitePress 的 layout-top 插槽
+ * 1、将 UsePermalink 组件传入 VitePress 的 layout-bottom 插槽
  * 2、将 NotFoundDelay 组件传入 VitePress 的 not-found 插槽
  */
 export function VitePluginVitePressUsePermalink(option: NotFoundOption = {}): Plugin & { name: string } {
@@ -240,14 +240,14 @@ export function VitePluginVitePressUsePermalink(option: NotFoundOption = {}): Pl
         // 读取原始的 Vue 文件内容
         const code = readFileSync(id, "utf-8");
 
-        const layoutTopSlotPosition = `<slot name="layout-top" />`;
+        const layoutTopSlotPosition = `<slot name="layout-bottom" />`;
         const slotName = "not-found";
         const notFoundSlotPosition = `<slot name="${slotName}" />`;
         const setupPosition = '<script setup lang="ts">';
 
         // 插入自定义组件
         return code
-          .replace(layoutTopSlotPosition, `<${UsePermalinkComponentName} />${layoutTopSlotPosition}`)
+          .replace(layoutTopSlotPosition, `${layoutTopSlotPosition} <${UsePermalinkComponentName} />`)
           .replace(
             notFoundSlotPosition,
             `<${NotFoundDelayComponentName}><template #${slotName}>${notFoundSlotPosition}</template></${NotFoundDelayComponentName}>`

@@ -104,7 +104,7 @@ const myFunction = () => {
 
 ### usePermalink 函数
 
-插件已经在 VitePress 的 `layout-top` 插槽引入 `usePermalink` 函数来初始化 permalinks 功能，如果因为 VitePress 升版等原因导致没有初始化 permalinks，则可以手动引入该函数进行初始化操作。
+插件已经在 VitePress 的 `layout-bottom` 插槽引入 `usePermalink` 函数来初始化 permalinks 功能，如果因为 VitePress 升版等原因导致没有初始化 permalinks，则可以手动引入该函数进行初始化操作。
 
 > 怎么验证 `usePermalink` 函数初始化是否生效？
 
