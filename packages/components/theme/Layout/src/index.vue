@@ -34,6 +34,7 @@ import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
 import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
+import { TkLogin, useWatchLogin } from "@teek/components/theme/Login";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -100,6 +101,11 @@ watch(
   { immediate: true, flush: "post" }
 );
 
+const { watchSite, watchPages } = useWatchLogin();
+
+watchSite();
+watchPages();
+
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [
   "home-hero-before",
@@ -115,6 +121,8 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
+    <TkLogin v-if="frontmatter.loginPage === true" />
+
     <template v-if="frontmatter.layout !== false">
       <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
       <TkArticleHeadingHighlight />

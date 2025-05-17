@@ -46,3 +46,25 @@ export const get = (object: Record<string, any>, path: string, defaultValue?: an
     return obj || defaultValue;
   }
 };
+
+/**
+ * 删除 Storage 的数据
+ *
+ * @param key 键名
+ * @param storage 存储类型，如 localStorage, sessionStorage
+ * @param vague 是否模糊匹配
+ */
+export const removeStorageItem = (key: string, storage: Storage, vague = false) => {
+  if (!vague) return storage.removeItem(key);
+
+  const keysToRemove: string[] = [];
+
+  for (let i = 0; i < storage.length; i++) {
+    const key = storage.key(i);
+    if (key && key.startsWith(key)) {
+      keysToRemove.push(key);
+    }
+  }
+
+  keysToRemove.forEach(key => storage.removeItem(key));
+};

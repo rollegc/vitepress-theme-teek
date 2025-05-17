@@ -260,5 +260,15 @@ export default {
           "Add a solid background below the current element under the mouse pointer to highlight its position.",
       },
     },
+    login: {
+      label: "Login Page",
+      reset: "Reset",
+      login: "Login",
+      loginSuccess: "Login succeeded!",
+      loginError: "Username or password incorrect!",
+      loginInfoNull: "Please input your username and password!",
+      usernamePlaceholder: "Please input a username",
+      passwordPlaceholder: "Please input a password",
+    },
   },
 };

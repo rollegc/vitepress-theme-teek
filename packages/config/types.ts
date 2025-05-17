@@ -29,6 +29,7 @@ import type {
   TopArticle,
   Wallpaper,
   Markdown,
+  Private,
 } from "./interface";
 
 export type * from "./interface";
@@ -207,6 +208,10 @@ export interface TeekConfig {
    * 文章页最近更新栏配置
    */
   articleUpdate?: ArticleUpdate;
+  /**
+   * 私密功能配置
+   */
+  private?: Private;
   /**
    * 赞赏功能配置
    */

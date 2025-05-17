@@ -14,11 +14,41 @@ export interface StorageEventLike {
 }
 
 export interface UseStorageOptions<T> {
+  /**
+   * vue watch 的 flush 选项
+   *
+   * @default 'pre'
+   */
   flush?: "pre" | "post" | "sync";
+  /**
+   * vue watch 的 deep 选项
+   *
+   * @default false
+   */
   deep?: boolean;
+  /**
+   * 如果 storage 中没有值，则存储默认值
+   *
+   * @default true
+   */
   writeDefaults?: boolean;
+  /**
+   * storage 的值是否与默认值合并
+   *
+   *  @default false
+   */
   mergeDefaults?: boolean | ((storageValue: T, defaults: T) => T);
+  /**
+   * 存储值的序列化函数
+   *
+   * @default JSON.stringify
+   */
   serializer?: Serializer<T>;
+  /**
+   * 是否在 onMounted 阶段读取 storage 的值
+   *
+   * @default true
+   */
   initOnMounted?: boolean;
 }
 
@@ -105,7 +135,7 @@ export const useStorage = <T extends string | number | boolean | object | null>(
   watch(data, () => write(data.value), { flush, deep });
 
   useMounted(() => {
-    if (!initOnMounted) update();
+    if (initOnMounted) update();
   });
 
   /**

@@ -11,6 +11,7 @@ import {
   TkArticleOverviewPage,
   TkTitleTag,
   TkIcon,
+  TkLogin,
 } from "@teek/components";
 
 import "../theme-chalk/src/index.scss";
@@ -36,6 +37,7 @@ export default {
     app.component("TkDemoCode", TkDemoCode);
     app.component("TkTitleTag", TkTitleTag);
     app.component("TkIcon", TkIcon);
+    app.component("TkLogin", TkLogin);
 
     // 站点分析
     const siteAnalytics = (siteData.value.themeConfig.siteAnalytics as TeekConfig["siteAnalytics"]) || [];
