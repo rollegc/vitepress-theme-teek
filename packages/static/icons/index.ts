@@ -50,6 +50,7 @@ export { default as successFilledIcon } from "./successFilled";
 export { default as warningFilledIcon } from "./warningFilled";
 export { default as questionFilledIcon } from "./questionFilled";
 export { default as topIcon } from "./top";
+export { default as lockIcon } from "./lock";
 
 export { default as autoWidthIcon } from "./theme-enhance/autoWidth";
 export { default as clickIcon } from "./theme-enhance/click";

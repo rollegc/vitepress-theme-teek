@@ -19,6 +19,7 @@ export type * from "./markdown";
 export type * from "./notice";
 export type * from "./plugins";
 export type * from "./post";
+export type * from "./private";
 export type * from "./siteAnalysis";
 export type * from "./social";
 export type * from "./tag";

@@ -41,12 +41,6 @@ const popupVisible = useElementHover(popoverRef);
 
 const triggerElComputed = computed(() => triggerEl || triggerRef.value);
 
-// 点击其他区域关闭弹框
-onClickOutside(popoverRef, () => {
-  if (trigger === "hover") return;
-  if (visible.value !== false) visible.value = false;
-});
-
 const { top, right, left, bottom, update } = usePopoverSize(triggerElComputed, popoverRef, {
   placement,
   offset,
@@ -113,6 +107,14 @@ watch(visible, newVal => {
 // 如果为 hover，则鼠标悬停在弹框内，不关闭弹框
 watch(popupVisible, newVal => {
   if (trigger === "hover") visible.value = newVal;
+});
+
+// 点击其他区域关闭弹框
+onClickOutside(popoverRef, e => {
+  // 如果点击了触发元素，则不关闭弹框
+  if (e.composedPath().includes(triggerRef.value)) return;
+  if (trigger === "hover") return;
+  if (visible.value !== false) visible.value = false;
 });
 
 const popoverContainerId = ns.joinNamespace("popover-container");

@@ -8,7 +8,11 @@ import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
-import { TkDocAfterAppreciation, TkAsideBottomAppreciation } from "@teek/components/theme/ArticleAppreciation";
+import {
+  TkDocAfterAppreciation,
+  TkAsideBottomAppreciation,
+  TkDocAfterAppreciationPopper,
+} from "@teek/components/theme/ArticleAppreciation";
 import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
 import { TkArticleShare } from "@teek/components/theme/ArticleShare";
 import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
@@ -30,6 +34,7 @@ import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
 import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
+import { TkLogin, useWatchLogin } from "@teek/components/theme/Login";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -96,6 +101,11 @@ watch(
   { immediate: true, flush: "post" }
 );
 
+const { watchSite, watchPages } = useWatchLogin();
+
+watchSite();
+watchPages();
+
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [
   "home-hero-before",
@@ -111,6 +121,8 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
+    <TkLogin v-if="frontmatter.loginPage === true" />
+
     <template v-if="frontmatter.layout !== false">
       <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
       <TkArticleHeadingHighlight />
@@ -176,6 +188,7 @@ const usedSlots = [
 
         <slot name="teek-doc-after-appreciation-before" />
         <TkDocAfterAppreciation v-if="teekConfig.appreciation.position === 'doc-after'" />
+        <TkDocAfterAppreciationPopper v-else-if="teekConfig.appreciation.position === 'doc-after-popper'" />
         <slot name="teek-doc-after-appreciation-after" />
 
         <slot name="teek-comment-before" />

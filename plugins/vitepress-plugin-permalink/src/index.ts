@@ -206,9 +206,8 @@ const getDirname = () => {
  * 2、将 NotFoundDelay 组件传入 VitePress 的 not-found 插槽
  */
 export function VitePluginVitePressUsePermalink(option: NotFoundOption = {}): Plugin & { name: string } {
-  const UsePermalinkComponentName = "UsePermalink";
-  const UsePermalinkComponentFile = `${UsePermalinkComponentName}.vue`;
-  const aliasUsePermalinkComponentFile = `${getDirname()}/components/${UsePermalinkComponentFile}`;
+  const usePermalinkFile = `usePermalink`;
+  const aliasUsePermalinkFile = `${getDirname()}/${usePermalinkFile}`;
 
   const NotFoundDelayComponentName = "NotFoundDelay";
   const NotFoundDelayComponentFile = `${NotFoundDelayComponentName}.vue`;
@@ -222,7 +221,7 @@ export function VitePluginVitePressUsePermalink(option: NotFoundOption = {}): Pl
       return {
         resolve: {
           alias: {
-            [`./${UsePermalinkComponentFile}`]: aliasUsePermalinkComponentFile,
+            [`./${usePermalinkFile}`]: aliasUsePermalinkFile,
             [`./${NotFoundDelayComponentFile}`]: aliasNotFoundDelayComponentFile,
           },
         },
@@ -240,22 +239,21 @@ export function VitePluginVitePressUsePermalink(option: NotFoundOption = {}): Pl
         // 读取原始的 Vue 文件内容
         const code = readFileSync(id, "utf-8");
 
-        const layoutTopSlotPosition = `<slot name="layout-bottom" />`;
         const slotName = "not-found";
         const notFoundSlotPosition = `<slot name="${slotName}" />`;
         const setupPosition = '<script setup lang="ts">';
 
         // 插入自定义组件
         return code
-          .replace(layoutTopSlotPosition, `${layoutTopSlotPosition} <${UsePermalinkComponentName} />`)
           .replace(
             notFoundSlotPosition,
             `<${NotFoundDelayComponentName}><template #${slotName}>${notFoundSlotPosition}</template></${NotFoundDelayComponentName}>`
           )
           .replace(
             setupPosition,
-            `${setupPosition}\nimport ${UsePermalinkComponentName} from './${UsePermalinkComponentFile}'\nimport ${NotFoundDelayComponentName} from './${NotFoundDelayComponentFile}'`
-          );
+            `${setupPosition}\nimport ${usePermalinkFile} from './${usePermalinkFile}'\nimport ${NotFoundDelayComponentName} from './${NotFoundDelayComponentFile}'`
+          )
+          .replace("</script>", `${usePermalinkFile}().startWatch() </script>`);
       }
     },
   };

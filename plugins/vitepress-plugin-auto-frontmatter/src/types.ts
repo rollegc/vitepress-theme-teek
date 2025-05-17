@@ -23,11 +23,11 @@ export interface AutoFrontmatterOption {
    */
   globOptions?: GlobOptions;
   /**
-   * 每次启动项目时，是否重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则直接覆盖文件本身存在的 frontmatter
+   * 每次启动项目时，是否基于 transform 返回的数据重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则重新生成新的 frontmatter
    *
    * @default false
    */
-  recover?: boolean;
+  recoverTransform?: boolean;
 }
 
 export interface FileInfo {

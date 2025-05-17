@@ -69,14 +69,15 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
 
     // 自定义 frontmatter 内容，添加永久链接和分类
     autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
-      let transformResult = transform?.(frontmatter, fileInfo) || {};
-
+      let transformResult = {};
       if (permalink && !frontmatter.permalink) {
         transformResult = { ...transformResult, ...createPermalink(permalinkPrefix) };
       }
       if (categories && !frontmatter.categories) {
         transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
+
+      transformResult = transform?.(transformResult, fileInfo) || transformResult;
 
       return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
     };

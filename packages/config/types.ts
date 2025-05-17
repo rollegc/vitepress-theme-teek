@@ -29,6 +29,7 @@ import type {
   TopArticle,
   Wallpaper,
   Markdown,
+  Private,
 } from "./interface";
 
 export type * from "./interface";
@@ -208,9 +209,17 @@ export interface TeekConfig {
    */
   articleUpdate?: ArticleUpdate;
   /**
+   * 私密功能配置
+   */
+  private?: Private;
+  /**
    * 赞赏功能配置
    */
-  appreciation?: Appreciation<""> | Appreciation<"doc-after"> | Appreciation<"aside-bottom">;
+  appreciation?:
+    | Appreciation<"">
+    | Appreciation<"doc-after">
+    | Appreciation<"aside-bottom">
+    | Appreciation<"doc-after-popper">;
   /**
    * 面包屑配置
    */

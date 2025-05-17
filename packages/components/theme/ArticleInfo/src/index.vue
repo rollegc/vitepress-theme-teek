@@ -36,9 +36,7 @@ const route = useRoute();
 // 文章创建时间，先读取 post.date，如果不存在，则遍历所有 md 文档获取文档的创建时间（因此建议在文档的 frontmatter 配置 date，让文章扫描耗费性能降低）
 const createDate = computed(() => {
   const originPosts: TkContentData[] = posts.value.originPosts;
-  const date =
-    post.date ||
-    originPosts.filter(item => [item.url, `${item.url}.md`].includes(`/${route.data.relativePath}`))[0]?.date;
+  const date = post.date || originPosts.find(item => [item.url, item.frontmatter.permalink].includes(route.path))?.date;
   const dateFormatConst = articleConfig.value.dateFormat;
 
   if (isFunction(dateFormatConst)) return dateFormatConst(date || "");

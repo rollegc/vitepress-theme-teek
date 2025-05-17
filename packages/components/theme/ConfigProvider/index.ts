@@ -128,19 +128,25 @@ export const usePagePath = () => {
   const postPagePath = computed(() => {
     let archivesUrl = "";
     let articleOverviewUrl = "";
+    let loginUrl = "";
 
     // 一次性循环寻找多个文章相关的自定义页面，避免重复对 posts.value.allPosts 循环
     posts.value.allPosts.forEach(item => {
       const {
-        frontmatter: { layout, archivesPage, articleOverviewPage },
+        frontmatter: { layout, archivesPage, articleOverviewPage, loginPage },
         url,
       } = item;
 
-      if (layout === "TkCataloguePage" || archivesPage === true) archivesUrl = url;
-      if (layout === "TkArticleOverviewPage" || articleOverviewPage === true) articleOverviewUrl = url;
+      const isPageLayout = layout === "page";
+
+      if (layout === "TkCataloguePage" || (isPageLayout && archivesPage === true)) archivesUrl = url;
+      if (layout === "TkArticleOverviewPage" || (isPageLayout && articleOverviewPage === true)) {
+        articleOverviewUrl = url;
+      }
+      if (layout === false && loginPage === true) loginUrl = url;
     });
 
-    return { archivesUrl, articleOverviewUrl };
+    return { archivesUrl, articleOverviewUrl, loginUrl };
   });
 
   return {
@@ -148,6 +154,7 @@ export const usePagePath = () => {
     tagPath,
     archivesPath: computed(() => postPagePath.value.archivesUrl),
     articleOverviewPath: computed(() => postPagePath.value.articleOverviewUrl),
+    loginPath: computed(() => postPagePath.value.loginUrl),
   };
 };
 

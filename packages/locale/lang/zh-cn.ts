@@ -255,5 +255,15 @@ export default {
         underHelpTipContent: "在当前鼠标悬停的元素下方添加一个纯色背景以突出显示当前鼠标悬停的位置。",
       },
     },
+    login: {
+      label: "登录页",
+      reset: "重置",
+      login: "登录",
+      loginSuccess: "登录成功！",
+      loginError: "用户名或者密码错误！",
+      loginInfoNull: "请输入用户名和密码！",
+      usernamePlaceholder: "请输入用户名",
+      passwordPlaceholder: "请输入密码",
+    },
   },
 };
