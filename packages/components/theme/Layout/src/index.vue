@@ -8,7 +8,11 @@ import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
-import { TkDocAfterAppreciation, TkAsideBottomAppreciation } from "@teek/components/theme/ArticleAppreciation";
+import {
+  TkDocAfterAppreciation,
+  TkAsideBottomAppreciation,
+  TkDocAfterAppreciationPopper,
+} from "@teek/components/theme/ArticleAppreciation";
 import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
 import { TkArticleShare } from "@teek/components/theme/ArticleShare";
 import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
@@ -176,6 +180,7 @@ const usedSlots = [
 
         <slot name="teek-doc-after-appreciation-before" />
         <TkDocAfterAppreciation v-if="teekConfig.appreciation.position === 'doc-after'" />
+        <TkDocAfterAppreciationPopper v-else-if="teekConfig.appreciation.position === 'doc-after-popper'" />
         <slot name="teek-doc-after-appreciation-after" />
 
         <slot name="teek-comment-before" />

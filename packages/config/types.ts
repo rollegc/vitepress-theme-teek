@@ -210,7 +210,11 @@ export interface TeekConfig {
   /**
    * 赞赏功能配置
    */
-  appreciation?: Appreciation<""> | Appreciation<"doc-after"> | Appreciation<"aside-bottom">;
+  appreciation?:
+    | Appreciation<"">
+    | Appreciation<"doc-after">
+    | Appreciation<"aside-bottom">
+    | Appreciation<"doc-after-popper">;
   /**
    * 面包屑配置
    */

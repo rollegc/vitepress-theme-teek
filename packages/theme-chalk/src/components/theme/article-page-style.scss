@@ -1,6 +1,17 @@
 @use "../../mixins/bem" as *;
 @use "../../mixins/function" as *;
 @use "../../mixins/config" as *;
+@use "../../mixins/mixins" as *;
+
+:root {
+  @include set-css-var("nav-color-dilute", rgb(255, 255, 255, 0.9));
+  @include set-css-var("sidebar-color-dilute", rgb(255, 255, 255, 0.8));
+}
+
+:root.dark {
+  @include set-css-var("nav-color-dilute", rgb(27, 27, 31, 0.9));
+  @include set-css-var("sidebar-color-dilute", rgb(27, 27, 31, 0.8));
+}
 
 html[layout-mode="original"] {
   body:not(:has(.is-home)):has(
@@ -77,7 +88,6 @@ html[layout-mode="original"] {
       .VPNav {
         /* 带侧边栏的导航栏 */
         .VPNavBar.has-sidebar:not(.home) {
-          background-color: getCssVar("bg-color");
           .title {
             padding-left: 20px;
           }
@@ -108,6 +118,9 @@ html[layout-mode="original"] {
   @include multiple-b(((card, card-nav, segment, segment-nav))) {
     &.Layout .VPNav .VPNavBar:not(.home) {
       background-color: getCssVar("bg-color");
+      @media (min-width: 1440px) {
+        background-color: getCssVar("nav-color-dilute");
+      }
     }
 
     .VPContent:not(.is-home) {
@@ -133,7 +146,7 @@ html[layout-mode="original"] {
     @media (min-width: 1440px) {
       /* 侧边栏 */
       .VPSidebar {
-        background-color: getCssVar("bg-color-elm");
+        background-color: getCssVar("sidebar-color-dilute");
         padding: 0;
         width: var(--vp-sidebar-width);
         top: var(--vp-nav-height);

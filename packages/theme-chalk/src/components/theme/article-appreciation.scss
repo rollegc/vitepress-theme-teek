@@ -60,6 +60,13 @@
     }
   }
 
+  @include m(doc-after-popper) {
+    margin-top: 0;
+    img {
+      max-width: 160px;
+    }
+  }
+
   @include m(aside-bottom) {
     img {
       max-width: 100%;

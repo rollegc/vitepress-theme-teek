@@ -10,7 +10,7 @@ export type MaybeElement = HTMLElement | SVGElement | VueInstance | undefined | 
 
 export interface OnClickOutsideOptions<Controls extends boolean = false> {
   /**
-   * 忽略的元素
+   * 忽略的元素（传入元素选择器）
    */
   ignore?: MaybeRefOrGetter<(MaybeRef | string)[]>;
   /**
