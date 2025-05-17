@@ -58,7 +58,7 @@ date: yyyy-MM-dd hh:mm:ss
 | exclude     | exclude 指定的对象如果在 markdown frontmatter 存在，则忽略该文件。当 include 和 exclude 存在相同文件时，exclude 优先级高 | `Record<string, any>`                                        |         |
 | transform   | 转换处理好的 frontmatter，该函数需要返回一个新的 frontmatter 或只返回 undefined，如果返回 {}，则清空 MD 文件本身存在的 frontmatter | `(frontmatter: Record<string, any>, fileInfo: FileInfo) => Record<string, any> | void` |         |
 | globOptions | tinyglobby 的配置项，插件默认已经忽略 node_modules 和 dist 目录的所有文件 | `GlobOptions`                                                |         |
-| recover     | 每次启动项目时，是否重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则直接覆盖文件本身存在的 frontmatter | `boolean`                                                    | false   |
+| recoverTransform     | 每次启动项目时，是否基于 transform 返回的数据重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则重新生成新的 frontmatter | `boolean`                                                    | false   |
 
 `globOptions` 是 `tinyglobby` 插件配置项，如果你需要忽略某些路径，可以使用该配置项 `globOptions.ignore`。更多用法请去 tinyglobby 官网查看。
 
@@ -286,11 +286,11 @@ export interface AutoFrontmatterOption {
    */
   globOptions?: GlobOptions;
   /**
-   * 每次启动项目时，是否重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则直接覆盖文件本身存在的 frontmatter
+   * 每次启动项目时，是否基于 transform 返回的数据重新生成新的 frontmatter，如果为 false，则只对不存在的 key 进行生成，如果为 true，则重新生成新的 frontmatter
    *
    * @default false
    */
-  recover?: boolean;
+  recoverTransform?: boolean;
 }
 
 export interface FileInfo {

@@ -51,7 +51,7 @@ export default function VitePluginVitePressAutoFrontmatter(
  * @param srcDir vitepress 配置项的 srcDir
  */
 const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOption, srcDir: string) => {
-  const { include, exclude, transform, recover = false } = option;
+  const { include, exclude, transform, recoverTransform = false } = option;
 
   for (const filePath of filePaths) {
     if (!filePath.endsWith(".md")) continue;
@@ -84,14 +84,14 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
 
     const transformResult = transform?.(tempFrontmatter, getFileInfo(srcDir, filePath));
     // 如果 frontmatter 没有修改过，且 transform 不存在或者返回 undefined，则不需要修改文件
-    if (!recover && !hasChange && !transformResult) continue;
+    if (!hasChange && !transformResult) continue;
 
     const finalFrontmatter = transformResult || tempFrontmatter;
     // 确保日期格式为 yyyy-MM-dd hh:mm:ss
     finalFrontmatter.date = formatDate(tempFrontmatter.date);
 
     // 如果源文件的 frontmatter 已经全部包含处理后的 frontmatter，则不需要修改
-    if (!recover && Object.keys(finalFrontmatter).every(key => frontmatter[key])) continue;
+    if (!recoverTransform && Object.keys(finalFrontmatter).every(key => frontmatter[key])) continue;
 
     // 转换为 --- xxx --- 字符串
     const frontmatterStr = Object.keys(finalFrontmatter).length

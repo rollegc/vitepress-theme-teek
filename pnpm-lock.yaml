@@ -42,9 +42,6 @@ catalogs:
     vitepress:
       specifier: ^1.6.3
       version: 1.6.3
-    vitepress-plugin-auto-frontmatter:
-      specifier: ^1.0.8
-      version: 1.0.8
     vitepress-plugin-catalogue:
       specifier: ^1.0.15
       version: 1.0.15
@@ -300,8 +297,8 @@ importers:
         specifier: 'catalog:'
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)
       vitepress-plugin-auto-frontmatter:
-        specifier: 'catalog:'
-        version: 1.0.8
+        specifier: workspace:*
+        version: link:../../plugins/vitepress-plugin-auto-frontmatter
       vitepress-plugin-catalogue:
         specifier: 'catalog:'
         version: 1.0.15
@@ -4833,9 +4830,6 @@ packages:
         optional: true
       yaml:
         optional: true
-
-  vitepress-plugin-auto-frontmatter@1.0.8:
-    resolution: {integrity: sha512-eYNxDR6+hbCt9YKiCvhViGVI4Lfd18nZOCNyUawh1V/PPuqI+ncwYGKT4I4qMmik42pSH4bT3JmwsQeeaNCQqw==}
 
   vitepress-plugin-catalogue@1.0.15:
     resolution: {integrity: sha512-D/WRzF4cDji6rTeeR8p84JJYFLkqXOYFIyJ+5Wk/c4yEUNQqtmNxVxUSpmvnMXg9N8yj+Z0IHw3qEJ+gIJjZVw==}
@@ -9480,12 +9474,6 @@ snapshots:
       sass: 1.83.1
       tsx: 4.19.3
       yaml: 2.7.1
-
-  vitepress-plugin-auto-frontmatter@1.0.8:
-    dependencies:
-      gray-matter: 4.0.3
-      picocolors: 1.1.1
-      tinyglobby: 0.2.12
 
   vitepress-plugin-catalogue@1.0.15:
     dependencies:

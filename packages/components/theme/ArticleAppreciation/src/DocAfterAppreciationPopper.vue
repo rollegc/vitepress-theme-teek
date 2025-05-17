@@ -1,5 +1,5 @@
 <script setup lang="ts" name="DocAfterAppreciationPopper">
-import type { Appreciation } from "@teek/config";
+import type { Appreciation, AppreciationPosition } from "@teek/config";
 import { computed, ref } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { aliPayIcon, weChatPayIcon } from "@teek/static";
@@ -16,10 +16,12 @@ const { getTeekConfigRef } = useTeekConfig();
 const appreciateConfig = getTeekConfigRef<Required<Appreciation<"doc-after-popper">>>("appreciation", { position: "" });
 
 const showContent = ref(false);
-const docAfterOptions = computed(() => ({ trigger: "click", ...appreciateConfig.value.options }));
+const docAfterPopperOptions = computed(
+  () => ({ trigger: "click", ...appreciateConfig.value.options }) as AppreciationPosition["doc-after-popper"]
+);
 
 const icon = computed(() => {
-  const { icon } = docAfterOptions.value;
+  const { icon } = docAfterPopperOptions.value;
   if (icon === "aliPay") return aliPayIcon;
   if (icon === "weChatPay") return weChatPayIcon;
 
@@ -29,31 +31,30 @@ const icon = computed(() => {
 
 <template>
   <div :class="ns.b()" :aria-label="t('tk.articleAppreciation.label')">
-    <TkPopover v-model="showContent" :trigger="docAfterOptions.trigger">
+    <TkPopover v-model="showContent" :trigger="docAfterPopperOptions.trigger">
       <template #reference>
         <div
-          v-if="docAfterOptions.buttonHtml"
-          v-html="docAfterOptions.buttonHtml"
+          v-if="docAfterPopperOptions.buttonHtml"
+          v-html="docAfterPopperOptions.buttonHtml"
           role="button"
           :aria-expanded="showContent"
           :aria-controls="`${ns.e('content')}`"
         />
         <button
-          v-else-if="docAfterOptions.title"
+          v-else-if="docAfterPopperOptions.title"
           :class="ns.e('button')"
-          @click="toggleShowContent"
           :aria-expanded="showContent"
           :aria-controls="`${ns.e('content')}`"
           aria-live="polite"
         >
           <TkIcon v-if="icon" :class="ns.e('button__icon')" :icon="icon" :size="16" aria-hidden="true" />
 
-          <span v-if="docAfterOptions.title" v-html="docAfterOptions.title" />
+          <span v-if="docAfterPopperOptions.title" v-html="docAfterPopperOptions.title" />
         </button>
       </template>
 
       <div :class="[ns.e('content'), ns.m('doc-after-popper')]" :aria-label="t('tk.articleAppreciation.contentLabel')">
-        <div :class="ns.e('content')" v-html="docAfterOptions.content" />
+        <div :class="ns.e('content')" v-html="docAfterPopperOptions.content" />
       </div>
     </TkPopover>
   </div>

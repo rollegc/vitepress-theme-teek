@@ -6,7 +6,7 @@
   "dependencies": {
     "gray-matter": "catalog:",
     "vitepress": "catalog:",
-    "vitepress-plugin-auto-frontmatter": "catalog:",
+    "vitepress-plugin-auto-frontmatter": "workspace:*",
     "vitepress-plugin-catalogue": "catalog:",
     "vitepress-plugin-doc-analysis": "catalog:",
     "vitepress-plugin-file-content-loader": "catalog:",
