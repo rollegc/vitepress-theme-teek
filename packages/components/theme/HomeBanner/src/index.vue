@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeBanner">
 import type { Banner, BodyBgImg } from "@teek/config";
 import { useData } from "vitepress";
-import { computed, onMounted, onUnmounted, ref, nextTick } from "vue";
+import { computed, onMounted, onUnmounted, ref, nextTick, watch } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { useNamespace, useLocale, useEventListener } from "@teek/hooks";
 import { upperFirst } from "@teek/helper";
@@ -12,6 +12,10 @@ import HomeBannerFeature from "./HomeBannerFeature.vue";
 import HomeBannerWaves from "./HomeBannerWaves.vue";
 
 defineOptions({ name: "HomeBanner" });
+
+const { disabled = false } = defineProps<{ disabled?: boolean }>();
+
+const fullImgNavBarKey = "full-img-nav-bar";
 
 const ns = useNamespace("banner");
 const { t } = useLocale();
@@ -70,24 +74,36 @@ const getStyle = () => {
 const bannerRef = ref<HTMLElement | null>(null);
 
 /**
+ * 根据参数决定添加或删除大图导航 class
+ */
+const toggleFullImgNavBarClass = (add = true) => {
+  const vPNavDom = document.querySelector(".VPNavBar");
+
+  if (add) vPNavDom?.classList.add(fullImgNavBarKey);
+  else vPNavDom?.classList.remove(fullImgNavBarKey);
+};
+
+/**
  * 修改导航栏样式（透明化）
  */
 const toggleClass = async () => {
-  if (!bannerRef.value) return;
+  if (!bannerRef.value || disabled) return;
 
   const current = currentBgStyle.value;
   // onMounted 已经校验一次，这里再次校验是防止 bannerStyle 配置项动态修改导致兼容性问题
   if (!current.isBannerFullImgBgStyle && !current.isBodyFullImgBgStyle) return;
   await nextTick();
 
-  const vPNavDom = document.querySelector(".VPNavBar");
-  if (!vPNavDom) return;
-
   const offset = current.isBodyImgBgStyle ? 0 : 100;
-  if (document.documentElement.scrollTop + offset < document.documentElement.clientHeight) {
-    vPNavDom.classList.add("full-img-nav-bar");
-  } else vPNavDom.classList.remove("full-img-nav-bar");
+  const windowInBanner = document.documentElement.scrollTop + offset < document.documentElement.clientHeight;
+  toggleFullImgNavBarClass(windowInBanner);
 };
+
+// 如果禁用 Banner，则删除 full-img-nav-bar
+watch(
+  () => disabled,
+  () => toggleFullImgNavBarClass(!disabled)
+);
 
 onMounted(() => {
   if (currentBgStyle.value.isBannerFullImgBgStyle || currentBgStyle.value.isBodyFullImgBgStyle) {
@@ -98,7 +114,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  document.querySelector(".VPNavBar")?.classList.remove("full-img-nav-bar");
+  toggleFullImgNavBarClass(false);
 });
 
 const className = computed(() => {

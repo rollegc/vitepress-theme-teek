@@ -45,6 +45,7 @@ const pageSize = computed(() => pageConfig.value.pageSize || defaultPageSize.val
 
 const route = useRoute();
 const currentPosts = ref<TkContentData[]>([]);
+const totalPostsCount = ref(0);
 
 const updateData = () => {
   if (!isClient) return;
@@ -73,9 +74,10 @@ const updateData = () => {
   // 总数处理
   if (total.value !== post?.length) total.value = post?.length || 0;
 
-  currentPosts.value = post
-    ?.filter(item => item.frontmatter.inHomePost !== false)
-    .slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
+  const inHomePosts = post.filter(item => item.frontmatter.inHomePost !== false);
+  totalPostsCount.value = inHomePosts.length;
+
+  currentPosts.value = inHomePosts.slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
 };
 
 watch(
@@ -151,7 +153,7 @@ defineExpose({ updateData });
 
       <div :class="`${ns.e('pagination')} flx-justify-center`" :aria-label="t('tk.homePost.pageLabel')">
         <TkPagination
-          v-if="currentPosts.length >= pageSize"
+          v-if="totalPostsCount >= pageSize"
           v-model:page-size="pageSize"
           v-model:current-page="pageNum"
           :total="total"

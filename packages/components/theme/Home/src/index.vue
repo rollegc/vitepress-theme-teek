@@ -37,7 +37,7 @@ const isPaging = ref(false);
 <template>
   <div :class="ns.b()" role="main" :aria-label="t('tk.home.label')">
     <div v-if="isHomePage && (teekConfig.banner.enabled ?? true)" v-show="!isPaging">
-      <TkHomeBanner>
+      <TkHomeBanner :disabled="isPaging">
         <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
       </TkHomeBanner>
     </div>
