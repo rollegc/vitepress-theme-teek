@@ -87,11 +87,11 @@ html[layout-mode="original"] {
       /* 导航栏 */
       .VPNav {
         /* 带侧边栏的导航栏 */
-        .VPNavBar.has-sidebar:not(.home) {
-          .title {
+        .VPNavBar.has-sidebar:not(.home) .container {
+          > .title {
             padding-left: 20px;
           }
-          .content {
+          > .content {
             padding-right: 32px;
             padding-left: var(--vp-sidebar-width);
             .content-body {
