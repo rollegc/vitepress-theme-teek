@@ -1,3 +1,5 @@
+import type { Component, Ref } from "vue";
+import type { TkIconProps } from "@teek/components/common/Icon";
 import type { Private } from "@teek/config";
 import { isClient } from "@teek/helper";
 
@@ -37,6 +39,21 @@ export const defaultPrivateConfig: Private = {
   session: false,
   siteLogin: false,
   site: [],
-  page: [],
+  pages: [],
   realm: {},
 };
+
+export type LoginForm = {
+  [key in "username" | "password" | "verifyCode"]: LoginFormItem;
+};
+
+export interface LoginFormItem {
+  model: string;
+  focusModel: boolean;
+  errorModel: boolean;
+  icon: TkIconProps["icon"];
+  placeholder: string;
+  type: string;
+  append?: Component;
+  appendModel?: string | Ref<string>;
+}

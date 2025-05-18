@@ -121,7 +121,9 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
-    <TkLogin v-if="frontmatter.loginPage === true" />
+    <template v-if="frontmatter.loginPage === true">
+      <slot name="teek-login-page"><TkLogin /></slot>
+    </template>
 
     <template v-if="frontmatter.layout !== false">
       <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />

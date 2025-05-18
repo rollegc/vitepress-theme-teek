@@ -71,6 +71,7 @@
     align-items: center;
     width: 100%;
 
+    /* for 屏幕阅读器 */
     .sr-only {
       position: absolute;
       width: 1px;
@@ -95,6 +96,14 @@
 
     @include when(focus) {
       border-color: getCssVar("theme-color");
+    }
+
+    @include when(error) {
+      border-color: var(--vp-c-danger-1);
+      input::placeholder,
+      .tk-icon {
+        color: var(--vp-c-danger-1);
+      }
     }
 
     @include m(control) {

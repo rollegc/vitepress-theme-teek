@@ -29,7 +29,12 @@ export const useWatchLogin = () => {
    * 验证用户凭证
    */
   const isValidCredential = (credentialList: LoginInfo[], loginInfo: LoginInfo) => {
-    return credentialList.some(item => item.username === loginInfo.username && item.password === loginInfo.password);
+    const decrypt = privateConfig.value.decrypt;
+    return credentialList.some(
+      item =>
+        item.username === loginInfo.username &&
+        item.password === (decrypt ? decrypt(loginInfo.password, frontmatter) : loginInfo.password)
+    );
   };
 
   /**
@@ -48,9 +53,15 @@ export const useWatchLogin = () => {
   /**
    * 判断是否已经登录
    */
-  const isLogin = (loginKey: string, credentialList: LoginInfo[]) => {
-    const loginInfo = getLoginInfo(loginKey);
-    return loginInfo && isValidCredential(credentialList, loginInfo) && !isLoginExpired(loginInfo, loginKey);
+  const isLogin = (loginKey: string, credentialList: LoginInfo[], type: "site" | "pages" | "realm" | "page") => {
+    const nativeValidate = () => {
+      const loginInfo = getLoginInfo(loginKey);
+      return !!(loginInfo && isValidCredential(credentialList, loginInfo) && !isLoginExpired(loginInfo, loginKey));
+    };
+
+    return privateConfig.value.doValidate
+      ? privateConfig.value.doValidate(type, frontmatter.value, nativeValidate)
+      : nativeValidate();
   };
 
   /**
@@ -63,7 +74,7 @@ export const useWatchLogin = () => {
     const { verifyMode, toPath } = loginUrlKeyMap;
     const goLogin = `${loginPath.value}?${verifyMode}=${verifyModeMap.site}&${toPath}=${window.location.href}`;
 
-    if (!isLogin(siteLoginKey, privateConfig.value.site)) router.go(goLogin);
+    if (!isLogin(siteLoginKey, privateConfig.value.site || [], "site")) router.go(goLogin);
   };
 
   /**
@@ -83,7 +94,7 @@ export const useWatchLogin = () => {
         if (!frontmatter.value.private || !loginPath.value || newVal.data.frontmatter.loginPage) return;
 
         // 如果站点级别登录信息是 admin 角色，则无需继续验证，统统放行 ~
-        if (isLogin(siteLoginKey, privateConfig.value.site)) {
+        if (isLogin(siteLoginKey, privateConfig.value.site || [], "site")) {
           const siteLoginInfo = getLoginInfo(siteLoginKey);
           if (siteLoginInfo.role === "admin") return;
         }
@@ -94,19 +105,19 @@ export const useWatchLogin = () => {
         const realm = frontmatter.value.privateRealm;
 
         const page = { username: frontmatter.value.username, password: frontmatter.value.password };
-        const isPage = page.username !== "" && page.password !== "";
+        const isPage = [page.username, page.password].every(item => ![undefined, ""].includes(item));
 
         // 单页面级别认证，如果登录信息失败，则继续往下校验 realm，如果还是失败，则跳转登录页面
         if (isPage) {
           const path = "/" + newVal.data.relativePath.replace(".md", "");
-          if (isLogin(pageLoginKey + path, [page])) return;
+          if (isLogin(pageLoginKey + path, [page], "page")) return;
         }
 
         // 页面领域级别认证
         if (realm) {
           const goRealm = goLogin.replace("{verifyMode}", verifyModeMap.realm) + `&${realmKey}=${realm}`;
 
-          if (!isLogin(realmLoginKey + realm, privateConfig.value.realm[realm])) router.go(goRealm);
+          if (!isLogin(realmLoginKey + realm, privateConfig.value.realm[realm] || [], "realm")) router.go(goRealm);
           return;
         }
 
@@ -118,7 +129,7 @@ export const useWatchLogin = () => {
 
         // 共享页面级别认证
         const goPages = goLogin.replace("{verifyMode}", verifyModeMap.pages);
-        if (!isLogin(pagesLoginKey, privateConfig.value.page)) router.go(goPages);
+        if (!isLogin(pagesLoginKey, privateConfig.value.pages || [], "pages")) router.go(goPages);
       },
       { immediate: true }
     );

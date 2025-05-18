@@ -13,7 +13,7 @@ export const teekDocConfig: TeekConfig = {
       { username: "teek0", password: "teek" },
       { username: "teek11", password: "teek", role: "admin" },
     ],
-    page: [
+    pages: [
       { username: "teek", password: "teek", strategy: "always" },
       { username: "teek1", password: "teek", session: true },
     ],

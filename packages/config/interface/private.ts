@@ -30,11 +30,43 @@ export interface Private {
   /**
    * 页面级登录信息，登录一次后其他私密文章都可以访问
    */
-  page?: LoginInfo[];
+  pages?: LoginInfo[];
   /**
    * 登录信息分组
    */
   realm?: { [key: string]: LoginInfo[] };
+  /**
+   * 输入框聚焦回调
+   */
+  onFocus?: (value: string, formName: "username" | "password" | "verifyCode") => void;
+  /**
+   * 输入框失焦回调
+   */
+  onBlur?: (value: string, formName: "username" | "password" | "verifyCode") => void;
+  /**
+   * 自定义登录逻辑，如果返回 boolean 代表自定义逻辑成功或者失败（内部会删除提示语），返回 undefined 代表结束登录逻辑
+   */
+  doLogin?: (
+    loginInfo: { username: string; password: string },
+    type: "site" | "pages" | "realm" | "page",
+    nativeExecLogin: () => boolean
+  ) => boolean | undefined;
+  /**
+   * 自定义验证逻辑
+   */
+  doValidate?: (
+    type: "site" | "pages" | "realm" | "page",
+    frontmatter: Record<string, any>,
+    nativeValidate: () => boolean
+  ) => boolean;
+  /**
+   * 自定义加密逻辑
+   */
+  encrypt?: (value: string, frontmatter: Record<string, any>) => string;
+  /**
+   * 自定义解密逻辑
+   */
+  decrypt?: (value: string, frontmatter: Record<string, any>) => string;
 }
 
 export interface LoginInfo {

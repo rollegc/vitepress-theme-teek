@@ -261,9 +261,12 @@ export default {
       login: "登录",
       loginSuccess: "登录成功！",
       loginError: "用户名或者密码错误！",
-      loginInfoNull: "请输入用户名和密码！",
+      loginInfoNonNull: "请输入用户名和密码！",
       usernamePlaceholder: "请输入用户名",
       passwordPlaceholder: "请输入密码",
+      verifyCodePlaceholder: "请输入验证码",
+      verifyCodeNonNull: "请输入验证码",
+      verifyCodeError: "请输入正确的验证码",
     },
   },
 };
