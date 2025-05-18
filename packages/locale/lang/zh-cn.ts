@@ -104,7 +104,7 @@ export default {
       infoLabel: "文章信息",
       coverImgLabel: "文章封面图",
     },
-    homeCard: {
+    pageCard: {
       label: "首页卡片",
       prev: "上一页",
       next: "下一页",
@@ -261,9 +261,18 @@ export default {
       login: "登录",
       loginSuccess: "登录成功！",
       loginError: "用户名或者密码错误！",
-      loginInfoNull: "请输入用户名和密码！",
+      loginInfoNonNull: "请输入用户名和密码！",
       usernamePlaceholder: "请输入用户名",
       passwordPlaceholder: "请输入密码",
+      verifyCodePlaceholder: "请输入验证码",
+      verifyCodeNonNull: "请输入验证码",
+      verifyCodeError: "请输入正确的验证码",
+    },
+    riskLink: {
+      label: "风险链接提示页",
+      title: "即将离开 {name}，请注意财产安全",
+      linkIllegal: "链接安全性校验中，请稍后 ...",
+      confirmButtonText: "继续访问",
     },
   },
 };

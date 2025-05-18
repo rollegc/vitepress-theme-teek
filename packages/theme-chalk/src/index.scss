@@ -7,6 +7,7 @@
 @use "./components/common/image-viewer";
 @use "./components/common/input-slide";
 @use "./components/common/message";
+@use "./components/common/page-card";
 @use "./components/common/pagination";
 @use "./components/common/popover";
 @use "./components/common/segmented-item";
@@ -39,7 +40,6 @@
 @use "./components/theme/footer-info";
 @use "./components/theme/home-banner";
 @use "./components/theme/home-card-list";
-@use "./components/theme/home-card";
 @use "./components/theme/home-category-card";
 @use "./components/theme/home-doc-analysis-card";
 @use "./components/theme/home-friend-link-card";
@@ -51,8 +51,9 @@
 @use "./components/theme/home";
 @use "./components/theme/layout-switch";
 @use "./components/theme/layout";
-@use "./components/theme/login";
+@use "./components/theme/login-page";
 @use "./components/theme/notice";
 @use "./components/theme/right-bottom-button";
+@use "./components/theme/risk-link-page";
 @use "./components/theme/spotlight-hover";
 @use "./components/theme/theme-enhance";

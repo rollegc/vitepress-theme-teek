@@ -159,11 +159,12 @@ export default defineConfig({
       {
         text: "功能页",
         items: [
-          { text: "归档", link: "/archives" },
-          { text: "清单", link: "/articleOverview" },
-          { text: "登录", link: "/login" },
-          { text: "分类", link: "/categories" },
-          { text: "标签", link: "/tags" },
+          { text: "归档页", link: "/archives" },
+          { text: "清单页", link: "/articleOverview" },
+          { text: "登录页", link: "/login" },
+          { text: "风险链接提示页", link: "/risk-link?target=https://vp.teek.top" },
+          { text: "分类页", link: "/categories" },
+          { text: "标签页", link: "/tags" },
         ],
       },
       {

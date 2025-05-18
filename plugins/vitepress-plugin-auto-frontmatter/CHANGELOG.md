@@ -1,5 +1,12 @@
 # vitepress-plugin-auto-frontmatter
 
+## 1.0.9
+
+### Patch Changes
+
+- a4282d6: recover 改为 recoverTransform
+- c7459ee: 新增 recover 配置项，支持覆盖原有的 frontmatter 信息
+
 ## 1.0.8
 
 ### Patch Changes

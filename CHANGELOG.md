@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.2.0...v1.3.0) (2025-05-18)
+
+### Features
+
+- 🚀 登录页新增验证码功能，新增各个阶段的回调配置项 ([e880baa](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e880baa137983c0baf60f6c19f5ca5ffea75c0f2))
+- 🚀 清单页支持大纲栏 ([b94a270](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b94a2707b793440cdd1a791af7662a9955d1a633))
+- 🚀 去掉部分组件 props，article 为 false 不显示文档分析组件 ([4f090ab](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/4f090ab95702369e53db407a50753319205a5330))
+- 🚀 新增 ArticleTitle 组件，支持 title 使用 HTML 标签，部分 article 配置项抽离和重命名，优化部分样式 ([1fd969e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/1fd969ebbab193580c9af5edffc3d9337377c10a))
+- 🚀 新增 DocAfterAppreciationPopper 组件，优化部分样式 ([a21b63e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a21b63ef2ab63953f8914dda458d9deccbbf4cd3))
+- 🚀 新增 usePagePath 函数获取功能页链接，优化部分样式，优化文档案例展示 ([cd80a7e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/cd80a7eb2f705d73048739e34caf7670d9f15b29))
+- 🚀 新增登录页、新增私密认证功能，优化部分代码问题，permlaink 插件的路由监听由组件引入改为函数引入 ([9a8b9df](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/9a8b9dfa38c23deb73a8fddba6784fa883cb3993))
+- 🚀 新增风险链接提示页 RiskLink 及其配置项，优化部分样式 ([f173a0d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/f173a0d2769a16a19222f4ae0e3696348771e1e2))
+- 🚀 新增全局配置 articleUpdate 相关配置项 ([a451e82](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a451e82c6ccc4f3787c4a684c2f9ab6bbcc5ce0c))
+- 🚀 新增文章页组件，归档页、目录页、清单页重构使用文章页组件，优化部分样式，删除目录页部分国际化内容，导出部分组件 ([3b77d68](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3b77d689181d7aaa3037ba401aef82bba27e0285))
+- 🚀 优化 Article 显示 Title HTML，支持动态 HTML 字符串解析，注册 TitleTag、Icon 全局组件，修复部分样式 ([82010fb](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/82010fbff297074b3c1eff5bcb989b66a9bffe87))
+- 🚀 组件 HomeCard 更名 PageCard，添加部分文档说明，私密文章单页面级别添加 loginInfo 配置，优化部分组件代码，优化部分组件样式，部分文件重命名 ([44c1367](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/44c13679f95788e17c3cd1e805f4514690ed3300))
+- 🚀 demo 容器支持效果渲染组件和源码复制组件分离，修复文章页的媒体样式，mdh1 插件默认支持文档布局注入一级标题，auto-frontmatter 插件添加 recover 配置项 ([c7459ee](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c7459ee801efe037ec96ae5ed290fded4fe5aff8))
+- 🚀 permalink、auto-frontmatter、mdh1 插件版本发布，Teek v1.3.0 版本发布 ([a21405d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a21405d61acaa7d8eec8620d07dfb39047af482a))
+
+### Bug Fixes
+
+- 🐞 修复 permalink 插件导致首页内容初次渲染丢失问题 ([1a7fd26](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/1a7fd268f3f093c0131e1a9e6527f3f5f988f453))
+- 🐞 修复卡片文章列表不兼容移动端样式问题 ([58b0263](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/58b02639612c5c9eedf7eb11811515c0196230a2))
+- 🐞 修复文章列表在最后一页时导致分页组件丢失问题 ([8746428](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/874642847caf60ac026128d1317280175b45caf6))
+
+### Styling
+
+- 🎨 删除 template 标签 ([54475b4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/54475b48f1a9606ed37f85434d08505da601d76e))
+- 🎨 新增 Icon 文档，优化 Icon 组件，优化部分组件样式 ([a1a87de](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a1a87de179d62467abed9cb336c97b428dac6cf8))
+
+### Code Refactoring
+
+- ♻️ auto-frontmatter 插件的 recover 配置项改为 recoverTransform ([a4282d6](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a4282d61a2b4d07edaab274a24a3a0c3cc6b0980))
+
 ## [1.2.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.1.5...v1.2.0) (2025-05-11)
 
 ### Features

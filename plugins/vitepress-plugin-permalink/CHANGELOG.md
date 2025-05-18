@@ -1,5 +1,12 @@
 # vitepress-plugin-permalink
 
+## 1.1.2
+
+### Patch Changes
+
+- 1a7fd26: Permalink 监听组件注册的 layout-top 插槽改为 layout-bottom，解决首页内容初次渲染丢失问题
+- 9a8b9df: 去掉 UsePermalink 组件引入，改为函数引入，兼容 layout 为 false 的页面
+
 ## 1.1.1
 
 ### Patch Changes

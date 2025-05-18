@@ -6,7 +6,7 @@ import { useNamespace, useLocale, useScrollData } from "@teek/hooks";
 import { friendLinkIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import { TkPageCard } from "@teek/components/common/PageCard";
 import ItemInfo from "./ItemInfo.vue";
 
 defineOptions({ name: "HomeFriendLinkCard" });
@@ -80,7 +80,7 @@ const handleTitleClick = () => {
 <template>
   <slot name="teek-home-friend-link-before" />
 
-  <TkHomeCard
+  <TkPageCard
     :page="!friendLinkConfig.autoScroll"
     v-model="pageNum"
     :pageSize="friendLinkConfig.limit"
@@ -130,7 +130,7 @@ const handleTitleClick = () => {
         {{ friendLinkConfig.emptyLabel }}
       </div>
     </template>
-  </TkHomeCard>
+  </TkPageCard>
 
   <slot name="teek-home-friend-link-after" />
 </template>

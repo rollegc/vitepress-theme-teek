@@ -8,7 +8,7 @@ import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList/src/homePostList";
 import { useTeekConfig, usePagePath, usePosts } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
-import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import { TkPageCard } from "@teek/components/common/PageCard";
 
 defineOptions({ name: "HomeCategoryCard" });
 
@@ -112,7 +112,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 <template>
   <slot name="teek-home-category-before" />
 
-  <TkHomeCard
+  <TkPageCard
     :page="!categoriesPage"
     v-model="pageNum"
     :pageSize="categoryConfig.limit"
@@ -159,7 +159,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
         {{ categoryConfig.emptyLabel }}
       </div>
     </template>
-  </TkHomeCard>
+  </TkPageCard>
 
   <slot name="teek-home-category-after" />
 </template>

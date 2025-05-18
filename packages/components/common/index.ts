@@ -11,4 +11,5 @@ export * from "./Popover";
 export * from "./Segmented";
 export * from "./TitleTag";
 export * from "./TransitionCollapse";
+export * from "./VerifyCode";
 export * from "./VpContainer";

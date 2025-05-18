@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
-import { useData } from "vitepress";
+import { useData, onContentUpdated } from "vitepress";
 import { computed, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
@@ -34,7 +34,8 @@ import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
 import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
-import { TkLogin, useWatchLogin } from "@teek/components/theme/Login";
+import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
+import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -66,6 +67,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   articleTopTip: undefined,
   articleShare: {},
   appreciation: {},
+  riskLink: { enabled: false },
 });
 
 const commentConfig = computed(() => {
@@ -102,9 +104,17 @@ watch(
 );
 
 const { watchSite, watchPages } = useWatchLogin();
+const { restart } = useRiskLink({
+  whiteList: teekConfig.value.riskLink.whiteList,
+  blackList: teekConfig.value.riskLink.blackList,
+});
 
 watchSite();
 watchPages();
+
+onContentUpdated(() => {
+  if (teekConfig.value.riskLink.enabled) restart;
+});
 
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [
@@ -121,7 +131,12 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
-    <TkLogin v-if="frontmatter.loginPage === true" />
+    <template v-if="frontmatter.loginPage === true">
+      <slot name="teek-login-page"><TkLoginPage /></slot>
+    </template>
+    <template v-if="frontmatter.riskLinkPage === true">
+      <slot name="teek-risk-link-page"><TkRiskLinkPage /></slot>
+    </template>
 
     <template v-if="frontmatter.layout !== false">
       <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />

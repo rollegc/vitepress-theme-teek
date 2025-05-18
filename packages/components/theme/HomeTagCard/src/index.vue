@@ -8,7 +8,7 @@ import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList";
 import { useTeekConfig, usePagePath, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
 import { postDataUpdateSymbol } from "@teek/components/theme/Home/src/home";
-import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import { TkPageCard } from "@teek/components/common/PageCard";
 
 defineOptions({ name: "HomeTagCard" });
 
@@ -124,7 +124,7 @@ watch(
 <template>
   <slot name="teek-home-tag-before" />
 
-  <TkHomeCard
+  <TkPageCard
     :page="!tagsPage"
     v-model="pageNum"
     :pageSize="tagConfig.limit"
@@ -169,7 +169,7 @@ watch(
 
       <div v-else :class="ns.m('empty')" :aria-label="tagConfig.emptyLabel">{{ tagConfig.emptyLabel }}</div>
     </template>
-  </TkHomeCard>
+  </TkPageCard>
 
   <slot name="teek-home-tag-after" />
 </template>

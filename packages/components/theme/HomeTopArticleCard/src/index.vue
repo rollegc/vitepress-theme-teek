@@ -6,7 +6,7 @@ import { useNamespace, useLocale } from "@teek/hooks";
 import { topArticleIcon } from "@teek/static";
 import { formatDate, isFunction } from "@teek/helper";
 import { useTeekConfig, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
-import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import { TkPageCard } from "@teek/components/common/PageCard";
 import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "HomeTopArticleCard" });
@@ -73,7 +73,7 @@ const handleTitleClick = () => {
 <template>
   <slot name="teek-home-top-article-before" />
 
-  <TkHomeCard
+  <TkPageCard
     page
     v-model="pageNum"
     :pageSize="topArticleConfig.limit"
@@ -116,7 +116,7 @@ const handleTitleClick = () => {
         {{ topArticleConfig.emptyLabel }}
       </div>
     </template>
-  </TkHomeCard>
+  </TkPageCard>
 
   <slot name="teek-home-top-article-after" />
 </template>

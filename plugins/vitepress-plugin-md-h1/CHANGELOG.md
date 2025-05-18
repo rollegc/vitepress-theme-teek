@@ -1,5 +1,11 @@
 # vitepress-plugin-md-h1
 
+## 1.0.11
+
+### Patch Changes
+
+- c7459ee: 默认仅支持文档布局的 Markdown 注入一级标题
+
 ## 1.0.10
 
 ### Patch Changes
