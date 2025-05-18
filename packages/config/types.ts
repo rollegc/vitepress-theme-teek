@@ -30,6 +30,7 @@ import type {
   Wallpaper,
   Markdown,
   Private,
+  RiskLink,
 } from "./interface";
 
 export type * from "./interface";
@@ -212,6 +213,10 @@ export interface TeekConfig {
    * 私密功能配置
    */
   private?: Private;
+  /**
+   * 风险链接提示功能配置
+   */
+  riskLink?: RiskLink;
   /**
    * 赞赏功能配置
    */

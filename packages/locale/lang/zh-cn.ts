@@ -268,5 +268,11 @@ export default {
       verifyCodeNonNull: "请输入验证码",
       verifyCodeError: "请输入正确的验证码",
     },
+    riskLink: {
+      label: "风险链接提示页",
+      title: "即将离开 {name}，请注意财产安全",
+      linkNoNull: "链接安全性校验中，请稍后 ...",
+      confirmButtonText: "继续访问",
+    },
   },
 };

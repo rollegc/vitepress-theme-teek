@@ -162,6 +162,7 @@ export default defineConfig({
           { text: "归档", link: "/archives" },
           { text: "清单", link: "/articleOverview" },
           { text: "登录", link: "/login" },
+          { text: "风险链接提示", link: "/risk-link?target=https://vp.teek.top" },
           { text: "分类", link: "/categories" },
           { text: "标签", link: "/tags" },
         ],

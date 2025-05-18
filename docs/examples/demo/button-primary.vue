@@ -28,7 +28,6 @@
   line-height: 1.5714285714285714;
 
   &:hover {
-    color: #ffffff;
     background-color: #5a79f4;
   }
 }

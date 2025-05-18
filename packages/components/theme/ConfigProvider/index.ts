@@ -96,8 +96,21 @@ export const usePageState = () => {
   const isCataloguePage = computed(() => !!frontmatter.value.catalogue);
   // 当前页面是否为文章清单页
   const isArticleOverviewPage = computed(() => !!frontmatter.value.articleOverviewPage);
+  // 当前页面是否为登录页
+  const isLoginUrl = computed(() => !!frontmatter.value.loginPage);
+  // 当前页面是否为风险链接页
+  const isRiskLinkPage = computed(() => !!frontmatter.value.riskLinkPage);
 
-  return { isHomePage, isCategoriesPage, isTagsPage, isArchivesPage, isCataloguePage, isArticleOverviewPage };
+  return {
+    isHomePage,
+    isCategoriesPage,
+    isTagsPage,
+    isArchivesPage,
+    isCataloguePage,
+    isArticleOverviewPage,
+    isLoginUrl,
+    isRiskLinkPage,
+  };
 };
 
 /**
@@ -129,11 +142,12 @@ export const usePagePath = () => {
     let archivesUrl = "";
     let articleOverviewUrl = "";
     let loginUrl = "";
+    let riskLinkUrl = "";
 
     // 一次性循环寻找多个文章相关的自定义页面，避免重复对 posts.value.allPosts 循环
     posts.value.allPosts.forEach(item => {
       const {
-        frontmatter: { layout, archivesPage, articleOverviewPage, loginPage },
+        frontmatter: { layout, archivesPage, articleOverviewPage, loginPage, riskLinkPage },
         url,
       } = item;
 
@@ -144,9 +158,10 @@ export const usePagePath = () => {
         articleOverviewUrl = url;
       }
       if (layout === false && loginPage === true) loginUrl = url;
+      if (layout === false && riskLinkPage === true) riskLinkUrl = url;
     });
 
-    return { archivesUrl, articleOverviewUrl, loginUrl };
+    return { archivesUrl, articleOverviewUrl, loginUrl, riskLinkUrl };
   });
 
   return {
@@ -155,6 +170,7 @@ export const usePagePath = () => {
     archivesPath: computed(() => postPagePath.value.archivesUrl),
     articleOverviewPath: computed(() => postPagePath.value.articleOverviewUrl),
     loginPath: computed(() => postPagePath.value.loginUrl),
+    riskLinkPath: computed(() => postPagePath.value.riskLinkUrl),
   };
 };
 

@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
-import { useData } from "vitepress";
+import { useData, onContentUpdated } from "vitepress";
 import { computed, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
@@ -35,6 +35,7 @@ import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeading
 import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
 import { TkLogin, useWatchLogin } from "@teek/components/theme/Login";
+import { TkRiskLink, useRiskLink } from "@teek/components/theme/RiskLink";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -66,6 +67,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   articleTopTip: undefined,
   articleShare: {},
   appreciation: {},
+  riskLink: {},
 });
 
 const commentConfig = computed(() => {
@@ -102,9 +104,12 @@ watch(
 );
 
 const { watchSite, watchPages } = useWatchLogin();
+const { restart } = useRiskLink(teekConfig.value.riskLink);
 
 watchSite();
 watchPages();
+
+onContentUpdated(restart);
 
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [
@@ -123,6 +128,9 @@ const usedSlots = [
   <template v-if="teekConfig.teekTheme">
     <template v-if="frontmatter.loginPage === true">
       <slot name="teek-login-page"><TkLogin /></slot>
+    </template>
+    <template v-if="frontmatter.riskLinkPage === true">
+      <slot name="teek-risk-link-page"><TkRiskLink /></slot>
     </template>
 
     <template v-if="frontmatter.layout !== false">

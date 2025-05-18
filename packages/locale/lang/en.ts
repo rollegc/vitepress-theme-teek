@@ -269,6 +269,15 @@ export default {
       loginInfoNull: "Please input your username and password!",
       usernamePlaceholder: "Please input a username",
       passwordPlaceholder: "Please input a password",
+      verifyCodePlaceholder: "Please input the verification code",
+      verifyCodeNonNull: "Please input the verification code",
+      verifyCodeError: "Please input the correct verification code",
+    },
+    riskLink: {
+      label: "Risk Link Page",
+      title: "Leaving {name} soon, please pay attention to property safety",
+      linkNoNull: "Link security verification in progress, please wait ...",
+      confirmButtonText: "Continue to visit",
     },
   },
 };

@@ -37,4 +37,5 @@ export * from "./Layout";
 export * from "./Login";
 export * from "./Notice";
 export * from "./RightBottomButton";
+export * from "./RiskLink";
 export * from "./ThemeEnhance";
