@@ -104,7 +104,7 @@ export default {
       infoLabel: "Article Information",
       coverImgLabel: "Article Cover Image",
     },
-    homeCard: {
+    pageCard: {
       label: "Home Card",
       prev: "Previous Page",
       next: "Next Page",
@@ -276,7 +276,7 @@ export default {
     riskLink: {
       label: "Risk Link Page",
       title: "Leaving {name} soon, please pay attention to property safety",
-      linkNoNull: "Link security verification in progress, please wait ...",
+      linkIllegal: "Link security verification in progress, please wait ...",
       confirmButtonText: "Continue to visit",
     },
   },

@@ -104,7 +104,7 @@ export default {
       infoLabel: "文章信息",
       coverImgLabel: "文章封面图",
     },
-    homeCard: {
+    pageCard: {
       label: "首页卡片",
       prev: "上一页",
       next: "下一页",
@@ -271,7 +271,7 @@ export default {
     riskLink: {
       label: "风险链接提示页",
       title: "即将离开 {name}，请注意财产安全",
-      linkNoNull: "链接安全性校验中，请稍后 ...",
+      linkIllegal: "链接安全性校验中，请稍后 ...",
       confirmButtonText: "继续访问",
     },
   },

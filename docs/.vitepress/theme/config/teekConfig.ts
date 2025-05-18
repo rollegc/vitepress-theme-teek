@@ -7,23 +7,6 @@ export const teekDocConfig: TeekConfig = {
       defaultMode: "bothWidthAdjustable",
     },
   },
-  // private: {
-  //   siteLogin: true,
-  //   site: [
-  //     { username: "teek0", password: "teek" },
-  //     { username: "teek11", password: "teek", role: "admin" },
-  //   ],
-  //   pages: [
-  //     { username: "teek", password: "teek", strategy: "always" },
-  //     { username: "teek1", password: "teek", session: true },
-  //   ],
-  //   realm: {
-  //     blog: [
-  //       { username: "teek2", password: "teek", strategy: "always" },
-  //       { username: "teek3", password: "teek" },
-  //     ],
-  //   },
-  // },
 };
 
 // 博客基础配置

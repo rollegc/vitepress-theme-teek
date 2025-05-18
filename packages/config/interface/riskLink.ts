@@ -1,5 +1,11 @@
 export interface RiskLink {
   /**
+   * 是否启用风险链接提示功能
+   *
+   * @default false
+   */
+  enabled?: boolean;
+  /**
    * 白名单，支持正则表达式
    */
   whiteList?: Array<RegExp | string>;

@@ -32,6 +32,12 @@
       user-select: none;
       margin: 0 8px;
       color: var(--vp-c-text-1);
+      opacity: 0.5;
+      transition: opacity 0.4s;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 

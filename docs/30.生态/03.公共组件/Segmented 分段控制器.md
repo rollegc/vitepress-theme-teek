@@ -10,7 +10,7 @@ tags:
   - 主题组件
 ---
 
-## 基础使用
+## 基础用法
 
 ::: demo
 segmented/basic

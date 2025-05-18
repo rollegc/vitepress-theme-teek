@@ -5,7 +5,7 @@ import { withBase } from "vitepress";
 import { computed } from "vue";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { TkHomeCard } from "@teek/components/theme/HomeCard";
+import { TkPageCard } from "@teek/components/common/PageCard";
 import { TkAvatar } from "@teek/components/common/Avatar";
 import { TkIcon } from "@teek/components/common/Icon";
 
@@ -28,7 +28,7 @@ const avatarBgStyle = computed(() => ({ backgroundImage: `url(${withBase(blogger
 <template>
   <slot name="teek-home-my-before" />
 
-  <TkHomeCard
+  <TkPageCard
     v-if="blogger.name"
     :class="[ns.b(), ns.is('circle-bg', isCircleBgImg)]"
     :aria-label="t('tk.myCard.label')"
@@ -82,7 +82,7 @@ const avatarBgStyle = computed(() => ({ backgroundImage: `url(${withBase(blogger
       <span class="name">{{ blogger.name }}</span>
       <span class="slogan">{{ blogger.slogan }}</span>
     </div>
-  </TkHomeCard>
+  </TkPageCard>
 
   <slot name="teek-home-my-after" />
 </template>

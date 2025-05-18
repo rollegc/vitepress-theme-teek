@@ -18,21 +18,21 @@ export interface Private {
    */
   session?: boolean;
   /**
-   * 是否使用站点登录功能，即第一次进入网站需要验证
+   * 是否使用站点级别登录功能，即第一次进入网站需要验证
    *
    * @default false
    */
   siteLogin?: boolean;
   /**
-   * 站点级登录信息，当 siteLogin 为 true 时生效
+   * 站点级别登录信息，进入站点时需要认证，当 siteLogin 为 true 时生效
    */
   site?: (LoginInfo & { role?: "common" | "admin" })[];
   /**
-   * 页面级登录信息，登录一次后其他私密文章都可以访问
+   * 全局页面级登录信息，登录一次后其他全局页面级别的文章都可以访问
    */
   pages?: LoginInfo[];
   /**
-   * 登录信息分组
+   * 领域页面级别登录信息，登录一次后其他相同领域的文章都可以访问
    */
   realm?: { [key: string]: LoginInfo[] };
   /**
@@ -45,6 +45,8 @@ export interface Private {
   onBlur?: (value: string, formName: "username" | "password" | "verifyCode") => void;
   /**
    * 自定义登录逻辑，如果返回 boolean 代表自定义逻辑成功或者失败（内部会删除提示语），返回 undefined 代表结束登录逻辑
+   *
+   * @param nativeExecLogin 内置的登录函数，通过调用该函数来实现内置的登录功能
    */
   doLogin?: (
     loginInfo: { username: string; password: string },
@@ -53,6 +55,8 @@ export interface Private {
   ) => boolean | undefined;
   /**
    * 自定义验证逻辑
+   *
+   * @param nativeExecLogin 内置的登录函数，通过调用该函数来实现内置的登录功能
    */
   doValidate?: (
     type: "site" | "pages" | "realm" | "page",
@@ -91,7 +95,7 @@ export interface LoginInfo {
    */
   session?: boolean;
   /**
-   * 登录方式，once 代表一次登录，always 代表每次访问都登录
+   * 登录策略，once 代表一次登录，always 代表每次访问都登录
    *
    * @default 'once'
    */

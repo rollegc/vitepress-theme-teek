@@ -11,7 +11,8 @@ import {
   TkArticleOverviewPage,
   TkTitleTag,
   TkIcon,
-  TkLogin,
+  TkLoginPage,
+  TkRiskLinkPage,
 } from "@teek/components";
 
 import "../theme-chalk/src/index.scss";
@@ -34,10 +35,11 @@ export default {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
     app.component("TkArticleOverviewPage", TkArticleOverviewPage);
+    app.component("TkLoginPage", TkLoginPage);
+    app.component("TkRiskLinkPage", TkRiskLinkPage);
     app.component("TkDemoCode", TkDemoCode);
     app.component("TkTitleTag", TkTitleTag);
     app.component("TkIcon", TkIcon);
-    app.component("TkLogin", TkLogin);
 
     // 站点分析
     const siteAnalytics = (siteData.value.themeConfig.siteAnalytics as TeekConfig["siteAnalytics"]) || [];

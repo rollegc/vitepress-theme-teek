@@ -34,8 +34,8 @@ import { TkHome } from "@teek/components/theme/Home";
 import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
 import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
-import { TkLogin, useWatchLogin } from "@teek/components/theme/Login";
-import { TkRiskLink, useRiskLink } from "@teek/components/theme/RiskLink";
+import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
+import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -67,7 +67,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   articleTopTip: undefined,
   articleShare: {},
   appreciation: {},
-  riskLink: {},
+  riskLink: { enabled: false },
 });
 
 const commentConfig = computed(() => {
@@ -104,12 +104,17 @@ watch(
 );
 
 const { watchSite, watchPages } = useWatchLogin();
-const { restart } = useRiskLink(teekConfig.value.riskLink);
+const { restart } = useRiskLink({
+  whiteList: teekConfig.value.riskLink.whiteList,
+  blackList: teekConfig.value.riskLink.blackList,
+});
 
 watchSite();
 watchPages();
 
-onContentUpdated(restart);
+onContentUpdated(() => {
+  if (teekConfig.value.riskLink.enabled) restart;
+});
 
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [
@@ -127,10 +132,10 @@ const usedSlots = [
 <template>
   <template v-if="teekConfig.teekTheme">
     <template v-if="frontmatter.loginPage === true">
-      <slot name="teek-login-page"><TkLogin /></slot>
+      <slot name="teek-login-page"><TkLoginPage /></slot>
     </template>
     <template v-if="frontmatter.riskLinkPage === true">
-      <slot name="teek-risk-link-page"><TkRiskLink /></slot>
+      <slot name="teek-risk-link-page"><TkRiskLinkPage /></slot>
     </template>
 
     <template v-if="frontmatter.layout !== false">
