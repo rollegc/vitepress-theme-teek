@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.0...v1.3.1) (2025-05-19)
+
+### Features
+
+- 🚀 1.0.0-alpha.5 版本发布 ([e4e0d93](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e4e0d93cf7a9f255651103d7a4926fd962879943))
+- 🚀 登录页、风险链接提示页兼容移动端，footerGroup 文字整体左对齐 ([6f9e148](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/6f9e1483c44b5d87da6602f7c7e363c64441cdc9))
+- 🚀 首页卡片栏新增插槽覆盖各个卡片，优化首页文章列表在移动端的效果，my 卡片新增部分配置项 ([644a41a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/644a41a17dec08061238e8ea4f1e405211e5a7d2))
+- 🚀 移动端的侧边栏上方添加 blogger 栏，首页卡片栏新增部分插槽，优化部分组件样式，移动端支持切换主题 ([436e832](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/436e832ef1c4dfc171829cc6cda897f038f7aceb))
+- 🚀 useNamespace 新增 storageKey 统一缓存 key 的格式 ([ed824aa](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ed824aa00be4807ac887c94307af8e20863c2490))
+
+### Bug Fixes
+
+- 🐞 文档导航栏历史版本 link 错误修复 ([7bd71da](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7bd71da56ab43af440d1437f644b0a405b1f954a))
+- 🐞 segment-nav 风格下的部分样式修复 ([6a111e2](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/6a111e2474fb188eca542a4247313acfa8602e58))
+
 ## [1.3.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.2.0...v1.3.0) (2025-05-18)
 
 ### Features
