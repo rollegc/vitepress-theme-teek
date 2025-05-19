@@ -9,7 +9,7 @@ import { giscusContext } from "./giscus";
 
 defineOptions({ name: "CommentGiscus" });
 
-const ns = useNamespace("");
+const ns = useNamespace();
 const vpRouter = useVpRouter();
 
 const { getTeekConfig } = useTeekConfig();

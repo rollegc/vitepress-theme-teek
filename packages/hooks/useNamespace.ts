@@ -5,7 +5,7 @@ import namespaceModule from "./cssModule/namespace.module.scss";
  * @param block 块，用于声明组件的命名空间
  * @param namespaceOverrides 自定义命名空间
  */
-export const useNamespace = (block: string, namespaceOverrides?: string) => {
+export const useNamespace = (block: string = "", namespaceOverrides?: string) => {
   const finalNamespace = namespaceOverrides || namespaceModule.namespace;
 
   const b = (blockSuffix?: string) => {
@@ -67,6 +67,10 @@ export const useNamespace = (block: string, namespaceOverrides?: string) => {
    * CSS 变量名称当 name = color，返回 --tk-color
    */
   const cssVarName = (name: string) => `--${finalNamespace}-${name}`;
+  /**
+   * 获取缓存的 key
+   */
+  const storageKey = (...key: string[]) => `${finalNamespace}:${key.join(":")}`;
 
   return {
     namespaceModule,
@@ -83,6 +87,7 @@ export const useNamespace = (block: string, namespaceOverrides?: string) => {
     joinNamespace,
     cssVar,
     cssVarName,
+    storageKey,
   };
 };
 

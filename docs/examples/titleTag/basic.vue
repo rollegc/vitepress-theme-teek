@@ -7,18 +7,18 @@ import { TkTitleTag } from "vitepress-theme-teek";
     <TkTitleTag text="跟随主题色变换" />
 
     <div class="tk-space">
-      <TkTitleTag text="Vitepress primary 类型 " type="vp-primary" />
-      <TkTitleTag text="Vitepress info 类型 " type="vp-info" />
-      <TkTitleTag text="Vitepress succuss 类型 " type="vp-success" />
-      <TkTitleTag text="Vitepress danger 类型 " type="vp-danger" />
-      <TkTitleTag text="Vitepress important 类型 " type="vp-important" />
+      <TkTitleTag text="Vitepress primary 类型" type="vp-primary" />
+      <TkTitleTag text="Vitepress info 类型" type="vp-info" />
+      <TkTitleTag text="Vitepress succuss 类型" type="vp-success" />
+      <TkTitleTag text="Vitepress danger 类型" type="vp-danger" />
+      <TkTitleTag text="Vitepress important 类型" type="vp-important" />
     </div>
 
     <div class="tk-space">
-      <TkTitleTag text="ElementPlus primary 类型 " type="ep-primary" />
-      <TkTitleTag text="ElementPlus info 类型 " type="ep-info" />
-      <TkTitleTag text="ElementPlus succuss 类型 " type="ep-success" />
-      <TkTitleTag text="ElementPlus danger 类型 " type="vp-danger" />
+      <TkTitleTag text="ElementPlus primary 类型" type="ep-primary" />
+      <TkTitleTag text="ElementPlus info 类型" type="ep-info" />
+      <TkTitleTag text="ElementPlus succuss 类型" type="ep-success" />
+      <TkTitleTag text="ElementPlus danger 类型" type="vp-danger" />
     </div>
 
     <div class="tk-space">

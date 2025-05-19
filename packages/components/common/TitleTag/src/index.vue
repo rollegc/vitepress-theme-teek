@@ -10,7 +10,10 @@ const ns = useNamespace("title-tag");
 </script>
 
 <template>
-  <span v-if="text" :class="[ns.b(), type && ns.m(type), position && ns.m(position), size && ns.m(size)]">
+  <span
+    v-if="text || $slots.default"
+    :class="[ns.b(), type && ns.m(type), position && ns.m(position), size && ns.m(size)]"
+  >
     <slot>{{ text }}</slot>
   </span>
 </template>
