@@ -28,6 +28,12 @@ export interface ThemeEnhance {
      */
     defaultMode?: LayoutMode | LayoutModeVal;
     /**
+     * 切换布局成功后的回调
+     *
+     * @since 1.3.2
+     */
+    switchModeDone?: (mode: LayoutMode | LayoutModeVal) => void;
+    /**
      * 禁用帮助提示
      *
      * @default false
@@ -87,6 +93,12 @@ export interface ThemeEnhance {
       | "ep-green"
       | "ep-yellow"
       | "ep-red";
+    /**
+     * 切换布局成功后的回调
+     *
+     * @since 1.3.2
+     */
+    switchColorDone?: (color: string) => void;
     /**
      * 是否将主题色扩散到其他元素（根据主题色计算其他元素需要的颜色）
      *

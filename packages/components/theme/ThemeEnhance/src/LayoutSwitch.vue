@@ -39,6 +39,8 @@ const update = (val: LayoutModeVal) => {
 
   if (el.getAttribute(layoutModeAttribute) === val) return;
   el.setAttribute(layoutModeAttribute, val);
+
+  themeEnhanceConfig.value.layoutSwitch?.switchModeDone?.(val);
 };
 
 // 切换布局模式

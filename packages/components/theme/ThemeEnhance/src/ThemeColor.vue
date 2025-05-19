@@ -53,6 +53,8 @@ const update = (val: string) => {
   // 先清除旧属性再获取新属性，否则一直获取的是旧属性
   clear();
   primaryColor.value = getComputedStyle(el).getPropertyValue(varNameList.vpIndigo1);
+
+  themeEnhanceConfig.value.themeColor?.switchColorDone?.(val);
 };
 
 watch(themeColor, update, { immediate: true });

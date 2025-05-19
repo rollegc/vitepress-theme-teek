@@ -53,11 +53,3 @@
     }
   }
 }
-
-@include multiple-b((segment, segment-nav)) {
-  .#{$namespace}-article-share {
-    &__button {
-      background-color: getCssVar("bg-color");
-    }
-  }
-}
