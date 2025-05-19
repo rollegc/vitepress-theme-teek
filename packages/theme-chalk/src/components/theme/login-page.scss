@@ -52,6 +52,9 @@
     padding: 50px 40px 45px;
     min-width: 450px;
     overflow: hidden;
+    .cursor-pointer {
+      width: 30%;
+    }
 
     @media (max-width: 640px) {
       min-width: 100%;
@@ -74,6 +77,10 @@
       line-height: 1;
       margin: 0;
       white-space: wrap;
+
+      @media (max-width: 640px) {
+        font-size: 24px;
+      }
     }
   }
 
@@ -87,6 +94,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    transition: border-color 0.3s;
 
     /* for 屏幕阅读器 */
     .sr-only {
@@ -133,6 +141,8 @@
   @include e(right__form__btn) {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
     width: 100%;
 
     button {

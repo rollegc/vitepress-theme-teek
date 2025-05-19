@@ -10,6 +10,10 @@
   border-radius: 10px;
   box-shadow: getCssVar("card-shadow");
 
+  @media (max-width: 640px) {
+    min-width: calc(100% - 40px);
+  }
+
   @include e(header) {
     flex-wrap: wrap;
     gap: 15px;

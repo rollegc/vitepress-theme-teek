@@ -7,7 +7,7 @@ import { isClient } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
 // @ts-ignore
 import loginBgImg from "@teek/static/img/loginBg.png";
-import { userIcon, lockIcon, successFilledIcon, refreshRightIcon } from "@teek/static";
+import { userIcon, lockIcon, successFilledIcon, refreshRightIcon, warningFilledIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkMessage } from "@teek/components/common/Message";
@@ -49,7 +49,7 @@ const loginForm = reactive<LoginForm>({
     model: "",
     focusModel: false,
     errorModel: false,
-    icon: lockIcon,
+    icon: warningFilledIcon,
     placeholder: t("tk.login.verifyCodePlaceholder"),
     type: "text",
     append: markRaw(TkVerifyCode),
@@ -298,8 +298,8 @@ const handleBlur = (item: LoginFormItem, formName: "username" | "password" | "ve
           <span class="title">{{ frontmatter.name ?? "VitePress Theme Teek" }}</span>
         </div>
 
-        <form class="flx-space-y-20">
-          <div v-for="(item, key) in loginForm" :key class="flx">
+        <form class="flx-space-y-20 login-form">
+          <div v-for="(item, key) in loginForm" :key class="flx login-form-item">
             <div :class="[ns.e('right__form'), ns.is('focus', item.focusModel), ns.is('error', item.errorModel)]">
               <TkIcon :icon="item.icon" />
               <label :for="'input-' + key" class="sr-only">{{ item.placeholder }}</label>
@@ -321,13 +321,7 @@ const handleBlur = (item: LoginFormItem, formName: "username" | "password" | "ve
               <TkIcon :icon="refreshRightIcon" />
               <span>{{ t("tk.login.reset") }}</span>
             </button>
-            <button
-              type="button"
-              :icon="successFilledIcon"
-              @click="login()"
-              class="flx-center primary"
-              :aria-label="t('tk.login.login')"
-            >
+            <button type="button" @click="login()" class="flx-center primary" :aria-label="t('tk.login.login')">
               <TkIcon :icon="successFilledIcon" />
               <span>{{ t("tk.login.login") }}</span>
             </button>
