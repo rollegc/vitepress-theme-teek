@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ConfigSwitch">
-import { TkSegmented, TkMessage, magicIcon, isClient } from "vitepress-theme-teek";
+import { TkSegmented, TkMessage, magicIcon, isClient, useMediaQuery } from "vitepress-theme-teek";
 import BaseTemplate from "@teek/components/theme/ThemeEnhance/src/components/BaseTemplate.vue";
 import { nextTick, ref, watch } from "vue";
 import { useClipboard } from "@teek/hooks";
@@ -38,11 +38,16 @@ const segmentedOptions = [
   { value: "blog-card", label: "博客卡片", title: "首页卡片文章列表 + 左侧卡片栏列表" },
 ];
 
+const emit = defineEmits<{
+  switch: [config: typeof teekDocConfig, style: string];
+}>();
+
 // 默认文档风格
 const themeStyle = ref("doc");
 const teekConfig = ref(teekDocConfig);
 
 const { copy, copied } = useClipboard();
+const isMobile = useMediaQuery("(max-width: 768px)");
 
 const update = async (style: string) => {
   if (style === "doc") teekConfig.value = teekDocConfig;
@@ -52,9 +57,11 @@ const update = async (style: string) => {
   if (style === "blog-body") teekConfig.value = teekBlogBodyConfig;
   if (style === "blog-card") teekConfig.value = teekBlogCardConfig;
 
-  await nextTick();
-  if (!isClient) return;
+  emit("switch", teekConfig.value, style);
 
+  await nextTick();
+
+  if (!isClient) return;
   const navDom = document.querySelector(".VPNavBar") as HTMLElement;
 
   // 兼容 Teek Banner 样式
@@ -70,8 +77,6 @@ const handleCopy = async () => {
     ? TkMessage.success({ message: "复制成功！", plain: true })
     : TkMessage.error({ message: "复制失败！", plain: true });
 };
-
-defineExpose({ themeStyle, teekConfig });
 </script>
 
 <template>
@@ -79,7 +84,7 @@ defineExpose({ themeStyle, teekConfig });
     :class="ns"
     :icon="magicIcon"
     :title="tipInfo.title"
-    helper
+    :helper="!isMobile"
     :helper-desc="tipInfo.desc"
     :tips="tipInfo.tips"
   >
@@ -98,6 +103,9 @@ defineExpose({ themeStyle, teekConfig });
 $namespace: config-switch;
 
 .#{$namespace} {
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
   h3 {
     display: inline-block;
     font-size: 12px;

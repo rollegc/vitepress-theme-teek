@@ -12,7 +12,7 @@ defineOptions({ name: "Icon" });
 
 const ns = useNamespace("icon");
 
-const { icon = "", iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps & { icon: any }>();
+const { icon = "", iconType, color, hover = false, hoverColor, ...props } = defineProps<IconProps>();
 
 const slot = useSlots();
 
@@ -43,6 +43,8 @@ const getFontIconType = () => {
     return iconType as unknown as "unicode" | "iconfont" | "symbol";
   }
 
+  if (!isString(icon)) return "iconfont";
+
   if (icon.toLowerCase().startsWith("if-")) return "iconfont";
   if (icon.toLowerCase().startsWith("uni-")) return "unicode";
   if (icon.toLowerCase().startsWith("sym-")) return "symbol";
@@ -50,8 +52,8 @@ const getFontIconType = () => {
 
 const isSvgIcon = () => isString(icon) && (iconType === "svg" || icon.startsWith("<svg"));
 const isFontIcon = () => isString(icon) && getFontIconType();
-const isComponent = () => !isString(icon) && (iconType === "component" || icon.name || icon.setup);
-const isIconifyOffline = () => !isString(icon) && (iconType === "iconifyOffline" || icon.body);
+const isComponent = () => !isString(icon) && (iconType === "component" || (icon as any).name || (icon as any).setup);
+const isIconifyOffline = () => !isString(icon) && (iconType === "iconifyOffline" || (icon as any).body);
 const isIconifyOnline = () => isString(icon) && (iconType === "iconifyOnline" || icon.includes(":"));
 const isImg = () => isString(icon) && (iconType === "img" || icon.toLowerCase().startsWith("img-"));
 </script>

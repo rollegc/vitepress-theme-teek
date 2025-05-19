@@ -71,6 +71,8 @@
 
   @include e(blogger) {
     padding: 5px 5px 0;
+    text-align: left;
+
     .name {
       font-size: 21px;
       display: block;

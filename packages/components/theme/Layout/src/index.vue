@@ -36,6 +36,7 @@ import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
 import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
 import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
+import { TkHomeMyCardScreen } from "@teek/components/theme/HomeMyCard";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -126,6 +127,7 @@ const usedSlots = [
   "aside-bottom",
   "page-top",
   "aside-outline-before",
+  "sidebar-nav-before",
 ];
 </script>
 
@@ -179,6 +181,10 @@ const usedSlots = [
 
         <slot name="teek-footer-info-after" />
         <slot name="layout-bottom" />
+      </template>
+
+      <template #sidebar-nav-before>
+        <TkHomeMyCardScreen />
       </template>
 
       <template #doc-before>

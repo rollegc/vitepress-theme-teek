@@ -73,7 +73,7 @@ const handleTitleClick = () => {
 <template>
   <slot name="teek-home-card-top-article-before" />
 
-  <slot name="teek-home-top-article">
+  <slot name="teek-home-card-top-article">
     <TkPageCard
       page
       v-model="pageNum"

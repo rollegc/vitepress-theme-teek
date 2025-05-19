@@ -188,7 +188,7 @@ const docAnalysisList = computed<DocAnalysisResolve[]>(() => {
 <template>
   <slot name="teek-home-card-doc-analysis-before" />
 
-  <slot name="teek-home-doc-analysis">
+  <slot name="teek-home-card-doc-analysis">
     <TkPageCard :title="finalTitle" :class="ns.b()" :aria-label="t('tk.docAnalysisCard.label')">
       <template v-for="item in docAnalysisList" :key="item.key">
         <div v-if="item.show !== false" :class="ns.e('item')">

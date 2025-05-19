@@ -124,7 +124,7 @@ watch(
 <template>
   <slot name="teek-home-card-tag-before" />
 
-  <slot name="teek-home-tag">
+  <slot name="teek-home-card-tag">
     <TkPageCard
       :page="!tagsPage"
       v-model="pageNum"

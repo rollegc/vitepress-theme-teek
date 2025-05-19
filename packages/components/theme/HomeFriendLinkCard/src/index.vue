@@ -80,7 +80,7 @@ const handleTitleClick = () => {
 <template>
   <slot name="teek-home-card-friend-link-before" />
 
-  <slot name="teek-home-friend-link">
+  <slot name="teek-home-card-friend-link">
     <TkPageCard
       :page="!friendLinkConfig.autoScroll"
       v-model="pageNum"

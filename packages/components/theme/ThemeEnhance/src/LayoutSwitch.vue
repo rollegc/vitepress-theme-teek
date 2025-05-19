@@ -41,8 +41,8 @@ const update = (val: LayoutModeVal) => {
   el.setAttribute(layoutModeAttribute, val);
 };
 
+// 切换布局模式
 watch(layoutMode, update, { immediate: true });
-
 // 文章单独设置布局模式
 watch(
   () => frontmatter.value.layoutMode,
@@ -56,6 +56,13 @@ watch(
     }
   },
   { immediate: true }
+);
+// 如果默认值发生改变，则更新布局模式
+watch(
+  () => themeEnhanceConfig.value.layoutSwitch?.defaultMode,
+  newVal => {
+    if (newVal) layoutMode.value = newVal;
+  }
 );
 
 const content = computed(() => [

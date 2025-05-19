@@ -29,7 +29,7 @@ const myCardColorStyle = computed(() => ({ color: blogger.value.color }));
 <template>
   <slot name="teek-home-card-my-before" />
 
-  <slot name="teek-home-my">
+  <slot name="teek-home-card-my">
     <TkPageCard
       v-if="blogger.name"
       :class="[ns.b(), ns.is('circle-bg', isCircleBgImg)]"
@@ -56,6 +56,7 @@ const myCardColorStyle = computed(() => ({ color: blogger.value.color }));
         <TkAvatar
           v-else
           :size="100"
+          :shape
           :text="blogger.name"
           :text-size="50"
           :bg-color="ns.cssVar('theme-color')"
@@ -86,7 +87,7 @@ const myCardColorStyle = computed(() => ({ color: blogger.value.color }));
       </div>
 
       <div :class="ns.e('blogger')" :aria-label="t('tk.myCard.bloggerLabel')">
-        <span class="name">{{ blogger.name }}</span>
+        <h3 class="name">{{ blogger.name }}</h3>
         <span class="slogan">{{ blogger.slogan }}</span>
       </div>
     </TkPageCard>

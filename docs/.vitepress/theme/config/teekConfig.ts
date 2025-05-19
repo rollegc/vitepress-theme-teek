@@ -19,14 +19,6 @@ const teekBlogCommonConfig: TeekConfig = {
   footerInfo: {
     customHtml: `<span id="runtime"></span>`, // 需要搭配 .vitepress/theme/helper/useRuntime.ts 使用
   },
-  blogger: {
-    avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
-    shape: "circle-rotate",
-    name: "天客",
-    slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
-    circleBgImg: "/blog/bg4.webp",
-    color: "#ffffff",
-  },
   docAnalysis: {
     createTime: "2025-03-23",
     statistics: {
@@ -161,6 +153,11 @@ export const teekBlogBodyConfig: TeekConfig = {
   pageStyle: "segment-nav",
   bodyBgImg: {
     imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
+  },
+  themeEnhance: {
+    layoutSwitch: {
+      defaultMode: "original",
+    },
   },
 };
 

@@ -112,7 +112,7 @@ const itemRefs = ref<HTMLLIElement[]>([]);
 <template>
   <slot name="teek-home-card-category-before" />
 
-  <slot name="teek-home-category">
+  <slot name="teek-home-card-category">
     <TkPageCard
       :page="!categoriesPage"
       v-model="pageNum"
