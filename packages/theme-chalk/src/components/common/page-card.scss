@@ -4,11 +4,11 @@
 @include b(page-card) {
   padding: getCssVar("home-card-padding");
   width: getCssVar("home-card-width");
-  overflow: hidden;
-  border-radius: 4px;
+  border-radius: getCssVar("home-card-border-radius");
   box-shadow: getCssVar("card-shadow");
-  transition: box-shadow 0.5s;
   background-color: getCssVar("bg-color-elm");
+  transition: box-shadow 0.5s;
+  overflow: hidden;
 
   &:hover {
     box-shadow: getCssVar("hover-shadow");

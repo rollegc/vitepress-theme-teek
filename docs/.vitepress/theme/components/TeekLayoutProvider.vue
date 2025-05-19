@@ -50,3 +50,11 @@ watch(
     </template>
   </Teek.Layout>
 </template>
+
+<style lang="scss">
+.tk-my.is-circle-bg {
+  .tk-my__avatar.circle-rotate {
+    margin-top: 200px;
+  }
+}
+</style>

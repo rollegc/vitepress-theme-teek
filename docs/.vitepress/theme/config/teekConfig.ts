@@ -24,6 +24,8 @@ const teekBlogCommonConfig: TeekConfig = {
     shape: "circle-rotate",
     name: "天客",
     slogan: "朝圣的使徒，正在走向编程的至高殿堂！",
+    circleBgImg: "/blog/bg4.webp",
+    color: "#ffffff",
   },
   docAnalysis: {
     createTime: "2025-03-23",

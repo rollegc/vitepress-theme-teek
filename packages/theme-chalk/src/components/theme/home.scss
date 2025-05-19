@@ -29,7 +29,7 @@
 
   @media (max-width: 1280px) {
     @include e(content) {
-      padding: 0 20px;
+      padding: 0 10px;
     }
   }
 
@@ -38,6 +38,7 @@
       flex-wrap: wrap;
       @include e(content__post) {
         width: 100%;
+        min-width: 100%;
       }
       @include e(content__info) {
         width: 100%;
