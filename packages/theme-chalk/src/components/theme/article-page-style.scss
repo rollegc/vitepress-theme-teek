@@ -79,6 +79,12 @@ html[layout-mode="original"] {
         }
       }
     }
+
+    .#{$namespace}-article-share {
+      &__button {
+        background-color: getCssVar("bg-color");
+      }
+    }
   }
 
   /* 导航栏样式 */

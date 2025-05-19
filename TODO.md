@@ -2,6 +2,7 @@
 
 - 站点信息内容前添加 Icon
 - Teek 推广介绍文章编写
+- 推送 Github 自动推送 Gitee
 
 ## 模板
 
