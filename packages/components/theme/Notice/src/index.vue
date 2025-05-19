@@ -107,7 +107,7 @@ const openOrDisableScroll = (action: "open" | "disable") => {
 };
 
 // 记录公告弹框状态的缓存 Key
-const storageKey = computed(() => `${ns.b()}-${localeIndex.value}`);
+const storageKey = computed(() => ns.storageKey("notice", localeIndex.value, isClient ? window.location.hostname : ""));
 
 if (noticeConfig.value.useStorage) {
   // 多语言切换后，读取新语言的缓存，更新公告弹框状态

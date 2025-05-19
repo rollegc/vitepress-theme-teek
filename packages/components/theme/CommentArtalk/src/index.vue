@@ -9,7 +9,7 @@ import { artalkContext } from "./artalk";
 
 defineOptions({ name: "CommentArtalk" });
 
-const ns = useNamespace("");
+const ns = useNamespace();
 const vpRouter = useVpRouter();
 
 const { getTeekConfig } = useTeekConfig();

@@ -9,7 +9,7 @@ import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "CodeBlockToggle" });
 
-const ns = useNamespace("");
+const ns = useNamespace();
 const { getTeekConfigRef } = useTeekConfig();
 
 const codeBlockConfig = getTeekConfigRef<CodeBlock>("codeBlock", {

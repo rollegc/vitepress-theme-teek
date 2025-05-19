@@ -35,7 +35,7 @@
       background-color: getCssVar("bg-color");
     }
     @media (min-width: 1280px) {
-      header.VPNav .VPNavBar {
+      header.VPNav .VPNavBar:not(.full-img-nav-bar) {
         &.home {
           background-color: getCssVar("body-bg-img-nav-color");
         }

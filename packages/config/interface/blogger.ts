@@ -25,4 +25,17 @@ export interface Blogger {
    * @since v1.1.5
    */
   circleBgImg?: string;
+  /**
+   * 遮罩层是否显示，仅当 shape 为 circle 且 circleBgImg 配置时有效
+   *
+   * @default true
+   * @since v1.3.1
+   */
+  circleBgMask?: boolean;
+  /**
+   * 字体颜色
+   *
+   * @since v1.3.1
+   */
+  color?: string;
 }

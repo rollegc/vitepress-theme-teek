@@ -7,7 +7,7 @@ import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "CommentTwikoo" });
 
-const ns = useNamespace("");
+const ns = useNamespace();
 const vpRouter = useVpRouter();
 
 const { getTeekConfig } = useTeekConfig();

@@ -100,7 +100,9 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
     mdH1Option.beforeInject = (frontmatter, id, title) => {
       if (["cataloguePage", "TkCataloguePage"].includes(frontmatter.layout) || frontmatter.catalogue) return false;
       if (["archivesPage", "TkArchivesPage"].includes(frontmatter.layout) || frontmatter.archivesPage) return false;
-      if (frontmatter.titleTag) return `${title} <span class="tk-title-tag large">${frontmatter.titleTag}</span>`;
+      if (frontmatter.titleTag) {
+        return `${title} <TkTitleTag size="large">${frontmatter.titleTag}</TkTitleTag>`;
+      }
 
       return selfBeforeInject?.(frontmatter, id, title);
     };

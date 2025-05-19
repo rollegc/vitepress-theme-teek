@@ -5,7 +5,7 @@ import { isClient } from "@teek/helper";
 import { useNamespace } from "@teek/hooks";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
-const ns = useNamespace("");
+const ns = useNamespace();
 const { getTeekConfigRef } = useTeekConfig();
 
 const themeConfig = getTeekConfigRef<TeekConfig>(null, {

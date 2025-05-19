@@ -70,16 +70,18 @@ const componentMap = computed(() => {
 
 <template>
   <div :class="[ns.b(), 'flx-column']">
-    <slot name="teek-home-info-before" />
+    <slot name="teek-home-card-before" />
 
-    <template v-for="item in finalHomeCardSort" :key="item">
-      <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
-        <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
-          <slot :name="name" />
-        </template>
-      </component>
-    </template>
+    <slot name="teek-home-card">
+      <template v-for="item in finalHomeCardSort" :key="item">
+        <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
+          <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
+            <slot :name="name" />
+          </template>
+        </component>
+      </template>
+    </slot>
 
-    <slot name="teek-home-info-after" />
+    <slot name="teek-home-card-after" />
   </div>
 </template>

@@ -49,8 +49,8 @@
 }
 
 /* 全屏图片风格或 body 图片风格时，修改顶部导航栏样式 */
-.VPNavBar.home.full-img-nav-bar {
-  background-color: transparent !important;
+.tk-layout .VPNavBar.home.full-img-nav-bar:not(.screen-open) {
+  background-color: transparent;
   color: var(--vp-c-white);
 
   .VPNavBarTitle .title,
@@ -89,6 +89,20 @@
 
   .VPNavBarTranslations {
     .text {
+      color: var(--vp-c-white);
+    }
+  }
+
+  .VPNavBarHamburger {
+    .top,
+    .middle,
+    .bottom {
+      background-color: var(--vp-c-white);
+    }
+  }
+
+  .VPNavBarExtra {
+    .button {
       color: var(--vp-c-white);
     }
   }

@@ -1,6 +1,7 @@
 import type { Component, Ref } from "vue";
 import type { TkIconProps } from "@teek/components/common/Icon";
 import type { Private } from "@teek/config";
+import { useNamespace } from "@teek/hooks";
 import { isClient } from "@teek/helper";
 
 /**
@@ -9,10 +10,12 @@ import { isClient } from "@teek/helper";
 export const getLoginStorageKey = () => {
   if (!isClient) return { siteLoginKey: "", pagesLoginKey: "", pageLoginKey: "", realmLoginKey: "" };
 
-  const siteLoginKey = `teek:private:site:${window.location.hostname}`;
-  const pagesLoginKey = `teek:private:pages:${window.location.hostname}`;
-  const pageLoginKey = `teek:private:page:${window.location.hostname}:`;
-  const realmLoginKey = `teek:private:realm:${window.location.hostname}:`;
+  const ns = useNamespace();
+
+  const siteLoginKey = ns.storageKey("private", "site", window.location.hostname);
+  const pagesLoginKey = ns.storageKey("private", "pages", window.location.hostname);
+  const pageLoginKey = ns.storageKey("private", "page", window.location.hostname);
+  const realmLoginKey = ns.storageKey("private", "realm", window.location.hostname);
 
   return { siteLoginKey, pagesLoginKey, pageLoginKey, realmLoginKey };
 };

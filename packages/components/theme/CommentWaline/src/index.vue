@@ -9,7 +9,7 @@ import { walineContext } from "./waline";
 
 defineOptions({ name: "CommentWaline" });
 
-const ns = useNamespace("");
+const ns = useNamespace();
 const vpRouter = useVpRouter();
 
 const { getTeekConfig } = useTeekConfig();
