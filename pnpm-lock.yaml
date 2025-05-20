@@ -43,8 +43,8 @@ catalogs:
       specifier: ^1.6.3
       version: 1.6.3
     vitepress-plugin-auto-frontmatter:
-      specifier: ^1.0.9
-      version: 1.0.9
+      specifier: ^1.0.10
+      version: 1.0.10
     vitepress-plugin-catalogue:
       specifier: ^1.0.15
       version: 1.0.15
@@ -61,8 +61,8 @@ catalogs:
       specifier: ^1.1.2
       version: 1.1.2
     vitepress-plugin-sidebar-resolve:
-      specifier: ^1.0.9
-      version: 1.0.9
+      specifier: ^1.0.10
+      version: 1.0.10
     vue:
       specifier: ^3.5.13
       version: 3.5.13
@@ -307,7 +307,7 @@ importers:
         version: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)
       vitepress-plugin-auto-frontmatter:
         specifier: 'catalog:'
-        version: 1.0.9
+        version: 1.0.10
       vitepress-plugin-catalogue:
         specifier: 'catalog:'
         version: 1.0.15
@@ -325,7 +325,7 @@ importers:
         version: 1.1.2(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
       vitepress-plugin-sidebar-resolve:
         specifier: 'catalog:'
-        version: 1.0.9(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
+        version: 1.0.10(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
     devDependencies:
       '@types/markdown-it':
         specifier: 'catalog:'
@@ -4846,8 +4846,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-auto-frontmatter@1.0.9:
-    resolution: {integrity: sha512-om5hMztDWnBkdWWfCv4G+ebdQTh0ip24pNwIRTyQejXFpqD4K+2/a+bgtdkoJyZJE8NW2DnLqodnyMVlAoU5ag==}
+  vitepress-plugin-auto-frontmatter@1.0.10:
+    resolution: {integrity: sha512-hK/ybuDHT0BRCNK5HaQOemrjbkN8Y31C+ilCHZaWklVA9mPJx6b1it2PVPN9E4BELydsANLlNMDDvTf7usXaSg==}
 
   vitepress-plugin-catalogue@1.0.15:
     resolution: {integrity: sha512-D/WRzF4cDji6rTeeR8p84JJYFLkqXOYFIyJ+5Wk/c4yEUNQqtmNxVxUSpmvnMXg9N8yj+Z0IHw3qEJ+gIJjZVw==}
@@ -4868,8 +4868,8 @@ packages:
     peerDependencies:
       vitepress: ^1.6.3
 
-  vitepress-plugin-sidebar-resolve@1.0.9:
-    resolution: {integrity: sha512-3LtpY1bQLdOIg9u7S6rNpF4359rPEcCTuijLczpB4ca/8h6tPthg7KFofKlzrwia61yVh04LkG6rLo1krZBPvg==}
+  vitepress-plugin-sidebar-resolve@1.0.10:
+    resolution: {integrity: sha512-OLn+5nTV8QCs1za8bizht3VQ16Qaqv0EcFyIG6fWt+CpDCdMSfsB3iD6BLtyx5aYv6q8IAPxMAw4RzAuzFQoZg==}
     peerDependencies:
       vitepress: ^1.6.3
 
@@ -9506,7 +9506,7 @@ snapshots:
       tsx: 4.19.3
       yaml: 2.7.1
 
-  vitepress-plugin-auto-frontmatter@1.0.9:
+  vitepress-plugin-auto-frontmatter@1.0.10:
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1
@@ -9539,7 +9539,7 @@ snapshots:
       picocolors: 1.1.1
       vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)
 
-  vitepress-plugin-sidebar-resolve@1.0.9(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
+  vitepress-plugin-sidebar-resolve@1.0.10(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1

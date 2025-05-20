@@ -106,4 +106,10 @@ export interface SidebarOption {
    * @default false
    */
   restart?: boolean;
+  /**
+   * 忽略插件在构建侧边栏时生成的警告信息
+   *
+   * @default false
+   */
+  ignoreWarn?: boolean;
 }

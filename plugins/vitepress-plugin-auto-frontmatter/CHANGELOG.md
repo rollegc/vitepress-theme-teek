@@ -1,5 +1,12 @@
 # vitepress-plugin-auto-frontmatter
 
+## 1.0.10
+
+### Patch Changes
+
+- 生成 frontmatter 时清除尾部的一次换行符
+- frontmatter 判空忽略 false 和 0
+
 ## 1.0.9
 
 ### Patch Changes
