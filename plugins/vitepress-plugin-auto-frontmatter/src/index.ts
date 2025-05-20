@@ -75,7 +75,7 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     };
 
     for (const [key, value] of Object.entries(addInfo)) {
-      if (!frontmatter[key]) {
+      if (frontmatter[key] === undefined) {
         // 放到最前面
         tempFrontmatter = { [key]: value, ...tempFrontmatter };
         hasChange = true;
@@ -91,11 +91,14 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     finalFrontmatter.date = formatDate(tempFrontmatter.date);
 
     // 如果源文件的 frontmatter 已经全部包含处理后的 frontmatter，则不需要修改
-    if (!recoverTransform && Object.keys(finalFrontmatter).every(key => frontmatter[key])) continue;
+    if (!recoverTransform && Object.keys(finalFrontmatter).every(key => frontmatter[key] !== undefined)) continue;
 
     // 转换为 --- xxx --- 字符串
     const frontmatterStr = Object.keys(finalFrontmatter).length
-      ? matter.stringify("", finalFrontmatter).replace(/'/g, "")
+      ? matter
+          .stringify("", finalFrontmatter)
+          .replace(/'/g, "")
+          .replace(/(?:\r?\n)$/, "") // 清除尾部的一次换行符
       : "";
 
     // 将修改后的内容写入文件

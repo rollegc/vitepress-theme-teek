@@ -42,8 +42,8 @@ const buildModules = async () => {
           resolvers: [cssResolver],
           beforeWriteFile: (filePath: string, content: string) => {
             let tempPath = filePath;
-            const sourcePath = "dist/types/src";
-            // 去掉打包后带有 src 的路径
+            const sourcePath = "dist/types/teek";
+            // 将 teek 目录下的 .d.ts 文件移到前一级（与 teek 目录下的 js 代码文件位置保持一致）
             if (filePath.includes(sourcePath)) tempPath = filePath.replace(sourcePath, "dist/types");
 
             // 在 cssResolver 里对 content 使用了 JSON.stringify，因此这里需要转换为 JSON

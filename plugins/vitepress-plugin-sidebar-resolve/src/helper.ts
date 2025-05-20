@@ -24,6 +24,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     initItems = true,
     initItemsText = false,
     sideBarResolved,
+    ignoreWarn = false,
   } = option;
   if (!path) return {};
 
@@ -46,7 +47,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     // 创建 SideBarItems
     const sidebarItems = createSideBarItems(dirPath, option, `${key}${fileName}/`);
 
-    if (!sidebarItems.length) {
+    if (!ignoreWarn && !sidebarItems.length) {
       return logger.warn(`该目录 '${dirPath}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
@@ -112,6 +113,7 @@ const createSideBarItems = (
     sideBarItemsResolved,
     beforeCreateSideBarItems,
     titleFormMd = false,
+    ignoreWarn = false,
   } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 
@@ -134,13 +136,13 @@ const createSideBarItems = (
     const index = parseInt(indexStr as string, 10);
 
     // 校验文件序号
-    if (fileIndexPrefix && isIllegalIndex(index)) {
+    if (!ignoreWarn && fileIndexPrefix && isIllegalIndex(index)) {
       logger.warn(`该文件 '${filePath}' 序号出错，请填写正确的序号`);
       return [];
     }
 
     // 判断序号是否已经存在
-    if (sidebarItems[index]) logger.warn(`该文件 '${filePath}' 的序号在同一级别中重复出现，将会被覆盖`);
+    if (!ignoreWarn && sidebarItems[index]) logger.warn(`该文件 '${filePath}' 的序号在同一级别中重复出现，将会被覆盖`);
 
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
@@ -163,7 +165,7 @@ const createSideBarItems = (
 
       if (!["md", "MD"].includes(type)) {
         // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
-        !onlyScannerRootMd && logger.warn(`该文件 '${filePath}' 非 .md 格式文件，不支持该文件类型`);
+        if (!ignoreWarn && !onlyScannerRootMd) logger.warn(`该文件 '${filePath}' 非 .md 格式文件，不支持该文件类型`);
         return [];
       }
 

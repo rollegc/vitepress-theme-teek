@@ -1,5 +1,11 @@
 # vitepress-plugin-sidebar-resolve
 
+## 1.0.10
+
+### Patch Changes
+
+- 添加 ignoreWarn 配置项来忽略插件在构建侧边栏时生成的警告信息
+
 ## 1.0.9
 
 ### Patch Changes

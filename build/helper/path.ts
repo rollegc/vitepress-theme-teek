@@ -5,7 +5,7 @@ import { pkgName, outputPkgName } from "./constants";
 export const projectRoot = resolve(__dirname, "..", "..");
 /** `/packages` */
 export const pkgRoot = resolve(projectRoot, "packages");
-/** `/packages/vitepress-theme-teek` */
+/** `/packages/teek` */
 export const tkRoot = resolve(pkgRoot, pkgName);
 
 /** `docs` */

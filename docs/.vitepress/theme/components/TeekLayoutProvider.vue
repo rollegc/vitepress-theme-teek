@@ -7,6 +7,7 @@ import { teekDocConfig } from "../config/teekConfig";
 import { useRibbon } from "../hooks/useRibbon";
 import { useRuntime } from "../hooks/useRuntime";
 import ConfigSwitch from "./ConfigSwitch.vue";
+import ContributeChart from "./ContributeChart.vue";
 
 const ns = "layout-provider";
 const { frontmatter } = useData();
@@ -15,44 +16,36 @@ const teekConfig = ref(teekDocConfig);
 provide(teekConfigContext, teekConfig);
 
 // 彩带背景
-const { start, stop } = useRibbon({ immediate: false, clickReRender: true });
+const { start: startRibbon, stop: stopRibbon } = useRibbon({ immediate: false, clickReRender: true });
 // 页脚运行时间
 const { start: startRuntime, stop: stopRuntime } = useRuntime("2021-10-19 00:00:00", {
   prefix: `<span style="width: 16px; display: inline-block; vertical-align: -3px; margin-right: 3px;">${clockIcon}</span>小破站已运行 `,
 });
 
-const watchRuntime = async (condition: boolean) => {
-  await nextTick();
-  if (condition) startRuntime();
-  else stopRuntime();
-};
+const watchRuntimeAndRibbon = async (layout: string, style: string) => {
+  const isHome = layout === "home";
+  const isDoc = [undefined, "doc"].includes(layout);
+  const isBlog = style.startsWith("blog");
 
-const watchRibbon = async (condition: boolean) => {
-  await nextTick();
-  if (condition) start();
-  else stop();
-};
-
-const watchRuntimeAndRibbon = (layout: string, style: string) => {
   // 博客类风格的首页显示运行时间
-  watchRuntime(layout === "home" && style.startsWith("blog"));
+  await nextTick();
+  if (isHome && isBlog) startRuntime();
+  else stopRuntime();
 
   // 博客类风格的首页显示彩带 & 设置了 pageStyle 的文章页显示彩带
-  watchRibbon(
-    (layout === "home" && style.startsWith("blog") && style !== "blog-body") ||
-      ([undefined, "doc"].includes(layout) && !!teekConfig.value.pageStyle)
-  );
+  if ((isHome && isBlog && style !== "blog-body") || (isDoc && !!teekConfig.value.pageStyle)) startRibbon();
+  else stopRibbon();
 };
 
-const currentStyle = ref("");
+// 默认文档风
+const currentStyle = ref("doc");
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
 
 const handleConfigSwitch = (config: TeekConfig, style: string) => {
   teekConfig.value = config;
-  currentStyle.value = style;
 
-  watchRuntimeAndRibbon(frontmatter.value.layout, currentStyle.value);
+  watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
 </script>
 
@@ -60,12 +53,16 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
   <Teek.Layout>
     <template #teek-theme-enhance-bottom>
       <div :class="[ns, 'flx-align-center']">
-        <ConfigSwitch @switch="handleConfigSwitch" />
+        <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
       </div>
     </template>
 
     <template #nav-screen-content-after>
-      <ConfigSwitch @switch="handleConfigSwitch" />
+      <ConfigSwitch v-model="currentStyle" @switch="handleConfigSwitch" />
+    </template>
+
+    <template #teek-archives-top-before>
+      <ContributeChart />
     </template>
   </Teek.Layout>
 </template>

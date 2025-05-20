@@ -71,6 +71,7 @@ sidebar: false
 | titleFormMd     | 是否从 md 文件获取第一个一级标题作为侧边栏 text              | `boolean`                                                    | `false`                        |
 | localeRootDir   | 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh | `string`                                                     | 文档根目录                     |
 | restart         | Markdown 文件创建或者删除时，是否重启 VitePress 服务         | `boolean`                                                    | `false`                        |
+| ignoreWarn         | 忽略插件在构建侧边栏时生成的警告信息         | `boolean`                                                    | `false`                        |
 
 > 额外说明
 
@@ -180,6 +181,12 @@ export interface SidebarOption {
    * @default false
    */
   restart?: boolean;
+  /**
+   * 忽略插件在构建侧边栏时生成的警告信息
+   *
+   * @default false
+   */
+  ignoreWarn?: boolean;
 }
 ```
 

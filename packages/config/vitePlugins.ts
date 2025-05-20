@@ -77,7 +77,7 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
         transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
 
-      transformResult = transform?.(transformResult, fileInfo) || transformResult;
+      transformResult = transform?.({ ...frontmatter, ...transformResult }, fileInfo) || transformResult;
 
       return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
     };

@@ -43,7 +43,7 @@ const emit = defineEmits<{
 }>();
 
 // 默认文档风格
-const themeStyle = ref("doc");
+const themeStyle = defineModel({ default: "doc" });
 const teekConfig = ref(teekDocConfig);
 
 const { copy, copied } = useClipboard();
@@ -94,7 +94,6 @@ const handleCopy = async () => {
         <button @click="handleCopy">Copy</button>
       </div>
     </template>
-
     <TkSegmented v-model="themeStyle" :options="segmentedOptions" />
   </BaseTemplate>
 </template>
