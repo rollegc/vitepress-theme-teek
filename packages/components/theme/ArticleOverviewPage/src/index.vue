@@ -6,6 +6,7 @@ import { formatDate } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { usePosts, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
+import { createDynamicComponent } from "@teek/components/theme/ArticleTitle";
 
 defineOptions({ name: "ArticleOverviewPage" });
 
@@ -104,7 +105,9 @@ const formatPublishDate = (date?: string) => {
           <tr v-for="data in item.data" :key="data.url">
             <td>{{ item.name }}</td>
             <td>
-              <a :href="data.url && withBase(data.url)" :aria-label="data.title">{{ data.title }}</a>
+              <a :href="data.url && withBase(data.url)" :aria-label="data.title">
+                <component v-if="data.title" :is="createDynamicComponent(data.title)" />
+              </a>
             </td>
             <td>{{ formatPublishDate(data.date) }}</td>
             <td>{{ data.wordCount }}</td>

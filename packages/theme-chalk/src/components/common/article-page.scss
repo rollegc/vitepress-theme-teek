@@ -17,7 +17,7 @@
     display: flex;
 
     @media (min-width: 1280px) {
-      width: calc(getCssVar("page-width") + 280px);
+      width: calc(getCssVar("page-width") + 360px);
 
       .#{$namespace}-doc {
         transform: translateX(80px);
