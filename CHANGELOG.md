@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.1...v1.3.2) (2025-05-20)
+
+### Features
+
+- 🚀 主题增强面板新增 switchModeDone、switchColorDone 配置项，优化 articleShare 在 pageStyle 配置下的样式 ([ff4bf0e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ff4bf0e2cd5db9d6a27b5864c79615d47b95f0fa))
+- 🚀 v1.3.2 版本发布 ([5cd1553](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5cd155379351e4afd2b4d883f3580a5812032a5e))
+
+### Bug Fixes
+
+- 🐞 修复 teek 文档的配置切换功能在移动端自动重置问题，auto-frontmatter 和 sidebar-resolve 插件发版 ([833573a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/833573ad62890092d56bbc0044b6e2a588873f4a))
+- 🐞 修复归档页的贡献图标宽度不兼容问题，风险链接提示页不支持内容编写 ([6481500](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/6481500f79014915d5bbd2a75632d1b611046d51))
+- 🐞 footerGroup 移动端样式优化，修复风险链接提示页不生效问题，修复白名单黑名单配置项命名 ([dc1cbed](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/dc1cbed0f1e3e4b9f7e30065e91c81c7982a332e))
+
+### Styling
+
+- 🎨 更新版本号 ([cfa00f6](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/cfa00f627244fa8dfc23b3150b4ace5a0c3175f0))
+
 ## [1.3.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.0...v1.3.1) (2025-05-19)
 
 ### Features
