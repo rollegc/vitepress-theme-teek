@@ -7,13 +7,13 @@ export interface UseRiskLinkOptions {
   /**
    * 白名单，支持正则表达式
    */
-  whiteList?: Array<RegExp | string>;
+  whitelist?: Array<RegExp | string>;
   /**
    * 黑名单，支持正则表达式
    *
    * @remark 如果设置了黑名单，则只拦截黑名单的链接
    */
-  blackList?: Array<RegExp | string>;
+  blacklist?: Array<RegExp | string>;
 }
 
 export const useRiskLink = (options: UseRiskLinkOptions = {}) => {
@@ -23,7 +23,7 @@ export const useRiskLink = (options: UseRiskLinkOptions = {}) => {
   const cleanups: Function[] = [];
   const { riskLinkPath } = usePagePath();
 
-  const { whiteList = [], blackList = [] } = options;
+  const { whitelist = [], blacklist = [] } = options;
 
   /**
    * 判断数组中是否存在某个元素，支持正则表达式
@@ -39,7 +39,7 @@ export const useRiskLink = (options: UseRiskLinkOptions = {}) => {
    */
   const isRiskLink = (url: string, currentDomain: string) => {
     const link = new URL(url, window.location.origin);
-    return link.hostname !== currentDomain && !isSome(whiteList, url);
+    return link.hostname !== currentDomain && !isSome(whitelist, url);
   };
 
   const start = async () => {
@@ -52,7 +52,7 @@ export const useRiskLink = (options: UseRiskLinkOptions = {}) => {
 
       if (!href || riskLinks.has(link)) return;
       // 如果设置了黑名单，则只拦截黑名单的链接
-      if (blackList.length && !isSome(blackList, href)) return;
+      if (blacklist.length && !isSome(blacklist, href)) return;
       // 判断是否为外链
       if (!isRiskLink(href, currentDomain)) return;
 

@@ -7,6 +7,7 @@ import { teekDocConfig } from "../config/teekConfig";
 import { useRibbon } from "../hooks/useRibbon";
 import { useRuntime } from "../hooks/useRuntime";
 import ConfigSwitch from "./ConfigSwitch.vue";
+import ContributeChart from "./ContributeChart.vue";
 
 const ns = "layout-provider";
 const { frontmatter } = useData();
@@ -66,6 +67,10 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
     <template #nav-screen-content-after>
       <ConfigSwitch @switch="handleConfigSwitch" />
+    </template>
+
+    <template #teek-archives-top-before>
+      <ContributeChart />
     </template>
   </Teek.Layout>
 </template>

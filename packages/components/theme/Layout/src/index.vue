@@ -106,15 +106,15 @@ watch(
 
 const { watchSite, watchPages } = useWatchLogin();
 const { restart } = useRiskLink({
-  whiteList: teekConfig.value.riskLink.whiteList,
-  blackList: teekConfig.value.riskLink.blackList,
+  whitelist: teekConfig.value.riskLink.whitelist,
+  blacklist: teekConfig.value.riskLink.blacklist,
 });
 
 watchSite();
 watchPages();
 
 onContentUpdated(() => {
-  if (teekConfig.value.riskLink.enabled) restart;
+  if (teekConfig.value.riskLink.enabled) restart();
 });
 
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽

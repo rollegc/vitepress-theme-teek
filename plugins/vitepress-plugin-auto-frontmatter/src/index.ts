@@ -91,7 +91,7 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
     finalFrontmatter.date = formatDate(tempFrontmatter.date);
 
     // 如果源文件的 frontmatter 已经全部包含处理后的 frontmatter，则不需要修改
-    if (!recoverTransform && Object.keys(finalFrontmatter).every(key => frontmatter[key])) continue;
+    if (!recoverTransform && Object.keys(finalFrontmatter).every(key => frontmatter[key] !== undefined)) continue;
 
     // 转换为 --- xxx --- 字符串
     const frontmatterStr = Object.keys(finalFrontmatter).length
