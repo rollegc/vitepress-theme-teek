@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.2...v1.3.3) (2025-05-20)
+
+### Features
+
+- 🚀 v1.3.3 版本发布 ([199b671](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/199b67141dca185ad22f724550a5d7cd89ae8101))
+
+### Bug Fixes
+
+- 🐞 修复打包的部分 .d.ts 文件引入其他文件路径错误问题 ([9280f43](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/9280f43c9822919e7f958b8f0d7677c06ec143ec))
+- 🐞 修复清单页没有渲染全局组件问题 ([0e11282](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/0e1128263dffaa7ac23f32cf4dda48ea2fb01efe))
+
 ### [1.3.2](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.1...v1.3.2) (2025-05-20)
 
 ### Features
