@@ -12,7 +12,7 @@ tags:
 
 ## 基础使用
 
-将归档页注册到全局里：
+将目录页注册到全局里：
 
 ```ts
 import DefaultTheme from "vitepress/theme";

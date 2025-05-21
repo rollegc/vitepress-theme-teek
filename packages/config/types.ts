@@ -130,6 +130,18 @@ export interface TeekConfig {
     page: PageData
   ) => VpContainerProps | undefined;
   /**
+   * 文章页底部使用 VitePress 容器添加提示
+   *
+   * @param frontmatter 文档 frontmatter
+   * @param localeIndex 当前国际化语言
+   * @param page 文章信息，即 useData().page 的信息
+   */
+  articleBottomTip?: (
+    frontmatter: PageData["frontmatter"],
+    localeIndex: string,
+    page: PageData
+  ) => VpContainerProps | undefined;
+  /**
    *  body 背景图片配置
    */
   bodyBgImg?: BodyBgImg;
