@@ -2,11 +2,9 @@
 import type { LoginInfo, Private } from "@teek/config";
 import type { LoginForm, LoginFormItem } from "./login";
 import { markRaw, reactive, ref } from "vue";
-import { useData, useRouter } from "vitepress";
+import { useData, useRouter, withBase } from "vitepress";
 import { isClient } from "@teek/helper";
 import { useNamespace, useLocale } from "@teek/hooks";
-// @ts-ignore
-import loginBgImg from "@teek/static/img/loginBg.png";
 import { userIcon, lockIcon, successFilledIcon, refreshRightIcon, warningFilledIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
@@ -30,7 +28,7 @@ const imgCode = ref("");
 
 const loginForm = reactive<LoginForm>({
   username: {
-    model: "teek",
+    model: "",
     focusModel: false,
     errorModel: false,
     icon: userIcon,
@@ -38,7 +36,7 @@ const loginForm = reactive<LoginForm>({
     type: "text",
   },
   password: {
-    model: "teek",
+    model: "",
     focusModel: false,
     errorModel: false,
     icon: lockIcon,
@@ -288,8 +286,8 @@ const handleBlur = (item: LoginFormItem, formName: "username" | "password" | "ve
 <template>
   <div :class="ns.b()" :aria-label="t('tk.login.label')">
     <div :class="ns.e('wrapper')">
-      <div :class="ns.e('left')">
-        <img :src="loginBgImg" alt="login" />
+      <div v-if="frontmatter.leftImg" :class="ns.e('left')">
+        <img :src="withBase(frontmatter.leftImg)" alt="login" />
       </div>
 
       <div :class="ns.e('right')">

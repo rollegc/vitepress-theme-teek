@@ -66,6 +66,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   comment: { provider: "" },
   articleUpdate: { enabled: true },
   articleTopTip: undefined,
+  articleBottomTip: undefined,
   articleShare: {},
   appreciation: {},
   riskLink: { enabled: false },
@@ -90,6 +91,9 @@ const commentConfig = computed(() => {
 
 const topTipConfig = computed(() => {
   return teekConfig.value.articleTopTip?.(frontmatter.value, localeIndex.value, page.value);
+});
+const bottomTipConfig = computed(() => {
+  return teekConfig.value.articleBottomTip?.(frontmatter.value, localeIndex.value, page.value);
 });
 
 const themeSizeAttribute = ns.joinNamespace("theme-size");
@@ -122,6 +126,7 @@ const usedSlots = [
   "home-hero-before",
   "nav-bar-content-after",
   "layout-bottom",
+  "doc-footer-before",
   "doc-before",
   "doc-after",
   "aside-bottom",
@@ -187,17 +192,20 @@ const usedSlots = [
         <TkHomeMyCardScreen />
       </template>
 
+      <template #doc-footer-before>
+        <TkVpContainer v-if="bottomTipConfig" v-bind="bottomTipConfig" />
+      </template>
+
       <template #doc-before>
         <slot name="doc-before" />
         <slot name="teek-article-analyze-before" />
-
         <TkArticleAnalyze v-if="frontmatter.article !== false" />
+        <slot name="teek-article-analyze-after" />
+
         <TkArticleImagePreview />
         <TkArticlePageStyle />
         <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
         <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
-
-        <slot name="teek-article-analyze-after" />
       </template>
 
       <template #doc-after>

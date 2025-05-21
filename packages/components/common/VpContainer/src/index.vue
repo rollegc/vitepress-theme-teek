@@ -20,13 +20,13 @@ const hasText = computed(() => text || slots.default);
     <div :class="[type, 'custom-block', { 'no-title': !title }]">
       <div v-if="hasTitle" class="custom-block-title">
         <slot name="title">
-          {{ title }}
+          <span v-html="title" />
         </slot>
       </div>
 
       <p v-if="hasText">
         <slot>
-          {{ text }}
+          <span v-html="text" />
         </slot>
       </p>
     </div>

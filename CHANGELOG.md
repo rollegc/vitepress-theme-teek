@@ -2,7 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.3.3](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.2...v1.3.3) (2025-05-20)
+### [1.3.4](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.3...v1.3.4) (2025-05-21)
+
+### Features
+
+- 🚀 登录页背景图解耦，支持 frontmatter 自定义传入，优化登录页在移动端的样式 ([17f69ec](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/17f69eccb58c4044479706cdad126161fc9840a1))
+- 🚀 新增 articleBottomTip 配置项，VpContainer 支持传入 HTML 格式文本 ([df11913](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/df11913e7a666b1cf06056d0b7e45845ffb456a5))
+
+### Bug Fixes
+
+- 🐞 修复登录页文本框存在默认值问题 ([c7d45e8](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c7d45e847ccc7595e627ec8b7ee60d672ff1fb59))
+
+## [1.3.3](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.2...v1.3.3) (2025-05-20)
 
 ### Features
 
@@ -13,7 +24,7 @@ All notable changes to this project will be documented in this file. See [standa
 - 🐞 修复打包的部分 .d.ts 文件引入其他文件路径错误问题 ([9280f43](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/9280f43c9822919e7f958b8f0d7677c06ec143ec))
 - 🐞 修复清单页没有渲染全局组件问题 ([0e11282](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/0e1128263dffaa7ac23f32cf4dda48ea2fb01efe))
 
-### [1.3.2](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.1...v1.3.2) (2025-05-20)
+## [1.3.2](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.1...v1.3.2) (2025-05-20)
 
 ### Features
 
