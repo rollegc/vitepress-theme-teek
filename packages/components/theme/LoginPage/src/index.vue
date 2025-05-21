@@ -28,7 +28,7 @@ const imgCode = ref("");
 
 const loginForm = reactive<LoginForm>({
   username: {
-    model: "teek",
+    model: "",
     focusModel: false,
     errorModel: false,
     icon: userIcon,
@@ -36,7 +36,7 @@ const loginForm = reactive<LoginForm>({
     type: "text",
   },
   password: {
-    model: "teek",
+    model: "",
     focusModel: false,
     errorModel: false,
     icon: lockIcon,

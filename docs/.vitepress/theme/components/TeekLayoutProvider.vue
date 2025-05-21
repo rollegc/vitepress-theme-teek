@@ -12,6 +12,8 @@ import ContributeChart from "./ContributeChart.vue";
 const ns = "layout-provider";
 const { frontmatter } = useData();
 
+// 默认文档风
+const currentStyle = ref("doc");
 const teekConfig = ref(teekDocConfig);
 provide(teekConfigContext, teekConfig);
 
@@ -36,9 +38,6 @@ const watchRuntimeAndRibbon = async (layout: string, style: string) => {
   if ((isHome && isBlog && style !== "blog-body") || (isDoc && !!teekConfig.value.pageStyle)) startRibbon();
   else stopRibbon();
 };
-
-// 默认文档风
-const currentStyle = ref("doc");
 
 watch(frontmatter, async newVal => watchRuntimeAndRibbon(newVal.layout, currentStyle.value), { immediate: true });
 
