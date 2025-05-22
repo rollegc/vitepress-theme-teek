@@ -1,6 +1,11 @@
 import { defineConfig } from "vitepress";
+// 本地 Teek 主题包引用（与 Teek 在线主题包引用 二选一）
 import { defineTeekConfig } from "../../packages/config";
 import { version } from "../../packages/teek/version";
+
+// Teek 在线主题包引用（需安装 Teek 在线版本）
+// import { defineTeekConfig } from "vitepress-theme-teek/config";
+// import { version } from "vitepress-theme-teek/es/version";
 
 const description = [
   "欢迎来到 vitepress-theme-teek 使用文档",
@@ -144,14 +149,19 @@ export default defineConfig({
     },
     nav: [
       { text: "首页", link: "/" },
-      { text: "指南", link: "/guide/intro", activeMatch: "/01.指南/" },
+      {
+        text: "指南",
+        link: "/guide/intro",
+        activeMatch: "/01.指南/",
+      },
       { text: "配置", link: "/reference/config", activeMatch: "/10.配置/" },
       { text: "开发", link: "/develop/intro", activeMatch: "/15.主题开发/" },
       {
         text: "资源",
         items: [
           { text: "案例", link: "/case" },
-          { text: "常见问题", link: "/theme/qa", activeMatch: "/20.常见问题/" },
+          { text: "常见问题", link: "/theme/qa" },
+          { text: "拓展", link: "/expand/intro" },
         ],
       },
       {

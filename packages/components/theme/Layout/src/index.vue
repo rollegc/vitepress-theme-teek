@@ -7,36 +7,36 @@ import { computed, provide, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/hooks";
 import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
-import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
+import { TkHome } from "@teek/components/theme/Home";
+import { TkHomeMyCardScreen } from "@teek/components/theme/HomeMyCard";
+import { TkBodyBgImage } from "@teek/components/theme/BodyBgImage";
+import { TkFooterGroup } from "@teek/components/theme/FooterGroup";
+import { TkFooterInfo } from "@teek/components/theme/FooterInfo";
+import { TkArticleImagePreview } from "@teek/components/theme/ArticleImagePreview";
+import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
+import { TkArticleShare } from "@teek/components/theme/ArticleShare";
+import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
+import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
+import { TkArticlePageStyle } from "@teek/components/theme/ArticlePageStyle";
 import {
   TkDocAfterAppreciation,
   TkAsideBottomAppreciation,
   TkDocAfterAppreciationPopper,
 } from "@teek/components/theme/ArticleAppreciation";
-import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
-import { TkArticleShare } from "@teek/components/theme/ArticleShare";
-import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
-import { TkArticleImagePreview } from "@teek/components/theme/ArticleImagePreview";
-import { TkBodyBgImage } from "@teek/components/theme/BodyBgImage";
-import { TkVpContainer } from "@teek/components/common/VpContainer";
-import { TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
-import { TkFooterGroup } from "@teek/components/theme/FooterGroup";
-import { TkFooterInfo } from "@teek/components/theme/FooterInfo";
-import { TkRightBottomButton } from "@teek/components/theme/RightBottomButton";
 import { TkCommentTwikoo } from "@teek/components/theme/CommentTwikoo";
 import { TkCommentArtalk } from "@teek/components/theme/CommentArtalk";
 import { TkCommentGiscus } from "@teek/components/theme/CommentGiscus";
 import { TkCommentWaline } from "@teek/components/theme/CommentWaline";
 import { TkCodeBlockToggle } from "@teek/components/theme/CodeBlockToggle";
-import { TkArticlePageStyle } from "@teek/components/theme/ArticlePageStyle";
+import { TkRightBottomButton } from "@teek/components/theme/RightBottomButton";
 import { TkNotice } from "@teek/components/theme/Notice";
-import { TkHome } from "@teek/components/theme/Home";
-import { TkArticleHeadingHighlight } from "@teek/components/theme/ArticleHeadingHighlight";
-import { TkArticleUpdate } from "@teek/components/theme/ArticleUpdate";
+import { TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
+import { TkVpContainer } from "@teek/components/common/VpContainer";
+import { TkArchivesPage } from "@teek/components/theme/ArchivesPage";
+import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
 import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
 import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
-import { TkHomeMyCardScreen } from "@teek/components/theme/HomeMyCard";
 
 defineOptions({ name: "TeekLayout" });
 
