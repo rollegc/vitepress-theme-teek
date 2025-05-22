@@ -54,7 +54,7 @@ const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
 const { frontmatter, localeIndex, page } = useData();
 
-// 支持 theme 或 frontmatter 配置
+// 支持 provide、frontmatter.tk、frontmatter、theme 配置
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekTheme: true,
   teekHome: true,
