@@ -1,7 +1,8 @@
 # TODO
 
-- 站点信息内容前添加 Icon
+- sidebar 插件不扫描 index.md 修复
 - 推送 Github 自动推送 Gitee
+- 站点信息内容前添加 Icon
 
 ## 模板
 
