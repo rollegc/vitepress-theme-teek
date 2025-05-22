@@ -5,7 +5,6 @@ import { withBase } from "vitepress";
 import { useNamespace, useLocale } from "@teek/hooks";
 import { topIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { createImageViewer } from "@teek/components/common/ImageViewer";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkArticleInfo } from "@teek/components/theme/ArticleInfo";
 import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
@@ -35,11 +34,6 @@ const excerpt = computed(
   () => post.frontmatter.description || post.excerpt || (postConfig.value.showCapture && post.capture)
 );
 
-const handleViewImg = (imgUrl: string | string[]) => {
-  const urlList = [imgUrl || []].flat() as string[];
-  createImageViewer({ ...postConfig.value.imageViewer, urlList });
-};
-
 // 是否展示作者、日期、分类、标签等信息
 const isShowInfo = computed(() => {
   const arr = [articleConfig.value.showInfo].flat();
@@ -59,7 +53,9 @@ const isShowInfo = computed(() => {
     />
 
     <div v-if="imgSrcList.length" :class="ns.e('cover-img')">
-      <img :src="withBase(imgSrcList[0])" class="cover-img" @click="handleViewImg(imgSrcList)" />
+      <a :href="postUrl" :alt="post.title">
+        <img :src="withBase(imgSrcList[0])" class="cover-img" />
+      </a>
     </div>
 
     <div :class="[ns.e('info')]">
