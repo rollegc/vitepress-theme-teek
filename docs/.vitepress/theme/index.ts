@@ -31,12 +31,7 @@ import "@teek/theme-chalk/tk-plus/banner-desc-gradient.scss"; // 博客风格 Ba
 import "./styles/code-bg.scss";
 import "./styles/iframe.scss";
 
-import SubNavIcon from "./components/SubNavIcon.vue";
-
 export default {
   extends: Teek,
   Layout: TeekLayoutProvider,
-  enhanceApp({ app }) {
-    app.component("SubNavIcon", SubNavIcon);
-  },
 };
