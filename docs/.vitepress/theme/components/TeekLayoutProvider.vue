@@ -36,7 +36,7 @@ const watchRuntimeAndRibbon = async (layout: string, style: string) => {
   else stopRuntime();
 
   // 博客类风格的首页显示彩带 & 设置了 pageStyle 的文章页显示彩带
-  if ((isHome && isBlog && style !== "blog-body") || (isDoc && !!teekConfig.value.pageStyle)) startRibbon();
+  if ((isHome && isBlog && style !== "blog-body") || (isDoc && teekConfig.value.pageStyle)) startRibbon();
   else stopRibbon();
 };
 
