@@ -170,7 +170,7 @@ export default defineConfig({
           { text: "Components 组件", link: "/ecosystem/components" },
           { text: "运行时 API", link: "/reference/runtime-api" },
           { text: "Helper 工具", link: "/ecosystem/helper" },
-          { text: "Hooks 函数", link: "/ecosystem/hooks" },
+          { text: "Hooks 函数", link: "/ecosystem/composables" },
           { text: "Markdown 插件工具", link: "/ecosystem/md-plugin-utils" },
         ],
       },
