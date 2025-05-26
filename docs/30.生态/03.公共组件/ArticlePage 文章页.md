@@ -22,7 +22,7 @@ articlePage/basic
 
 ## 使用文章页样式
 
-::: demo 使用 VitePress 的文章页样式
+::: demo 使用 `doc` 配置项来加载 VitePress 的默认文档样式。
 
 ```yaml
 effect: articlePage/doc-iframe
@@ -33,7 +33,7 @@ file: articlePage/doc
 
 ## 使用大纲栏
 
-::: demo 当存在 h1 到 h6 标题标签时，使用 `aside` 配置项，会自动生成一个大纲栏。
+::: demo 当存在 h1 到 h6 标题标签时，可以使用 `aside` 配置项来自动生成一个大纲栏。
 
 ```yaml
 effect: articlePage/aside-iframe
