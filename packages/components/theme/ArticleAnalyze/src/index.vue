@@ -3,7 +3,7 @@ import type { ArticleAnalyze, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } 
 import type { TkContentData } from "@teek/config";
 import { computed, nextTick, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/hooks";
+import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/composables";
 import { readingIcon, clockIcon, viewIcon } from "@teek/static/icons";
 import { TkArticleBreadcrumb } from "@teek/components/theme/ArticleBreadcrumb";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";

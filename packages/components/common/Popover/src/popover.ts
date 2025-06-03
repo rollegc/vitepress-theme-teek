@@ -1,4 +1,4 @@
-import type { UsePopoverSizeOptions, NumStr } from "@teek/hooks";
+import type { UsePopoverSizeOptions, NumStr } from "@teek/composables";
 
 export interface PopoverProps {
   /**

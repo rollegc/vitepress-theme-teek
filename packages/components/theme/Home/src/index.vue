@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import type { TkHomePostListInstance } from "@teek/components";
 import { ref, provide } from "vue";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkHomeFullscreenWallpaper } from "@teek/components/theme/HomeFullscreenWallpaper";
 import { TkHomePostList } from "@teek/components/theme/HomePostList";

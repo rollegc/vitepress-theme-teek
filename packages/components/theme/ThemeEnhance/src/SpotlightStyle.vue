@@ -1,7 +1,7 @@
 <script setup lang="ts" name="SpotlightStyle">
 import type { ThemeEnhance } from "@teek/config";
 import { computed } from "vue";
-import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useStorage, useMediaQuery, useLocale } from "@teek/composables";
 import { clickIcon, alignLeftIcon, alignTextLeftIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";

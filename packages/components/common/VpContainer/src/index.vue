@@ -1,7 +1,7 @@
 <script setup lang="ts" name="VpContainer">
 import { computed, useSlots } from "vue";
 import type { VpContainerProps } from "./vpContainer";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 
 defineOptions({ name: "VpContainer" });
 

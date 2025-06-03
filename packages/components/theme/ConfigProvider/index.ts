@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
 import { computed, defineComponent, h, inject, provide, unref } from "vue";
 import { useData } from "vitepress";
-import { useAnchorScroll, useViewTransition } from "@teek/hooks";
+import { useAnchorScroll, useViewTransition } from "@teek/composables";
 import { emptyPost } from "@teek/config/post/helper";
 import { isFunction, isObject } from "@teek/helper";
 

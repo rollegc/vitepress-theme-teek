@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import { computed, onMounted, ref } from "vue";
 import { isClient } from "@teek/helper";
-import { useLocale, useDebounce, useEventListener } from "@teek/hooks";
+import { useLocale, useDebounce, useEventListener } from "@teek/composables";
 import { rocketIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkMessage } from "@teek/components/common/Message";

@@ -1,6 +1,6 @@
 <script setup lang="ts" name="DocAsideOutlineItem">
 import type { MenuItem } from "./outline";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 
 defineOptions({ name: "DocAsideOutlineItem" });
 

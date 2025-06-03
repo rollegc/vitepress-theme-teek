@@ -2,7 +2,7 @@
 import { TkSegmented, TkMessage, magicIcon, isClient, useMediaQuery } from "vitepress-theme-teek";
 import BaseTemplate from "@teek/components/theme/ThemeEnhance/src/components/BaseTemplate.vue";
 import { nextTick, ref, watch } from "vue";
-import { useClipboard } from "@teek/hooks";
+import { useClipboard } from "@teek/composables";
 import {
   teekDocConfig,
   teekBlogConfig,

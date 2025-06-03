@@ -2,7 +2,7 @@
 import type { FriendLink } from "@teek/config";
 import { computed, ref, onMounted } from "vue";
 import { useRouter } from "vitepress";
-import { useNamespace, useLocale, useScrollData } from "@teek/hooks";
+import { useNamespace, useLocale, useScrollData } from "@teek/composables";
 import { friendLinkIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -25,7 +25,6 @@ const friendLinkConfig = getTeekConfigRef<Required<FriendLink>>("friendLink", {
   scrollSpeed: 2500,
   autoPage: false,
   pageSpeed: 4000,
-  imageViewer: {},
   titleClick: undefined,
 });
 

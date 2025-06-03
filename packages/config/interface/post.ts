@@ -1,4 +1,3 @@
-import type { ImageViewerProps } from "@teek/components/common/ImageViewer/src/imageViewer";
 import type { TitleTagProps } from "@teek/components/common/TitleTag/src/titleTag";
 
 export interface Post {
@@ -63,10 +62,6 @@ export interface Post {
    * @default 'tk-slide-fade'
    */
   transitionName?: string;
-  /**
-   * 封面图查看器配置
-   */
-  imageViewer?: Omit<ImageViewerProps, "urlList">;
   /**
    * 列表模式下的标题标签位置（postStyle 为 list）
    *

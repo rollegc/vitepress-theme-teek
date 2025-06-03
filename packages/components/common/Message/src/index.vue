@@ -2,7 +2,7 @@
 import type { MessageEmits, MessageProps, MessageType } from "./message";
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { VPBadge } from "vitepress/theme";
-import { useEventListener, useNamespace, useZIndex } from "@teek/hooks";
+import { useEventListener, useNamespace, useZIndex } from "@teek/composables";
 import { closeIcon, circleCloseFilledIcon, infoFilledIcon, successFilledIcon, warningFilledIcon } from "@teek/static";
 import { TkIcon } from "@teek/components/common/Icon";
 import { messagePropsDefaults } from "./message";

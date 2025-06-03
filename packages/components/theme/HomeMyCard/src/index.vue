@@ -3,7 +3,7 @@ import type { Blogger, Social } from "@teek/config";
 import type { TkAvatarProps } from "@teek/components/common/Avatar";
 import { withBase } from "vitepress";
 import { computed } from "vue";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkPageCard } from "@teek/components/common/PageCard";
 import { TkAvatar } from "@teek/components/common/Avatar";

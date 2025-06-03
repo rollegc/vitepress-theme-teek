@@ -2,7 +2,7 @@
 import type { DocAnalysis, DocAnalysisInfo } from "@teek/config";
 import { computed, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/hooks";
+import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/composables";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "@teek/helper";
 import { docAnalysisIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";

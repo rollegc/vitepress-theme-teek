@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vitepress";
 import { isClient } from "@teek/helper";
-import { useEventListener, useStorage } from "@teek/hooks";
+import { useEventListener, useStorage } from "@teek/composables";
 import { SpotlightStyle } from "../themeEnhance";
 import { ns, spotlightStyleStorageKey } from "../namespace";
 

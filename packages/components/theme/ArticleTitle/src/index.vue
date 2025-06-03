@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticleTitle">
 import type { TkContentData } from "@teek/config";
 import type { TkTitleTagProps } from "@teek/components/common/TitleTag";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { TkTitleTag } from "@teek/components/common/TitleTag";
 import { createDynamicComponent } from "./compile";
 

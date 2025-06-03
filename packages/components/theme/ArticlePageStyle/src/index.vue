@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import { watch, nextTick } from "vue";
 import { isClient } from "@teek/helper";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 const ns = useNamespace();

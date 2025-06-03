@@ -1,6 +1,6 @@
 <script setup lang="ts" name="ArticlePage">
 import type { ArticlePageProps } from "./articlePage";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import DocAsideOutline from "./components/DocAsideOutline.vue";
 
 defineOptions({ name: "ArticlePage" });

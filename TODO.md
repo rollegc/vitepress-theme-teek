@@ -3,7 +3,7 @@
 - sidebar 插件不扫描 index.md 修复
 - 推送 Github 自动推送 Gitee
 
-## 1.3.5 版本发布
+## 1.3.5 版本
 
 ### 已完成
 
@@ -11,9 +11,7 @@
 
 ### 代办
 
-- 卡片日期点击图片跳转而不是打开预览图
-- hooks 改名为 composables，包括文档设计的 hooks 文字也更改为 composables
-- 导航栏图标解决一级导航在移动端存在 padding 问题
+- teek docs 单独作为模板库
 
 ## 模板
 

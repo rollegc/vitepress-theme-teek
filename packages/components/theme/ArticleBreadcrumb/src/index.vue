@@ -2,7 +2,7 @@
 import type { Breadcrumb as BreadcrumbType } from "@teek/config";
 import { computed } from "vue";
 import { useData, withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { houseIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkBreadcrumb, TkBreadcrumbItem } from "@teek/components/common/Breadcrumb";

@@ -2,7 +2,7 @@
 import type { Banner } from "@teek/config";
 import { useData, withBase } from "vitepress";
 import { onBeforeUnmount, ref } from "vue";
-import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
+import { useNamespace, useLocale, useWindowSize } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "HomeBannerFeature" });

@@ -4,7 +4,7 @@ import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
 import { useData, onContentUpdated } from "vitepress";
 import { computed, provide, watch } from "vue";
-import { useNamespace, localeContextKey } from "@teek/hooks";
+import { useNamespace, localeContextKey } from "@teek/composables";
 import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkHome } from "@teek/components/theme/Home";

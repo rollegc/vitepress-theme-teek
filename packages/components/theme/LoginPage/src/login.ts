@@ -1,7 +1,7 @@
 import type { Component, Ref } from "vue";
 import type { TkIconProps } from "@teek/components/common/Icon";
 import type { Private } from "@teek/config";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { isClient } from "@teek/helper";
 
 /**

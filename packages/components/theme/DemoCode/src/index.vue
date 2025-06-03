@@ -2,7 +2,7 @@
 import type { DemoCodeProps } from "./demoCode";
 import { ref, computed, defineAsyncComponent } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useClipboard } from "@teek/hooks";
+import { useNamespace, useLocale, useClipboard } from "@teek/composables";
 import { playgroundIcon, githubIcon, copyIcon, codeIcon, caretTopIcon } from "@teek/static";
 import { TkMessage } from "@teek/components/common/Message";
 import { TkTransitionCollapse } from "@teek/components/common/TransitionCollapse";

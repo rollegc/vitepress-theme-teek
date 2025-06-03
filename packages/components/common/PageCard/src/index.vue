@@ -3,7 +3,7 @@ import type { PageCardProps } from "./pageCard";
 import { onMounted, ref, onUnmounted } from "vue";
 import { withBase } from "vitepress";
 import { isValidURL } from "@teek/helper";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { arrowLeftIcon, arrowRightIcon } from "@teek/static";
 import { TkIcon } from "@teek/components/common/Icon";
 

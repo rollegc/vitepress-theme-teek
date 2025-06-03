@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Popover">
 import type { PopoverProps, PopoverEmits } from "./popover";
 import { computed, ref, watch, onBeforeMount } from "vue";
-import { useNamespace, useZIndex, useElementHover, usePopoverSize, onClickOutside } from "@teek/hooks";
+import { useNamespace, useZIndex, useElementHover, usePopoverSize, onClickOutside } from "@teek/composables";
 import { addUnit } from "@teek/helper";
 import { TkFocusTrap } from "@teek/components/common/FocusTrap";
 import { useFocusTrap } from "./useFocusTrap";

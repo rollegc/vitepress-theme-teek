@@ -2,7 +2,7 @@
 import type { ThemeEnhance } from "@teek/config";
 import { computed, watch } from "vue";
 import { isClient } from "@teek/helper";
-import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useDebounce, useStorage, useMediaQuery, useLocale } from "@teek/composables";
 import { autoWidthIcon, scaleIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkInputSlide } from "@teek/components/common/InputSlide";

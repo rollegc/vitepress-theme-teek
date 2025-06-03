@@ -122,7 +122,6 @@ export const teekBlogParkConfig: TeekConfig = {
 export const teekBlogFullConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   post: {
-    imageViewer: { hideOnClickModal: true },
     coverImgMode: "full",
   },
   banner: {
@@ -165,7 +164,6 @@ export const teekBlogBodyConfig: TeekConfig = {
 export const teekBlogCardConfig: TeekConfig = {
   ...teekBlogCommonConfig,
   post: {
-    imageViewer: { hideOnClickModal: true },
     postStyle: "card",
   },
   homeCardListPosition: "left",

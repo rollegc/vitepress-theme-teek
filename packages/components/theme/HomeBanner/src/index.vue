@@ -3,7 +3,7 @@ import type { Banner, BodyBgImg } from "@teek/config";
 import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, nextTick, watch } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { useNamespace, useLocale, useEventListener } from "@teek/hooks";
+import { useNamespace, useLocale, useEventListener } from "@teek/composables";
 import { upperFirst } from "@teek/helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";

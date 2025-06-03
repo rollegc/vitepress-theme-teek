@@ -1,6 +1,6 @@
 <script setup lang="ts" name="TransitionCollapse">
 import type { RendererElement } from "vue";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 
 defineOptions({ name: "TransitionCollapse" });
 

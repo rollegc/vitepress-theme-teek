@@ -3,7 +3,7 @@ import type { Category, DocDocAnalysisFileInfo } from "@teek/config";
 import { computed } from "vue";
 import { withBase, useData } from "vitepress";
 import { formatDate } from "@teek/helper";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { usePosts, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import { createDynamicComponent } from "@teek/components/theme/ArticleTitle";

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeMyCardScreen">
 import type { Blogger } from "@teek/config";
 import { withBase } from "vitepress";
-import { useNamespace, useLocale, useMediaQuery } from "@teek/hooks";
+import { useNamespace, useLocale, useMediaQuery } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "HomeMyCardScreen" });

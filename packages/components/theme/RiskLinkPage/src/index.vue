@@ -1,7 +1,7 @@
 <script setup lang="ts" name="RiskLinkPage">
 import { onMounted, ref } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { isValidURL } from "@teek/helper";
 
 defineOptions({ name: "RiskLinkPage" });

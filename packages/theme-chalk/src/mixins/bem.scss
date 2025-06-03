@@ -18,15 +18,15 @@ $E: null;
 /* 多个 Block 块 */
 @mixin multiple-b($block) {
   $B: $namespace + $common-separator !global;
-  $elector: "";
+  $selector: "";
   /* 拼接逗号 */
   @each $unit in $block {
-    $elector: #{$elector + "." + $B + $unit + ","};
+    $selector: #{$selector + "." + $B + $unit + ","};
   }
   /* 去掉最后一个多余的逗号 */
-  $elector: string.slice($elector, 1, -2);
+  $selector: string.slice($selector, 1, -2);
 
-  #{$elector} {
+  #{$selector} {
     @content;
   }
 }

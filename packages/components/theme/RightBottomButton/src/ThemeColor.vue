@@ -2,7 +2,7 @@
 import type { ThemeEnhance } from "@teek/config";
 import { computed, onMounted, watch } from "vue";
 import { useData } from "vitepress";
-import { useLocale, useStorage } from "@teek/hooks";
+import { useLocale, useStorage } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkPopover } from "@teek/components/common/Popover";

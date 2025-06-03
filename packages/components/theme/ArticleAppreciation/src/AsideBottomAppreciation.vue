@@ -1,7 +1,7 @@
 <script setup lang="ts" name="AsideBottomAppreciation">
 import type { Appreciation } from "@teek/config";
 import { computed } from "vue";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "AsideBottomAppreciation" });

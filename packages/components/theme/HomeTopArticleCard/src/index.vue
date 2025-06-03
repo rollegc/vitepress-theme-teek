@@ -2,7 +2,7 @@
 import type { TopArticle, TkContentData } from "@teek/config";
 import { computed, ref } from "vue";
 import { useRouter, withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { topArticleIcon } from "@teek/static";
 import { formatDate, isFunction } from "@teek/helper";
 import { useTeekConfig, usePosts, useTagColor } from "@teek/components/theme/ConfigProvider";
