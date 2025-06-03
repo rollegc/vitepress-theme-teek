@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.5](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.4...v1.3.5) (2025-06-03)
+
+### Features
+
+- 🚀 卡片列表点击图片由放大改为跳转文章页，新增拓展专题文档，更新部分文档内容 ([f0d5657](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/f0d565793c1bb42511fa8219d2694965558509d1))
+- 🚀 文档新增自定义 404 页面 ([76b9e4d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/76b9e4d158313010a894770dd4406dc52966c8b2))
+- 🚀 hooks 重命名为 composables，首页卡片、友情链接、卡片容器的图片去掉预览功能，修复文章分类文字下半身消失问题 ([5e9c116](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5e9c116b67eec35dd2e8e95ff10c62858156cc27))
+
+### Bug Fixes
+
+- 🐞 修复导航组件失效问题 ([71776d2](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/71776d2d0febf2ad1a247aa5da28e8d2a8d0d41c))
+
+### Styling
+
+- 🎨 优化代码引入顺序 ([2ead72c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2ead72c75bad8770142664a0179b5f67c7f3a240))
+
+### Docs
+
+- 📚 插槽布局文档移到指南系列，部分生态文档重命名 ([aa7160a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/aa7160a44778873026c944a05519a94c1a15124e))
+- 📚 删除不需要的组件 ([1439e6b](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/1439e6b61bfd74b579602e5e721b2a8058961140))
+
 ## [1.3.4](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.3...v1.3.4) (2025-05-21)
 
 ### Features
