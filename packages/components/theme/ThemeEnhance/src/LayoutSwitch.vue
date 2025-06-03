@@ -4,7 +4,7 @@ import type { LayoutModeVal } from "./themeEnhance";
 import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
-import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useStorage, useMediaQuery, useLocale } from "@teek/composables";
 import { fullscreenIcon, fullScreenOneIcon, fullscreenTwoIcon, layoutIcon, overallReductionIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";

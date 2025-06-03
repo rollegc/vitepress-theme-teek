@@ -2,7 +2,7 @@
 import type { ThemeEnhance } from "@teek/config";
 import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
-import { useStorage, useMediaQuery, useLocale } from "@teek/hooks";
+import { useStorage, useMediaQuery, useLocale } from "@teek/composables";
 import { clickIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";

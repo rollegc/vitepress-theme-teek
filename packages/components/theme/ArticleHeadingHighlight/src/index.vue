@@ -2,7 +2,7 @@
 import { nextTick, watch } from "vue";
 import { useRoute } from "vitepress";
 import { isClient } from "@teek/helper";
-import { useNamespace, useEventListener } from "@teek/hooks";
+import { useNamespace, useEventListener } from "@teek/composables";
 
 const ns = useNamespace("article-heading-highlight");
 

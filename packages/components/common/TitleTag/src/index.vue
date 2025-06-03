@@ -1,5 +1,5 @@
 <script setup lang="ts" name="TitleTag">
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { TitleTagProps } from "./titleTag";
 
 defineOptions({ name: "TitleTag" });

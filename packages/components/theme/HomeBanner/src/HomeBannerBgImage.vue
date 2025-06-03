@@ -2,7 +2,7 @@
 import type { Banner } from "@teek/config";
 import { withBase } from "vitepress";
 import { computed, onMounted } from "vue";
-import { useNamespace, useLocale, useSwitchData } from "@teek/hooks";
+import { useNamespace, useLocale, useSwitchData } from "@teek/composables";
 import { isString } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 

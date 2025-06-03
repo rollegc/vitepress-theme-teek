@@ -2,9 +2,8 @@
 import type { ArticleAnalyze, Post, TkContentData } from "@teek/config";
 import { computed } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { createImageViewer } from "@teek/components/common/ImageViewer";
 import { TkArticleInfo } from "@teek/components/theme/ArticleInfo";
 import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
@@ -22,7 +21,6 @@ const postConfig = getTeekConfigRef<Post>("post", {
   moreLabel: t("tk.homePost.moreLabel"),
   showCapture: false,
   splitSeparator: false,
-  imageViewer: {},
   listStyleTitleTagPosition: "right",
   defaultCoverImg: [],
 });
@@ -35,14 +33,6 @@ const excerpt = computed(
   () => post.frontmatter.description || post.excerpt || (postConfig.value.showCapture && post.capture)
 );
 
-/**
- * 点击图片进行预览
- */
-const handleViewImg = (imgUrl: string | string[]) => {
-  const urlList = [imgUrl || []].flat() as string[];
-  createImageViewer({ ...postConfig.value.imageViewer, urlList });
-};
-
 const imgSrcList = computed(() => [post.frontmatter.coverImg || postConfig.value.defaultCoverImg || []].flat());
 
 const coverImgMap = computed(() => {
@@ -52,14 +42,12 @@ const coverImgMap = computed(() => {
       is: "div",
       props: {
         style: `background-image: url(${withBase(imgSrcListConst[0])});`,
-        onClick: () => handleViewImg(imgSrcListConst),
       },
     },
     full: {
       is: "img",
       props: {
         src: withBase(imgSrcListConst[0]),
-        onClick: () => handleViewImg(imgSrcListConst),
       },
     },
   };
@@ -120,14 +108,19 @@ const isShowInfo = computed(() => {
 
       <!-- 右侧封面图 -->
       <div :class="`${ns.e('right')} flx-align-center`">
-        <div v-if="imgSrcList.length" :class="`${coverImgMode} cover`" :aria-label="t('tk.homePost.coverImgLabel')">
+        <a
+          v-if="imgSrcList.length"
+          :href="postUrl"
+          :class="`${coverImgMode} cover`"
+          :aria-label="t('tk.homePost.coverImgLabel')"
+        >
           <component
             :is="coverImgMap[coverImgMode].is"
             v-bind="coverImgMap[coverImgMode].props"
             aria-hidden="true"
             class="cover-img"
           />
-        </div>
+        </a>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArticleImagePreview">
 import type { ArticleAnalyze } from "@teek/config";
 import { computed } from "vue";
-import { useEventListener } from "@teek/hooks";
+import { useEventListener } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { createImageViewer } from "@teek/components/common/ImageViewer";
 
@@ -15,10 +15,10 @@ const imageViewer = computed(() => {
 
 const previewImage = (e: Event) => {
   const target = e.target as HTMLElement;
-  const currentTarget = e.currentTarget as HTMLElement;
 
-  if (target.tagName.toLowerCase() === "img") {
-    const imgDoms = currentTarget.querySelectorAll<HTMLImageElement>(".content-container .main img");
+  // 当点击的是图片，且图片的 class 不为 no-preview 时，才触发预览
+  if (target.tagName.toLowerCase() === "img" && !target.className.includes("no-preview")) {
+    const imgDoms = target.querySelectorAll<HTMLImageElement>(".content-container .main img");
     const imgs = Array.from(imgDoms);
 
     const urlList = imgs.map(el => el.src);

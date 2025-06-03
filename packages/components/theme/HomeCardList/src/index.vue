@@ -1,7 +1,7 @@
 <script setup lang="ts" name="HomeCardList">
 import type { TeekConfig } from "@teek/config";
 import { computed } from "vue";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
 import { TkHomeMyCard } from "@teek/components/theme/HomeMyCard";
 import { TkHomeTopArticleCard } from "@teek/components/theme/HomeTopArticleCard";

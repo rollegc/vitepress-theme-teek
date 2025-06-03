@@ -2,7 +2,7 @@
 import type { Category } from "@teek/config";
 import { computed, ref, inject, onMounted, watch } from "vue";
 import { useRouter, withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { categoryIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList/src/homePostList";

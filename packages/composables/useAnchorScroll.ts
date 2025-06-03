@@ -1,8 +1,8 @@
 import { reactive, watch } from "vue";
 import { useData } from "vitepress";
-import { useEventListener } from "@teek/hooks/useEventListener";
+import { useEventListener } from "@teek/composables/useEventListener";
 import { isClient } from "@teek/helper";
-import { useMounted } from "@teek/hooks/useMounted";
+import { useMounted } from "@teek/composables/useMounted";
 
 /**
  * 监听浏览器滚动，当滚动到锚点，自动在 URL 后面添加锚点信息

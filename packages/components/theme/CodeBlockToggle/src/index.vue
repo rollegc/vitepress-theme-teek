@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CodeBlockToggle">
 import type { CodeBlock } from "@teek/config";
 import { nextTick, watch } from "vue";
-import { useEventListener, useNamespace } from "@teek/hooks";
+import { useEventListener, useNamespace } from "@teek/composables";
 import { isBoolean, isClient } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
 import { TkMessage } from "@teek/components/common/Message";

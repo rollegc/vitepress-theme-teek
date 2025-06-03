@@ -2,7 +2,7 @@
 import type { Tag } from "@teek/config";
 import { watch, computed, ref, inject, onMounted } from "vue";
 import { useRouter, withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { tagIcon } from "@teek/static";
 import { isFunction } from "@teek/helper";
 import { pageNumKey } from "@teek/components/theme/HomePostList";

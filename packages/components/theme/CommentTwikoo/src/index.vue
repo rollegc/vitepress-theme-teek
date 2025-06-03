@@ -2,7 +2,7 @@
 import type { CommentProvider } from "@teek/config";
 import { ref, onMounted } from "vue";
 import { isClient } from "@teek/helper";
-import { useNamespace, useVpRouter } from "@teek/hooks";
+import { useNamespace, useVpRouter } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "CommentTwikoo" });

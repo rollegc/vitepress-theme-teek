@@ -1,7 +1,7 @@
 <script setup lang="ts" name="DocAsideOutline">
 import { onContentUpdated, useData } from "vitepress";
 import { onMounted, ref, shallowRef } from "vue";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { getHeaders, resolveTitle, useActiveAnchor } from "./outline";
 import DocAsideOutlineItem from "./DocAsideOutlineItem.vue";
 

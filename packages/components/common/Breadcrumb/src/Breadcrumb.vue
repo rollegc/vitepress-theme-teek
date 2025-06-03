@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Breadcrumb">
 import type { BreadcrumbProps } from "./breadcrumb";
 import { onMounted, provide, ref } from "vue";
-import { useLocale } from "@teek/hooks";
+import { useLocale } from "@teek/composables";
 import { breadcrumbKey } from "./breadcrumb";
 import { ns } from "./namespace";
 

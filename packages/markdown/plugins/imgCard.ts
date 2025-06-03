@@ -75,7 +75,7 @@ const renderImgCard = (imgCard: { data: ImgCard.Item[]; config: ImgCard.Config }
               style="--img-height: ${imgHeight}; --img-object-fit: ${objectFit}; --desc-line-clamp: ${lineClamp}"
             >
               <div class="${rootClass}__item__img">
-                <img src="${withBase(base, card.img)}" @click="${(e: Event) => e.preventDefault()}">
+                <img src="${withBase(base, card.img)}" class="no-preview">
               </div>
               <div class="${rootClass}__item__info">
                   <p class="name">${card.name}</p>

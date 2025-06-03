@@ -1,6 +1,6 @@
 <script setup lang="ts" name="FooterGroup">
 import type { FooterGroup } from "@teek/config";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { isExternal } from "@teek/helper";
 import { externalLinkIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="Icon">
 import type { IconProps } from "./icon";
 import { useSlots, computed } from "vue";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { addUnit, isString } from "@teek/helper";
 import SvgIcon from "./components/SvgIcon.vue";
 import FontIcon from "./components/FontIcon.vue";

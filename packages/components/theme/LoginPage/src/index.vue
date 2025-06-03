@@ -4,7 +4,7 @@ import type { LoginForm, LoginFormItem } from "./login";
 import { markRaw, reactive, ref } from "vue";
 import { useData, useRouter, withBase } from "vitepress";
 import { isClient } from "@teek/helper";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { userIcon, lockIcon, successFilledIcon, refreshRightIcon, warningFilledIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";

@@ -3,7 +3,7 @@ import type { CommentProvider } from "@teek/config";
 import type { WalineInstance } from "./waline";
 import { inject, onMounted } from "vue";
 import { isClient } from "@teek/helper";
-import { useNamespace, useVpRouter } from "@teek/hooks";
+import { useNamespace, useVpRouter } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { walineContext } from "./waline";
 

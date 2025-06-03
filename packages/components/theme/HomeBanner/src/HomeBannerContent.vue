@@ -2,7 +2,7 @@
 import type { Banner } from "@teek/config";
 import { computed, onMounted } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useTextTypes, useSwitchData } from "@teek/hooks";
+import { useNamespace, useLocale, useTextTypes, useSwitchData } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
 defineOptions({ name: "HomeBannerContent" });

@@ -1,4 +1,4 @@
-import { useEventListener, useScopeDispose } from "@teek/hooks";
+import { useEventListener, useScopeDispose } from "@teek/composables";
 import { usePagePath } from "@teek/components/theme/ConfigProvider";
 import { isClient, isString } from "@teek/helper";
 import { nextTick } from "vue";

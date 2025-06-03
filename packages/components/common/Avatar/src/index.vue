@@ -2,7 +2,7 @@
 import type { AvatarProps, AvatarEmit } from "./avatar";
 import type { CSSProperties } from "vue";
 import { computed, ref, watch } from "vue";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { addUnit, isString } from "@teek/helper";
 import { TkIcon } from "@teek/components/common/Icon";
 

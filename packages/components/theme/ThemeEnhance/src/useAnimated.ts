@@ -1,7 +1,7 @@
 import { isClient } from "@teek/helper";
 import { layoutModeAttribute } from "./themeEnhance";
 import { MaybeRefOrGetter, toValue } from "vue";
-import { useScopeDispose } from "@teek/hooks";
+import { useScopeDispose } from "@teek/composables";
 
 /**
  * 加载动画

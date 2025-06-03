@@ -3,7 +3,7 @@ import type { CommentProvider } from "@teek/config";
 import { ref, nextTick, onMounted, computed, inject } from "vue";
 import { useData } from "vitepress";
 import { isFunction } from "@teek/helper";
-import { useNamespace, useVpRouter } from "@teek/hooks";
+import { useNamespace, useVpRouter } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { giscusContext } from "./giscus";
 

@@ -1,4 +1,4 @@
-import type { VpRouter } from "@teek/hooks";
+import type { VpRouter } from "@teek/composables";
 
 export interface TopArticle {
   /**

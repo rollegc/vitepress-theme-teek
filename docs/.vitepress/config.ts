@@ -70,7 +70,7 @@ export default defineConfig({
   extends: teekConfig,
   title: "vitepress-theme-teek",
   description: description,
-  cleanUrls: true,
+  cleanUrls: false,
   lastUpdated: true,
   lang: "zh-CN",
   head: [

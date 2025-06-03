@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BorderHighlight">
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 
 defineOptions({ name: "BorderHighlight" });
 

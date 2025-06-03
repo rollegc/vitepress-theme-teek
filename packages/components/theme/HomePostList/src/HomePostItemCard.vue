@@ -2,7 +2,7 @@
 import type { ArticleAnalyze, Post, TkContentData } from "@teek/config";
 import { computed } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { topIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
@@ -21,7 +21,6 @@ const { getTeekConfigRef } = useTeekConfig();
 const postConfig = getTeekConfigRef<Post>("post", {
   showCapture: false,
   splitSeparator: false,
-  imageViewer: {},
   cardStyleTitleTagPosition: "left",
   defaultCoverImg: [],
 });

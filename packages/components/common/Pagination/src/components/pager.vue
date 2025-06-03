@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { PaginationPagerProps } from "./pager";
 import { computed, ref, watchEffect } from "vue";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { dArrowRightIcon, dArrowLeftIcon, moreFilledIcon } from "@teek/static";
 
 defineOptions({ name: "PaginationPager" });

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@teek/hooks",
+  "name": "@teek/composables",
   "license": "MIT",
   "main": "index.ts",
   "devDependencies": {

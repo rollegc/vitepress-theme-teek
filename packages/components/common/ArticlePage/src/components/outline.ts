@@ -4,7 +4,7 @@ import type { DefaultTheme } from "vitepress/theme";
 import type { Ref } from "vue";
 import { getScrollOffset } from "vitepress";
 import { onMounted, onUnmounted, onUpdated } from "vue";
-import { useMediaQuery, useDebounce, useNamespace } from "@teek/hooks";
+import { useMediaQuery, useDebounce, useNamespace } from "@teek/composables";
 
 const ignoreRE = /\b(?:VPBadge|header-anchor|footnote-ref|ignore-header)\b/;
 

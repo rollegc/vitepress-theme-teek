@@ -1,6 +1,6 @@
 import { computed, type MaybeRef, toValue } from "vue";
 import { isClient } from "@teek/helper";
-import { useScopeDispose } from "@teek/hooks";
+import { useScopeDispose } from "@teek/composables";
 
 export interface UseRuntimeOptions {
   /**

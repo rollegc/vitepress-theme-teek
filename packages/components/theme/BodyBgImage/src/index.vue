@@ -2,7 +2,7 @@
 import type { BodyBgImg } from "@teek/config";
 import { computed, onMounted } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace, useSwitchData } from "@teek/hooks";
+import { useNamespace, useSwitchData } from "@teek/composables";
 import { isString } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 

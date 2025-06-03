@@ -4,7 +4,7 @@ import type { Post, TkContentData } from "@teek/config";
 import { reactive, ref, watch, nextTick, computed } from "vue";
 import { useRoute, useData } from "vitepress";
 import { isClient, removeUnit } from "@teek/helper";
-import { useNamespace, useLocale, useWindowSize } from "@teek/hooks";
+import { useNamespace, useLocale, useWindowSize } from "@teek/composables";
 import { emptyIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkPagination } from "@teek/components/common/Pagination";

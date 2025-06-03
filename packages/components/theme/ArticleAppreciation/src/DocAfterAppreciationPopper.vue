@@ -1,7 +1,7 @@
 <script setup lang="ts" name="DocAfterAppreciationPopper">
 import type { Appreciation, AppreciationPosition } from "@teek/config";
 import { computed, ref } from "vue";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { aliPayIcon, weChatPayIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";

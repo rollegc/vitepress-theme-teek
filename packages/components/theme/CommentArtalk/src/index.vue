@@ -3,7 +3,7 @@ import type { CommentProvider } from "@teek/config";
 import { inject, onMounted, onUnmounted, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
-import { useNamespace, useVpRouter } from "@teek/hooks";
+import { useNamespace, useVpRouter } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { artalkContext } from "./artalk";
 

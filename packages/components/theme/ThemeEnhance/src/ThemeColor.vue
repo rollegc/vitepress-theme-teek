@@ -4,7 +4,7 @@ import type { SegmentedOption } from "@teek/components/common/Segmented";
 import { computed, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { isClient } from "@teek/helper";
-import { useStorage, useMediaQuery, useLocale, useThemeColor, varNameList } from "@teek/hooks";
+import { useStorage, useMediaQuery, useLocale, useThemeColor, varNameList } from "@teek/composables";
 import { waterIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkSegmented } from "@teek/components/common/Segmented";
@@ -74,7 +74,7 @@ watch(
   { immediate: true }
 );
 
-// 扩散到其他 var 变量（useThemeColor hooks）
+// 扩散到其他 var 变量（useThemeColor composables）
 watch(
   isSpread,
   newVal => {

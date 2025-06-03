@@ -2,7 +2,7 @@
 import type { FooterInfo, Social } from "@teek/config";
 import { computed } from "vue";
 import { withBase } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { themeIcon, copyrightIcon, icpRecordIcon } from "@teek/static";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";

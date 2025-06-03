@@ -1,7 +1,7 @@
 <script lang="ts" setup name="ImageViewer">
 import type { ImageViewerEmits, ImageViewerProps, ImageViewerAction, ImageViewerMode } from "./imageViewer";
 import { computed, effectScope, nextTick, onMounted, ref, shallowRef, watch } from "vue";
-import { useNamespace, useLocale, useDebounce, useEventListener, useZIndex } from "@teek/hooks";
+import { useNamespace, useLocale, useDebounce, useEventListener, useZIndex } from "@teek/composables";
 import {
   arrowLeftIcon,
   arrowRightIcon,

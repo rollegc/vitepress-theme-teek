@@ -1,7 +1,7 @@
 <script setup lang="ts" name="ArchivesPage">
 import { withBase, useData } from "vitepress";
 import { computed } from "vue";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";

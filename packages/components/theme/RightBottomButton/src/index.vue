@@ -5,7 +5,7 @@ import { useData } from "vitepress";
 import { isBoolean } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { mobileMaxWidthMedia, TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
-import { useMediaQuery } from "@teek/hooks";
+import { useMediaQuery } from "@teek/composables";
 import { ns } from "./namespace";
 import BackTop from "./BackTop.vue";
 import ToComment from "./ToComment.vue";

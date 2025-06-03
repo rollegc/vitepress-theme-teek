@@ -4,7 +4,7 @@ import type { ArticleAnalyze, ArticleInfoPosition, TkContentData } from "@teek/c
 import { useRoute, withBase, useData } from "vitepress";
 import { computed } from "vue";
 import { formatDate, isFunction } from "@teek/helper";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { userIcon, calendarIcon, editPenIcon, folderOpenedIcon, collectionTagIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";

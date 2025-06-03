@@ -2,7 +2,7 @@
 import type { TkContentData, ArticleUpdate } from "@teek/config";
 import { computed } from "vue";
 import { withBase, useRoute, useData } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { editPenIcon } from "@teek/static";
 import { usePosts, useTeekConfig, usePagePath } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";

@@ -2,7 +2,7 @@
 import type { ThemeEnhance } from "@teek/config";
 import { computed } from "vue";
 import { readingIcon } from "@teek/static";
-import { useMediaQuery } from "@teek/hooks";
+import { useMediaQuery } from "@teek/composables";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
 import { TkPopover } from "@teek/components/common/Popover";

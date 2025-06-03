@@ -23,7 +23,7 @@ export type * from "@teek/config";
 export * from "@teek/static";
 export * from "@teek/components";
 export * from "@teek/helper";
-export * from "@teek/hooks";
+export * from "@teek/composables";
 export * from "@teek/locale";
 export * from "@teek/markdown/helper";
 export * from "./version";

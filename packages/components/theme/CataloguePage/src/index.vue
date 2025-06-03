@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CataloguePage">
 import { computed } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale } from "@teek/hooks";
+import { useNamespace, useLocale } from "@teek/composables";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import CatalogueItem from "./CatalogueItem.vue";
 

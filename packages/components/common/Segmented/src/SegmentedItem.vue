@@ -1,6 +1,6 @@
 <script setup lang="ts" name="SegmentedItem">
 import type { SegmentedItemProps, ModelType } from "./segmented";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { TkIcon } from "@teek/components/common/Icon";
 
 defineOptions({ name: "SegmentedItem" });

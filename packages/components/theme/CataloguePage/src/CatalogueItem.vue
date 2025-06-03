@@ -1,7 +1,7 @@
 <script setup lang="ts" name="CatalogueItem">
 import type { CatalogueItem } from "@teek/config";
 import { withBase } from "vitepress";
-import { useNamespace } from "@teek/hooks";
+import { useNamespace } from "@teek/composables";
 import { TkTitleTag } from "@teek/components/common/TitleTag";
 
 defineOptions({ name: "CatalogueItem" });
