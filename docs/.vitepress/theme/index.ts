@@ -28,15 +28,10 @@ import "@teek/theme-chalk/tk-plus/banner-desc-gradient.scss"; // 博客风格 Ba
 // import "vitepress-theme-teek/theme-chalk/vp-plus/doc-fade-in.scss";
 // import "vitepress-theme-teek/theme-chalk/tk-plus/banner-desc-gradient.scss";
 
-import NavIcon from "./components/NavIcon.vue";
-
 import "./styles/code-bg.scss";
 import "./styles/iframe.scss";
 
 export default {
   extends: Teek,
   Layout: TeekLayoutProvider,
-  enhanceApp({ app }) {
-    app.component("NavIcon", NavIcon);
-  },
 };
