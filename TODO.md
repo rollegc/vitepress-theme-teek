@@ -8,6 +8,7 @@
 ### 代办
 
 - 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
+- 在功能页配置文档时，面包屑的 `配置` 鼠标悬停不是点击形状，但是可以点击进入目录页（当前强制面包屑的最后一个节点不会是点击形状，需要判断是否有链接来决定）
 
 ### 已完成
 
