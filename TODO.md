@@ -7,7 +7,11 @@
 
 ### 代办
 
+- 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
+
 ### 已完成
+
+- 修复首页卡片栏插槽失效问题
 
 ## 模板
 
