@@ -185,6 +185,7 @@ export default defineConfig({
           { text: "标签页", link: "/tags" },
         ],
       },
+      { text: "✨ 赞赏", link: "/personal/" },
       {
         text: version,
         items: [
