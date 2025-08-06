@@ -73,8 +73,6 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
 <style lang="scss">
 .tk-my.is-circle-bg {
-  margin-bottom: 20px;
-
   .tk-my__avatar.circle-rotate {
     margin-top: 200px;
   }

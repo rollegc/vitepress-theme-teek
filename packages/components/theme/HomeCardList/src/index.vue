@@ -35,34 +35,34 @@ const componentMap = computed(() => {
     my: {
       el: TkHomeMyCard,
       show: homePage,
-      slot: ["-home-my-before", "-home-my-after"],
+      slot: ["teek-home-my-before", "teek-home-my-after"],
     },
     topArticle: {
       el: TkHomeTopArticleCard,
       show: homePage && topArticle?.enabled !== false,
-      slot: ["-home-top-article-before", "-home-top-article-after"],
+      slot: ["teek-home-top-article-before", "teek-home-top-article-after"],
     },
     category: {
       el: TkHomeCategoryCard,
       props: { categoriesPage: categoriesPage },
       show: (homePage || categoriesPage) && category?.enabled !== false,
-      slot: ["-home-category-before", "-home-category-after"],
+      slot: ["teek-home-category-before", "teek-home-category-after"],
     },
     tag: {
       el: TkHomeTagCard,
       props: { tagsPage: tagsPage },
       show: (homePage || tagsPage) && tag?.enabled !== false,
-      slot: ["-home-tag-before", "-home-tag-after"],
+      slot: ["teek-home-tag-before", "teek-home-tag-after"],
     },
     docAnalysis: {
       el: TkHomeDocAnalysisCard,
       show: homePage && docAnalysis?.enabled !== false,
-      slot: ["-home-doc-analysis-before", "-home-doc-analysis-after"],
+      slot: ["teek-home-doc-analysis-before", "teek-home-doc-analysis-after"],
     },
     friendLink: {
       el: TkHomeFriendLinkCard,
       show: homePage && friendLink?.enabled !== false,
-      slot: ["-home-friend-link-before", "-home-friend-link-after"],
+      slot: ["teek-home-friend-link-before", "teek-home-friend-link-after"],
     },
   };
 });

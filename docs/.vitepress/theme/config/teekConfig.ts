@@ -153,6 +153,15 @@ export const teekBlogBodyConfig: TeekConfig = {
   bodyBgImg: {
     imgSrc: ["/blog/bg1.webp", "/blog/bg2.webp", "/blog/bg3.webp"],
   },
+  banner: {
+    name: "🎉 Teek Blog",
+    description: [
+      "故事由我书写，旅程由你见证，传奇由她聆听 —— 来自 Young Kbt",
+      "积跬步以至千里，致敬每个爱学习的你 —— 来自 Evan Xu",
+      "这一生波澜壮阔或是不惊都没问题 —— 来自 Weibw",
+    ],
+    descStyle: "types",
+  },
   themeEnhance: {
     layoutSwitch: {
       defaultMode: "original",
