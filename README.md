@@ -65,37 +65,39 @@ pnpm docs:dev
 
 ## 效果图
 
+下面只列出部分效果图，更多的功能请访问 [官方文档](https://vp.teek.top)
+
 ### 文档首页
 
-![](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010539.png){width="500px"}
+![](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010539.png)
 
 ### Banner 大图
 
-![Banner 大图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004931.png){width="500px"}
+![Banner 大图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004931.png)
 
 ### Banner 小图
 
-![Banner 小图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004833.png){width="500px"}
+![Banner 小图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004833.png)
 
 ### 全背景图
 
-![全背景图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004913.png){width="500px"}
+![全背景图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004913.png)
 
 ### 卡片风格
 
-![卡片风格](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004909.png){width="500px"}
+![卡片风格](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004909.png)
 
 ### 碎片化文章页
 
-![碎片化文章页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004839.png){width="500px"}
+![碎片化文章页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004839.png)
 
 ### 目录页
 
-![目录页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004926.png){width="500px"}
+![目录页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004926.png)
 
 ### 归档页
 
-![归档页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004922.png){width="500px"}
+![归档页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004922.png)
 
 ## 💖 支持这个项目
 
