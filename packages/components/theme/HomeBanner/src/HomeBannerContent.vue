@@ -71,15 +71,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text">
-    <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
+  <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')" style="">
+    <div style="position: fixed">
       <!--      <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>-->
-      <!-- 使用默认插槽，允许外部传入自定义内容 -->
-      <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">
-        <!-- 插槽内容优先，如果没有传入则显示默认内容 -->
-        <slot name="banner-title">
-          {{ bannerConfig.name }}
-        </slot>
+      <!-- 1. 如果传入了插槽内容，则只渲染插槽 -->
+      <template v-if="$slots['banner-title']">
+        <slot name="banner-title" />
+      </template>
+
+      <!-- 2. 如果没有传入插槽，则渲染默认的h1标签及内容 -->
+      <h1 v-else :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">
+        {{ bannerConfig.name }}
       </h1>
 
       <p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
@@ -104,12 +106,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-</style>

@@ -5,7 +5,11 @@
   padding-top: 48px;
   color: getCssVar("banner-text-color");
   text-align: center;
-	position: fixed;
+	//position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 
   @include e(content__title) {
     font-size: getCssVar("banner-title-text");

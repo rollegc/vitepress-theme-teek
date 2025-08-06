@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, nextTick, watch } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { useNamespace, useLocale, useEventListener } from "@teek/composables";
-import { upperFirst } from "@teek/helper";
+import { isClient, upperFirst } from "@teek/helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
 import HomeBannerContent from "./HomeBannerContent.vue";
@@ -105,6 +105,30 @@ watch(
   () => toggleFullImgNavBarClass(!disabled)
 );
 
+const { isDark } = useData();
+
+watch(
+  currentBgStyle,
+  style => {
+    // 仅在客户端执行document操作
+    if (!isClient) return;
+
+    console.log("当前样式配置：", style);
+    console.log("isDark", isDark.value);
+
+    // 如需使用初始值，可从 initialBgColors 中获取
+    // 例如：const lightInitial = initialBgColors.value.light
+
+    if (style.isBodyImgBgStyle) {
+      document.documentElement.style.setProperty("--tk-home-bg-color", "transparent");
+    } else {
+      // 非图片背景时，可根据当前模式恢复对应初始值
+      document.documentElement.style.setProperty("--tk-home-bg-color", "");
+    }
+  },
+  { immediate: true }
+);
+
 onMounted(() => {
   if (currentBgStyle.value.isBannerFullImgBgStyle || currentBgStyle.value.isBodyFullImgBgStyle) {
     // 全屏图片模式，监听滚轮，修改导航栏样式（透明化）
@@ -179,5 +203,7 @@ const styleComponent = computed(() => {
     />
   </div>
 
-  <slot name="teek-home-banner-after" />
+  <div :class="ns.e('after-container')">
+    <slot name="teek-home-banner-after" />
+  </div>
 </template>

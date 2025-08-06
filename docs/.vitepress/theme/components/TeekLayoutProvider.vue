@@ -71,7 +71,6 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
     </template>
 
     <template #banner-title>
-      <h1>测试测试测试测试</h1>
     </template>
   </Teek.Layout>
 </template>
