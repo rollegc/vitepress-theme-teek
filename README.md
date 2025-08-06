@@ -65,6 +65,10 @@ pnpm docs:dev
 
 ## 效果图
 
+### 文档首页
+
+![](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010539.png){width="500px"}
+
 ### Banner 大图
 
 ![Banner 大图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004931.png){width="500px"}
