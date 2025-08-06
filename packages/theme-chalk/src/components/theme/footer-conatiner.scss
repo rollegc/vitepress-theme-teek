@@ -3,5 +3,6 @@
 
 @include b(footer-container) {
   background-color: var(--vp-c-bg);
-	padding: 1rem 0;
+  padding: 2rem 0;
+  position: relative;
 }

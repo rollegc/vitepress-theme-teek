@@ -1,8 +1,9 @@
 <script setup lang="ts" name="FooterContainer">
+import { usePageState } from "@teek/components/theme/ConfigProvider";
 const { isHomePage } = usePageState();
-
 import { useNamespace } from "@teek/composables";
-import { TkFooterGroup, TkFooterInfo, usePageState } from "@teek/components";
+import { TkFooterGroup } from "@teek/components/theme/FooterGroup";
+import { TkFooterInfo } from "@teek/components/theme/FooterInfo";
 defineOptions({ name: "FooterContainer" });
 const ns = useNamespace("footer-container");
 </script>

@@ -26,7 +26,7 @@ const { start: startRuntime, stop: stopRuntime } = useRuntime("2021-10-19 00:00:
 });
 
 const watchRuntimeAndRibbon = async (layout: string, style: string) => {
-	console.log("watchRuntimeAndRibbon", layout, style);
+  console.log("watchRuntimeAndRibbon", layout, style);
   const isHome = layout === "home";
   const isDoc = [undefined, "doc"].includes(layout);
   const isBlog = style.startsWith("blog");
@@ -68,6 +68,10 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
     <template #not-found>
       <NotFound />
+    </template>
+
+    <template #banner-title>
+      <h1>测试测试测试测试</h1>
     </template>
   </Teek.Layout>
 </template>
