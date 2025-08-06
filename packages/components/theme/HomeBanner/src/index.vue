@@ -158,7 +158,7 @@ const styleComponent = computed(() => {
 <template>
   <slot name="teek-home-banner-before" />
 
-  <div ref="bannerRef" :class="[ns.b(), className]" :style="getStyle()" :aria-label="t('tk.homeBanner.label')">
+  <div ref="bannerRef" :class="[ns.b(), className]" class="testaaaaaaaaaaaaa" :style="getStyle()" :aria-label="t('tk.homeBanner.label')">
     <component :is="styleComponent.el" v-bind="styleComponent.props">
       <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />
@@ -179,3 +179,21 @@ const styleComponent = computed(() => {
 
   <slot name="teek-home-banner-after" />
 </template>
+
+<style lang="scss" scoped>
+.testaaaaaaaaaaaaa{
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+}
+.tk-banner-bg-image{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	z-index: -9;
+	background-color: #363636;
+	overflow: hidden;
+}
+</style>

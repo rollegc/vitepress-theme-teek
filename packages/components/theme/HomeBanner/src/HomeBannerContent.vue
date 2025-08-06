@@ -15,21 +15,21 @@ const { getTeekConfigRef } = useTeekConfig();
 const { site, frontmatter } = useData();
 // Banner 配置项
 const bannerConfig = getTeekConfigRef<Required<Banner>>("banner", {
-  name: frontmatter.value.tk?.name || site.value.title || "",
-  descStyle: "default",
-  description: [],
-  switchTime: 4000,
-  switchShuffle: false,
-  typesInTime: 200,
-  typesOutTime: 100,
-  typesNextTime: 800,
-  typesShuffle: false,
+	name: frontmatter.value.tk?.name || site.value.title || "",
+	descStyle: "default",
+	description: [],
+	switchTime: 4000,
+	switchShuffle: false,
+	typesInTime: 200,
+	typesOutTime: 100,
+	typesNextTime: 800,
+	typesShuffle: false,
 });
 
 const descArray = computed(() => [
-  ...new Set(
-    [frontmatter.value.tk?.description || bannerConfig.value.description || []].flat()?.filter((v: string) => !!v)
-  ),
+	...new Set(
+		[frontmatter.value.tk?.description || bannerConfig.value.description || []].flat()?.filter((v: string) => !!v),
+	),
 ]);
 
 // 文本描述默认风格
@@ -41,52 +41,64 @@ const isSwitchDescStyle = computed(() => bannerConfig.value.descStyle === "switc
 
 // 文字打印输入输出效果
 const {
-  text: typesText,
-  isFinished,
-  start: startTypes,
+	text: typesText,
+	isFinished,
+	start: startTypes,
 } = useTextTypes(descArray, {
-  inputTime: bannerConfig.value.typesInTime,
-  outputTime: bannerConfig.value.typesOutTime,
-  nextTime: bannerConfig.value.typesNextTime,
-  shuffle: bannerConfig.value.typesShuffle,
+	inputTime: bannerConfig.value.typesInTime,
+	outputTime: bannerConfig.value.typesOutTime,
+	nextTime: bannerConfig.value.typesNextTime,
+	shuffle: bannerConfig.value.typesShuffle,
 });
 
 // 文字淡入淡出效果
 const { data: text, start: startAutoSwitch } = useSwitchData(descArray, {
-  timeout: bannerConfig.value.switchTime,
-  shuffle: bannerConfig.value.switchShuffle,
-  onUpdate: (data, newValue) => {
-    // 重新渲染数据，同时触发动画
-    data.value = "";
-    setTimeout(() => {
-      data.value = newValue;
-    }, 100);
-  },
+	timeout: bannerConfig.value.switchTime,
+	shuffle: bannerConfig.value.switchShuffle,
+	onUpdate: (data, newValue) => {
+		// 重新渲染数据，同时触发动画
+		data.value = "";
+		setTimeout(() => {
+			data.value = newValue;
+		}, 100);
+	},
 });
 
 onMounted(() => {
-  if (isTypesDescStyle.value) startTypes();
-  if (isSwitchDescStyle.value) startAutoSwitch();
+	if (isTypesDescStyle.value) startTypes();
+	if (isSwitchDescStyle.value) startAutoSwitch();
 });
 </script>
 
 <template>
-  <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
-    <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>
+	<div class="text">
+		<div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
+			<h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>
 
-    <p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
-      <template v-if="isDefaultDescStyle">
-        <span>{{ descArray[0] }}</span>
-      </template>
-      <template v-else-if="isSwitchDescStyle">
+			<p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
+				<template v-if="isDefaultDescStyle">
+					<span>{{ descArray[0] }}</span>
+				</template>
+				<template v-else-if="isSwitchDescStyle">
         <span v-show="!!text" @click="startAutoSwitch" class="switch" :aria-label="t('tk.homeBanner.descSwitchLabel')">
           {{ text }}
         </span>
-      </template>
-      <template v-else-if="isTypesDescStyle && descArray.length">
-        <span :aria-label="t('tk.homeBanner.descTypedLabel')">{{ typesText }}</span>
-        <span :class="['typed', { 'is-animation': isFinished }]">|</span>
-      </template>
-    </p>
-  </div>
+				</template>
+				<template v-else-if="isTypesDescStyle && descArray.length">
+					<span :aria-label="t('tk.homeBanner.descTypedLabel')">{{ typesText }}</span>
+					<span :class="['typed', { 'is-animation': isFinished }]">|</span>
+				</template>
+			</p>
+		</div>
+	</div>
+
 </template>
+
+<style lang="scss" scoped>
+.text {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+</style>

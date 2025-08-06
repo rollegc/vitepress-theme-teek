@@ -37,6 +37,7 @@ import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
 import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
 import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
+import FooterContainer from "@teek/components/theme/Footer";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -179,13 +180,7 @@ const usedSlots = [
       </template>
 
       <template #layout-bottom>
-        <TkFooterGroup v-if="isHomePage" />
-        <slot name="teek-footer-info-before" />
-
-        <TkFooterInfo v-if="isHomePage" />
-
-        <slot name="teek-footer-info-after" />
-        <slot name="layout-bottom" />
+        <FooterContainer />
       </template>
 
       <template #sidebar-nav-before>

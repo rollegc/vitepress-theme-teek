@@ -5,6 +5,7 @@
   padding-top: 48px;
   color: getCssVar("banner-text-color");
   text-align: center;
+	position: fixed;
 
   @include e(content__title) {
     font-size: getCssVar("banner-title-text");

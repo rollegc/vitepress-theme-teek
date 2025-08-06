@@ -1,0 +1,7 @@
+@use "../../mixins/bem" as *;
+@use "../../mixins/function" as *;
+
+@include b(footer-container) {
+  background-color: var(--vp-c-bg);
+	padding: 1rem 0;
+}
