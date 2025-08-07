@@ -42,8 +42,7 @@ const isPaging = ref(false);
       </TkHomeBanner>
     </div>
 
-<!--		:style="teekConfig.bodyBgImg?.imgSrc ? 'background-color: transparent;' : ''"  -->
-    <div :class="ns.e('container')" >
+    <div :class="ns.e('container')">
       <div :class="[ns.e('content'), ns.joinNamespace('wallpaper-outside'), 'flx-start-justify-center']">
         <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
           <slot name="teek-home-post-before" />
