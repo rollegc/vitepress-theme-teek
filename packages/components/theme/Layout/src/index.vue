@@ -50,7 +50,7 @@ const { Layout } = DefaultTheme;
 
 const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
-const { isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
+const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage, topTip, bottomTip } = usePageState();
 const { frontmatter, localeIndex, page } = useData();
 
 // 支持 provide、frontmatter.tk、frontmatter、theme 配置
@@ -186,7 +186,7 @@ const usedSlots = [
       </template>
 
       <template #doc-footer-before>
-        <TkVpContainer v-if="bottomTipConfig" v-bind="bottomTipConfig" />
+        <TkVpContainer v-if="bottomTipConfig && bottomTip" v-bind="bottomTipConfig" />
       </template>
 
       <template #doc-before>
@@ -198,7 +198,7 @@ const usedSlots = [
         <TkArticleImagePreview />
         <TkArticlePageStyle />
         <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
-        <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
+        <TkVpContainer v-if="topTipConfig && topTip" v-bind="topTipConfig" />
       </template>
 
       <template #doc-after>
