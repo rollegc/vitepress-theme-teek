@@ -71,15 +71,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')" style="">
-    <div style="position: fixed">
-      <!--      <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>-->
-      <!-- 1. 如果传入了插槽内容，则只渲染插槽 -->
+  <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
+    <div :class="ns.e('content__fixed')">
+      <!-- 首页banner图文字插槽 -->
       <template v-if="$slots['banner-title']">
         <slot name="banner-title" />
       </template>
 
-      <!-- 2. 如果没有传入插槽，则渲染默认的h1标签及内容 -->
+      <!-- 如果没有传入插槽，则渲染默认的h1标签及内容 -->
       <h1 v-else :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">
         {{ bannerConfig.name }}
       </h1>

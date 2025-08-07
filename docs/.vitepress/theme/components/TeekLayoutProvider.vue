@@ -9,6 +9,8 @@ import { useRuntime } from "../composables/useRuntime";
 import ConfigSwitch from "./ConfigSwitch.vue";
 import ContributeChart from "./ContributeChart.vue";
 import NotFound from "./404.vue";
+import HomeBannerContent from "@teek/components/theme/HomeBanner/src/HomeBannerContent.vue";
+import HomeBannerFeature from "@teek/components/theme/HomeBanner/src/HomeBannerFeature.vue";
 
 const ns = "layout-provider";
 const { frontmatter } = useData();
@@ -68,9 +70,6 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
     <template #not-found>
       <NotFound />
-    </template>
-
-    <template #banner-title>
     </template>
   </Teek.Layout>
 </template>

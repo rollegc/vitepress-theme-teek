@@ -105,25 +105,18 @@ watch(
   () => toggleFullImgNavBarClass(!disabled)
 );
 
-const { isDark } = useData();
-
 watch(
   currentBgStyle,
   style => {
     // 仅在客户端执行document操作
     if (!isClient) return;
 
-    console.log("当前样式配置：", style);
-    console.log("isDark", isDark.value);
-
-    // 如需使用初始值，可从 initialBgColors 中获取
-    // 例如：const lightInitial = initialBgColors.value.light
-
+    // 监听主题变化调整首页背景色
     if (style.isBodyImgBgStyle) {
-      document.documentElement.style.setProperty("--tk-home-bg-color", "transparent");
+      document.body.style.setProperty("--tk-home-bg-color", "transparent");
     } else {
-      // 非图片背景时，可根据当前模式恢复对应初始值
-      document.documentElement.style.setProperty("--tk-home-bg-color", "");
+      // 更清晰的方式：直接移除内联设置
+      document.body.style.removeProperty("--tk-home-bg-color");
     }
   },
   { immediate: true }
