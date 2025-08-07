@@ -4,7 +4,7 @@ import { useData } from "vitepress";
 import { computed, onMounted, onUnmounted, ref, nextTick, watch } from "vue";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { useNamespace, useLocale, useEventListener } from "@teek/composables";
-import { upperFirst } from "@teek/helper";
+import { isClient, upperFirst } from "@teek/helper";
 import HomeBannerBgPure from "./HomeBannerBgPure.vue";
 import HomeBannerBgImage from "./HomeBannerBgImage.vue";
 import HomeBannerContent from "./HomeBannerContent.vue";
@@ -105,6 +105,23 @@ watch(
   () => toggleFullImgNavBarClass(!disabled)
 );
 
+watch(
+  currentBgStyle,
+  style => {
+    // 仅在客户端执行document操作
+    if (!isClient) return;
+
+    // 监听主题变化调整首页背景色
+    if (style.isBodyImgBgStyle) {
+      document.body.style.setProperty("--tk-home-bg-color", "transparent");
+    } else {
+      // 更清晰的方式：直接移除内联设置
+      document.body.style.removeProperty("--tk-home-bg-color");
+    }
+  },
+  { immediate: true }
+);
+
 onMounted(() => {
   if (currentBgStyle.value.isBannerFullImgBgStyle || currentBgStyle.value.isBodyFullImgBgStyle) {
     // 全屏图片模式，监听滚轮，修改导航栏样式（透明化）
@@ -162,7 +179,9 @@ const styleComponent = computed(() => {
     <component :is="styleComponent.el" v-bind="styleComponent.props">
       <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />
-        <HomeBannerContent />
+        <HomeBannerContent>
+          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        </HomeBannerContent>
         <slot name="teek-home-banner-content-after" />
 
         <slot name="teek-home-banner-feature-before" />
@@ -177,5 +196,7 @@ const styleComponent = computed(() => {
     />
   </div>
 
-  <slot name="teek-home-banner-after" />
+  <div :class="ns.e('after-container')">
+    <slot name="teek-home-banner-after" />
+  </div>
 </template>

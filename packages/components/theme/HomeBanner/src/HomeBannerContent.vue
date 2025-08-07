@@ -72,21 +72,36 @@ onMounted(() => {
 
 <template>
   <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
-    <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>
+    <div :class="ns.e('content__fixed')">
+      <!-- 首页banner图文字插槽 -->
+      <template v-if="$slots['banner-title']">
+        <slot name="banner-title" />
+      </template>
 
-    <p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
-      <template v-if="isDefaultDescStyle">
-        <span>{{ descArray[0] }}</span>
-      </template>
-      <template v-else-if="isSwitchDescStyle">
-        <span v-show="!!text" @click="startAutoSwitch" class="switch" :aria-label="t('tk.homeBanner.descSwitchLabel')">
-          {{ text }}
-        </span>
-      </template>
-      <template v-else-if="isTypesDescStyle && descArray.length">
-        <span :aria-label="t('tk.homeBanner.descTypedLabel')">{{ typesText }}</span>
-        <span :class="['typed', { 'is-animation': isFinished }]">|</span>
-      </template>
-    </p>
+      <!-- 如果没有传入插槽，则渲染默认的h1标签及内容 -->
+      <h1 v-else :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">
+        {{ bannerConfig.name }}
+      </h1>
+
+      <p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
+        <template v-if="isDefaultDescStyle">
+          <span>{{ descArray[0] }}</span>
+        </template>
+        <template v-else-if="isSwitchDescStyle">
+          <span
+            v-show="!!text"
+            @click="startAutoSwitch"
+            class="switch"
+            :aria-label="t('tk.homeBanner.descSwitchLabel')"
+          >
+            {{ text }}
+          </span>
+        </template>
+        <template v-else-if="isTypesDescStyle && descArray.length">
+          <span :aria-label="t('tk.homeBanner.descTypedLabel')">{{ typesText }}</span>
+          <span :class="['typed', { 'is-animation': isFinished }]">|</span>
+        </template>
+      </p>
+    </div>
   </div>
 </template>
