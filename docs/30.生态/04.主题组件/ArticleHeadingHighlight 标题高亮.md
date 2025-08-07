@@ -1,5 +1,5 @@
 ---
-title: 标题高亮
+title: ArticleHeadingHighlight 标题高亮
 date: 2025-04-29 02:41:47
 permalink: /ecosystem/components/article-heading-highlight
 categories:

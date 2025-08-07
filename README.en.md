@@ -4,7 +4,7 @@
 
 [Github](https://github.com/Kele-Bingtang/vitepress-theme-teek) ｜ [Gitee](https://gitee.com/kele-bingtang/vitepress-theme-teek) ｜ [Preview](https://notes.teek.top/) ｜[Docs](http://vp.teek.top/)
 
-✨一个轻量、简洁高效、灵活配置、易于扩展的 VitePress 主题。
+✨ A lightweight, concise and efficient, flexibly configured, and easily extensible VitePress theme.
 
 </div>
 
@@ -29,105 +29,105 @@
   </a>
 </p>
 
-**简体中文** | [English](./README.en.md)
+[简体中文](./README.md) | **English**
 
-## Teek 在线安装
+## Teek Online Installation
 
-请看 [快速开始](https://vp.teek.top/guide/quickstart)。
+Please see [Quick Start](https://vp.teek.top/guide/quickstart).
 
-## 贡献指南
+## Contribution Guide
 
-请看 [贡献指南](https://vp.teek.top/guide/contribution)。
+Please see [Contribution Guide](https://vp.teek.top/guide/contribution).
 
-## 本地运行
+## Local Development
 
-项目拉取
+Project cloning
 
 ```bash
 git clone https://github.com/Kele-Bingtang/vitepress-theme-teek.git
 ```
 
-依赖安装（只能用 pnpm 安装依赖）
+Dependencies installation (only pnpm can be used to install dependencies)
 
 ```bash
 pnpm install
 ```
 
-引用包构建
+Build referenced packages
 
 ```bash
 pnpm stub
 ```
 
-文档项目启动
+Start documentation project
 
 ```bash
 pnpm docs:dev
 ```
 
-## 效果图
+## Effect Images
 
-下面只列出部分效果图，更多的功能请访问 [官方文档](https://vp.teek.top)
+Only some effect images are listed below. For more features, please visit [Official Documentation](https://vp.teek.top)
 
-### 文档首页
+### Document Homepage
 
 ![](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010539.png)
 
-### Banner 大图
+### Banner Large Image
 
 ![Banner 大图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004931.png)
 
-### Banner 小图
+### Banner Small Image
 
 ![Banner 小图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004833.png)
 
-### 全背景图
+### Full Background Image
 
 ![全背景图](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004913.png)
 
-### 卡片风格
+### Card Style
 
 ![卡片风格](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004909.png)
 
-### 碎片化文章页
+### Fragmented Article Page
 
 ![碎片化文章页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004839.png)
 
-### 目录页
+### Catalog Page
 
 ![目录页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004926.png)
 
-### 归档页
+### Archive Page
 
 ![归档页](https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807004922.png)
 
-## 💖 支持这个项目
+## 💖 Support This Project
 
-如果您正在使用这个项目并感觉这个项目给你带来帮助，或者是想支持我继续开发，您可以通过如下任意方式支持我：
+If you are using this project and feel it has helped you, or if you want to support my continued development, you can support me in any of the following ways:
 
-- Star 并分享 [VitePress Theme Teek](https://github.com/Kele-Bingtang/vitepress-theme-teek) 🚀
-- 通过以下二维码进行赞助，打赏作者一杯茶 🍵
+- Star and share [VitePress Theme Teek](https://github.com/Kele-Bingtang/vitepress-theme-teek) 🚀
+- Sponsor through the QR codes below, and buy the author a cup of tea 🍵
 
-谢谢！❤️
+Thank you! ❤️
 
-|                                                                 微信赞赏                                                                  |                                                               微信                                                                |                                                              支付宝                                                               |
+|                                                            WeChat Appreciation                                                            |                                                              WeChat                                                               |                                                              Alipay                                                               |
 | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
 | <img src="https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010102.jpg" alt="WeChat Sponsor QRcode" width=180> | <img src="https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010104.jpg" alt="WeChat QRcode" width=180> | <img src="https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/vp-teek-cover/20250807010106.jpg" alt="Alipay QRcode" width=180> |
 
-您的赞助将帮助 Teek：
+Your sponsorship will help Teek:
 
-- 维护项目的基础设施
-- 投入更多时间进行开发
-- 提供更好的技术支持
-- 开发更多实用功能
+- Maintain project infrastructure
+- Invest more time in development
+- Provide better technical support
+- Develop more practical features
 
-二维码没有正常显示？点 [这里](https://vp.teek.top/personal.html) 😎
+QR codes not displaying properly? Click [here](https://vp.teek.top/personal.html) 😎
 
-## 致谢
+## Acknowledgements
 
-❤️ 感谢支持这个项目的朋友，您的每一份帮助都让这个项目变得更好！
+❤️ Thank you to friends who support this project. Your help makes this project better!
 
-❤️ 感谢为这个项目贡献代码的朋友 → [Contributors](https://github.com/Kele-Bingtang/vitepress-theme-teek/graphs/contributors)
+❤️ Thank you to friends who contributed code to this project → [Contributors](https://github.com/Kele-Bingtang/vitepress-theme-teek/graphs/contributors)
 
 ## License
 

@@ -1,5 +1,5 @@
 ---
-title: 文章分析
+title: ArticleAnalyze 文章分析
 date: 2025-04-29 02:41:47
 permalink: /ecosystem/components/article-analyze
 categories:
