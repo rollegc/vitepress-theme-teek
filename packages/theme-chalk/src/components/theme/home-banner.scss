@@ -21,9 +21,15 @@
 
 @include b(banner) {
   position: relative;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // width: 100%;
+  // height: 100%;
+  // overflow: hidden;
+  // z-index: -1;
 
   @include when(full-img) {
-    overflow: hidden;
     margin-top: calc(-1 * var(--vp-nav-height));
 
     @include e(content) {
@@ -46,13 +52,6 @@
       padding-bottom: 10vh;
     }
   }
-
-	@include e(after-container) {
-		position: relative;
-		background-color: getCssVar(home-bg-color);
-		// overflow: hidden 会创建 “块级格式化上下文（BFC）”，子元素的 margin 不会穿透父元素边界，而是被父元素 “包裹”。
-		overflow: hidden;
-	}
 }
 
 /* 全屏图片风格或 body 图片风格时，修改顶部导航栏样式 */
