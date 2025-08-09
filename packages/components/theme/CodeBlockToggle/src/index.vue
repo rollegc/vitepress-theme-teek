@@ -1,8 +1,8 @@
 <script setup lang="ts" name="CodeBlockToggle">
 import type { CodeBlock } from "@teek/config";
 import { nextTick, watch } from "vue";
-import { useNamespace } from "@teek/composables";
-import { isClient } from "@teek/helper";
+import { useEventListener, useNamespace } from "@teek/composables";
+import { addUnit, isBoolean, isClient } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
 import { TkMessage } from "@teek/components/common/Message";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -16,6 +16,8 @@ const { getTeekConfigRef } = useTeekConfig();
 const codeBlockConfig = getTeekConfigRef<CodeBlock>("codeBlock", {
   collapseHeight: 700,
   copiedDone: undefined,
+  overlay: false,
+  overlayHeight: 400,
 });
 
 const documentAttribute = "code-block";
@@ -37,33 +39,6 @@ watch(
 );
 
 /**
- * 获取元素高度
- */
-const getElementHeight = (item: HTMLElement) => {
-  const parentClass = item.parentElement?.className || "";
-  if (!parentClass.includes("blocks")) return item.offsetHeight;
-  if (parentClass.includes("blocks") && item.className.includes("active")) return item.offsetHeight;
-
-  item.style.display = "block";
-  const height = item.offsetHeight;
-  item.style.display = "";
-  return height;
-};
-
-/**
- * 安全获取元素高度
- */
-const getSafeElementHeight = (item: HTMLElement) => {
-  const originalDisplay = item.style.display;
-  const originalHeight = item.style.height;
-  item.style.display = "block";
-  const height = getElementHeight(item);
-  item.style.display = originalDisplay;
-  item.style.height = originalHeight;
-  return height;
-};
-
-/**
  * 初始化代码块
  */
 const initCodeBlock = () => {
@@ -72,7 +47,7 @@ const initCodeBlock = () => {
   Array.from(modes).forEach(item => {
     const copyDom = item.querySelector<HTMLElement>(`.copy`);
 
-    copyDom?.addEventListener("click", e => {
+    copyDom?.addEventListener("click", () => {
       codeBlockConfig.value.copiedDone?.(TkMessage);
     });
 
@@ -81,7 +56,6 @@ const initCodeBlock = () => {
     if (className?.includes("details") || className?.includes(ns.joinNamespace("vp-code"))) return;
 
     const arrowElement = item.querySelector<HTMLElement>(`.${arrowClass}`);
-    const modeHeight = getSafeElementHeight(item);
 
     // 手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面
     if (arrowElement) return;
@@ -91,75 +65,101 @@ const initCodeBlock = () => {
     // 添加箭头图标
     newArrowElement.innerHTML = arrowDownIcon;
 
-    if (modeHeight > 400) {
-      // 默认设置为折叠状态
-      item.style.maxHeight = "400px";
-      item.style.overflow = "hidden";
-      item.style.position = "relative";
-
-      const overlay = createOverlay(() => {
-        overlay.remove();
-        item.style.maxHeight = modeHeight + "px";
-        if (newArrowElement) {
-          newArrowElement.classList.remove(foldClass);
-        }
-      });
-
+    // 如果开启遮罩层，则初始化遮罩层 HTML
+    if (codeBlockConfig.value.overlay) {
+      const overlay = createOverlay(() => newArrowElement.click());
       item.appendChild(overlay);
-
-      // 如果有箭头元素，初始状态设为折叠
-      if (newArrowElement) {
-        newArrowElement.classList.add(foldClass);
-      }
     }
 
     // 给箭头图标添加点击事件
-    if (newArrowElement) {
-      addClickEvent(newArrowElement, item, modeHeight);
-    }
-
+    addClickEvent(newArrowElement, item);
     item.append(newArrowElement);
   });
 };
 
 /**
- * 添加点击事件
+ * 给箭头图标添加点击事件（折叠/展开）
+ *
+ * @param arrowDom 箭头元素
+ * @param codeDom 代码块元素
  */
-const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement, modeHeight: number) => {
-  const clickEvent = () => {
-    const isFold = arrowDom.classList.contains(foldClass);
+const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
+  // 获取代码块原来的高度
+  const modeHeight = getElementHeight(codeDom);
+  // 初始化代码块高度，确保第一次折叠时就有动画
+  codeDom.style.height = `${modeHeight}px`;
+  // 获取代码块的元素
+  const preDom = codeDom.querySelector<HTMLElement>("pre");
+  const lineNumbersWrapperDom = codeDom.querySelector<HTMLElement>(".line-numbers-wrapper");
+  const codeBlockOverlayDom = codeDom.querySelector<HTMLElement>(".code-block-overlay");
 
-    if (isFold) {
-      codeDom.style.maxHeight = modeHeight + "px";
-      arrowDom.classList.remove(foldClass);
-      const overlay = codeDom.querySelector(".code-block-overlay");
-      if (overlay) overlay.remove();
-    } else {
-      if (modeHeight < 400) {
-        codeDom.style.maxHeight = "40px";
-      } else if (modeHeight <= 700) {
-        codeDom.style.maxHeight = modeHeight + "px";
-      } else {
-        codeDom.style.maxHeight = "400px";
-      }
+  // 折叠/展开代码块的状态
+  const codeBlockState = {
+    expand: { height: `${modeHeight}px`, display: "block", overlayDisplay: "none", speed: 80 },
+    fold: {
+      height: codeBlockConfig.value.overlay
+        ? (addUnit(codeBlockConfig.value.overlayHeight) ?? "400px")
+        : ns.cssVar("code-block-fold-height"),
+      display: codeBlockConfig.value.overlay ? "block" : "none",
+      overlayDisplay: "flex",
+      speed: 400,
+    },
+  };
 
-      arrowDom.classList.add(foldClass);
+  let timer: ReturnType<typeof setTimeout> | null;
 
-      if (modeHeight > 400) {
-        let overlay = codeDom.querySelector(".code-block-overlay") as HTMLElement | null;
-        if (!overlay) {
-          overlay = createOverlay(() => {
-            overlay?.remove();
-            codeDom.style.maxHeight = modeHeight + "px";
-            arrowDom.classList.remove(foldClass);
-          });
-          codeDom.appendChild(overlay);
-        }
-      }
+  const clearTimer = () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
     }
   };
 
-  arrowDom.addEventListener("click", clickEvent);
+  // 箭头点击事件
+  const toggle = () => {
+    const isFold = arrowDom.classList.contains(foldClass);
+    // 如果是折叠状态，则需要展开
+    const state = codeBlockState[isFold ? "expand" : "fold"];
+
+    codeDom.style.height = state.height;
+
+    clearTimer();
+
+    if (preDom || lineNumbersWrapperDom) {
+      timer = setTimeout(() => {
+        if (preDom) preDom.style.display = state.display;
+        if (lineNumbersWrapperDom) lineNumbersWrapperDom.style.display = state.display;
+        if (codeBlockOverlayDom) codeBlockOverlayDom.style.display = state.overlayDisplay;
+        clearTimer();
+      }, state.speed);
+    }
+
+    arrowDom.classList.toggle(foldClass);
+  };
+
+  useEventListener(arrowDom, "click", toggle);
+
+  const collapseHeight = codeBlockConfig.value.collapseHeight;
+
+  if (isBoolean(collapseHeight)) collapseHeight && toggle();
+  else if (collapseHeight && modeHeight > collapseHeight) toggle();
+  else if (codeBlockOverlayDom) codeBlockOverlayDom.style.display = "none"; // 如果不折叠，则默认不显示遮罩层
+};
+
+/**
+ * 获取元素的高度
+ */
+const getElementHeight = (item: HTMLElement) => {
+  const parentElementClass = item.parentElement?.className || "";
+  // blocks 代表是代码组
+  if (!parentElementClass.includes("blocks")) return item.offsetHeight;
+  if (parentElementClass.includes("blocks") && item.className.includes("active")) return item.offsetHeight;
+
+  // 如果元素 display none ，则 display block 后获取高度再 display none
+  item.style.display = "block";
+  const height = item.offsetHeight;
+  item.style.display = "";
+  return height;
 };
 </script>
 

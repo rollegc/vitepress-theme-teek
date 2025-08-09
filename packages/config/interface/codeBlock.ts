@@ -17,4 +17,18 @@ export interface CodeBlock {
    * 复制代码完成后的回调
    */
   copiedDone?: (TkMessage: Message) => void;
+  /**
+   * 代码块底部是否显示展开/折叠遮罩层
+   *
+   * @default false
+   * @version 1.4.0
+   */
+  overlay?: boolean;
+  /**
+   * 当出现遮罩层时，指定代码块显示高度，当 overlay 为 true 时生效
+   *
+   * @default 400
+   * @version 1.4.0
+   */
+  overlayHeight?: number;
 }

@@ -47,7 +47,7 @@ export function readFileList(
       readFileList(filePath, option, fileList, prefix);
     } else {
       // 是文件
-      if (!isMdFile(dirOrFilename)) return [];
+      if (!isMarkdownFile(dirOrFilename)) return [];
       if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
       // 根目录的 index.md（首页文档）不扫描
       if (filePath === resolve(path, "index.md")) return [];
@@ -77,7 +77,7 @@ export function readFileList(
  *
  * @param filePath 文件绝对路径
  */
-const isMdFile = (filePath: string) => {
+const isMarkdownFile = (filePath: string) => {
   return filePath.includes("md") || filePath.includes("MD");
 };
 

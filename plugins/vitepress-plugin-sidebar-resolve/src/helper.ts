@@ -3,7 +3,7 @@ import { join, basename, resolve } from "node:path";
 import matter from "gray-matter";
 import type { DefaultTheme } from "vitepress";
 import type { SidebarOption } from "./types";
-import { getTitleFromMd, isIllegalIndex, isSome } from "./util";
+import { getTitleFromMarkdown, isIllegalIndex, isSome } from "./util";
 import logger from "./log";
 
 // 默认忽略的文件夹列表
@@ -52,7 +52,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     }
 
     const { name, title } = resolveFileName(fileName, dirPath);
-    const mdTitle = titleFormMd ? tryGetMdTitle(dirPath, fileName) : "";
+    const mdTitle = titleFormMd ? getInfoFromMarkdown(dirPath, fileName).title : "";
     const text = initItemsText ? mdTitle || title : undefined;
 
     sidebar[`${key}${fileName}/`] = initItems
@@ -114,6 +114,9 @@ const createSideBarItems = (
     beforeCreateSideBarItems,
     titleFormMd = false,
     ignoreWarn = false,
+    sort = true,
+    defaultSortNum = 9999,
+    sortNumFromFileName = false,
   } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 
@@ -146,14 +149,31 @@ const createSideBarItems = (
 
     if (!onlyScannerRootMd && statSync(filePath).isDirectory()) {
       // 是文件夹目录
-      const mdTitle = titleFormMd ? tryGetMdTitle(root, dirOrFilename) : "";
+      const info = getInfoFromMarkdown(root, dirOrFilename);
+      const mdTitle = titleFormMd ? info.title : "";
       const text = mdTitle || title;
+      const childSideBarItems = createSideBarItems(filePath, option, `${prefix}${dirOrFilename}/`);
 
-      const sidebarItem = {
+      let sidebarItem: Record<string, any> = {
         text,
         collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
-        items: createSideBarItems(filePath, option, `${prefix}${dirOrFilename}/`),
+        items: childSideBarItems,
       };
+
+      if (sort) {
+        sidebarItem = {
+          ...sidebarItem,
+          // 对子侧边栏进行排序
+          items: childSideBarItems
+            .sort((a: any, b: any) => (a.sort || defaultSortNum) - (b.sort || defaultSortNum))
+            .map(item => {
+              // 排完序后删除排序属性
+              delete (item as any).sort;
+              return item;
+            }),
+          sort: sortNumFromFileName ? index : info.sort,
+        };
+      }
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
       else sidebarItems[index] = sidebarItem;
@@ -171,18 +191,23 @@ const createSideBarItems = (
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
-      const { data: { title: frontmatterTitle, sidebar = true } = {}, content: mdContent } = matter(content, {});
+      const { data: { title: frontmatterTitle, sidebar = true, sidebarSort } = {}, content: mdContent } = matter(
+        content,
+        {}
+      );
 
       if (!sidebar) return [];
       // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
-      const mdTitle = titleFormMd ? getTitleFromMd(mdContent) : "";
+      const mdTitle = titleFormMd ? getTitleFromMarkdown(mdContent) : "";
       const text = frontmatterTitle || mdTitle || title;
 
-      const sidebarItem = {
+      let sidebarItem: Record<string, any> = {
         text,
         collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
         link: prefix + name,
       };
+
+      if (sort) sidebarItem = { ...sidebarItem, sort: sortNumFromFileName ? index : sidebarSort };
 
       if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
       else sidebarItems[index] = sidebarItem;
@@ -191,6 +216,17 @@ const createSideBarItems = (
 
   // 将没有序号的 sidebarItemsNoIndex 放到最后面
   sidebarItems = [...sidebarItems, ...sidebarItemsNoIndex].filter(Boolean);
+
+  if (sort) {
+    // 对根侧边栏下的子侧边栏进行排序
+    sidebarItems = sidebarItems
+      .sort((a: any, b: any) => (a.sort || defaultSortNum) - (b.sort || defaultSortNum))
+      .map(item => {
+        // 排完序后删除排序属性
+        delete (item as any).sort;
+        return item;
+      });
+  }
 
   return sideBarItemsResolved?.(sidebarItems) ?? sidebarItems;
 };
@@ -242,11 +278,16 @@ const resolveFileName = (
 };
 
 /**
- * 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取一级标题，一旦获取到第一个则不再继续遍历
+ * 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取数据
  * @param root 目录绝对路径
  * @param dirOrFilename 文件夹名
  */
-const tryGetMdTitle = (root: string, dirOrFilename: string) => {
+const getInfoFromMarkdown = (root: string, dirOrFilename: string) => {
+  const state = {
+    title: undefined as string | undefined,
+    sort: undefined as number | undefined,
+  };
+
   const filePaths = [
     join(root, dirOrFilename, "index.md"),
     join(root, dirOrFilename, "index.MD"),
@@ -257,11 +298,12 @@ const tryGetMdTitle = (root: string, dirOrFilename: string) => {
     if (!existsSync(filePath)) continue;
 
     const content = readFileSync(filePath, "utf-8");
-    const { content: mdContent } = matter(content, {});
-    const t = getTitleFromMd(mdContent);
+    const { data: { title, sidebarSort } = {}, content: mdContent } = matter(content, {});
+    const t = getTitleFromMarkdown(mdContent);
 
-    if (t) return t;
+    if (!state.title) state.title = title || t;
+    if (!state.sort) state.sort = sidebarSort;
   }
 
-  return "";
+  return state;
 };

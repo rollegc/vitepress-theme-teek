@@ -70,6 +70,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   articleShare: {},
   appreciation: {},
   riskLink: { enabled: false },
+  themeEnhance: { enabled: true },
 });
 
 const commentConfig = computed(() => {
@@ -173,7 +174,7 @@ const usedSlots = [
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
 
-        <TkThemeEnhance position="top">
+        <TkThemeEnhance v-if="teekConfig.themeEnhance.enabled ?? true" position="top">
           <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
         </TkThemeEnhance>
       </template>
@@ -212,7 +213,7 @@ const usedSlots = [
         <slot name="doc-after" />
 
         <slot name="teek-doc-update-before" />
-        <TkArticleUpdate v-if="teekConfig.articleUpdate.enabled && frontmatter.articleUpdate !== false" />
+        <TkArticleUpdate v-if="(teekConfig.articleUpdate.enabled ?? true) && frontmatter.articleUpdate !== false" />
         <slot name="teek-doc-update-after" />
 
         <slot name="teek-doc-after-appreciation-before" />

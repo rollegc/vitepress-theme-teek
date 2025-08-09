@@ -85,7 +85,7 @@ const scannerMdFile = (
       scannerMdFile(filePath, option, `${prefix}/${dirOrFilename}`, cleanUrls);
     } else {
       // 是文件
-      if (!isMdFile(dirOrFilename)) return;
+      if (!isMarkdownFile(dirOrFilename)) return;
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
@@ -108,7 +108,7 @@ const scannerMdFile = (
  *
  * @param filePath 文件绝对路径
  */
-const isMdFile = (filePath: string) => {
+const isMarkdownFile = (filePath: string) => {
   return filePath.includes("md") || filePath.includes("MD");
 };
 

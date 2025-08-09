@@ -8,21 +8,26 @@
 ### 代办
 
 - 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
-- 在功能页配置文档时，面包屑的 `配置` 鼠标悬停不是点击形状，但是可以点击进入目录页（当前强制面包屑的最后一个节点不会是点击形状，需要判断是否有链接来决定）
-- 支持 `frontmatter.sideBarSort` 对代替文件名数字排序（url 带有数字）
-- `frontmatter.inCatalogue` 配置无效
-- `demo` 容器，隐藏源代码栏固定位置失效
-- 主题面板支持隐藏
-- 当 `frontmatter.permalink` 和文件名一样，点击跳转 `RangeError: Maximum call stack size exceeded`
 
 ### issue
 
-- [articleAnalyze的teleport配置不生效 · Issue #90 · Kele-Bingtang/vitepress-theme-teek](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
-- [关于命名约定 · Issue #86 · Kele-Bingtang/vitepress-theme-teek](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/86)
+- [articleAnalyze的teleport配置不生效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
+- [关于命名约定](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/86)
+- [不蒜子经常502，能否增加其他统计](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/91)
+- [移动端导航栏字体颜色bug](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/92)
+- [多层级时失效permalink失效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/93)
 
 ### 已完成
 
 - 修复首页卡片栏插槽失效问题
+- 面包屑 `Item` 为支持跳转时，鼠标悬停未变成 `cursor: pointer` 修复
+- 主题面板支持配置隐藏
+- `demo` 容器，隐藏源代码栏固定位置失效修复
+- 代码块缩进时样式丢失修复
+- 代码块折叠支持遮罩层显示
+- 支持 `frontmatter.sidebarSort` 对代替文件名序号进行排序
+- 目录页如果目录下的 `Markdown` 文件为空，则不添加到目录页
+- 当 `frontmatter.permalink` 和文件名一样，点击跳转报错 `RangeError: Maximum call stack size exceeded` 修复
 
 ## 模板
 

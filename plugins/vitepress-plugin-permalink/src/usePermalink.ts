@@ -77,7 +77,7 @@ export default function usePermalink() {
     } else filePath = permalinks.inv[maybeIsPermalink];
 
     // 如果获取的文件路径和访问的路由地址一致，则返回空，不需要重复跳转
-    if (filePath === decodePath) return "";
+    if (`/${filePath}` === decodePath) return "";
     return filePath;
   };
 

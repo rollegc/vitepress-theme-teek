@@ -14,6 +14,8 @@ const { theme, frontmatter } = useData();
 
 // 目录列表
 const catalogues = computed(() => theme.value.catalogues?.inv[frontmatter.value.path]?.catalogues);
+
+console.log(catalogues.value);
 </script>
 
 <template>
