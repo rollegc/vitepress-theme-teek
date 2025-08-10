@@ -23,7 +23,7 @@ export function resolveTitle(theme: DefaultTheme.Config): string {
 export function getHeaders(range: DefaultTheme.Config["outline"]): MenuItem[] {
   const ns = useNamespace();
 
-  const headers = [...document.querySelectorAll(`.${ns.joinNamespace("article-page")} :where(h1,h2,h3,h4,h5,h6)`)]
+  const headers = [...document.querySelectorAll(`.${ns.join("article-page")} :where(h1,h2,h3,h4,h5,h6)`)]
     .filter(el => el.id && el.hasChildNodes())
     .map(el => {
       const level = Number(el.tagName[1]);

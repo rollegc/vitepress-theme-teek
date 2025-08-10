@@ -148,10 +148,10 @@ const copyCode = async () => {
     </div>
 
     <TkTransitionCollapse>
-      <div v-show="sourceVisible" :class="ns.joinNamespace('vp-code')" v-html="decodeSource" />
+      <div v-show="sourceVisible" :class="ns.join('vp-code')" v-html="decodeSource" />
     </TkTransitionCollapse>
 
-    <Transition :name="ns.joinNamespace('fade-linear')">
+    <Transition :name="ns.join('fade-linear')">
       <div
         v-show="sourceVisible"
         :class="ns.e('float-control')"

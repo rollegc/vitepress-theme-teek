@@ -34,7 +34,7 @@ const scrollToComment = useDebounce(
   () => {
     if (!isClient) return;
 
-    document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(`#${ns.join("comment")}`)?.scrollIntoView({ behavior: "smooth" });
     setTimeout(() => {
       toCommentConfig.value.done?.(TkMessage);
     }, 600);
@@ -51,7 +51,7 @@ useEventListener(() => window, "scroll", watchScroll);
 </script>
 
 <template>
-  <Transition :name="ns.joinNamespace('fade')">
+  <Transition :name="ns.join('fade')">
     <slot :show="showToComment" :icon="commentIcon" :scrollToComment>
       <div
         v-show="showToComment"

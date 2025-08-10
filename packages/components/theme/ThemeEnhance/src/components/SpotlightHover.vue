@@ -134,9 +134,9 @@ watch(
       v-if="props.enabled && !shouldRecalculate"
       :style="boxStyles"
       :class="[
-        ns.joinNamespace('spotlight-hover'),
-        spotlightStyle === SpotlightStyle.Under ? ns.joinNamespace('spotlight-hover__under') : '',
-        spotlightStyle === SpotlightStyle.Aside ? ns.joinNamespace('spotlight-hover__aside') : '',
+        ns.join('spotlight-hover'),
+        spotlightStyle === SpotlightStyle.Under ? ns.join('spotlight-hover__under') : '',
+        spotlightStyle === SpotlightStyle.Aside ? ns.join('spotlight-hover__aside') : '',
       ]"
       aria-hidden="true"
       focusable="false"

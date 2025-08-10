@@ -58,7 +58,7 @@ useEventListener(() => window, "scroll", watchScroll);
 </script>
 
 <template>
-  <Transition :name="ns.joinNamespace('fade')">
+  <Transition :name="ns.join('fade')">
     <slot :show="showToTop" :progress="progress" :icon="rocketIcon" :scrollToTop="scrollToTop">
       <div
         v-show="showToTop"
@@ -73,7 +73,7 @@ useEventListener(() => window, "scroll", watchScroll);
         aria-valuemax="100"
       >
         <template v-if="backTopConfig.content === 'progress'">
-          <span class="progress">{{ progress }}</span>
+          <span class="content">{{ progress }}</span>
         </template>
         <TkIcon v-else-if="backTopConfig.content === 'icon'" :icon="rocketIcon" aria-hidden="true" />
       </div>

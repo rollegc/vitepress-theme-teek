@@ -53,7 +53,7 @@ onMounted(async () => {
     preventJump();
 
     // 路由切换后更新评论内容
-    return vpRouter.bindAfterRouteChange(ns.joinNamespace("waline"), () => waline?.update());
+    return vpRouter.bindAfterRouteChange(ns.join("waline"), () => waline?.update());
   }
 
   console.error(

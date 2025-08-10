@@ -66,7 +66,7 @@ onMounted(() => {
   // 手动初始化 css 内容并添加命名空间，防止样式全局污染
   initCss();
   // 路由切换后更新评论内容
-  twikooJs.value && vpRouter.bindAfterRouteChange(ns.joinNamespace("twikoo"), href => reloadTwikoo(href));
+  twikooJs.value && vpRouter.bindAfterRouteChange(ns.join("twikoo"), href => reloadTwikoo(href));
 });
 </script>
 

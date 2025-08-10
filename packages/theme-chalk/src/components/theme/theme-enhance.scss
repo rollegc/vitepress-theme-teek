@@ -91,7 +91,7 @@
   }
 
   @include e(helper) {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all getCssVar("transition-duration-fast") cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0.5;
     color: getCssVar("theme-enhance-text-color");
     cursor: help;
@@ -151,14 +151,14 @@
     background: #dcdfe6;
     cursor: pointer;
     transition:
-      border-color 0.3s,
-      background-color 0.3s;
+      border-color getCssVar("transition-duration"),
+      background-color getCssVar("transition-duration");
 
     .action {
       position: absolute;
       left: 1px;
       border-radius: 100%;
-      transition: all 0.3s;
+      transition: all getCssVar("transition-duration");
       width: 16px;
       height: 16px;
       background-color: var(--vp-c-white);
@@ -183,7 +183,7 @@
   .#{$namespace}-theme-enhance-slide-move,
   .#{$namespace}-theme-enhance-slide-enter-active,
   .#{$namespace}-theme-enhance-slide-leave-active {
-    transition: all 0.2s ease-in-out;
+    transition: all getCssVar("transition-duration-fast") ease-in-out;
   }
   .#{$namespace}-theme-enhance-slide-enter-from {
     transform: translateY(-15px);

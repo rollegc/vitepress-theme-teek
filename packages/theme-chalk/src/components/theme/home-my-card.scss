@@ -12,7 +12,7 @@
     margin-bottom: 10px;
 
     &.circle-rotate img {
-      transition: transform 0.6s ease;
+      transition: getCssVar("transition-duration-slow-plus") ease;
       &:hover {
         transform: rotate(360deg) scale(1.1);
       }

@@ -82,7 +82,7 @@ onMounted(() => {
   if (!initArtalkByInject() && server) {
     initJs();
     // 路由切换后更新评论内容
-    return artalk.value && vpRouter.bindAfterRouteChange(ns.joinNamespace("artalk"), () => reloadArtalk());
+    return artalk.value && vpRouter.bindAfterRouteChange(ns.join("artalk"), () => reloadArtalk());
   }
 
   console.error(

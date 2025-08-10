@@ -32,8 +32,8 @@
       display: inline-flex;
       align-items: center;
       transition:
-        color 0.25s cubic-bezier(0.25, 0.1, 0.25, 1),
-        background-color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        color getCssVar("transition-duration") cubic-bezier(0.25, 0.1, 0.25, 1),
+        background-color getCssVar("transition-duration") cubic-bezier(0.25, 0.1, 0.25, 1);
       padding: 8px 8px 8px 0;
       border-radius: 12px;
 

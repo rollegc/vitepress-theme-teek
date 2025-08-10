@@ -58,7 +58,7 @@ const footerData = computed(() => {
 <template>
   <div
     v-if="footerInfo || social.length"
-    :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]"
+    :class="[ns.b(), ns.join('wallpaper-outside')]"
     role="contentinfo"
     :aria-label="t('tk.footerInfo.label')"
   >

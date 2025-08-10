@@ -17,6 +17,7 @@
   @include set-css-var("slider-track-color", #ffffff);
   @include set-css-var("slider-track-progress-color", #ffffff);
   @include set-css-var("slider-track-progress-padding", 0px);
+  @include set-css-var("slider-transition-duration", getCssVar("transition-duration-fast"));
 }
 
 :root.dark {
@@ -51,7 +52,7 @@
     margin: 0;
     appearance: none;
     -webkit-appearance: none;
-    transition: background-color 0.2s ease;
+    transition: background-color getCssVar("slider-transition-duration") ease;
     cursor: col-resize;
 
     &:focus {

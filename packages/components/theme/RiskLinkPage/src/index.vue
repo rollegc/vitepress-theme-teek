@@ -27,7 +27,7 @@ const confirmRedirect = () => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('center'), 'flx-space-y-20']">
+  <div :class="[ns.b(), ns.join('center'), 'flx-space-y-20']">
     <div :class="[ns.e('header'), 'flx-align-center']">
       <img v-if="frontmatter.logo" :src="frontmatter.logo" alt="logo" />
       <p v-if="targetLink" :class="ns.e('title')">

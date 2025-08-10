@@ -181,15 +181,5 @@ const styleComponent = computed(() => {
     />
   </div>
 
-  <!-- <div
-    :style="{
-      height:
-        currentBgStyle.isBannerPureBgStyle || currentBgStyle.isBannerPartImgBgStyle
-          ? ns.cssVar('home-banner-part-min-height')
-          : '100vh',
-      marginTop: 'calc(-1 * var(--vp-nav-height))',
-    }"
-  ></div> -->
-
   <slot name="teek-home-banner-after" />
 </template>

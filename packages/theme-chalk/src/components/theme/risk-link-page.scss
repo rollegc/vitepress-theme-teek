@@ -50,7 +50,7 @@
     background-image: none;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all getCssVar("transition-duration-fast") cubic-bezier(0.645, 0.045, 0.355, 1);
     user-select: none;
     touch-action: manipulation;
     line-height: 1.5;

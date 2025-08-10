@@ -83,7 +83,7 @@ const themeColorList = computed(() => {
     placement="left-start"
     :width="120"
     :x-offset="15"
-    :transition-name="ns.joinNamespace('fade-scale')"
+    :transition-name="ns.join('fade-scale')"
     :title="t('tk.themeEnhance.themeColor.title')"
     role="button"
     :aria-label="t('tk.themeEnhance.themeColor.title')"

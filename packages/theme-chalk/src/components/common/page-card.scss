@@ -7,7 +7,7 @@
   border-radius: getCssVar("home-card-border-radius");
   box-shadow: getCssVar("card-shadow");
   background-color: getCssVar("bg-color-elm");
-  transition: box-shadow 0.5s;
+  transition: box-shadow getCssVar("transition-duration-slow");
   overflow: hidden;
 
   &:hover {

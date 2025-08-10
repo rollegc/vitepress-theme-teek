@@ -117,7 +117,7 @@ onClickOutside(popoverRef, e => {
   if (visible.value !== false) visible.value = false;
 });
 
-const popoverContainerId = ns.joinNamespace("popover-container");
+const popoverContainerId = ns.join("popover-container");
 
 onBeforeMount(() => {
   // 所有的 Popover 放在 body 下的一个 div 里
@@ -155,7 +155,7 @@ const {
   </div>
 
   <Teleport :to="`#${popoverContainerId}`">
-    <Transition :name="transition ? transitionName || ns.joinNamespace('fade-linear') : ''">
+    <Transition :name="transition ? transitionName || ns.join('fade-linear') : ''">
       <div
         v-if="!disabled"
         v-show="visible"

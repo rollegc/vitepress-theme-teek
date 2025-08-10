@@ -53,7 +53,7 @@ const initCodeBlock = () => {
 
     // 忽略部分 class：代码块父元素的 class 中包含 details、tk-vp-code 则跳过
     const className = item.parentElement?.className;
-    if (className?.includes("details") || className?.includes(ns.joinNamespace("vp-code"))) return;
+    if (className?.includes("details") || className?.includes(ns.join("vp-code"))) return;
 
     const arrowElement = item.querySelector<HTMLElement>(`.${arrowClass}`);
 
@@ -61,6 +61,7 @@ const initCodeBlock = () => {
     if (arrowElement) return;
 
     const newArrowElement = document.createElement("div");
+    newArrowElement.setAttribute("aria-hidden", "true");
     newArrowElement.classList.add(arrowClass);
     // 添加箭头图标
     newArrowElement.innerHTML = arrowDownIcon;

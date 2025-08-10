@@ -1,5 +1,5 @@
 @use "../../mixins/bem" as *;
-@use "../../mixins/config" as *;
+@use "../../mixins/function" as *;
 
 @include b(icon) {
   position: relative;
@@ -12,7 +12,7 @@
   line-height: 1em;
   color: var(--icon-color, inherit);
   fill: var(--icon-color, currentColor);
-  transition: color getCssVar(transition-duration);
+  transition: color getCssVar("transition-duration");
 
   svg {
     width: var(--icon-size, 1em);

@@ -14,6 +14,7 @@ const description = [
 ].toString();
 
 const teekConfig = defineTeekConfig({
+  sidebarTrigger: true,
   author: { name: "Teeker", link: "https://github.com/Kele-Bingtang" },
   blogger: {
     avatar: "https://testingcf.jsdelivr.net/gh/Kele-Bingtang/static/user/avatar1.png",
@@ -85,13 +86,14 @@ export default defineConfig({
     ["meta", { property: "og:description", description }],
     ["meta", { name: "description", description }],
     ["meta", { name: "author", content: "Teek" }],
-    [
-      "meta",
-      {
-        name: "viewport",
-        content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
-      },
-    ],
+    // 禁止浏览器缩放
+    // [
+    //   "meta",
+    //   {
+    //     name: "viewport",
+    //     content: "width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no",
+    //   },
+    // ],
     ["meta", { name: "keywords", description }],
     ["meta", { name: "baidu-site-verification", content: "codeva-GdK2q9MO1i" }], // 百度收录
     ["meta", { name: "msvalidate.01", content: "48CABE70F538B8D117567176ABF325AF" }], // Bing 收录验证
