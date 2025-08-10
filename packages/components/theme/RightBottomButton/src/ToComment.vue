@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ToComment">
-import type { TeekConfig, ToComment } from "@teek/config";
+import type { ToComment } from "@teek/config";
 import { computed, ref } from "vue";
 import { isClient } from "@teek/helper";
 import { useLocale, useDebounce, useEventListener } from "@teek/composables";

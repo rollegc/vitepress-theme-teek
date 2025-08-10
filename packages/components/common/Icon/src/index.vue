@@ -102,7 +102,7 @@ const isImage = computed(
   <i v-else-if="isSvgIconHtml" v-html="icon" :class="[ns.b(), ns.is('hover', hover)]" :style="getStyle()" />
 
   <FontIcon
-    v-else-if="isFontIcon"
+    v-else-if="isFontIcon && fontIconType"
     :icon="finalIcon"
     :iconType="fontIconType"
     :class="[ns.b(), ns.is('hover', hover)]"

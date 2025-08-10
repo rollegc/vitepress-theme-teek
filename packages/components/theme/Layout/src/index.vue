@@ -204,7 +204,7 @@ const usedSlots = [
       </template>
 
       <template #doc-footer-before>
-        <TkVpContainer v-if="bottomTipConfig && bottomTip" v-bind="bottomTipConfig" />
+        <TkVpContainer v-if="bottomTipConfig" v-bind="isBoolean(bottomTipConfig) ? {} : bottomTipConfig" />
       </template>
 
       <template #doc-before>
@@ -216,7 +216,7 @@ const usedSlots = [
         <TkArticleImagePreview />
         <TkArticlePageStyle />
         <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
-        <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
+        <TkVpContainer v-if="topTipConfig" v-bind="isBoolean(topTipConfig) ? {} : topTipConfig" />
       </template>
 
       <template #doc-after>
