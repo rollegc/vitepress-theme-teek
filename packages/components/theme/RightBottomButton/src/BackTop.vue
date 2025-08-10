@@ -72,7 +72,9 @@ useEventListener(() => window, "scroll", watchScroll);
         aria-valuemin="0"
         aria-valuemax="100"
       >
-        <template v-if="backTopConfig.content === 'progress'">{{ progress }}</template>
+        <template v-if="backTopConfig.content === 'progress'">
+          <span class="progress">{{ progress }}</span>
+        </template>
         <TkIcon v-else-if="backTopConfig.content === 'icon'" :icon="rocketIcon" aria-hidden="true" />
       </div>
     </slot>

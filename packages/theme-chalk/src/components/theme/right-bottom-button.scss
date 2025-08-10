@@ -30,7 +30,8 @@ $progress-thickness: calc($button-size / 10);
       background-color: getCssVar("theme-color");
       box-shadow: 0 0 15px getCssVar("theme-color");
 
-      .#{$namespace}-icon {
+      .#{$namespace}-icon,
+      .progress {
         color: var(--vp-c-white);
       }
     }
