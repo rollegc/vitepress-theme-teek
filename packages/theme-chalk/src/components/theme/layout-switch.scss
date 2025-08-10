@@ -186,70 +186,70 @@ html[layout-mode-animated="true"] {
   /* sidebar */
   .VPNavBar.has-sidebar > .wrapper > .container > .title {
     transition:
-      width 0.5s ease-in-out,
-      padding-left 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      padding-left getCssVar("transition-duration-slow") ease-in-out;
   }
   /* navBar */
   .VPNavBar > .wrapper > .container > .title {
     transition:
-      width 0.5s ease-in-out,
-      padding-left 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      padding-left getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPNavBar > .wrapper > .container {
     transition:
-      width 0.5s ease-in-out,
-      max-width 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      max-width getCssVar("transition-duration-slow") ease-in-out;
   }
 
   /* sidebar */
   .VPNavBar.has-sidebar > .wrapper > .container > .content,
   .VPNavBar > .wrapper > .container > .content {
     transition:
-      padding-right 0.5s ease-in-out,
-      padding-left 0.5s ease-in-out;
+      padding-right getCssVar("transition-duration-slow") ease-in-out,
+      padding-left getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPNavBar.has-sidebar > .divider {
     transition:
-      padding-left 0.5s ease-in-out,
-      width 0.5s ease-in-out;
+      padding-left getCssVar("transition-duration-slow") ease-in-out,
+      width getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPSidebar {
     transition:
-      width 0.5s ease-in-out,
-      padding-left 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      padding-left getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPContent.has-sidebar {
     transition:
-      width 0.5s ease-in-out,
-      padding-left 0.5s ease-in-out,
-      padding-right 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      padding-left getCssVar("transition-duration-slow") ease-in-out,
+      padding-right getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPDoc .container {
     transition:
-      width 0.5s ease-in-out,
-      max-width 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      max-width getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPDoc.has-aside .content-container {
     transition:
-      width 0.5s ease-in-out,
-      max-width 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      max-width getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPDoc:not(.has-sidebar) .container {
     transition:
-      width 0.5s ease-in-out,
-      max-width 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      max-width getCssVar("transition-duration-slow") ease-in-out;
   }
 
   .VPDoc:not(.has-sidebar) .container > .content {
     transition:
-      width 0.5s ease-in-out,
-      max-width 0.5s ease-in-out;
+      width getCssVar("transition-duration-slow") ease-in-out,
+      max-width getCssVar("transition-duration-slow") ease-in-out;
   }
 }

@@ -141,6 +141,12 @@ export interface TeekConfig {
     page: PageData
   ) => VpContainerProps | undefined;
   /**
+   * 是否启用侧边栏展开/折叠触发器
+   *
+   * @default false
+   */
+  sidebarTrigger?: boolean;
+  /**
    *  body 背景图片配置
    */
   bodyBgImg?: BodyBgImg;

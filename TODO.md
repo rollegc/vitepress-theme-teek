@@ -8,10 +8,9 @@
 ### 代办
 
 - 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
+- 添加常用 icon 库
 
 ### issue
-
-- [不蒜子经常502，能否增加其他统计](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/91)
 
 ### 已完成
 
@@ -26,6 +25,7 @@
 - 当 `frontmatter.permalink` 和文件名一样，点击跳转报错 `RangeError: Maximum call stack size exceeded` 修复
 - [关于命名约定](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/86)
 - [articleAnalyze 的 teleport 配置不生效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
+- [不蒜子经常502，能否增加其他统计](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/91)
 
 ## 模板
 

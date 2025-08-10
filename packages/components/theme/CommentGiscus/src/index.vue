@@ -62,7 +62,7 @@ onMounted(() => {
   }
   reloadGiscus();
   // 路由切换后更新评论内容
-  vpRouter.bindAfterRouteChange(ns.joinNamespace("giscus"), () => {
+  vpRouter.bindAfterRouteChange(ns.join("giscus"), () => {
     reloadGiscus();
   });
 });

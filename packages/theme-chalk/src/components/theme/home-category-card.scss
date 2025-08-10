@@ -21,11 +21,11 @@
       padding: 2px 5px;
       font-size: getCssVar("home-font-size-middle");
       transition:
-        background-color 0.2s,
-        border-color 0.2s,
-        color 0.2s,
-        opacity 0.5s ease,
-        transform 0.5s ease;
+        background-color getCssVar("transition-duration-fast"),
+        border-color getCssVar("transition-duration-fast"),
+        color getCssVar("transition-duration-fast"),
+        opacity getCssVar("transition-duration-slow") ease,
+        transform getCssVar("transition-duration-slow") ease;
       border-left: 2px solid transparent;
       margin-top: -1px;
 

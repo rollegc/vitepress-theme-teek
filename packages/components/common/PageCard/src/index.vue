@@ -10,7 +10,7 @@ import { TkIcon } from "@teek/components/common/Icon";
 defineOptions({ name: "PageCard" });
 
 const ns = useNamespace("page-card");
-const pointClass = ns.joinNamespace("pointer");
+const pointClass = ns.join("pointer");
 const { t } = useLocale();
 
 const {
@@ -30,7 +30,7 @@ const pageNum = defineModel<number>({ default: 1 });
 const pageTotalNum = Math.ceil(total / pageSize);
 const hasNextData = total !== 0 && pageTotalNum !== 1;
 // Vue 动画名
-const transitionName = ref(ns.joinNamespace("scroll"));
+const transitionName = ref(ns.join("scroll"));
 
 /**
  * 分页
@@ -40,7 +40,7 @@ const transitionName = ref(ns.joinNamespace("scroll"));
 const pagination = (to: number, type: "prev" | "next") => {
   emit("pagination", to, type);
   // 修改为分页动画名
-  transitionName.value = ns.joinNamespace(`slide-${type}`);
+  transitionName.value = ns.join(`slide-${type}`);
 
   if (page && autoPage) startAutoPage();
   const index = pageNum.value % pageTotalNum;

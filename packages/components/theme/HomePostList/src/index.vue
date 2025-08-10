@@ -27,7 +27,7 @@ const postConfig = getTeekConfigRef<Required<Post>>("post", {
   coverImgMode: "default",
   emptyLabel: t("tk.homePost.emptyLabel"),
   transition: true,
-  transitionName: ns.joinNamespace("slide-fade"),
+  transitionName: ns.join("slide-fade"),
 });
 // 自定义一页数量 & 分页组件的 Props
 const pageConfig = getTeekConfigRef<Partial<TkPaginationProps & { pageSize?: number }>>("page", {});

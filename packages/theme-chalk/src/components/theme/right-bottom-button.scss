@@ -23,15 +23,19 @@ $progress-thickness: calc($button-size / 10);
     box-shadow: getCssVar("card-shadow");
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all getCssVar("transition-duration") ease;
     background: getCssVar("bg-color");
+
+    .content {
+      user-select: none;
+    }
 
     &:hover {
       background-color: getCssVar("theme-color");
       box-shadow: 0 0 15px getCssVar("theme-color");
 
       .#{$namespace}-icon,
-      .progress {
+      .content {
         color: var(--vp-c-white);
       }
     }

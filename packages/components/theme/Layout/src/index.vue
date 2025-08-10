@@ -37,6 +37,7 @@ import { TkCataloguePage } from "@teek/components/theme/CataloguePage";
 import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPage";
 import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
 import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
+import { TkSidebarTrigger } from "@teek/components/theme/SidebarTrigger";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -59,6 +60,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekTheme: true,
   teekHome: true,
   vpHome: true,
+  sidebarTrigger: false,
   codeBlock: { disabled: false },
   themeSize: "",
   bodyBgImg: {},
@@ -99,7 +101,7 @@ const bottomTipConfig = computed(() => {
   return teekConfig.value.articleBottomTip?.(frontmatter.value, localeIndex.value, page.value);
 });
 
-const themeSizeAttribute = ns.joinNamespace("theme-size");
+const themeSizeAttribute = ns.join("theme-size");
 watch(
   () => teekConfig.value.themeSize,
   newValue => {
@@ -217,6 +219,11 @@ const usedSlots = [
         <TkArticlePageStyle />
         <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
         <TkVpContainer v-if="topTipConfig" v-bind="isBoolean(topTipConfig) ? {} : topTipConfig" />
+        <TkSidebarTrigger v-if="teekConfig.sidebarTrigger">
+          <template #default="scope">
+            <slot name="teek-sidebar-trigger" v-bind="scope" />
+          </template>
+        </TkSidebarTrigger>
       </template>
 
       <template #doc-after>

@@ -21,7 +21,7 @@
 
 .hover-color {
   cursor: pointer !important;
-  transition: color 0.2s;
+  transition: color getCssVar("transition-duration-fast");
 
   &:hover {
     color: getCssVar("theme-color") !important;

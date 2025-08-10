@@ -17,13 +17,13 @@ const initPageStyle = async () => {
   if (!isClient) return;
   await nextTick();
 
-  const tkLayoutDom = document.querySelector(`.${ns.joinNamespace("layout")}`);
+  const tkLayoutDom = document.querySelector(`.${ns.join("layout")}`);
   // 清除可能已经存在的 pageStyle
   ["default", "card", "card-nav", "segment", "segment-nav"].forEach(item =>
-    tkLayoutDom?.classList.remove(ns.joinNamespace(item))
+    tkLayoutDom?.classList.remove(ns.join(item))
   );
 
-  tkLayoutDom?.classList.add(ns.joinNamespace(themeConfig.value.pageStyle));
+  tkLayoutDom?.classList.add(ns.join(themeConfig.value.pageStyle));
 };
 
 watch(() => themeConfig.value.pageStyle, initPageStyle, { immediate: true });

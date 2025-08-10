@@ -7,7 +7,7 @@
   overflow: hidden;
   box-shadow: getCssVar("card-shadow");
   background-color: getCssVar("bg-color-elm");
-  transition: box-shadow 0.4s;
+  transition: box-shadow getCssVar("transition-duration-slow");
   position: relative;
   height: 100%;
   &:hover {
@@ -29,7 +29,7 @@
     .cover-img {
       width: 100%;
       height: 100%;
-      transition: transform 0.4s linear;
+      transition: transform getCssVar("transition-duration") linear;
       object-fit: cover;
       cursor: pointer;
 

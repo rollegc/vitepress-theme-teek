@@ -40,7 +40,7 @@ const disabledThemeColor = computed(() => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
+  <div :class="[ns.b(), ns.join('wallpaper-outside'), 'flx-column']">
     <slot name="teek-right-bottom-before" />
 
     <BackTopComponent v-if="backTopConfig.enabled">

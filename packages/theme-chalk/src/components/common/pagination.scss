@@ -21,6 +21,7 @@
   @include set-css-var("pagination-button-width-large", 40px);
   @include set-css-var("pagination-button-height-large", 40px);
   @include set-css-var("pagination-item-gap", 16px);
+  @include set-css-var("pagination-transition-duration", getCssVar("transition-duration-fast"));
 }
 
 @mixin pagination-button {
@@ -153,7 +154,7 @@
       background-image: none;
       border-radius: 4px;
       cursor: text;
-      transition: box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: box-shadow getCssVar("pagination-transition-duration") cubic-bezier(0.645, 0.045, 0.355, 1);
       transform: translateZ(0);
       box-shadow: 0 0 0 1px var(--vp-c-divider) inset;
 

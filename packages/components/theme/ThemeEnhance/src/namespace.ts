@@ -2,7 +2,7 @@ import { useNamespace } from "@teek/composables";
 
 export const ns = useNamespace("theme-enhance");
 
-export const transitionName = ns.joinNamespace("theme-enhance-slide");
+export const transitionName = ns.join("theme-enhance-slide");
 export const pageMaxWidthVar = ns.cssVarName("page-max-width");
 export const docMaxWidthVar = ns.cssVarName("doc-max-width");
 

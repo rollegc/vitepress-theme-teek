@@ -52,9 +52,9 @@ onBeforeUnmount(() => {
 <template>
   <TransitionGroup
     v-if="bannerConfig.features.length"
-    :name="ns.joinNamespace('slide-next')"
+    :name="ns.join('slide-next')"
     tag="div"
-    :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-wrap-between']"
+    :class="[ns.b(), ns.join('wallpaper-outside'), 'flx-wrap-between']"
     :aria-label="t('tk.homeBanner.featureLabel')"
   >
     <div

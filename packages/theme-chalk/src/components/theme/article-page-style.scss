@@ -70,6 +70,7 @@ html[layout-mode="original"] {
                 padding-bottom: 10px;
                 border-left: none;
                 background-color: getCssVar("bg-color");
+                border-radius: 4px;
               }
             }
           }
@@ -135,6 +136,7 @@ html[layout-mode="original"] {
         /* 文档内容 */
         .container > .content {
           padding-top: 20px;
+          border-radius: 4px;
         }
       }
     }

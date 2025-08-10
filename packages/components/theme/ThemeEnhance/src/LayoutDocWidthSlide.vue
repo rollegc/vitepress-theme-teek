@@ -36,7 +36,7 @@ const updateMaxWidth = (val: number) => {
   if (!themeEnhanceConfig.value.layoutSwitch?.disableAnimation) startAnimated();
 
   const bodyStyle = document.body.style;
-  if (!shouldActivateMaxWidth.value) bodyStyle.setProperty(ns.joinNamespace("page-max-width"), `100%`);
+  if (!shouldActivateMaxWidth.value) bodyStyle.setProperty(ns.join("page-max-width"), `100%`);
 
   bodyStyle.setProperty(docMaxWidthVar, `${Math.ceil(val / 100)}%`);
 };

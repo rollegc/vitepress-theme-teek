@@ -151,7 +151,7 @@ watch(
             :key="item.name"
             :style="getTagStyle(index)"
             @click="handleSwitchTag(item.name)"
-            :class="[{ active: item.name === selectedTag }, ns.joinNamespace('pointer')]"
+            :class="[{ active: item.name === selectedTag }, ns.join('pointer')]"
             :aria-label="item.name"
           >
             <span>{{ item.name }}</span>

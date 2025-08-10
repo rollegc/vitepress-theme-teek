@@ -20,6 +20,10 @@
   @include set-css-var("hover-shadow", 0 3px 12px 3px rgba(0, 0, 0, 0.2));
   /* 控制首页背景色遮罩颜色 */
   @include set-css-var("home-bg-color", #ffffff);
+  @include set-css-var("transition-duration", 0.3s);
+  @include set-css-var("transition-duration-fast", 0.2s);
+  @include set-css-var("transition-duration-slow", 0.5s);
+  @include set-css-var("transition-duration-slow-plus", 0.6s);
 }
 
 :root.dark {

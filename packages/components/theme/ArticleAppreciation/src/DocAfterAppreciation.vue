@@ -62,7 +62,7 @@ watch(
       <span v-else v-html="docAfterOptions.expandTitle" />
     </button>
 
-    <Transition :name="ns.joinNamespace('fade')">
+    <Transition :name="ns.join('fade')">
       <div v-if="showContent" :class="ns.e('content')" :aria-label="t('tk.articleAppreciation.contentLabel')">
         <div :class="ns.e('content')" v-html="docAfterOptions.content" />
       </div>

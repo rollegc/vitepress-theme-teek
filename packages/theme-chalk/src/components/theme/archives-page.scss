@@ -51,7 +51,7 @@
           line-height: 2;
           a {
             display: block;
-            transition: padding 0.3s;
+            transition: padding getCssVar("transition-duration");
             &:hover {
               padding-left: 16px;
               color: getCssVar("theme-color");

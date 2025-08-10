@@ -84,7 +84,7 @@ const closePopoverWhenTimeout = () => {
 
 onMounted(() => {
   // 调用自定义的切换后回调
-  vpRouter.bindAfterRouteChange(ns.joinNamespace("notice"), () =>
+  vpRouter.bindAfterRouteChange(ns.join("notice"), () =>
     noticeConfig.value.onAfterRouteChange?.(vpRouter.route, showNoticeIcon.value, showPopover.value)
   );
   closePopoverWhenTimeout();
@@ -163,7 +163,7 @@ const storagePopoverState = (state: string) => {
 </script>
 
 <template>
-  <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside')]" :aria-label="t('tk.notice.label')">
+  <div :class="[ns.b(), ns.join('wallpaper-outside')]" :aria-label="t('tk.notice.label')">
     <component v-if="styleObj" :is="'style'">{{ styleObj }}</component>
 
     <!-- 公告图标 -->
@@ -198,7 +198,7 @@ const storagePopoverState = (state: string) => {
             :icon="noticeConfig.closeIcon"
             color="#ffffff"
             size="20px"
-            :class="ns.joinNamespace('pointer')"
+            :class="ns.join('pointer')"
             @click="handleClosePopover"
             role="button"
             :aria-label="t('tk.notice.closeLabel')"
