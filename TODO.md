@@ -14,7 +14,6 @@
 - [articleAnalyze的teleport配置不生效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
 - [不蒜子经常502，能否增加其他统计](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/91)
 - [移动端导航栏字体颜色bug](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/92)
-- [多层级时失效permalink失效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/93)
 
 ### 已完成
 
