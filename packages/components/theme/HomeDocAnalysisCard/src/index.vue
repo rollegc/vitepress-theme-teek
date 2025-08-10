@@ -2,7 +2,7 @@
 import type { DocAnalysis, DocAnalysisInfo } from "@teek/config";
 import { computed, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/composables";
+import { useNamespace, useLocale, useUvPv, useVpRouter } from "@teek/composables";
 import { formatDiffDateToDay, getNowDate, isFunction, formatDiffDate } from "@teek/helper";
 import { docAnalysisIcon } from "@teek/static";
 import { useTeekConfig, usePosts } from "@teek/components/theme/ConfigProvider";
@@ -69,6 +69,7 @@ const formatWordCount = (wordCount: number) => {
 };
 
 const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => ({
+  url: "",
   provider: "",
   siteView: true,
   iteration: false,
@@ -79,12 +80,8 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
 // 是否使用访问量功能
 const useSiteView = computed(() => !!statisticsConfig.value.provider && statisticsConfig.value.siteView);
 
-// 通过不蒜子获取访问量和访客数
-const { sitePv, siteUv, isGet, request } = useBuSuanZi(useSiteView.value, {
-  tryRequest: statisticsConfig.value.tryRequest,
-  tryCount: statisticsConfig.value.tryCount,
-  tryIterationTime: statisticsConfig.value.tryIterationTime,
-});
+// 通过 busuanzi、vercount 等网站流量统计提供商获取访问量和访客数
+const { sitePv, siteUv, isGet, request } = useUvPv(useSiteView.value, statisticsConfig.value);
 
 const statisticsInfo = computed(() => ({ siteUv: siteUv.value, sitePv: sitePv.value, isGet: isGet.value }));
 

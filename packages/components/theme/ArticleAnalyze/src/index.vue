@@ -1,9 +1,9 @@
 <script setup lang="ts" name="ArticleAnalyze">
 import type { ArticleAnalyze, DocAnalysis, DocDocAnalysisFileInfo, TeekConfig } from "@teek/config";
 import type { TkContentData } from "@teek/config";
-import { computed, nextTick, onMounted, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useBuSuanZi, useVpRouter } from "@teek/composables";
+import { useNamespace, useLocale, useUvPv, useVpRouter } from "@teek/composables";
 import { readingIcon, clockIcon, viewIcon } from "@teek/static/icons";
 import { TkArticleBreadcrumb } from "@teek/components/theme/ArticleBreadcrumb";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
@@ -83,6 +83,7 @@ const docAnalysisConfig = getTeekConfigRef<DocAnalysis>("docAnalysis", {
 });
 
 const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => ({
+  url: "",
   provider: "",
   pageView: true,
   tryRequest: false,
@@ -94,12 +95,8 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
 // 是否使用访问量功能
 const usePageView = computed(() => !!statisticsConfig.value.provider && statisticsConfig.value.pageView);
 
-// 通过不蒜子获取访问量
-const { pagePv, isGet, request } = useBuSuanZi(usePageView.value, {
-  tryRequest: statisticsConfig.value.tryRequest,
-  tryCount: statisticsConfig.value.tryCount,
-  tryIterationTime: statisticsConfig.value.tryIterationTime,
-});
+// 通过 busuanzi、vercount 等网站流量统计提供商获取访问量
+const { pagePv, isGet, request } = useUvPv(usePageView.value, statisticsConfig.value);
 
 const statisticsInfo = computed(() => ({ pagePv: pagePv.value, isGet: isGet.value }));
 

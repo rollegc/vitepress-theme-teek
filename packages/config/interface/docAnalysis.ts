@@ -1,3 +1,4 @@
+import type { UseUvPvOptions } from "@teek/composables/useUvPv";
 import type { PartialKey } from "@teek/helper";
 
 export interface DocAnalysis {
@@ -34,12 +35,6 @@ export interface DocAnalysis {
    */
   statistics?: {
     /**
-     * 统计服务提供商
-     *
-     * @default ''
-     */
-    provider?: "" | "busuanzi";
-    /**
      * 是否开启首页的访问量和排名统计，仅当 provider 存在生效
      *
      * @default true
@@ -52,30 +47,12 @@ export interface DocAnalysis {
      */
     pageView?: boolean;
     /**
-     * 如果请求不蒜子接口失败，是否重试，类型 boolean
-     *
-     * @default false
-     */
-    tryRequest?: boolean;
-    /**
-     * 重试次数，仅当 tryRequest 为 true 时有效
-     *
-     * @default 5
-     */
-    tryCount?: number;
-    /**
-     * 重试间隔时间，单位毫秒，仅当 tryRequest 为 true 时有效
-     *
-     * @default 2000
-     */
-    tryIterationTime?: number;
-    /**
      * 是否只统计永久链接的浏览量，如果为 false，则统计 VitePress 默认的文档目录链接
      *
      * @default true
      */
     permalink?: boolean;
-  };
+  } & UseUvPvOptions; // 支持 UseUvPvOptions 的配置项
   /**
    * 自定义现有信息
    * originValue 为计算前的数据，currentValue 为计算后的数据（加单位的数据），针对 lastActiveTime 这些需要判断 N 分、N 时、N 天的 key，originValue 为具体的时间，需要自行计算
