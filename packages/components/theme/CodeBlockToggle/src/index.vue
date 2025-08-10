@@ -2,10 +2,11 @@
 import type { CodeBlock } from "@teek/config";
 import { nextTick, watch } from "vue";
 import { useEventListener, useNamespace } from "@teek/composables";
-import { isBoolean, isClient } from "@teek/helper";
+import { addUnit, isBoolean, isClient } from "@teek/helper";
 import { arrowDownIcon } from "@teek/static";
 import { TkMessage } from "@teek/components/common/Message";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { createOverlay } from "./createOverlay";
 
 defineOptions({ name: "CodeBlockToggle" });
 
@@ -15,6 +16,8 @@ const { getTeekConfigRef } = useTeekConfig();
 const codeBlockConfig = getTeekConfigRef<CodeBlock>("codeBlock", {
   collapseHeight: 700,
   copiedDone: undefined,
+  overlay: false,
+  overlayHeight: 400,
 });
 
 const documentAttribute = "code-block";
@@ -44,7 +47,7 @@ const initCodeBlock = () => {
   Array.from(modes).forEach(item => {
     const copyDom = item.querySelector<HTMLElement>(`.copy`);
 
-    copyDom?.addEventListener("click", e => {
+    copyDom?.addEventListener("click", () => {
       codeBlockConfig.value.copiedDone?.(TkMessage);
     });
 
@@ -53,6 +56,7 @@ const initCodeBlock = () => {
     if (className?.includes("details") || className?.includes(ns.joinNamespace("vp-code"))) return;
 
     const arrowElement = item.querySelector<HTMLElement>(`.${arrowClass}`);
+
     // 手动创建箭头元素，然后添加点击事件，最后 append 到代码块元素的最后面
     if (arrowElement) return;
 
@@ -60,6 +64,13 @@ const initCodeBlock = () => {
     newArrowElement.classList.add(arrowClass);
     // 添加箭头图标
     newArrowElement.innerHTML = arrowDownIcon;
+
+    // 如果开启遮罩层，则初始化遮罩层 HTML
+    if (codeBlockConfig.value.overlay) {
+      const overlay = createOverlay(() => newArrowElement.click());
+      item.appendChild(overlay);
+    }
+
     // 给箭头图标添加点击事件
     addClickEvent(newArrowElement, item);
     item.append(newArrowElement);
@@ -80,10 +91,19 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
   // 获取代码块的元素
   const preDom = codeDom.querySelector<HTMLElement>("pre");
   const lineNumbersWrapperDom = codeDom.querySelector<HTMLElement>(".line-numbers-wrapper");
+  const codeBlockOverlayDom = codeDom.querySelector<HTMLElement>(".code-block-overlay");
 
+  // 折叠/展开代码块的状态
   const codeBlockState = {
-    expand: { height: `${modeHeight}px`, display: "block", speed: 80 },
-    fold: { height: ns.cssVar("code-block-fold-height"), display: "none", speed: 400 },
+    expand: { height: `${modeHeight}px`, display: "block", overlayDisplay: "none", speed: 80 },
+    fold: {
+      height: codeBlockConfig.value.overlay
+        ? (addUnit(codeBlockConfig.value.overlayHeight) ?? "400px")
+        : ns.cssVar("code-block-fold-height"),
+      display: codeBlockConfig.value.overlay ? "block" : "none",
+      overlayDisplay: "flex",
+      speed: 400,
+    },
   };
 
   let timer: ReturnType<typeof setTimeout> | null;
@@ -109,7 +129,8 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
       timer = setTimeout(() => {
         if (preDom) preDom.style.display = state.display;
         if (lineNumbersWrapperDom) lineNumbersWrapperDom.style.display = state.display;
-        if (timer) clearTimer();
+        if (codeBlockOverlayDom) codeBlockOverlayDom.style.display = state.overlayDisplay;
+        clearTimer();
       }, state.speed);
     }
 
@@ -122,6 +143,7 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
 
   if (isBoolean(collapseHeight)) collapseHeight && toggle();
   else if (collapseHeight && modeHeight > collapseHeight) toggle();
+  else if (codeBlockOverlayDom) codeBlockOverlayDom.style.display = "none"; // 如果不折叠，则默认不显示遮罩层
 };
 
 /**

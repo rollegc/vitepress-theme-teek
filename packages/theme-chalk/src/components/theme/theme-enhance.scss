@@ -15,19 +15,18 @@
 
 @include b(theme-enhance) {
   height: 100%;
-  @include when(top) {
-    &::before {
-      margin-right: 16px;
-      margin-left: 16px;
-      width: 1px;
-      height: 24px;
-      background-color: var(--vp-c-divider);
-      content: "";
-    }
 
-    .tk-icon {
-      cursor: pointer;
-    }
+  &::before {
+    margin-right: 16px;
+    margin-left: 16px;
+    width: 1px;
+    height: 24px;
+    background-color: var(--vp-c-divider);
+    content: "";
+  }
+
+  .tk-icon {
+    cursor: pointer;
   }
 
   @media (max-width: 768px) {

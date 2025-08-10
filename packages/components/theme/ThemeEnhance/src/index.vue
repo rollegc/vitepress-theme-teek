@@ -17,8 +17,6 @@ import SpotlightStyle from "./SpotlightStyle.vue";
 
 defineOptions({ name: "ThemeEnhance" });
 
-defineProps<{ position: "top" | "bottom" }>();
-
 const { getTeekConfigRef } = useTeekConfig();
 const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", { position: "top" });
 
@@ -36,7 +34,7 @@ const disabledList = computed(() => {
 <template>
   <TkPopover
     v-if="!isMobile && themeEnhanceConfig.position === 'top'"
-    :class="[ns.b(), ns.is(position), 'flx-align-center']"
+    :class="[ns.b(), 'flx-align-center']"
     :popper-class="ns.e('popover')"
     :y-offset="-15"
   >

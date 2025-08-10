@@ -2,25 +2,32 @@
 @use "../../mixins/config" as *;
 
 @include b(icon) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: var(--icon-size, 1em);
   height: var(--icon-size, 1em);
-  line-height: 1em;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  fill: var(--icon-color, currentColor);
-  color: var(--icon-color, inherit);
   font-size: var(--icon-size, inherit);
+  line-height: 1em;
+  color: var(--icon-color, inherit);
+  fill: var(--icon-color, currentColor);
+  transition: color getCssVar(transition-duration);
 
   svg {
     width: var(--icon-size, 1em);
     height: var(--icon-size, 1em);
+    vertical-align: middle;
+    fill: currentcolor;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .iconfont {
-    color: var(--icon-color, inherit);
     font-size: var(--icon-size, 1em);
+    color: var(--icon-color, inherit);
   }
 
   @include when(hover) {

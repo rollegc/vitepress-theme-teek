@@ -18,15 +18,15 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
       {{ index }}.
       <span v-html="item.title" />
       <TkTitleTag
-        v-if="item.frontmatter.titleTag"
-        :text="item.frontmatter.titleTag"
+        v-if="item.frontmatter?.titleTag"
+        :text="item.frontmatter?.titleTag"
         position="right"
         size="small"
-        :aria-label="item.frontmatter.titleTag"
+        :aria-label="item.frontmatter?.titleTag"
       />
     </a>
 
-    <template v-else>
+    <template v-else-if="item.children.length > 0">
       <div :id="item.title" :class="nsSub.e('title')" role="group" :aria-labelledby="`${item.title}-label`">
         <a :href="`#${item.title}`" class="anchor" :aria-label="item.title">#</a>
         <span :id="`${item.title}-label`">{{ `${index}. ${item.title}` }}</span>

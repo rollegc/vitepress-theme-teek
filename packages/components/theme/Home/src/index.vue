@@ -38,7 +38,9 @@ const isPaging = ref(false);
   <div :class="ns.b()" role="main" :aria-label="t('tk.home.label')">
     <div v-if="isHomePage && (teekConfig.banner.enabled ?? true)" v-show="!isPaging">
       <TkHomeBanner :disabled="isPaging">
-        <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+          <slot :name="name" v-bind="scope" />
+        </template>
       </TkHomeBanner>
     </div>
 
@@ -46,7 +48,9 @@ const isPaging = ref(false);
       <div :class="ns.e('content__post')" :aria-label="t('tk.home.postLabel')">
         <slot name="teek-home-post-before" />
         <TkHomePostList v-model="isPaging" ref="homePostListInstance">
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </TkHomePostList>
         <slot name="teek-home-post-after" />
       </div>
@@ -56,7 +60,9 @@ const isPaging = ref(false);
         :aria-label="t('tk.home.cardLabel')"
       >
         <TkHomeCardList>
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </TkHomeCardList>
       </div>
     </div>

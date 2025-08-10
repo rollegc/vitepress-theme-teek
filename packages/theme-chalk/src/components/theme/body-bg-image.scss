@@ -20,7 +20,7 @@
   z-index: -999999;
   height: 100vh;
   width: 100vw;
-  transition: background-image 1 s;
+  transition: background-image 1s;
   background: getCssVar("body-bg-img");
   opacity: getCssVar("body-bg-img-opacity");
 

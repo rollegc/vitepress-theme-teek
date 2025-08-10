@@ -56,7 +56,7 @@ export interface SidebarOption {
    */
   collapsed?: boolean | ((relativePath: string, text: string | undefined) => boolean);
   /**
-   * 文件名前缀必须以「数字.」开头
+   * 文件名前缀必须以「序号.」开头
    *
    * @default true
    */
@@ -112,4 +112,28 @@ export interface SidebarOption {
    * @default false
    */
   ignoreWarn?: boolean;
+  /**
+   * 是否开启侧边栏排序功能，可以在 frontmatter.sidebarSort 对本文件进行排序，越低的越靠前
+   *
+   * 如果只通过文件名添加前缀序号进行排序，则建议关掉该配置，因为该配置开启后，会读取每一个文件的 frontmatter.sidebarSort，耗费些许时间
+   *
+   * @default true
+   */
+  sort?: boolean;
+  /**
+   * 没有指定 frontmatter.sideBarSort 时的默认值，用于侧边栏排序
+   *
+   * @default 9999
+   */
+  defaultSortNum?: number;
+  /**
+   * 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSort
+   *
+   * @default false
+   */
+  sortNumFromFileName?: boolean;
+  /**
+   * 自定义序号后的分隔符（默认仍然支持 . 作为分隔符，该配置是支持额外分隔符，如自定义分隔符为 _，则文件名 01.a.md 和 01_a.md 都生效）
+   */
+  indexSeparator?: string;
 }

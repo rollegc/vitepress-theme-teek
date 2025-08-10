@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.6](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.5...v1.3.6) (2025-07-31)
+
+### Features
+- 🚀 代码块超过一定高度添加遮罩，点击查看更多展开全部代码
+- 🚀 添加frontmatter字段，`bottomTip`文章页底部articleBottomTip提示，默认为true表示显示，false表示不显示；`topTip`文章页顶部articleTopTip提示，默认为true表示显示，false表示不显示
+
 ## [1.3.5](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.4...v1.3.5) (2025-06-03)
 
 ### Features

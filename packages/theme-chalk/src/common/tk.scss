@@ -20,9 +20,10 @@
 }
 
 .hover-color {
+  cursor: pointer !important;
   transition: color 0.2s;
+
   &:hover {
-    color: getCssVar("theme-color");
-    cursor: pointer;
+    color: getCssVar("theme-color") !important;
   }
 }

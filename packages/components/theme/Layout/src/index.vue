@@ -70,6 +70,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   articleShare: {},
   appreciation: {},
   riskLink: { enabled: false },
+  themeEnhance: { enabled: true },
 });
 
 const commentConfig = computed(() => {
@@ -90,9 +91,11 @@ const commentConfig = computed(() => {
 });
 
 const topTipConfig = computed(() => {
+  if (isBoolean(teekConfig.value.articleTopTip)) return teekConfig.value.articleTopTip;
   return teekConfig.value.articleTopTip?.(frontmatter.value, localeIndex.value, page.value);
 });
 const bottomTipConfig = computed(() => {
+  if (isBoolean(teekConfig.value.articleBottomTip)) return teekConfig.value.articleBottomTip;
   return teekConfig.value.articleBottomTip?.(frontmatter.value, localeIndex.value, page.value);
 });
 
@@ -149,11 +152,15 @@ const usedSlots = [
       <TkBodyBgImage v-if="teekConfig.bodyBgImg?.imgSrc" />
       <TkArticleHeadingHighlight />
       <TkNotice v-if="teekConfig.notice?.enabled">
-        <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+          <slot :name="name" v-bind="scope" />
+        </template>
       </TkNotice>
       <TkRightBottomButton>
         <!-- 通用插槽 -->
-        <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+          <slot :name="name" v-bind="scope" />
+        </template>
       </TkRightBottomButton>
     </template>
 
@@ -164,7 +171,9 @@ const usedSlots = [
 
         <!-- 自定义首页 -->
         <TkHome v-if="teekConfig.teekHome">
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </TkHome>
 
         <slot name="teek-home-after" />
@@ -173,8 +182,10 @@ const usedSlots = [
       <template #nav-bar-content-after>
         <slot name="nav-bar-content-after" />
 
-        <TkThemeEnhance position="top">
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+        <TkThemeEnhance v-if="teekConfig.themeEnhance.enabled ?? true">
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </TkThemeEnhance>
       </template>
 
@@ -193,7 +204,7 @@ const usedSlots = [
       </template>
 
       <template #doc-footer-before>
-        <TkVpContainer v-if="bottomTipConfig" v-bind="bottomTipConfig" />
+        <TkVpContainer v-if="bottomTipConfig" v-bind="isBoolean(bottomTipConfig) ? {} : bottomTipConfig" />
       </template>
 
       <template #doc-before>
@@ -205,14 +216,14 @@ const usedSlots = [
         <TkArticleImagePreview />
         <TkArticlePageStyle />
         <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
-        <TkVpContainer v-if="topTipConfig" v-bind="topTipConfig" />
+        <TkVpContainer v-if="topTipConfig" v-bind="isBoolean(topTipConfig) ? {} : topTipConfig" />
       </template>
 
       <template #doc-after>
         <slot name="doc-after" />
 
         <slot name="teek-doc-update-before" />
-        <TkArticleUpdate v-if="teekConfig.articleUpdate.enabled && frontmatter.articleUpdate !== false" />
+        <TkArticleUpdate v-if="(teekConfig.articleUpdate.enabled ?? true) && frontmatter.articleUpdate !== false" />
         <slot name="teek-doc-update-after" />
 
         <slot name="teek-doc-after-appreciation-before" />
@@ -249,10 +260,14 @@ const usedSlots = [
         <slot name="teek-page-top-before" />
 
         <TkArchivesPage v-if="isArchivesPage">
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </TkArchivesPage>
         <TkCataloguePage v-if="isCataloguePage">
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </TkCataloguePage>
         <TkArticleOverviewPage v-if="isArticleOverviewPage" />
 

@@ -11,8 +11,8 @@
     "vitepress-plugin-doc-analysis": "catalog:",
     "vitepress-plugin-file-content-loader": "catalog:",
     "vitepress-plugin-md-h1": "catalog:",
-    "vitepress-plugin-permalink": "catalog:",
-    "vitepress-plugin-sidebar-resolve": "catalog:"
+    "vitepress-plugin-permalink": "workspace:*",
+    "vitepress-plugin-sidebar-resolve": "workspace:*"
   },
   "devDependencies": {
     "@types/markdown-it": "catalog:"

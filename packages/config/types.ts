@@ -1,6 +1,5 @@
 import type { PageData } from "vitepress";
 import type { VpContainerProps } from "@teek/components/common/VpContainer/src/vpContainer";
-import type { Message } from "@teek/components/common/Message/src/message";
 import type { TkPaginationProps } from "../components/common/Pagination";
 import type {
   Appreciation,
@@ -8,6 +7,7 @@ import type {
   ArticleShare,
   ArticleUpdate,
   Author,
+  BackTop,
   Banner,
   Blogger,
   BodyBgImg,
@@ -20,6 +20,7 @@ import type {
   FooterGroup,
   FriendLink,
   ThemeEnhance,
+  ToComment,
   Notice,
   Plugins,
   Post,
@@ -110,13 +111,13 @@ export interface TeekConfig {
    */
   themeSize?: "small" | "default" | "large" | "wide";
   /**
-   * 回到顶部后的回调
+   * 回到顶部按钮配置
    */
-  backTopDone?: (TkMessage: Message) => void;
+  backTop?: BackTop;
   /**
-   * 滚动到评论后的回调
+   * 滚动到评论区配置
    */
-  toCommentDone?: (TkMessage: Message) => void;
+  toComment?: ToComment;
   /**
    * 文章页顶部使用 VitePress 容器添加提示
    *
@@ -124,11 +125,9 @@ export interface TeekConfig {
    * @param localeIndex 当前国际化语言
    * @param page 文章信息，即 useData().page 的信息
    */
-  articleTopTip?: (
-    frontmatter: PageData["frontmatter"],
-    localeIndex: string,
-    page: PageData
-  ) => VpContainerProps | undefined;
+  articleTopTip?:
+    | boolean
+    | ((frontmatter: PageData["frontmatter"], localeIndex: string, page: PageData) => VpContainerProps | undefined);
   /**
    * 文章页底部使用 VitePress 容器添加提示
    *

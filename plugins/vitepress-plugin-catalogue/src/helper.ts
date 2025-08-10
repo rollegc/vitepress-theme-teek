@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, extname, join, resolve } from "node:path";
 import matter from "gray-matter";
 import type { CatalogueInfo, CatalogueItem, CatalogueOption } from "./types";
-import { getTitleFromMd, isIllegalIndex, isMdFile, isSome } from "./util";
+import { getTitleFromMarkdown, isIllegalIndex, isMarkdownFile, isSome } from "./util";
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
@@ -67,7 +67,7 @@ const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
       scannerMdFile(filePath, option, `${prefix}/${dirOrFilename}`);
     } else {
       // 是文件
-      if (!isMdFile(dirOrFilename)) return;
+      if (!isMarkdownFile(dirOrFilename)) return;
 
       const content = readFileSync(filePath, "utf-8");
       // 解析出 frontmatter 数据
@@ -124,7 +124,7 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
       else catalogueItemList[index] = catalogueItem;
     } else {
       // 是文件
-      if (!isMdFile(dirOrFilename)) return [];
+      if (!isMarkdownFile(dirOrFilename)) return [];
       if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
 
       const content = readFileSync(filePath, "utf-8");
@@ -136,7 +136,7 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
       if (catalogue || !inCatalogue) return [];
 
       // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
-      const mdTitle = titleFormMd ? getTitleFromMd(mdContent) : "";
+      const mdTitle = titleFormMd ? getTitleFromMarkdown(mdContent) : "";
       const finalTitle = frontmatterTitle || mdTitle || title;
 
       const catalogueItem = {
@@ -216,7 +216,7 @@ const tryGetMdTitle = (root: string, dirOrFilename: string) => {
 
     const content = readFileSync(filePath, "utf-8");
     const { content: mdContent } = matter(content, {});
-    const t = getTitleFromMd(mdContent);
+    const t = getTitleFromMarkdown(mdContent);
 
     if (t) return t;
   }

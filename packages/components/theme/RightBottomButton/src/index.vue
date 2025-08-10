@@ -1,20 +1,22 @@
 <script setup lang="ts" name="RightBottomButton">
-import type { TeekConfig, ThemeEnhance } from "@teek/config";
+import type { BackTop, TeekConfig, ThemeEnhance, ToComment } from "@teek/config";
 import { computed } from "vue";
 import { useData } from "vitepress";
 import { isBoolean } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
-import { mobileMaxWidthMedia, TkThemeEnhance } from "@teek/components/theme/ThemeEnhance";
+import { mobileMaxWidthMedia } from "@teek/components/theme/ThemeEnhance";
 import { useMediaQuery } from "@teek/composables";
 import { ns } from "./namespace";
-import BackTop from "./BackTop.vue";
-import ToComment from "./ToComment.vue";
-import ThemeColor from "./ThemeColor.vue";
+import BackTopComponent from "./BackTop.vue";
+import ToCommentComponent from "./ToComment.vue";
+import ThemeColorComponent from "./ThemeColor.vue";
 
 defineOptions({ name: "RightBottomButton" });
 
 const { getTeekConfigRef } = useTeekConfig();
-const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
+const backTopConfig = getTeekConfigRef<BackTop>("backTop", { enabled: true });
+const toCommentConfig = getTeekConfigRef<ToComment>("toComment", { enabled: true });
+const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", { enabled: true });
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, { comment: { provider: "" } });
 const { frontmatter } = useData();
 
@@ -27,8 +29,13 @@ const commentConfig = computed(() => {
 
 const isMobile = useMediaQuery(mobileMaxWidthMedia);
 const disabledThemeColor = computed(() => {
-  const { themeColor = {} } = themeEnhanceConfig.value;
-  return !isMobile.value || (themeColor.disabled ?? themeColor.disabledInMobile);
+  const { enabled = true, themeColor = {}, position = "top" } = themeEnhanceConfig.value;
+  const isDisabled = themeColor.disabled ?? themeColor.disabledInMobile;
+
+  // 如果全局禁用主题增强功能，则禁用主题颜色，其次判断是否局部禁用主题颜色功能，最后默认移动端启用主题颜色功能
+  if (!enabled) return true;
+  if (isDisabled !== undefined) return isDisabled;
+  return !isMobile.value && position === "top";
 });
 </script>
 
@@ -36,18 +43,19 @@ const disabledThemeColor = computed(() => {
   <div :class="[ns.b(), ns.joinNamespace('wallpaper-outside'), 'flx-column']">
     <slot name="teek-right-bottom-before" />
 
-    <BackTop />
-    <ToComment v-if="commentConfig.enabled && commentConfig.provider" />
-    <TkThemeEnhance
-      v-if="!isMobile && themeEnhanceConfig.position === 'bottom'"
-      :class="ns.e('button')"
-      position="bottom"
-      :y-offset="7"
-    >
-      <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
-    </TkThemeEnhance>
+    <BackTopComponent v-if="backTopConfig.enabled">
+      <template #default="scope">
+        <slot name="teek-back-top" v-bind="scope" />
+      </template>
+    </BackTopComponent>
 
-    <ThemeColor v-if="!disabledThemeColor" />
+    <ToCommentComponent v-if="toCommentConfig.enabled && commentConfig.enabled && commentConfig.provider">
+      <template #default="scope">
+        <slot name="teek-to-comment" v-bind="scope" />
+      </template>
+    </ToCommentComponent>
+
+    <ThemeColorComponent v-if="!disabledThemeColor" />
 
     <slot name="teek-right-bottom-after" />
   </div>

@@ -1,4 +1,4 @@
-export const getTitleFromMd = (mdContent: string) => {
+export const getTitleFromMarkdown = (mdContent: string) => {
   // 切割换行符 \r\n 或 \n
   const lines = mdContent.trimStart().split(/\r?\n/);
 
@@ -25,7 +25,7 @@ export const isIllegalIndex = (index: number) => {
  *
  * @param filePath 文件绝对路径
  */
-export const isMdFile = (filePath: string) => {
+export const isMarkdownFile = (filePath: string) => {
   return filePath.includes("md") || filePath.includes("MD");
 };
 

@@ -12,11 +12,11 @@
 @include b(demo-code) {
   border: 1px solid var(--vp-c-divider);
   border-radius: 4px 4px 0 0;
-  overflow-y: auto;
 
   @include e(effect) {
     padding: 24px;
     margin: 0.5px;
+    overflow-y: auto;
   }
 
   @include e(button-group) {
@@ -64,6 +64,7 @@
     right: 0;
     bottom: 0;
     z-index: 10;
+
     span {
       font-size: 14px;
       margin-left: 10px;

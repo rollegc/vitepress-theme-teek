@@ -2,7 +2,7 @@ import type { FileContentLoaderData } from "vitepress-plugin-file-content-loader
 import type { TkContentData, PostData } from "./types";
 import type { RequiredKeyPartialOther } from "@teek/helper";
 import type { SiteConfig } from "vitepress";
-import { getTitleFromMd } from "vitepress-plugin-sidebar-resolve";
+import { getTitleFromMarkdown } from "vitepress-plugin-sidebar-resolve";
 import { basename, join } from "node:path";
 import { statSync } from "node:fs";
 import { formatDate } from "@teek/helper";
@@ -102,7 +102,7 @@ export function getTitle(post: RequiredKeyPartialOther<TkContentData, "frontmatt
   const splitName = basename(post.url).split(".");
   // 如果目录下有 index.md 且没有一级标题，则使用目录名作为文章标题
   const name = splitName.length > 1 ? splitName[1] : splitName[0];
-  return getTitleFromMd(content) || name || "";
+  return getTitleFromMarkdown(content) || name || "";
 }
 
 /**

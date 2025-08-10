@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 
 @include b(banner-content) {
-  @include e(content__desc) {
+  @include e(desc) {
     display: inline-block;
     background-color: #ffffff66;
     backdrop-filter: blur(4px);

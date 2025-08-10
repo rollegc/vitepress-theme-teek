@@ -162,7 +162,11 @@ const styleComponent = computed(() => {
     <component :is="styleComponent.el" v-bind="styleComponent.props">
       <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />
-        <HomeBannerContent />
+        <HomeBannerContent>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
+        </HomeBannerContent>
         <slot name="teek-home-banner-content-after" />
 
         <slot name="teek-home-banner-feature-before" />
@@ -176,6 +180,16 @@ const styleComponent = computed(() => {
       :aria-label="t('tk.homeBanner.wavesLabel')"
     />
   </div>
+
+  <!-- <div
+    :style="{
+      height:
+        currentBgStyle.isBannerPureBgStyle || currentBgStyle.isBannerPartImgBgStyle
+          ? ns.cssVar('home-banner-part-min-height')
+          : '100vh',
+      marginTop: 'calc(-1 * var(--vp-nav-height))',
+    }"
+  ></div> -->
 
   <slot name="teek-home-banner-after" />
 </template>

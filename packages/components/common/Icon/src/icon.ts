@@ -39,6 +39,10 @@ export interface IconProps {
    */
   imgAlt?: string;
   /**
+   * 是否使用鼠标手形
+   */
+  pointer?: boolean;
+  /**
    * 自定义图标样式
    */
   style?: Record<string, any>;

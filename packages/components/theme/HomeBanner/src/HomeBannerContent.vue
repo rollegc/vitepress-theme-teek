@@ -72,9 +72,17 @@ onMounted(() => {
 
 <template>
   <div :class="ns.b()" :aria-label="t('tk.homeBanner.contentLabel')">
-    <h1 :class="ns.e('content__title')" :aria-label="t('tk.homeBanner.titleLabel')">{{ bannerConfig.name }}</h1>
+    <!-- 首页 banner 图文字插槽 -->
+    <template v-if="$slots['teek-home-banner-name']">
+      <slot name="teek-home-banner-name" v-bind="{ name: bannerConfig.name }" />
+    </template>
 
-    <p :class="ns.e('content__desc')" :aria-label="t('tk.homeBanner.descLabel')">
+    <!-- 如果没有传入插槽，则渲染默认的 h1 标签及内容 -->
+    <h1 v-else :class="ns.e('title')" :aria-label="t('tk.homeBanner.titleLabel')">
+      {{ bannerConfig.name }}
+    </h1>
+
+    <p :class="ns.e('desc')" :aria-label="t('tk.homeBanner.descLabel')">
       <template v-if="isDefaultDescStyle">
         <span>{{ descArray[0] }}</span>
       </template>
