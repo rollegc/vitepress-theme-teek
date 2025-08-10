@@ -25,6 +25,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     initItemsText = false,
     sideBarResolved,
     ignoreWarn = false,
+    indexSeparator,
   } = option;
   if (!path) return {};
 
@@ -51,7 +52,7 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
       return logger.warn(`该目录 '${dirPath}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
     }
 
-    const { name, title } = resolveFileName(fileName, dirPath);
+    const { name, title } = resolveFileName(fileName, dirPath, indexSeparator);
     const mdTitle = titleFormMd ? getInfoFromMarkdown(dirPath, fileName).title : "";
     const text = initItemsText ? mdTitle || title : undefined;
 
@@ -117,6 +118,7 @@ const createSideBarItems = (
     sort = true,
     defaultSortNum = 9999,
     sortNumFromFileName = false,
+    indexSeparator,
   } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
 
@@ -134,7 +136,7 @@ const createSideBarItems = (
 
     const filePath = resolve(root, dirOrFilename);
     // 解析文件名
-    const { index: indexStr, title, type, name } = resolveFileName(dirOrFilename, filePath);
+    const { index: indexStr, title, type, name } = resolveFileName(dirOrFilename, filePath, indexSeparator);
     // 十进制转换
     const index = parseInt(indexStr as string, 10);
 
@@ -232,52 +234,6 @@ const createSideBarItems = (
 };
 
 /**
- * 解析文件名，返回文件序号、文件标题、文件类型
- * @param filename 文件名
- * @param filePath 文件绝对路径
- */
-const resolveFileName = (
-  filename: string,
-  filePath: string
-): { index: string | number; title: string; type: string; name: string } => {
-  const stat = statSync(filePath);
-  // 文件序号
-  let index: string | number = "";
-  // 文章标题，如果为目录，则默认为文件夹名。如果为 md 文件，则尝试获取 frontmatter 中的 title，否则为文件名为标题
-  let title = "";
-  // 文件类型
-  let type = "";
-  // 文件名称，不带后缀
-  let name = "";
-
-  /**
-   * 如果 filename 为 ke.md，则解析为 ['ke', 'md']，最后结果为 { index: 0, title: ke, type: md, name: ke }
-   * 如果 filename 为 1.ke.md，则解析为 ['1', 'ke', 'md']，最后结果为 { index: 1, title: ke, type: md, name: 1.ke }
-   * 如果 filename 为 1.ke.d.md，则解析为 ['1', 'ke.d', 'md']，最后结果为 { index: 1, title: ke.d, type: md, name: 1.ke.d }
-   */
-  const fileNameArr = filename.split(".");
-
-  if (fileNameArr.length === 2) {
-    // index.md 文件的下标默认为 0，则永远在侧边栏的第一位
-    index = fileNameArr[0] === "index" ? "0" : fileNameArr[0];
-    title = stat.isDirectory() ? fileNameArr[1] : fileNameArr[0];
-    type = fileNameArr[1];
-    name = fileNameArr[0];
-  } else {
-    const firstDotIndex = filename.indexOf(".");
-    const lastDotIndex = filename.lastIndexOf(".");
-    index = filename.substring(0, firstDotIndex);
-    type = filename.substring(lastDotIndex + 1);
-    name = stat.isDirectory() ? filename : filename.substring(0, lastDotIndex);
-
-    if (stat.isDirectory()) title = filename.substring(firstDotIndex + 1);
-    else title = filename.substring(firstDotIndex + 1, lastDotIndex);
-  }
-
-  return { index, title, type, name };
-};
-
-/**
  * 按顺序从该目录下的 [index.md, index.MD, 目录名.md] 文件获取数据
  * @param root 目录绝对路径
  * @param dirOrFilename 文件夹名
@@ -306,4 +262,101 @@ const getInfoFromMarkdown = (root: string, dirOrFilename: string) => {
   }
 
   return state;
+};
+
+/**
+ * 解析文件名，返回文件序号、文件标题、文件类型
+ * @param filename 文件名
+ * @param filePath 文件绝对路径
+ */
+const resolveFileName = (filename: string, filePath: string, separator: string = ".") => {
+  const stat = statSync(filePath);
+
+  /**
+   * 文件名解析逻辑：
+   * 1. 点(.)分隔符逻辑始终存在：
+   *    - 01.ke.md -> { index: "01", title: "ke", type: "md", name: "01.ke" }
+   *    - ke.md -> { index: "ke", title: "ke", type: "md", name: "ke" }
+   *    - index.md -> { index: "0", title: "index", type: "md", name: "index" }
+   *
+   * 2. 自定义分隔符(_)额外支持：
+   *    - 01_ke.md -> { index: "01", title: "ke", type: "md", name: "01_ke" }
+   *    - a_b.md -> { index: "", title: "a_b", type: "md", name: "a_b" } (不含数字前缀，不处理)
+   *    - 01.a_b.md -> { index: "01", title: "a_b", type: "md", name: "01.a_b" } (仍使用点分隔符)
+   *    - 01_a_b.md -> { index: "01", title: "a_b", type: "md", name: "01_a_b" } (自定义分隔符)
+   */
+
+  // 处理自定义分隔符
+  if (separator !== "." && isExtraSeparator(filename, separator)) {
+    return parseExtraSeparator(filename, stat.isDirectory(), separator);
+  }
+
+  // 处理点(.)分隔符
+  if (filename.includes(".")) {
+    return parseDotSeparator(filename, stat.isDirectory());
+  }
+
+  // 无分隔符情况
+  return { index: "", title: filename, type: "", name: filename };
+};
+
+/**
+ * 使用点分隔符解析文件名
+ */
+const parseDotSeparator = (filename: string, isDirectory: boolean) => {
+  const parts = filename.split(".");
+
+  if (parts.length === 2) {
+    // 简单情况：name.ext 或 index.md
+    const index = parts[0] === "index" ? "0" : parts[0];
+    const title = isDirectory ? parts[1] : parts[0];
+    const type = isDirectory ? "" : parts[1];
+    const name = parts[0];
+
+    return { index, title, type, name };
+  } else {
+    // 复杂情况：01.name.ext
+    const firstDotIndex = filename.indexOf(".");
+    const lastDotIndex = filename.lastIndexOf(".");
+    const index = filename.substring(0, firstDotIndex);
+
+    // 对于文件，需要处理扩展名，对于目录，则不处理
+    const title = filename.substring(firstDotIndex + 1, lastDotIndex);
+    const type = isDirectory ? "" : filename.substring(lastDotIndex + 1);
+    const name = isDirectory ? filename : filename.substring(0, lastDotIndex);
+
+    return { index, title, type, name };
+  }
+};
+
+/**
+ * 检查是否符合自定义分隔符模式：数字开头 + 自定义分隔符 + 内容（对于目录）或内容 + . + 扩展名（对于文件）
+ */
+const isExtraSeparator = (filename: string, separator: string) => {
+  // 必须包含自定义分隔符
+  if (!filename.includes(separator)) return false;
+
+  const parts = filename.split(separator, 2);
+  // 第一部分必须是数字
+  if (!/^\d+$/.test(parts[0])) return false;
+
+  return true;
+};
+
+/**
+ * 解析符合自定义分隔符模式的文件名或目录名
+ */
+const parseExtraSeparator = (filename: string, isDirectory: boolean, separator: string) => {
+  const firstSeparatorIndex = filename.indexOf(separator);
+  const lastDotIndex = filename.lastIndexOf(".");
+  const index = filename.substring(0, firstSeparatorIndex);
+
+  // 对于文件，需要处理扩展名，对于目录，则不处理
+  const title = isDirectory
+    ? filename.substring(firstSeparatorIndex + 1)
+    : filename.substring(firstSeparatorIndex + 1, lastDotIndex);
+  const type = isDirectory ? "" : filename.substring(lastDotIndex + 1);
+  const name = isDirectory ? filename : filename.substring(0, lastDotIndex);
+
+  return { index, title, type, name };
 };

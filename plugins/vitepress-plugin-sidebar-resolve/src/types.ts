@@ -132,4 +132,8 @@ export interface SidebarOption {
    * @default false
    */
   sortNumFromFileName?: boolean;
+  /**
+   * 自定义序号后的分隔符（默认仍然支持 . 作为分隔符，该配置是支持额外分隔符，如自定义分隔符为 _，则文件名 01.a.md 和 01_a.md 都生效）
+   */
+  indexSeparator?: string;
 }
