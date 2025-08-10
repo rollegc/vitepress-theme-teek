@@ -7,13 +7,13 @@
   color: getCssVar("banner-text-color");
   text-align: center;
 
-  @include e(content__title) {
+  @include e(title) {
     font-size: getCssVar("banner-title-text");
     font-weight: 600;
     line-height: 1.25;
   }
 
-  @include e(content__desc) {
+  @include e(desc) {
     font-size: getCssVar("banner-desc-text");
     max-width: 800px;
     line-height: 1.3;

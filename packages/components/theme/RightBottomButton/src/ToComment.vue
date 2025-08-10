@@ -1,5 +1,5 @@
 <script setup lang="ts" name="ToComment">
-import type { TeekConfig } from "@teek/config";
+import type { TeekConfig, ToComment } from "@teek/config";
 import { computed, ref } from "vue";
 import { isClient } from "@teek/helper";
 import { useLocale, useDebounce, useEventListener } from "@teek/composables";
@@ -14,7 +14,7 @@ defineOptions({ name: "ToComment" });
 const { t } = useLocale();
 const { getTeekConfigRef } = useTeekConfig();
 
-const toCommentDone = getTeekConfigRef<TeekConfig["toCommentDone"]>("toCommentDone");
+const toCommentConfig = getTeekConfigRef<ToComment>("toComment");
 
 // 前往评论区
 const scrollTop = ref(0);
@@ -36,7 +36,7 @@ const scrollToComment = useDebounce(
 
     document.querySelector(`#${ns.joinNamespace("comment")}`)?.scrollIntoView({ behavior: "smooth" });
     setTimeout(() => {
-      toCommentDone.value?.(TkMessage);
+      toCommentConfig.value.done?.(TkMessage);
     }, 600);
   },
   500,
@@ -52,15 +52,17 @@ useEventListener(() => window, "scroll", watchScroll);
 
 <template>
   <Transition :name="ns.joinNamespace('fade')">
-    <div
-      v-show="showToComment"
-      :title="t('tk.rightBottomButton.toComment')"
-      :class="ns.e('button')"
-      @click="scrollToComment"
-      role="button"
-      :aria-label="t('tk.rightBottomButton.toComment')"
-    >
-      <TkIcon :icon="commentIcon" aria-hidden="true" />
-    </div>
+    <slot :show="showToComment" :icon="commentIcon" :scrollToComment>
+      <div
+        v-show="showToComment"
+        :title="t('tk.rightBottomButton.toComment')"
+        :class="ns.e('button')"
+        @click="scrollToComment"
+        role="button"
+        :aria-label="t('tk.rightBottomButton.toComment')"
+      >
+        <TkIcon :icon="commentIcon" aria-hidden="true" />
+      </div>
+    </slot>
   </Transition>
 </template>

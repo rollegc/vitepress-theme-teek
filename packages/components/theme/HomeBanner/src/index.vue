@@ -163,7 +163,9 @@ const styleComponent = computed(() => {
       <div :class="[ns.e('content'), { 'no-feature': !bannerConfig.features.length }]">
         <slot name="teek-home-banner-content-before" />
         <HomeBannerContent>
-          <template v-for="(_, name) in $slots" :key="name" #[name]><slot :name="name" /></template>
+          <template v-for="(_, name) in $slots" :key="name" #[name]="scope">
+            <slot :name="name" v-bind="scope" />
+          </template>
         </HomeBannerContent>
         <slot name="teek-home-banner-content-after" />
 

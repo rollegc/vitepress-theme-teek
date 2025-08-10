@@ -100,10 +100,6 @@ export const usePageState = () => {
   const isLoginUrl = computed(() => !!frontmatter.value.loginPage);
   // 当前页面是否为风险链接页
   const isRiskLinkPage = computed(() => !!frontmatter.value.riskLinkPage);
-  // 是否显示底部提示
-  const bottomTip = computed(() => unref(frontmatter).bottomTip !== false)
-  // 是否显示顶部提示
-  const topTip = computed(() => unref(frontmatter).topTip !== false)
 
   return {
     isHomePage,
@@ -114,8 +110,6 @@ export const usePageState = () => {
     isArticleOverviewPage,
     isLoginUrl,
     isRiskLinkPage,
-    bottomTip,
-    topTip,
   };
 };
 

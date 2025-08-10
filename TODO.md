@@ -3,7 +3,7 @@
 - sidebar 插件不扫描 index.md 修复
 - 推送 Github 自动推送 Gitee
 
-## 1.3.6 版本
+## 1.4.0 版本
 
 ### 代办
 

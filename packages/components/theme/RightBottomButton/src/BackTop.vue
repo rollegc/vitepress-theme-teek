@@ -1,5 +1,5 @@
 <script setup lang="ts" name="BackTop">
-import type { TeekConfig } from "@teek/config";
+import type { BackTop } from "@teek/config";
 import { computed, onMounted, ref } from "vue";
 import { isClient } from "@teek/helper";
 import { useLocale, useDebounce, useEventListener } from "@teek/composables";
@@ -14,7 +14,10 @@ defineOptions({ name: "BackTop" });
 const { t } = useLocale();
 
 const { getTeekConfigRef } = useTeekConfig();
-const backTopDone = getTeekConfigRef<TeekConfig["backTopDone"]>("backTopDone");
+const backTopConfig = getTeekConfigRef<BackTop>("backTop", {
+  enabled: true,
+  content: "progress",
+});
 
 // 返回顶部 & 前往评论区
 const scrollTop = ref(0);
@@ -27,7 +30,7 @@ const scrollToTop = useDebounce(
 
     document.querySelector("html")?.scrollIntoView({ behavior: "smooth" });
     setTimeout(() => {
-      backTopDone.value?.(TkMessage);
+      backTopConfig.value.done?.(TkMessage);
     }, 600);
   },
   500,
@@ -56,19 +59,22 @@ useEventListener(() => window, "scroll", watchScroll);
 
 <template>
   <Transition :name="ns.joinNamespace('fade')">
-    <div
-      v-show="showToTop"
-      :title="t('tk.rightBottomButton.backTopTitle')"
-      :class="[ns.e('button'), 'back-top']"
-      @click="scrollToTop"
-      :style="{ [ns.cssVarName('progress')]: progress }"
-      role="button"
-      :aria-label="t('tk.rightBottomButton.backTopTitle')"
-      :aria-valuenow="progress"
-      aria-valuemin="0"
-      aria-valuemax="100"
-    >
-      <TkIcon :icon="rocketIcon" aria-hidden="true" />
-    </div>
+    <slot :show="showToTop" :progress="progress" :icon="rocketIcon" :scrollToTop="scrollToTop">
+      <div
+        v-show="showToTop"
+        :title="t('tk.rightBottomButton.backTopTitle')"
+        :class="[ns.e('button'), 'back-top']"
+        @click="scrollToTop"
+        :style="{ [ns.cssVarName('progress')]: progress }"
+        role="button"
+        :aria-label="t('tk.rightBottomButton.backTopTitle')"
+        :aria-valuenow="progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <template v-if="backTopConfig.content === 'progress'">{{ progress }}</template>
+        <TkIcon v-else-if="backTopConfig.content === 'icon'" :icon="rocketIcon" aria-hidden="true" />
+      </div>
+    </slot>
   </Transition>
 </template>
