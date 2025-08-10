@@ -11,9 +11,7 @@
 
 ### issue
 
-- [articleAnalyze的teleport配置不生效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
 - [不蒜子经常502，能否增加其他统计](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/91)
-- [移动端导航栏字体颜色bug](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/92)
 
 ### 已完成
 
@@ -27,6 +25,7 @@
 - 目录页如果目录下的 `Markdown` 文件为空，则不添加到目录页
 - 当 `frontmatter.permalink` 和文件名一样，点击跳转报错 `RangeError: Maximum call stack size exceeded` 修复
 - [关于命名约定](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/86)
+- [articleAnalyze 的 teleport 配置不生效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
 
 ## 模板
 

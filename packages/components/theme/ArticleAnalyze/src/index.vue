@@ -74,9 +74,7 @@ const teleportInfo = () => {
   targetDom?.[position]?.(baseInfoRefConst);
 };
 
-onMounted(() => {
-  nextTick(teleportInfo);
-});
+watch(router.route, () => nextTick(teleportInfo), { immediate: true, flush: "post" });
 
 const docAnalysisConfig = getTeekConfigRef<DocAnalysis>("docAnalysis", {
   wordCount: true,

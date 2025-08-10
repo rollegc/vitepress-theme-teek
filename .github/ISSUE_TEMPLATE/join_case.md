@@ -2,7 +2,7 @@
 name: 申请加入案例
 about: 申请将你的站点展示在文档站案例页
 title: 申请加入案例
-labels: case
+labels: join case
 ---
 
 <!--
