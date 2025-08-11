@@ -2,7 +2,7 @@
 @use "../../mixins/function" as *;
 
 @include b(category) {
-  @include when(page) {
+  @include is(page) {
     position: sticky;
     top: 72px;
     max-height: calc(100vh - 160px);

@@ -34,7 +34,10 @@ html[layout-mode="fullWidth"] {
 
     /* 覆盖 doc 样式 */
     .VPContent.has-sidebar {
-      padding-left: calc((100vw - getCssVar("full-width-max-width")) / 2 + var(--vp-sidebar-width)) !important;
+      padding-left: calc(
+        (100vw - getCssVar("full-width-max-width")) / 2 +
+          var(--vp-sidebar-width) - var(#{getCssVarName("sidebar-trigger-doc-offset")}, 0px)
+      ) !important;
       padding-right: calc((100vw - getCssVar("full-width-max-width")) / 2) !important;
     }
 
@@ -109,7 +112,10 @@ html[layout-mode="sidebarWidthAdjustableOnly"] {
     }
 
     .VPContent.has-sidebar {
-      padding-left: calc((100vw - getCssVar("doc-max-width")) / 2 + var(--vp-sidebar-width)) !important;
+      padding-left: calc(
+        (100vw - getCssVar("doc-max-width")) / 2 +
+          var(--vp-sidebar-width) - var(#{getCssVarName("sidebar-trigger-doc-offset")}, 0px)
+      ) !important;
       padding-right: calc((100vw - getCssVar("doc-max-width")) / 2) !important;
     }
   }
@@ -164,7 +170,10 @@ html[layout-mode="bothWidthAdjustable"] {
     }
 
     .VPContent.has-sidebar {
-      padding-left: calc((100vw - getCssVar("doc-max-width")) / 2 + var(--vp-sidebar-width)) !important;
+      padding-left: calc(
+        (100vw - getCssVar("doc-max-width")) / 2 +
+          var(--vp-sidebar-width) - var(#{getCssVarName("sidebar-trigger-doc-offset")}, 0px)
+      ) !important;
       padding-right: calc((100vw - getCssVar("doc-max-width")) / 2) !important;
     }
   }

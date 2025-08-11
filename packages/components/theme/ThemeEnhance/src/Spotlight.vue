@@ -18,7 +18,7 @@ const themeEnhanceConfig = getTeekConfigRef<ThemeEnhance>("themeEnhance", {});
 const { t } = useLocale();
 const { frontmatter } = useData();
 
-const isMobile = useMediaQuery(touchMedia);
+const supportTouch = useMediaQuery(touchMedia);
 
 const spotlight = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultValue ?? true);
 const oldSpotlight = ref(spotlight.value);
@@ -72,10 +72,10 @@ const tips = [
     :helper="!themeEnhanceConfig.spotlight?.disableHelp"
     :helper-desc="t('tk.themeEnhance.spotlight.helpDesc')"
     :tips
-    :disabled="isMobile"
+    :disabled="supportTouch"
   >
-    <TkSegmented v-model="spotlight" :options="segmentedOptions" :disabled="isMobile" />
+    <TkSegmented v-model="spotlight" :options="segmentedOptions" :disabled="supportTouch" />
   </BaseTemplate>
 
-  <SpotlightHover v-if="spotlight && !isMobile" :enabled="spotlight && !isMobile" />
+  <SpotlightHover v-if="spotlight && !supportTouch" :enabled="spotlight && !supportTouch" />
 </template>

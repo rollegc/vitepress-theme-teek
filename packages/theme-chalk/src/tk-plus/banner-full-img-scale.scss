@@ -3,7 +3,7 @@
 @use "../mixins/function" as *;
 
 @include b(banner) {
-  @include when(full-img) {
+  @include is(full-img) {
     overflow: hidden;
   }
 

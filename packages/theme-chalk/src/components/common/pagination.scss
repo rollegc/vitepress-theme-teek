@@ -105,10 +105,10 @@
   }
 
   & > * {
-    @include when(first) {
+    @include is(first) {
       margin-left: 0 !important;
     }
-    @include when(last) {
+    @include is(last) {
       margin-right: 0 !important;
     }
   }
@@ -188,7 +188,7 @@
     justify-content: flex-end;
   }
 
-  @include when(background) {
+  @include is(background) {
     .btn-prev,
     .btn-next,
     .#{$namespace}-pager li {

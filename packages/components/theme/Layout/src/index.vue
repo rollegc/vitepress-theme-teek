@@ -166,7 +166,13 @@ const usedSlots = [
       </TkRightBottomButton>
     </template>
 
-    <Layout :class="[ns.b(), { [ns.m('hide-vp-home')]: !teekConfig.vpHome }]">
+    <Layout
+      :class="[
+        ns.b(),
+        { [ns.m('hide-vp-home')]: !teekConfig.vpHome },
+        ns.has('sidebar-trigger', teekConfig.sidebarTrigger),
+      ]"
+    >
       <template #home-hero-before>
         <slot name="home-hero-before" />
         <slot name="teek-home-before" />

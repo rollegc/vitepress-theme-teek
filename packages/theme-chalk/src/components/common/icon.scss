@@ -30,7 +30,7 @@
     color: var(--icon-color, inherit);
   }
 
-  @include when(hover) {
+  @include is(hover) {
     &:hover {
       svg,
       i {

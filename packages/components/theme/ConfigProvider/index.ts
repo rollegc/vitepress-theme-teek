@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
 import { computed, defineComponent, h, inject, provide, unref } from "vue";
 import { useData } from "vitepress";
-import { useAnchorScroll, useViewTransition } from "@teek/composables";
+import { useAnchorScroll, useMediaQuery, useViewTransition } from "@teek/composables";
 import { emptyPost } from "@teek/config/post/helper";
 import { isFunction, isObject } from "@teek/helper";
 
@@ -210,4 +210,13 @@ export const useTagColor = () => {
     { border: "#a5f3fc", bg: "#ecfeff", text: "#0891b2" },
     { border: "#c7d2fe", bg: "#eef2ff", text: "#4f46e5" },
   ]);
+};
+
+/**
+ * 封装常用响应式变量
+ */
+export const useCommon = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  return { isMobile };
 };

@@ -1,12 +1,14 @@
 <script setup lang="ts" name="SidebarTrigger">
-import { ref } from "vue";
-import { useNamespace } from "@teek/composables";
+import { nextTick, onMounted, ref } from "vue";
+import { useMediaQuery, useNamespace } from "@teek/composables";
 import { autoWidthIcon } from "@teek/static";
 import { TkIcon } from "@teek/components/common/Icon";
 
 const ns = useNamespace("sidebar-trigger");
 
 const active = ref(false);
+
+const isLt960 = useMediaQuery("(max-width: 960px)");
 
 const toggleSideBar = () => {
   const layoutDom = document.querySelector(`.${ns.join("layout")}`);
@@ -20,10 +22,17 @@ const toggleSideBar = () => {
     }, 300);
   }
 };
+
+onMounted(async () => {
+  await nextTick();
+  const docDom = document.querySelector(".VPContent.has-sidebar");
+  // 不直接在 css 添加动画，而是在组件初始化时添加 class，从而添加动画，如果直接在 css 添加动画，导致从首页进入文章页触发动画，有割裂感
+  docDom?.classList.add("sidebar-trigger-transition");
+});
 </script>
 
 <template>
-  <slot :active :icon="autoWidthIcon" :toggleSideBar>
+  <slot v-if="!isLt960" :active :icon="autoWidthIcon" :toggleSideBar>
     <div :class="[ns.b(), ns.is('active', active)]" @click="toggleSideBar">
       <div :class="[ns.join('right-bottom-button__button')]">
         <TkIcon :icon="autoWidthIcon" />

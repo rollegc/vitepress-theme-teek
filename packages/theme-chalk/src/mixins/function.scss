@@ -26,7 +26,7 @@
 @function containWhenFlag($selector) {
   $selector: selectorToString($selector);
 
-  @if string.index($selector, "." + config.$state-prefix) {
+  @if string.index($selector, "." + config.$is-state-prefix) {
     @return true;
   } @else {
     @return false;

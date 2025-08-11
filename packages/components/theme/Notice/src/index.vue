@@ -2,10 +2,10 @@
 import type { Notice } from "@teek/config";
 import { computed, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
-import { useNamespace, useLocale, useMediaQuery, useVpRouter } from "@teek/composables";
+import { useNamespace, useLocale, useVpRouter } from "@teek/composables";
 import { isClient, isString } from "@teek/helper";
 import { noticeIcon, closeIcon } from "@teek/static";
-import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { useCommon, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkIcon } from "@teek/components/common/Icon";
 
 defineOptions({ name: "Notice" });
@@ -56,12 +56,12 @@ const noticeTitle = computed(() => {
   return title(localeIndex.value);
 });
 
-const isMobile = useMediaQuery("(max-width: 768px)");
+const { isMobile } = useCommon();
 watch(
   () => noticeConfig.value.mobileMinify,
   val => {
     // 是否在移动端隐藏公告图标
-    if (isMobile) destroyNoticeIcon.value = val;
+    if (isMobile.value) destroyNoticeIcon.value = val;
   },
   { immediate: true }
 );

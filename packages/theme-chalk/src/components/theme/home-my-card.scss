@@ -3,7 +3,7 @@
 
 @include b(my) {
   position: relative;
-  @include when(circle-bg) {
+  @include is(circle-bg) {
     background-color: transparent;
   }
 
@@ -51,7 +51,7 @@
     height: 100%;
     z-index: -1;
 
-    @include when(mask) {
+    @include is(mask) {
       &::after {
         content: "";
         position: absolute;

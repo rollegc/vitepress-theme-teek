@@ -72,10 +72,34 @@ $E: null;
   }
 }
 
-@mixin when($state) {
+@mixin is($state, $match: true) {
+  $selector: $is-state-prefix + $state;
+
   @at-root {
-    &.#{$state-prefix + $state} {
-      @content;
+    @if $match {
+      &.#{$selector} {
+        @content;
+      }
+    } @else {
+      &:not(.#{$selector}) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin has($state, $match: true) {
+  $selector: $has-state-prefix + $state;
+
+  @at-root {
+    @if $match {
+      &.#{$selector} {
+        @content;
+      }
+    } @else {
+      &:not(.#{$selector}) {
+        @content;
+      }
     }
   }
 }

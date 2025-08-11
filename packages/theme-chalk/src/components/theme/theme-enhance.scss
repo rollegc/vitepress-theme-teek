@@ -85,7 +85,7 @@
     user-select: none;
     gap: 4px;
 
-    @include when(disabled) {
+    @include is(disabled) {
       opacity: 0.5;
     }
   }
@@ -168,7 +168,7 @@
       color: #dcdfe6;
     }
 
-    @include when(checked) {
+    @include is(checked) {
       border-color: var(--vp-c-brand-1);
       background-color: var(--vp-c-brand-1);
 
