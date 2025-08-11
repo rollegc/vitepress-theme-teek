@@ -1,5 +1,11 @@
 # vitepress-plugin-sidebar-resolve
 
+## 1.1.0
+
+### Minor Changes
+
+- 新增新配置项，支持更多定制化功能
+
 ## 1.0.10
 
 ### Patch Changes
