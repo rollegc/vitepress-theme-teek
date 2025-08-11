@@ -144,6 +144,9 @@ export const teekBlogFullConfig: TeekConfig = {
       categoryId: "DIC_kwDONpVfBM4Cm3v9",
     },
   },
+  codeBlock: {
+    overlay: true,
+  },
 };
 
 // 博客全图配置

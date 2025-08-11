@@ -22,8 +22,8 @@ export interface CatalogueOption {
    *
    * @default false
    * @remark 侧边栏 text 获取顺序
-   * titleFormMd 为 true：md 文件 formatter.title > [md 文件第一个一级标题] > md 文件名
-   * titleFormMd 为 false：md 文件 formatter.title > md 文件名
+   * titleFormMd 为 true：md 文件 frontmatter.title > [md 文件第一个一级标题] > md 文件名
+   * titleFormMd 为 false：md 文件 frontmatter.title > md 文件名
    */
   titleFormMd?: boolean;
   /**

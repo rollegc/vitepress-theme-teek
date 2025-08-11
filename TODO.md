@@ -1,16 +1,15 @@
 # TODO
 
-- sidebar 插件不扫描 index.md 修复
-- 推送 Github 自动推送 Gitee
+- 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
+- 添加常用 icon 库
 
 ## 1.4.0 版本
 
 ### 代办
 
-- 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
-- 添加常用 icon 库
-
 ### issue
+
+- 文章页分析区域支持自定义文字（插槽）
 
 ### 已完成
 

@@ -135,7 +135,7 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
       // 不扫描目录页和 inCatalogue 为 false 的文档
       if (catalogue || !inCatalogue) return [];
 
-      // title 获取顺序：md 文件 formatter.title > md 文件一级标题 > md 文件名
+      // title 获取顺序：md 文件 frontmatter.title > md 文件一级标题 > md 文件名
       const mdTitle = titleFormMd ? getTitleFromMarkdown(mdContent) : "";
       const finalTitle = frontmatterTitle || mdTitle || title;
 

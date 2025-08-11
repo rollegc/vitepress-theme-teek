@@ -66,8 +66,8 @@ export interface SidebarOption {
    *
    * @default false
    * @remark 侧边栏 text 获取顺序
-   * titleFormMd 为 true：md 文件 formatter.title > [md 文件第一个一级标题] > md 文件名
-   * titleFormMd 为 false：md 文件 formatter.title > md 文件名
+   * titleFormMd 为 true：md 文件 frontmatter.title > [md 文件第一个一级标题] > md 文件名
+   * titleFormMd 为 false：md 文件 frontmatter.title > md 文件名
    */
   titleFormMd?: boolean;
   /**
@@ -126,7 +126,7 @@ export interface SidebarOption {
    */
   defaultSortNum?: number;
   /**
-   * 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSort
+   * 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSortNum
    *
    * @default false
    */
