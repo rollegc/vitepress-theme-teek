@@ -116,6 +116,23 @@ export const teekBlogParkConfig: TeekConfig = {
     ],
     descStyle: "switch",
   },
+  footerGroup: [
+    {
+      title: "外部链接",
+      links: [
+        { name: "示例 1", link: "https://vp.teek.top" },
+        { name: "示例 2", link: "https://vp.teek.top" },
+        { name: "示例 3", link: "https://vp.teek.top" },
+      ],
+    },
+    {
+      title: "内部链接",
+      links: [
+        { name: "快速开始", link: "/guide/quickstart" },
+        { name: "配置简介", link: "/reference/config" },
+      ],
+    },
+  ],
 };
 
 // 博客大图配置

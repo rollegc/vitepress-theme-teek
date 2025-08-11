@@ -1,10 +1,11 @@
 <script setup lang="ts" name="SidebarTrigger">
 import { nextTick, onMounted, ref } from "vue";
-import { useMediaQuery, useNamespace } from "@teek/composables";
+import { useLocale, useMediaQuery, useNamespace } from "@teek/composables";
 import { autoWidthIcon } from "@teek/static";
 import { TkIcon } from "@teek/components/common/Icon";
 
 const ns = useNamespace("sidebar-trigger");
+const { t } = useLocale();
 
 const active = ref(false);
 
@@ -33,7 +34,13 @@ onMounted(async () => {
 
 <template>
   <slot v-if="!isLt960" :active :icon="autoWidthIcon" :toggleSideBar>
-    <div :class="[ns.b(), ns.is('active', active)]" @click="toggleSideBar">
+    <div
+      :class="[ns.b(), ns.is('active', active)]"
+      @click="toggleSideBar"
+      :title="t('tk.sidebarTrigger.label')"
+      role="button"
+      :aria-label="t('tk.sidebarTrigger.label')"
+    >
       <div :class="[ns.join('right-bottom-button__button')]">
         <TkIcon :icon="autoWidthIcon" />
       </div>

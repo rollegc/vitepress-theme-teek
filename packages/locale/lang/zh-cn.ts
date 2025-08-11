@@ -274,5 +274,8 @@ export default {
       linkIllegal: "链接安全性校验中，请稍后 ...",
       confirmButtonText: "继续访问",
     },
+    sidebarTrigger: {
+      label: "侧边栏展开/折叠",
+    },
   },
 };

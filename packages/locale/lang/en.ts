@@ -279,5 +279,8 @@ export default {
       linkIllegal: "Link security verification in progress, please wait ...",
       confirmButtonText: "Continue to visit",
     },
+    sidebarTrigger: {
+      label: "Sidebar expand/collapse",
+    },
   },
 };

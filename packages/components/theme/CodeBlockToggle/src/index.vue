@@ -88,7 +88,7 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
   // 获取代码块原来的高度
   const modeHeight = getElementHeight(codeDom);
   // 初始化代码块高度，确保第一次折叠时就有动画
-  codeDom.style.height = `${modeHeight}px`;
+  codeDom.style.height = addUnit(modeHeight);
   // 获取代码块的元素
   const preDom = codeDom.querySelector<HTMLElement>("pre");
   const lineNumbersWrapperDom = codeDom.querySelector<HTMLElement>(".line-numbers-wrapper");
@@ -96,7 +96,7 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
 
   // 折叠/展开代码块的状态
   const codeBlockState = {
-    expand: { height: `${modeHeight}px`, display: "block", overlayDisplay: "none", speed: 80 },
+    expand: { height: addUnit(modeHeight), display: "block", overlayDisplay: "none", speed: 80 },
     fold: {
       height: codeBlockConfig.value.overlay
         ? (addUnit(codeBlockConfig.value.overlayHeight) ?? "400px")
@@ -142,8 +142,10 @@ const addClickEvent = (arrowDom: HTMLElement, codeDom: HTMLElement) => {
 
   const collapseHeight = codeBlockConfig.value.collapseHeight;
 
-  if (isBoolean(collapseHeight)) collapseHeight && toggle();
-  else if (collapseHeight && modeHeight > collapseHeight) toggle();
+  if (isBoolean(collapseHeight)) {
+    if (collapseHeight) toggle();
+    else if (codeBlockOverlayDom) codeBlockOverlayDom.style.display = "none"; // 关闭默认折叠功能，则不显示遮罩层
+  } else if (collapseHeight && modeHeight > collapseHeight) toggle();
   else if (codeBlockOverlayDom) codeBlockOverlayDom.style.display = "none"; // 如果不折叠，则默认不显示遮罩层
 };
 

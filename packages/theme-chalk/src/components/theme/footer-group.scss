@@ -34,7 +34,8 @@
       transition:
         color getCssVar("transition-duration") cubic-bezier(0.25, 0.1, 0.25, 1),
         background-color getCssVar("transition-duration") cubic-bezier(0.25, 0.1, 0.25, 1);
-      padding: 8px 8px 8px 0;
+      padding: 8px 10px;
+      margin-left: -10px;
       border-radius: 12px;
 
       &:hover {
