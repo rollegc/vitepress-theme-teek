@@ -58,23 +58,24 @@ sidebar: false
 
 ### Parameters
 
-| name                | description                                                                                                                             | type                                                                          | default                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------ |
-| ignoreList          | 忽略的文件/文件夹列表，支持正则表达式                                                                                                   | `string[]`                                                                    | `[]`                           |
-| path                | 指定扫描的根目录                                                                                                                        | `string`                                                                      | `vitepress` 的 `srcDir` 配置项 |
-| ignoreIndexMd       | 是否忽略每个目录下的 `index.md` 文件                                                                                                    | `boolean`                                                                     | `false`                        |
-| scannerRootMd       | 是否扫描根目录下的 Markdown 文件作为 sideBar，如果为 true，则扫描根目录下的 Markdown 文件作为 sideBar，且忽略根目录下的 index.md        | `boolean`                                                                     | `true`                         |
-| initItems           | 是否初始化第一层 items                                                                                                                  | `boolean`                                                                     | `true`                         |
-| initItemsText       | 是否初始化第一层 items 的 text 为当前目录名。当 `initItems` 为 true 时生效                                                              | `boolean`                                                                     | `false`                        |
-| collapsed           | 是否折叠侧边栏，函数的 2 个参数为当前文件的相对路径（基于根目录）和侧边栏的 `text`                                                      | `boolean` \| `((relativePath: string, text: string \| undefined) => boolean)` | `true`                         |
-| fileIndexPrefix     | 文件名前缀必须以「数字.」开头                                                                                                           | `boolean`                                                                     | `false`                        |
-| titleFormMd         | 是否从 Markdown 文件获取第一个一级标题作为侧边栏 text                                                                                   | `boolean`                                                                     | `false`                        |
-| localeRootDir       | 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh | `string`                                                                      | 文档根目录                     |
-| restart             | Markdown 文件创建或者删除时，是否重启 VitePress 服务                                                                                    | `boolean`                                                                     | `false`                        |
-| ignoreWarn          | 忽略插件在构建侧边栏时生成的警告信息                                                                                                    | `boolean`                                                                     | `false`                        |
-| sort                | 是否开启侧边栏排序功能，可以在 `frontmatter.sidebarSort` 对本文件进行排序，越低的越靠前                                                 | `boolean`                                                                     | `true`                         |
-| defaultSortNum      | 没有指定 `frontmatter.sideBarSort` 时的默认值，用于侧边栏排序                                                                           | `number`                                                                      | 9999                           |
-| sortNumFromFileName | 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSortNum          | `boolean`                                                                     | `false`                        |
+| name                | description                                                                                                                               | type                                                                          | default                        |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------ |
+| ignoreList          | 忽略的文件/文件夹列表，支持正则表达式                                                                                                     | `string[]`                                                                    | `[]`                           |
+| path                | 指定扫描的根目录                                                                                                                          | `string`                                                                      | `vitepress` 的 `srcDir` 配置项 |
+| ignoreIndexMd       | 是否忽略每个目录下的 `index.md` 文件                                                                                                      | `boolean`                                                                     | `false`                        |
+| scannerRootMd       | 是否扫描根目录下的 Markdown 文件作为 sideBar，如果为 true，则扫描根目录下的 Markdown 文件作为 sideBar，且忽略根目录下的 index.md          | `boolean`                                                                     | `true`                         |
+| initItems           | 是否初始化第一层 items                                                                                                                    | `boolean`                                                                     | `true`                         |
+| initItemsText       | 是否初始化第一层 items 的 text 为当前目录名。当 `initItems` 为 true 时生效                                                                | `boolean`                                                                     | `false`                        |
+| collapsed           | 是否折叠侧边栏，函数的 2 个参数为当前文件的相对路径（基于根目录）和侧边栏的 `text`                                                        | `boolean` \| `((relativePath: string, text: string \| undefined) => boolean)` | `true`                         |
+| fileIndexPrefix     | 文件名前缀必须以「数字.」开头                                                                                                             | `boolean`                                                                     | `false`                        |
+| titleFormMd         | 是否从 Markdown 文件获取第一个一级标题作为侧边栏 text                                                                                     | `boolean`                                                                     | `false`                        |
+| localeRootDir       | 当 VitePress 设置 locales 国际化后，如果将 root 语言（默认语言）的所有文件放到一个单独的目录下，如 zh，则需要将 `localeRootDir` 设为 zh   | `string`                                                                      | 文档根目录                     |
+| restart             | Markdown 文件创建或者删除时，是否重启 VitePress 服务                                                                                      | `boolean`                                                                     | `false`                        |
+| ignoreWarn          | 忽略插件在构建侧边栏时生成的警告信息                                                                                                      | `boolean`                                                                     | `false`                        |
+| sort                | 是否开启侧边栏排序功能，可以在 `frontmatter.sidebarSort` 对本文件进行排序，越低的越靠前                                                   | `boolean`                                                                     | `true`                         |
+| defaultSortNum      | 没有指定 `frontmatter.sideBarSort` 时的默认值，用于侧边栏排序                                                                             | `number`                                                                      | 9999                           |
+| sortNumFromFileName | 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSortNum            | `boolean`                                                                     | `false`                        |
+| indexSeparator      | 自定义序号后的分隔符（默认仍然支持 `.` 作为分隔符，该配置是支持额外分隔符，如自定义分隔符为 `_`，则文件名 `01.a.md` 和 `01_a.md` 都生效） | `string`                                                                      |                                |
 
 > 额外说明
 
@@ -210,6 +211,10 @@ export interface SidebarOption {
    * @default false
    */
   sortNumFromFileName?: boolean;
+  /**
+   * 自定义序号后的分隔符（默认仍然支持 . 作为分隔符，该配置是支持额外分隔符，如自定义分隔符为 _，则文件名 01.a.md 和 01_a.md 都生效）
+   */
+  indexSeparator?: string;
 }
 ```
 

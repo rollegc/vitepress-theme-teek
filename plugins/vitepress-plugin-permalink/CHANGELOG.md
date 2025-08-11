@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.1.3
+
+### Patch Changes
+
+- 新增新配置项，支持更多定制化功能
+
 ## 1.1.2
 
 ### Patch Changes

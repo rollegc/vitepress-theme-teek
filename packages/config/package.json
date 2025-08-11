@@ -7,12 +7,12 @@
     "gray-matter": "catalog:",
     "vitepress": "catalog:",
     "vitepress-plugin-auto-frontmatter": "catalog:",
-    "vitepress-plugin-catalogue": "workspace:*",
+    "vitepress-plugin-catalogue": "catalog:",
     "vitepress-plugin-doc-analysis": "catalog:",
     "vitepress-plugin-file-content-loader": "catalog:",
     "vitepress-plugin-md-h1": "catalog:",
-    "vitepress-plugin-permalink": "workspace:*",
-    "vitepress-plugin-sidebar-resolve": "workspace:*"
+    "vitepress-plugin-permalink": "catalog:",
+    "vitepress-plugin-sidebar-resolve": "catalog:"
   },
   "devDependencies": {
     "@types/markdown-it": "catalog:"
