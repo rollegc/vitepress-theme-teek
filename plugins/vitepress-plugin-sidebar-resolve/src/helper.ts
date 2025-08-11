@@ -1,8 +1,8 @@
+import type { DefaultTheme } from "vitepress";
+import type { SidebarOption } from "./types";
 import { readdirSync, statSync, readFileSync, existsSync } from "node:fs";
 import { join, basename, resolve } from "node:path";
 import matter from "gray-matter";
-import type { DefaultTheme } from "vitepress";
-import type { SidebarOption } from "./types";
 import { getTitleFromMarkdown, isIllegalIndex, isSome } from "./util";
 import logger from "./log";
 
@@ -255,9 +255,9 @@ const getInfoFromMarkdown = (root: string, dirOrFilename: string) => {
 
     const content = readFileSync(filePath, "utf-8");
     const { data: { title, sidebarSort } = {}, content: mdContent } = matter(content, {});
-    const t = getTitleFromMarkdown(mdContent);
+    const t = title || getTitleFromMarkdown(mdContent);
 
-    if (!state.title) state.title = title || t;
+    if (!state.title) state.title = t;
     if (!state.sort) state.sort = sidebarSort;
   }
 

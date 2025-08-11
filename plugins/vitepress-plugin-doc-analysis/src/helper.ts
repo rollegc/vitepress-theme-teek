@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, relative, resolve } from "node:path";
-import { FilePathInfo, DocAnalysisOption } from "./types";
 import matter from "gray-matter";
+import { FilePathInfo, DocAnalysisOption } from "./types";
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];

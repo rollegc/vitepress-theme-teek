@@ -94,7 +94,6 @@ export interface SidebarOption {
   /**
    * 创建 sideBarItem 之前的回调。每个 sideBarItem 指的是每个目录下的文件数组
    *
-   *
    * @param data 将要解析的所有文件名
    * @default undefined
    * @remark 可以过滤掉不需要解析为 sideBarItem 的文件

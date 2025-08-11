@@ -1,7 +1,7 @@
+import type { PermalinkOption } from "./types";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, extname, resolve } from "node:path";
 import matter from "gray-matter";
-import type { PermalinkOption } from "./types";
 
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];

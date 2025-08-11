@@ -27,6 +27,8 @@
 - [articleAnalyze 的 teleport 配置不生效](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90)
 - [不蒜子经常502，能否增加其他统计](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/91)
 
+- sidebar、permalink、catalogue 发版
+
 ## 模板
 
 创建空的 Markdown 文档时，可以使用如下模板填充，提升友好度
