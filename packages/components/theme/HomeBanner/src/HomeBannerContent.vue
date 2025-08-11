@@ -60,7 +60,7 @@ const { data: text, start: startAutoSwitch } = useSwitchData(descArray, {
     data.value = "";
     setTimeout(() => {
       data.value = newValue;
-    }, 100);
+    }, 20);
   },
 });
 
@@ -87,9 +87,10 @@ onMounted(() => {
         <span>{{ descArray[0] }}</span>
       </template>
       <template v-else-if="isSwitchDescStyle">
-        <span v-show="!!text" @click="startAutoSwitch" class="switch" :aria-label="t('tk.homeBanner.descSwitchLabel')">
+        <span v-show="text" @click="startAutoSwitch" class="switch" :aria-label="t('tk.homeBanner.descSwitchLabel')">
           {{ text }}
         </span>
+        <span v-show="!text">&nbsp;</span>
       </template>
       <template v-else-if="isTypesDescStyle && descArray.length">
         <span :aria-label="t('tk.homeBanner.descTypedLabel')">{{ typesText }}</span>
