@@ -20,7 +20,7 @@ const spotlightStyle = useStorage(
   themeEnhanceConfig.value.spotlight?.defaultStyle || SpotlightStyle.Aside
 );
 const spotlightToggledOn = useStorage(spotlightStorageKey, themeEnhanceConfig.value.spotlight?.defaultValue ?? true);
-const isMobile = useMediaQuery(touchMedia);
+const supportTouch = useMediaQuery(touchMedia);
 
 const content = computed(() => [
   {
@@ -66,9 +66,9 @@ const tips = computed(() =>
       :helper="!themeEnhanceConfig.spotlight?.disableHelp"
       :helper-desc="t('tk.themeEnhance.spotlightStyles.helpDesc')"
       :tips
-      :disabled="isMobile"
+      :disabled="supportTouch"
     >
-      <TkSegmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="isMobile" />
+      <TkSegmented v-model="spotlightStyle" :options="segmentedOptions" :disabled="supportTouch" />
     </BaseTemplate>
   </Transition>
 </template>

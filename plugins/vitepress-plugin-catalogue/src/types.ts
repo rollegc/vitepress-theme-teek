@@ -22,10 +22,20 @@ export interface CatalogueOption {
    *
    * @default false
    * @remark 侧边栏 text 获取顺序
-   * titleFormMd 为 true：md 文件 formatter.title > [md 文件第一个一级标题] > md 文件名
-   * titleFormMd 为 false：md 文件 formatter.title > md 文件名
+   * titleFormMd 为 true：md 文件 frontmatter.title > [md 文件第一个一级标题] > md 文件名
+   * titleFormMd 为 false：md 文件 frontmatter.title > md 文件名
    */
   titleFormMd?: boolean;
+  /**
+   * 自定义序号后的分隔符（默认仍然支持 . 作为分隔符，该配置是支持额外分隔符，如自定义分隔符为 _，则文件名 01.a.md 和 01_a.md 都生效）
+   */
+  indexSeparator?: string;
+  /**
+   * 解析完每个 catalogueItem 后的回调。每个 catalogueItem 指的是每个目录下的文件数组
+   *
+   * @param data 当前 catalogueItem 列表
+   */
+  catalogueItemResolved?: (data: CatalogueItem[]) => CatalogueItem[];
 }
 
 export interface Catalogue {

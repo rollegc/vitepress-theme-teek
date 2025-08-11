@@ -14,7 +14,7 @@
 侧边栏的 `text` 获取顺序：
 
 - 如果为目录：按顺序从该目录下的 `index.md, index.MD, 目录名.md` 文件获取一级标题，如果获取不到，则以目录名为 `text`
-- 如果为文件：`formatter.title` > Markdown 文件一级标题（`titleFormMd` 为 true 生效） > Markdown 文件名
+- 如果为文件：`frontmatter.title` > Markdown 文件一级标题（`titleFormMd` 为 true 生效） > Markdown 文件名
 
 ## 🕯️ Install
 
@@ -74,7 +74,7 @@ sidebar: false
 | ignoreWarn          | 忽略插件在构建侧边栏时生成的警告信息                                                                                                    | `boolean`                                                                     | `false`                        |
 | sort                | 是否开启侧边栏排序功能，可以在 `frontmatter.sidebarSort` 对本文件进行排序，越低的越靠前                                                 | `boolean`                                                                     | `true`                         |
 | defaultSortNum      | 没有指定 `frontmatter.sideBarSort` 时的默认值，用于侧边栏排序                                                                           | `number`                                                                      | 9999                           |
-| sortNumFromFileName | 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSort             | `boolean`                                                                     | `false`                        |
+| sortNumFromFileName | 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSortNum          | `boolean`                                                                     | `false`                        |
 
 > 额外说明
 
@@ -144,8 +144,8 @@ export interface SidebarOption {
    *
    * @default false
    * @remark 侧边栏 text 获取顺序
-   * titleFormMd 为 true：md 文件 formatter.title > [md 文件第一个一级标题] > md 文件名
-   * titleFormMd 为 false：md 文件 formatter.title > md 文件名
+   * titleFormMd 为 true：md 文件 frontmatter.title > [md 文件第一个一级标题] > md 文件名
+   * titleFormMd 为 false：md 文件 frontmatter.title > md 文件名
    */
   titleFormMd?: boolean;
   /**
@@ -205,7 +205,7 @@ export interface SidebarOption {
    */
   defaultSortNum?: number;
   /**
-   * 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSort
+   * 是否用文件名的前缀序号作为其侧边栏 Item 的排序序号。如果为 true，当文件名存在序号前缀，则使用序号前缀，否则使用 defaultSortNum
    *
    * @default false
    */

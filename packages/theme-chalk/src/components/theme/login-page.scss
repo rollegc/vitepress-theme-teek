@@ -125,11 +125,11 @@
       margin-right: 8px;
     }
 
-    @include when(focus) {
+    @include is(focus) {
       border-color: getCssVar("theme-color");
     }
 
-    @include when(error) {
+    @include is(error) {
       border-color: var(--vp-c-danger-1);
       input::placeholder,
       .tk-icon {

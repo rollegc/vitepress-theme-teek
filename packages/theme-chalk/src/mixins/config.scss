@@ -4,4 +4,5 @@ $namespace: "tk" !default;
 $common-separator: "-" !default;
 $element-separator: "__" !default;
 $modifier-separator: "--" !default;
-$state-prefix: "is-" !default;
+$is-state-prefix: "is-" !default;
+$has-state-prefix: "has-" !default;

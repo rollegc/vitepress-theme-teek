@@ -5,7 +5,7 @@
 @use "./home-post-item-card";
 
 @include b(post-list) {
-  @include when(card) {
+  @include is(card) {
     > ul {
       display: grid;
       row-gap: 1.1rem;

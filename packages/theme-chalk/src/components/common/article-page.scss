@@ -13,7 +13,7 @@
     padding: 0 10px;
   }
 
-  @include when(aside) {
+  @include is(aside) {
     display: flex;
 
     @media (min-width: 1280px) {
@@ -124,12 +124,12 @@
 }
 
 @include b(aside-outline-item) {
-  @include when(root) {
+  @include is(root) {
     position: relative;
     z-index: 1;
   }
 
-  @include when(nested) {
+  @include is(nested) {
     padding-right: 16px;
     padding-left: 16px;
   }

@@ -35,12 +35,12 @@
     border-radius: 6px;
     box-shadow: var(--vp-shadow-2);
 
-    @include when(top) {
+    @include is(top) {
       top: 80px;
       right: 20px;
     }
 
-    @include when(center) {
+    @include is(center) {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);

@@ -31,14 +31,14 @@
     color 0.25s,
     box-shadow 0.25s;
 
-  @include when(active) {
+  @include is(active) {
     font-weight: bold;
     color: getCssVar("segmented-item-active-text");
     background-color: getCssVar("segmented-item-active-bg");
     box-shadow: 0 2px 4px 0px getCssVar("segmented-item-shadow-color");
   }
 
-  @include when(disabled) {
+  @include is(disabled) {
     opacity: 0.5;
     cursor: not-allowed;
     color: getCssVar("segmented-item-active-text");

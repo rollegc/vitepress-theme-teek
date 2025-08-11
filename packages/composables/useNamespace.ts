@@ -39,6 +39,10 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
     return bool ? `is-${name}` : "";
   };
 
+  const has = (name: string, bool = true) => {
+    return bool ? `has-${name}` : "";
+  };
+
   /**
    * 创建 BEM 元素
    */
@@ -83,6 +87,7 @@ export const useNamespace = (block: string = "", namespaceOverrides?: string) =>
     em,
     bem,
     is,
+    has,
     createBem,
     join,
     cssVar,
