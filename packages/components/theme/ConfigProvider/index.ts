@@ -63,7 +63,7 @@ export const useTeekConfig = () => {
     }
 
     // 非对象格式，则根据优先级返回
-    return valueFromInject || valueFromFrontmatter || valueFromTheme || dv;
+    return valueFromInject ?? valueFromFrontmatter ?? valueFromTheme ?? dv;
   };
 
   /**
