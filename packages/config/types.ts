@@ -32,6 +32,7 @@ import type {
   Markdown,
   Private,
   RiskLink,
+  FadeTransition,
 } from "./interface";
 
 export type * from "./interface";
@@ -81,7 +82,6 @@ export interface TeekConfig {
    * @default true
    */
   viewTransition?: boolean;
-
   /**
    * 首页卡片栏列表位置
    *
@@ -146,6 +146,12 @@ export interface TeekConfig {
    * @default false
    */
   sidebarTrigger?: boolean;
+  /**
+   * 是否全局启用 fade 过渡动画
+   *
+   * @default true
+   */
+  fadeTransition?: boolean | FadeTransition;
   /**
    *  body 背景图片配置
    */

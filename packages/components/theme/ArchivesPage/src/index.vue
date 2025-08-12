@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ArchivesPage">
 import { withBase, useData } from "vitepress";
-import { computed } from "vue";
-import { useNamespace, useLocale } from "@teek/composables";
-import { usePosts } from "@teek/components/theme/ConfigProvider";
+import { computed, onMounted, useTemplateRef } from "vue";
+import { useNamespace, useLocale, useWindowTransition } from "@teek/composables";
+import { useFadeTransition, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
@@ -25,6 +25,15 @@ const defaultLabel = computed(() => {
     count: frontmatterConst.count ?? t("tk.archives.count"),
     notFound: frontmatterConst.notFound ?? t("tk.archives.notFound"),
   };
+});
+
+// 屏幕加载元素时，开启过渡动画
+const fadeTransition = useFadeTransition(config => config.archives);
+const timelineItemListInstance = useTemplateRef("timelineItemListInstance");
+const { start } = useWindowTransition(timelineItemListInstance, false);
+
+onMounted(() => {
+  fadeTransition.value && start();
 });
 </script>
 
@@ -64,7 +73,7 @@ const defaultLabel = computed(() => {
             </div>
 
             <ul>
-              <li v-for="item in p" :key="item.url">
+              <li ref="timelineItemListInstance" v-for="item in p" :key="item.url">
                 <a :href="item.url && withBase(item.url)" :aria-label="`${item.title}`">
                   <span class="date">{{ item.date?.slice(5, 10) }}</span>
                   <TkArticleTitle :post="item" :title-tag-props="{ position: 'right', size: 'small' }" />

@@ -42,7 +42,7 @@ onMounted(async () => {
       :aria-label="t('tk.sidebarTrigger.label')"
     >
       <div :class="[ns.join('right-bottom-button__button')]">
-        <TkIcon :icon="autoWidthIcon" />
+        <TkIcon :icon="autoWidthIcon" aria-hidden="true" />
       </div>
     </div>
   </slot>

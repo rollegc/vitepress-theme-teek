@@ -55,7 +55,7 @@ const updatePosts = computed(() => {
         </span>
 
         <div :class="ns.e('content')">
-          <a v-if="item.url" :href="withBase(item.url)" class="flx-1 hover-color" :aria-label="item.title">
+          <a v-if="item.url" :href="withBase(item.url)" class="flx-1 hover-color sle" :aria-label="item.title">
             <TkArticleTitle :post="item" :title-tag-props="{ position: 'right', size: 'small' }" />
           </a>
           <span v-if="item.date" :class="ns.em('content', 'date')">{{ item.date }}</span>
