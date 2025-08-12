@@ -1,7 +1,7 @@
 // From https://github.com/vueuse/vueuse/blob/main/packages/core/onClickOutside/index.ts
 import type { ComponentPublicInstance, MaybeRef, MaybeRefOrGetter, VNode } from "vue";
 import { toValue } from "vue";
-import { isClient, isIOS } from "@teek/helper";
+import { isClient, isIos } from "@teek/helper";
 import { useEventListener } from "./useEventListener";
 
 export type VueInstance = ComponentPublicInstance;
@@ -62,7 +62,7 @@ export const onClickOutside = (
     return controls ? { stop: () => {}, cancel: () => {}, trigger: () => {} } : () => {};
   }
 
-  if (isIOS() && !_iOSWorkaround) {
+  if (isIos() && !_iOSWorkaround) {
     _iOSWorkaround = true;
     const listenerOptions = { passive: true };
     Array.from(window.document.body.children).forEach(el => useEventListener(el, "click", () => {}, listenerOptions));

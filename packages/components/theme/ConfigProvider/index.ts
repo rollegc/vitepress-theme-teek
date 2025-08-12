@@ -1,5 +1,5 @@
 import type { PostData } from "@teek/config/post/types";
-import type { TeekConfig } from "@teek/config";
+import type { FadeTransition, TeekConfig } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
 import { computed, defineComponent, h, inject, provide, unref } from "vue";
 import { useData } from "vitepress";
@@ -210,6 +210,18 @@ export const useTagColor = () => {
     { border: "#a5f3fc", bg: "#ecfeff", text: "#0891b2" },
     { border: "#c7d2fe", bg: "#eef2ff", text: "#4f46e5" },
   ]);
+};
+
+export const useFadeTransition = (condition?: (fadeTransition: FadeTransition) => boolean | undefined) => {
+  const { getTeekConfigRef } = useTeekConfig();
+  const fadeTransitionConfig = getTeekConfigRef<FadeTransition>("fadeTransition", true);
+
+  return computed(() => {
+    const fadeTransition = fadeTransitionConfig.value;
+    if (fadeTransition === undefined) return true;
+
+    return isObject(fadeTransition) ? (condition?.(fadeTransition) ?? true) : fadeTransition !== false;
+  });
 };
 
 /**

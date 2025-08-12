@@ -1,8 +1,8 @@
 <script setup lang="ts" name="HomeCardList">
 import type { TeekConfig } from "@teek/config";
-import { computed } from "vue";
-import { useNamespace } from "@teek/composables";
-import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
+import { computed, onMounted, useTemplateRef } from "vue";
+import { useWindowTransition, useNamespace } from "@teek/composables";
+import { useTeekConfig, usePageState, useFadeTransition } from "@teek/components/theme/ConfigProvider";
 import { TkHomeMyCard } from "@teek/components/theme/HomeMyCard";
 import { TkHomeTopArticleCard } from "@teek/components/theme/HomeTopArticleCard";
 import { TkHomeCategoryCard } from "@teek/components/theme/HomeCategoryCard";
@@ -13,8 +13,8 @@ import { TkHomeDocAnalysisCard } from "@teek/components/theme/HomeDocAnalysisCar
 defineOptions({ name: "HomeCardList" });
 
 const ns = useNamespace("home-card-list");
-const { getTeekConfig } = useTeekConfig();
-const teekConfig = computed(() => getTeekConfig<TeekConfig>(null, {}));
+const { getTeekConfigRef } = useTeekConfig();
+const teekConfig = getTeekConfigRef<TeekConfig>(null, {});
 
 // 获取用户配置 + 默认的卡片排序
 const finalHomeCardSort = computed(() => {
@@ -66,6 +66,15 @@ const componentMap = computed(() => {
     },
   };
 });
+
+// 屏幕加载元素时，开启过渡动画
+const fadeTransition = useFadeTransition(config => config.card);
+const cardListInstance = useTemplateRef("cardListInstance");
+const { start } = useWindowTransition(cardListInstance, false);
+
+onMounted(() => {
+  fadeTransition.value && start();
+});
 </script>
 
 <template>
@@ -74,11 +83,23 @@ const componentMap = computed(() => {
 
     <slot name="teek-home-card">
       <template v-for="item in finalHomeCardSort" :key="item">
-        <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
-          <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
-            <slot :name="name" />
-          </template>
-        </component>
+        <!-- 使用淡入动画 -->
+        <div v-if="fadeTransition" ref="cardListInstance">
+          <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
+            <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
+              <slot :name="name" />
+            </template>
+          </component>
+        </div>
+
+        <!-- 不使用淡入动画 -->
+        <template v-else>
+          <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
+            <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
+              <slot :name="name" />
+            </template>
+          </component>
+        </template>
       </template>
     </slot>
 

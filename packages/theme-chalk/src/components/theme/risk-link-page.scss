@@ -3,7 +3,7 @@
 
 @include b(risk-link) {
   top: 40%;
-  min-width: 450px;
+  min-width: 350px;
   max-width: 620px;
   background-color: getCssVar("bg-color-elm");
   padding: 20px;
@@ -11,7 +11,7 @@
   box-shadow: getCssVar("card-shadow");
 
   @media (max-width: 640px) {
-    min-width: calc(100% - 40px);
+    width: calc(100% - 60px);
   }
 
   @include e(header) {

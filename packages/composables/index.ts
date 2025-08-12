@@ -19,4 +19,5 @@ export * from "./useThemeColor";
 export * from "./useViewTransition";
 export * from "./useVpRouter";
 export * from "./useWindowSize";
+export * from "./useWindowTransition";
 export * from "./useZIndex";

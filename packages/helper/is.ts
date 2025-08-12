@@ -17,8 +17,6 @@ export const isValidURL = (url: string) => {
 
 /**
  * 判断数据类型
- * @param {Any} val 需要判断类型的数据
- * @return string
  */
 export const isType = (val: any) => {
   if (val === null) return "null";
@@ -34,24 +32,31 @@ export const is = (val: unknown, type: string) => {
 };
 
 /**
+ * 是否为纯粹的函数
+ */
+export const isPlainFunction = <T = Function>(val: unknown): val is T => {
+  return is(val, "Function");
+};
+
+/**
  * 是否为函数
  */
 export const isFunction = <T = Function>(val: unknown): val is T => {
-  return is(val, "Function");
+  return is(val, "Function") || isAsyncFunction(val);
 };
 
 /**
  * 是否已定义
  */
 export const isDef = <T = unknown>(val?: T): val is T => {
-  return typeof val !== "undefined";
+  return val !== undefined;
 };
 
 /**
  * 是否为未定义
  */
 export const isUnDef = <T = unknown>(val?: T): val is T => {
-  return !isDef(val);
+  return val === undefined;
 };
 
 /**
@@ -69,16 +74,10 @@ export const isDate = (val: unknown): val is Date => {
 };
 
 /**
- * 是否是有效的数字（包含正负整数，0 以及正负浮点数）
+ * 是否为数字
  */
 export const isNumber = (val: unknown): val is number => {
-  const regPos = /^\d+(\.\d+)?$/; // 非负浮点数
-  const regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; // 负浮点数
-  if (regPos.test(val as string) || regNeg.test(val as string)) {
-    return true;
-  } else {
-    return false;
-  }
+  return is(val, "Number") && !Number.isNaN(val);
 };
 
 /**
@@ -92,7 +91,7 @@ export const isStringNumber = (val: string): boolean => {
 /**
  *  是否为 AsyncFunction
  */
-export const isAsyncFunction = <T = any>(val: unknown): val is Promise<T> => {
+export const isAsyncFunction = (val: unknown): val is () => Promise<any> => {
   return is(val, "AsyncFunction");
 };
 
@@ -120,26 +119,12 @@ export const isBoolean = (val: unknown): val is boolean => {
 /**
  * 是否为数组
  */
-export const isArray = (arg: any) => {
+export const isArray = (val: unknown): val is any[] => {
   if (typeof Array.isArray === "undefined") {
-    return Object.prototype.toString.call(arg) === "[object Array]";
+    return Object.prototype.toString.call(val) === "[object Array]";
   }
-  return Array.isArray(arg);
+  return Array.isArray(val);
 };
-
-/**
- * 是否客户端
- */
-export const isClient = typeof window !== "undefined" && typeof document !== "undefined";
-
-/**
- * 是否为服务器
- */
-export const isServer = !isClient;
-/**
- * 是否在浏览器中
- */
-export const inBrowser = isClient;
 
 /**
  * 是否为元素节点
@@ -147,11 +132,6 @@ export const inBrowser = isClient;
 export const isElement = (val: unknown): val is Element => {
   if (typeof Element === "undefined") return false;
   return val instanceof Element;
-};
-
-// 是否为图片节点
-export const isImageDom = (o: Element) => {
-  return o && ["IMAGE", "IMG"].includes(o.tagName);
 };
 
 /**
@@ -165,14 +145,14 @@ export const isNull = (val: unknown): val is null => {
  * 是否为 null 且未定义
  */
 export const isNullAndUnDef = (val: unknown): val is null | undefined => {
-  return isUnDef(val) && isNull(val);
+  return val === null && val === undefined;
 };
 
 /**
  * 是否为 null 或未定义
  */
 export const isNullOrUnDef = (val: unknown): val is null | undefined => {
-  return isUnDef(val) || isNull(val);
+  return val === null || val === undefined;
 };
 
 /**
@@ -185,11 +165,21 @@ export const isPhone = (val: string) => {
 /**
  * 是否是图片链接
  */
-export const isImgPath = (path: string): boolean => {
+export const isImagePath = (path: string): boolean => {
   return /(https?:\/\/|data:image\/).*?\.(png|jpg|jpeg|gif|svg|webp|ico)/gi.test(path);
 };
 
-export const isIOS = () => {
+/**
+ * 是否为图片节点
+ */
+export const isImageDom = (o: Element) => {
+  return o && ["IMAGE", "IMG"].includes(o.tagName);
+};
+
+/**
+ * 是否为 iOS 系统
+ */
+export const isIos = () => {
   return (
     isClient &&
     window?.navigator?.userAgent &&
@@ -201,22 +191,22 @@ export const isIOS = () => {
 /**
  * 是否为空值项（包含数组、对象判断）
  *
- * @param checkFull 是否检查数组、对象是否为空。默认 true
+ * @param checkComplexType 是否检查数组、对象是否为空
  */
-export const isEmpty = (val: any, checkFull = true): boolean => {
+export const isEmpty = (val: unknown, checkComplexType = true): boolean => {
   // NaN 的检查
   if (isNumber(val) && isNaN(val)) return true;
 
   // 检查空字符串、null 和 undefined
   if (val === "" || val === null || val === undefined) return true;
 
-  if (!checkFull) return false;
+  if (!checkComplexType) return false;
 
   // 检查是不是数组并且长度为 0
-  if (isArray(val) && val.length === 0) return true;
+  if (isArray(val) && !val.length) return true;
 
-  // 检查是不是对象并且没有自身可枚举属性
-  if (isObject(val) && Object.keys(val).length === 0) return true;
+  // 检查是不是空对象
+  if (isObject(val) && !Object.keys(val).length) return true;
 
   // 如果以上都不是，则不为空
   return false;
@@ -237,7 +227,6 @@ export const isFocusable = (element: HTMLElement): boolean => {
 
   switch (element.nodeName) {
     case "A": {
-      // casting current element to Specific HTMLElement in order to be more type precise
       return !!(element as HTMLAnchorElement).href && (element as HTMLAnchorElement).rel !== "ignore";
     }
     case "INPUT": {
@@ -253,3 +242,17 @@ export const isFocusable = (element: HTMLElement): boolean => {
     }
   }
 };
+
+/**
+ * 是否客户端
+ */
+export const isClient = typeof window !== "undefined" && typeof document !== "undefined";
+
+/**
+ * 是否为服务器
+ */
+export const isServer = !isClient;
+/**
+ * 是否在浏览器中
+ */
+export const inBrowser = isClient;
