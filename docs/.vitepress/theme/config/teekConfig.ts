@@ -164,6 +164,26 @@ export const teekBlogFullConfig: TeekConfig = {
   codeBlock: {
     overlay: true,
   },
+  themeEnhance: {
+    themeColor: {
+      append: [
+        {
+          label: "博客扩展主题",
+          tip: "博客扩展主题",
+          options: [
+            { label: "紫罗兰", value: "violet", color: "#7166f0" },
+            { label: "珊瑚粉", value: "coral-pink", color: "#ff6b6b" },
+            { label: "天蓝", value: "sky-blue", color: "#00bbf9" },
+            { label: "蓝绿", value: "blue-green", color: "#00f5d4" },
+            { label: "石板灰", value: "slate-gray", color: "#708090" },
+            { label: "粉红", value: "pink", color: "#f15bb5" },
+            { label: "黄绿", value: "yellow-green", color: "#8ac926" },
+            { label: "橙红", value: "orange-red", color: "#ff9e6b" },
+          ],
+        },
+      ],
+    },
+  },
 };
 
 // 博客全图配置

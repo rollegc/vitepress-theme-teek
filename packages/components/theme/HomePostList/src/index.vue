@@ -6,7 +6,7 @@ import { useRoute, useData } from "vitepress";
 import { isClient, removeUnit } from "@teek/helper";
 import { useNamespace, useLocale, useWindowSize, useWindowTransition } from "@teek/composables";
 import { emptyIcon } from "@teek/static";
-import { useTeekConfig, usePosts, useFadeTransition } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePosts, useWindowTransitionConfig } from "@teek/components/theme/ConfigProvider";
 import { TkPagination } from "@teek/components/common/Pagination";
 import { TkIcon } from "@teek/components/common/Icon";
 import { pageNumKey } from "./homePostList";
@@ -133,12 +133,12 @@ useWindowSize(width => {
 });
 
 // 屏幕加载元素时，开启过渡动画
-const fadeTransition = useFadeTransition(config => config.post);
+const windowTransition = useWindowTransitionConfig(config => config.post);
 const postItemListInstance = useTemplateRef("postItemListInstance");
-const { start } = useWindowTransition(postItemListInstance, false);
+const { start } = useWindowTransition(postItemListInstance as any, false);
 
 onMounted(() => {
-  fadeTransition.value && start();
+  windowTransition.value && start();
 });
 
 defineExpose({ updateData });
@@ -154,7 +154,7 @@ defineExpose({ updateData });
           :aria-label="t('tk.homePost.label')"
         >
           <li v-for="post in currentPosts" :key="post.url" :class="{ 'full-img': coverImgMode === 'full' }">
-            <div v-if="fadeTransition" ref="postItemListInstance">
+            <div v-if="windowTransition" ref="postItemListInstance">
               <HomePostItemCard v-if="postConfig.postStyle === 'card'" :post />
               <HomePostItem v-else :post :coverImgMode />
             </div>

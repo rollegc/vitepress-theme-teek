@@ -1,5 +1,5 @@
 import type { PostData } from "@teek/config/post/types";
-import type { FadeTransition, TeekConfig } from "@teek/config";
+import type { WindowTransition, TeekConfig } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
 import { computed, defineComponent, h, inject, provide, unref } from "vue";
 import { useData } from "vitepress";
@@ -63,7 +63,7 @@ export const useTeekConfig = () => {
     }
 
     // 非对象格式，则根据优先级返回
-    return valueFromInject || valueFromFrontmatter || valueFromTheme || dv;
+    return valueFromInject ?? valueFromFrontmatter ?? valueFromTheme ?? dv;
   };
 
   /**
@@ -212,15 +212,15 @@ export const useTagColor = () => {
   ]);
 };
 
-export const useFadeTransition = (condition?: (fadeTransition: FadeTransition) => boolean | undefined) => {
+export const useWindowTransitionConfig = (condition?: (windowTransition: WindowTransition) => boolean | undefined) => {
   const { getTeekConfigRef } = useTeekConfig();
-  const fadeTransitionConfig = getTeekConfigRef<FadeTransition>("fadeTransition", true);
+  const windowTransitionConfig = getTeekConfigRef<WindowTransition>("windowTransition", true);
 
   return computed(() => {
-    const fadeTransition = fadeTransitionConfig.value;
-    if (fadeTransition === undefined) return true;
+    const windowTransition = windowTransitionConfig.value;
+    if (windowTransition === undefined) return true;
 
-    return isObject(fadeTransition) ? (condition?.(fadeTransition) ?? true) : fadeTransition !== false;
+    return isObject(windowTransition) ? (condition?.(windowTransition) ?? true) : windowTransition !== false;
   });
 };
 

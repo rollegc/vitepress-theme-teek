@@ -1,11 +1,12 @@
+import { readonly, ref } from "vue";
 import { useData } from "vitepress";
 import { getLightColor, getDarkColor, isClient, isFunction } from "@teek/helper";
 import { computed, MaybeRef, shallowRef, toValue, watch } from "vue";
 
-const vpIndigo1 = "--vp-c-indigo-1";
-const vpIndigo2 = "--vp-c-indigo-2";
-const vpIndigo3 = "--vp-c-indigo-3";
-const vpIndigoSoft = "--vp-c-indigo-soft";
+const vpBrand1 = "--vp-c-brand-1";
+const vpBrand2 = "--vp-c-brand-2";
+const vpBrand3 = "--vp-c-brand-3";
+const vpBrandSoft = "--vp-c-brand-soft";
 const vpBg = "--vp-c-bg";
 const vpBgAlt = "--vp-c-bg-alt";
 const vpBgSoft = "--vp-c-bg-soft";
@@ -18,10 +19,10 @@ const tkBgColorElm = "--tk-bg-color-elm";
 const tkBgColorMute = "--tk-bg-color-mute";
 
 export const varNameList = {
-  vpIndigo1,
-  vpIndigo2,
-  vpIndigo3,
-  vpIndigoSoft,
+  vpBrand1,
+  vpBrand2,
+  vpBrand3,
+  vpBrandSoft,
   vpBg,
   vpBgAlt,
   vpBgSoft,
@@ -43,11 +44,13 @@ export const varNameList = {
  * @returnParam stop 还原 var 变量本身的颜色，并取消 dark 的监听
  * @returnParam update 手动根据 color 再次计算并更新 var 变量
  * @returnParam clear 还原所有 var 变量
+ * @returnParam updateSpread 修改 spread 的值
  */
 export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (() => string[] | undefined)) => {
-  const { isDark } = useData();
+  // 主题色是否扩展到其他 css 变量
+  const isSpread = ref(false);
 
-  const ignoreListConst = isFunction(ignoreList) ? ignoreList() : ignoreList || [];
+  const { isDark } = useData();
 
   const setStyleVar = (key: string, value: string) => {
     if (!isClient) return;
@@ -76,12 +79,14 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
     const primary = colorComputed.value;
     if (!primary) return;
 
-    const lightVarMap = {
-      [vpIndigo1]: primary,
-      [vpIndigo2]: getLightColor(primary, 0.1)!,
-      [vpIndigo3]: getLightColor(primary, 0.2)!,
-      [vpIndigoSoft]: getLightColor(primary, 0.85)!,
+    const lightVarDefaultMap = {
+      [vpBrand1]: primary,
+      [vpBrand2]: getLightColor(primary, 0.1)!,
+      [vpBrand3]: getLightColor(primary, 0.2)!,
+      [vpBrandSoft]: getLightColor(primary, 0.85)!,
+    };
 
+    const lightVarSpreadMap = {
       [vpBg]: getLightColor(primary, 0.96)!,
       [vpBgAlt]: getLightColor(primary, 0.93)!,
       [vpBgElv]: getLightColor(primary, 0.945)!,
@@ -95,10 +100,20 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
       [tkBgColorMute]: getLightColor(primary, 0.91)!,
     };
 
-    Object.keys(lightVarMap).forEach(key => {
+    const ignoreListConst = isFunction(ignoreList) ? ignoreList() : ignoreList || [];
+
+    Object.keys(lightVarDefaultMap).forEach(key => {
       if (ignoreListConst?.includes(key)) return;
-      setStyleVar(key, lightVarMap[key]);
+      setStyleVar(key, lightVarDefaultMap[key]);
     });
+
+    // 扩展其他 var 变量
+    if (isSpread.value) {
+      Object.keys(lightVarSpreadMap).forEach(key => {
+        if (ignoreListConst?.includes(key)) return;
+        setStyleVar(key, lightVarSpreadMap[key]);
+      });
+    }
   };
 
   /**
@@ -109,12 +124,14 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
     const primary = colorComputed.value;
     if (!primary) return;
 
-    const darkVarMap = {
-      [vpIndigo1]: primary,
-      [vpIndigo2]: getDarkColor(primary, 0.1)!,
-      [vpIndigo3]: getDarkColor(primary, 0.2)!,
-      [vpIndigoSoft]: getDarkColor(primary, 0.85)!,
+    const darkVarDefaultMap = {
+      [vpBrand1]: primary,
+      [vpBrand2]: getDarkColor(primary, 0.1)!,
+      [vpBrand3]: getDarkColor(primary, 0.2)!,
+      [vpBrandSoft]: getDarkColor(primary, 0.85)!,
+    };
 
+    const darkVarSpreadMap = {
       [vpBg]: getDarkColor(primary, 0.92)!,
       [vpBgAlt]: getDarkColor(primary, 0.94)!,
       [vpBgElv]: getDarkColor(primary, 0.92)!,
@@ -126,22 +143,24 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
       [tkBgColorMute]: getDarkColor(primary, 0.91)!,
     };
 
-    Object.keys(darkVarMap).forEach(key => {
+    const ignoreListConst = isFunction(ignoreList) ? ignoreList() : ignoreList || [];
+
+    Object.keys(darkVarDefaultMap).forEach(key => {
       if (ignoreListConst?.includes(key)) return;
-      setStyleVar(key, darkVarMap[key]);
+      setStyleVar(key, darkVarDefaultMap[key]);
     });
+
+    // 扩展其他 var 变量
+    if (isSpread.value) {
+      Object.keys(darkVarSpreadMap).forEach(key => {
+        if (ignoreListConst?.includes(key)) return;
+        setStyleVar(key, darkVarSpreadMap[key]);
+      });
+    }
   };
 
   const isStop = shallowRef(false);
   let stopWatch: ReturnType<typeof watch> | null = null;
-
-  const update = () => {
-    if (isStop.value) return;
-    clear();
-
-    if (isDark.value) switchDark();
-    else switchLight();
-  };
 
   const start = () => {
     if (!isStop.value || !!stopWatch) return;
@@ -150,6 +169,14 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
     update();
 
     stopWatch = watch(isDark, update, { flush: "post" });
+  };
+
+  const update = () => {
+    if (isStop.value) return;
+    clear();
+
+    if (isDark.value) switchDark();
+    else switchLight();
   };
 
   const stop = () => {
@@ -163,6 +190,18 @@ export const useThemeColor = (color: MaybeRef<string>, ignoreList?: string[] | (
 
   // 主题色变化时，重新计算颜色
   watch(colorComputed, update);
+  // 修改扩散值，则重置
+  watch(isSpread, () => {
+    stop();
+    start();
+  });
 
-  return { start, stop, update, clear };
+  return {
+    isSpread: readonly(isSpread),
+    start,
+    stop,
+    update,
+    clear,
+    updateSpread: (value: boolean) => (isSpread.value = value),
+  };
 };

@@ -1,10 +1,10 @@
 import type {
-  ThemeColor,
+  ThemeColorName,
   LayoutMode,
   SpotlightStyle,
   LayoutModeVal,
+  ThemeColorOption,
 } from "../../components/theme/ThemeEnhance/src/themeEnhance";
-import type { SegmentedOption } from "../../components/common/Segmented/src/segmented";
 
 export interface ThemeEnhance {
   /**
@@ -86,12 +86,34 @@ export interface ThemeEnhance {
      */
     disabled?: boolean;
     /**
+     * 从 0 完全自定义布局主题色，不使用内置主题色
+     *
+     * @default false
+     * @version 1.4.1
+     */
+    customize?:
+      | boolean
+      | {
+          /**
+           * 是否使用 vitepress 的主题色
+           *
+           * @default true
+           */
+          vitepressTheme?: boolean;
+          /**
+           * 是否使用 elementPlus 的主题色
+           *
+           * @default true
+           */
+          elementPlusTheme?: boolean;
+        };
+    /**
      * 布局默认主题色
      *
-     * @default ThemeColor.vpDefault
+     * @default ThemeColorName.vpDefault
      */
-    defaultColor?:
-      | ThemeColor
+    defaultColorName?:
+      | ThemeColorName
       | "vp-default"
       | "vp-green"
       | "vp-yellow"
@@ -99,7 +121,8 @@ export interface ThemeEnhance {
       | "ep-blue"
       | "ep-green"
       | "ep-yellow"
-      | "ep-red";
+      | "ep-red"
+      | string;
     /**
      * 切换布局成功后的回调
      *
@@ -139,7 +162,7 @@ export interface ThemeEnhance {
       /**
        * 主题组内容
        */
-      options: SegmentedOption[];
+      options: ThemeColorOption[];
     }[];
   };
   /**

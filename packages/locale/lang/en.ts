@@ -224,8 +224,8 @@ export default {
       themeColor: {
         title: "Layout Theme Color",
         speedLabel: "Speed",
-        vpLabel: "VP Theme",
-        epLabel: "EP Theme",
+        vpLabel: "VitePress Theme",
+        epLabel: "ElementPlus Theme",
         vpTip: "VitePress Theme",
         epTip: "ElementPlus Theme",
         defaultLabel: "Default",

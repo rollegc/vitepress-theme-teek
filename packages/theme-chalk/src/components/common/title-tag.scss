@@ -14,8 +14,8 @@
   color: getCssVar("theme-color");
 
   @include m(vp-primary) {
-    border: 1px solid var(--vp-c-indigo-1);
-    color: var(--vp-c-indigo-1);
+    border: 1px solid var(--vp-c-brand-1);
+    color: var(--vp-c-brand-1);
   }
 
   @include m(vp-info) {

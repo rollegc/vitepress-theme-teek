@@ -1,4 +1,4 @@
-export interface FadeTransition {
+export interface WindowTransition {
   /**
    * 是否开启首页文章列表动画
    *

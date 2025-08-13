@@ -14,6 +14,7 @@
 
 @include b(popover) {
   max-width: 100vw;
+  max-height: calc(100vh - 100px);
   position: absolute;
   color: getCssVar("popover-color");
   background-color: getCssVar("popover-bg-color");

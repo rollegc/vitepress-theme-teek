@@ -52,24 +52,37 @@
     .label {
       margin-right: 10px;
     }
+
     h3 {
       display: inline-block;
       font-size: 12px;
       opacity: 0.8;
     }
-    .#{$namespace}-segmented {
-      &-item.is-active {
-        color: var(--vp-c-brand-1);
-        background-color: var(--vp-c-brand-soft);
 
-        &:hover {
-          color: var(--vp-c-brand-3);
-          background-color: var(--vp-c-brand-soft);
-        }
+    .color-list {
+      gap: 10px;
+    }
+
+    .color-wrapper {
+      outline: 1px solid var(--vp-c-divider);
+      padding: 4px;
+      cursor: pointer;
+      transition: outline-color 0.2s ease-in-out;
+      border-radius: 6px;
+
+      &:hover {
+        outline: 2px solid var(--tk-theme-color);
       }
-      &-item {
-        min-width: 66px;
-        max-width: 66px;
+
+      @include is(active) {
+        outline: 2px solid var(--tk-theme-color);
+      }
+
+      .color-bg {
+        border-radius: 6px;
+        width: 24px;
+        height: 24px;
+        margin: 6px 12px;
       }
     }
   }

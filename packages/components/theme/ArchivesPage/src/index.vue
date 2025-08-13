@@ -2,7 +2,7 @@
 import { withBase, useData } from "vitepress";
 import { computed, onMounted, useTemplateRef } from "vue";
 import { useNamespace, useLocale, useWindowTransition } from "@teek/composables";
-import { useFadeTransition, usePosts } from "@teek/components/theme/ConfigProvider";
+import { useWindowTransitionConfig, usePosts } from "@teek/components/theme/ConfigProvider";
 import { TkArticlePage } from "@teek/components/common/ArticlePage";
 import { TkArticleTitle } from "@teek/components/theme/ArticleTitle";
 
@@ -28,12 +28,12 @@ const defaultLabel = computed(() => {
 });
 
 // 屏幕加载元素时，开启过渡动画
-const fadeTransition = useFadeTransition(config => config.archives);
+const windowTransition = useWindowTransitionConfig(config => config.archives);
 const timelineItemListInstance = useTemplateRef("timelineItemListInstance");
 const { start } = useWindowTransition(timelineItemListInstance, false);
 
 onMounted(() => {
-  fadeTransition.value && start();
+  windowTransition.value && start();
 });
 </script>
 
