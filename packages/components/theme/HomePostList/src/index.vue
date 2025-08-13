@@ -135,7 +135,7 @@ useWindowSize(width => {
 // 屏幕加载元素时，开启过渡动画
 const windowTransition = useWindowTransitionConfig(config => config.post);
 const postItemListInstance = useTemplateRef("postItemListInstance");
-const { start } = useWindowTransition(postItemListInstance, false);
+const { start } = useWindowTransition(postItemListInstance as any, false);
 
 onMounted(() => {
   windowTransition.value && start();

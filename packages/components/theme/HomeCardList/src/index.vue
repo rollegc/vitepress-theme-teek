@@ -70,7 +70,7 @@ const componentMap = computed(() => {
 // 屏幕加载元素时，开启过渡动画
 const windowTransition = useWindowTransitionConfig(config => config.card);
 const cardListInstance = useTemplateRef("cardListInstance");
-const { start } = useWindowTransition(cardListInstance, false);
+const { start } = useWindowTransition(cardListInstance as any, false);
 
 onMounted(() => {
   windowTransition.value && start();

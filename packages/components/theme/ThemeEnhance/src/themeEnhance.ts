@@ -12,7 +12,7 @@ export enum SpotlightStyle {
   Aside = "aside",
 }
 
-export enum ThemeColor {
+export enum ThemeColorName {
   vpDefault = "vp-default",
   vpGreen = "vp-green",
   vpYellow = "vp-yellow",
@@ -23,15 +23,24 @@ export enum ThemeColor {
   epRed = "ep-red",
 }
 
+export interface ThemeColorOption {
+  value: string;
+  label: string;
+  color?: string;
+  title?: string;
+  ariaLabel?: string;
+}
+
+// Teek 内置的主题色
 export const themeColorList = [
-  ThemeColor.vpDefault,
-  ThemeColor.vpGreen,
-  ThemeColor.vpYellow,
-  ThemeColor.vpRed,
-  ThemeColor.epBlue,
-  ThemeColor.epGreen,
-  ThemeColor.epYellow,
-  ThemeColor.epRed,
+  ThemeColorName.vpDefault,
+  ThemeColorName.vpGreen,
+  ThemeColorName.vpYellow,
+  ThemeColorName.vpRed,
+  ThemeColorName.epBlue,
+  ThemeColorName.epGreen,
+  ThemeColorName.epYellow,
+  ThemeColorName.epRed,
 ] as string[];
 
 export const mobileMaxWidthMedia = "(max-width: 768px)";

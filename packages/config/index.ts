@@ -12,7 +12,7 @@ import {
 } from "../markdown";
 import { registerPluginAndGet } from "./vitePlugins";
 
-export { ThemeColor, LayoutMode, SpotlightStyle } from "../components/theme/ThemeEnhance/src/themeEnhance";
+export { ThemeColorName, LayoutMode, SpotlightStyle } from "../components/theme/ThemeEnhance/src/themeEnhance";
 export type * from "./types";
 
 export const defineTeekConfig = (config: TeekConfig & UserConfig<DefaultTheme.Config> = {}): UserConfig => {

@@ -222,8 +222,8 @@ export default {
       themeColor: {
         title: "主题色",
         speedLabel: "扩散",
-        vpLabel: "VP 主题",
-        epLabel: "EP 主题",
+        vpLabel: "VitePress 主题",
+        epLabel: "ElementPlus 主题",
         vpTip: "VitePress 主题",
         epTip: "ElementPlus 主题",
         defaultLabel: "预设",
