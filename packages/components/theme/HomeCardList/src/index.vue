@@ -2,7 +2,7 @@
 import type { TeekConfig } from "@teek/config";
 import { computed, onMounted, useTemplateRef } from "vue";
 import { useWindowTransition, useNamespace } from "@teek/composables";
-import { useTeekConfig, usePageState, useFadeTransition } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState, useWindowTransitionConfig } from "@teek/components/theme/ConfigProvider";
 import { TkHomeMyCard } from "@teek/components/theme/HomeMyCard";
 import { TkHomeTopArticleCard } from "@teek/components/theme/HomeTopArticleCard";
 import { TkHomeCategoryCard } from "@teek/components/theme/HomeCategoryCard";
@@ -68,12 +68,12 @@ const componentMap = computed(() => {
 });
 
 // 屏幕加载元素时，开启过渡动画
-const fadeTransition = useFadeTransition(config => config.card);
+const windowTransition = useWindowTransitionConfig(config => config.card);
 const cardListInstance = useTemplateRef("cardListInstance");
 const { start } = useWindowTransition(cardListInstance, false);
 
 onMounted(() => {
-  fadeTransition.value && start();
+  windowTransition.value && start();
 });
 </script>
 
@@ -84,7 +84,7 @@ onMounted(() => {
     <slot name="teek-home-card">
       <template v-for="item in finalHomeCardSort" :key="item">
         <!-- 使用淡入动画 -->
-        <div v-if="fadeTransition" ref="cardListInstance">
+        <div v-if="windowTransition" ref="cardListInstance">
           <component v-if="componentMap[item]?.show" :is="componentMap[item]?.el" v-bind="componentMap[item]?.props">
             <template v-for="name in componentMap[item]?.slot" :key="name" #[name]>
               <slot :name="name" />

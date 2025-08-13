@@ -32,7 +32,7 @@ import type {
   Markdown,
   Private,
   RiskLink,
-  FadeTransition,
+  WindowTransition,
 } from "./interface";
 
 export type * from "./interface";
@@ -151,7 +151,7 @@ export interface TeekConfig {
    *
    * @default true
    */
-  fadeTransition?: boolean | FadeTransition;
+  windowTransition?: boolean | WindowTransition;
   /**
    *  body 背景图片配置
    */
