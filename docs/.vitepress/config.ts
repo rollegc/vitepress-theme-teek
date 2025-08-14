@@ -162,7 +162,7 @@ export default defineConfig({
         items: [
           { text: "案例", link: "/case" },
           { text: "常见问题", link: "/theme/qa" },
-          { text: "拓展", link: "/expand/intro" },
+          { text: "功能拓展", link: "/expand/intro" },
         ],
       },
       {

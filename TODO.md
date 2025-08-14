@@ -5,21 +5,21 @@
 ### 代办
 
 - 新增首页全新 Feature 组件
-- 添加常用 icon 库
 - 壁纸滚动 fixed
+- 页面全局 Loading 动画
 
 ### issue
 
 ### 已完成
 
 - 主题增强面板主题色具象化
+- 添加社交图标库
 
 ## AR
 
 - 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
 - 文章页分析区域支持自定义文字（插槽）
-- plus 样式示例编写
-- 页面全局 Loading 动画
+- vp/tk plus 样式示例编写
 
 ## 空模板
 
