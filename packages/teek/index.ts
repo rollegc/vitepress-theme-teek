@@ -17,6 +17,10 @@ import {
 
 import "../theme-chalk/src/index.scss";
 
+// 引入 iconfont 图标
+import "@teek/static/iconfont/social/iconfont.js";
+import "@teek/static/iconfont/social/iconfont.css";
+
 export type DefaultThemeType = typeof DefaultTheme;
 export type * from "@teek/config";
 
