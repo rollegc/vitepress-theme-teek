@@ -38,6 +38,7 @@ import { TkArticleOverviewPage } from "@teek/components/theme/ArticleOverviewPag
 import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
 import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
 import { TkSidebarTrigger } from "@teek/components/theme/SidebarTrigger";
+import { TkHomeFeature } from "@teek/components/theme/HomeFeature";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -129,6 +130,7 @@ onContentUpdated(() => {
 // 维护已使用的插槽，防止外界传来的插槽覆盖已使用的插槽
 const usedSlots = [
   "home-hero-before",
+  "home-features-after",
   "nav-bar-content-after",
   "layout-bottom",
   "doc-footer-before",
@@ -185,6 +187,16 @@ const usedSlots = [
         </TkHome>
 
         <slot name="teek-home-after" />
+      </template>
+
+      <template #home-features-after>
+        <template v-if="!teekConfig.teekHome">
+          <slot name="teek-home-features-before" />
+          <TkHomeFeature />
+          <slot name="teek-home-features-after" />
+        </template>
+
+        <slot name="home-features-after" />
       </template>
 
       <template #nav-bar-content-after>
