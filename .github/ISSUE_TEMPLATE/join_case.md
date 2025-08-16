@@ -1,18 +1,26 @@
 ---
 name: 申请加入案例
-about: 申请将你的站点展示在文档站案例页
+description: 申请将你的站点展示在文档站案例页
 title: 申请加入案例
 labels: join case
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您抽出宝贵时间填写这份申请加入案例表单！
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: 确认项
+      description: 提交表单之前，请确认您已有以下确认项目
+      options:
+        - label: 使用 Teek 主题
+          required: true
+        - label: 有 10 篇以上文章
+          required: true
+        - label: 保留 Footer 的主题版本（点击可以跳转主题链接）
+          required: true
 ---
-
-<!--
-请按照模板填写，否则此申请将可能不会被通过并直接关闭。
-
-站点要求：
-1. 使用 Teek 主题
-2. 有 10 篇以上文章
-3. 保留 footer 的主题推荐链接
--->
 
 名称: 站点名称
 简介: 站点简介
@@ -21,4 +29,4 @@ labels: join case
 作者: 作者名称
 头像: 作者头像链接
 
-备注(可选)： 知识库兼博客 | 社区 | 知识库 | 博客 | 文档站
+备注(可选，只能选择一个填写)： 知识库兼博客 | 社区 | 知识库 | 博客 | 文档站
