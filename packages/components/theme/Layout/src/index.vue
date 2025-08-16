@@ -39,6 +39,7 @@ import { TkLoginPage, useWatchLogin } from "@teek/components/theme/LoginPage";
 import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage";
 import { TkSidebarTrigger } from "@teek/components/theme/SidebarTrigger";
 import { TkHomeFeature } from "@teek/components/theme/HomeFeature";
+import { TkRouteLoading } from "@teek/components/theme/RouteLoading";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -62,6 +63,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekHome: true,
   vpHome: true,
   sidebarTrigger: false,
+  loading: true,
   codeBlock: { disabled: false },
   themeSize: "",
   bodyBgImg: {},
@@ -166,6 +168,12 @@ const usedSlots = [
           <slot :name="name" v-bind="scope" />
         </template>
       </TkRightBottomButton>
+
+      <TkRouteLoading v-if="teekConfig.loading ?? true">
+        <template #default="scope">
+          <slot name="teek-loading" v-bind="scope" />
+        </template>
+      </TkRouteLoading>
     </template>
 
     <Layout

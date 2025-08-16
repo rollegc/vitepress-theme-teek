@@ -112,6 +112,12 @@ export interface TeekConfig {
    */
   themeSize?: "small" | "default" | "large" | "wide";
   /**
+   * 页面加载 Loading 动画，如果为 boolean，则控制是否启用，如果为字符串，则指定加载 Loading 动画的文案
+   *
+   * @default true
+   */
+  loading?: boolean | string;
+  /**
    * 回到顶部按钮配置
    */
   backTop?: BackTop;
