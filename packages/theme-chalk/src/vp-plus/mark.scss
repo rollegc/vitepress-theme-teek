@@ -1,6 +1,7 @@
 @use "../mixins/mixins" as *;
 @use "../mixins/function" as *;
 
+/* <mark></mark> 样式 */
 :root {
   @include set-css-var("mark-color", #d63200);
 }
