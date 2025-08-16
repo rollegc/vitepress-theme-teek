@@ -1,4 +1,5 @@
 @use "../../mixins/bem" as *;
+@use "../../mixins/function" as *;
 
 @include b(home-features) {
   margin: auto;
@@ -36,13 +37,13 @@
     border-radius: 8px;
     overflow: hidden;
     transition:
-      background 0.3s ease,
-      box-shadow 0.3s ease,
-      transform 0.3s ease;
+      background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
       background-color: transparent;
-      box-shadow: var(--tk-hover-shadow);
+      box-shadow: getCssVar("hover-shadow");
       transform: scale(1.05);
     }
 

@@ -5,9 +5,6 @@
 ### 代办
 
 - 壁纸滚动 fixed
-- 页面全局 Loading 动画
-- 卡片主题色悬停样式（tk-plus）
-- 主题色每个 4s 自动切换新的主题色
 
 ### issue
 
@@ -16,12 +13,14 @@
 - 主题增强面板主题色具象化
 - 添加社交图标库
 - 新增首页全新 Feature 组件
+- 页面全局 Loading 动画
+- 卡片主题色悬停样式（tk-plus）
+- 主题色每隔一段时间自动切换新的主题色
+- 永久链接 404 优化
 
 ## AR
 
 - 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`
-- 文章页分析区域支持自定义文字（插槽）
-- vp/tk plus 样式示例编写
 
 ## 空模板
 

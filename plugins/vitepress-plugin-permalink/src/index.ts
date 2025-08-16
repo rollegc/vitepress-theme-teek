@@ -1,7 +1,7 @@
 import type { Plugin, ViteDevServer } from "vite";
 import type { DefaultTheme } from "vitepress";
 import createPermalinks, { standardLink } from "./helper";
-import type { NotFoundOption, Permalink, PermalinkOption } from "./types";
+import type { Permalink, PermalinkOption } from "./types";
 import { dirname, join } from "node:path";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -12,13 +12,8 @@ export * from "./types";
 /**
  * 默认暴露 2 个插件集
  */
-export default function VitePluginVitePressPermalink(
-  option: { permalinkOption?: PermalinkOption; notFoundOption?: NotFoundOption } = {}
-) {
-  return [
-    VitePluginVitePressAutoPermalink(option.permalinkOption),
-    VitePluginVitePressUsePermalink(option.notFoundOption),
-  ];
+export default function VitePluginVitePressPermalink(option: PermalinkOption = {}) {
+  return [VitePluginVitePressAutoPermalink(option), VitePluginVitePressUsePermalink(option)];
 }
 
 /**
@@ -205,7 +200,7 @@ const getDirname = () => {
  * 1、将 UsePermalink 组件传入 VitePress 的 layout-bottom 插槽
  * 2、将 NotFoundDelay 组件传入 VitePress 的 not-found 插槽
  */
-export function VitePluginVitePressUsePermalink(option: NotFoundOption = {}): Plugin & { name: string } {
+export function VitePluginVitePressUsePermalink(option: PermalinkOption = {}): Plugin & { name: string } {
   const usePermalinkFile = `usePermalink`;
   const aliasUsePermalinkFile = `${getDirname()}/${usePermalinkFile}`;
 

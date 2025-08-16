@@ -21,13 +21,6 @@ import "../theme-chalk/src/index.scss";
 import "@teek/static/iconfont/social/iconfont.js";
 import "@teek/static/iconfont/social/iconfont.css";
 
-// 引入社交图标库
-// if (isClient) {
-//   import("@teek/static/iconfont/social/iconfont.js");
-//   // @ts-ignore
-//   import("@teek/static/iconfont/social/iconfont.css");
-// }
-
 export type DefaultThemeType = typeof DefaultTheme;
 export type * from "@teek/config";
 
