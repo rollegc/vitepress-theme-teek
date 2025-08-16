@@ -205,4 +205,8 @@ export default defineConfig({
       pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",
     },
   },
+  // transformHtml: (code, id, context) => {
+  //   if (context.page !== "404.md") return code;
+  //   return code.replace("404 | ", "");
+  // },
 });

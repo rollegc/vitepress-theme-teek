@@ -1,7 +1,12 @@
-import { useRouter, useData, inBrowser } from "vitepress";
+import { useRouter, useData } from "vitepress";
 import { nextTick, onBeforeMount } from "vue";
 
-export default function usePermalink() {
+/**
+ * 监听永久链接跳转
+ *
+ * @param executeBeforeMountFn 是否执行 beforeMount 阶段，当只要获取 teyGetFilePathByPermalink 函数时，可以设置为 false，避免重复执行 beforeMount 阶段
+ */
+export default function usePermalink(executeBeforeMountFn = true) {
   const fakeHost = "http://a.com";
   const router = useRouter();
   const { site, theme, localeIndex } = useData();
@@ -37,21 +42,23 @@ export default function usePermalink() {
       });
     }
 
-    // 不存在 permalink 则获取文档地址来跳转（router.onBeforeRouteChange 在跳转前已经执行了该逻辑，因此这里触发率 0%，只是用于兜底，因为 router.onBeforeRouteChange 可能因为用户使用不当被覆盖）
+    // 不存在 permalink 则获取文档地址来跳转（router.onBeforeRouteChange 在跳转前已经执行了该逻辑，因此只要在 onBeforeMount 触发，用于兜底
     const filePath = teyGetFilePathByPermalink(pathname);
     if (filePath) {
-      if (inBrowser) document.title = "";
       const targetUrl = base + filePath + search + hash;
+
       // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
       history.replaceState(history.state || null, "", targetUrl);
       router.go(targetUrl);
     } else router.onAfterUrlLoad?.(href);
   };
 
-  onBeforeMount(() => {
-    if (!router.state.permalinkPlugin) router.state = { ...router.state, permalinkPlugin: true };
-    replaceUrlWhenPermalinkExist(window.location.href);
-  });
+  if (executeBeforeMountFn) {
+    onBeforeMount(() => {
+      if (!router.state.permalinkPlugin) router.state = { ...router.state, permalinkPlugin: true };
+      replaceUrlWhenPermalinkExist(window.location.href);
+    });
+  }
 
   /**
    * 尝试通过路由地址获取文件地址（当路由地址为 permalink 时才有值返回，否则返回空）
