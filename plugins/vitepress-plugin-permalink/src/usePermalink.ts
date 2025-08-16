@@ -99,7 +99,6 @@ export default function usePermalink() {
       if (href === base) return;
 
       const { pathname, search, hash } = new URL(href, fakeHost);
-
       // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
       const filePath = teyGetFilePathByPermalink(pathname);
 
@@ -123,5 +122,5 @@ export default function usePermalink() {
     router.state = { ...router.state, permalinkPlugin: true };
   };
 
-  return { startWatch };
+  return { startWatch, teyGetFilePathByPermalink };
 }

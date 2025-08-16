@@ -1,45 +1,40 @@
 <script setup lang="ts" name="NotFoundDelay">
-import type { NotFoundOption } from "..";
 import { useRouter, useData } from "vitepress";
-import { nextTick, onMounted, ref, unref } from "vue";
-// @ts-ignore
-import option from "virtual:not-found-option";
+import { onBeforeMount, ref } from "vue";
 import NotFound from "vitepress/dist/client/theme-default/NotFound.vue";
+import usePermalink from "../usePermalink";
 
-const { notFoundDelayLoad = 500 } = { ...option } as NotFoundOption;
-const { title } = useData();
+const router = useRouter();
+const { site, theme, title } = useData();
+const { teyGetFilePathByPermalink } = usePermalink();
 
 // 禁止加载 404 页面
 const disableNotFoundPage = ref(true);
 
-const delayNotFoundPage = () => {
-  document.title = "";
-  disableNotFoundPage.value = true;
-  // 延迟 notFoundDelayLoad 再加载 404 页面。因为 permalink 插件支持自定义 URL，但是 VP 初始化时根据自定义 URL 寻找文档会 404，因此这里延迟来给 permalink 插件寻找正确的文档路径
-  setTimeout(() => {
-    disableNotFoundPage.value = false;
-    nextTick(() => (document.title = unref(title)));
-  }, notFoundDelayLoad);
+const unDisableNotFoundPage = () => {
+  disableNotFoundPage.value = false;
+  // 还原浏览器标题
+  document.title = title.value;
 };
 
-onMounted(() => {
-  delayNotFoundPage();
+onBeforeMount(() => {
+  // 清除浏览器标题，防止出现 404 文字
+  document.title = "";
+  const { permalinks } = theme.value;
+  if (!permalinks && !Object.keys(permalinks || {}).length) unDisableNotFoundPage();
+
+  const { pathname, search, hash } = new URL(window.location.href);
+  const filePath = teyGetFilePathByPermalink(pathname);
+
+  if (filePath) {
+    // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
+    const targetUrl = site.value.base + filePath + search + hash;
+    router.go(targetUrl);
+
+    // 1s 后如果为成功跳转文件地址，则打开 404 页面
+    setTimeout(unDisableNotFoundPage, 1000);
+  } else unDisableNotFoundPage();
 });
-
-const router = useRouter();
-const state = router.state || {};
-
-// 防止重复在 router 添加函数
-if (!state.permalinkPluginNotFoundDelay) {
-  const selfOnBeforeRouteChange = router.onBeforeRouteChange;
-  router.onBeforeRouteChange = (href: string) => {
-    delayNotFoundPage();
-
-    return selfOnBeforeRouteChange?.(href);
-  };
-
-  router.state = { ...state, permalinkPluginNotFoundDelay: true };
-}
 </script>
 
 <template>
