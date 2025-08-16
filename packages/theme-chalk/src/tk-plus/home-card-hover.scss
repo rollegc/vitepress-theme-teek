@@ -3,13 +3,10 @@
 /* 首页卡片悬停效果 */
 @mixin card-hover-effect {
   border-radius: 10px;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 10px 16px -4px var(--vp-c-brand-1);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 32px var(--vp-c-brand-1);
+    transform: scale(1.02);
   }
 }
 

@@ -63,7 +63,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekHome: true,
   vpHome: true,
   sidebarTrigger: false,
-  loading: true,
+  loading: false,
   codeBlock: { disabled: false },
   themeSize: "",
   bodyBgImg: {},
@@ -169,7 +169,7 @@ const usedSlots = [
         </template>
       </TkRightBottomButton>
 
-      <TkRouteLoading v-if="teekConfig.loading ?? true">
+      <TkRouteLoading v-if="teekConfig.loading ?? false">
         <template #default="scope">
           <slot name="teek-loading" v-bind="scope" />
         </template>
