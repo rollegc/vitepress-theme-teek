@@ -95,7 +95,9 @@ const processPermalinkNotFoundWhenFirstLoaded = ({ siteData, router }: any) => {
     // 如果通过永久链接获取的文件路径存在，则跳转
     if (filePath) {
       const targetUrl = base + filePath + search + hash;
-      router.go(targetUrl);
+      setTimeout(() => {
+        router.go(targetUrl);
+      }, 10);
       return false;
     }
   }
