@@ -35,7 +35,7 @@ export * from "./version";
 export default {
   extends: DefaultTheme,
   Layout: TeekConfigProvider(TkLayout),
-  enhanceApp({ app, siteData, router }) {
+  async enhanceApp({ app, siteData, router }) {
     app.component("TkCataloguePage", TkCataloguePage);
     app.component("TkArchivesPage", TkArchivesPage);
     app.component("TkArticleOverviewPage", TkArticleOverviewPage);
@@ -51,7 +51,7 @@ export default {
     // 处理站点分析
     processSiteAnalytics(themeConfig);
     // 处理永久链接导致 404 问题
-    processPermalinkNotFoundWhenFirstLoaded({ siteData, router });
+    await processPermalinkNotFoundWhenFirstLoaded({ siteData, router });
   },
 } as DefaultThemeType & { extends: DefaultThemeType };
 
@@ -78,7 +78,7 @@ const processSiteAnalytics = (themeConfig: any) => {
 /**
  * 第一次访问页面时，处理永久链接导致 404 问题
  */
-const processPermalinkNotFoundWhenFirstLoaded = ({ siteData, router }: any) => {
+const processPermalinkNotFoundWhenFirstLoaded = async ({ siteData, router }: any) => {
   const { base, cleanUrls, themeConfig } = siteData.value;
   // 404 页面处理永久链接 404 问题（仅针对首次页面刷新）
   if (router.route.path === base && router.route.data.isNotFound) {
@@ -92,13 +92,10 @@ const processPermalinkNotFoundWhenFirstLoaded = ({ siteData, router }: any) => {
     const link = cleanUrls ? decodePath : decodePath + ".html";
     const filePath = themeConfig.permalinks.inv[link];
 
-    // 如果通过永久链接获取的文件路径存在，则跳转
+    // 通过永久链接获取的文件路径存在，则跳转
     if (filePath) {
       const targetUrl = base + filePath + search + hash;
-      setTimeout(() => {
-        router.go(targetUrl);
-      }, 10);
-      return false;
+      await router.go(targetUrl);
     }
   }
 };
