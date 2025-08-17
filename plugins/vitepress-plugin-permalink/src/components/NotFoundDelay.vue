@@ -15,7 +15,7 @@ const unDisableNotFoundPage = () => {
   disableNotFoundPage.value = false;
 };
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   const { permalinks } = theme.value;
   if (!permalinks && !Object.keys(permalinks || {}).length) return unDisableNotFoundPage();
 
@@ -26,7 +26,7 @@ onBeforeMount(() => {
     // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
     const targetUrl = site.value.base + filePath + search + hash;
     history.replaceState(history.state || null, "", targetUrl);
-    router.go(targetUrl);
+    await router.go(targetUrl);
 
     // 1s 后如果未成功跳转文件地址，则打开 404 页面
     setTimeout(unDisableNotFoundPage, 1000);

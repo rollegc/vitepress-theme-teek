@@ -65,9 +65,9 @@ router.onAfterRouteChange = (href: string) => {
 // 获取可能已有的 onAfterRouteChange
 const selfOnAfterRouteChange = router.onAfterRouteChange;
 
-router.onAfterRouteChange = (href: string) => {
+router.onAfterRouteChange = async (href: string) => {
   // 调用可能已有的 onAfterRouteChange
-  selfOnAfterRouteChange?.(href);
+  await selfOnAfterRouteChange?.(href);
 
   // 调用自己的函数
   myFunction();
@@ -84,9 +84,9 @@ const myFunction = () => {
 // 获取可能已有的 onBeforeRouteChange
 const selfOnBeforeRouteChange = router.onBeforeRouteChange;
 
-router.onBeforeRouteChange = (href: string) => {
+router.onBeforeRouteChange = async (href: string) => {
   // 调用已有的 onBeforeRouteChange
-  const selfResult = selfOnBeforeRouteChange?.(href);
+  const selfResult = await selfOnBeforeRouteChange?.(href);
   if (selfResult === false) return false;
 
   // 调用自己的函数
