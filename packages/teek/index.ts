@@ -80,12 +80,12 @@ const processSiteAnalytics = (themeConfig: any) => {
  */
 const processPermalinkNotFoundWhenFirstLoaded = ({ siteData, router }: any) => {
   const { base, cleanUrls, themeConfig } = siteData.value;
-
   // 404 页面处理永久链接 404 问题（仅针对首次页面刷新）
-  if (router.route.path !== base && router.route.data.isNotFound) {
+  if (router.route.path === base && router.route.data.isNotFound) {
+    const { pathname, search, hash } = new URL(location.href);
     const decodePath =
       "/" +
-      decodeURIComponent(location.href.slice(base.length))
+      decodeURIComponent(pathname.slice(base.length))
         .replace(/\/$/, "")
         .replace(/\.html/, "");
 
@@ -94,7 +94,8 @@ const processPermalinkNotFoundWhenFirstLoaded = ({ siteData, router }: any) => {
 
     // 如果通过永久链接获取的文件路径存在，则跳转
     if (filePath) {
-      router.go(filePath);
+      const targetUrl = base + filePath + search + hash;
+      router.go(targetUrl);
       return false;
     }
   }
