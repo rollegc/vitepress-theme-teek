@@ -199,7 +199,12 @@ export default defineConfig({
     socialLinks: [{ icon: "github", link: "https://github.com/Kele-Bingtang/vitepress-theme-teek" }],
 
     search: {
-      provider: "local",
+      provider: "algolia",
+      options: {
+        appId: "2LFTZ9LKO9",
+        apiKey: "017332fa7dc0bbe5e1637b215f92a5d1",
+        indexName: "vitepress_theme_teek",
+      },
     },
     editLink: {
       text: "在 GitHub 上编辑此页",
@@ -207,7 +212,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [llmstxt()],
+    plugins: [llmstxt() as any],
   },
   // transformHtml: (code, id, context) => {
   //   if (context.page !== "404.md") return code;
