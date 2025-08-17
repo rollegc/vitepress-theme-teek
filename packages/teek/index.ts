@@ -1,3 +1,4 @@
+import type { EnhanceAppContext } from "vitepress";
 import type { TeekConfig } from "@teek/config";
 import type { BaiduAnalyticsOptions, GoogleAnalyticsOptions, UmamiAnalytics } from "@teek/helper";
 import DefaultTheme from "vitepress/theme";
@@ -53,7 +54,10 @@ export default {
     // 处理永久链接导致 404 问题
     await processPermalinkNotFoundWhenFirstLoaded({ siteData, router });
   },
-} as DefaultThemeType & { extends: DefaultThemeType };
+} as Omit<DefaultThemeType, "enhanceApp"> & {
+  extends: DefaultThemeType;
+  enhanceApp: (options: EnhanceAppContext) => Promise<void>;
+};
 
 /**
  * 处理站点分析
