@@ -97,7 +97,7 @@ const processPermalinkNotFoundWhenFirstLoaded = ({ siteData, router }: any) => {
       const targetUrl = base + filePath + search + hash;
       setTimeout(() => {
         router.go(targetUrl);
-      }, 10);
+      }, 0);
       return false;
     }
   }
