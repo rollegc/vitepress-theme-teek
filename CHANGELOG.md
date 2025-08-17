@@ -2,43 +2,83 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.4.0...v1.4.1) (2025-08-17)
+
+### Features
+
+- **icon:** 🚀 新增社交图标库以及 iconfont 使用说明 ([b5b4e81](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b5b4e817581a0df75ef6c7186b2ed4b2cd958505))
+- **theme:** 🚀 添加全局淡入动画效果 ([d924f36](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/d924f36cfa67d4e35f2d3fcb153525740afd0efe))
+- **theme:** 🚀 添加页面全局 Loading 动画功能 ([2340009](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2340009e4961ab98f360755b12fe2e4d763d578b))
+- **theme:** 🚀 新增首页特性组件并优化相关配置 ([b10783f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b10783f1226e18f5191276952793f1e64a781a9d))
+- **theme:** 🚀 新增自定义主题色功能 ([60f6f85](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/60f6f85a47902896e9f3bc6e76d4bc5cb1e392d3))
+- **theme:** 优化首次访问页面时的 404 问题处理 ([f38f6b7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/f38f6b7432126459ec69e7982dabbcdf1352cb97))
+- **theme:** 优化主题样式和功能 ([a478ba5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a478ba5054bae216cea786ffa2fd7dc0c0860326))
+
+### Bug Fixes
+
+- 🐞 修复打包失效问题 ([881ec37](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/881ec3712c695f8ea00d7a27a6a098f708bc9bf3))
+- **config:** 修复打包失效问题 ([88834c4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/88834c4dec95424b7c3ebd1f2fc3dbbd5b925a33))
+
+### Performance Improvements
+
+- **theme:** 优化配置提供者 ([2b85ac5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2b85ac50cada6eddcdeacfa410c9a36d4395b375))
+- **theme:** 优化图标库加载和 ESLint 配置 ([c04c7ad](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c04c7ad62cf1924fadd4266408b1832ec4509953))
+
+### Docs
+
+- 删除 2-light.svg ([ac760f7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ac760f79f60041a2b8171f054943f6182e3ff243))
+- **CHANGELOG:** 1.4.0 版本发布 ([4ab3127](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/4ab31278c7d6ccb32515d2d7bb4bd8224bc324db))
+- **config:** 更新主题配置文档和 Issue 提交模板 ([352c67d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/352c67d264356edce684561ac9a1b6535dc4aaba))
+- **docs:** 更新文档内容 ([7e1d35f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7e1d35fef92d37c627a98037adfe23bccc7d25d4))
+
+### Code Refactoring
+
+- **config:** 重命名 fadeTransition 为 windowTransition ([c4c47ab](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c4c47abda1dd554c99989ee4191db66a7196669a))
+- **docs:** 优化文档注释和样式 ([1318123](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/131812321d7bf50c5bf52db07a784906bd4240e2))
+- **permalink:** 优化永久链接插件功能和结构 ([3ff375a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3ff375ad200f602f8e8d4f59d9b026ee564b3272))
+- **theme:** ♻️ 优化网络流量统计函数和优化组件文档使用说明 ([e9f5867](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e9f58673de626b02fbc37592257267f82594dc08))
+
+### Build System
+
+- **deps:** vitepress-plugin-permalink 1.1.4 版本发布 ([bba3838](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bba38383db3ae1fd1db2cd3d3154cae5fb62c576))
+
 ## [1.4.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.5...v1.4.0) (2025-08-11)
 
 ### Features
 
-- 代码块超过一定高度添加遮罩，点击查看更多展开全部代码 ([bbe3d65](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bbe3d6536af1cfb37576c7d07c77e32d7dd0804a))
-- **catalogue:** 支持自定义序号分隔符并优化目录解析 ([59bd019](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/59bd019b8248b48ed794569c3647310b0d7824b1))
-- **docAnalysis:** 统计服务提供商新增 vercount 并优化统计逻辑 ([3c48f1d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3c48f1d46469ba16baa784918e82ce855b21e79a))
-- **docs:** 新增部分新功能和修复部分问题 ([365370a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/365370a741e6d5efec1bea6409e51651eea948b2))
-- **docs:** 优化目录结构和侧边栏排序功能 ([7e4091a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7e4091a4624aaa65c5f6842a8e60a69d5552305d))
-- **plugin:** 升级插件版本并添加新功能 ([11bd85e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/11bd85e38d613c23c12267138b3953cf6d9d283c))
-- **sidebar:** 添加侧边栏展开/折叠触发器，新增 transition-duration 相关 var 变量 ([ba1751b](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ba1751b213e3329511efe0655e6e303a7d7fa37c))
-- **sidebar:** 支持自定义序号分隔符，fixes [#86](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/86) ([7ea83a7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7ea83a76d90ff0a930477133934bc2f9b671edbf))
-- **theme:** 新增回到顶部和滚动到评论区配置，并支持插槽覆盖 ([562fe72](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/562fe727855257587386df6227aa60de5a8ff29c))
-- **theme:** 优化代码块折叠功能并添加侧边栏触发器国际化支持 ([b3f767f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b3f767f3f4b099bad2c0414c94b3056c131b33a7))
+- 🚀 代码块超过一定高度添加遮罩，点击查看更多展开全部代码 ([bbe3d65](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bbe3d6536af1cfb37576c7d07c77e32d7dd0804a))
+- **catalogue:** 🚀 支持自定义序号分隔符并优化目录解析 ([59bd019](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/59bd019b8248b48ed794569c3647310b0d7824b1))
+- **docAnalysis:** 🚀 统计服务提供商新增 vercount 并优化统计逻辑 ([3c48f1d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3c48f1d46469ba16baa784918e82ce855b21e79a))
+- **docs:** 🚀 新增部分新功能和修复部分问题 ([365370a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/365370a741e6d5efec1bea6409e51651eea948b2))
+- **docs:** 🚀 优化目录结构和侧边栏排序功能 ([7e4091a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7e4091a4624aaa65c5f6842a8e60a69d5552305d))
+- **plugin:** 🚀 升级插件版本并添加新功能 ([11bd85e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/11bd85e38d613c23c12267138b3953cf6d9d283c))
+- **sidebar:** 🚀 添加侧边栏展开/折叠触发器，新增 transition-duration 相关 var 变量 ([ba1751b](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ba1751b213e3329511efe0655e6e303a7d7fa37c))
+- **sidebar:** 🚀 支持自定义序号分隔符，fixes [#86](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/86) ([7ea83a7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7ea83a76d90ff0a930477133934bc2f9b671edbf))
+- **theme:** 🚀 新增回到顶部和滚动到评论区配置，并支持插槽覆盖 ([562fe72](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/562fe727855257587386df6227aa60de5a8ff29c))
+- **theme:** 🚀 优化代码块折叠功能并添加侧边栏触发器国际化支持 ([b3f767f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b3f767f3f4b099bad2c0414c94b3056c131b33a7))
 
 ### Bug Fixes
 
 - 🐞 修复首页卡片栏插槽失效问题 ([ded0aca](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ded0aca7df3539bbc1cb561f8be24cac9f951225))
-- **theme:** 修复 articleAnalyze 组件的 teleport 配置不生效问题，fixes [#90](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90) ([507be0c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/507be0c18fde8ce838c9a64793f44d89fa930088))
-- **theme:** 修复进度条显示进度数值的样式 ([48d7214](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/48d7214b8d7475d8c436a89ef4e03fdfb1174856))
+- **theme:** 🐞 修复 articleAnalyze 组件的 teleport 配置不生效问题，fixes [#90](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/90) ([507be0c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/507be0c18fde8ce838c9a64793f44d89fa930088))
+- **theme:** 🐞 修复进度条显示进度数值的样式 ([48d7214](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/48d7214b8d7475d8c436a89ef4e03fdfb1174856))
 
 ### Docs
 
 - 📚 快速开始文档更新 ([cf906ed](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/cf906ed51e25469c7ae57c4316b4564fb185ec19))
 - 📚 使用文档更新 ([cbab646](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/cbab6461d4e1bd2218a9127f57bca215e111fdeb))
-- **case:** 更新案例展示页面并移除 TODO 事项 ([5006a1b](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5006a1be274b912a661fb350523d7af96dcd1070))
-- **README:** 更新效果图说明并添加官方文档链接 ([c36c028](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c36c028e95c91c2bbfc3b6379f94a09b33b3e145))
-- **README:** 添加文档首页截图 ([79105b5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/79105b5978d0de0d18218013106c72274eb32b2b))
-- **README:** 添加项目效果图和赞助支持内容 ([ab59a0c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ab59a0c0d07ecfa86784a3dc92d2699f8ff61410))
-- **README:** 添加英文版本并优化中文版本 ([61f8234](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/61f8234d8510e0b47b582a2c524b6b2e1fcfa80f))
+- **case:** 📚 更新案例展示页面并移除 TODO 事项 ([5006a1b](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/5006a1be274b912a661fb350523d7af96dcd1070))
+- **README:** 📚 更新效果图说明并添加官方文档链接 ([c36c028](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c36c028e95c91c2bbfc3b6379f94a09b33b3e145))
+- **README:** 📚 添加文档首页截图 ([79105b5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/79105b5978d0de0d18218013106c72274eb32b2b))
+- **README:** 📚 添加项目效果图和赞助支持内容 ([ab59a0c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ab59a0c0d07ecfa86784a3dc92d2699f8ff61410))
+- **README:** 📚 添加英文版本并优化中文版本 ([61f8234](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/61f8234d8510e0b47b582a2c524b6b2e1fcfa80f))
 
 ### Code Refactoring
 
-- **components:** 优化 HomeBanner 组件描述切换效果 ([a02a18e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a02a18eb6f18555d21ee318d6e2d1336b48de34a))
-- **components:** 优化多个组件的属性处理和代码结构 ([76f58dc](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/76f58dc68d94d1705cbed6e8cc7852d76fc9a7db))
-- **theme:** 重构侧边栏触发器样式和逻辑 ([bac82c9](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bac82c9cf4f8d24177b866f06ccd59bd3b093faf))
-- **theme:** 重构主题组件并优化样式 ([861e29c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/861e29c07b44dd850789282ef531d8b57cdd82a2))
+- **components:** ♻️ 优化 HomeBanner 组件描述切换效果 ([a02a18e](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a02a18eb6f18555d21ee318d6e2d1336b48de34a))
+- **components:** ♻️ 优化多个组件的属性处理和代码结构 ([76f58dc](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/76f58dc68d94d1705cbed6e8cc7852d76fc9a7db))
+- **theme:** ♻️ 重构侧边栏触发器样式和逻辑 ([bac82c9](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bac82c9cf4f8d24177b866f06ccd59bd3b093faf))
+- **theme:** ♻️ 重构主题组件并优化样式 ([861e29c](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/861e29c07b44dd850789282ef531d8b57cdd82a2))
 
 ## [1.3.6](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.5...v1.3.6) (2025-07-31)
 

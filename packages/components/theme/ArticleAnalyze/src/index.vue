@@ -96,7 +96,7 @@ const statisticsConfig = computed<NonNullable<DocAnalysis["statistics"]>>(() => 
 const usePageView = computed(() => !!statisticsConfig.value.provider && statisticsConfig.value.pageView);
 
 // 通过 busuanzi、vercount 等网站流量统计提供商获取访问量
-const { pagePv, isGet, request } = useUvPv(usePageView.value, statisticsConfig.value);
+const { pagePv, isGet, request } = useUvPv(false, statisticsConfig.value);
 
 const statisticsInfo = computed(() => ({ pagePv: pagePv.value, isGet: isGet.value }));
 
@@ -113,9 +113,13 @@ if (statisticsConfig.value.permalink && router.state?.permalinkPlugin) {
     };
   });
 } else {
-  watch(router.route, () => {
-    if (usePageView.value) request();
-  });
+  watch(
+    router.route,
+    () => {
+      if (usePageView.value) request();
+    },
+    { immediate: true }
+  );
 }
 </script>
 
