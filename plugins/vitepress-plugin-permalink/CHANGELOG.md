@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.1.6
+
+### Patch Changes
+
+- 修复浏览器前进后退仍然出现 404 页面问题
+
 ## 1.1.5
 
 ### Patch Changes
