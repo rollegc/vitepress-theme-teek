@@ -25,10 +25,11 @@ onBeforeMount(() => {
   if (filePath) {
     // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
     const targetUrl = site.value.base + filePath + search + hash;
+    history.replaceState(history.state || null, "", targetUrl);
     router.go(targetUrl);
 
     // 1s 后如果未成功跳转文件地址，则打开 404 页面
-    setTimeout(unDisableNotFoundPage, 4000);
+    setTimeout(unDisableNotFoundPage, 1000);
   } else unDisableNotFoundPage();
 });
 </script>
