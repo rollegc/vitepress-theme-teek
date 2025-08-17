@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import llmstxt from "vitepress-plugin-llms";
 // 本地 Teek 主题包引用（与 Teek 在线主题包引用 二选一）
 import { defineTeekConfig } from "../../packages/config";
 import { version } from "../../packages/teek/version";
@@ -204,6 +205,9 @@ export default defineConfig({
       text: "在 GitHub 上编辑此页",
       pattern: "https://github.com/Kele-Bingtang/vitepress-theme-teek/edit/master/docs/:path",
     },
+  },
+  vite: {
+    plugins: [llmstxt()],
   },
   // transformHtml: (code, id, context) => {
   //   if (context.page !== "404.md") return code;
