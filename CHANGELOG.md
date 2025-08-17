@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.4.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.4.0...v1.4.1) (2025-08-17)
+## [1.4.1](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.4.0...v1.4.1) (2025-08-17)
 
 ### Features
 
@@ -11,36 +11,36 @@ All notable changes to this project will be documented in this file. See [standa
 - **theme:** 🚀 添加页面全局 Loading 动画功能 ([2340009](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2340009e4961ab98f360755b12fe2e4d763d578b))
 - **theme:** 🚀 新增首页特性组件并优化相关配置 ([b10783f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/b10783f1226e18f5191276952793f1e64a781a9d))
 - **theme:** 🚀 新增自定义主题色功能 ([60f6f85](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/60f6f85a47902896e9f3bc6e76d4bc5cb1e392d3))
-- **theme:** 优化首次访问页面时的 404 问题处理 ([f38f6b7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/f38f6b7432126459ec69e7982dabbcdf1352cb97))
-- **theme:** 优化主题样式和功能 ([a478ba5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a478ba5054bae216cea786ffa2fd7dc0c0860326))
+- **theme:** 🚀 优化首次访问页面时的 404 问题处理 ([f38f6b7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/f38f6b7432126459ec69e7982dabbcdf1352cb97))
+- **theme:** 🚀 优化主题样式和功能 ([a478ba5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/a478ba5054bae216cea786ffa2fd7dc0c0860326))
 
 ### Bug Fixes
 
 - 🐞 修复打包失效问题 ([881ec37](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/881ec3712c695f8ea00d7a27a6a098f708bc9bf3))
-- **config:** 修复打包失效问题 ([88834c4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/88834c4dec95424b7c3ebd1f2fc3dbbd5b925a33))
+- **config:** 🐞 修复打包失效问题 ([88834c4](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/88834c4dec95424b7c3ebd1f2fc3dbbd5b925a33))
 
 ### Performance Improvements
 
-- **theme:** 优化配置提供者 ([2b85ac5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2b85ac50cada6eddcdeacfa410c9a36d4395b375))
-- **theme:** 优化图标库加载和 ESLint 配置 ([c04c7ad](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c04c7ad62cf1924fadd4266408b1832ec4509953))
+- **theme:** ⚡️ 优化配置提供者 ([2b85ac5](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/2b85ac50cada6eddcdeacfa410c9a36d4395b375))
+- **theme:** ⚡️ 优化图标库加载和 ESLint 配置 ([c04c7ad](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c04c7ad62cf1924fadd4266408b1832ec4509953))
 
 ### Docs
 
-- 删除 2-light.svg ([ac760f7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ac760f79f60041a2b8171f054943f6182e3ff243))
-- **CHANGELOG:** 1.4.0 版本发布 ([4ab3127](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/4ab31278c7d6ccb32515d2d7bb4bd8224bc324db))
-- **config:** 更新主题配置文档和 Issue 提交模板 ([352c67d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/352c67d264356edce684561ac9a1b6535dc4aaba))
-- **docs:** 更新文档内容 ([7e1d35f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7e1d35fef92d37c627a98037adfe23bccc7d25d4))
+- 📚 删除 2-light.svg ([ac760f7](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/ac760f79f60041a2b8171f054943f6182e3ff243))
+- **CHANGELOG:** 📚 1.4.0 版本发布 ([4ab3127](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/4ab31278c7d6ccb32515d2d7bb4bd8224bc324db))
+- **config:** 📚 更新主题配置文档和 Issue 提交模板 ([352c67d](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/352c67d264356edce684561ac9a1b6535dc4aaba))
+- **docs:** 📚 更新文档内容 ([7e1d35f](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/7e1d35fef92d37c627a98037adfe23bccc7d25d4))
 
 ### Code Refactoring
 
-- **config:** 重命名 fadeTransition 为 windowTransition ([c4c47ab](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c4c47abda1dd554c99989ee4191db66a7196669a))
-- **docs:** 优化文档注释和样式 ([1318123](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/131812321d7bf50c5bf52db07a784906bd4240e2))
-- **permalink:** 优化永久链接插件功能和结构 ([3ff375a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3ff375ad200f602f8e8d4f59d9b026ee564b3272))
+- **config:** ♻️ 重命名 fadeTransition 为 windowTransition ([c4c47ab](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/c4c47abda1dd554c99989ee4191db66a7196669a))
+- **docs:** ♻️ 优化文档注释和样式 ([1318123](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/131812321d7bf50c5bf52db07a784906bd4240e2))
+- **permalink:** ♻️ 优化永久链接插件功能和结构 ([3ff375a](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/3ff375ad200f602f8e8d4f59d9b026ee564b3272))
 - **theme:** ♻️ 优化网络流量统计函数和优化组件文档使用说明 ([e9f5867](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/e9f58673de626b02fbc37592257267f82594dc08))
 
 ### Build System
 
-- **deps:** vitepress-plugin-permalink 1.1.4 版本发布 ([bba3838](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bba38383db3ae1fd1db2cd3d3154cae5fb62c576))
+- **deps:** 📦️ vitepress-plugin-permalink 1.1.4 版本发布 ([bba3838](https://github.com/Kele-Bingtang/vitepress-theme-teek/commit/bba38383db3ae1fd1db2cd3d3154cae5fb62c576))
 
 ## [1.4.0](https://github.com/Kele-Bingtang/vitepress-theme-teek/compare/v1.3.5...v1.4.0) (2025-08-11)
 
