@@ -109,9 +109,6 @@ export default function usePermalink(executeBeforeMountFn = true) {
       // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
       const filePath = teyGetFilePathByPermalink(pathname);
 
-      console.log("onBeforeRouteChange -> pathname", pathname);
-      console.log("onBeforeRouteChange -> filePath", filePath);
-
       if (filePath) {
         const targetUrl = base + filePath + search + hash;
         await router.go(targetUrl);

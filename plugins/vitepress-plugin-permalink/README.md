@@ -23,6 +23,17 @@ yarn add vitepress-plugin-permalink
 npm install vitepress-plugin-permalink
 ```
 
+插件提供两种方式实现永久链接：
+
+1. `Proxy` 方式
+2. `Rewrites` 方式
+
+两者只能二选一，如果都配置，则以 `Rewrites` 方式为主。
+
+### Proxy
+
+Proxy 方式不会影响文件路径，而是在访问文件路径时，通过代理（拦截）转换 `Permalink`，因此既可以通过文件路径访问，也可以通过 `Permalink` 访问。
+
 添加 `vitepress-plugin-permalink` 插件到 `.vitepress/config.ts`
 
 ```typescript
@@ -39,6 +50,25 @@ export default defineConfig({
 > 说明：该插件仅限项目启动时生效，已改动或新添加的 Markdown 需要重启项目才能生效。
 
 插件默认忽略 `["node_modules", "dist", ".vitepress", "public"]` 目录下的文件，且只扫描 Markdown 文档。
+
+### Rewrites
+
+插件于 `v1.2.0` 提供 `createRewrites` 方法，用于创建 [rewrites](https://vitepress.dev/zh/guide/routing#route-rewrites)，通过该方式可以实现永久链接功能。
+
+如果使用该方式，则 `Proxy` 相关功能都失效，如 `usePermalink` 函数。
+
+`Rewrites` 方式在项目运行或者构建时，通过改变文件路径达到永久链接功能，你可以在构建的 `dist` 文件夹查看修改后的文件路径。
+
+```typescript
+import { defineConfig } from "vitepress";
+import { createRewrites } from "vitepress-plugin-permalink";
+
+export default defineConfig({
+  rewrites: createRewrites(),
+});
+```
+
+注意：该方式会打乱原来的文件结构，因此侧边栏不再是基于文件路径配置，而是需要基于 `frontmatter.permalink` 属性配置。
 
 ## 🛠️ Options
 
