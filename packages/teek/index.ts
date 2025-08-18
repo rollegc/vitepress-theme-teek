@@ -52,7 +52,7 @@ export default {
     // 处理站点分析
     processSiteAnalytics(themeConfig);
     // 处理永久链接导致 404 问题
-    await processPermalinkNotFoundWhenFirstLoaded({ siteData, router });
+    if (themeConfig.permalinks) await processPermalinkNotFoundWhenFirstLoaded({ siteData, router });
   },
 } as Omit<DefaultThemeType, "enhanceApp"> & {
   extends: DefaultThemeType;

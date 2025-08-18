@@ -22,6 +22,9 @@ onBeforeMount(async () => {
   const { search, hash } = new URL(window.location.href);
   const filePath = teyGetFilePathByPermalink(router.route.path);
 
+  console.log("notFound -> path", router.route.path);
+  console.log("notFound -> filePath", filePath);
+
   if (filePath) {
     // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
     const targetUrl = site.value.base + filePath + search + hash;
@@ -29,7 +32,7 @@ onBeforeMount(async () => {
     await router.go(targetUrl);
 
     // 1s 后如果未成功跳转文件地址，则打开 404 页面
-    setTimeout(unDisableNotFoundPage, 1000);
+    setTimeout(unDisableNotFoundPage, 3000);
   } else unDisableNotFoundPage();
 });
 </script>
