@@ -11,7 +11,7 @@
     "vitepress-plugin-doc-analysis": "catalog:",
     "vitepress-plugin-file-content-loader": "catalog:",
     "vitepress-plugin-md-h1": "catalog:",
-    "vitepress-plugin-permalink": "workspace:*",
+    "vitepress-plugin-permalink": "catalog:",
     "vitepress-plugin-sidebar-resolve": "catalog:"
   },
   "devDependencies": {

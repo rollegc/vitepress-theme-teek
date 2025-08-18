@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.2.0
+
+### Minor Changes
+
+- 新增 Rewrites 方式生成永久链接，优化 Proxy 方式 404 问题
+
 ## 1.1.6
 
 ### Patch Changes

@@ -57,6 +57,9 @@ catalogs:
     vitepress-plugin-md-h1:
       specifier: ^1.0.11
       version: 1.0.11
+    vitepress-plugin-permalink:
+      specifier: ^1.2.0
+      version: 1.2.0
     vitepress-plugin-sidebar-resolve:
       specifier: ^1.1.2
       version: 1.1.2
@@ -327,8 +330,8 @@ importers:
         specifier: 'catalog:'
         version: 1.0.11
       vitepress-plugin-permalink:
-        specifier: workspace:*
-        version: link:../../plugins/vitepress-plugin-permalink
+        specifier: 'catalog:'
+        version: 1.2.0(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
       vitepress-plugin-sidebar-resolve:
         specifier: 'catalog:'
         version: 1.1.2(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
@@ -5037,6 +5040,11 @@ packages:
 
   vitepress-plugin-md-h1@1.0.11:
     resolution: {integrity: sha512-oZhS8NwsMk+chZBul4RzvbEUdDEVxJXorgLHf2S2U/eAyq8XENXFLhpGa3MKV0rVVA4WiN5K5eBv4ZOCmzxI7A==}
+
+  vitepress-plugin-permalink@1.2.0:
+    resolution: {integrity: sha512-dVsayR4npk7dal+7Khox6Im8Mt3c2xez/vDHITHc8r2C2o3+SUf3uo4TcHB0EoZwmH0njFADt/Flpp/ly4FPWQ==}
+    peerDependencies:
+      vitepress: ^1.6.3
 
   vitepress-plugin-sidebar-resolve@1.1.2:
     resolution: {integrity: sha512-73Xl2hRFfAR+kf2GGMuYC96uN5VXsiFJjTezGD8CyC5kZzaU3hVxr+FkGbxk3CPynDaDNyyRJEu/LYYvD9dv9Q==}
@@ -10007,6 +10015,12 @@ snapshots:
   vitepress-plugin-md-h1@1.0.11:
     dependencies:
       gray-matter: 4.0.3
+
+  vitepress-plugin-permalink@1.2.0(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
+    dependencies:
+      gray-matter: 4.0.3
+      picocolors: 1.1.1
+      vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)
 
   vitepress-plugin-sidebar-resolve@1.1.2(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
     dependencies:
