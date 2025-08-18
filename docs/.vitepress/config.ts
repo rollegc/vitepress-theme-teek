@@ -45,7 +45,6 @@ const teekConfig = defineTeekConfig({
     sidebarOption: {
       initItems: false,
     },
-    permalink: false,
   },
   markdown: {
     demo: {

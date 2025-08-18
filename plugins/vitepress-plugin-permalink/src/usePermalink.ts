@@ -34,11 +34,11 @@ export default function usePermalink(executeBeforeMountFn = true) {
 
     if (permalink) {
       // 存在 permalink 则在 URL 替换
-      return nextTick(() => {
+      return nextTick(async () => {
         const to = base.replace(/\/$/, "") + permalink + search + hash;
         history.replaceState(history.state || null, "", to);
 
-        router.onAfterUrlLoad?.(to);
+        await router.onAfterUrlLoad?.(to);
       });
     }
 
@@ -50,7 +50,7 @@ export default function usePermalink(executeBeforeMountFn = true) {
       // router.go 前清除当前历史记录，防止 router.go 后浏览器返回时回到当前历史记录时，又重定向过去，如此反复循环
       history.replaceState(history.state || null, "", targetUrl);
       await router.go(targetUrl);
-    } else router.onAfterUrlLoad?.(href);
+    } else await router.onAfterUrlLoad?.(href);
   };
 
   if (executeBeforeMountFn) {
@@ -108,6 +108,9 @@ export default function usePermalink(executeBeforeMountFn = true) {
       const { pathname, search, hash } = new URL(href, fakeHost);
       // 尝试获取文件路径（当 pathname 为 permalink 时才获取成功）
       const filePath = teyGetFilePathByPermalink(pathname);
+
+      console.log("onBeforeRouteChange -> pathname", pathname);
+      console.log("onBeforeRouteChange -> filePath", filePath);
 
       if (filePath) {
         const targetUrl = base + filePath + search + hash;
