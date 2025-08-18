@@ -10,6 +10,8 @@
 
 ### 已完成
 
+- 主题增强面板的主题色 h3 标题添加 `margin-bottom`
+
 ## AR
 
 - 修复浏览器报错：`Hydration completed but contains mismatches.`，官方解决方案：`https://cn.vuejs.org/guide/scaling-up/ssr#hydration-mismatch`

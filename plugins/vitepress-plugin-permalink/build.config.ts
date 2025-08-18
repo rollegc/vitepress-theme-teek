@@ -6,7 +6,7 @@ export default defineBuildConfig({
     "src/index",
     "src/usePermalink",
     "src/rewrites",
-    { builder: "mkdist", input: "src/components", outDir: "dist/components" },
+    { builder: "mkdist", input: "src/components", outDir: "dist/components", pattern: ["**/*.vue"], loaders: ["vue"] },
   ],
   clean: true,
   declaration: true,

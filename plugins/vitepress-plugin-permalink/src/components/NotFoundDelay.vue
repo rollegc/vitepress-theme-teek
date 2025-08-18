@@ -28,7 +28,7 @@ onBeforeMount(async () => {
     history.replaceState(history.state || null, "", targetUrl);
     await router.go(targetUrl);
 
-    // 1s 后如果未成功跳转文件地址，则打开 404 页面
+    // 3s 后如果未成功跳转文件地址，则打开 404 页面
     setTimeout(unDisableNotFoundPage, 3000);
   } else unDisableNotFoundPage();
 });
