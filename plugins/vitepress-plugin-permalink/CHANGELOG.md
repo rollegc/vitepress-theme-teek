@@ -1,5 +1,11 @@
 # vitepress-plugin-permalink
 
+## 1.2.1
+
+### Patch Changes
+
+- 修复 unbuild 构建 Vue 组件失效问题
+
 ## 1.2.0
 
 ### Minor Changes
