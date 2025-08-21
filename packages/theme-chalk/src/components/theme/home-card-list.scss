@@ -8,4 +8,8 @@
 
 @include b(home-card-list) {
   gap: getCssVar(home-info-gap);
+
+  @include e(transition) {
+    gap: getCssVar(home-info-gap);
+  }
 }
