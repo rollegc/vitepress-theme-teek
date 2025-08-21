@@ -14,7 +14,7 @@ export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public
  * @param  option 配置项
  * @param prefix 指定前缀，在生成侧边栏的 link 时，会自动加上前缀
  */
-export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarMulti => {
+export default (option: SidebarOption = {}, prefix = "/") => {
   const {
     path,
     ignoreList = [],
@@ -28,19 +28,30 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     indexSeparator,
     prefixTransform,
     suffixTransform,
+    type = "object",
+    rootTitle = "Root",
   } = option;
   if (!path) return {};
+
+  const isSidebarObject = type === "object";
 
   // 确保 prefix 始终都有 / 结尾
   prefix = prefix.replace(/\/$/, "") + "/";
 
-  const sidebar: DefaultTheme.SidebarMulti = {};
+  const sidebarObj: DefaultTheme.SidebarMulti = {};
+  const sidebarArray: DefaultTheme.SidebarItem[] = [];
   // 获取指定根目录下的所有目录绝对路径
   const dirPaths = readDirPaths(path, ignoreList);
 
   // 只扫描根目录的 md 文件，且不扫描 index.md（首页文档）
   const key = prefix === "/" ? prefix : `/${prefix}`;
-  if (scannerRootMd) sidebar[key] = createSidebarItems(path, { ...option, ignoreIndexMd: true }, key, scannerRootMd);
+  if (scannerRootMd) {
+    const sidebarItems = createSidebarItems(path, { ...option, ignoreIndexMd: true }, key, scannerRootMd);
+    if (sidebarItems?.length) {
+      if (isSidebarObject) sidebarObj[key] = sidebarItems;
+      else sidebarArray.push({ text: rootTitle, items: sidebarItems });
+    }
+  }
 
   // 遍历根目录下的每个子目录，生成对应的侧边栏数据
   dirPaths.forEach(dirPath => {
@@ -60,20 +71,28 @@ export default (option: SidebarOption = {}, prefix = "/"): DefaultTheme.SidebarM
     // 标题添加前缀和后缀
     const sidebarPrefix = (info.prefix && (prefixTransform?.(info.prefix) ?? info.prefix)) ?? "";
     const sidebarSuffix = (info.suffix && (suffixTransform?.(info.suffix) ?? info.suffix)) ?? "";
-    const text = sidebarPrefix + (initItemsText ? mdTitle || title : "") + sidebarSuffix;
+    const text = sidebarPrefix + (mdTitle || title) + sidebarSuffix;
 
-    sidebar[`${key}${fileName}/`] = initItems
-      ? [
-          {
-            text,
-            collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
-            items: sidebarItems,
-          },
-        ]
-      : sidebarItems;
+    const sidebarItem = {
+      text,
+      collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
+      items: sidebarItems,
+    };
+
+    // 数组类型侧边栏
+    if (isSidebarObject) {
+      // 对象类型侧边栏
+      sidebarObj[`${key}${fileName}/`] = initItems
+        ? [{ ...sidebarItem, text: initItemsText ? text : "" }]
+        : sidebarItems;
+    } else sidebarArray.push(sidebarItem);
   });
 
-  return sidebarResolved?.(sidebar) ?? sidebar;
+  const finalSidebar = isSidebarObject ? sidebarObj : sidebarArray;
+
+  console.log(finalSidebar);
+
+  return sidebarResolved?.(finalSidebar) ?? finalSidebar;
 };
 
 /**

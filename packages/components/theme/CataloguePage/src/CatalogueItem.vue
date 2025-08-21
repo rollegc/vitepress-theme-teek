@@ -26,7 +26,7 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
       />
     </a>
 
-    <template v-else-if="item.children.length > 0">
+    <template v-else-if="item.children.length">
       <div :id="item.title" :class="nsSub.e('title')" role="group" :aria-labelledby="`${item.title}-label`">
         <a :href="`#${item.title}`" class="anchor" :aria-label="item.title">#</a>
         <span :id="`${item.title}-label`">{{ `${index}. ${item.title}` }}</span>
