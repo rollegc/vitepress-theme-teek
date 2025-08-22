@@ -164,9 +164,9 @@ export default defineConfig({
       {
         text: "资源",
         items: [
-          { text: "案例", link: "/case" },
-          { text: "常见问题", link: "/theme/qa" },
-          { text: "功能拓展", link: "/expand/intro" },
+          { text: "案例", link: "/resources/case" },
+          { text: "常见问题", link: "/resources/qa" },
+          { text: "功能拓展", link: "/resources/expand/intro" },
         ],
       },
       {

@@ -11,7 +11,7 @@ import ContributeChart from "./ContributeChart.vue";
 import NotFound from "./404.vue";
 
 const ns = "layout-provider";
-const { frontmatter } = useData();
+const { frontmatter, theme } = useData();
 
 // 默认文档风
 const currentStyle = ref("doc");

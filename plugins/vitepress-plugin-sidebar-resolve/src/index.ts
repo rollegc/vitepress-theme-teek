@@ -7,7 +7,7 @@ import createRewritesSidebar from "./rewritesToSidebar";
 import logger from "./log";
 
 export * from "./types";
-export * from "./util";
+export * from "./utils";
 
 export default function VitePluginVitePressSidebarResolve(option: SidebarOption = {}): Plugin & { name: string } {
   let isExecute = false;
@@ -41,12 +41,12 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       const {
         site: { themeConfig = {}, locales = {} },
         srcDir,
-        userConfig,
+        rewrites: rewritesObj,
       } = config.vitepress;
 
       const { path, ignoreList, localeRootDir, type = "object", resolveRule = "filePath" } = option;
       const baseDir = path ? join(srcDir, path) : srcDir;
-      const rewrites = userConfig?.rewrites || {};
+      const rewrites = rewritesObj.map || {};
 
       // 如果 指定 rewrites 规则，但是 rewrites 不存在，则走 filePath 逻辑
       const isFilePathRule =
@@ -84,19 +84,23 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       else if (isRewritesRule) {
         // 如果不是多语言，直接自动生成结构化侧边栏
         if (!localesKeys.length) {
-          return setSideBar(themeConfig, createRewritesSidebar(rewrites, option), type);
+          return setSideBar(themeConfig, createRewritesSidebar(rewrites, { ...option, path: baseDir }), type);
         }
 
         // 国际化处理，针对每个语言的目录进行单独的扫描（除了 root）
         localesKeys.forEach(localesKey => {
-          const sidebar = createRewritesSidebar(rewrites, { ...option, matchPrefixAndRemove: localesKey });
+          const sidebar = createRewritesSidebar(rewrites, { ...option, path: `${baseDir}/${localesKey}` }, localesKey);
           setSideBar(locales[localesKey].themeConfig, sidebar, type);
         });
 
         // 如果指定了 root 的目录，则扫描指定目录
         const rootDir = localeRootDir ? `/${localeRootDir}` : "";
         // 对 root 根目录的 sidebar 进行单独的扫描，且不扫描其他语言目录
-        const rootSideBar = createRewritesSidebar(rewrites, { ...option, matchPrefixAndRemove: rootDir });
+        const rootSideBar = createRewritesSidebar(rewrites, {
+          ...option,
+          path: `${baseDir}${rootDir}`,
+          ignoreList: [...(ignoreList || []), ...localesKeys],
+        });
         setSideBar(locales["root"].themeConfig, rootSideBar, type);
       }
     },

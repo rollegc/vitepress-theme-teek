@@ -4,13 +4,18 @@ import { basename, extname, join, resolve } from "node:path";
 import matter from "gray-matter";
 import { getTitleFromMarkdown, isIllegalIndex, isMarkdownFile, isSome } from "./util";
 
+interface VitePressConfig {
+  rewrites?: Record<string, string>;
+  cleanUrls?: boolean;
+}
+
 // 默认忽略的文件夹列表
 export const DEFAULT_IGNORE_DIR = ["node_modules", "dist", ".vitepress", "public"];
 
 // 目录页数据
 const catalogueInfo: CatalogueInfo[] = [];
 
-export default (option: CatalogueOption = {}) => {
+export default (option: CatalogueOption = {}, vitepressConfig: VitePressConfig = {}) => {
   const { path = "", ignoreList = [] } = option;
   if (!path) return [];
 
@@ -18,7 +23,7 @@ export default (option: CatalogueOption = {}) => {
   const dirPaths = readDirPaths(path, ignoreList);
 
   // 遍历根目录下的每个子目录
-  dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath)));
+  dirPaths.forEach(dirPath => scannerMdFile(dirPath, option, basename(dirPath), vitepressConfig));
 
   return catalogueInfo;
 };
@@ -51,7 +56,7 @@ const readDirPaths = (sourceDir: string, ignoreList: CatalogueOption["ignoreList
  * @param option 配置项
  * @param prefix 目录前缀，每次递归都加前端目录名
  */
-const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
+const scannerMdFile = (root: string, option: CatalogueOption, prefix = "", vitepressConfig: VitePressConfig = {}) => {
   const { path: srcDir = "", ignoreList = [] } = option;
   const ignoreListAll = [...DEFAULT_IGNORE_DIR, ...ignoreList];
   // 读取目录名（文件和文件夹）
@@ -64,7 +69,7 @@ const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
 
     if (statSync(filePath).isDirectory()) {
       // 是文件夹目录
-      scannerMdFile(filePath, option, `${prefix}/${dirOrFilename}`);
+      scannerMdFile(filePath, option, `${prefix}/${dirOrFilename}`, vitepressConfig);
     } else {
       // 是文件
       if (!isMarkdownFile(dirOrFilename)) return;
@@ -79,7 +84,7 @@ const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
         catalogueInfo.push({
           filePath: `${prefix}/${filename}`,
           path,
-          catalogues: createCatalogueList(join(srcDir, path), option, `/${path}/`),
+          catalogues: createCatalogueList(join(srcDir, path), option, `/${path}/`, vitepressConfig),
         });
       }
     }
@@ -92,7 +97,12 @@ const scannerMdFile = (root: string, option: CatalogueOption, prefix = "") => {
  * @param option 配置项
  * @param prefix 目录前缀，每次递归都加前端目录名
  */
-const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"): CatalogueItem[] => {
+const createCatalogueList = (
+  root: string,
+  option: CatalogueOption,
+  prefix = "/",
+  vitepressConfig: VitePressConfig = {}
+): CatalogueItem[] => {
   if (!existsSync(root)) {
     console.warn(`'${root}' 路径不存在，将忽略该目录页的生成`);
     return [];
@@ -116,7 +126,7 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
 
       const catalogueItem = {
         title: mdTitle || title,
-        children: createCatalogueList(filePath, option, `${prefix}${dirOrFilename}/`),
+        children: createCatalogueList(filePath, option, `${prefix}${dirOrFilename}/`, vitepressConfig),
         frontmatter: {},
       };
 
@@ -138,10 +148,14 @@ const createCatalogueList = (root: string, option: CatalogueOption, prefix = "/"
       // title 获取顺序：md 文件 frontmatter.title > md 文件一级标题 > md 文件名
       const mdTitle = titleFormMd ? getTitleFromMarkdown(mdContent) : "";
       const finalTitle = frontmatterTitle || mdTitle || title;
+      const filePth = prefix + name;
+
+      const { rewrites = {}, cleanUrls } = vitepressConfig;
 
       const catalogueItem = {
         title: finalTitle,
-        link: prefix + name,
+        url:
+          (rewrites[`${filePth.replace(/^\//, "")}.md`].replace(/\.md$/, "") || filePath) + (cleanUrls ? "" : ".html"),
         frontmatter,
       };
 

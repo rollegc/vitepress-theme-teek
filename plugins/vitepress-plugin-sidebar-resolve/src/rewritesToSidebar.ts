@@ -1,325 +1,329 @@
 import type { DefaultTheme } from "vitepress";
-import type { SidebarOption } from "./types";
+import type { DirectoryStructure, SidebarOption } from "./types";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
+import matter from "gray-matter";
+import { getTitleFromMarkdown, isIllegalIndex, isSome } from "./utils";
+import { getInfoFromMarkdownDir, resolveFileName } from "./nodeHelper";
+import logger from "./log";
 
 /**
- * 根据 VitePress 的 rewrites 配置生成 sidebar
+ * 生成基于 rewrites 生成侧边栏数据
  *
- * 规则：
- * rewrites 格式为 a/b.md: c/d/e.md，key 为本地文件路径，value 为重写后的运行文件路径
- *
- * 根据本地文件路径生成 sidebar：xx/xx.md 为 [{text: "a", items: [{text: "b", link: "/c/d/e" }]}]，其中 link 为运行文件路径
- *
- * 如果为对象形式，则对象的 key 为运行文件路径第一个 / 前路径，如 {/c/: [{text: "a", items: [{text: "b", link: "/c/d/e" }]}]}
+ * @param rewrites VitePress rewrites 配置
+ * @param option Sidebar 配置选项
+ * @param prefix 前缀路径
  */
+export default function createRewritesSidebar(
+  rewrites: Record<string, string> = {},
+  option: SidebarOption = {},
+  prefix = "/"
+): DefaultTheme.SidebarMulti | DefaultTheme.SidebarItem[] {
+  const {
+    path,
+    ignoreList = [],
+    scannerRootMd = true,
+    collapsed,
+    titleFormMd = false,
+    initItems = true,
+    initItemsText = false,
+    sidebarResolved,
+    ignoreWarn = false,
+    indexSeparator,
+    prefixTransform,
+    suffixTransform,
+    type = "object",
+    rootTitle = "Root",
+  } = option;
 
-/**
- * 重写规则映射接口
- */
-type Rewrites = Record<string, string>;
+  const isSidebarObject = type === "object";
+  if (!path) return isSidebarObject ? {} : [];
 
-/**
- * 对象格式 sidebar 的路径映射项
- */
-interface PathMapItem {
-  /** 处理后的 key 路径部分（已去除序号和 .md 扩展名） */
-  keyPaths: string[];
-  /** rewrites 的 value */
-  valuePath: string;
-  /** 完整的链接路径 */
-  link: string;
+  prefix = prefix.replace(/\/$/, "") + "/";
+
+  // 转换 rewrites 为目录结构
+  const dirStructure = buildDirectoryStructure(rewrites);
+
+  const sidebarObj: DefaultTheme.SidebarMulti = {};
+  const sidebarArray: DefaultTheme.SidebarItem[] = [];
+
+  // 处理根路径下的文件（非目录）
+  if (scannerRootMd) {
+    const key = prefix === "/" ? prefix : `/${prefix}`;
+    const rootSidebarItems = createSidebarItems(
+      dirStructure,
+      path,
+      { ...option, ignoreIndexMd: true },
+      key,
+      scannerRootMd
+    );
+
+    if (rootSidebarItems.length > 0) {
+      if (isSidebarObject) sidebarObj[key] = rootSidebarItems;
+      else sidebarArray.push({ text: rootTitle, items: rootSidebarItems });
+    }
+  }
+
+  // 处理根目录下的一级子目录
+  Object.entries(dirStructure).forEach(([dirName, dirOrFileInfo]) => {
+    // 如果是文件（根路径下的文件），则不处理
+    if (typeof dirOrFileInfo === "string") return;
+
+    const dirPath = `${prefix}${dirName}/`;
+    const dirRelativePath = join(path, dirPath);
+
+    if (!existsSync(dirRelativePath)) return;
+    if (!isSome(ignoreList, dirName) && !statSync(dirRelativePath).isDirectory()) return;
+
+    // 获取 rewrites 的 value 的第一个 / 前内容
+    const key = Object.keys(rewrites).find(item => item.startsWith(dirName));
+    if (!key) return;
+
+    const sidebarItems = createSidebarItems(dirOrFileInfo, dirRelativePath, option, dirPath);
+
+    if (!ignoreWarn && sidebarItems.length === 0) {
+      return logger.warn(`该目录 '${dirName}' 内部没有任何文件或文件序号出错，将忽略生成对应侧边栏`);
+    }
+
+    const { name, title } = resolveFileName(dirName, dirRelativePath, indexSeparator);
+    const info = getInfoFromMarkdownDir(path, dirName);
+    const mdTitle = titleFormMd ? info.title : "";
+    // 标题添加前缀和后缀
+    const sidebarPrefix = (info.prefix && (prefixTransform?.(info.prefix) ?? info.prefix)) ?? "";
+    const sidebarSuffix = (info.suffix && (suffixTransform?.(info.suffix) ?? info.suffix)) ?? "";
+    const text = sidebarPrefix + (mdTitle || title) + sidebarSuffix;
+
+    const sidebarItem = {
+      text,
+      collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
+      items: sidebarItems,
+    };
+
+    if (isSidebarObject) {
+      const path = rewrites[key].split("/")[0];
+      sidebarObj[`/${path}/`] = initItems ? [{ ...sidebarItem, text: initItemsText ? text : "" }] : sidebarItems;
+    } else sidebarArray.push(sidebarItem);
+  });
+
+  const finalSidebar = isSidebarObject ? sidebarObj : sidebarArray;
+  return sidebarResolved?.(finalSidebar) ?? finalSidebar;
 }
 
-type RewritesOptions = SidebarOption & {
-  /**
-   * 只处理指定的前缀数据，匹配成功则去除，用于国际化
-   * 如：{ zh/01.指南/01.简介/01.简介.md': 'zh/guide/intro.md' }，且 matchPrefixAndRemove 为 zh
-   * 则解析成 { '01.指南/01.简介/01.简介.md': 'guide/intro.md' }
-   */
-  matchPrefixAndRemove?: string;
-};
-
-export default (rewrites: Rewrites, options: RewritesOptions) => {
-  const { type = "object", matchPrefixAndRemove = "", sidebarResolved } = options;
-
-  // 如果指定了 matchPrefixAndRemove，则过滤出匹配前缀的重写规则
-  let filteredRewrites = rewrites;
-  if (matchPrefixAndRemove) {
-    filteredRewrites = filterRewritesByPrefix(rewrites, matchPrefixAndRemove);
-  }
-
-  const finalSidebar =
-    type === "object" ? buildObjectSidebar(filteredRewrites, options) : buildArraySidebar(filteredRewrites, options);
-
-  return sidebarResolved?.(finalSidebar) ?? finalSidebar;
-};
-
 /**
- * 根据前缀过滤重写规则
- * @param rewrites 重写规则
- * @param prefix 要匹配的前缀，如 "zh"
- * @returns 过滤后的重写规则
+ * 将目录映射为对应的侧边栏配置数据，处理成 VitePress 格式
+ *
+ * @param structure 目录结构树
+ * @param root 文件/文件夹的根目录绝对路径
+ * @param option 配置项
+ * @param prefix 记录的文件/文件夹路径（包含刚进入方法时的 root 目录），确保 prefix 始终都有 / 结尾
+ * @param onlyScannerRootMd 是否只扫描根目录下的 md 文件，如果为 false，则只递归扫描根目录下的所有子目录文件（不包含根目录文件），如果为 true，则只扫描根目录的文件
  */
-const filterRewritesByPrefix = (rewrites: Rewrites, prefix: string) => {
-  const filtered: Rewrites = {};
+const createSidebarItems = (
+  structure: DirectoryStructure,
+  root: string,
+  option: SidebarOption,
+  prefix = "/",
+  onlyScannerRootMd = false
+): DefaultTheme.SidebarItem[] => {
+  const {
+    collapsed,
+    ignoreList = [],
+    ignoreIndexMd = false,
+    fileIndexPrefix = false,
+    sidebarItemsResolved,
+    beforeCreateSidebarItems,
+    titleFormMd = false,
+    ignoreWarn = false,
+    sort = true,
+    defaultSortNum = 9999,
+    sortNumFromFileName = false,
+    indexSeparator,
+    prefixTransform,
+    suffixTransform,
+  } = option;
 
-  for (const [key, value] of Object.entries(rewrites)) {
-    // 检查 value 是否以指定前缀开头
-    const cleanValue = value.replace(/\.md$/, "");
-    const valueParts = cleanValue.split("/").filter(part => part.length > 0);
+  const ignoreListAll = [...ignoreList];
+  // 结构化文章侧边栏数据，以文件夹的序号为数字下标
+  let sidebarItems: DefaultTheme.SidebarItem[] = [];
+  // 存储没有序号的文件，最终生成 sidebarItems 的时候，将这些文件放到最后面
+  const sidebarItemsNoIndex: DefaultTheme.SidebarItem[] = [];
+  const entries = Object.entries(beforeCreateSidebarItems?.(structure) || structure);
 
-    if (valueParts.length > 0 && valueParts[0] === prefix) filtered[key] = value;
-  }
+  entries.forEach(([dirOrFilename, dirOrFileInfo]) => {
+    if (isSome(ignoreListAll, dirOrFilename)) return;
 
-  return filtered;
-};
+    const filePath = join(root, dirOrFilename);
+    if (!existsSync(filePath)) return;
 
-/**
- * 构建对象格式的 sidebar
- * @param rewrites 重写规则
- * @param prefix 要移除的前缀
- * @returns 对象格式的 sidebar
- */
-const buildObjectSidebar = (rewrites: Rewrites, options: RewritesOptions) => {
-  const { matchPrefixAndRemove: prefix = "", initItems = true, initItemsText = false } = options;
+    const { index: indexStr, title, type, name } = resolveFileName(dirOrFilename, filePath, indexSeparator);
+    const index = parseInt(indexStr as string, 10);
 
-  // 用于存储处理后的路径信息
-  const pathMap: Record<string, PathMapItem[]> = {};
-
-  // 遍历所有重写规则，处理 key 和 value
-  for (const [key, value] of Object.entries(rewrites)) {
-    // 处理 key（本地文件路径） - 移除 .md 扩展名并按 / 分割
-    const cleanKeyPath = key.replace(/\.md$/, "");
-    const keyParts = cleanKeyPath.split("/").filter(part => part.length > 0);
-
-    // 处理 value（重写后的运行路径）
-    const cleanValuePath = removePrefixFromPath(value, prefix);
-    const valueParts = cleanValuePath.split("/").filter(part => part.length > 0);
-
-    if (valueParts.length > 0) {
-      const firstLevel = valueParts[0];
-      const remainingKeyParts = keyParts.map(part => extractTextFromKeyPart(part));
-
-      if (!pathMap[firstLevel]) pathMap[firstLevel] = [];
-
-      pathMap[firstLevel].push({
-        keyPaths: remainingKeyParts,
-        valuePath: value,
-        link: `/${cleanValuePath}`,
-      });
+    if (!ignoreWarn && fileIndexPrefix && isIllegalIndex(index)) {
+      logger.warn(`该文件 '${dirOrFilename}' 序号出错，请填写正确的序号`);
+      return;
     }
-  }
 
-  const result: DefaultTheme.SidebarMulti = {};
+    if (!onlyScannerRootMd && statSync(filePath).isDirectory() && typeof dirOrFileInfo === "object") {
+      // 是文件夹目录
+      const info = getInfoFromMarkdownDir(root, dirOrFilename);
+      const mdTitle = titleFormMd ? info.title : "";
+      // 标题添加前缀和后缀
+      const sidebarPrefix = (info.prefix && (prefixTransform?.(info.prefix) ?? info.prefix)) ?? "";
+      const sidebarSuffix = (info.suffix && (suffixTransform?.(info.suffix) ?? info.suffix)) ?? "";
+      const text = sidebarPrefix + (mdTitle || title) + sidebarSuffix;
+      const childSidebarItems = createSidebarItems(dirOrFileInfo, filePath, option, `${prefix}${dirOrFilename}/`);
 
-  for (const [firstLevel, paths] of Object.entries(pathMap)) {
-    const sidebarItems = buildObjectSidebarItems(paths, options);
-
-    if (!initItemsText && sidebarItems.length === 1) sidebarItems[0].text = "";
-
-    result[`/${firstLevel}/`] = initItems
-      ? sidebarItems
-      : sidebarItems.length > 1
-        ? sidebarItems
-        : (sidebarItems[0].items ?? sidebarItems);
-  }
-
-  console.log(result);
-  return result;
-};
-
-/**
- * 构建对象格式的 sidebar 项目列表
- * @param paths 路径数组
- * @returns sidebar 项目列表
- */
-const buildObjectSidebarItems = (paths: PathMapItem[], options: RewritesOptions) => {
-  const { collapsed, sidebarItemsResolved, prefixTransform, suffixTransform } = options;
-
-  const sidebarItems: DefaultTheme.SidebarItem[] = [];
-
-  // 处理每个路径
-  for (const path of paths) {
-    const { keyPaths, valuePath, link } = path;
-
-    if (keyPaths.length === 0) {
-      // 如果没有更多层级，则跳过
-      continue;
-    } else if (keyPaths.length === 1) {
-      const prefix = prefixTransform?.(keyPaths[0]) ?? "";
-      const suffix = suffixTransform?.(keyPaths[0]) ?? "";
-      const text = prefix + keyPaths[0] + suffix;
-
-      sidebarItems.push({
+      let sidebarItem: Record<string, any> = {
         text,
-        link: link,
-        collapsed: typeof collapsed === "function" ? collapsed(valuePath, text) : collapsed,
-      });
+        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
+        items: childSidebarItems,
+      };
+
+      if (sort) {
+        sidebarItem = {
+          ...sidebarItem,
+          // 对子侧边栏进行排序
+          items: childSidebarItems
+            .sort((a: any, b: any) => (a.sort || defaultSortNum) - (b.sort || defaultSortNum))
+            .map(item => {
+              // 排完序后删除排序属性
+              delete (item as any).sort;
+              return item;
+            }),
+          sort: sortNumFromFileName ? index : info.sort,
+        };
+      }
+
+      if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
+      else sidebarItems[index] = sidebarItem;
     } else {
-      // 还有多个层级，构建嵌套结构
-      let currentItems = sidebarItems;
+      // 是文件
+      // 开启只扫描根目录 md 文件时，不扫描 index.md（首页文档）
+      if (onlyScannerRootMd && dirOrFilename === "index.md") return [];
+      if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
 
-      for (let i = 0; i < keyPaths.length; i++) {
-        const keyPart = keyPaths[i];
-
-        // 查找是否已存在相同 text 的项
-        let existingItem = currentItems.find(item => item.text === keyPart);
-
-        if (!existingItem) {
-          if (i === keyPaths.length - 1) {
-            // 最后一级，添加链接
-            existingItem = { text: keyPart, link: link };
-          } else {
-            // 非最后一级，添加 items 数组
-            existingItem = { text: keyPart, items: [] };
-          }
-          currentItems.push(existingItem);
-        }
-
-        // 更新 currentItems 指针到下一级
-        if (i < keyPaths.length - 1) {
-          if (!existingItem.items) existingItem.items = [];
-          currentItems = existingItem.items;
-        }
-      }
-    }
-  }
-  const finalSidebar = sidebarItemsResolved?.(sidebarItems) ?? sidebarItems;
-
-  return finalSidebar;
-};
-
-/**
- * 构建数组格式的 sidebar
- * @param rewrites 重写规则
- * @param prefix 要移除的前缀
- * @returns 数组格式的 sidebar
- */
-const buildArraySidebar = (rewrites: Rewrites, options: RewritesOptions) => {
-  const { matchPrefixAndRemove: prefix = "" } = options;
-
-  // 用于存储处理后的路径信息
-  const pathMap: Record<string, PathMapItem[]> = {};
-
-  // 遍历所有重写规则，处理 key 和 value
-  for (const [key, value] of Object.entries(rewrites)) {
-    // 处理 key（本地文件路径），移除 .md 扩展名并按 / 分割
-    const cleanKeyPath = key.replace(/\.md$/, "");
-    const keyParts = cleanKeyPath.split("/").filter(part => part.length > 0);
-
-    if (keyParts.length > 0) {
-      const firstLevel = extractTextFromKeyPart(keyParts[0]);
-      const remainingKeyParts = keyParts.slice(1).map(part => extractTextFromKeyPart(part));
-
-      // 处理 value（重写后的运行路径）
-      const cleanValuePath = removePrefixFromPath(value, prefix);
-
-      if (!pathMap[firstLevel]) {
-        pathMap[firstLevel] = [];
+      if (!["md", "MD"].includes(type)) {
+        // 开启扫描根目录时，则不添加提示功能，因为根目录有大量的文件/文件夹不是 md 文件，这里不应该打印
+        if (!ignoreWarn && !onlyScannerRootMd) logger.warn(`该文件 '${filePath}' 非 .md 格式文件，不支持该文件类型`);
+        return [];
       }
 
-      pathMap[firstLevel].push({
-        keyPaths: remainingKeyParts,
-        valuePath: value,
-        link: `/${cleanValuePath}`,
-      });
-    }
-  }
+      const content = readFileSync(filePath, "utf-8");
+      // 解析出 frontmatter 数据
+      const {
+        data: { title: frontmatterTitle, sidebar = true, sidebarSort, sidebarPrefix, sidebarSuffix } = {},
+        content: mdContent,
+      } = matter(content, {});
 
-  const result: DefaultTheme.SidebarItem[] = [];
+      if (!sidebar) return [];
+      // title 获取顺序：md 文件 frontmatter.title > md 文件一级标题 > md 文件名
+      const mdTitle = titleFormMd ? getTitleFromMarkdown(mdContent) : "";
+      // 标题添加前缀和后缀
+      const finalSidebarPrefix = (sidebarPrefix && (prefixTransform?.(sidebarPrefix) ?? sidebarPrefix)) ?? "";
+      const finalSidebarSuffix = (sidebarSuffix && (suffixTransform?.(sidebarSuffix) ?? sidebarSuffix)) ?? "";
+      const text = finalSidebarPrefix + (frontmatterTitle || mdTitle || title) + finalSidebarSuffix;
 
-  for (const [firstLevel, paths] of Object.entries(pathMap)) {
-    result.push({
-      text: firstLevel,
-      items: buildArraySidebarItems(paths, options),
-    });
-  }
-
-  return result;
-};
-
-/**
- * 构建数组格式的 sidebar 项目列表
- * @param paths 路径数组
- * @returns sidebar 项目列表
- */
-const buildArraySidebarItems = (paths: PathMapItem[], options: RewritesOptions) => {
-  const { collapsed, sidebarItemsResolved, prefixTransform, suffixTransform } = options;
-
-  const sidebarItems: DefaultTheme.SidebarItem[] = [];
-
-  // 处理每个路径
-  for (const path of paths) {
-    const { keyPaths, valuePath, link } = path;
-
-    // 如果没有更多层级，则跳过
-    if (keyPaths.length === 0) continue;
-    // 只剩一个层级，添加为叶子节点
-    else if (keyPaths.length === 1) {
-      // 处理前缀和后缀
-      const prefix = prefixTransform?.(keyPaths[0]) ?? "";
-      const suffix = suffixTransform?.(keyPaths[0]) ?? "";
-      const text = prefix + keyPaths[0] + suffix;
-
-      sidebarItems.push({
+      let sidebarItem: Record<string, any> = {
         text,
-        link: link,
-        collapsed: typeof collapsed === "function" ? collapsed(valuePath, text) : collapsed,
-      });
-    } else {
-      // 还有多个层级，构建嵌套结构
-      let currentItems = sidebarItems;
+        collapsed: typeof collapsed === "function" ? collapsed(prefix + name, text) : collapsed,
+        link: dirOrFileInfo as string, // 此时是 rewrites 的文件路径
+      };
 
-      for (let i = 0; i < keyPaths.length; i++) {
-        const keyPart = keyPaths[i];
+      if (sort) sidebarItem = { ...sidebarItem, sort: sortNumFromFileName ? index : sidebarSort };
 
-        // 查找是否已存在相同 text 的项
-        let existingItem = currentItems.find(item => item.text === keyPart);
-
-        if (!existingItem) {
-          // 最后一级，添加链接
-          if (i === keyPaths.length - 1) existingItem = { text: keyPart, link: link };
-          // 非最后一级，添加 items 数组
-          else existingItem = { text: keyPart, items: [] };
-
-          currentItems.push(existingItem);
-        }
-
-        // 更新 currentItems 指针到下一级
-        if (i < keyPaths.length - 1) {
-          if (!existingItem.items) existingItem.items = [];
-          currentItems = existingItem.items;
-        }
-      }
+      if (isIllegalIndex(index)) sidebarItemsNoIndex.push(sidebarItem);
+      else sidebarItems[index] = sidebarItem;
     }
+  });
+
+  // 合并有索引和无索引的项目
+  sidebarItems = [...sidebarItems.filter(Boolean), ...sidebarItemsNoIndex];
+
+  if (sort) {
+    sidebarItems = sidebarItems
+      .sort((a: any, b: any) => (a.sort || defaultSortNum) - (b.sort || defaultSortNum))
+      .map(item => {
+        delete (item as any).sort;
+        return item;
+      });
   }
 
   return sidebarItemsResolved?.(sidebarItems) ?? sidebarItems;
 };
 
 /**
- * 移除路径前缀
- * @param path 路径
- * @param prefix 要移除的前缀
- * @returns 移除前缀后的路径
- */
-const removePrefixFromPath = (path: string, prefix: string) => {
-  const cleanPath = path.replace(/\.md$/, "");
-  const parts = cleanPath.split("/").filter(part => part.length > 0);
-
-  // 如果第一个部分是前缀，则移除它
-  if (parts.length > 0 && parts[0] === prefix) {
-    return parts.slice(1).join("/");
+ * 构建目录结构树
+ *
+ * 如：
+ * {
+    '01.指南/01.简介/01.简介.md': 'guide/intro.md',
+    '01.指南/01.简介/10.快速开始.md': 'guide/quickstart.md',
+    '01.指南/01.简介/20.结构化目录.md': 'guide/directory-structure.md',
+    '01.指南/10.使用/05.Markdown 拓展.md': 'guide/markdown.md',
+    '01.指南/10.使用/10.摘要与封面.md': 'guide/summary.md',
+    '01.指南/10.使用/15.主题增强.md': 'guide/theme-enhance.md',
+    '01.指南/10.使用/20.样式增强.md': 'guide/styles-plus.md',
+    '01.指南/10.使用/25.国际化.md': 'guide/i18n.md',
+    '01.指南/10.使用/30.Vite 插件.md': 'guide/plugins.md',
+    '01.指南/10.使用/35.站点统计.md': 'guide/statistics.md',
+    '01.指南/10.使用/40.图标使用.md': 'guide/icon-use.md',
+    '01.指南/10.使用/45.私密文章.md': 'guide/private.md',
+    '01.指南/20.相关/02.插槽布局.md': 'guide/slot.md',
+    '01.指南/20.相关/05.路由钩子.md': 'guide/router-hook.md',
+    '01.指南/20.相关/10.写作排版.md': 'guide/typesetting.md',
+    '01.指南/20.相关/15.笔记技巧.md': 'guide/skill.md',
+    '01.指南/20.相关/99.鸣谢.md': 'thank-they.md',
   }
-
-  return cleanPath;
-};
-
-/**
- * 从 rewrites 的 key 的部分中提取文本（去除序号）
- * @param part key 的一部分，如 "01.简介" 或 "简介"
- * @returns 提取后的文本，如 "简介"
+ * 最终生成如下：
+ * {
+    "01.指南": {
+      "01.简介": {
+        "01.简介.md": "guide/intro.md",
+        "10.快速开始.md": "guide/quickstart.md",
+        "20.结构化目录.md": "guide/directory-structure.md"
+      },
+      "10.使用": {
+        "05.Markdown 拓展.md": "guide/markdown.md",
+        "10.摘要与封面.md": "guide/summary.md",
+        "15.主题增强.md": "guide/theme-enhance.md",
+        "20.样式增强.md": "guide/styles-plus.md",
+        "25.国际化.md": "guide/i18n.md",
+        "30.Vite 插件.md": "guide/plugins.md",
+        "35.站点统计.md": "guide/statistics.md",
+        "40.图标使用.md": "guide/icon-use.md",
+        "45.私密文章.md": "guide/private.md"
+      },
+      "20.相关": {
+        "02.插槽布局.md": "guide/slot.md",
+        "05.路由钩子.md": "guide/router-hook.md",
+        "10.写作排版.md": "guide/typesetting.md",
+        "15.笔记技巧.md": "guide/skill.md",
+        "99.鸣谢.md": "thank-they.md"
+      }
+    }
+  }
  */
-const extractTextFromKeyPart = (part: string) => {
-  // 移除开头的序号（如 01. 10. 等）
-  return part.replace(/^\d+\./, "");
+const buildDirectoryStructure = (rewrites: Record<string, string>): DirectoryStructure => {
+  const structure: DirectoryStructure = {};
+
+  Object.entries(rewrites).forEach(([key, value]) => {
+    const parts = key.split("/");
+    let currentLevel = structure;
+
+    // 遍历路径部分，构建嵌套结构
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      const isLast = i === parts.length - 1;
+
+      // 最后一部分是文件
+      if (isLast) currentLevel[part] = value;
+      else {
+        // 中间部分是目录
+        if (!currentLevel[part]) currentLevel[part] = {};
+        currentLevel = currentLevel[part] as DirectoryStructure;
+      }
+    }
+  });
+
+  return structure;
 };

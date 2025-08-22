@@ -14,7 +14,7 @@ defineProps<{ item: CatalogueItem; index: number | string }>();
 
 <template>
   <li :class="item.children ? nsSub.b() : nsItem.b()">
-    <a v-if="!item.children" :href="item.link && withBase(item.link)" :aria-label="`${index}. ${item.title}`">
+    <a v-if="!item.children" :href="item.url && withBase(item.url)" :aria-label="`${index}. ${item.title}`">
       {{ index }}.
       <span v-html="item.title" />
       <TkTitleTag

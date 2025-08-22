@@ -112,7 +112,7 @@ export interface SidebarOption {
    * @default undefined
    * @remark 可以过滤掉不需要解析为 sidebarItem 的文件
    */
-  beforeCreateSidebarItems?: (data: string[]) => string[];
+  beforeCreateSidebarItems?: (data: string[] | DirectoryStructure) => string[];
   /**
    * Markdown 文件创建或者删除时，是否重启 VitePress 服务
    *
@@ -163,4 +163,8 @@ export interface SidebarOption {
    * @default 'filePath'
    */
   resolveRule?: "filePath" | "rewrites";
+}
+
+export interface DirectoryStructure {
+  [key: string]: DirectoryStructure | string;
 }

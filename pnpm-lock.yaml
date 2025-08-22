@@ -45,13 +45,7 @@ catalogs:
     vitepress-plugin-auto-frontmatter:
       specifier: ^1.0.10
       version: 1.0.10
-    vitepress-plugin-catalogue:
-      specifier: ^1.1.0
-      version: 1.1.0
     vitepress-plugin-doc-analysis:
-      specifier: ^1.0.12
-      version: 1.0.12
-    vitepress-plugin-file-content-loader:
       specifier: ^1.0.12
       version: 1.0.12
     vitepress-plugin-md-h1:
@@ -315,14 +309,14 @@ importers:
         specifier: 'catalog:'
         version: 1.0.10
       vitepress-plugin-catalogue:
-        specifier: 'catalog:'
-        version: 1.1.0
+        specifier: workspace:*
+        version: link:../../plugins/vitepress-plugin-catalogue
       vitepress-plugin-doc-analysis:
         specifier: 'catalog:'
         version: 1.0.12
       vitepress-plugin-file-content-loader:
-        specifier: 'catalog:'
-        version: 1.0.12(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3))
+        specifier: workspace:*
+        version: link:../../plugins/vitepress-plugin-file-content-loader
       vitepress-plugin-md-h1:
         specifier: 'catalog:'
         version: 1.0.11
@@ -5021,16 +5015,8 @@ packages:
   vitepress-plugin-auto-frontmatter@1.0.10:
     resolution: {integrity: sha512-hK/ybuDHT0BRCNK5HaQOemrjbkN8Y31C+ilCHZaWklVA9mPJx6b1it2PVPN9E4BELydsANLlNMDDvTf7usXaSg==}
 
-  vitepress-plugin-catalogue@1.1.0:
-    resolution: {integrity: sha512-vmF35lcJekIGSGrigxneo3uPQIVoKInNEs6qQA7+5+2otXJXGl6ioWxGVyL+SO3EpBa+Dn+yjwGrlk3zlPN7Cg==}
-
   vitepress-plugin-doc-analysis@1.0.12:
     resolution: {integrity: sha512-Ww3XS6Ks8husOkrgyXY7pL4hmHvoP9px5bG8E9sOqvcsCBEpPw6m5Ou56feS5KCo32BgAPw/mPX0yRMepD0C2Q==}
-
-  vitepress-plugin-file-content-loader@1.0.12:
-    resolution: {integrity: sha512-Y2TCX35sfbUfNIbJTuzmRu5/kGzMNu375ogFwH3/5HhPJCl7SqKiCU2ZkyT9Cf3zAxRIj082qDMwuHgkov5IPw==}
-    peerDependencies:
-      vitepress: ^1.6.3
 
   vitepress-plugin-llms@1.7.3:
     resolution: {integrity: sha512-XhTVbUrKwrzrwlRKd/zT2owvjwi5cdB21HgDRcHqp9PYK4Fy+mBYJUoTcLaJ5IKD1DDrJZMo0DuJeyC5RSDI9Q==}
@@ -9968,22 +9954,10 @@ snapshots:
       picocolors: 1.1.1
       tinyglobby: 0.2.12
 
-  vitepress-plugin-catalogue@1.1.0:
-    dependencies:
-      gray-matter: 4.0.3
-      picocolors: 1.1.1
-
   vitepress-plugin-doc-analysis@1.0.12:
     dependencies:
       gray-matter: 4.0.3
       picocolors: 1.1.1
-
-  vitepress-plugin-file-content-loader@1.0.12(vitepress@1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)):
-    dependencies:
-      gray-matter: 4.0.3
-      picocolors: 1.1.1
-      tinyglobby: 0.2.12
-      vitepress: 1.6.3(@algolia/client-search@5.19.0)(@types/node@22.14.0)(async-validator@4.2.5)(postcss@8.5.3)(sass@1.83.1)(search-insights@2.17.3)(typescript@5.8.3)
 
   vitepress-plugin-llms@1.7.3:
     dependencies:
