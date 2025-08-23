@@ -11,7 +11,7 @@ import ContributeChart from "./ContributeChart.vue";
 import NotFound from "./404.vue";
 
 const ns = "layout-provider";
-const { frontmatter, theme } = useData();
+const { frontmatter } = useData();
 
 // 默认文档风
 const currentStyle = ref("doc");
@@ -76,14 +76,6 @@ const list = ["name1", "name2", "name3", "name4"];
           </div>
         </div>
       </div>
-    </template>
-
-    <template #teek-home-card-my-after>
-      <TkPageCard title="卡片">
-        <ul>
-          <li v-for="item in list" :key="item">{{ item }}</li>
-        </ul>
-      </TkPageCard>
     </template>
 
     <template #not-found>

@@ -1,6 +1,6 @@
 import { defineConfig } from "vitepress";
 import llmstxt from "vitepress-plugin-llms";
-import { createRewrites } from "../../packages/config";
+// import { createRewrites } from "../../packages/config";
 // 本地 Teek 主题包引用（与 Teek 在线主题包引用 二选一）
 import { defineTeekConfig } from "../../packages/config";
 import { version } from "../../packages/teek/version";
@@ -45,7 +45,7 @@ const teekConfig = defineTeekConfig({
   vitePlugins: {
     sidebarOption: {
       initItems: false,
-      resolveRule: "rewrites",
+      // resolveRule: "rewrites",
     },
   },
   markdown: {
@@ -136,7 +136,7 @@ export default defineConfig({
       return [...items, ...permalinkItemBak];
     },
   },
-  rewrites: createRewrites(),
+  // rewrites: createRewrites(),
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: "/teek-logo-mini.svg",

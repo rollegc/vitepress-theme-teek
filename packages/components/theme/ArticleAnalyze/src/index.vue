@@ -35,7 +35,6 @@ const docAnalysisInfo = computed(() => theme.value.docAnalysisInfo || {});
 // 文章阅读量、阅读时长、字数
 const pageViewInfo = computed(() => {
   let pageViewInfo: Partial<DocDocAnalysisFileInfo> = {};
-  console.log(router.route);
   docAnalysisInfo.value.eachFileWords?.forEach(item => {
     if (item.fileInfo.relativePath === router.route.data.filePath) pageViewInfo = item;
   });
