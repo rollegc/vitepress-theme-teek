@@ -163,6 +163,12 @@ export interface SidebarOption {
    * @default 'filePath'
    */
   resolveRule?: "filePath" | "rewrites";
+  /**
+   * 是否校验每个目录下的 rewrites 前缀是否一致，仅当 ignoreWarn 为 true 生效
+   *
+   * @default false
+   */
+  checkRewritesPrefix?: boolean;
 }
 
 export interface DirectoryStructure {

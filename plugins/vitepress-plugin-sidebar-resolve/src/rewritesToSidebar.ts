@@ -29,6 +29,7 @@ export default function createRewritesSidebar(
     initItemsText = false,
     sidebarResolved,
     ignoreWarn = false,
+    checkRewritesPrefix = false,
     indexSeparator,
     prefixTransform,
     suffixTransform,
@@ -78,6 +79,9 @@ export default function createRewritesSidebar(
     // 获取 rewrites 的 value 的第一个 / 前内容
     const key = Object.keys(rewrites).find(item => item.startsWith(dirName));
     if (!key) return;
+
+    // 验证 rewrites 的同目录下的前缀是否一致
+    !ignoreWarn && checkRewritesPrefix && validateRewritesPrefix(rewrites, dirName, ignoreList);
 
     const sidebarItems = createSidebarItems(dirOrFileInfo, dirRelativePath, option, dirPath);
 
@@ -326,4 +330,49 @@ const buildDirectoryStructure = (rewrites: Record<string, string>): DirectoryStr
   });
 
   return structure;
+};
+
+/**
+ * 校验指定前缀的重写规则是否具有相同的值前缀
+ *
+ * @param rewrites 重写规则对象
+ * @param keyPrefix 键的前缀，如 '01.指南'
+ */
+const validateRewritesPrefix = (
+  rewrites: Record<string, string>,
+  keyPrefix: string,
+  ignoreList: (string | RegExp)[] = []
+) => {
+  // 获取所有以指定前缀开头的键值对，并排除忽略列表中的项
+  const filteredEntries = Object.entries(rewrites).filter(([key, value]) => {
+    // 检查是否以指定前缀开头
+    if (!key.startsWith(keyPrefix)) return false;
+
+    // 检查是否在忽略列表中
+    const isInIgnoreList = isSome(ignoreList, key);
+    if (isInIgnoreList) return false;
+
+    // 检查值是否包含路径分隔符
+    return value.includes("/");
+  });
+
+  if (filteredEntries.length === 0) return;
+
+  // 提取值的第一个路径段作为前缀进行比较
+  const valuePrefixes = filteredEntries.map(([key, value]) => {
+    const firstSegment = value.split("/")[0];
+    return { key, value, prefix: firstSegment };
+  });
+
+  // 获取第一个值的前缀作为基准
+  const basePrefix = valuePrefixes[0].prefix;
+  const inconsistentEntries = valuePrefixes.filter(item => item.prefix !== basePrefix);
+
+  // 如果存在不一致的文件，则打印出来
+  if (inconsistentEntries.length > 0) {
+    console.warn(
+      `检测到 '${keyPrefix}' 路径下的部分文件 Rewrites 前缀不一致，要求的基准前缀 '/${basePrefix}'，不一致的文件如下:`
+    );
+    inconsistentEntries.forEach(item => console.warn(`  ${item.key}`));
+  }
 };
