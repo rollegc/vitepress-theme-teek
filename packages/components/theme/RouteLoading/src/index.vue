@@ -4,12 +4,12 @@ import { useVpRouter, useNamespace } from "@teek/composables";
 import { isString } from "@teek/helper";
 import { useTeekConfig } from "@teek/components/theme/ConfigProvider";
 
-const loading = ref(false);
+const loading = ref(true);
 const ns = useNamespace("route-loading");
 const vpRouter = useVpRouter();
 const { getTeekConfigRef } = useTeekConfig();
 
-const loadingConfig = getTeekConfigRef("loading", true);
+const loadingConfig = getTeekConfigRef("loading", false);
 
 /**
  * 路由开始时加载 Loading 动画
@@ -27,6 +27,7 @@ vpRouter.bindAfterRouteChange("routeLoadingAfter", () => {
 
 const handleRouteStart = () => (loading.value = true);
 const handleRouteComplete = () => (loading.value = false);
+
 onBeforeMount(() => {
   // 首次加载 Loading 动画
   handleRouteStart();
