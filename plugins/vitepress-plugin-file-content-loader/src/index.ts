@@ -72,7 +72,7 @@ export default function VitePluginVitePressFileContentLoader<T = FileContentLoad
 
         const path = normalizePath(relative(srcDir, file)).replace(/(^|\/)index\.md$/, "$1");
         const relativePath = "/" + path.replace(/\.md$/, cleanUrls ? "" : ".html");
-        const url = "/" + (rewrites.map?.[path] || path).replace(/\.md$/, cleanUrls ? "" : ".html");
+        const url = "/" + (rewrites.map[path] || path).replace(/\.md$/, cleanUrls ? "" : ".html");
 
         const html = render ? md.render(src) : undefined;
         const renderedExcerpt = renderExcerpt && excerpt?.endsWith("\n") ? md.render(excerpt) : undefined;

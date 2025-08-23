@@ -5,7 +5,6 @@
 ### 代办
 
 - 壁纸滚动 fixed
-- sidebar 插件 rewrites 模式扫描 key 对应的路径，目录取 index.md、index.MD、目录名.md 的 frontmatter.title 或者一级标题，文件去自身，逻辑同理
 
 ### issue
 
@@ -15,6 +14,7 @@
 - 修复卡片栏插槽失效问题
 - 修复卡片风格文章列表没有摘要时高度不够问题
 - 优化主题页面元素的过渡动画和新增卡片栏插槽 gap
+- 支持 rewrites 侧边栏
 
 ## AR
 

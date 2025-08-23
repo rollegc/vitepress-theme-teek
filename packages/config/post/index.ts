@@ -25,13 +25,13 @@ import matter from "gray-matter";
 export const transformData = (data: FileContentLoaderData): TkContentData => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { themeConfig } = siteConfig.userConfig;
-  const { frontmatter, url, excerpt } = data;
+  const { frontmatter, url, relativePath, excerpt } = data;
 
   if (frontmatter.date) frontmatter.date = formatDate(frontmatter.date);
 
   return {
     url,
-    relativePath: "",
+    relativePath,
     frontmatter,
     author: themeConfig.author,
     title: getTitle(data),

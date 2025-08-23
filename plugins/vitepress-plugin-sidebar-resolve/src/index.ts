@@ -47,17 +47,17 @@ export default function VitePluginVitePressSidebarResolve(option: SidebarOption 
       const { path, ignoreList, localeRootDir, type = "object", resolveRule = "filePath" } = option;
       const baseDir = path ? join(srcDir, path) : srcDir;
       const rewrites = rewritesObj.map || {};
+      const rewritesLength = Object.keys(rewrites).length;
 
       // 如果 指定 rewrites 规则，但是 rewrites 不存在，则走 filePath 逻辑
-      const isFilePathRule =
-        resolveRule === "filePath" || (resolveRule === "rewrites" && !Object.keys(rewrites).length);
+      const isFilePathRule = resolveRule === "filePath" || (resolveRule === "rewrites" && !rewritesLength);
 
-      const isRewritesRule = resolveRule === "rewrites" && Object.keys(rewrites).length;
+      const isRewritesRule = resolveRule === "rewrites" && rewritesLength;
 
       // 国际化多语言 key 数组
       const localesKeys = Object.keys(locales).filter(key => key !== "root");
 
-      // 文件路径规则
+      //  filePath 规则
       if (isFilePathRule) {
         // 如果不是多语言，直接自动生成结构化侧边栏
         if (!localesKeys.length) {

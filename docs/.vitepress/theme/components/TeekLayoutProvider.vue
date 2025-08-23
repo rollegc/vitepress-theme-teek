@@ -1,6 +1,6 @@
 <script setup lang="ts" name="TeekLayoutProvider">
 import type { TeekConfig } from "vitepress-theme-teek";
-import Teek, { teekConfigContext, clockIcon } from "vitepress-theme-teek";
+import Teek, { teekConfigContext, clockIcon, TkPageCard } from "vitepress-theme-teek";
 import { useData } from "vitepress";
 import { watch, nextTick, ref, provide } from "vue";
 import { teekDocConfig } from "../config/teekConfig";
@@ -47,6 +47,8 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
+
+const list = ["name1", "name2", "name3", "name4"];
 </script>
 
 <template>
@@ -74,6 +76,14 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
           </div>
         </div>
       </div>
+    </template>
+
+    <template #teek-home-card-my-after>
+      <TkPageCard title="卡片">
+        <ul>
+          <li v-for="item in list" :key="item">{{ item }}</li>
+        </ul>
+      </TkPageCard>
     </template>
 
     <template #not-found>

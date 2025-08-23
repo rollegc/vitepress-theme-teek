@@ -3,6 +3,7 @@ import { Catalogue, CatalogueOption } from "./types";
 import createCatalogues from "./helper";
 import { join } from "node:path";
 import logger from "./log";
+import { removeMarkdownExt } from "./util";
 
 export * from "./types";
 
@@ -29,7 +30,7 @@ export default function VitePluginVitePressCatalogue(option: CatalogueOption = {
       const finalCatalogues: Catalogue = { arr: catalogues, map: {}, inv: {} };
       catalogues.forEach(item => {
         const { filePath, path, catalogues = [] } = item;
-        const url = (rewrites.map?.[`${filePath}.md`].replace(/\.md$/, "") || filePath) + (cleanUrls ? "" : ".html");
+        const url = (removeMarkdownExt(rewrites.map[`${filePath}.md`]) || filePath) + (cleanUrls ? "" : ".html");
 
         finalCatalogues.map[filePath] = { url, path, catalogues };
         finalCatalogues.inv[path] = { url, filePath, catalogues };

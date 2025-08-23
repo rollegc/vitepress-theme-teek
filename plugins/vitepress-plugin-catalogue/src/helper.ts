@@ -2,7 +2,7 @@ import type { CatalogueInfo, CatalogueItem, CatalogueOption } from "./types";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, extname, join, resolve } from "node:path";
 import matter from "gray-matter";
-import { getTitleFromMarkdown, isIllegalIndex, isMarkdownFile, isSome } from "./util";
+import { getTitleFromMarkdown, isIllegalIndex, isMarkdownFile, isSome, removeMarkdownExt } from "./util";
 
 interface VitePressConfig {
   rewrites?: Record<string, string>;
@@ -116,17 +116,17 @@ const createCatalogueList = (
   const dirOrFilenames = readdirSync(root);
 
   dirOrFilenames.forEach(dirOrFilename => {
-    const filePath = resolve(root, dirOrFilename);
-    const { index: indexStr, title, name } = resolveFileName(dirOrFilename, filePath, indexSeparator);
+    const fileAbsolutePath = resolve(root, dirOrFilename);
+    const { index: indexStr, title, name } = resolveFileName(dirOrFilename, fileAbsolutePath, indexSeparator);
     const index = parseInt(indexStr as string, 10);
 
-    if (statSync(filePath).isDirectory()) {
+    if (statSync(fileAbsolutePath).isDirectory()) {
       // 是文件夹目录
       const mdTitle = titleFormMd ? tryGetMarkdownTitle(root, dirOrFilename) : "";
 
       const catalogueItem = {
         title: mdTitle || title,
-        children: createCatalogueList(filePath, option, `${prefix}${dirOrFilename}/`, vitepressConfig),
+        children: createCatalogueList(fileAbsolutePath, option, `${prefix}${dirOrFilename}/`, vitepressConfig),
         frontmatter: {},
       };
 
@@ -137,7 +137,7 @@ const createCatalogueList = (
       if (!isMarkdownFile(dirOrFilename)) return [];
       if (ignoreIndexMd && ["index.md", "index.MD"].includes(dirOrFilename)) return [];
 
-      const content = readFileSync(filePath, "utf-8");
+      const content = readFileSync(fileAbsolutePath, "utf-8");
       // 解析出 frontmatter 数据
       const { data: frontmatter = {}, content: mdContent } = matter(content, {});
       const { title: frontmatterTitle, catalogue, inCatalogue = true } = frontmatter;
@@ -148,14 +148,14 @@ const createCatalogueList = (
       // title 获取顺序：md 文件 frontmatter.title > md 文件一级标题 > md 文件名
       const mdTitle = titleFormMd ? getTitleFromMarkdown(mdContent) : "";
       const finalTitle = frontmatterTitle || mdTitle || title;
-      const filePth = prefix + name;
+      const filePath = prefix + name;
 
       const { rewrites = {}, cleanUrls } = vitepressConfig;
 
       const catalogueItem = {
         title: finalTitle,
         url:
-          (rewrites[`${filePth.replace(/^\//, "")}.md`].replace(/\.md$/, "") || filePath) + (cleanUrls ? "" : ".html"),
+          (removeMarkdownExt(rewrites[`${filePath.replace(/^\//, "")}.md`]) || filePath) + (cleanUrls ? "" : ".html"),
         frontmatter,
       };
 
