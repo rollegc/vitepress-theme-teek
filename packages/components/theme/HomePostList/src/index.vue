@@ -80,13 +80,7 @@ const updateData = () => {
   currentPosts.value = inHomePosts.slice((pageNum.value - 1) * pageSize.value, pageNum.value * pageSize.value);
 };
 
-watch(
-  route,
-  () => {
-    updateData();
-  },
-  { immediate: true }
-);
+watch(() => route.path, updateData, { immediate: true });
 
 /**
  * 切换分页时，记录到 URL 上

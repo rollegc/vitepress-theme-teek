@@ -221,7 +221,9 @@ const usedSlots = [
         <TkFooterGroup v-if="isHomePage" />
         <slot name="teek-footer-info-before" />
 
-        <TkFooterInfo v-if="isHomePage" />
+        <slot name="teek-footer-info">
+          <TkFooterInfo v-if="isHomePage" />
+        </slot>
 
         <slot name="teek-footer-info-after" />
         <slot name="layout-bottom" />
