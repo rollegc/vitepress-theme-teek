@@ -235,10 +235,6 @@ const usedSlots = [
         <TkHomeMyCardScreen />
       </template>
 
-      <template #doc-footer-before>
-        <TkVpContainer v-if="bottomTipConfig" v-bind="isBoolean(bottomTipConfig) ? {} : bottomTipConfig" />
-      </template>
-
       <template #doc-before>
         <slot name="doc-before" />
         <slot name="teek-article-analyze-before" />
@@ -254,6 +250,10 @@ const usedSlots = [
             <slot name="teek-sidebar-trigger" v-bind="scope" />
           </template>
         </TkSidebarTrigger>
+      </template>
+
+      <template #doc-footer-before>
+        <TkVpContainer v-if="bottomTipConfig" v-bind="isBoolean(bottomTipConfig) ? {} : bottomTipConfig" />
       </template>
 
       <template #doc-after>
