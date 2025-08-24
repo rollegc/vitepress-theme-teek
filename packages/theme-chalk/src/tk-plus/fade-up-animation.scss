@@ -1,7 +1,7 @@
 @use "../mixins/bem" as *;
 @use "../mixins/function" as *;
 
-/* 初次进入页面添加渐显动画  */
+/* 首次进入页面添加渐显动画  */
 
 $fade-up-animation: fade-up 0.6s 0.1s backwards;
 $fade-up-slide-animation: fade-up-slide 0.7s cubic-bezier(0, 0, 0.58, 1) forwards;
