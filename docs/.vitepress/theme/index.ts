@@ -12,7 +12,6 @@ import "@teek/theme-chalk/vp-plus/table.scss"; // 表格样式调整，去掉单
 import "@teek/theme-chalk/vp-plus/mark.scss"; // <mark></mark> 样式
 import "@teek/theme-chalk/vp-plus/blockquote.scss"; // > 引用块样式
 import "@teek/theme-chalk/vp-plus/index-rainbow.scss"; // 首页图片彩虹动画
-// import "@teek/theme-chalk/vp-plus/doc-fade-in.scss"; // 进入文档页淡入效果
 import "@teek/theme-chalk/tk-plus/banner-desc-gradient.scss"; // 博客风格 Banner 描述渐变样式
 import "@teek/theme-chalk/tk-plus/home-card-hover.scss"; // 首页卡片悬停效果
 import "@teek/theme-chalk/tk-plus/fade-up-animation.scss"; // 首次加载的动画效果
