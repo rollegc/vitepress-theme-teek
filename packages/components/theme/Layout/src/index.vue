@@ -3,7 +3,7 @@ import type { TeekConfig } from "@teek/config";
 import type { Language } from "@teek/locale";
 import DefaultTheme from "vitepress/theme";
 import { useData, onContentUpdated } from "vitepress";
-import { computed, provide, watch } from "vue";
+import { computed, provide, ref, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/composables";
 import { isBoolean, isClient } from "@teek/helper";
 import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
@@ -52,6 +52,7 @@ provide(
 
 const { Layout } = DefaultTheme;
 
+const loading = ref(false);
 const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
@@ -147,11 +148,17 @@ const usedSlots = [
 
 <template>
   <template v-if="teekConfig.teekTheme">
+    <TkRouteLoading v-if="teekConfig.loading ?? false" v-model="loading">
+      <template #default="scope">
+        <slot name="teek-loading" v-bind="scope" />
+      </template>
+    </TkRouteLoading>
+
     <template v-if="frontmatter.loginPage === true">
-      <slot name="teek-login-page"><TkLoginPage /></slot>
+      <slot name="teek-login-page"><TkLoginPage v-show="!loading" /></slot>
     </template>
     <template v-if="frontmatter.riskLinkPage === true">
-      <slot name="teek-risk-link-page"><TkRiskLinkPage /></slot>
+      <slot name="teek-risk-link-page"><TkRiskLinkPage v-show="!loading" /></slot>
     </template>
 
     <template v-if="frontmatter.layout !== false">
@@ -168,15 +175,10 @@ const usedSlots = [
           <slot :name="name" v-bind="scope" />
         </template>
       </TkRightBottomButton>
-
-      <TkRouteLoading v-if="teekConfig.loading ?? false">
-        <template #default="scope">
-          <slot name="teek-loading" v-bind="scope" />
-        </template>
-      </TkRouteLoading>
     </template>
 
     <Layout
+      v-show="!loading"
       :class="[
         ns.b(),
         { [ns.m('hide-vp-home')]: !teekConfig.vpHome },
