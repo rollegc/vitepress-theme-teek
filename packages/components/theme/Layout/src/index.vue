@@ -65,7 +65,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   vpHome: true,
   sidebarTrigger: false,
   loading: false,
-  codeBlock: { disabled: false },
+  codeBlock: { enabled: true },
   themeSize: "",
   bodyBgImg: {},
   notice: {},
@@ -243,7 +243,7 @@ const usedSlots = [
 
         <TkArticleImagePreview />
         <TkArticlePageStyle />
-        <TkCodeBlockToggle v-if="!teekConfig.codeBlock.disabled" />
+        <TkCodeBlockToggle v-if="teekConfig.codeBlock.enabled ?? true" />
         <TkVpContainer v-if="topTipConfig" v-bind="isBoolean(topTipConfig) ? {} : topTipConfig" />
         <TkSidebarTrigger v-if="teekConfig.sidebarTrigger">
           <template #default="scope">
