@@ -1,3 +1,9 @@
+/**
+ * 这是一个 Teek 配置文件模板，涵盖 Teek 95% 的配置项
+ *
+ * 该文件并没有被外部任何文件引用，您可以参考这个里面的配置项，按需提取放到 teekConfig.ts 文件里并进行更改
+ */
+
 // 本地 Teek 主题包引用（与 Teek 在线主题包引用 二选一）
 import { defineTeekConfig } from "../../packages/config";
 
