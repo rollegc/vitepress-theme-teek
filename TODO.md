@@ -11,6 +11,8 @@
 ### 已完成
 
 - 添加博主状态图标并优化头像功能
+- 新增 `teekConfig.template.ts` 配置模板文件
+- 修复 `frontmatter.author` 在首页文章列表配置无效问题
 
 ## AR
 

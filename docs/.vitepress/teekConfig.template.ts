@@ -393,13 +393,20 @@ export const teekConfig = defineTeekConfig({
     if (frontmatter.date && Date.now() - new Date(frontmatter.date).getTime() > longTime) return tip;
   },
   // 在每个文章页顶部显示 VitePress 容器添加提示，使用场景如添加文章版权声明。
-  articleBottomTip: () => {
+  articleBottomTip: frontmatter => {
+    const hash = false;
+    const query = false;
+    const { origin, pathname, search } = location;
+    const url = `${origin}${frontmatter.permalink ?? pathname}${query ? search : ""}${hash ? location.hash : ""}`;
+
+    const author = "Teek";
+
     return {
       type: "tip",
       // title: "声明", // 可选
-      text: `<p>作者：Teek</p>
-             <p>版权：此文章版权归 Teek 所有，如有转载，请注明出处!</p>
-             <p style="margin-bottom: 0">链接：可点击右上角分享此页面复制文章链接</p>
+      text: `<p>作者：${author}</p>
+             <p style="margin-bottom: 0">链接：<a href="${decodeURIComponent(url)}" target="_blank">${decodeURIComponent(url)}</a></p>
+             <p>版权：此文章版权归 ${author} 所有，如有转载，请注明出处!</p>
             `,
     };
   },
