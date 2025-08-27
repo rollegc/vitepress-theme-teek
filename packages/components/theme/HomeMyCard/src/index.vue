@@ -61,7 +61,7 @@ const myCardColorStyle = computed(() => ({ color: bloggerConfig.value.color }));
           aria-hidden="true"
         />
         <TkAvatar
-          v-if="bloggerConfig.status?.icon && shape.startsWith('circle')"
+          v-if="bloggerConfig.status?.icon && shape?.startsWith('circle')"
           :src="bloggerConfig.status.icon"
           :text="bloggerConfig.status.icon"
           :size="bloggerConfig.status.size ?? 26"
