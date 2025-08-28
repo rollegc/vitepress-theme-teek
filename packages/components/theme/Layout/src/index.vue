@@ -63,7 +63,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekHome: true,
   vpHome: true,
   sidebarTrigger: false,
-  loading: true,
+  loading: false,
   codeBlock: { enabled: true },
   themeSize: "",
   bodyBgImg: {},
