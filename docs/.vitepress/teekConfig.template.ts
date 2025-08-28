@@ -394,11 +394,12 @@ export const teekConfig = defineTeekConfig({
   },
   // 在每个文章页顶部显示 VitePress 容器添加提示，使用场景如添加文章版权声明。
   articleBottomTip: frontmatter => {
+    if (typeof window === "undefined") return;
+
     const hash = false;
     const query = false;
-    const { origin, pathname, search } = location;
+    const { origin, pathname, search } = window.location;
     const url = `${origin}${frontmatter.permalink ?? pathname}${query ? search : ""}${hash ? location.hash : ""}`;
-
     const author = "Teek";
 
     return {

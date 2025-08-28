@@ -42,6 +42,7 @@ export const teekConfig = defineTeekConfig({
   vitePlugins: {
     sidebarOption: {
       initItems: false,
+      ignoreIndexMd: true,
     },
   },
   markdown: {

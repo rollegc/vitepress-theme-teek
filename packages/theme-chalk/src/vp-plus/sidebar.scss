@@ -3,8 +3,6 @@
 .VPSidebar {
   .nav {
     .item {
-      transition: transform getCssVar("transition-duration") ease-in-out;
-
       h2.text {
         /* 一级菜单字体加大 */
         font-size: 18px;
@@ -12,10 +10,11 @@
 
       p.text {
         font-size: 15px;
-      }
+        transition: transform getCssVar("transition-duration") ease-in-out;
 
-      &:hover {
-        transform: translate(4px);
+        &:hover {
+          transform: translate(4px);
+        }
       }
     }
 
