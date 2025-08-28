@@ -52,7 +52,6 @@ provide(
 
 const { Layout } = DefaultTheme;
 
-const loading = ref(false);
 const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
@@ -64,7 +63,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   teekHome: true,
   vpHome: true,
   sidebarTrigger: false,
-  loading: false,
+  loading: true,
   codeBlock: { enabled: true },
   themeSize: "",
   bodyBgImg: {},
@@ -78,6 +77,8 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   riskLink: { enabled: false },
   themeEnhance: { enabled: true },
 });
+
+const loading = ref(teekConfig.value.loading);
 
 const commentConfig = computed(() => {
   const comment = frontmatter.value.comment ?? teekConfig.value.comment;
