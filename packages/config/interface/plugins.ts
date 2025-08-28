@@ -3,7 +3,7 @@ import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { MdH1Option } from "vitepress-plugin-md-h1";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import type { AutoFrontmatterOption } from "vitepress-plugin-auto-frontmatter";
+import { TeekAutoFrontmatterOption } from "./teekAutoFrontmatterOption";
 
 export interface Plugins {
   /**
@@ -70,5 +70,5 @@ export interface Plugins {
    *
    * @default '{ permalinkPrefix: "pages", categories: true }'
    */
-  autoFrontmatterOption?: AutoFrontmatterOption & { permalinkPrefix?: string; categories?: boolean };
+  autoFrontmatterOption?: TeekAutoFrontmatterOption;
 }

@@ -40,6 +40,17 @@ export const teekConfig = defineTeekConfig({
   },
   articleShare: { enabled: true },
   vitePlugins: {
+    autoFrontmatter: true, // 自动生成 frontmatter
+    autoFrontmatterOption: {
+      recoverTransform: false,
+      categories: false,
+      coverImg: true,
+      coverImgList: ["1.webp", "2.webp", "3.webp", "4.webp"],
+      permalinkRules: [
+        { folderName: "01.指南/01.简介/", prefix: "/$path-$uuid2/teek/$uuid1/$uuid", removeLevel: 99 }, // 添加前缀
+      ],
+      enableDetailLog: true,
+    },
     sidebarOption: {
       initItems: false,
       ignoreIndexMd: true,

@@ -6,9 +6,10 @@ import MdH1 from "vitepress-plugin-md-h1";
 import Catalogue from "vitepress-plugin-catalogue";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
-import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
-import { createCategory, createPermalink } from "./addFrontmatter";
+import AutoFrontmatter, { FileInfo } from "vitepress-plugin-auto-frontmatter";
+import { createCategory, handleCoverImg, handleDate, handleTransformByRules } from "./util/addFrontmatter";
 import { transformData, transformRaw } from "./post";
+import { TeekAutoFrontmatterOption, TransformRule } from "./interface/teekAutoFrontmatterOption";
 
 export const registerPluginAndGet = (vitePlugins: Plugins = {}, teekTheme = true) => {
   const plugins: any[] = [];
@@ -54,10 +55,14 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
     const {
       pattern,
       globOptions = {},
-      transform,
-      permalinkPrefix = "pages",
       categories = true,
-    } = autoFrontmatterOption;
+      coverImg = false,
+      isForceCoverImg = false,
+      coverImgList = [],
+      permalinkRules = [],
+      enableHandleDate = true,
+      enableDetailLog = false,
+    }: TeekAutoFrontmatterOption = autoFrontmatterOption;
 
     // 默认扫描全部 MD 文件
     if (!pattern) autoFrontmatterOption.pattern = "**/*.md";
@@ -67,19 +72,54 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
     };
 
+    // 如果启用 permalinkRules 规则，则默认开启同名覆盖
+    if (permalink && !!permalinkRules) {
+      autoFrontmatterOption.recoverTransform = true;
+    }
     // 自定义 frontmatter 内容，添加永久链接和分类
-    autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
-      let transformResult = {};
-      if (permalink && !frontmatter.permalink) {
-        transformResult = { ...transformResult, ...createPermalink(permalinkPrefix) };
+    autoFrontmatterOption.transform = (frontmatter: Record<string, any>, fileInfo: FileInfo) => {
+      if (!fileInfo.relativePath.startsWith("01.指南/01.简介")) return;
+
+      // 创建副本用于比较是否发生修改
+      const oriFrontMatter: Record<string, any> = { ...frontmatter };
+
+      if (permalink && permalinkRules?.length > 0) {
+        handleTransformByRules(frontmatter, fileInfo, permalinkRules);
+      } else if (permalink) {
+        // 开启 permalink 功能但未提供规则时，添加默认规则
+        const defaultTransformRules: TransformRule[] = [{ folderName: "*", prefix: "/pages/$uuid5" }];
+        handleTransformByRules(frontmatter, fileInfo, defaultTransformRules);
       }
+
+      // 开启封面图并且封面图列表不为空
+      if (coverImg && coverImgList?.length > 0) {
+        // 处理封面图
+        handleCoverImg(frontmatter, coverImgList, isForceCoverImg);
+      }
+
       if (categories && !frontmatter.categories) {
-        transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
+        createCategory(frontmatter, fileInfo, ["@fragment"]);
+        //transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
 
-      transformResult = transform?.({ ...frontmatter, ...transformResult }, fileInfo) || transformResult;
+      // 比较处理前后的对象是否一致，一致则返回 undefined，不修改文件
+      if (JSON.stringify(oriFrontMatter) === JSON.stringify(frontmatter)) {
+        return undefined;
+      }
 
-      return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
+      // 日期转换处理
+      if (enableHandleDate) {
+        // 如果发生了变更需要处理日期，减去8小时抵消时区转换
+        handleDate(frontmatter);
+      }
+
+      // 打印日志
+      if (enableDetailLog) {
+        console.info("发生变更的文件：", fileInfo.relativePath);
+        console.info("最终生成的frontmatter：", frontmatter);
+      }
+
+      return Object.keys(frontmatter).length ? frontmatter : undefined;
     };
 
     plugins.push(AutoFrontmatter(autoFrontmatterOption));
