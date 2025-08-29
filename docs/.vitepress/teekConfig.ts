@@ -43,12 +43,21 @@ export const teekConfig = defineTeekConfig({
     autoFrontmatter: true, // 自动生成 frontmatter
     autoFrontmatterOption: {
       recoverTransform: false,
+      // 是否开启自动生成 categories
       categories: false,
-      coverImg: true,
+      // 是否开启添加文档封面图
+      enableCoverImg: true,
+      // 是否开启强制覆盖封面图
+      enableForceCoverImg: false,
+      // 封面图列表
       coverImgList: ["1.webp", "2.webp", "3.webp", "4.webp"],
+      // 是否开启生成永久链接
+      enablePermalink: true,
+      // 处理永久链接的规则
       permalinkRules: [
         { folderName: "01.指南/01.简介/", prefix: "/$path-$uuid2/teek/$uuid1/$uuid", removeLevel: 99 }, // 添加前缀
       ],
+      enableHandleDate: false,
       enableDetailLog: true,
     },
     sidebarOption: {

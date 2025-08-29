@@ -53,11 +53,17 @@ export default function VitePluginVitePressAutoFrontmatter(
 const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOption, srcDir: string) => {
   const { include, exclude, transform, recoverTransform = false } = option;
 
+  logger.info(`=========== ${option}`);
+
   for (const filePath of filePaths) {
     if (!filePath.endsWith(".md")) continue;
 
     const fileContent = readFileSync(filePath, "utf-8");
+
     const { data: frontmatter, content } = matter(fileContent);
+
+    logger.info(`frontmatter  ${JSON.stringify(frontmatter)}`);
+    logger.info(`frontmatter  ${frontmatter.date}, ${frontmatter.date instanceof Date}`);
 
     if (frontmatter.layout === "home") continue;
 

@@ -55,12 +55,21 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
     const {
       pattern,
       globOptions = {},
+      // 是否开启自动生成 categories
       categories = true,
-      coverImg = false,
-      isForceCoverImg = false,
+      // 是否开启添加文档封面图
+      enableCoverImg = false,
+      // 是否开启强制覆盖封面图
+      enableForceCoverImg = false,
+      // 封面图列表
       coverImgList = [],
+      // 是否开启生成永久链接
+      enablePermalink = true,
+      // 处理永久链接的规则
       permalinkRules = [],
+      // 是否处理日期转换
       enableHandleDate = true,
+      // 是否打印详细的转换日志
       enableDetailLog = false,
     }: TeekAutoFrontmatterOption = autoFrontmatterOption;
 
@@ -72,34 +81,38 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
     };
 
-    // 如果启用 permalinkRules 规则，则默认开启同名覆盖
-    if (permalink && !!permalinkRules) {
+    //autoFrontmatterOption.exclude = { layout: false };
+
+    // 如果启用生成永久连接，则默认开启同名key覆盖（不开启规则无法生效）
+    if (enablePermalink) {
       autoFrontmatterOption.recoverTransform = true;
     }
     // 自定义 frontmatter 内容，添加永久链接和分类
     autoFrontmatterOption.transform = (frontmatter: Record<string, any>, fileInfo: FileInfo) => {
-      if (!fileInfo.relativePath.startsWith("01.指南/01.简介")) return;
+      if (!fileInfo.relativePath.startsWith("01.指南/01.简介")) return undefined;
 
+      console.log("relativePath", fileInfo.relativePath);
       // 创建副本用于比较是否发生修改
       const oriFrontMatter: Record<string, any> = { ...frontmatter };
 
-      if (permalink && permalinkRules?.length > 0) {
+      // 启用生成永久连接，并且配置了 permalinkRules 规则，则根据配置的规则进行处理
+      if (enablePermalink && permalinkRules?.length > 0) {
         handleTransformByRules(frontmatter, fileInfo, permalinkRules);
-      } else if (permalink) {
+      } else if (enablePermalink) {
         // 开启 permalink 功能但未提供规则时，添加默认规则
-        const defaultTransformRules: TransformRule[] = [{ folderName: "*", prefix: "/pages/$uuid5" }];
+        const defaultTransformRules: TransformRule[] = [{ folderName: "*", prefix: "/$path/$uuid5" }];
         handleTransformByRules(frontmatter, fileInfo, defaultTransformRules);
       }
 
       // 开启封面图并且封面图列表不为空
-      if (coverImg && coverImgList?.length > 0) {
+      if (enableCoverImg && coverImgList?.length > 0) {
         // 处理封面图
-        handleCoverImg(frontmatter, coverImgList, isForceCoverImg);
+        handleCoverImg(frontmatter, coverImgList, enableForceCoverImg);
       }
 
+      // 开启分类功能
       if (categories && !frontmatter.categories) {
         createCategory(frontmatter, fileInfo, ["@fragment"]);
-        //transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
 
       // 比较处理前后的对象是否一致，一致则返回 undefined，不修改文件
