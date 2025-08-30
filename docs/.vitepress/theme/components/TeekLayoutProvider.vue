@@ -47,8 +47,6 @@ const handleConfigSwitch = (config: TeekConfig, style: string) => {
 
   watchRuntimeAndRibbon(frontmatter.value.layout, style);
 };
-
-const list = ["name1", "name2", "name3", "name4"];
 </script>
 
 <template>

@@ -254,7 +254,10 @@ const usedSlots = [
       </template>
 
       <template #doc-footer-before>
+        <slot name="doc-footer-before" />
+        <slot name="teek-article-bottom-tip-before" />
         <TkVpContainer v-if="bottomTipConfig" v-bind="isBoolean(bottomTipConfig) ? {} : bottomTipConfig" />
+        <slot name="teek-article-bottom-tip-after" />
       </template>
 
       <template #doc-after>
