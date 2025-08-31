@@ -52,7 +52,6 @@ provide(
 
 const { Layout } = DefaultTheme;
 
-const loading = ref(false);
 const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
@@ -78,6 +77,8 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   riskLink: { enabled: false },
   themeEnhance: { enabled: true },
 });
+
+const loading = ref(teekConfig.value.loading);
 
 const commentConfig = computed(() => {
   const comment = frontmatter.value.comment ?? teekConfig.value.comment;
@@ -253,7 +254,10 @@ const usedSlots = [
       </template>
 
       <template #doc-footer-before>
+        <slot name="doc-footer-before" />
+        <slot name="teek-article-bottom-tip-before" />
         <TkVpContainer v-if="bottomTipConfig" v-bind="isBoolean(bottomTipConfig) ? {} : bottomTipConfig" />
+        <slot name="teek-article-bottom-tip-after" />
       </template>
 
       <template #doc-after>
