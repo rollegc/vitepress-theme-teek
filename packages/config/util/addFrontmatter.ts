@@ -21,11 +21,10 @@ export const createPermalink = (permalinkPrefix = "") => {
 /**
  * 创建 categories 分类列表
  *
- * @param frontmatter
  * @param fileInfo 文件信息
  * @param ignore 需要忽略的文件名或目录名
  */
-export const createCategory = (frontmatter: Record<string, any>, fileInfo: FileInfo, ignore: string[] = []) => {
+export const createCategory = (fileInfo: FileInfo, ignore: string[] = []) => {
   const siteConfig: SiteConfig = (globalThis as any).VITEPRESS_CONFIG;
   const { locales = {} } = siteConfig.userConfig;
 
@@ -42,8 +41,7 @@ export const createCategory = (frontmatter: Record<string, any>, fileInfo: FileI
   });
 
   // [""] 表示添加一个为空的 categories
-
-  return (frontmatter.categories = categories.length ? categories : [""]);
+  return { categories: categories.length ? categories : [""] };
 };
 
 /**
@@ -148,51 +146,40 @@ const cleanPathSpaces = (path: string): string => {
 };
 
 /**
- * 处理日期：减去8小时抵消时区转换
- * @param frontMatter 原始 frontMatter
- * @returns 转换后的 frontMatter
- */
-export const handleDate = (frontMatter: Record<string, any>): void => {
-  // 处理日期：减去8小时抵消时区转换
-  if (frontMatter.date) {
-    const originalDate = new Date(frontMatter.date);
-    originalDate.setHours(originalDate.getHours() - 8);
-    frontMatter.date = originalDate;
-  }
-};
-
-/**
  * 处理封面图
- * @param frontMatter 原始 frontMatter
+ * @param coverImg 原始封面图
  * @param coverList 封面图列表
- * @param isForce 是否强制替换封面图
+ * @param enableForceCoverImg 是否强制替换封面图
  * @returns 转换后的 frontMatter
  */
-export const handleCoverImg = (frontMatter: Record<string, any>, coverList: string[], isForce = false): void => {
-  // 原始封面图
-  let coverImg = frontMatter.coverImg;
+export const handleCoverImg = (coverImg: string, coverList: string[], enableForceCoverImg = false) => {
+  // 缓存随机索引生成逻辑（减少重复计算）
+  const getRandomCover = () => coverList[Math.floor(Math.random() * coverList.length)];
 
-  // 如果文件本身的 coverImg 不存在于 coverList 中，则随机获取一个
-  if (isForce || !coverList.includes(coverImg)) {
-    // 随机获取 coverImg
-    coverImg = coverList[Math.floor(Math.random() * coverList.length)];
-    console.log("文件 coverImg 更改为 =>", coverImg);
-    frontMatter.coverImg = coverImg;
+  // 强制模式：直接返回随机封面（优先级最高）
+  if (enableForceCoverImg) {
+    return { coverImg: getRandomCover() };
   }
+
+  // 非强制模式：检查当前封面是否有效
+  // 用 Set 优化 includes 性能（尤其 coverList 较长时）
+  const coverSet: Set<string> = new Set(coverList);
+  if (!coverSet.has(coverImg)) {
+    return { coverImg: getRandomCover() };
+  }
+
+  // 封面有效时返回空对象（保持原逻辑）
+  return {};
 };
 
 /**
  * 根据规则转换 permalink
- * @param frontMatter 原始 frontMatter
+ * @param permalink 原始 permalink
  * @param fileInfo 文件信息
  * @param rules 规则数组
  * @returns 转换后的 frontMatter
  */
-export const handleTransformByRules = (
-  frontMatter: Record<string, any>,
-  fileInfo: FileInfo,
-  rules: TransformRule[]
-): void => {
+export const handleTransformByRules = (permalink: string, fileInfo: FileInfo, rules: TransformRule[]) => {
   // 转换函数：支持移除指定层级前缀后再添加新前缀，新增clear清空逻辑 + UUID占位符替换
   for (const rule of rules) {
     const { folderName, prefix = "", removeLevel, clear = false } = rule; // 解构时给clear默认值false
@@ -202,16 +189,13 @@ export const handleTransformByRules = (
       continue;
     }
 
-    //console.log(`folderName：${folderName}`, `prefix: ${prefix}`, `removeLevel: ${removeLevel}`, `clear: ${clear}`);
-
     // 2. 如果clear为true，直接清空permalink并返回（优先级最高）
-    if (clear) {
-      frontMatter.permalink = "";
-      console.log(`匹配规则：${folderName}（clear=true）→ 清空permalink`);
+    if (clear || permalink === undefined) {
+      permalink = "";
     }
 
     // 兼容null和undefined，避免空字符串替换报错
-    let originalPermalink = frontMatter.permalink;
+    let originalPermalink = permalink;
     if (originalPermalink === null || originalPermalink === undefined) {
       originalPermalink = "";
     }
@@ -250,8 +234,28 @@ export const handleTransformByRules = (
 
     // 8. 拼接新 permalink 并返回结果（此时prefix已替换占位符）
     const newPermalink = `${normalizedPrefix}${originalPermalink}`;
-    frontMatter.permalink = newPermalink;
 
-    console.log(`原permalink：${frontMatter.permalink} → 新permalink：${newPermalink}`);
+    return { permalink: newPermalink };
   }
+  return {};
+};
+
+/**
+ * 判断值是否为 Record<string, any> 或 undefined
+ * @param value 要检查的值
+ * @returns true 如果是对象（字符串键）或 undefined 则返回 true，否则返回 false
+ */
+export const isRecordOrUndefined = value => {
+  // 检查是否为 undefined
+  if (value === undefined) {
+    return true;
+  }
+
+  // 检查是否为普通对象（排除 null、数组、函数等）
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    !Array.isArray(value) &&
+    Object.prototype.toString.call(value) === "[object Object]"
+  );
 };

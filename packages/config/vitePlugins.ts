@@ -7,7 +7,7 @@ import Catalogue from "vitepress-plugin-catalogue";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import AutoFrontmatter, { FileInfo } from "vitepress-plugin-auto-frontmatter";
-import { createCategory, handleCoverImg, handleDate, handleTransformByRules } from "./util/addFrontmatter";
+import { createCategory, handleCoverImg, handleTransformByRules, isRecordOrUndefined } from "./util/addFrontmatter";
 import { transformData, transformRaw } from "./post";
 import { TeekAutoFrontmatterOption, TransformRule } from "./interface/teekAutoFrontmatterOption";
 
@@ -55,6 +55,7 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
     const {
       pattern,
       globOptions = {},
+      transform,
       // 是否开启自动生成 categories
       categories = true,
       // 是否开启添加文档封面图
@@ -67,10 +68,6 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       enablePermalink = true,
       // 处理永久链接的规则
       permalinkRules = [],
-      // 是否处理日期转换
-      enableHandleDate = true,
-      // 是否打印详细的转换日志
-      enableDetailLog = false,
     }: TeekAutoFrontmatterOption = autoFrontmatterOption;
 
     // 默认扫描全部 MD 文件
@@ -81,58 +78,50 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
     };
 
-    //autoFrontmatterOption.exclude = { layout: false };
-
     // 如果启用生成永久连接，则默认开启同名key覆盖（不开启规则无法生效）
     if (enablePermalink) {
       autoFrontmatterOption.recoverTransform = true;
     }
     // 自定义 frontmatter 内容，添加永久链接和分类
     autoFrontmatterOption.transform = (frontmatter: Record<string, any>, fileInfo: FileInfo) => {
-      if (!fileInfo.relativePath.startsWith("01.指南/01.简介")) return undefined;
+      let transformResult = {};
 
-      console.log("relativePath", fileInfo.relativePath);
-      // 创建副本用于比较是否发生修改
-      const oriFrontMatter: Record<string, any> = { ...frontmatter };
-
-      // 启用生成永久连接，并且配置了 permalinkRules 规则，则根据配置的规则进行处理
-      if (enablePermalink && permalinkRules?.length > 0) {
-        handleTransformByRules(frontmatter, fileInfo, permalinkRules);
-      } else if (enablePermalink) {
+      // 启用生成永久连接，并根据规则进行处理(跳过目录页)
+      if (enablePermalink && frontmatter.catalogue !== true) {
+        let finalPermalinkRules: TransformRule[] = permalinkRules;
         // 开启 permalink 功能但未提供规则时，添加默认规则
-        const defaultTransformRules: TransformRule[] = [{ folderName: "*", prefix: "/$path/$uuid5" }];
-        handleTransformByRules(frontmatter, fileInfo, defaultTransformRules);
+        if (permalinkRules?.length <= 0) {
+          finalPermalinkRules = [{ folderName: "*", prefix: "/$path/$uuid5" }];
+        }
+
+        transformResult = {
+          ...transformResult,
+          ...handleTransformByRules(frontmatter.permalink, fileInfo, finalPermalinkRules),
+        };
       }
 
       // 开启封面图并且封面图列表不为空
       if (enableCoverImg && coverImgList?.length > 0) {
         // 处理封面图
-        handleCoverImg(frontmatter, coverImgList, enableForceCoverImg);
+        transformResult = {
+          ...transformResult,
+          ...handleCoverImg(frontmatter.coverImg, coverImgList, enableForceCoverImg),
+        };
       }
 
       // 开启分类功能
       if (categories && !frontmatter.categories) {
-        createCategory(frontmatter, fileInfo, ["@fragment"]);
+        transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
 
-      // 比较处理前后的对象是否一致，一致则返回 undefined，不修改文件
-      if (JSON.stringify(oriFrontMatter) === JSON.stringify(frontmatter)) {
-        return undefined;
+      // 调用自定义 transform 方法的逻辑(可选)
+      transformResult = transform?.({ ...frontmatter, ...transformResult }, fileInfo) || transformResult;
+      // 确保 transform 方法返回结果为 Record<string, any> 或 undefined，否则无视其结果
+      if (!isRecordOrUndefined(transformResult)) {
+        transformResult = {};
       }
 
-      // 日期转换处理
-      if (enableHandleDate) {
-        // 如果发生了变更需要处理日期，减去8小时抵消时区转换
-        handleDate(frontmatter);
-      }
-
-      // 打印日志
-      if (enableDetailLog) {
-        console.info("发生变更的文件：", fileInfo.relativePath);
-        console.info("最终生成的frontmatter：", frontmatter);
-      }
-
-      return Object.keys(frontmatter).length ? frontmatter : undefined;
+      return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
     };
 
     plugins.push(AutoFrontmatter(autoFrontmatterOption));

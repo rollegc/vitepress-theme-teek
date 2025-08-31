@@ -22,7 +22,7 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
 
   /**
    * 是否开启强制覆盖封面图（coverImgList为空时无效）
-   * 开始时：针对已存在封面图的文件，会强制覆盖掉原来的封面图
+   * 开启时：针对已存在封面图的文件，会强制覆盖掉原来的封面图
    * @default false（默认关闭）
    */
   enableForceCoverImg?: boolean;
@@ -34,6 +34,7 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
 
   /**
    * 是否开启生成永久链接 Permalink
+   * 默认跳过 `frontmatter.catalogue` 设置为`true` 的Markdown 文档 （目录页）
    * @default true（默认开启）
    */
   enablePermalink?: boolean;
@@ -55,16 +56,10 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
 
   /**
    * 是否处理日期转换
-   * 开启时减去8小时抵消时区转换
+   * 开启时根据本地时区进行转换
    * @default true（默认开启防止日期变化）
    */
   enableHandleDate?: boolean;
-
-  /**
-   * 是否打印详细的转换日志
-   * @default false（默认关闭）
-   */
-  enableDetailLog?: boolean;
 }
 
 /**

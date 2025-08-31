@@ -53,20 +53,18 @@ export default function VitePluginVitePressAutoFrontmatter(
 const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOption, srcDir: string) => {
   const { include, exclude, transform, recoverTransform = false } = option;
 
-  logger.info(`=========== ${option}`);
-
   for (const filePath of filePaths) {
     if (!filePath.endsWith(".md")) continue;
 
+    // 同步读取文件内容
     const fileContent = readFileSync(filePath, "utf-8");
-
+    // 用 gray-matter 解析 frontmatter
     const { data: frontmatter, content } = matter(fileContent);
 
-    logger.info(`frontmatter  ${JSON.stringify(frontmatter)}`);
-    logger.info(`frontmatter  ${frontmatter.date}, ${frontmatter.date instanceof Date}`);
+    // layout为home或者false的不处理
+    if (frontmatter.layout === "home" || frontmatter.layout === false) continue;
 
-    if (frontmatter.layout === "home") continue;
-
+    // 根据配置的 include（白名单）和 exclude（黑名单）筛选文件，只处理符合条件的文件
     const isPass = checkExcludeAndInclude(frontmatter, { exclude, include });
     if (!isPass) continue;
 
@@ -94,9 +92,9 @@ const writeFrontmatterToFile = (filePaths: string[], option: AutoFrontmatterOpti
 
     const finalFrontmatter = transformResult || tempFrontmatter;
     // 确保日期格式为 yyyy-MM-dd hh:mm:ss
-    finalFrontmatter.date = formatDate(tempFrontmatter.date);
+    finalFrontmatter.date = formatDate(tempFrontmatter.date, "yyyy-MM-dd hh:mm:ss", option.enableHandleTimezone);
 
-    // 如果源文件的 frontmatter 已经全部包含处理后的 frontmatter，则不需要修改
+    // 如果没有开启同名key覆盖且源文件的 frontmatter 已经全部包含处理后的 frontmatter，则不需要修改
     if (!recoverTransform && Object.keys(finalFrontmatter).every(key => frontmatter[key] !== undefined)) continue;
 
     // 转换为 --- xxx --- 字符串
