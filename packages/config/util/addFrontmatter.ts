@@ -193,7 +193,7 @@ export const handleTransformByRules = (permalink: string, fileInfo: FileInfo, ru
 
     // 2. 如果clear为true，直接清空permalink并返回（优先级最高）
     if (clear || permalink === undefined) {
-      permalink = "";
+      return { permalink: "" };
     }
 
     // 兼容null和undefined，避免空字符串替换报错

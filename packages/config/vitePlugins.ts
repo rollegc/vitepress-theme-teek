@@ -65,7 +65,7 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       // 封面图列表
       coverImgList = [],
       // 是否开启生成永久链接
-      enablePermalink = true,
+      enablePermalink = false,
       // 处理永久链接的规则
       permalinkRules = [],
     }: TeekAutoFrontmatterOption = autoFrontmatterOption;

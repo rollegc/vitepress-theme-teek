@@ -8,7 +8,7 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
   /**
    * 是否开启自动生成 categories
    * 开启时根据文档目录自动生成分类
-   * @default false（默认关闭）
+   * @default true（默认开启）
    */
   categories?: boolean;
 
@@ -36,7 +36,8 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
    * 是否开启生成永久链接 Permalink
    * 默认跳过 `frontmatter.catalogue` 设置为`true` 的Markdown 文档 （目录页）
    * 如果开启该功能，但未提供 permalinkRules 规则，则使用默认规则 { folderName: "*", prefix: "/$path/$uuid5" }
-   * @default true（默认开启）
+   * 需要搭配 recoverTransform 一起使用，否则无法覆盖
+   * @default false（默认关闭）
    */
   enablePermalink?: boolean;
 

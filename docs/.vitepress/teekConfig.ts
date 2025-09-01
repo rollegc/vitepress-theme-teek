@@ -49,14 +49,13 @@ export const teekConfig = defineTeekConfig({
       // 是否开启添加文档封面图
       enableCoverImg: false,
       // 是否开启强制覆盖封面图，
-      enableForceCoverImg: true,
+      enableForceCoverImg: false,
       // 封面图列表
-      coverImgList: ["1.webp", "2.webp", "3.webp", "4.webp", 'https://vp.teek.top/blog/bg1.webp'],
+      coverImgList: [],
       // 是否开启生成永久链接
       enablePermalink: false,
       // 处理永久链接的规则
       permalinkRules: [
-        { folderName: "01.指南/01.简介/", prefix: "/$path/teek/$uuid", removeLevel: 99 }, // 添加前缀
       ],
 			// 是否开启时区转换
 			enableHandleTimezone: true,
