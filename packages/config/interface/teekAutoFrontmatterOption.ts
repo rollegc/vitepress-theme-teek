@@ -7,22 +7,22 @@ import { AutoFrontmatterOption } from "vitepress-plugin-auto-frontmatter";
 export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
   /**
    * 是否开启自动生成 categories
+   * 开启时根据文档目录自动生成分类
    * @default false（默认关闭）
    */
   categories?: boolean;
 
   /**
    * 是否自动为无封面图的MD文档添加随机封面，根据coverImgList内容选择（coverImgList为空时无效）
-   * 开启时：
-   *  - 针对无封面图的MD文档，会自动添加封面图
-   *  - 针对已存在封面图的MD文档，会判断是否存在于coverImgList中，如果存在则不覆盖，不存在则覆盖掉原来的封面图
+   * 开启时：无封面图的MD文档，会自动添加封面图
    * @default false（默认关闭）
    */
   enableCoverImg?: boolean;
 
   /**
    * 是否开启强制覆盖封面图（coverImgList为空时无效）
-   * 开启时：针对已存在封面图的文件，会强制覆盖掉原来的封面图
+   * 开启时：已有封面图的MD文档，会判断是否存在于coverImgList中，如果存在则跳过，如果不存在则覆盖掉原来的封面图。
+   * 需要搭配 recoverTransform 一起使用，否则无法覆盖
    * @default false（默认关闭）
    */
   enableForceCoverImg?: boolean;
@@ -35,13 +35,14 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
   /**
    * 是否开启生成永久链接 Permalink
    * 默认跳过 `frontmatter.catalogue` 设置为`true` 的Markdown 文档 （目录页）
+   * 如果开启该功能，但未提供 permalinkRules 规则，则使用默认规则 { folderName: "*", prefix: "/$path/$uuid5" }
    * @default true（默认开启）
    */
   enablePermalink?: boolean;
 
   /**
    * 处理 permalink 的规则配置
-   * enablePermalink为false时无效
+   * enablePermalink 设置为 false 时无效
    * @example
    * { folderName: "00.Teek", prefix: "/teek" } // 添加前缀
    * { folderName: "00.Teek/01.XXX", prefix: "/tool", removeLevel: 1 } // 先移除一层前缀，再添加前缀
@@ -53,13 +54,6 @@ export interface TeekAutoFrontmatterOption extends AutoFrontmatterOption {
    * { folderName: "*", clear: true}, // * 代表所有文件都匹配，清空所有文件的永久链接
    */
   permalinkRules?: TransformRule[];
-
-  /**
-   * 是否处理日期转换
-   * 开启时根据本地时区进行转换
-   * @default true（默认开启防止日期变化）
-   */
-  enableHandleDate?: boolean;
 }
 
 /**

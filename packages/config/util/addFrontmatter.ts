@@ -156,16 +156,18 @@ export const handleCoverImg = (coverImg: string, coverList: string[], enableForc
   // 缓存随机索引生成逻辑（减少重复计算）
   const getRandomCover = () => coverList[Math.floor(Math.random() * coverList.length)];
 
-  // 强制模式：直接返回随机封面（优先级最高）
-  if (enableForceCoverImg) {
+  // 如果封面图为 undefined，则直接随机获取一个
+  if (coverImg === undefined) {
     return { coverImg: getRandomCover() };
   }
 
-  // 非强制模式：检查当前封面是否有效
-  // 用 Set 优化 includes 性能（尤其 coverList 较长时）
-  const coverSet: Set<string> = new Set(coverList);
-  if (!coverSet.has(coverImg)) {
-    return { coverImg: getRandomCover() };
+  // 如果有值且开启强制模式，则检查当前封面图是否有效，有效跳过，无效则随机获取一个
+  if (enableForceCoverImg) {
+    // 用 Set 优化 includes 性能（尤其 coverList 较长时）
+    const coverSet: Set<string> = new Set(coverList);
+    if (!coverSet.has(coverImg)) {
+      return { coverImg: getRandomCover() };
+    }
   }
 
   // 封面有效时返回空对象（保持原逻辑）

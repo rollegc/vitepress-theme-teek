@@ -78,10 +78,6 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       ignore: [...ignoreDir.autoFrontmatter, ...(globOptions.ignore || [])],
     };
 
-    // 如果启用生成永久连接，则默认开启同名key覆盖（不开启规则无法生效）
-    if (enablePermalink) {
-      autoFrontmatterOption.recoverTransform = true;
-    }
     // 自定义 frontmatter 内容，添加永久链接和分类
     autoFrontmatterOption.transform = (frontmatter: Record<string, any>, fileInfo: FileInfo) => {
       let transformResult = {};

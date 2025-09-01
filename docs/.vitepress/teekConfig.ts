@@ -42,21 +42,23 @@ export const teekConfig = defineTeekConfig({
   vitePlugins: {
     autoFrontmatter: true, // 自动生成 frontmatter
     autoFrontmatterOption: {
+			// 是否开启同名key覆盖
       recoverTransform: false,
       // 是否开启自动生成 categories
       categories: false,
       // 是否开启添加文档封面图
       enableCoverImg: false,
-      // 是否开启强制覆盖封面图
-      enableForceCoverImg: false,
+      // 是否开启强制覆盖封面图，
+      enableForceCoverImg: true,
       // 封面图列表
       coverImgList: ["1.webp", "2.webp", "3.webp", "4.webp", 'https://vp.teek.top/blog/bg1.webp'],
       // 是否开启生成永久链接
       enablePermalink: false,
       // 处理永久链接的规则
       permalinkRules: [
-        { folderName: "01.指南/01.简介/", prefix: "/$path-$uuid2/teek/$uuid1/$uuid", removeLevel: 99 }, // 添加前缀
+        { folderName: "01.指南/01.简介/", prefix: "/$path/teek/$uuid", removeLevel: 99 }, // 添加前缀
       ],
+			// 是否开启时区转换
 			enableHandleTimezone: true,
     },
     sidebarOption: {
