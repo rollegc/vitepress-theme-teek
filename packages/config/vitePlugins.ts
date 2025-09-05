@@ -6,10 +6,9 @@ import MdH1 from "vitepress-plugin-md-h1";
 import Catalogue from "vitepress-plugin-catalogue";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
-import AutoFrontmatter, { FileInfo } from "vitepress-plugin-auto-frontmatter";
-import { createCategory, handleCoverImg, handleTransformByRules, isRecordOrUndefined } from "./util/addFrontmatter";
+import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
+import { createCategory, createCoverImg, createComplexPermalink } from "./util/addFrontmatter";
 import { transformData, transformRaw } from "./post";
-import { TeekAutoFrontmatterOption, TransformRule } from "./interface/teekAutoFrontmatterOption";
 
 export const registerPluginAndGet = (vitePlugins: Plugins = {}, teekTheme = true) => {
   const plugins: any[] = [];
@@ -58,17 +57,17 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       transform,
       // 是否开启自动生成 categories
       categories = true,
+      // 是否开启生成永久链接
+      permalink = false,
       // 是否开启添加文档封面图
-      enableCoverImg = false,
+      coverImg = false,
       // 是否开启强制覆盖封面图
-      enableForceCoverImg = false,
+      forceCoverImg = false,
       // 封面图列表
       coverImgList = [],
-      // 是否开启生成永久链接
-      enablePermalink = false,
       // 处理永久链接的规则
       permalinkRules = [],
-    }: TeekAutoFrontmatterOption = autoFrontmatterOption;
+    } = autoFrontmatterOption;
 
     // 默认扫描全部 MD 文件
     if (!pattern) autoFrontmatterOption.pattern = "**/*.md";
@@ -79,29 +78,18 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
     };
 
     // 自定义 frontmatter 内容，添加永久链接和分类
-    autoFrontmatterOption.transform = (frontmatter: Record<string, any>, fileInfo: FileInfo) => {
+    autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
       let transformResult = {};
 
       // 启用生成永久连接，并根据规则进行处理(跳过目录页)
-      if (enablePermalink && frontmatter.catalogue !== true) {
-        let finalPermalinkRules: TransformRule[] = permalinkRules;
+      if (permalink && !frontmatter.permalink) {
+        let finalPermalinkRules = permalinkRules;
         // 开启 permalink 功能但未提供规则时，添加默认规则
-        if (permalinkRules?.length <= 0) {
-          finalPermalinkRules = [{ folderName: "*", prefix: "/$path/$uuid5" }];
-        }
+        if (!permalinkRules.length) finalPermalinkRules = [{ folderName: "*", prefix: "/$path/$uuid5" }];
 
         transformResult = {
           ...transformResult,
-          ...handleTransformByRules(frontmatter.permalink, fileInfo, finalPermalinkRules),
-        };
-      }
-
-      // 开启封面图并且封面图列表不为空
-      if (enableCoverImg && coverImgList?.length > 0) {
-        // 处理封面图
-        transformResult = {
-          ...transformResult,
-          ...handleCoverImg(frontmatter.coverImg, coverImgList, enableForceCoverImg),
+          ...createComplexPermalink(frontmatter.permalink, fileInfo, finalPermalinkRules),
         };
       }
 
@@ -110,12 +98,17 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
         transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
 
-      // 调用自定义 transform 方法的逻辑(可选)
-      transformResult = transform?.({ ...frontmatter, ...transformResult }, fileInfo) || transformResult;
-      // 确保 transform 方法返回结果为 Record<string, any> 或 undefined，否则无视其结果
-      if (!isRecordOrUndefined(transformResult)) {
-        transformResult = {};
+      // 开启封面图并且封面图列表不为空
+      if (coverImg && coverImgList.length) {
+        if (!frontmatter.coverImg) {
+          transformResult = { ...transformResult, ...createCoverImg(coverImgList) };
+        } else if (frontmatter.coverImg && forceCoverImg) {
+          transformResult = { ...transformResult, ...createCoverImg(coverImgList) };
+        }
       }
+
+      // 调用可能已存在 transform 方法
+      transformResult = transform?.({ ...frontmatter, ...transformResult }, fileInfo) || transformResult;
 
       return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
     };

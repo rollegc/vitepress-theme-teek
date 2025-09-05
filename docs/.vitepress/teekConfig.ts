@@ -40,26 +40,6 @@ export const teekConfig = defineTeekConfig({
   },
   articleShare: { enabled: true },
   vitePlugins: {
-    autoFrontmatter: true, // 自动生成 frontmatter
-    autoFrontmatterOption: {
-			// 是否开启同名key覆盖
-      recoverTransform: false,
-      // 是否开启自动生成 categories
-      categories: false,
-      // 是否开启添加文档封面图
-      enableCoverImg: false,
-      // 是否开启强制覆盖封面图，
-      enableForceCoverImg: false,
-      // 封面图列表
-      coverImgList: [],
-      // 是否开启生成永久链接
-      enablePermalink: false,
-      // 处理永久链接的规则
-      permalinkRules: [
-      ],
-			// 是否开启时区转换
-			enableHandleTimezone: true,
-    },
     sidebarOption: {
       initItems: false,
       ignoreIndexMd: true,
