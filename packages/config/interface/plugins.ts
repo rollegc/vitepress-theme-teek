@@ -3,7 +3,7 @@ import type { SidebarOption } from "vitepress-plugin-sidebar-resolve";
 import type { CatalogueOption } from "vitepress-plugin-catalogue";
 import type { MdH1Option } from "vitepress-plugin-md-h1";
 import type { DocAnalysisOption } from "vitepress-plugin-doc-analysis";
-import type { AutoFrontmatterOption } from "vitepress-plugin-auto-frontmatter";
+import { TeekAutoFrontmatterOption } from "./teekAutoFrontmatterOption";
 
 export interface Plugins {
   /**
@@ -63,12 +63,27 @@ export interface Plugins {
    */
   autoFrontmatter?: boolean;
   /**
-   * autoFrontmatter 插件配置项，并拓展出其他配置项
+   * autoFrontmatter 插件配置项，Teek 中对其进行了增强，拓展了其他配置项
    *
-   * permalinkPrefix 为自动生成 permalink 的固定前缀，如 pages、pages/demo，默认为 pages。当禁用 permalink 插件后，不会自动生成 permalink
+   * recoverTransform: 是否开启同名key覆盖
    * categories 为是否自动生成 categories
+   * enableCoverImg 是否开启添加文档封面图
+   * enableForceCoverImg 是否开启强制覆盖封面图
+   * coverImgList 封面图列表
+   * enablePermalink 是否开启生成永久链接
+   * permalinkRules 处理永久链接的规则
+   * enableHandleDate 是否处理时区转换
    *
-   * @default '{ permalinkPrefix: "pages", categories: true }'
+   * @default '{
+   *  recoverTransform: false,
+   * 	categories: true,
+   * 	enableCoverImg: false,
+   *  enableForceCoverImg: false,
+   *  coverImgList: [],
+   *  enablePermalink: false,
+   *  permalinkRules: []
+   *  enableHandleDate: true
+   * }'
    */
-  autoFrontmatterOption?: AutoFrontmatterOption & { permalinkPrefix?: string; categories?: boolean };
+  autoFrontmatterOption?: TeekAutoFrontmatterOption;
 }
