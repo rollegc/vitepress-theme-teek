@@ -28,6 +28,13 @@ export interface AutoFrontmatterOption {
    * @default false
    */
   recoverTransform?: boolean;
+
+  /**
+   * 是否开启时区转换处理
+   * 开启时根据本地时区进行转换
+   * @default true（默认开启，防止日期变化）
+   */
+  enableHandleTimezone?: boolean;
 }
 
 export interface FileInfo {
