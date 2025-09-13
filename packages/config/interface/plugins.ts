@@ -75,7 +75,7 @@ export interface AutoFrontmatterOptionExtra extends AutoFrontmatterOption {
   /**
    * 是否开启生成永久链接 Permalink，如果开启该功能，但未提供 permalinkRules 规则，则使用默认规则 { folderName: "*", prefix: "/$path/$uuid5" }
    *
-   * @default false
+   * @default true
    */
   permalink?: boolean;
   /**

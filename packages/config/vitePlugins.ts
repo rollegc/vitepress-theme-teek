@@ -58,7 +58,7 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       // 是否开启自动生成 categories
       categories = true,
       // 是否开启生成永久链接
-      permalink = false,
+      permalink = true,
       // 是否开启添加文档封面图
       coverImg = false,
       // 是否开启强制覆盖封面图

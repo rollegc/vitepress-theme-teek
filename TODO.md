@@ -7,6 +7,7 @@
 - 壁纸滚动 `fixed`
 - 时钟卡片
 - `demo` 容器 `yaml` 支持非 `Vue` 组件的源码复制
+- 首页 Banner 和卡片栏支持禁用
 
 ### issue
 
