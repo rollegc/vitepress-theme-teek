@@ -56,6 +56,7 @@ const isPaging = ref(false);
       </div>
 
       <div
+        v-if="teekConfig.homeCardListPosition"
         :class="[ns.e('content__info'), teekConfig.homeCardListPosition === 'left' ? ns.is('left') : ns.is('right')]"
         :aria-label="t('tk.home.cardLabel')"
       >

@@ -88,7 +88,7 @@ export interface TeekConfig {
    *
    * @default 'right'
    */
-  homeCardListPosition?: "left" | "right";
+  homeCardListPosition?: "left" | "right" | false;
   /**
    * 首页卡片的位置排序，当设置了 `homeCardSort` 但没有全部补全，则剩余内容默认按照 `homeCardSort` 的顺序进行排序
    *
