@@ -52,6 +52,7 @@ const style = computed(() => {
       </div>
 
       <div :class="ns.e('info')">
+        <slot name="teek-article-banner-info-top" />
         <TkArticleBreadcrumb v-if="!isMobile" />
 
         <div :class="ns.e('meta')" class="flx-center flx-wrap">
@@ -83,6 +84,7 @@ const style = computed(() => {
 
         <h1>{{ frontmatter.title }}</h1>
         <TkArticleAnalyze :breadcrumb="false" scope="article-info" />
+        <slot name="teek-article-banner-info-bottom" />
       </div>
     </div>
 
