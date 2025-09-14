@@ -5,7 +5,7 @@ import { computed, defineComponent, h, inject, nextTick, provide, ref, unref, wa
 import { useData, useRoute } from "vitepress";
 import { useAnchorScroll, useMediaQuery, useViewTransition } from "@teek/composables";
 import { emptyPost } from "@teek/config/post/helper";
-import { isFunction, isObject } from "@teek/helper";
+import { isClient, isFunction, isObject } from "@teek/helper";
 
 export const postsContext: InjectionKey<PostData> = Symbol("posts");
 export const teekConfigContext: InjectionKey<TeekConfig | Ref<TeekConfig>> = Symbol("teekConfig");
@@ -212,6 +212,9 @@ export const useTagColor = () => {
   ]);
 };
 
+/**
+ * 视图渐入过渡效果的响应式配置项获取
+ */
 export const useWindowTransitionConfig = (condition?: (windowTransition: WindowTransition) => boolean | undefined) => {
   const { getTeekConfigRef } = useTeekConfig();
   const windowTransitionConfig = getTeekConfigRef<WindowTransition>("windowTransition", true);
@@ -225,17 +228,26 @@ export const useWindowTransitionConfig = (condition?: (windowTransition: WindowT
 };
 
 /**
- * 封装常用响应式变量
+ * 获取常用响应式变量
  */
 export const useCommon = () => {
-  const route = useRoute();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
+  return { isMobile };
+};
+
+/**
+ * 侧边栏相关属性
+ */
+export const useSidebar = () => {
   const hasSidebar = ref(true);
+  const route = useRoute();
 
   watch(
     () => route.path,
     async () => {
+      if (!isClient) return;
+
       await nextTick();
       // 检查是否存在侧边栏
       const sidebarDom = document.querySelector(".VPSidebar");
@@ -245,5 +257,5 @@ export const useCommon = () => {
     { immediate: true, flush: "post" }
   );
 
-  return { isMobile, hasSidebar };
+  return { hasSidebar };
 };

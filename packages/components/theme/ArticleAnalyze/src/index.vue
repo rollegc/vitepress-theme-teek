@@ -127,14 +127,14 @@ watch(
     <div v-if="isShowInfo" ref="baseInfoRef" :class="`${ns.e('wrapper')} flx-align-center`">
       <TkArticleInfo :post :scope />
 
-      <div v-if="docAnalysisConfig.wordCount || pageViewInfo.wordCount" class="flx-center">
+      <div v-if="docAnalysisConfig.wordCount && pageViewInfo.wordCount" class="flx-center">
         <TkIcon v-if="articleConfig.showIcon" :icon="readingIcon" aria-hidden="true" />
         <a :title="t('tk.articleAnalyze.wordCount')" class="hover-color" :aria-label="t('tk.articleAnalyze.wordCount')">
           {{ pageViewInfo.wordCount }}
         </a>
       </div>
 
-      <div v-if="docAnalysisConfig.readingTime || pageViewInfo.readingTime" class="flx-center">
+      <div v-if="docAnalysisConfig.readingTime && pageViewInfo.readingTime" class="flx-center">
         <TkIcon v-if="articleConfig.showIcon" :icon="clockIcon" />
         <a
           :title="t('tk.articleAnalyze.readingTime')"

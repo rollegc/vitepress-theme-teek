@@ -6,7 +6,7 @@ import { useData, onContentUpdated } from "vitepress";
 import { computed, provide, ref, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/composables";
 import { isBoolean, isClient } from "@teek/helper";
-import { useTeekConfig, usePageState, useCommon } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState, useSidebar } from "@teek/components/theme/ConfigProvider";
 import { TkHome } from "@teek/components/theme/Home";
 import { TkHomeMyCardScreen } from "@teek/components/theme/HomeMyCard";
 import { TkBodyBgImage } from "@teek/components/theme/BodyBgImage";
@@ -57,7 +57,7 @@ const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
 const { frontmatter, localeIndex, page } = useData();
-const { hasSidebar } = useCommon();
+const { hasSidebar } = useSidebar();
 
 // 支持 provide、frontmatter.tk、frontmatter、theme 配置
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {

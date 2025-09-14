@@ -142,7 +142,7 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
   }
   // 文档内容分析插件
   if (docAnalysis) {
-    docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.docAnalysis];
+    docAnalysisOption.ignoreList = [...(docAnalysisOption?.ignoreList || []), ...ignoreDir.docAnalysis];
     plugins.push(DocAnalysis(docAnalysisOption));
   }
 

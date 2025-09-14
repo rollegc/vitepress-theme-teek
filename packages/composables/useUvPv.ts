@@ -15,17 +15,17 @@ export interface UvPvData {
   page_uv?: number;
   /** 今日数据 */
   today?: {
-    site_pv?: number;
-    site_uv?: number;
-    page_pv?: number;
-    page_uv?: number;
+    site_pv: number;
+    site_uv: number;
+    page_pv: number;
+    page_uv: number;
   };
   /** 昨日数据 */
   yesterday?: {
-    site_pv?: number;
-    site_uv?: number;
-    page_pv?: number;
-    page_uv?: number;
+    site_pv: number;
+    site_uv: number;
+    page_pv: number;
+    page_uv: number;
   };
 }
 
