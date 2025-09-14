@@ -1,12 +1,10 @@
 # TODO
 
-## v1.4.7
+## v1.5.0
 
 ### 代办
 
 - 壁纸滚动 `fixed`
-- 时钟卡片
-- `demo` 容器 `yaml` 支持非 `Vue` 组件的源码复制
 
 ### issue
 
@@ -15,6 +13,7 @@
 - 修复 `My` 的状态 `icon` 文本渲染 `img` 问题
 - 重构 `frontmatter` 插件生成 `permalink` 规则，新增 `frontmatter.coverImg` 生成规则
 - 首页卡片栏支持配置来取消显示
+- `demo` 容器 `yaml` 支持非 `Vue` 组件的源码复制
 
 ## AR
 
