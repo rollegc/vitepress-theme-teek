@@ -1,8 +1,8 @@
 import type { PostData } from "@teek/config/post/types";
 import type { WindowTransition, TeekConfig } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
-import { computed, defineComponent, h, inject, provide, unref } from "vue";
-import { useData } from "vitepress";
+import { computed, defineComponent, h, inject, nextTick, provide, ref, unref, watch } from "vue";
+import { useData, useRoute } from "vitepress";
 import { useAnchorScroll, useMediaQuery, useViewTransition } from "@teek/composables";
 import { emptyPost } from "@teek/config/post/helper";
 import { isFunction, isObject } from "@teek/helper";
@@ -228,7 +228,22 @@ export const useWindowTransitionConfig = (condition?: (windowTransition: WindowT
  * 封装常用响应式变量
  */
 export const useCommon = () => {
+  const route = useRoute();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  return { isMobile };
+  const hasSidebar = ref(true);
+
+  watch(
+    () => route.path,
+    async () => {
+      await nextTick();
+      // 检查是否存在侧边栏
+      const sidebarDom = document.querySelector(".VPSidebar");
+      if (sidebarDom) hasSidebar.value = true;
+      else hasSidebar.value = false;
+    },
+    { immediate: true, flush: "post" }
+  );
+
+  return { isMobile, hasSidebar };
 };

@@ -34,6 +34,7 @@ import type {
   RiskLink,
   WindowTransition,
   Feature,
+  ArticleBanner,
 } from "./interface";
 
 export type * from "./interface";
@@ -231,6 +232,12 @@ export interface TeekConfig {
    * 新版代码块配置
    */
   codeBlock?: CodeBlock;
+  /**
+   * 文章页顶部 Banner，仅在没有侧边栏的文章页生效
+   *
+   * @since 1.5.0
+   */
+  articleBanner?: ArticleBanner;
   /**
    * 文章信息配置
    */

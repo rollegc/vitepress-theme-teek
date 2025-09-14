@@ -6,7 +6,7 @@ import { useData, onContentUpdated } from "vitepress";
 import { computed, provide, ref, watch } from "vue";
 import { useNamespace, localeContextKey } from "@teek/composables";
 import { isBoolean, isClient } from "@teek/helper";
-import { useTeekConfig, usePageState } from "@teek/components/theme/ConfigProvider";
+import { useTeekConfig, usePageState, useCommon } from "@teek/components/theme/ConfigProvider";
 import { TkHome } from "@teek/components/theme/Home";
 import { TkHomeMyCardScreen } from "@teek/components/theme/HomeMyCard";
 import { TkBodyBgImage } from "@teek/components/theme/BodyBgImage";
@@ -40,6 +40,7 @@ import { TkRiskLinkPage, useRiskLink } from "@teek/components/theme/RiskLinkPage
 import { TkSidebarTrigger } from "@teek/components/theme/SidebarTrigger";
 import { TkHomeFeature } from "@teek/components/theme/HomeFeature";
 import { TkRouteLoading } from "@teek/components/theme/RouteLoading";
+import { TkArticleBanner } from "@teek/components/theme/ArticleBanner";
 
 defineOptions({ name: "TeekLayout" });
 
@@ -56,6 +57,7 @@ const ns = useNamespace("layout");
 const { getTeekConfigRef } = useTeekConfig();
 const { isHomePage, isArchivesPage, isCataloguePage, isArticleOverviewPage } = usePageState();
 const { frontmatter, localeIndex, page } = useData();
+const { hasSidebar } = useCommon();
 
 // 支持 provide、frontmatter.tk、frontmatter、theme 配置
 const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
@@ -76,6 +78,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   appreciation: {},
   riskLink: { enabled: false },
   themeEnhance: { enabled: true },
+  articleBanner: { enabled: true },
 });
 
 const loading = ref(teekConfig.value.loading);
@@ -105,6 +108,16 @@ const bottomTipConfig = computed(() => {
   if (isBoolean(teekConfig.value.articleBottomTip)) return teekConfig.value.articleBottomTip;
   return teekConfig.value.articleBottomTip?.(frontmatter.value, localeIndex.value, page.value);
 });
+
+// 是否显示 Article Banner（使用条件：开启该功能、没有侧边栏的文章页）
+const showArticleBanner = computed(
+  () =>
+    frontmatter.value.articleBanner !== false &&
+    teekConfig.value.articleBanner.enabled &&
+    !hasSidebar.value &&
+    frontmatter.value.article !== false &&
+    (!frontmatter.value.layout || frontmatter.value.layout === "doc")
+);
 
 const themeSizeAttribute = ns.join("theme-size");
 watch(
@@ -236,10 +249,14 @@ const usedSlots = [
         <TkHomeMyCardScreen />
       </template>
 
+      <template #layout-top>
+        <TkArticleBanner v-if="showArticleBanner" />
+      </template>
+
       <template #doc-before>
         <slot name="doc-before" />
         <slot name="teek-article-analyze-before" />
-        <TkArticleAnalyze v-if="frontmatter.article !== false" />
+        <TkArticleAnalyze v-if="frontmatter.article !== false && !showArticleBanner" />
         <slot name="teek-article-analyze-after" />
 
         <TkArticleImagePreview />
