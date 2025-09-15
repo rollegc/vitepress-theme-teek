@@ -7,7 +7,12 @@ import Catalogue from "vitepress-plugin-catalogue";
 import DocAnalysis from "vitepress-plugin-doc-analysis";
 import FileContentLoader, { FileContentLoaderOptions } from "vitepress-plugin-file-content-loader";
 import AutoFrontmatter from "vitepress-plugin-auto-frontmatter";
-import { createCategory, createPermalink } from "./addFrontmatter";
+import {
+  createCategory,
+  createCoverImg,
+  createComplexPermalink,
+  createSimplePermalink,
+} from "./autoFrontmatter/addFrontmatter";
 import { transformData, transformRaw } from "./post";
 
 export const registerPluginAndGet = (vitePlugins: Plugins = {}, teekTheme = true) => {
@@ -55,8 +60,14 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
       pattern,
       globOptions = {},
       transform,
-      permalinkPrefix = "pages",
       categories = true,
+      permalink = true,
+      coverImg = false,
+      forceCoverImg = false,
+      coverImgList = [],
+      permalinkType = sidebarOption.resolveRule === "filePath" ? "simple" : "rules",
+      permalinkPrefix = "pages",
+      permalinkRules = [],
     } = autoFrontmatterOption;
 
     // 默认扫描全部 MD 文件
@@ -70,13 +81,32 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
     // 自定义 frontmatter 内容，添加永久链接和分类
     autoFrontmatterOption.transform = (frontmatter, fileInfo) => {
       let transformResult = {};
-      if (permalink && !frontmatter.permalink) {
-        transformResult = { ...transformResult, ...createPermalink(permalinkPrefix) };
+
+      // 启用生成永久连接，并根据规则进行处理(跳过目录页)
+      if (permalink && !frontmatter.permalink?.trim()) {
+        const permalinkObj =
+          permalinkType === "simple" || !fileInfo.relativePath.includes("/")
+            ? createSimplePermalink(permalinkPrefix)
+            : createComplexPermalink(frontmatter.permalink, fileInfo, permalinkRules);
+
+        transformResult = { ...transformResult, ...permalinkObj };
       }
+
+      // 开启分类功能
       if (categories && !frontmatter.categories) {
         transformResult = { ...transformResult, ...createCategory(fileInfo, ["@fragment"]) };
       }
 
+      // 开启封面图并且封面图列表不为空
+      if (coverImg && coverImgList.length) {
+        if (!frontmatter.coverImg) {
+          transformResult = { ...transformResult, ...createCoverImg(coverImgList) };
+        } else if (frontmatter.coverImg && forceCoverImg) {
+          transformResult = { ...transformResult, ...createCoverImg(coverImgList) };
+        }
+      }
+
+      // 调用可能已存在 transform 方法
       transformResult = transform?.({ ...frontmatter, ...transformResult }, fileInfo) || transformResult;
 
       return Object.keys(transformResult).length ? { ...frontmatter, ...transformResult } : undefined;
@@ -112,7 +142,7 @@ const registerLoosePlugins = (vitePlugins: Plugins, ignoreDir: Record<string, an
   }
   // 文档内容分析插件
   if (docAnalysis) {
-    docAnalysisOption.ignoreList = [...(sidebarOption?.ignoreList || []), ...ignoreDir.docAnalysis];
+    docAnalysisOption.ignoreList = [...(docAnalysisOption?.ignoreList || []), ...ignoreDir.docAnalysis];
     plugins.push(DocAnalysis(docAnalysisOption));
   }
 

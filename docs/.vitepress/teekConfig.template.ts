@@ -17,7 +17,13 @@ export const teekConfig = defineTeekConfig({
   loading: false, // 页面加载 Loading 动画配置，如果为 boolean，则控制是否启用，如果为字符串，则指定加载 Loading 动画的文案
   homeCardListPosition: "right", // 首页卡片栏列表位置，当为 left 则在文章列表左侧，当为 right 则在文章列表右侧
   anchorScroll: true, // 是否启用锚点滚动功能，即阅读文章时，自动将 h1 ~ h6 标题添加到地址栏 # 后面
-  viewTransition: true, // 深色、浅色模式切换时是否开启过渡动画
+  // 深色、浅色模式切换时是否开启过渡动画
+  viewTransition: {
+    enabled: true, // 是否启用深浅色切换动画效果
+    mode: "out-in", // 动画模式，out 始终从点击点往全屏扩散，out-in 第一次从点击点往全屏扩散，再次点击从全屏回到点击点
+    duration: 300, // 动画持续时间，当 mode 为 out 时，默认为 300ms，mode 为 out-in 时，默认为 600ms
+    easing: "ease-in", // 缓动函数
+  },
   themeSize: "default", // 站点尺寸，默认为 medium
   // 右下角回到顶部配置
   backTop: {
@@ -453,9 +459,16 @@ export const teekConfig = defineTeekConfig({
     autoFrontmatter: true, // 是否启用 autoFrontmatter 插件
     // autoFrontmatter 插件配置项
     autoFrontmatterOption: {
-      permalinkPrefix: "pages", // 自动生成 permalink 的固定前缀，如 pages、pages/demo，默认为 pages
-      categories: true, // 是否自动生成 categories
-      // ...
+      permalink: true, // 是否开启生成永久链接
+      recoverTransform: false, // 是否开启同名 key 覆盖
+      categories: true, // 是否开启自动生成 categories
+      coverImg: false, // 是否开启添加文档封面图
+      forceCoverImg: false, // 是否开启强制覆盖封面图
+      coverImgList: [], // 封面图列表
+      // 处理永久链接的规则
+      permalinkRules: [
+        //{ folderName: "01.指南/01.简介/", prefix: "/$path/$uuid", removeLevel: 99 }, // 添加前缀
+      ],
     },
   },
 });
