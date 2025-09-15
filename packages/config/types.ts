@@ -35,6 +35,7 @@ import type {
   WindowTransition,
   Feature,
   ArticleBanner,
+  ViewTransition,
 } from "./interface";
 
 export type * from "./interface";
@@ -79,12 +80,6 @@ export interface TeekConfig {
    */
   anchorScroll?: boolean;
   /**
-   * 深色、浅色模式切换时是否开启过渡动画
-   *
-   * @default true
-   */
-  viewTransition?: boolean;
-  /**
    * 首页卡片栏列表位置
    *
    * @default 'right'
@@ -118,6 +113,12 @@ export interface TeekConfig {
    * @default true
    */
   loading?: boolean | string;
+  /**
+   * 深色、浅色模式切换过渡动画配置
+   *
+   * @since v1.5.0
+   */
+  viewTransition?: ViewTransition;
   /**
    * 回到顶部按钮配置
    */

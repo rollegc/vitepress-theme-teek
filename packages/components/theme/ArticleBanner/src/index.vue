@@ -3,7 +3,7 @@ import type { ArticleBanner, Post } from "@teek/config";
 import { computed } from "vue";
 import { useData, withBase } from "vitepress";
 import { useNamespace } from "@teek/composables";
-import { useSidebar, useTeekConfig } from "@teek/components/theme/ConfigProvider";
+import { useCommon, useSidebar, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkArticleBreadcrumb } from "@teek/components/theme/ArticleBreadcrumb";
 import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
 import { TkHomeBannerWaves } from "@teek/components/theme/HomeBanner";
@@ -12,6 +12,7 @@ const ns = useNamespace("article-banner");
 const { frontmatter } = useData();
 
 const { hasSidebar } = useSidebar();
+const { isMobile } = useCommon();
 
 const { getTeekConfigRef } = useTeekConfig();
 

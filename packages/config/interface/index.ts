@@ -29,5 +29,6 @@ export type * from "./siteAnalysis";
 export type * from "./social";
 export type * from "./tag";
 export type * from "./topArticle";
+export type * from "./viewTransition";
 export type * from "./wallpaper";
 export type * from "./windowTransition";

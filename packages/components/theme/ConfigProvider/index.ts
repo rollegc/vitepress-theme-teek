@@ -1,5 +1,5 @@
 import type { PostData } from "@teek/config/post/types";
-import type { WindowTransition, TeekConfig } from "@teek/config";
+import type { WindowTransition, TeekConfig, ViewTransition } from "@teek/config";
 import type { Component, Ref, InjectionKey } from "vue";
 import { computed, defineComponent, h, inject, nextTick, provide, ref, unref, watch } from "vue";
 import { useData, useRoute } from "vitepress";
@@ -22,7 +22,15 @@ export const TeekConfigProvider = (layout: Component) => {
 
       // 开启监听器
       useAnchorScroll().startWatch();
-      useViewTransition();
+
+      const { getTeekConfig } = useTeekConfig();
+      const viewTransitionConfig = getTeekConfig<ViewTransition>("viewTransition", {
+        enabled: true,
+        mode: "out-in",
+        easing: "ease-in",
+      });
+
+      viewTransitionConfig.enabled && useViewTransition(viewTransitionConfig);
 
       return () => h(layout, null, slots);
     },

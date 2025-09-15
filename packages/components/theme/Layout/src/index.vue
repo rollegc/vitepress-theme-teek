@@ -79,6 +79,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   riskLink: { enabled: false },
   themeEnhance: { enabled: true },
   articleBanner: { enabled: true },
+  pageStyle: "default",
 });
 
 const loading = ref(teekConfig.value.loading);
@@ -116,7 +117,8 @@ const showArticleBanner = computed(
     teekConfig.value.articleBanner.enabled &&
     !hasSidebar.value &&
     frontmatter.value.article !== false &&
-    (!frontmatter.value.layout || frontmatter.value.layout === "doc")
+    (!frontmatter.value.layout || frontmatter.value.layout === "doc") &&
+    teekConfig.value.pageStyle === "default"
 );
 
 const themeSizeAttribute = ns.join("theme-size");
