@@ -1,15 +1,18 @@
 <script setup lang="ts" name="ArticleBanner">
 import type { ArticleBanner, Post } from "@teek/config";
-import { computed } from "vue";
-import { useData, withBase } from "vitepress";
+import { computed, nextTick, ref, watch } from "vue";
+import { useData, withBase, useRoute } from "vitepress";
 import { useNamespace } from "@teek/composables";
 import { useCommon, useSidebar, useTeekConfig } from "@teek/components/theme/ConfigProvider";
 import { TkArticleBreadcrumb } from "@teek/components/theme/ArticleBreadcrumb";
 import { TkArticleAnalyze } from "@teek/components/theme/ArticleAnalyze";
 import { TkHomeBannerWaves } from "@teek/components/theme/HomeBanner";
 
+const loaded = ref(false);
+
 const ns = useNamespace("article-banner");
 const { frontmatter } = useData();
+const route = useRoute();
 
 const { hasSidebar } = useSidebar();
 const { isMobile } = useCommon();
@@ -43,10 +46,21 @@ const style = computed(() => {
       frontmatter.value.coverBgColor || articleBannerConfig.value.defaultCoverBgColor,
   };
 });
+
+watch(
+  () => route.path,
+  async () => {
+    // 切换路由后，重新出发动画
+    await nextTick();
+    loaded.value = true;
+    // 避免加载太快导致动画不出现
+    setTimeout(() => (loaded.value = false), 1);
+  }
+);
 </script>
 
 <template>
-  <div v-if="!hasSidebar && articleBannerConfig.enabled" :class="ns.b()" :style>
+  <div v-if="!hasSidebar && articleBannerConfig.enabled" v-show="!loaded" :class="ns.b()" :style>
     <div :class="ns.e('wrapper')" class="flx-justify-center">
       <div v-if="imgSrc" :class="ns.e('cover')">
         <img :src="imgSrc" class="no-preview" alt="cover" />
