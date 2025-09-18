@@ -16,6 +16,7 @@
 - `demo` 容器 `yaml` 支持非 `Vue` 组件的源码复制
 - 新增文章页 Banner 功能以及相关插槽
 - 新增深色、浅色模式切换过渡动画配置
+- 修复 TODO 插件中代码块文本出现多次问题 [#145](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/145)
 
 ## AR
 
