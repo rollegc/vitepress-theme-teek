@@ -78,7 +78,7 @@ const teekConfig = getTeekConfigRef<Required<TeekConfig>>(null, {
   appreciation: {},
   riskLink: { enabled: false },
   themeEnhance: { enabled: true },
-  articleBanner: { enabled: true },
+  articleBanner: { enabled: false },
   pageStyle: "default",
 });
 
