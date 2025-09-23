@@ -36,8 +36,8 @@
     height: 100%;
     width: 0;
     background-color: rgb(0, 153, 255); // 滑动块的颜色配置
-    transition: width 5s ease-in-out; // 动画持续时间的配置
-    animation: remove-corner 5s ease-in-out forwards;
+    transition: width 2s ease-in-out; // 动画持续时间的配置
+    animation: remove-corner 2s ease-in-out forwards; // 逐渐圆角的动画配置，建议与  transition 保持一直呢~😏
     border-top-right-radius: 25px; // 圆角效果，注释/删除，取消圆角，需要同时删除下面的代码🔽
     border-bottom-right-radius: 25px; // 圆角效果，注释/删除，取消圆角，需要同时删除上面的代码🔼
     z-index: 1;

@@ -29,6 +29,6 @@ export function useCopyEvent(): void {
 
     setTimeout(() => {
       banner.classList.add("hide");
-    }, 5000);
+    }, 3000); // 调整横幅存在时间，这里是毫秒单位哦~
   }
 }
