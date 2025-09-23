@@ -1,5 +1,6 @@
 import Teek from "vitepress-theme-teek";
 import TeekLayoutProvider from "./components/TeekLayoutProvider.vue";
+import { useCopyEvent } from "./composables/useCopyEvent";
 
 // Teek 本地主题包引用（与 Teek 在线主题包引用 二选一）
 // 当前引入文件为 scss，需要执行 pnpm add sass，如果不想安装额外依赖，可以直接引入 Teek 已经构建好的 css 文件，请看 https://vp.teek.top/styles-plus.html
@@ -15,6 +16,7 @@ import "@teek/theme-chalk/vp-plus/index-rainbow.scss"; // 首页图片彩虹动�
 import "@teek/theme-chalk/tk-plus/banner-desc-gradient.scss"; // 博客风格 Banner 描述渐变样式
 import "@teek/theme-chalk/tk-plus/home-card-hover.scss"; // 首页卡片悬停效果
 import "@teek/theme-chalk/tk-plus/fade-up-animation.scss"; // 首次加载的动画效果
+import "./styles/CopySjHfTs.scss"; //引入顶部横幅复制事件提示样式
 
 // Teek 在线主题包引用（需安装 Teek 在线版本）
 // import "vitepress-theme-teek/index.css";
@@ -38,4 +40,9 @@ import "./styles/iframe.scss";
 export default {
   extends: Teek,
   Layout: TeekLayoutProvider,
+  setup() {
+    if (typeof window !== "undefined") {
+      useCopyEvent();
+    }
+  },
 };
