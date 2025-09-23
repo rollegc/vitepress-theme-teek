@@ -19,6 +19,7 @@
 - 修复 TODO 插件中代码块文本出现多次问题 [#145](https://github.com/Kele-Bingtang/vitepress-theme-teek/issues/145)
 - `docAnalysis.appendInfo` 支持函数式配置
 - 网站访问量添加自定义事件，利用该事件搭配 `docAnalysis.appendInfo` 添加更多访问量信息
+- 新增复制提示功能
 
 ## AR
 
