@@ -1,5 +1,11 @@
 # vitepress-plugin-auto-frontmatter
 
+## 1.0.13
+
+### Patch Changes
+
+- 修复日期生成多 8 个小时问题
+
 ## 1.0.12
 
 ### Patch Changes
